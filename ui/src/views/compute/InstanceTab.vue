@@ -57,6 +57,34 @@
           :columns="['displayname', 'state', 'type', 'created']"
           :routerlinks="(record) => { return { displayname: '/vmsnapshot/' + record.id } }"/>
       </a-tab-pane>
+      <a-tab-pane :tab="$t('label.dr')" key="disasterrecoverycluster" v-if="'createDisasterRecoveryClusterVm' in $store.getters.apis">
+        <a-button
+          type="primary"
+          style="width: 100%; margin-bottom: 10px"
+          @click="showAddMirVMModal"
+          :loading="loadingMirror"
+          :disabled="!('createDisasterRecoveryClusterVm' in $store.getters.apis)">
+          <template #icon><plus-outlined /></template> {{ $t('label.add.dr.mirroring.vm') }}
+        </a-button>
+        <DRTable :resource="vm" :loading="loading">
+          <template #actions="record">
+            <tooltip-button
+              tooltipPlacement="bottom"
+              :tooltip="$t('label.dr.simulation.test')"
+              icon="ExperimentOutlined"
+              :disabled="!('connectivityTestsDisasterRecovery' in $store.getters.apis)"
+              @onClick="DrSimulationTest(record)" />
+            <tooltip-button
+              tooltipPlacement="bottom"
+              :tooltip="$t('label.dr.remove.mirroring')"
+              :disabled="!('deleteDisasterRecoveryClusterVm' in $store.getters.apis)"
+              type="primary"
+              :danger="true"
+              icon="link-outlined"
+              @onClick="removeMirror(record)" />
+          </template>
+        </DRTable>
+      </a-tab-pane>
       <a-tab-pane :tab="$t('label.backup')" key="backups" v-if="'listBackups' in $store.getters.apis">
         <ListResourceTable
           apiName="listBackups"
@@ -66,7 +94,7 @@
           :routerlinks="(record) => { return { created: '/backup/' + record.id } }"
           :showSearch="false"/>
       </a-tab-pane>
-      <a-tab-pane :tab="$t('label.securitygroups')" key="securitygroups" v-if="dataResource.securitygroup && dataResource.securitygroup.length > 0 || $store.getters.showSecurityGroups">
+      <a-tab-pane :tab="$t('label.securitygroups')" key="securitygroups" v-if="(dataResource.securitygroup && dataResource.securitygroup.length > 0) || ($store.getters.showSecurityGroups && securityGroupNetworkProviderUseThisVM)">
         <a-button
           type="primary"
           style="width: 100%; margin-bottom: 10px"
@@ -75,6 +103,8 @@
           <template #icon><edit-outlined /></template> {{ $t('label.action.update.security.groups') }}
         </a-button>
         <ListResourceTable
+          apiName="listSecurityGroups"
+          :params="{virtualmachineid: dataResource.id}"
           :items="dataResource.securitygroup"
           :columns="['name', 'description']"
           :routerlinks="(record) => { return { name: '/securitygroups/' + record.id } }"
@@ -124,6 +154,36 @@
       <CreateVolume :resource="resource" @close-action="closeModals" />
     </a-modal>
 
+    <a-modal
+      :visible="showAddMirrorVMModal"
+      :title="$t('label.add.dr.mirroring.vm')"
+      :maskClosable="false"
+      :closable="true"
+      :footer="null"
+      @cancel="closeModals">
+      <DRMirroringVMAdd :resource="resource" @close-action="closeModals" />
+    </a-modal>
+
+    <a-modal
+      :visible="showDrSimulationTestModal"
+      :title="$t('label.dr.simulation.test')"
+      :maskClosable="false"
+      :closable="true"
+      :footer="null"
+      width="850px"
+      @cancel="closeModals">
+      <DRsimulationTestModal :resource="resource" @close-action="closeModals" />
+    </a-modal>
+
+    <a-modal
+      :visible="showRemoveMirrorVMModal"
+      :title="$t('label.dr.remove.mirroring')"
+      :maskClosable="false"
+      :closable="true"
+      :footer="null"
+      @cancel="closeModals">
+      <DRMirroringVMRemove :resource="resource" @close-action="closeModals" />
+    </a-modal>
   </a-spin>
 </template>
 
@@ -145,6 +205,10 @@ import ResourceIcon from '@/components/view/ResourceIcon'
 import AnnotationsTab from '@/components/view/AnnotationsTab'
 import VolumesTab from '@/components/view/VolumesTab.vue'
 import SecurityGroupSelection from '@views/compute/wizard/SecurityGroupSelection'
+import DRTable from '@/views/compute/dr/DRTable'
+import DRsimulationTestModal from '@/views/compute/dr/DRsimulationTestModal'
+import DRMirroringVMAdd from '@/views/compute/dr/DRMirroringVMAdd'
+import DRMirroringVMRemove from '@/views/compute/dr/DRMirroringVMRemove'
 
 export default {
   name: 'InstanceTab',
@@ -156,6 +220,10 @@ export default {
     DetailSettings,
     CreateVolume,
     NicsTab,
+    DRTable,
+    DRsimulationTestModal,
+    DRMirroringVMAdd,
+    DRMirroringVMRemove,
     InstanceSchedules,
     ListResourceTable,
     SecurityGroupSelection,
@@ -182,13 +250,19 @@ export default {
       totalStorage: 0,
       currentTab: 'details',
       showAddVolumeModal: false,
+      showUpdateSecurityGroupsModal: false,
       diskOfferings: [],
+      showAddMirrorVMModal: false,
+      showDrSimulationTestModal: false,
+      showRemoveMirrorVMModal: false,
+      loadingMirror: false,
       annotations: [],
       dataResource: {},
       editeNic: '',
       editNicLinkStat: '',
       dataPreFill: {},
-      securitygroupids: []
+      securitygroupids: [],
+      securityGroupNetworkProviderUseThisVM: false
     }
   },
   created () {
@@ -246,6 +320,25 @@ export default {
           this.annotations = json.listannotationsresponse.annotation
         }
       })
+      api('listNetworks', { supportedservices: 'SecurityGroup' }).then(json => {
+        if (json.listnetworksresponse && json.listnetworksresponse.network) {
+          for (const net of json.listnetworksresponse.network) {
+            if (this.securityGroupNetworkProviderUseThisVM) {
+              break
+            }
+            const listVmParams = {
+              id: this.resource.id,
+              networkid: net.id,
+              listall: true
+            }
+            api('listVirtualMachines', listVmParams).then(json => {
+              if (json.listvirtualmachinesresponse && json.listvirtualmachinesresponse?.virtualmachine?.length > 0) {
+                this.securityGroupNetworkProviderUseThisVM = true
+              }
+            })
+          }
+        }
+      })
     },
     listDiskOfferings () {
       api('listDiskOfferings', {
@@ -271,9 +364,15 @@ export default {
       this.showUpdateSecurityGroupsModal = true
       this.loadingSG = false
     },
+    showAddMirVMModal () {
+      this.showAddMirrorVMModal = true
+    },
     closeModals () {
       this.showAddVolumeModal = false
       this.showUpdateSecurityGroupsModal = false
+      this.showAddMirrorVMModal = false
+      this.showRemoveMirrorVMModal = false
+      this.showDrSimulationTestModal = false
     },
     updateSecurityGroupsSelection (securitygroupids) {
       this.securitygroupids = securitygroupids || []
@@ -285,6 +384,12 @@ export default {
         this.closeModals()
         this.parentFetchData()
       })
+    },
+    DrSimulationTest () {
+      this.showDrSimulationTestModal = true
+    },
+    removeMirror () {
+      this.showRemoveMirrorVMModal = true
     }
   }
 }
@@ -392,6 +497,9 @@ export default {
       margin-left: 10px;
     }
 
+  }
+  .dr-simulation-modal {
+    width: 100%;
   }
 
   .ant-list-item-meta-title {

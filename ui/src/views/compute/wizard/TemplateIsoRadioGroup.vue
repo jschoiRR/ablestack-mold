@@ -45,7 +45,14 @@
                 :osId="item.ostypeid"
                 :os-name="item.osName" />
               &nbsp;
-              {{ item.displaytext }}
+              {{ item.displaytext  }} <span v-if="item.kvdoenable">
+                <a-tooltip>
+                  <template #title>
+                    {{ $t('label.kvdoenable') }}
+                  </template>
+                  <clear-outlined/>
+                </a-tooltip>
+              </span>
               <span v-if="item?.projectid">
                 | <project-outlined /> {{ item.project }}
             </span>

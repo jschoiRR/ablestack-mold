@@ -56,6 +56,7 @@ SELECT
     `disk_offering`.`disk_size` AS `root_disk_size`,
     `disk_offering`.`encrypt` AS `encrypt_root`,
     `disk_offering`.`shareable` AS `shareable`,
+    `disk_offering`.`kvdo_enable` AS `kvdo_enable`,
     `service_offering`.`cpu` AS `cpu`,
     `service_offering`.`speed` AS `speed`,
     `service_offering`.`ram_size` AS `ram_size`,

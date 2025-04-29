@@ -34,6 +34,7 @@ import org.apache.cloudstack.api.command.user.volume.GetUploadParamsForVolumeCmd
 import org.apache.cloudstack.api.command.user.volume.MigrateVolumeCmd;
 import org.apache.cloudstack.api.command.user.volume.ResizeVolumeCmd;
 import org.apache.cloudstack.api.command.user.volume.UploadVolumeCmd;
+import org.apache.cloudstack.api.command.user.volume.UpdateCompressDedupCmd;
 import org.apache.cloudstack.api.response.GetUploadParamsResponse;
 import org.apache.cloudstack.framework.config.ConfigKey;
 
@@ -191,4 +192,6 @@ public interface VolumeApiService {
     Pair<String, String> checkAndRepairVolume(CheckAndRepairVolumeCmd cmd) throws ResourceAllocationException;
 
     Volume cloneVolumeFromSnapshot(Volume volume, long snapshotId, Long vmId) throws StorageUnavailableException;
+
+    Volume updateCompressDedupVolume(UpdateCompressDedupCmd cmd);
 }

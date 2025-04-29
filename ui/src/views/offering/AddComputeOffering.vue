@@ -392,7 +392,13 @@
                 </a-radio-button>
               </a-radio-group>
             </a-form-item>
-            <a-form-item name="shareable" ref="shareable">
+            <a-form-item v-if="!form.shareable" name="kvdoenable" ref="kvdoenable">
+              <template #label>
+                <tooltip-label :title="$t('label.kvdoenable')" :tooltip="apiParams.kvdoenable.description"/>
+              </template>
+              <a-switch v-model:checked="form.kvdoenable" />
+            </a-form-item>
+            <a-form-item v-if="!form.kvdoenable" name="shareable" ref="shareable">
               <template #label>
                 <tooltip-label :title="$t('label.shareable')" :tooltip="apiParams.shareable.description"/>
               </template>
@@ -741,6 +747,7 @@ export default {
         diskofferingid: this.selectedDiskOfferingId,
         diskofferingstrictness: this.diskofferingstrictness,
         encryptdisk: this.encryptdisk,
+        kvdoenable: false,
         shareable: false
       })
       this.rules = reactive({
@@ -973,6 +980,7 @@ export default {
           diskofferingstrictness: values.diskofferingstrictness,
           encryptroot: values.encryptdisk,
           shareable: values.shareable,
+          kvdoEnable: values.kvdoenable,
           purgeresources: values.purgeresources
         }
         if (values.shareable === true) {

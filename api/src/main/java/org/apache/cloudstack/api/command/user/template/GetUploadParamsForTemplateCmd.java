@@ -94,6 +94,9 @@ public class GetUploadParamsForTemplateCmd extends AbstractGetUploadParamsCmd {
     @Parameter(name = ApiConstants.TEMPLATE_TAG, type = CommandType.STRING, description = "the tag for this template.")
     private String templateTag;
 
+    @Parameter(name = ApiConstants.KVDO_ENABLE, type = CommandType.BOOLEAN, description = "Whether to KVDO compression and deduplication the volume", since = "4.20")
+    private Boolean kvdoEnable;
+
     @Parameter(name=ApiConstants.DEPLOY_AS_IS,
             type = CommandType.BOOLEAN,
             description = "(VMware only) true if VM deployments should preserve all the configurations defined for this template", since = "4.15.1")
@@ -161,6 +164,10 @@ public class GetUploadParamsForTemplateCmd extends AbstractGetUploadParamsCmd {
 
     public String getTemplateTag() {
         return templateTag;
+    }
+
+    public Boolean isKvdoEnable() {
+        return kvdoEnable;
     }
 
     public boolean isDeployAsIs() {

@@ -401,7 +401,9 @@
                     :current="page.unmanaged"
                     :pageSize="pageSize.unmanaged"
                     :total="itemCount.unmanaged"
-                    :showTotal="total => `${$t('label.showing')} ${Math.min(total, 1+((page.unmanaged-1)*pageSize.unmanaged))}-${Math.min(page.unmanaged*pageSize.unmanaged, total)} ${$t('label.of')} ${total} ${$t('label.items')}`"
+                    :showTotal="total => this.$localStorage.get('LOCALE') == 'ko_KR' ?
+                      `${$t('label.total')} ${total} ${$t('label.items')} ${$t('label.of')} ${Math.min(total, 1+((page.unmanaged-1)*pageSize.unmanaged))}-${Math.min(page.unmanaged*pageSize.unmanaged, total)} ${$t('label.showing')}` :
+                      `${$t('label.showing')} ${Math.min(total, 1+((page.unmanaged-1)*pageSize.unmanaged))}-${Math.min(page.unmanaged*pageSize.unmanaged, total)} ${$t('label.of')} ${total} ${$t('label.items')}`"
                     @change="fetchUnmanagedInstances"
                     showQuickJumper>
                     <template #buildOptionText="props">
@@ -472,7 +474,9 @@
                     :current="page.managed"
                     :pageSize="pageSize.managed"
                     :total="itemCount.managed"
-                    :showTotal="total => `${$t('label.showing')} ${Math.min(total, 1+((page.managed-1)*pageSize.managed))}-${Math.min(page.managed*pageSize.managed, total)} ${$t('label.of')} ${total} ${$t('label.items')}`"
+                    :showTotal="total => this.$localStorage.get('LOCALE') == 'ko_KR' ?
+                      `${$t('label.total')} ${total} ${$t('label.items')} ${$t('label.of')} ${Math.min(total, 1+((page.managed-1)*pageSize.managed))}-${Math.min(page.managed*pageSize.managed, total)} ${$t('label.showing')}` :
+                      `${$t('label.showing')} ${Math.min(total, 1+((page.managed-1)*pageSize.managed))}-${Math.min(page.managed*pageSize.managed, total)} ${$t('label.of')} ${total} ${$t('label.items')}`"
                     @change="fetchManagedInstances"
                     showQuickJumper>
                     <template #buildOptionText="props">
@@ -840,7 +844,8 @@ export default {
           options: {
             zoneid: _.get(this.zone, 'id'),
             podid: this.podId,
-            hypervisor: this.destinationHypervisor
+            hypervisor: this.destinationHypervisor,
+            allocationstate: 'Enabled'
           },
           field: 'clusterid'
         },

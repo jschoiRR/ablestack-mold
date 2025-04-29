@@ -74,11 +74,11 @@ public interface TemplateAdapter extends Adapter {
     boolean delete(TemplateProfile profile);
 
     TemplateProfile prepare(boolean isIso, Long userId, String name, String displayText, CPU.CPUArch arch, Integer bits, Boolean passwordEnabled, Boolean requiresHVM, String url, Boolean isPublic,
-                            Boolean featured, Boolean isExtractable, String format, Long guestOSId, List<Long> zoneId, HypervisorType hypervisorType, String accountName, Long domainId, String chksum, Boolean bootable, Map details, boolean directDownload,
+                            Boolean featured, Boolean isExtractable, String format, Long guestOSId, List<Long> zoneId, HypervisorType hypervisorType, String accountName, Long domainId, String chksum, Boolean bootable, Map details, boolean directDownload, boolean kvdoEnable,
                             boolean deployAsIs) throws ResourceAllocationException;
 
     TemplateProfile prepare(boolean isIso, long userId, String name, String displayText, CPU.CPUArch arch, Integer bits, Boolean passwordEnabled, Boolean requiresHVM, String url, Boolean isPublic,
                             Boolean featured, Boolean isExtractable, String format, Long guestOSId, List<Long> zoneId, HypervisorType hypervisorType, String chksum, Boolean bootable, String templateTag, Account templateOwner, Map details, Boolean sshKeyEnabled, String imageStoreUuid, Boolean isDynamicallyScalable,
-                            TemplateType templateType, boolean directDownload, boolean deployAsIs) throws ResourceAllocationException;
+                            TemplateType templateType, boolean directDownload, boolean kvdoEnable, boolean deployAsIs) throws ResourceAllocationException;
 
 }

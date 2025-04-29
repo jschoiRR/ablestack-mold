@@ -18,10 +18,15 @@
  */
 package org.apache.cloudstack.storage.motion;
 
+import static org.apache.cloudstack.vm.UnmanagedVMsManagerImpl.KVM_VM_IMPORT_DEFAULT_TEMPLATE_NAME;
+import static org.apache.cloudstack.vm.UnmanagedVMsManagerImpl.VM_IMPORT_DEFAULT_TEMPLATE_NAME;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -29,10 +34,10 @@ import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 
-import com.cloud.agent.api.PrepareForMigrationAnswer;
 import org.apache.cloudstack.engine.subsystem.api.storage.ChapInfo;
 import org.apache.cloudstack.engine.subsystem.api.storage.ClusterScope;
 import org.apache.cloudstack.engine.subsystem.api.storage.CopyCommandResult;
@@ -45,8 +50,8 @@ import org.apache.cloudstack.engine.subsystem.api.storage.EndPoint;
 import org.apache.cloudstack.engine.subsystem.api.storage.EndPointSelector;
 import org.apache.cloudstack.engine.subsystem.api.storage.HostScope;
 import org.apache.cloudstack.engine.subsystem.api.storage.ObjectInDataStoreStateMachine;
-import org.apache.cloudstack.engine.subsystem.api.storage.PrimaryDataStore;
 import org.apache.cloudstack.engine.subsystem.api.storage.ObjectInDataStoreStateMachine.Event;
+import org.apache.cloudstack.engine.subsystem.api.storage.PrimaryDataStore;
 import org.apache.cloudstack.engine.subsystem.api.storage.PrimaryDataStoreDriver;
 import org.apache.cloudstack.engine.subsystem.api.storage.Scope;
 import org.apache.cloudstack.engine.subsystem.api.storage.SnapshotInfo;
@@ -71,9 +76,10 @@ import org.apache.cloudstack.storage.datastore.db.SnapshotDataStoreDao;
 import org.apache.cloudstack.storage.datastore.db.StoragePoolVO;
 import org.apache.cloudstack.storage.to.PrimaryDataStoreTO;
 import org.apache.cloudstack.storage.to.VolumeObjectTO;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.cloud.agent.AgentManager;
 import com.cloud.agent.api.Answer;
@@ -82,6 +88,7 @@ import com.cloud.agent.api.MigrateCommand;
 import com.cloud.agent.api.MigrateCommand.MigrateDiskInfo;
 import com.cloud.agent.api.ModifyTargetsAnswer;
 import com.cloud.agent.api.ModifyTargetsCommand;
+import com.cloud.agent.api.PrepareForMigrationAnswer;
 import com.cloud.agent.api.PrepareForMigrationCommand;
 import com.cloud.agent.api.storage.CopyVolumeAnswer;
 import com.cloud.agent.api.storage.CopyVolumeCommand;
@@ -137,13 +144,6 @@ import com.cloud.vm.VirtualMachine;
 import com.cloud.vm.VirtualMachineManager;
 import com.cloud.vm.dao.VMInstanceDao;
 import com.google.common.base.Preconditions;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.stream.Collectors;
-import org.apache.commons.collections.CollectionUtils;
-
-import static org.apache.cloudstack.vm.UnmanagedVMsManagerImpl.KVM_VM_IMPORT_DEFAULT_TEMPLATE_NAME;
-import static org.apache.cloudstack.vm.UnmanagedVMsManagerImpl.VM_IMPORT_DEFAULT_TEMPLATE_NAME;
 
 public class StorageSystemDataMotionStrategy implements DataMotionStrategy {
     protected Logger logger = LogManager.getLogger(getClass());
@@ -328,23 +328,19 @@ public class StorageSystemDataMotionStrategy implements DataMotionStrategy {
     public void copyAsync(DataObject srcData, DataObject destData, Host destHost, AsyncCompletionCallback<CopyCommandResult> callback) {
         if (srcData instanceof SnapshotInfo) {
             SnapshotInfo srcSnapshotInfo = (SnapshotInfo)srcData;
-
             handleCopyAsyncForSnapshot(srcSnapshotInfo, destData, callback);
         } else if (srcData instanceof TemplateInfo && destData instanceof VolumeInfo) {
             TemplateInfo srcTemplateInfo = (TemplateInfo)srcData;
             VolumeInfo destVolumeInfo = (VolumeInfo)destData;
-
             handleCopyAsyncForTemplateAndVolume(srcTemplateInfo, destVolumeInfo, callback);
         } else if (srcData instanceof VolumeInfo && destData instanceof VolumeInfo) {
             VolumeInfo srcVolumeInfo = (VolumeInfo)srcData;
             VolumeInfo destVolumeInfo = (VolumeInfo)destData;
-
             handleCopyAsyncForVolumes(srcVolumeInfo, destVolumeInfo, callback);
         } else if (srcData instanceof VolumeInfo && destData instanceof TemplateInfo &&
                 (destData.getDataStore().getRole() == DataStoreRole.Image || destData.getDataStore().getRole() == DataStoreRole.ImageCache)) {
             VolumeInfo srcVolumeInfo = (VolumeInfo)srcData;
             TemplateInfo destTemplateInfo = (TemplateInfo)destData;
-
             handleCreateTemplateFromManagedVolume(srcVolumeInfo, destTemplateInfo, callback);
         }
         else {
@@ -2078,8 +2074,8 @@ public class StorageSystemDataMotionStrategy implements DataMotionStrategy {
                     migrateDiskInfo = configureMigrateDiskInfo(srcVolumeInfo, destPath, backingPath);
                     migrateDiskInfo.setSourceDiskOnStorageFileSystem(isStoragePoolTypeOfFile(sourceStoragePool));
                     migrateDiskInfoList.add(migrateDiskInfo);
-                    prepareDiskWithSecretConsumerDetail(vmTO, srcVolumeInfo, destVolumeInfo.getPath());
                 }
+                prepareDiskWithSecretConsumerDetail(vmTO, srcVolumeInfo, destVolumeInfo.getPath());
 
                 migrateStorage.put(srcVolumeInfo.getPath(), migrateDiskInfo);
 
@@ -2293,6 +2289,8 @@ public class StorageSystemDataMotionStrategy implements DataMotionStrategy {
             if (success) {
                 VolumeVO volumeVO = _volumeDao.findById(destVolumeInfo.getId());
                 volumeVO.setFormat(ImageFormat.QCOW2);
+                volumeVO.setLastId(srcVolumeInfo.getId());
+
                 _volumeDao.update(volumeVO.getId(), volumeVO);
 
                 _volumeService.copyPoliciesBetweenVolumesAndDestroySourceVolumeAfterMigration(Event.OperationSuccessed, null, srcVolumeInfo, destVolumeInfo, false);
@@ -2479,7 +2477,8 @@ public class StorageSystemDataMotionStrategy implements DataMotionStrategy {
                 throw new CloudRuntimeException("Destination storage pool with ID " + dataStore.getId() + " was not located.");
             }
 
-            if (srcStoragePoolVO.isManaged() && srcStoragePoolVO.getId() != destStoragePoolVO.getId()) {
+            boolean isSrcAndDestPoolPowerFlexStorage = srcStoragePoolVO.getPoolType().equals(Storage.StoragePoolType.PowerFlex) && destStoragePoolVO.getPoolType().equals(Storage.StoragePoolType.PowerFlex);
+            if (srcStoragePoolVO.isManaged() && !isSrcAndDestPoolPowerFlexStorage && srcStoragePoolVO.getId() != destStoragePoolVO.getId()) {
                 throw new CloudRuntimeException("Migrating a volume online with KVM from managed storage is not currently supported.");
             }
 
@@ -2570,7 +2569,6 @@ public class StorageSystemDataMotionStrategy implements DataMotionStrategy {
                 Map<String, String> srcDetails = getVolumeDetails(volumeInfo);
 
                 copyCommand.setOptions(srcDetails);
-
                 copyCmdAnswer = (CopyCmdAnswer)agentManager.send(hostVO.getId(), copyCommand);
 
                 if (!copyCmdAnswer.getResult()) {

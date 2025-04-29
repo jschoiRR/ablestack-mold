@@ -431,7 +431,7 @@ public class AblestackPrimaryDataStoreDriverImpl implements PrimaryDataStoreDriv
 
         ResizeVolumeCommand resizeCmd =
                 new ResizeVolumeCommand(vol.getPath(), new StorageFilerTO(pool), vol.getSize(), resizeParameter.newSize, resizeParameter.shrinkOk,
-                        resizeParameter.instanceName, vol.getChainInfo());
+                        resizeParameter.instanceName, vol.getChainInfo(), vol.getKvdoEnable());
         if (pool.getParent() != 0) {
             resizeCmd.setContextParam(DiskTO.PROTOCOL_TYPE, Storage.StoragePoolType.DatastoreCluster.toString());
         }

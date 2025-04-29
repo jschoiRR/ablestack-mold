@@ -33,6 +33,7 @@ public class ResizeVolumeCommand extends Command {
     private boolean shrinkOk;
     private String vmInstance;
     private String chainInfo;
+    private boolean kvdoEnable;
 
     /* For managed storage */
     private boolean managed;
@@ -56,15 +57,16 @@ public class ResizeVolumeCommand extends Command {
     }
 
     public ResizeVolumeCommand(String path, StorageFilerTO pool, Long currentSize, Long newSize, boolean shrinkOk, String vmInstance,
-                               String chainInfo, byte[] passphrase, String encryptFormat) {
-        this(path, pool, currentSize, newSize, shrinkOk, vmInstance, chainInfo);
+                               String chainInfo, byte[] passphrase, String encryptFormat, boolean kvdoEnable) {
+        this(path, pool, currentSize, newSize, shrinkOk, vmInstance, chainInfo, kvdoEnable);
         this.passphrase = passphrase;
         this.encryptFormat = encryptFormat;
     }
 
-    public ResizeVolumeCommand(String path, StorageFilerTO pool, Long currentSize, Long newSize, boolean shrinkOk, String vmInstance, String chainInfo) {
+    public ResizeVolumeCommand(String path, StorageFilerTO pool, Long currentSize, Long newSize, boolean shrinkOk, String vmInstance, String chainInfo, boolean kvdoEnable) {
         this(path, pool, currentSize, newSize, shrinkOk, vmInstance);
         this.chainInfo = chainInfo;
+        this.kvdoEnable = kvdoEnable;
     }
 
     public ResizeVolumeCommand(String path, StorageFilerTO pool, Long currentSize, Long newSize, boolean shrinkOk, String vmInstance,
@@ -112,6 +114,8 @@ public class ResizeVolumeCommand extends Command {
             Arrays.fill(this.passphrase, (byte) 0);
         }
     }
+
+    public boolean getKvdoEnable() { return kvdoEnable; }
 
     /**
      * {@inheritDoc}

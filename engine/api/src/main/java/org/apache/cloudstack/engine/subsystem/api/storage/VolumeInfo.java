@@ -78,6 +78,8 @@ public interface VolumeInfo extends DownloadableDataInfo, Volume {
 
     boolean getShareable();
 
+    boolean getKvdoEnable();
+
     /**
      * Currently available for KVM volumes
      */

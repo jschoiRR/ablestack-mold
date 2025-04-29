@@ -602,6 +602,12 @@ public class MockResourceManagerImpl extends ManagerBase implements ResourceMana
     }
 
     @Override
+    public List<HostVO> listAllUpAndEnabledHostsAndRoutingTypeInOneZoneByHypervisor(final HypervisorType type, final long dcId) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
     public List<HostVO> listAllUpHostsInOneZoneByHypervisor(final HypervisorType type, final long dcId) {
         // TODO Auto-generated method stub
         return null;
@@ -620,7 +626,7 @@ public class MockResourceManagerImpl extends ManagerBase implements ResourceMana
     }
 
     @Override
-    public boolean isGPUDeviceAvailable(final long hostId, final String groupName, final String vgpuType) {
+    public boolean isGPUDeviceAvailable(final Host host, final String groupName, final String vgpuType) {
         // TODO Auto-generated method stub
         return false;
     }

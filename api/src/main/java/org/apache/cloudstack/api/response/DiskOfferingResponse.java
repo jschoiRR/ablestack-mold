@@ -173,6 +173,10 @@ public class DiskOfferingResponse extends BaseResponseWithAnnotations {
     @Param(description = "Whether to use it as a shared volume", since = "4.19")
     private Boolean shareable;
 
+    @SerializedName(ApiConstants.KVDO_ENABLE)
+    @Param(description = "Whether to KVDO compression and deduplication the volume", since = "4.20")
+    private Boolean kvdoEnable;
+
     @SerializedName(ApiConstants.DETAILS)
     @Param(description = "additional key/value details tied with this disk offering", since = "4.17")
     private Map<String, String> details;
@@ -409,6 +413,8 @@ public class DiskOfferingResponse extends BaseResponseWithAnnotations {
     public void setEncrypt(Boolean encrypt) { this.encrypt = encrypt; }
 
     public void setShareable(Boolean shareable) { this.shareable = shareable; }
+
+    public void setKvdoEnable(Boolean kvdoEnable) { this.kvdoEnable = kvdoEnable; }
 
     public void setDetails(Map<String, String> details) {
         this.details = details;

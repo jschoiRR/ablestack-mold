@@ -23,6 +23,7 @@ public class QemuImgFile {
     private long size = 0;
     private String fileName;
     private PhysicalDiskFormat format = PhysicalDiskFormat.RAW;
+    private boolean kvdoEnable = false;
 
     public QemuImgFile(String fileName) {
         this.fileName = fileName;
@@ -66,6 +67,14 @@ public class QemuImgFile {
 
     public PhysicalDiskFormat getFormat() {
         return this.format;
+    }
+
+    public void setKvdoEnable(boolean kvdoEnable) {
+        this.kvdoEnable = kvdoEnable;
+    }
+
+    public boolean getKvdoEnable() {
+        return kvdoEnable;
     }
 
 }

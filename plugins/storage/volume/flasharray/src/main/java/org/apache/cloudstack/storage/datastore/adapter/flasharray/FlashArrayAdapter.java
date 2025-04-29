@@ -453,11 +453,11 @@ public class FlashArrayAdapter implements ProviderAdapter {
     public ProviderVolumeStorageStats getManagedStorageStats() {
         FlashArrayPod pod = getVolumeNamespace(this.pod);
         // just in case
-        if (pod == null || pod.getFootprint() == 0) {
+        if (pod == null) {
             return null;
         }
         Long capacityBytes = pod.getQuotaLimit();
-        Long usedBytes = pod.getQuotaLimit() - (pod.getQuotaLimit() - pod.getFootprint());
+        Long usedBytes = pod.getFootprint();
         ProviderVolumeStorageStats stats = new ProviderVolumeStorageStats();
         stats.setCapacityInBytes(capacityBytes);
         stats.setActualUsedInBytes(usedBytes);
@@ -882,6 +882,9 @@ public class FlashArrayAdapter implements ProviderAdapter {
     }
 
     private <T> T PATCH(String path, Object input, final TypeReference<T> type) {
+        logger.info("path :::::::: " + path);
+        logger.info("input ::::::: " + input.toString());
+        logger.info("type :::::::: " + type);
         CloseableHttpResponse response = null;
         try {
             this.refreshSession(false);
@@ -893,8 +896,10 @@ public class FlashArrayAdapter implements ProviderAdapter {
             request.setEntity(new StringEntity(data));
 
             CloseableHttpClient client = getClient();
+            logger.info("request ::::::::::" + request);
             response = (CloseableHttpResponse) client.execute(request);
 
+            logger.info("response :::::::: " + response);
             final int statusCode = response.getStatusLine().getStatusCode();
             if (statusCode == 200 || statusCode == 201) {
                 if (type != null)

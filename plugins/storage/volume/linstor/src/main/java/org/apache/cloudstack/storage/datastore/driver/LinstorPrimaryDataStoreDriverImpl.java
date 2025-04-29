@@ -382,7 +382,7 @@ public class LinstorPrimaryDataStoreDriverImpl implements PrimaryDataStoreDriver
                 long vMaxIops = maxIops != null ? maxIops : 0;
                 long newIops = vcIops + vMaxIops;
                 capacityIops -= newIops;
-                logger.info("Current storagepool " + storagePool.getName() + " iops capacity:  " + capacityIops);
+                logger.info(String.format("Current storagepool %s iops capacity:  %d", storagePool, capacityIops));
                 storagePool.setCapacityIops(Math.max(0, capacityIops));
                 _storagePoolDao.update(storagePool.getId(), storagePool);
             }
@@ -1104,7 +1104,7 @@ public class LinstorPrimaryDataStoreDriverImpl implements PrimaryDataStoreDriver
 
         ResizeVolumeCommand resizeCmd =
             new ResizeVolumeCommand(vol.getPath(), new StorageFilerTO(pool), oldSize, resizeParameter.newSize, resizeParameter.shrinkOk,
-                resizeParameter.instanceName, null);
+                resizeParameter.instanceName, null, vol.getKvdoEnable());
         CreateCmdResult result = new CreateCmdResult(null, null);
         try {
             ResizeVolumeAnswer answer = (ResizeVolumeAnswer) _storageMgr.sendToPool(pool, resizeParameter.hosts, resizeCmd);
@@ -1197,7 +1197,7 @@ public class LinstorPrimaryDataStoreDriverImpl implements PrimaryDataStoreDriver
     @Override
     public void takeSnapshot(SnapshotInfo snapshotInfo, AsyncCompletionCallback<CreateCmdResult> callback)
     {
-        logger.debug("Linstor: takeSnapshot with snapshot: " + snapshotInfo.getUuid());
+        logger.debug(String.format("Linstor: takeSnapshot with snapshot: %s", snapshotInfo.getSnapshotVO()));
 
         final VolumeInfo volumeInfo = snapshotInfo.getBaseVolume();
         final VolumeVO volumeVO = _volumeDao.findById(volumeInfo.getId());

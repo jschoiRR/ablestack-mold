@@ -214,6 +214,12 @@
             </a-form-item>
           </a-col>
         </a-row>
+        <a-form-item ref="kvdoenable" name="kvdoenable" v-if="allowed && hyperKVMShow">
+          <template #label>
+            <tooltip-label :title="$t('label.kvdoenable')" :tooltip="apiParams.kvdoenable.description"/>
+          </template>
+          <a-switch v-model:checked="form.kvdoenable" />
+        </a-form-item>
         <a-row :gutter="12" v-if="allowed && (hyperKVMShow || hyperCustomShow) && currentForm === 'Create'">
           <a-col :md="24" :lg="12">
             <a-form-item ref="directdownload" name="directdownload">
@@ -677,6 +683,14 @@ export default {
         })
       }
 
+      if (store.getters.userInfo.roletype === this.rootAdmin && this.currentForm === 'Upload') {
+        this.allowed = true
+        listZones.push({
+          id: this.$t('label.all.zone'),
+          name: this.$t('label.all.zone')
+        })
+      }
+
       this.zones.loading = true
       this.zones.opts = []
 
@@ -1039,6 +1053,7 @@ export default {
       this.selectedFormat = null
       this.form.deployasis = false
       this.form.directdownload = false
+      this.form.kvdoenable = false
       this.form.xenserverToolsVersion61plus = false
 
       this.resetSelect(arrSelectReset)

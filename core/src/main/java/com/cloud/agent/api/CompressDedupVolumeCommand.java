@@ -1,3 +1,4 @@
+//
 // Licensed to the Apache Software Foundation (ASF) under one
 // or more contributor license agreements.  See the NOTICE file
 // distributed with this work for additional information
@@ -14,30 +15,36 @@
 // KIND, either express or implied.  See the License for the
 // specific language governing permissions and limitations
 // under the License.
+//
 
-<template>
-  <a
-    v-if="['host'].includes($route.meta.name) && 'listHostsMetrics' in $store.getters.apis"
-    :href="resource.details?.manageconsoleprotocol+'://'+resource.outofbandmanagement?.address+':'+resource.details?.manageconsoleport"
-    target="_blank">
-    <a-button style="margin-left: 5px" shape="circle" type="" :size="size" :disabled="resource.details?.manageconsoleport == undefined" >
-      <LaptopOutlined />
-    </a-button>
-  </a>
-</template>
-<script>
-export default {
-  name: 'OobmUrl',
-  props: {
-    resource: {
-      type: Object,
-      required: true,
-      default: () => ({})
-    },
-    size: {
-      type: String,
-      default: 'small'
+package com.cloud.agent.api;
+
+public class CompressDedupVolumeCommand extends Command {
+
+    String compress;
+    String dedup;
+    String path;
+
+    public CompressDedupVolumeCommand(String compress, String dedup, String path) {
+        this.compress = compress;
+        this.dedup = dedup;
+        this.path = path;
     }
-  }
+
+    @Override
+    public boolean executeInSequence() {
+        return false;
+    }
+
+    public String getCompress() {
+        return compress;
+    }
+
+    public String getDedup() {
+        return dedup;
+    }
+
+    public String getPath() {
+        return path;
+    }
 }
-</script>

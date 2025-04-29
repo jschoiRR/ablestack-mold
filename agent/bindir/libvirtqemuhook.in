@@ -19,6 +19,7 @@ import re
 import sys
 import os
 import subprocess
+import time
 from threading import Timer
 from xml.dom.minidom import parse
 from cloudutils.configFileOps import configFileOps
@@ -194,11 +195,42 @@ def unmapStorage():
             target = volume.getElementsByTagName("target")[0]
             #if target.getAttribute("bus") == "scsi":
             try:
-                disk = volume.getElementsByTagName("source")[0]
-                img = disk.getAttribute("dev")
-                ret_code = executeProgram("/usr/bin/rbd", ["unmap", img])
-                if ret_code == 22:
-                    logger.error('rbd unmap failed: %s is not rbd image' % img)
+                if volume.getElementsByTagName("source"):
+                    disk = volume.getElementsByTagName("source")[0]
+                    img = disk.getAttribute("dev")
+                    #If kvdo, disable operation is required
+                    if "vg_" in img and img.endswith("-ablestack_kvdo"):
+                        pattern = r'/dev/mapper/vg_([0-9a-f]{32})-ablestack_kvdo'
+                        match = re.search(pattern, img)
+                        # If there are matching results
+                        if match:
+                            vg_name = "vg_"+str(match.group(1))
+                            for i in range(10):
+                                ret_code = executeProgram("/usr/sbin/vgchange", ["-an", vg_name])
+                                if ret_code == 0:
+                                    break
+                                elif i < 10 and ret_code != 0:
+                                    time.sleep(6)
+                                else:
+                                    logger.error('kvdo vgchange failed: %s' % img)
+
+                            # Convert to UUID format
+                            hex_string = match.group(1)
+                            image_uuid = f"{hex_string[:8]}-{hex_string[8:12]}-{hex_string[12:16]}-{hex_string[16:20]}-{hex_string[20:]}"
+                            for i in range(10):
+                                ret_code = executeProgram("/usr/bin/rbd", ["unmap", image_uuid])
+                                if ret_code == 0:
+                                    break
+                                elif i < 10 and ret_code != 0:
+                                    time.sleep(6)
+                                else:
+                                    logger.error('kvdo rbd unmap failed: %s is not rbd image' % img)
+                        else:
+                            logger.error('rbd kvdo unmap failed: %s is not ablestack kvdo image' % img)
+                    else:
+                        ret_code = executeProgram("/usr/bin/rbd", ["unmap", img])
+                        if ret_code == 22:
+                            logger.error('rbd unmap failed: %s is not rbd image' % img)
             except Exception as e:
                 logger.exception("exception: %s\n" % (e))
                 pass

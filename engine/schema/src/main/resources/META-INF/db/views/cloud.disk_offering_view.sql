@@ -57,6 +57,7 @@ SELECT
     `vsphere_storage_policy`.`value` AS `vsphere_storage_policy`,
     `disk_offering`.`encrypt` AS `encrypt`,
     `disk_offering`.`shareable` AS `shareable`,
+    `disk_offering`.`kvdo_enable` AS `kvdo_enable`,
     GROUP_CONCAT(DISTINCT(domain.id)) AS domain_id,
     GROUP_CONCAT(DISTINCT(domain.uuid)) AS domain_uuid,
     GROUP_CONCAT(DISTINCT(domain.name)) AS domain_name,

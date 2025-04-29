@@ -348,8 +348,8 @@ CREATE VIEW `cloud`.`template_view` AS
           CONCAT(`vm_template`.`id`,
                  '_',
                  IFNULL(`data_center`.`id`, 0)) AS `temp_zone_pair`,
-          `vm_template`.`direct_download` AS `direct_download`,
-          `vm_template`.`deploy_as_is` AS `deploy_as_is`
+         `vm_template`.`direct_download` AS `direct_download`,
+         `vm_template`.`deploy_as_is` AS `deploy_as_is`
      FROM
          (((((((((((((`vm_template`
          JOIN `guest_os` ON ((`guest_os`.`id` = `vm_template`.`guest_os_id`)))

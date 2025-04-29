@@ -792,6 +792,7 @@ public class LibvirtVMDef {
         private DiskFmtType _diskFmtType; /* qcow2, raw etc. */
         private boolean _readonly = false;
         private boolean _shareable = false;
+        private boolean _kvdoEnable = false;
         private boolean _deferAttach = false;
         private Long _bytesReadRate;
         private Long _bytesReadRateMax;
@@ -922,8 +923,8 @@ public class LibvirtVMDef {
             }
         }
 
-        public void defISODisk(String volPath) {
-            _diskType = DiskType.FILE;
+        public void defISODisk(String volPath, DiskType diskType) {
+            _diskType = diskType;
             _deviceType = DeviceType.CDROM;
             _sourcePath = volPath;
             _diskLabel = getDevLabel(3, DiskBus.IDE, true);
@@ -932,8 +933,8 @@ public class LibvirtVMDef {
             _bus = DiskBus.IDE;
         }
 
-        public void defISODisk(String volPath, boolean isUefiEnabled) {
-            _diskType = DiskType.FILE;
+        public void defISODisk(String volPath, boolean isUefiEnabled, DiskType diskType) {
+            _diskType = diskType;
             _deviceType = DeviceType.CDROM;
             _sourcePath = volPath;
             _bus = isUefiEnabled ? DiskBus.SATA : DiskBus.IDE;
@@ -942,18 +943,18 @@ public class LibvirtVMDef {
             _diskCacheMode = DiskCacheMode.NONE;
         }
 
-        public void defISODisk(String volPath, Integer devId) {
-            defISODisk(volPath, devId, null);
+        public void defISODisk(String volPath, Integer devId, DiskType diskType) {
+            defISODisk(volPath, devId, null, diskType);
         }
 
-        public void defISODisk(String volPath, Integer devId, String diskLabel) {
+        public void defISODisk(String volPath, Integer devId, String diskLabel, DiskType diskType) {
             if (devId == null && StringUtils.isBlank(diskLabel)) {
                 LOGGER.debug(String.format("No ID or label informed for volume [%s].", volPath));
-                defISODisk(volPath);
+                defISODisk(volPath, diskType);
                 return;
             }
 
-            _diskType = DiskType.FILE;
+            _diskType = diskType;
             _deviceType = DeviceType.CDROM;
             _sourcePath = volPath;
 
@@ -970,11 +971,11 @@ public class LibvirtVMDef {
             _bus = DiskBus.IDE;
         }
 
-        public void defISODisk(String volPath, Integer devId,boolean isSecure) {
+        public void defISODisk(String volPath, Integer devId, boolean isSecure, DiskType diskType) {
             if (!isSecure) {
-                defISODisk(volPath, devId);
+                defISODisk(volPath, devId, diskType);
             } else {
-                _diskType = DiskType.FILE;
+                _diskType = diskType;
                 _deviceType = DeviceType.CDROM;
                 _sourcePath = volPath;
                 _diskLabel = getDevLabel(devId, DiskBus.SATA, true);
@@ -1053,6 +1054,10 @@ public class LibvirtVMDef {
 
         public void setSharable() {
             _shareable = true;
+        }
+
+        public void setKvdoEnable() {
+            _kvdoEnable = true;
         }
 
         public void setAttachDeferred(boolean deferAttach) {
@@ -1450,6 +1455,7 @@ public class LibvirtVMDef {
         private Integer _userIp4Prefix;
         private Integer _multiQueueNumber;
         private Boolean _packedVirtQueues;
+        private Boolean _filterrefFilter = false;
 
         public void defBridgeNet(String brName, String targetBrName, String macAddr, NicModel model) {
             defBridgeNet(brName, targetBrName, macAddr, model, 0);
@@ -1646,6 +1652,10 @@ public class LibvirtVMDef {
             this._packedVirtQueues = packedVirtQueues;
         }
 
+        public void setFilterrefFilterTag() {
+            this._filterrefFilter = true;
+        }
+
         public String getContent() {
             StringBuilder netBuilder = new StringBuilder();
             if (_netType == GuestNetType.BRIDGE) {
@@ -1721,7 +1731,9 @@ public class LibvirtVMDef {
             if (StringUtils.isNotBlank(_userIp4Network) && _userIp4Prefix != null) {
                 netBuilder.append(String.format("<ip family='ipv4' address='%s' prefix='%s'/>\n", _userIp4Network, _userIp4Prefix));
             }
-
+            if (_filterrefFilter) {
+                netBuilder.append("<filterref filter='allow-all-traffic'/>");
+            }
             return netBuilder.toString();
         }
 

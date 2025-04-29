@@ -72,6 +72,7 @@ public final class LibvirtResizeVolumeCommandWrapper extends CommandWrapper<Resi
         final boolean shrinkOk = command.getShrinkOk();
         final StorageFilerTO spool = command.getPool();
         final String notifyOnlyType = LibvirtComputingResource.RESIZE_NOTIFY_ONLY;
+        final boolean kvdoEnable = command.getKvdoEnable();
 
         if ( currentSize == newSize) {
             // nothing to do
@@ -157,6 +158,7 @@ public final class LibvirtResizeVolumeCommandWrapper extends CommandWrapper<Resi
                 resizecmd.add("-t", type);
                 resizecmd.add("-r", String.valueOf(shrinkOk));
                 resizecmd.add("-v", vmInstanceName);
+                resizecmd.add("-k", String.valueOf(kvdoEnable));
                 final String result = resizecmd.execute();
 
                 if (result != null) {

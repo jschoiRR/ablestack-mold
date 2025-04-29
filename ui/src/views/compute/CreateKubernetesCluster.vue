@@ -381,6 +381,7 @@ export default {
     fetchServiceOfferingData () {
       this.serviceOfferings = []
       const params = {}
+      params.kvdoenable = false
       this.serviceOfferingLoading = true
       api('listServiceOfferings', params).then(json => {
         var items = json.listserviceofferingsresponse.serviceoffering

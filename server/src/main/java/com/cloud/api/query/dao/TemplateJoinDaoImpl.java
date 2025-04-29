@@ -330,6 +330,7 @@ public class TemplateJoinDaoImpl extends GenericDaoBaseWithTagInformation<Templa
                 _accountService.isRootAdmin(CallContext.current().getCallingAccount().getId())));
 
         templateResponse.setDirectDownload(template.isDirectDownload());
+        templateResponse.setKvdoEnable(template.isKvdoEnable());
         templateResponse.setDeployAsIs(template.isDeployAsIs());
         templateResponse.setRequiresHvm(template.isRequiresHvm());
         if (template.getArch() != null) {

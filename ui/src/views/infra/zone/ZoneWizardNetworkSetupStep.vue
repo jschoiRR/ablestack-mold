@@ -101,7 +101,6 @@
     />
 
     <div v-if="guestTrafficRangeMode">
-      <div>{{ isNsxZone }}</div>
       <static-inputs-form
         v-if="steps && steps[currentStep].formKey === 'guestTraffic'"
         @nextPressed="nextPressed"
@@ -215,7 +214,6 @@ export default {
       return isNsx
     },
     allSteps () {
-      console.log(this.isNsxZone)
       const steps = []
       steps.push({
         title: 'label.physical.network',

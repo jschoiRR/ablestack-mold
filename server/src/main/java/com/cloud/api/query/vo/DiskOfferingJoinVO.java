@@ -167,6 +167,9 @@ public class DiskOfferingJoinVO extends BaseViewVO implements InternalIdentity, 
     @Column(name = "shareable")
     private boolean shareable;
 
+    @Column(name = "kvdo_enable")
+    private boolean kvdoEnable;
+
     public DiskOfferingJoinVO() {
     }
 
@@ -360,4 +363,6 @@ public class DiskOfferingJoinVO extends BaseViewVO implements InternalIdentity, 
     public boolean getEncrypt() { return encrypt; }
 
     public boolean getShareable() { return shareable; }
+
+    public boolean getKvdoEnable() { return kvdoEnable; }
 }

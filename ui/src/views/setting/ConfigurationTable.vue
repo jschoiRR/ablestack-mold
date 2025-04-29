@@ -43,7 +43,9 @@
       :current="page"
       :pageSize="pagesize"
       :total="count"
-      :showTotal="count => `${$t('label.showing')} ${Math.min(count, 1+((page-1)*pagesize))}-${Math.min(page*pagesize, count)} ${$t('label.of')} ${count} ${$t('label.items')}`"
+      :showTotal="count => this.$localStorage.get('LOCALE') == 'ko_KR' ?
+        `${$t('label.total')} ${count} ${$t('label.items')} ${$t('label.of')} ${Math.min(count, 1+((page-1)*pagesize))}-${Math.min(page*pagesize, count)} ${$t('label.showing')}` :
+        `${$t('label.showing')} ${Math.min(count, 1+((page-1)*pagesize))}-${Math.min(page*pagesize, count)} ${$t('label.of')} ${count} ${$t('label.items')}`"
       :pageSizeOptions="pageSizeOptions"
       @change="changePage"
       @showSizeChange="changePage"

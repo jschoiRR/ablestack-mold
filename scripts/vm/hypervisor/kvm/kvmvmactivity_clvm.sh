@@ -18,6 +18,9 @@
 
 help() {
   printf "Usage: $0 
+                    -p rbd pool name
+                    -n rbd pool auth username
+                    -g sharedmountpoint type GFS2 path
                     -h host
                     -u volume uuid list
                     -t time on ms
@@ -25,24 +28,37 @@ help() {
   exit 1
 }
 #set -x
-PoolName=rbd
-PoolAuthUserName=admin
+RbdPoolName=
+RbdPoolAuthUserName=
+GfsPoolPath=
 HostIP=
 UUIDList=
 MSTime=
 SuspectTime=
 
-while getopts 'h:u:t:d:' OPTION
+while getopts 'p:n:g:h:q:u:t:d:' OPTION
 do
   case $OPTION in
+  p)
+     RbdPoolName="$OPTARG"
+     ;;
+  n)
+     RbdPoolAuthUserName="$OPTARG"
+     ;;
+  g)
+     GfsPoolPath="$OPTARG"
+     ;;
   h)
      HostIP="$OPTARG"
+     ;;
+  q)
+     poolPath="$OPTARG"
      ;;
   u)
      UUIDList="$OPTARG"
      ;;
   t)
-     MSTime="$OPTARG"
+     interval="$OPTARG"
      ;;
   d)
      SuspectTime="$OPTARG"
@@ -53,26 +69,37 @@ do
   esac
 done
 
-if [ -z "$PoolName" ]; then
-  exit 2
-fi
+poolPath=$(echo $poolPath | cut -d '/' -f2-)
 
-if [ -z "$SuspectTime" ]; then
-  exit 2
-fi
-
+hbFolder=$GfsPoolPath/MOLD-HB
+hbFile=$hbFolder/$HostIP-$poolPath
 
 # First check: heartbeat file
 now=$(date +%s)
-hb=$(rados -p $PoolName get hb-$HostIP - --id $PoolAuthUserName)
-diff=$(expr $now - $hb)
-if [ $diff -lt 61 ]; then
-    echo "=====> ALIVE <====="
-    exit 0
+if [ -n "$RbdPoolName" ] ; then
+   getHbTime=$(rbd -p $RbdPoolName --id $RbdPoolAuthUserName image-meta get MOLD-HB $HostIP-$poolPath)
+   if [ $? -eq 0 ]; then
+      diff=$(expr $now - $getHbTime)
+      if [ $diff -le $interval ]; then
+         echo "### [HOST STATE : ALIVE] in [PoolType : CLVM] ###"
+         exit 0
+      fi
+   fi
+elif [ -n "$GfsPoolPath" ] ; then
+   now=$(date +%s)
+   getHbTime=$(cat $hbFile)
+   diff=$(expr $now - $getHbTime)
+   if [ $diff -le $interval ]; then
+      echo "### [HOST STATE : ALIVE] in [PoolType : CLVM] ###"
+      exit 0
+   fi
+else
+   printf "There is no storage information of type RBD or SharedMountPoint."
+   return 0
 fi
 
 if [ -z "$UUIDList" ]; then
-    echo "=====> Considering host as DEAD due to empty UUIDList <======"
+    echo " ### [HOST STATE : DEAD] Volume UUID list is empty => Considered host down in [PoolType : CLVM] ###"
     exit 0
 fi
 
@@ -80,7 +107,7 @@ fi
 statusFlag=true
 for UUID in $(echo $UUIDList | sed 's/,/ /g'); do
     # vol_persist=$(sg_persist -ik /dev/vg_iscsi/$UUID)
-    vol_lvs=$(lvs 2>/dev/null|grep $UUID) 
+    vol_lvs=$(lvs 2>/dev/null | grep $UUID)
     if [[ $vol_lvs =~ "-wi-ao----" ]]; then
         continue
     else
@@ -90,9 +117,9 @@ for UUID in $(echo $UUIDList | sed 's/,/ /g'); do
 done
 
 if [ statusFlag == "true" ]; then
-    echo "=====> ALIVE <====="
+    echo "### [HOST STATE : ALIVE] in [PoolType : CLVM] ###"
 else
-    echo "=====> Considering host as DEAD due to [CLVM] sg_persist does not exists <======"
+    echo "### [HOST STATE : DEAD] Unable to confirm normal activity of volume image list => Considered host down in [PoolType : CLVM] ### "
 fi
 
 exit 0

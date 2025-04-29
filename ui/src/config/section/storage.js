@@ -59,10 +59,12 @@ export default {
           fields.push('project')
         }
         fields.push('zonename')
+        fields.push('usedfsbytes')
+        fields.push('kvdoenable')
 
         return fields
       },
-      details: ['name', 'id', 'type', 'storagetype', 'diskofferingdisplaytext', 'deviceid', 'sizegb', 'physicalsize', 'provisioningtype', 'utilization', 'diskkbsread', 'diskkbswrite', 'diskioread', 'diskiowrite', 'diskiopstotal', 'miniops', 'maxiops', 'path', 'deleteprotection'],
+      details: ['name', 'id', 'type', 'storagetype', 'diskofferingdisplaytext', 'deviceid', 'sizegb', 'physicalsize', 'provisioningtype', 'utilization', 'usedfsbytes', 'kvdoenable', 'compress', 'dedup', 'savingrate', 'diskkbsread', 'diskkbswrite', 'diskioread', 'diskiowrite', 'diskiopstotal', 'miniops', 'maxiops', 'path', 'deleteprotection'],
       related: [{
         name: 'snapshot',
         title: 'label.snapshots',
@@ -161,6 +163,16 @@ export default {
           }
         },
         {
+          api: 'updateCompressDedup',
+          icon: 'clear-outlined',
+          label: 'label.action.update.compress.dedup',
+          message: 'message.enable.compress.dedup',
+          dataView: true,
+          show: (record) => { return record.virtualmachineid && ['Running'].includes(record.vmstate) && record.kvdoenable },
+          popup: true,
+          component: shallowRef(defineAsyncComponent(() => import('@/views/storage/UpdateCompressDedup.vue')))
+        },
+        {
           api: 'createSnapshot',
           icon: 'camera-outlined',
           docHelp: 'adminguide/storage.html#working-with-volume-snapshots',
@@ -214,7 +226,7 @@ export default {
           label: 'label.migrate.volume',
           args: ['volumeid', 'storageid', 'livemigrate'],
           dataView: true,
-          show: (record, store) => { return record.state === 'Ready' },
+          show: (record, store) => { return record.state === 'Ready' && !record.kvdoenable },
           popup: true,
           component: shallowRef(defineAsyncComponent(() => import('@/views/storage/MigrateVolume.vue')))
         },
@@ -253,9 +265,7 @@ export default {
           label: 'label.action.create.template.from.volume',
           dataView: true,
           show: (record) => {
-            return !['Destroy', 'Destroyed', 'Expunging', 'Expunged', 'Migrating', 'Uploading', 'UploadError', 'Creating'].includes(record.state) &&
-                ((record.type === 'ROOT' && record.vmstate === 'Stopped') ||
-                    (record.type !== 'ROOT' && !record.virtualmachineid && !['Allocated', 'Uploaded'].includes(record.state)))
+            return record.state === 'Ready' && (record.vmstate === 'Stopped' || !record.virtualmachineid)
           },
           args: (record, store) => {
             var fields = ['volumeid', 'name', 'displaytext', 'ostypeid', 'isdynamicallyscalable', 'requireshvm', 'passwordenabled']

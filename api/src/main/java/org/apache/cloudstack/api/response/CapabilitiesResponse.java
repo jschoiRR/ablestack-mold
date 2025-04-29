@@ -120,25 +120,13 @@ public class CapabilitiesResponse extends BaseResponse {
     @Param(description = "true if Automation Service plugin is enabled, false otherwise")
     private boolean automationServiceEnabled;
 
-    @SerializedName("wallportalprotocol")
-    @Param(description = "Monitoring Service Wall Portal Protocol setting")
-    private String wallPortalProtocol;
-
-    @SerializedName("wallportaldomain")
-    @Param(description = "Monitoring Service Wall Portal Domain setting")
-    private String wallPortalDomain;
-
-    @SerializedName("wallportalport")
-    @Param(description = "Monitoring Service Wall Portal Port setting")
-    private String wallPortalPort;
-
-    @SerializedName("wallportalvmuri")
-    @Param(description = "Monitoring Service Wall Portal for VM Uri setting")
-    private String wallPortalVmUri;
-
     @SerializedName("securityfeaturesenabled")
     @Param(description = "A setting that enables/disables features developed for security features.")
     private boolean securityFeaturesEnabled;
+
+    @SerializedName("disasterrecoveryenabled")
+    @Param(description = "A setting that enables/disables features developed for disaster recovery features.")
+    private boolean disasterRecoveryEnabled;
 
     @SerializedName("host")
     @Param(description = "Management Server Host Ip")
@@ -272,24 +260,12 @@ public class CapabilitiesResponse extends BaseResponse {
         this.automationServiceEnabled = automationServiceEnabled;
     }
 
-    public void setWallPortalProtocol(String wallPortalProtocol) {
-        this.wallPortalProtocol = wallPortalProtocol;
-    }
-
-    public void setWallPortalDomain(String wallPortalDomain) {
-        this.wallPortalDomain = wallPortalDomain;
-    }
-
-    public void setWallPortalPort(String wallPortalPort) {
-        this.wallPortalPort = wallPortalPort;
-    }
-
-    public void setWallPortalVmUri(String wallPortalVmUri) {
-        this.wallPortalVmUri = wallPortalVmUri;
-    }
-
     public void setSecurityFeaturesEnabled(boolean securityFeaturesEnabled) {
         this.securityFeaturesEnabled = securityFeaturesEnabled;
+    }
+
+    public void setDisasterRecoveryEnabled(boolean disasterRecoveryEnabled) {
+        this.disasterRecoveryEnabled = disasterRecoveryEnabled;
     }
 
     public void setHost(String host) {

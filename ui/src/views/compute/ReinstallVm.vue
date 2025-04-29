@@ -173,7 +173,9 @@ export default {
       templateKey: 0,
       dataPrefill: {
         templateid: this.resource.templateid,
-        diskofferingid: this.resource.diskofferingid
+        diskofferingid: this.resource.diskofferingid,
+        isreinstall: true,
+        kvdoenable: this.resource.kvdoenable
       }
     }
   },
@@ -274,7 +276,7 @@ export default {
       args.templatefilter = templateFilter
       args.details = 'all'
       args.showicon = 'true'
-
+      args.kvdoenable = this.resource.kvdoenable
       return new Promise((resolve, reject) => {
         api('listTemplates', args).then((response) => {
           resolve(response)

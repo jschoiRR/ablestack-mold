@@ -16,16 +16,14 @@
 // under the License.
 
 <template>
-  <a
-    v-if="['vm'].includes($route.meta.name) && 'updateVirtualMachine' in $store.getters.apis"
-    :href="urlAction($store.getters, resource.id)"
-    target="_blank" >
-    <a-button style="margin-left: 5px" shape="circle" type="" :size="size" :disabled="['Stopped', 'Error', 'Destroyed'].includes(resource.state)" >
+  <a :href="uriInfo" target="_blank">
+    <a-button style="margin-left: 5px" shape="circle" type="" :size="size" v-if="uriCreateOk">
       <AreaChartOutlined />
     </a-button>
   </a>
 </template>
 <script>
+import { api } from '@/api'
 export default {
   name: 'WallLinkUrl',
   props: {
@@ -33,33 +31,50 @@ export default {
       type: Object,
       required: true
     },
+    scope: {
+      type: String,
+      default: 'vm'
+    },
     size: {
       type: String,
       default: 'small'
     }
   },
+  data () {
+    return {
+      uriCreateOk: false,
+      uriInfo: ''
+    }
+  },
+  created () {
+    this.urlAction()
+  },
   methods: {
-    urlAction (storeGetters, resourceId) {
-      var uri = ''
-      const host = storeGetters.features.host
-      const wallPortalProtocol = storeGetters.features.wallportalprotocol
-      const wallPortalDomain = storeGetters.features.wallportaldomain
-      const wallPortalPort = storeGetters.features.wallportalport
-      if (wallPortalProtocol === null || wallPortalProtocol === '') {
-        uri += 'http://'
-      } else {
-        uri += wallPortalProtocol + '://'
-      }
-      if (wallPortalDomain === null || wallPortalDomain === '') {
-        uri += host
-      } else {
-        uri += wallPortalDomain
-      }
-      if (typeof wallPortalPort !== 'undefined') {
-        uri += ':' + wallPortalPort
-      }
-      uri += storeGetters.features.wallportalvmuri + '?kiosk&orgId=2&var-vm_uuid=' + resourceId
-      return uri
+    urlAction () {
+      api('listConfigurations', { keyword: 'monitoring.wall.portal' }).then(json => {
+        var items = json.listconfigurationsresponse.configuration
+        var wallPortalProtocol = items.filter(x => x.name === 'monitoring.wall.portal.protocol')[0]?.value
+        const wallPortalPort = items.filter(x => x.name === 'monitoring.wall.portal.port')[0]?.value
+        var wallPortalDomain = items.filter(x => x.name === 'monitoring.wall.portal.domain')[0]?.value
+        if (wallPortalDomain === null || wallPortalDomain === '') {
+          wallPortalDomain = this.$store.getters.features.host
+        }
+        var uri = ''
+        uri += wallPortalProtocol + '://' + wallPortalDomain + ':' + wallPortalPort
+        if (this.scope === 'vm') {
+          const vmUriPath = items.filter(x => x.name === 'monitoring.wall.portal.vm.uri')[0]?.value
+          this.uriInfo = uri + vmUriPath + '&var-vm_uuid=' + this.resource.id
+          this.uriCreateOk = true
+        } else if (this.scope === 'host') {
+          const hostUriPath = items.filter(x => x.name === 'monitoring.wall.portal.host.uri')[0]?.value
+          this.uriInfo = uri + hostUriPath + '&var-host=' + this.resource.ipaddress
+          this.uriCreateOk = true
+        } else if (this.scope === 'cluster') {
+          const clusterUriPath = items.filter(x => x.name === 'monitoring.wall.portal.cluster.uri')[0]?.value
+          this.uriInfo = uri + clusterUriPath
+          this.uriCreateOk = true
+        }
+      })
     }
   }
 }

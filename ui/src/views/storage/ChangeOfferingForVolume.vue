@@ -81,7 +81,7 @@
           :placeholder="this.$t('label.maxiops')"/>
       </a-form-item>
     </span>
-    <a-form-item name="autoMigrate" ref="autoMigrate" :label="$t('label.automigrate.volume')">
+    <a-form-item v-if="!this.resource.kvdoenable" name="autoMigrate" ref="autoMigrate" :label="$t('label.automigrate.volume')">
       <template #label>
         <tooltip-label :title="$t('label.automigrate.volume')" :tooltip="apiParams.automigrate.description"/>
       </template>
@@ -90,7 +90,7 @@
         :checked="autoMigrate"
         @change="val => { autoMigrate = val }"/>
     </a-form-item>
-    <a-form-item name="shrinkOk" ref="shrinkOk" :label="$t('label.shrinkok')">
+    <a-form-item v-if="!this.resource.kvdoenable" name="shrinkOk" ref="shrinkOk" :label="$t('label.shrinkok')">
       <a-switch
         v-model:checked="form.shrinkOk"
         :checked="shrinkOk"
@@ -180,8 +180,15 @@ export default {
         volumeid: this.resource.id,
         listall: true
       }).then(response => {
-        this.diskOfferings = response.listdiskofferingsresponse.diskoffering
-        if (this.diskOfferings) {
+        var ret = response.listdiskofferingsresponse.diskoffering
+        if (ret && Array.isArray(ret)) {
+          ret.forEach((item) => {
+            if (item.kvdoenable === this.resource.kvdoenable) {
+              this.diskOfferings.push(item)
+            }
+          })
+        }
+        if (this.diskOfferings.length > 0) {
           this.selectedDiskOfferingId = this.diskOfferings[0].id
           this.customDiskOffering = this.diskOfferings[0].iscustomized || false
           this.isCustomizedDiskIOps = this.diskOfferings[0]?.iscustomizediops || false

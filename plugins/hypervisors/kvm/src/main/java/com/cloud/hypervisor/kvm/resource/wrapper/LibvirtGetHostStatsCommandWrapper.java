@@ -27,12 +27,12 @@ import com.cloud.hypervisor.kvm.resource.LibvirtComputingResource;
 import com.cloud.resource.CommandWrapper;
 import com.cloud.resource.ResourceWrapper;
 import com.cloud.utils.Pair;
+
 import org.apache.cloudstack.utils.linux.CPUStat;
 import org.apache.cloudstack.utils.linux.MemStat;
 
 @ResourceWrapper(handles =  GetHostStatsCommand.class)
 public final class LibvirtGetHostStatsCommandWrapper extends CommandWrapper<GetHostStatsCommand, Answer, LibvirtComputingResource> {
-
 
     @Override
     public Answer execute(final GetHostStatsCommand command, final LibvirtComputingResource libvirtComputingResource) {
@@ -41,7 +41,6 @@ public final class LibvirtGetHostStatsCommandWrapper extends CommandWrapper<GetH
 
         final double cpuUtil = cpuStat.getCpuUsedPercent();
         final double loadAvg = cpuStat.getCpuLoadAverage();
-
         final Pair<Double, Double> nicStats = libvirtComputingResource.getNicStats(libvirtComputingResource.getPublicBridgeName());
 
         final HostStatsEntry hostStats = new HostStatsEntry(command.getHostId(), cpuUtil, nicStats.first() / 1024, nicStats.second() / 1024, "host", memStat.getTotal() / 1024, memStat.getAvailable() / 1024, 0, loadAvg);

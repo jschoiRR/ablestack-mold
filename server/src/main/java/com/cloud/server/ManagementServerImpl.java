@@ -1,3 +1,5 @@
+
+
 // Licensed to the Apache Software Foundation (ASF) under one
 // or more contributor license agreements.  See the NOTICE file
 // distributed with this work for additional information
@@ -16,213 +18,14 @@
 // under the License.
 package com.cloud.server;
 
-import com.cloud.agent.AgentManager;
-import com.cloud.agent.api.Answer;
-import com.cloud.agent.api.CheckGuestOsMappingAnswer;
-import com.cloud.agent.api.CheckGuestOsMappingCommand;
-import com.cloud.agent.api.Command;
-import com.cloud.agent.api.GetHypervisorGuestOsNamesAnswer;
-import com.cloud.agent.api.GetHypervisorGuestOsNamesCommand;
-import com.cloud.agent.api.GetVncPortAnswer;
-import com.cloud.agent.api.GetVncPortCommand;
-import com.cloud.agent.api.ListHostDeviceAnswer;
-import com.cloud.agent.api.ListHostDeviceCommand;
-import com.cloud.agent.api.PatchSystemVmAnswer;
-import com.cloud.agent.api.PatchSystemVmCommand;
-import com.cloud.agent.api.proxy.AllowConsoleAccessCommand;
-import com.cloud.agent.api.routing.NetworkElementCommand;
-import com.cloud.agent.manager.Commands;
-import com.cloud.agent.manager.allocator.HostAllocator;
-import com.cloud.alert.Alert;
-import com.cloud.alert.AlertManager;
-import com.cloud.alert.AlertVO;
-import com.cloud.alert.dao.AlertDao;
-import com.cloud.api.ApiDBUtils;
-import com.cloud.api.query.dao.StoragePoolJoinDao;
-import com.cloud.api.query.vo.StoragePoolJoinVO;
-import com.cloud.capacity.Capacity;
-import com.cloud.capacity.CapacityVO;
-import com.cloud.capacity.dao.CapacityDao;
-import com.cloud.capacity.dao.CapacityDaoImpl.SummedCapacity;
-import com.cloud.cluster.ClusterManager;
-import com.cloud.cluster.ManagementServerHostVO;
-import com.cloud.cluster.dao.ManagementServerHostDao;
-import com.cloud.configuration.Config;
-import com.cloud.configuration.ConfigurationManagerImpl;
-import com.cloud.consoleproxy.ConsoleProxyManagementState;
-import com.cloud.consoleproxy.ConsoleProxyManager;
-import com.cloud.dc.AccountVlanMapVO;
-import com.cloud.dc.ClusterVO;
-import com.cloud.dc.DataCenterVO;
-import com.cloud.dc.DomainVlanMapVO;
-import com.cloud.dc.HostPodVO;
-import com.cloud.dc.Pod;
-import com.cloud.dc.PodVlanMapVO;
-import com.cloud.dc.Vlan;
-import com.cloud.dc.Vlan.VlanType;
-import com.cloud.dc.VlanVO;
-import com.cloud.dc.dao.AccountVlanMapDao;
-import com.cloud.dc.dao.ClusterDao;
-import com.cloud.dc.dao.DataCenterDao;
-import com.cloud.dc.dao.DomainVlanMapDao;
-import com.cloud.dc.dao.HostPodDao;
-import com.cloud.dc.dao.PodVlanMapDao;
-import com.cloud.dc.dao.VlanDao;
-import com.cloud.deploy.DataCenterDeployment;
-import com.cloud.deploy.DeploymentPlanner;
-import com.cloud.deploy.DeploymentPlanner.ExcludeList;
-import com.cloud.deploy.DeploymentPlanningManager;
-import com.cloud.domain.DomainVO;
-import com.cloud.domain.dao.DomainDao;
-import com.cloud.event.ActionEvent;
-import com.cloud.event.ActionEventUtils;
-import com.cloud.event.EventTypes;
-import com.cloud.event.EventVO;
-import com.cloud.event.dao.EventDao;
-import com.cloud.exception.AgentUnavailableException;
-import com.cloud.exception.ConcurrentOperationException;
-import com.cloud.exception.InsufficientAddressCapacityException;
-import com.cloud.exception.InvalidParameterValueException;
-import com.cloud.exception.ManagementServerException;
-import com.cloud.exception.OperationTimedoutException;
-import com.cloud.exception.PermissionDeniedException;
-import com.cloud.exception.ResourceUnavailableException;
-import com.cloud.exception.VirtualMachineMigrationException;
-import com.cloud.gpu.GPU;
-import com.cloud.ha.HighAvailabilityManager;
-import com.cloud.host.DetailVO;
-import com.cloud.host.Host;
-import com.cloud.host.Host.Type;
-import com.cloud.host.HostTagVO;
-import com.cloud.host.HostVO;
-import com.cloud.host.dao.HostDao;
-import com.cloud.host.dao.HostDetailsDao;
-import com.cloud.host.dao.HostTagsDao;
-import com.cloud.hypervisor.Hypervisor.HypervisorType;
-import com.cloud.hypervisor.HypervisorCapabilities;
-import com.cloud.hypervisor.HypervisorCapabilitiesVO;
-import com.cloud.hypervisor.HypervisorGuru;
-import com.cloud.hypervisor.dao.HypervisorCapabilitiesDao;
-import com.cloud.hypervisor.kvm.dpdk.DpdkHelper;
-import com.cloud.info.ConsoleProxyInfo;
-import com.cloud.network.IpAddress;
-import com.cloud.network.IpAddressManager;
-import com.cloud.network.IpAddressManagerImpl;
-import com.cloud.network.Network;
-import com.cloud.network.NetworkModel;
-import com.cloud.network.Networks;
-import com.cloud.network.dao.IPAddressDao;
-import com.cloud.network.dao.IPAddressVO;
-import com.cloud.network.dao.LoadBalancerDao;
-import com.cloud.network.dao.LoadBalancerVO;
-import com.cloud.network.dao.NetworkAccountDao;
-import com.cloud.network.dao.NetworkAccountVO;
-import com.cloud.network.dao.NetworkDao;
-import com.cloud.network.dao.NetworkDomainDao;
-import com.cloud.network.dao.NetworkDomainVO;
-import com.cloud.network.dao.NetworkVO;
-import com.cloud.network.dao.PublicIpQuarantineDao;
-import com.cloud.network.vpc.dao.VpcDao;
-import com.cloud.org.Cluster;
-import com.cloud.org.Grouping.AllocationState;
-import com.cloud.projects.Project;
-import com.cloud.projects.Project.ListProjectResourcesCriteria;
-import com.cloud.projects.ProjectManager;
-import com.cloud.resource.ResourceManager;
-import com.cloud.server.ResourceTag.ResourceObjectType;
-import com.cloud.service.ServiceOfferingVO;
-import com.cloud.service.dao.ServiceOfferingDao;
-import com.cloud.service.dao.ServiceOfferingDetailsDao;
-import com.cloud.storage.DiskOfferingVO;
-import com.cloud.storage.GuestOS;
-import com.cloud.storage.GuestOSCategoryVO;
-import com.cloud.storage.GuestOSHypervisor;
-import com.cloud.storage.GuestOSHypervisorVO;
-import com.cloud.storage.GuestOSVO;
-import com.cloud.storage.GuestOsCategory;
-import com.cloud.storage.ScopeType;
-import com.cloud.storage.Storage;
-import com.cloud.storage.StorageManager;
-import com.cloud.storage.StoragePool;
-import com.cloud.storage.StoragePoolStatus;
-import com.cloud.storage.VMTemplateVO;
-import com.cloud.storage.Volume;
-import com.cloud.storage.VolumeApiServiceImpl;
-import com.cloud.storage.VolumeVO;
-import com.cloud.storage.dao.DiskOfferingDao;
-import com.cloud.storage.dao.GuestOSCategoryDao;
-import com.cloud.storage.dao.GuestOSDao;
-import com.cloud.storage.dao.GuestOSHypervisorDao;
-import com.cloud.storage.dao.StoragePoolTagsDao;
-import com.cloud.storage.dao.VMTemplateDao;
-import com.cloud.storage.dao.VolumeDao;
-import com.cloud.storage.secondary.SecondaryStorageVmManager;
-import com.cloud.tags.ResourceTagVO;
-import com.cloud.tags.dao.ResourceTagDao;
-import com.cloud.template.TemplateManager;
-import com.cloud.user.Account;
-import com.cloud.user.AccountManager;
-import com.cloud.user.AccountService;
-import com.cloud.user.ResourceLimitService;
-import com.cloud.user.SSHKeyPair;
-import com.cloud.user.SSHKeyPairVO;
-import com.cloud.user.User;
-import com.cloud.user.UserData;
-import com.cloud.user.UserDataVO;
-import com.cloud.user.UserVO;
-import com.cloud.user.dao.AccountDao;
-import com.cloud.user.dao.SSHKeyPairDao;
-import com.cloud.user.dao.UserDao;
-import com.cloud.user.dao.UserDataDao;
-import com.cloud.utils.NumbersUtil;
-import com.cloud.utils.Pair;
-import com.cloud.utils.PasswordGenerator;
-import com.cloud.utils.Ternary;
-import com.cloud.utils.component.ComponentLifecycle;
-import com.cloud.utils.component.ManagerBase;
-import com.cloud.utils.concurrency.NamedThreadFactory;
-import com.cloud.utils.crypt.DBEncryptionUtil;
-import com.cloud.utils.db.DB;
-import com.cloud.utils.db.Filter;
-import com.cloud.utils.db.GlobalLock;
-import com.cloud.utils.db.JoinBuilder;
-import com.cloud.utils.db.JoinBuilder.JoinType;
-import com.cloud.utils.db.SearchBuilder;
-import com.cloud.utils.db.SearchCriteria;
-import com.cloud.utils.db.Transaction;
-import com.cloud.utils.db.TransactionCallbackNoReturn;
-import com.cloud.utils.db.TransactionStatus;
-import com.cloud.utils.db.UUIDManager;
-import com.cloud.utils.exception.CloudRuntimeException;
-import com.cloud.utils.fsm.StateMachine2;
-import com.cloud.utils.net.MacAddress;
-import com.cloud.utils.net.NetUtils;
-import com.cloud.utils.ssh.SSHKeysHelper;
-import com.cloud.vm.ConsoleProxyVO;
-import com.cloud.vm.DiskProfile;
-import com.cloud.vm.DomainRouterVO;
-import com.cloud.vm.InstanceGroupVO;
-import com.cloud.vm.NicVO;
-import com.cloud.vm.SecondaryStorageVmVO;
-import com.cloud.vm.UserVmDetailVO;
-import com.cloud.vm.UserVmManager;
-import com.cloud.vm.UserVmVO;
-import com.cloud.vm.VMInstanceVO;
-import com.cloud.vm.VirtualMachine;
-import com.cloud.vm.VirtualMachine.State;
-import com.cloud.vm.VirtualMachineManager;
-import com.cloud.vm.VirtualMachineProfile;
-import com.cloud.vm.VirtualMachineProfileImpl;
-import com.cloud.vm.dao.ConsoleProxyDao;
-import com.cloud.vm.dao.DomainRouterDao;
-import com.cloud.vm.dao.InstanceGroupDao;
-import com.cloud.vm.dao.NicDao;
-import com.cloud.vm.dao.SecondaryStorageVmDao;
-import com.cloud.vm.dao.UserVmDao;
-import com.cloud.vm.dao.UserVmDetailsDao;
-import com.cloud.vm.dao.VMInstanceDao;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.lang.reflect.Field;
+import java.net.SocketTimeoutException;
+import java.net.URL;
+import java.security.SecureRandom;
 import java.security.cert.CertificateException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -246,9 +49,9 @@ import java.util.stream.Collectors;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import javax.inject.Inject;
-import javax.naming.ConfigurationException;
-
-import com.cloud.utils.security.CertificateHelper;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
 import org.apache.cloudstack.acl.ControlledEntity;
 import org.apache.cloudstack.acl.SecurityChecker;
 import org.apache.cloudstack.affinity.AffinityGroupProcessor;
@@ -267,16 +70,10 @@ import org.apache.cloudstack.api.command.admin.account.UpdateAccountCmd;
 import org.apache.cloudstack.api.command.admin.address.AcquirePodIpCmdByAdmin;
 import org.apache.cloudstack.api.command.admin.address.AssociateIPAddrCmdByAdmin;
 import org.apache.cloudstack.api.command.admin.address.ListPublicIpAddressesCmdByAdmin;
-import org.apache.cloudstack.api.command.admin.address.ReleasePodIpCmdByAdmin;
 import org.apache.cloudstack.api.command.admin.affinitygroup.UpdateVMAffinityGroupCmdByAdmin;
 import org.apache.cloudstack.api.command.admin.alert.GenerateAlertCmd;
 import org.apache.cloudstack.api.command.admin.autoscale.CreateCounterCmd;
 import org.apache.cloudstack.api.command.admin.autoscale.DeleteCounterCmd;
-import org.apache.cloudstack.api.command.admin.bgp.CreateASNRangeCmd;
-import org.apache.cloudstack.api.command.admin.bgp.DeleteASNRangeCmd;
-import org.apache.cloudstack.api.command.admin.bgp.ListASNRangesCmd;
-import org.apache.cloudstack.api.command.user.bgp.ListASNumbersCmd;
-import org.apache.cloudstack.api.command.admin.bgp.ReleaseASNumberCmd;
 import org.apache.cloudstack.api.command.admin.cluster.AddClusterCmd;
 import org.apache.cloudstack.api.command.admin.cluster.DeleteClusterCmd;
 import org.apache.cloudstack.api.command.admin.cluster.ListClustersCmd;
@@ -291,7 +88,6 @@ import org.apache.cloudstack.api.command.admin.config.UpdateHypervisorCapabiliti
 import org.apache.cloudstack.api.command.admin.direct.download.ListTemplateDirectDownloadCertificatesCmd;
 import org.apache.cloudstack.api.command.admin.direct.download.ProvisionTemplateDirectDownloadCertificateCmd;
 import org.apache.cloudstack.api.command.admin.direct.download.RevokeTemplateDirectDownloadCertificateCmd;
-import org.apache.cloudstack.api.command.admin.direct.download.UploadTemplateDirectDownloadCertificateCmd;
 import org.apache.cloudstack.api.command.admin.domain.CreateDomainCmd;
 import org.apache.cloudstack.api.command.admin.domain.DeleteDomainCmd;
 import org.apache.cloudstack.api.command.admin.domain.ListDomainChildrenCmd;
@@ -337,13 +133,11 @@ import org.apache.cloudstack.api.command.admin.loadbalancer.ListLoadBalancerRule
 import org.apache.cloudstack.api.command.admin.management.ListMgmtsCmd;
 import org.apache.cloudstack.api.command.admin.network.AddNetworkDeviceCmd;
 import org.apache.cloudstack.api.command.admin.network.AddNetworkServiceProviderCmd;
-import org.apache.cloudstack.api.command.admin.network.CreateManagementNetworkIpRangeCmd;
 import org.apache.cloudstack.api.command.admin.network.CreateNetworkCmdByAdmin;
 import org.apache.cloudstack.api.command.admin.network.CreateNetworkOfferingCmd;
 import org.apache.cloudstack.api.command.admin.network.CreatePhysicalNetworkCmd;
 import org.apache.cloudstack.api.command.admin.network.CreateStorageNetworkIpRangeCmd;
 import org.apache.cloudstack.api.command.admin.network.DedicateGuestVlanRangeCmd;
-import org.apache.cloudstack.api.command.admin.network.DeleteManagementNetworkIpRangeCmd;
 import org.apache.cloudstack.api.command.admin.network.DeleteNetworkDeviceCmd;
 import org.apache.cloudstack.api.command.admin.network.DeleteNetworkOfferingCmd;
 import org.apache.cloudstack.api.command.admin.network.DeleteNetworkServiceProviderCmd;
@@ -354,14 +148,12 @@ import org.apache.cloudstack.api.command.admin.network.ListGuestVlansCmd;
 import org.apache.cloudstack.api.command.admin.network.ListNetworkDeviceCmd;
 import org.apache.cloudstack.api.command.admin.network.ListNetworkIsolationMethodsCmd;
 import org.apache.cloudstack.api.command.admin.network.ListNetworkServiceProvidersCmd;
-import org.apache.cloudstack.api.command.admin.network.ListNetworksCmdByAdmin;
 import org.apache.cloudstack.api.command.admin.network.ListPhysicalNetworksCmd;
 import org.apache.cloudstack.api.command.admin.network.ListStorageNetworkIpRangeCmd;
 import org.apache.cloudstack.api.command.admin.network.ListSupportedNetworkServicesCmd;
 import org.apache.cloudstack.api.command.admin.network.MigrateNetworkCmd;
 import org.apache.cloudstack.api.command.admin.network.MigrateVPCCmd;
 import org.apache.cloudstack.api.command.admin.network.ReleaseDedicatedGuestVlanRangeCmd;
-import org.apache.cloudstack.api.command.admin.network.UpdateNetworkCmdByAdmin;
 import org.apache.cloudstack.api.command.admin.network.UpdateNetworkOfferingCmd;
 import org.apache.cloudstack.api.command.admin.network.UpdateNetworkServiceProviderCmd;
 import org.apache.cloudstack.api.command.admin.network.UpdatePhysicalNetworkCmd;
@@ -383,6 +175,7 @@ import org.apache.cloudstack.api.command.admin.outofbandmanagement.EnableOutOfBa
 import org.apache.cloudstack.api.command.admin.outofbandmanagement.EnableOutOfBandManagementForHostCmd;
 import org.apache.cloudstack.api.command.admin.outofbandmanagement.EnableOutOfBandManagementForZoneCmd;
 import org.apache.cloudstack.api.command.admin.outofbandmanagement.IssueOutOfBandManagementPowerActionCmd;
+import org.apache.cloudstack.api.command.admin.outofbandmanagement.LicenseCheckCmd;
 import org.apache.cloudstack.api.command.admin.outofbandmanagement.ListHostDevicesCmd;
 import org.apache.cloudstack.api.command.admin.pod.CreatePodCmd;
 import org.apache.cloudstack.api.command.admin.pod.DeletePodCmd;
@@ -531,12 +324,10 @@ import org.apache.cloudstack.api.command.admin.volume.ResizeVolumeCmdByAdmin;
 import org.apache.cloudstack.api.command.admin.volume.UpdateVolumeCmdByAdmin;
 import org.apache.cloudstack.api.command.admin.volume.UploadVolumeCmdByAdmin;
 import org.apache.cloudstack.api.command.admin.vpc.CreatePrivateGatewayByAdminCmd;
-import org.apache.cloudstack.api.command.admin.vpc.CreateVPCCmdByAdmin;
 import org.apache.cloudstack.api.command.admin.vpc.CreateVPCOfferingCmd;
 import org.apache.cloudstack.api.command.admin.vpc.DeletePrivateGatewayCmd;
 import org.apache.cloudstack.api.command.admin.vpc.DeleteVPCOfferingCmd;
 import org.apache.cloudstack.api.command.admin.vpc.ListPrivateGatewaysCmdByAdminCmd;
-import org.apache.cloudstack.api.command.admin.vpc.ListVPCsCmdByAdmin;
 import org.apache.cloudstack.api.command.admin.vpc.UpdateVPCCmdByAdmin;
 import org.apache.cloudstack.api.command.admin.vpc.UpdateVPCOfferingCmd;
 import org.apache.cloudstack.api.command.admin.zone.CreateZoneCmd;
@@ -558,7 +349,6 @@ import org.apache.cloudstack.api.command.user.address.ReleaseIPAddrCmd;
 import org.apache.cloudstack.api.command.user.address.RemoveQuarantinedIpCmd;
 import org.apache.cloudstack.api.command.user.address.ReserveIPAddrCmd;
 import org.apache.cloudstack.api.command.user.address.UpdateIPAddrCmd;
-import org.apache.cloudstack.api.command.user.address.UpdateQuarantinedIpCmd;
 import org.apache.cloudstack.api.command.user.affinitygroup.CreateAffinityGroupCmd;
 import org.apache.cloudstack.api.command.user.affinitygroup.DeleteAffinityGroupCmd;
 import org.apache.cloudstack.api.command.user.affinitygroup.ListAffinityGroupTypesCmd;
@@ -787,6 +577,7 @@ import org.apache.cloudstack.api.command.user.volume.MigrateVolumeCmd;
 import org.apache.cloudstack.api.command.user.volume.RecoverVolumeCmd;
 import org.apache.cloudstack.api.command.user.volume.RemoveResourceDetailCmd;
 import org.apache.cloudstack.api.command.user.volume.ResizeVolumeCmd;
+import org.apache.cloudstack.api.command.user.volume.UpdateCompressDedupCmd;
 import org.apache.cloudstack.api.command.user.volume.UpdateVolumeCmd;
 import org.apache.cloudstack.api.command.user.volume.UploadVolumeCmd;
 import org.apache.cloudstack.api.command.user.vpc.CreatePrivateGatewayCmd;
@@ -821,6 +612,7 @@ import org.apache.cloudstack.api.command.user.vpn.UpdateVpnConnectionCmd;
 import org.apache.cloudstack.api.command.user.vpn.UpdateVpnCustomerGatewayCmd;
 import org.apache.cloudstack.api.command.user.vpn.UpdateVpnGatewayCmd;
 import org.apache.cloudstack.api.command.user.zone.ListZonesCmd;
+import org.apache.cloudstack.api.response.LicenseCheckerResponse;
 import org.apache.cloudstack.api.response.ListHostDevicesResponse;
 import org.apache.cloudstack.api.response.ListResponse;
 import org.apache.cloudstack.auth.UserAuthenticator;
@@ -844,6 +636,10 @@ import org.apache.cloudstack.framework.config.impl.ConfigurationGroupVO;
 import org.apache.cloudstack.framework.config.impl.ConfigurationSubGroupVO;
 import org.apache.cloudstack.framework.config.impl.ConfigurationVO;
 import org.apache.cloudstack.framework.security.keystore.KeystoreManager;
+import org.apache.cloudstack.ha.HAConfigManager;
+import org.apache.cloudstack.ha.HAConfigVO;
+import org.apache.cloudstack.ha.HAResource;
+import org.apache.cloudstack.ha.dao.HAConfigDao;
 import org.apache.cloudstack.managed.context.ManagedContextRunnable;
 import org.apache.cloudstack.query.QueryService;
 import org.apache.cloudstack.resourcedetail.dao.GuestOsDetailsDao;
@@ -858,12 +654,219 @@ import org.apache.cloudstack.storage.datastore.db.VolumeDataStoreVO;
 import org.apache.cloudstack.userdata.UserDataManager;
 import org.apache.cloudstack.utils.CloudStackVersion;
 import org.apache.cloudstack.utils.identity.ManagementServerNode;
+import org.apache.cloudstack.utils.security.SSLUtils;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
-
-
+import com.cloud.agent.AgentManager;
+import com.cloud.agent.api.Answer;
+import com.cloud.agent.api.CheckGuestOsMappingAnswer;
+import com.cloud.agent.api.CheckGuestOsMappingCommand;
+import com.cloud.agent.api.Command;
+import com.cloud.agent.api.GetHypervisorGuestOsNamesAnswer;
+import com.cloud.agent.api.GetHypervisorGuestOsNamesCommand;
+import com.cloud.agent.api.GetVncPortAnswer;
+import com.cloud.agent.api.GetVncPortCommand;
+import com.cloud.agent.api.ListHostDeviceAnswer;
+import com.cloud.agent.api.ListHostDeviceCommand;
+import com.cloud.agent.api.PatchSystemVmAnswer;
+import com.cloud.agent.api.PatchSystemVmCommand;
+import com.cloud.agent.api.proxy.AllowConsoleAccessCommand;
+import com.cloud.agent.api.routing.NetworkElementCommand;
+import com.cloud.agent.manager.Commands;
+import com.cloud.agent.manager.allocator.HostAllocator;
+import com.cloud.alert.Alert;
+import com.cloud.alert.AlertManager;
+import com.cloud.alert.AlertVO;
+import com.cloud.alert.dao.AlertDao;
+import com.cloud.api.ApiDBUtils;
+import com.cloud.api.query.dao.StoragePoolJoinDao;
+import com.cloud.api.query.vo.StoragePoolJoinVO;
+import com.cloud.capacity.Capacity;
+import com.cloud.capacity.CapacityVO;
+import com.cloud.capacity.dao.CapacityDao;
+import com.cloud.capacity.dao.CapacityDaoImpl.SummedCapacity;
+import com.cloud.cluster.ClusterManager;
+import com.cloud.configuration.Config;
+import com.cloud.configuration.ConfigurationManagerImpl;
+import com.cloud.consoleproxy.ConsoleProxyManagementState;
+import com.cloud.consoleproxy.ConsoleProxyManager;
+import com.cloud.dc.AccountVlanMapVO;
+import com.cloud.dc.ClusterVO;
+import com.cloud.dc.DataCenterVO;
+import com.cloud.dc.DomainVlanMapVO;
+import com.cloud.dc.HostPodVO;
+import com.cloud.dc.Pod;
+import com.cloud.dc.PodVlanMapVO;
+import com.cloud.dc.Vlan;
+import com.cloud.dc.Vlan.VlanType;
+import com.cloud.dc.VlanVO;
+import com.cloud.dc.dao.AccountVlanMapDao;
+import com.cloud.dc.dao.ClusterDao;
+import com.cloud.dc.dao.DataCenterDao;
+import com.cloud.dc.dao.DomainVlanMapDao;
+import com.cloud.dc.dao.HostPodDao;
+import com.cloud.dc.dao.PodVlanMapDao;
+import com.cloud.dc.dao.VlanDao;
+import com.cloud.deploy.DataCenterDeployment;
+import com.cloud.deploy.DeploymentPlanner;
+import com.cloud.deploy.DeploymentPlanner.ExcludeList;
+import com.cloud.deploy.DeploymentPlanningManager;
+import com.cloud.domain.DomainVO;
+import com.cloud.domain.dao.DomainDao;
+import com.cloud.event.ActionEvent;
+import com.cloud.event.ActionEventUtils;
+import com.cloud.event.EventTypes;
+import com.cloud.event.EventVO;
+import com.cloud.event.dao.EventDao;
+import com.cloud.exception.AgentUnavailableException;
+import com.cloud.exception.ConcurrentOperationException;
+import com.cloud.exception.InsufficientAddressCapacityException;
+import com.cloud.exception.InvalidParameterValueException;
+import com.cloud.exception.ManagementServerException;
+import com.cloud.exception.OperationTimedoutException;
+import com.cloud.exception.PermissionDeniedException;
+import com.cloud.exception.ResourceUnavailableException;
+import com.cloud.exception.VirtualMachineMigrationException;
+import com.cloud.gpu.GPU;
+import com.cloud.ha.HighAvailabilityManager;
+import com.cloud.host.DetailVO;
+import com.cloud.host.Host;
+import com.cloud.host.Host.Type;
+import com.cloud.host.HostTagVO;
+import com.cloud.host.HostVO;
+import com.cloud.host.dao.HostDao;
+import com.cloud.host.dao.HostDetailsDao;
+import com.cloud.host.dao.HostTagsDao;
+import com.cloud.hypervisor.Hypervisor.HypervisorType;
+import com.cloud.hypervisor.HypervisorCapabilities;
+import com.cloud.hypervisor.HypervisorCapabilitiesVO;
+import com.cloud.hypervisor.HypervisorGuru;
+import com.cloud.hypervisor.dao.HypervisorCapabilitiesDao;
+import com.cloud.hypervisor.kvm.dpdk.DpdkHelper;
+import com.cloud.info.ConsoleProxyInfo;
+import com.cloud.network.IpAddress;
+import com.cloud.network.IpAddressManager;
+import com.cloud.network.IpAddressManagerImpl;
+import com.cloud.network.Network;
+import com.cloud.network.NetworkModel;
+import com.cloud.network.Networks;
+import com.cloud.network.dao.IPAddressDao;
+import com.cloud.network.dao.IPAddressVO;
+import com.cloud.network.dao.LoadBalancerDao;
+import com.cloud.network.dao.LoadBalancerVO;
+import com.cloud.network.dao.NetworkAccountDao;
+import com.cloud.network.dao.NetworkAccountVO;
+import com.cloud.network.dao.NetworkDao;
+import com.cloud.network.dao.NetworkDomainDao;
+import com.cloud.network.dao.NetworkDomainVO;
+import com.cloud.network.dao.NetworkVO;
+import com.cloud.network.dao.PublicIpQuarantineDao;
+import com.cloud.network.vpc.dao.VpcDao;
+import com.cloud.org.Cluster;
+import com.cloud.org.Grouping.AllocationState;
+import com.cloud.projects.Project;
+import com.cloud.projects.Project.ListProjectResourcesCriteria;
+import com.cloud.projects.ProjectManager;
+import com.cloud.resource.ResourceManager;
+import com.cloud.server.ResourceTag.ResourceObjectType;
+import com.cloud.service.ServiceOfferingVO;
+import com.cloud.service.dao.ServiceOfferingDao;
+import com.cloud.service.dao.ServiceOfferingDetailsDao;
+import com.cloud.storage.DiskOfferingVO;
+import com.cloud.storage.GuestOS;
+import com.cloud.storage.GuestOSCategoryVO;
+import com.cloud.storage.GuestOSHypervisor;
+import com.cloud.storage.GuestOSHypervisorVO;
+import com.cloud.storage.GuestOSVO;
+import com.cloud.storage.GuestOsCategory;
+import com.cloud.storage.ScopeType;
+import com.cloud.storage.Storage;
+import com.cloud.storage.StorageManager;
+import com.cloud.storage.StoragePool;
+import com.cloud.storage.StoragePoolStatus;
+import com.cloud.storage.VMTemplateVO;
+import com.cloud.storage.Volume;
+import com.cloud.storage.VolumeApiServiceImpl;
+import com.cloud.storage.VolumeVO;
+import com.cloud.storage.dao.DiskOfferingDao;
+import com.cloud.storage.dao.GuestOSCategoryDao;
+import com.cloud.storage.dao.GuestOSDao;
+import com.cloud.storage.dao.GuestOSHypervisorDao;
+import com.cloud.storage.dao.StoragePoolTagsDao;
+import com.cloud.storage.dao.VMTemplateDao;
+import com.cloud.storage.dao.VolumeDao;
+import com.cloud.storage.secondary.SecondaryStorageVmManager;
+import com.cloud.tags.ResourceTagVO;
+import com.cloud.tags.dao.ResourceTagDao;
+import com.cloud.template.TemplateManager;
+import com.cloud.user.Account;
+import com.cloud.user.AccountManager;
+import com.cloud.user.AccountService;
+import com.cloud.user.ResourceLimitService;
+import com.cloud.user.SSHKeyPair;
+import com.cloud.user.SSHKeyPairVO;
+import com.cloud.user.User;
+import com.cloud.user.UserData;
+import com.cloud.user.UserDataVO;
+import com.cloud.user.UserVO;
+import com.cloud.user.dao.AccountDao;
+import com.cloud.user.dao.SSHKeyPairDao;
+import com.cloud.user.dao.UserDao;
+import com.cloud.user.dao.UserDataDao;
+import com.cloud.utils.NumbersUtil;
+import com.cloud.utils.Pair;
+import com.cloud.utils.PasswordGenerator;
+import com.cloud.utils.Ternary;
+import com.cloud.utils.component.ComponentLifecycle;
+import com.cloud.utils.component.ManagerBase;
+import com.cloud.utils.concurrency.NamedThreadFactory;
+import com.cloud.utils.crypt.DBEncryptionUtil;
+import com.cloud.utils.db.DB;
+import com.cloud.utils.db.Filter;
+import com.cloud.utils.db.GlobalLock;
+import com.cloud.utils.db.JoinBuilder;
+import com.cloud.utils.db.JoinBuilder.JoinType;
+import com.cloud.utils.db.SearchBuilder;
+import com.cloud.utils.db.SearchCriteria;
+import com.cloud.utils.db.Transaction;
+import com.cloud.utils.db.TransactionCallbackNoReturn;
+import com.cloud.utils.db.TransactionStatus;
+import com.cloud.utils.db.UUIDManager;
+import com.cloud.utils.exception.CloudRuntimeException;
+import com.cloud.utils.fsm.StateMachine2;
+import com.cloud.utils.net.MacAddress;
+import com.cloud.utils.net.NetUtils;
+import com.cloud.utils.nio.TrustAllManager;
+import com.cloud.utils.security.CertificateHelper;
+import com.cloud.utils.ssh.SSHKeysHelper;
+import com.cloud.vm.ConsoleProxyVO;
+import com.cloud.vm.DiskProfile;
+import com.cloud.vm.DomainRouterVO;
+import com.cloud.vm.InstanceGroupVO;
+import com.cloud.vm.NicVO;
+import com.cloud.vm.SecondaryStorageVmVO;
+import com.cloud.vm.UserVmDetailVO;
+import com.cloud.vm.UserVmManager;
+import com.cloud.vm.UserVmVO;
+import com.cloud.vm.VMInstanceVO;
+import com.cloud.vm.VirtualMachine;
+import com.cloud.vm.VirtualMachine.State;
+import com.cloud.vm.VirtualMachineManager;
+import com.cloud.vm.VirtualMachineProfile;
+import com.cloud.vm.VirtualMachineProfileImpl;
+import com.cloud.vm.dao.ConsoleProxyDao;
+import com.cloud.vm.dao.DomainRouterDao;
+import com.cloud.vm.dao.InstanceGroupDao;
+import com.cloud.vm.dao.NicDao;
+import com.cloud.vm.dao.SecondaryStorageVmDao;
+import com.cloud.vm.dao.UserVmDao;
+import com.cloud.vm.dao.UserVmDetailsDao;
+import com.cloud.vm.dao.VMInstanceDao;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.JsonNode;
+import javax.naming.ConfigurationException;
 
 
 
@@ -873,6 +876,9 @@ public class ManagementServerImpl extends ManagerBase implements ManagementServe
     static final String FOR_SYSTEMVMS = "forsystemvms";
     static final ConfigKey<Integer> vmPasswordLength = new ConfigKey<>("Advanced", Integer.class, "vm.password.length", "6", "Specifies the length of a randomly generated password", false);
     static final ConfigKey<Integer> sshKeyLength = new ConfigKey<>("Advanced", Integer.class, "ssh.key.length", "2048", "Specifies custom SSH key length (bit)", true, ConfigKey.Scope.Global);
+    static final ConfigKey<Integer> LicenseCheckInterval = new ConfigKey<>("Advanced", Integer.class,
+            "license.check.interval", "1",
+            "License check interval (days)", true);
     static final ConfigKey<Boolean> humanReadableSizes = new ConfigKey<>("Advanced", Boolean.class, "display.human.readable.sizes", "true", "Enables outputting human readable byte sizes to logs and usage records.", false, ConfigKey.Scope.Global);
     public static final ConfigKey<String> customCsIdentifier = new ConfigKey<>("Advanced", String.class, "custom.cs.identifier", UUID.randomUUID().toString().split("-")[0].substring(4), "Custom identifier for the cloudstack installation", true, ConfigKey.Scope.Global);
     private static final VirtualMachine.Type []systemVmTypes = { VirtualMachine.Type.SecondaryStorageVm, VirtualMachine.Type.ConsoleProxy};
@@ -1032,8 +1038,6 @@ public class ManagementServerImpl extends ManagerBase implements ManagementServe
     @Inject
     UserDataManager userDataManager;
     @Inject
-    private ManagementServerHostDao _msHostDao;
-    @Inject
     StoragePoolTagsDao storagePoolTagsDao;
 
     @Inject
@@ -1047,9 +1051,16 @@ public class ManagementServerImpl extends ManagerBase implements ManagementServe
     @Inject
     ResourceLimitService resourceLimitService;
 
+    @Inject
+    private HAConfigManager haConfigManager;
+
+    @Inject
+    private HAConfigDao haConfigDao;
+
     private LockControllerListener _lockControllerListener;
     private final ScheduledExecutorService _eventExecutor = Executors.newScheduledThreadPool(1, new NamedThreadFactory("EventChecker"));
     private final ScheduledExecutorService _alertExecutor = Executors.newScheduledThreadPool(1, new NamedThreadFactory("AlertChecker"));
+    private final ScheduledExecutorService _licenseExecutor = Executors.newScheduledThreadPool(1, new NamedThreadFactory("LicenseCheck"));
     private static final int patchCommandTimeout = 600000;
 
     private Map<String, String> _configs;
@@ -1140,6 +1151,10 @@ public class ManagementServerImpl extends ManagerBase implements ManagementServe
             _alertExecutor.scheduleAtFixedRate(new AlertPurgeTask(), alertPurgeInterval, alertPurgeInterval, TimeUnit.SECONDS);
         }
 
+        if(LicenseCheckInterval.value() > 0) {
+            _licenseExecutor.scheduleAtFixedRate(new LicenseCheckTask(), 0, LicenseCheckInterval.value(), TimeUnit.DAYS);
+        }
+
         final String[] availableIds = TimeZone.getAvailableIDs();
         _availableIdsMap = new HashMap<>(availableIds.length);
         for (final String id : availableIds) {
@@ -1169,21 +1184,73 @@ public class ManagementServerImpl extends ManagerBase implements ManagementServe
         _clusterMgr.registerListener(_lockControllerListener);
 
         enableAdminUser("password");
+
+         // Initialize license check and agent control for all hosts
+
+
         return true;
     }
 
-    @Override
-    public boolean stop() {
-        logger.info("Shutdown CloudStack management server...");
-        ManagementServerHostVO msHost = _msHostDao.findByMsid(ManagementServerNode.getManagementServerId());
-        if (_msHostDao.increaseAlertCount(msHost.getId()) > 0) {
-            if (logger.isDebugEnabled()) {
-                logger.debug("Detected management server node " + msHost.getServiceIP() + " is down, send alert");
+    private class LicenseCheckTask extends ManagedContextRunnable {
+        @Override
+        protected void runInContext() {
+            try {
+                logger.info("Starting license check for all hosts...");
+                List<HostVO> hosts = _hostDao.listByType(Host.Type.Routing);
+
+                if (hosts != null && !hosts.isEmpty()) {
+                    for (HostVO host : hosts) {
+                        try {
+                            checkLicense(host);
+                        } catch (Exception e) {
+                            logger.error("Failed to check license for host: " + host.getId(), e);
+                        }
+                    }
+                }
+            } catch (Exception e) {
+                logger.error("Error in license check task", e);
             }
-            _alertMgr.sendAlert(AlertManager.AlertType.ALERT_TYPE_MANAGEMENT_NODE, 0, new Long(0), "Management server node " + msHost.getServiceIP() + " is down",
-                "");
         }
-        return true;
+    }
+
+    private void controlHostAgent(HostVO host, String action) {
+        HttpsURLConnection connection = null;
+        try {
+            String ipAddress = host.getPrivateIpAddress();
+            String glueEndpoint = "https://" + ipAddress + ":8080/api/v1/license/controlHostAgent/" + action;
+
+            // SSL 인증서 에러 우회 처리
+            final SSLContext sslContext = SSLUtils.getSSLContext();
+            sslContext.init(null, new TrustManager[]{new TrustAllManager()}, new SecureRandom());
+
+            URL url = new URL(glueEndpoint);
+            connection = (HttpsURLConnection) url.openConnection();
+            connection.setSSLSocketFactory(sslContext.getSocketFactory());
+            connection.setDoOutput(true);
+            connection.setRequestMethod("GET");
+            connection.setConnectTimeout(10000);
+            connection.setReadTimeout(180000);
+            connection.setRequestProperty("Accept", "application/json");
+
+            // 연결 시도 전에 소켓 설정
+            System.setProperty("sun.net.client.defaultConnectTimeout", "5000");
+            System.setProperty("sun.net.client.defaultReadTimeout", "15000");
+
+            int responseCode = connection.getResponseCode();
+            if (responseCode == 200) {
+                logger.info("Successfully " + action + "ed agent for host: " + host.getId() + " (IP: " + ipAddress + ")");
+            } else {
+                logger.error("Failed to " + action + " agent for host: " + host.getId() + " (IP: " + ipAddress + "). Response code: " + responseCode);
+            }
+        } catch (SocketTimeoutException e) {
+            logger.error("Connection timed out while controlling agent for host: " + host.getId() + " (IP: " + host.getPrivateIpAddress() + ")", e);
+        } catch (Exception e) {
+            logger.error("Error controlling agent for host: " + host.getId() + " (IP: " + host.getPrivateIpAddress() + ")", e);
+        } finally {
+            if (connection != null) {
+                connection.disconnect();
+            }
+        }
     }
 
     protected Map<String, String> getConfigs() {
@@ -1496,7 +1563,7 @@ public class ManagementServerImpl extends ManagerBase implements ManagementServe
     }
 
     protected boolean zoneWideVolumeRequiresStorageMotion(PrimaryDataStore volumeDataStore,
-               final Host sourceHost, final Host destinationHost) {
+            final Host sourceHost, final Host destinationHost) {
         if (volumeDataStore.isManaged() && sourceHost.getClusterId() != destinationHost.getClusterId()) {
             PrimaryDataStoreDriver driver = (PrimaryDataStoreDriver)volumeDataStore.getDriver();
             // Depends on the storage driver. For some storages simply
@@ -2587,7 +2654,7 @@ public class ManagementServerImpl extends ManagerBase implements ManagementServe
                     freeAddrs.addAll(_ipAddressMgr.listAvailablePublicIps(dcId, null, vlanDbIds, owner, VlanType.VirtualNetwork, associatedNetworkId,
                             false, false, false, null, null, false, cmd.getVpcId(), cmd.isDisplay(), false, false)); // Free
                 } catch (InsufficientAddressCapacityException e) {
-                    logger.warn("no free address is found in zone " + dcId);
+                    logger.warn("no free address is found in zone {}", dc);
                 }
             }
             for (IPAddressVO addr: freeAddrs) {
@@ -3121,8 +3188,8 @@ public class ManagementServerImpl extends ManagerBase implements ManagementServe
 
     }
 
-    protected ConsoleProxyInfo getConsoleProxyForVm(final long dataCenterId, final long userVmId) {
-        return _consoleProxyMgr.assignProxy(dataCenterId, userVmId);
+    protected ConsoleProxyInfo getConsoleProxyForVm(final long dataCenterId, final VMInstanceVO userVm) {
+        return _consoleProxyMgr.assignProxy(dataCenterId, userVm);
     }
 
     private ConsoleProxyVO startConsoleProxy(final long instanceId) {
@@ -3157,7 +3224,7 @@ public class ManagementServerImpl extends ManagerBase implements ManagementServe
     public String getConsoleAccessUrlRoot(final long vmId) {
         final VMInstanceVO vm = _vmInstanceDao.findById(vmId);
         if (vm != null) {
-            final ConsoleProxyInfo proxy = getConsoleProxyForVm(vm.getDataCenterId(), vmId);
+            final ConsoleProxyInfo proxy = getConsoleProxyForVm(vm.getDataCenterId(), vm);
             if (proxy != null) {
                 return proxy.getProxyImageUrl();
             }
@@ -3171,7 +3238,7 @@ public class ManagementServerImpl extends ManagerBase implements ManagementServe
         if (vm == null) {
             return new Pair<>(false, "Cannot find a VM with id = " + vmId);
         }
-        final ConsoleProxyInfo proxy = getConsoleProxyForVm(vm.getDataCenterId(), vmId);
+        final ConsoleProxyInfo proxy = getConsoleProxyForVm(vm.getDataCenterId(), vm);
         if (proxy == null) {
             return new Pair<>(false, "Cannot find a console proxy for the VM " + vmId);
         }
@@ -3198,7 +3265,7 @@ public class ManagementServerImpl extends ManagerBase implements ManagementServe
         return new Pair<>(result, details);
     }
 
-     @Override
+    @Override
     public ListResponse<ListHostDevicesResponse> listHostDevices(ListHostDevicesCmd cmd) {
         Long id = cmd.getId();
         HostVO hostVO = _hostDao.findById(id);
@@ -3266,7 +3333,7 @@ public class ManagementServerImpl extends ManagerBase implements ManagementServe
     public String getConsoleAccessAddress(long vmId) {
         final VMInstanceVO vm = _vmInstanceDao.findById(vmId);
         if (vm != null) {
-            final ConsoleProxyInfo proxy = getConsoleProxyForVm(vm.getDataCenterId(), vmId);
+            final ConsoleProxyInfo proxy = getConsoleProxyForVm(vm.getDataCenterId(), vm);
             return proxy != null ? proxy.getProxyAddress() : null;
         }
         return null;
@@ -3527,7 +3594,7 @@ public class ManagementServerImpl extends ManagerBase implements ManagementServe
 
 
     protected List<CapacityVO> listCapacitiesWithDetails(final Long zoneId, final Long podId, Long clusterId,
-             final Integer capacityType, final String tag, List<Long> dcList) {
+            final Integer capacityType, final String tag, List<Long> dcList) {
         List<String> tags = new ArrayList<>();
         if (StringUtils.isNotEmpty(tag)) {
             tags.add(tag);
@@ -3848,8 +3915,10 @@ public class ManagementServerImpl extends ManagerBase implements ManagementServe
         cmdList.add(CreateNetworkCmd.class);
         cmdList.add(DeleteNetworkACLCmd.class);
         cmdList.add(DeleteNetworkCmd.class);
+        cmdList.add(ListNetworkACLListsCmd.class);
         cmdList.add(ListNetworkACLsCmd.class);
         cmdList.add(ListNetworkOfferingsCmd.class);
+        cmdList.add(ListNetworkPermissionsCmd.class);
         cmdList.add(ListNetworkProtocolsCmd.class);
         cmdList.add(ListNetworksCmd.class);
         cmdList.add(RestartNetworkCmd.class);
@@ -3949,6 +4018,7 @@ public class ManagementServerImpl extends ManagerBase implements ManagementServe
         cmdList.add(UploadVolumeCmd.class);
         cmdList.add(DestroyVolumeCmd.class);
         cmdList.add(RecoverVolumeCmd.class);
+        cmdList.add(UpdateCompressDedupCmd.class);
         cmdList.add(ChangeOfferingForVolumeCmd.class);
         cmdList.add(CreateStaticRouteCmd.class);
         cmdList.add(CreateVPCCmd.class);
@@ -4056,7 +4126,6 @@ public class ManagementServerImpl extends ManagerBase implements ManagementServe
         cmdList.add(UpdateVpnConnectionCmd.class);
         cmdList.add(UpdateVpnGatewayCmd.class);
         cmdList.add(ListQuarantinedIpsCmd.class);
-        cmdList.add(UpdateQuarantinedIpCmd.class);
         cmdList.add(RemoveQuarantinedIpCmd.class);
         // separated admin commands
         cmdList.add(ListAccountsCmdByAdmin.class);
@@ -4106,10 +4175,9 @@ public class ManagementServerImpl extends ManagerBase implements ManagementServe
         cmdList.add(AssociateIPAddrCmdByAdmin.class);
         cmdList.add(ListPublicIpAddressesCmdByAdmin.class);
         cmdList.add(CreateNetworkCmdByAdmin.class);
-        cmdList.add(UpdateNetworkCmdByAdmin.class);
-        cmdList.add(ListNetworksCmdByAdmin.class);
-        cmdList.add(CreateVPCCmdByAdmin.class);
-        cmdList.add(ListVPCsCmdByAdmin.class);
+        // cmdList.add(ListNetworksCmdByAdmin.class);
+        // cmdList.add(CreateVPCCmdByAdmin.class);
+        // cmdList.add(ListVPCsCmdByAdmin.class);
         cmdList.add(UpdateVPCCmdByAdmin.class);
         cmdList.add(CreatePrivateGatewayByAdminCmd.class);
         cmdList.add(ListPrivateGatewaysCmdByAdminCmd.class);
@@ -4120,10 +4188,6 @@ public class ManagementServerImpl extends ManagerBase implements ManagementServe
         cmdList.add(MigrateNetworkCmd.class);
         cmdList.add(MigrateVPCCmd.class);
         cmdList.add(AcquirePodIpCmdByAdmin.class);
-        cmdList.add(ReleasePodIpCmdByAdmin.class);
-        cmdList.add(CreateManagementNetworkIpRangeCmd.class);
-        cmdList.add(DeleteManagementNetworkIpRangeCmd.class);
-        cmdList.add(UploadTemplateDirectDownloadCertificateCmd.class);
         cmdList.add(RevokeTemplateDirectDownloadCertificateCmd.class);
         cmdList.add(ListTemplateDirectDownloadCertificatesCmd.class);
         cmdList.add(ProvisionTemplateDirectDownloadCertificateCmd.class);
@@ -4144,12 +4208,6 @@ public class ManagementServerImpl extends ManagerBase implements ManagementServe
         cmdList.add(UpdateSecondaryStorageSelectorCmd.class);
         cmdList.add(RemoveSecondaryStorageSelectorCmd.class);
         cmdList.add(ListAffectedVmsForStorageScopeChangeCmd.class);
-
-        cmdList.add(CreateASNRangeCmd.class);
-        cmdList.add(ListASNRangesCmd.class);
-        cmdList.add(DeleteASNRangeCmd.class);
-        cmdList.add(ListASNumbersCmd.class);
-        cmdList.add(ReleaseASNumberCmd.class);
 
         // Out-of-band management APIs for admins
         cmdList.add(EnableOutOfBandManagementForHostCmd.class);
@@ -4184,6 +4242,7 @@ public class ManagementServerImpl extends ManagerBase implements ManagementServe
         cmdList.add(UpdateBucketCmd.class);
         cmdList.add(DeleteBucketCmd.class);
         cmdList.add(ListBucketsCmd.class);
+        cmdList.add(LicenseCheckCmd.class);
 
         return cmdList;
     }
@@ -4615,11 +4674,8 @@ public class ManagementServerImpl extends ManagerBase implements ManagementServe
         final boolean desktopServiceEnabled = Boolean.parseBoolean(_configDao.getValue("cloud.desktop.service.enabled"));
         final boolean automationServiceEnabled = Boolean.parseBoolean(_configDao.getValue("cloud.automation.service.enabled"));
         final String desktopWorksPortalPort = _configDao.getValue("cloud.desktop.service.works.portal.port");
-        final String wallPortalProtocol = _configDao.getValue("monitoring.wall.portal.protocol");
-        final String wallPortalDomain = _configDao.getValue("monitoring.wall.portal.domain");
-        final String wallPortalPort = _configDao.getValue("monitoring.wall.portal.port");
-        final String wallPortalVmUri = _configDao.getValue("monitoring.wall.portal.vm.uri");
         final boolean securityFeaturesEnabled = Boolean.parseBoolean(_configDao.getValue("security.features.enabled"));
+        final boolean disasterRecoveryEnabled = Boolean.parseBoolean(_configDao.getValue("cloud.dr.service.enabled"));
         final String host = _configDao.getValue("host");
         final boolean balancingServiceEnabled = Boolean.parseBoolean(_configDao.getValue("cloud.balancing.service.enabled"));
         final boolean eventDeleteEnabled = Boolean.parseBoolean(_configDao.getValue("event.delete.enabled"));
@@ -4655,11 +4711,8 @@ public class ManagementServerImpl extends ManagerBase implements ManagementServe
         capabilities.put("desktopServiceEnabled", desktopServiceEnabled);
         capabilities.put("automationServiceEnabled", automationServiceEnabled);
         capabilities.put("desktopWorksPortalPort", desktopWorksPortalPort);
-        capabilities.put("wallPortalProtocol", wallPortalProtocol);
-        capabilities.put("wallPortalDomain", wallPortalDomain);
-        capabilities.put("wallPortalPort", wallPortalPort);
-        capabilities.put("wallPortalVmUri", wallPortalVmUri);
         capabilities.put("securityFeaturesEnabled", securityFeaturesEnabled);
+        capabilities.put("disasterRecoveryEnabled", disasterRecoveryEnabled);
         capabilities.put("host", host);
         capabilities.put("balancingServiceEnabled", balancingServiceEnabled);
         capabilities.put("eventDeleteEnabled", eventDeleteEnabled);
@@ -5194,8 +5247,8 @@ public class ManagementServerImpl extends ManagerBase implements ManagementServe
         String password = vm.getDetail("Encrypted.Password");
 
         if (StringUtils.isEmpty(password)) {
-            throw new InvalidParameterValueException(String.format("No password found for VM with id [%s]. When the VM's SSH keypair is changed, the current encrypted password is "
-              + "removed due to incosistency in the encryptation, as the new SSH keypair is different from which the password was encrypted. To get a new password, it must be reseted.", vmId));
+            throw new InvalidParameterValueException(String.format("No password found for VM [%s]. When the VM's SSH keypair is changed, the current encrypted password is "
+            + "removed due to inconsistency in the encryption, as the new SSH keypair is different from which the password was encrypted. To get a new password, it must be reseted.", vm));
         }
 
         return password;
@@ -5213,19 +5266,19 @@ public class ManagementServerImpl extends ManagerBase implements ManagementServe
         Transaction.execute(new TransactionCallbackNoReturn() {
             @Override
             public void doInTransactionWithoutResult(final TransactionStatus status) {
-                for (final HostVO h : hosts) {
+                for (final HostVO host : hosts) {
                     if (logger.isDebugEnabled()) {
-                        logger.debug("Changing password for host name = " + h.getName());
+                        logger.debug("Changing password for host {}", host);
                     }
                     // update password for this host
-                    final DetailVO nv = _detailsDao.findDetail(h.getId(), ApiConstants.USERNAME);
+                    final DetailVO nv = _detailsDao.findDetail(host.getId(), ApiConstants.USERNAME);
                     if (nv == null) {
-                        final DetailVO nvu = new DetailVO(h.getId(), ApiConstants.USERNAME, userNameWithoutSpaces);
+                        final DetailVO nvu = new DetailVO(host.getId(), ApiConstants.USERNAME, userNameWithoutSpaces);
                         _detailsDao.persist(nvu);
-                        final DetailVO nvp = new DetailVO(h.getId(), ApiConstants.PASSWORD, DBEncryptionUtil.encrypt(command.getPassword()));
+                        final DetailVO nvp = new DetailVO(host.getId(), ApiConstants.PASSWORD, DBEncryptionUtil.encrypt(command.getPassword()));
                         _detailsDao.persist(nvp);
                     } else if (nv.getValue().equals(userNameWithoutSpaces)) {
-                        final DetailVO nvp = _detailsDao.findDetail(h.getId(), ApiConstants.PASSWORD);
+                        final DetailVO nvp = _detailsDao.findDetail(host.getId(), ApiConstants.PASSWORD);
                         nvp.setValue(DBEncryptionUtil.encrypt(command.getPassword()));
                         _detailsDao.persist(nvp);
                     } else {
@@ -5282,7 +5335,7 @@ public class ManagementServerImpl extends ManagerBase implements ManagementServe
             @Override
             public void doInTransactionWithoutResult(final TransactionStatus status) {
                 if (logger.isDebugEnabled()) {
-                    logger.debug("Changing password for host name = " + host.getName());
+                    logger.debug("Changing password for host {}", host);
                 }
                 // update password for this host
                 final DetailVO nv = _detailsDao.findDetail(host.getId(), ApiConstants.USERNAME);
@@ -5661,5 +5714,225 @@ public class ManagementServerImpl extends ManagerBase implements ManagementServe
 
     public void setLockControllerListener(final LockControllerListener lockControllerListener) {
         _lockControllerListener = lockControllerListener;
+    }
+
+    @Override
+    public LicenseCheckerResponse checkLicense(LicenseCheckCmd cmd) {
+        Long hostId = cmd.getHostId();
+        if (hostId == null) {
+            throw new InvalidParameterValueException("Host ID is required");
+        }
+
+        HostVO host = _hostDao.findById(hostId);
+        if (host == null) {
+            throw new InvalidParameterValueException("Host not found: " + hostId);
+        }
+
+        return checkLicense(host);
+    }
+
+    private LicenseCheckerResponse checkLicense(HostVO host) {
+        LicenseCheckerResponse response = new LicenseCheckerResponse();
+        response.setHostId(host.getId());
+        response.setObjectName("licensecheck");
+
+        try {
+            String ipAddress = host.getPrivateIpAddress();
+            String licenseApiUrl = "https://" + ipAddress + ":8080/api/v1/license/isLicenseExpired";
+
+            HttpsURLConnection connection = null;
+            try {
+                // SSL 설정
+                final SSLContext sslContext = SSLUtils.getSSLContext();
+                sslContext.init(null, new TrustManager[]{new TrustAllManager()}, new SecureRandom());
+
+                URL url = new URL(licenseApiUrl);
+                connection = (HttpsURLConnection) url.openConnection();
+                connection.setSSLSocketFactory(sslContext.getSocketFactory());
+                connection.setHostnameVerifier((hostname, session) -> hostname.equals(ipAddress));
+                connection.setDoOutput(true);
+                connection.setRequestMethod("GET");
+                connection.setConnectTimeout(10000);
+                connection.setReadTimeout(180000);
+                connection.setRequestProperty("Accept", "application/json");
+                connection.setRequestProperty("Content-Type", "application/json");
+
+                int responseCode = connection.getResponseCode();
+
+                if (responseCode == 200) {
+                    BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                    StringBuilder responseData = new StringBuilder();
+                    String line;
+                    while ((line = in.readLine()) != null) {
+                        responseData.append(line);
+                    }
+                    in.close();
+
+                    // JSON 응답 파싱
+                    ObjectMapper mapper = new ObjectMapper();
+                    JsonNode jsonNode = mapper.readTree(responseData.toString());
+
+                    // 라이선스 정보 설정
+                    if (jsonNode.has("error")) {
+                        String errorMessage = jsonNode.get("error").asText();
+                        response.setHasLicense(false);
+                        response.setSuccess(false);
+                        response.setExpiryDate(null);
+
+                        // 에이전트 중지 및 알림 전송
+                        // controlHostAgent(host, "stop");
+                        // handleExpiredLicense(host);
+                        // _alertMgr.sendAlert(
+                        //     AlertManager.AlertType.ALERT_TYPE_HOST,
+                        //     host.getDataCenterId(),
+                        //     host.getId(),
+                        //     "License error for host " + host.getName(),
+                        //     "License check failed: " + errorMessage
+                        // );
+                    } else {
+                        boolean isExpired = jsonNode.get("expiry_date").asBoolean();
+                        boolean isIssued = jsonNode.get("issued_date").asBoolean();
+                        String expiryDateStr = jsonNode.get("expired").asText();
+                        String issuedDateStr = jsonNode.get("issued").asText();
+
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                        Date issuedDate = null;
+                        Date expiryDate = null;
+
+                        if (issuedDateStr != null && !issuedDateStr.isEmpty()) {
+                            issuedDate = sdf.parse(issuedDateStr);
+                            response.setIssuedDate(issuedDate);
+                        }
+
+                        if (expiryDateStr != null && !expiryDateStr.isEmpty()) {
+                            expiryDate = sdf.parse(expiryDateStr);
+                            response.setExpiryDate(expiryDate);
+                        }
+
+                        // 라이선스 유효성 검사: 발급되지 않았거나 만료되었으면 false
+                        boolean isValid = !isExpired && !isIssued;
+                        response.setSuccess(isValid);
+                        response.setHasLicense(true);
+
+                        // 라이선스 상태에 따른 에이전트 제어
+                        if (isValid) {
+                            controlHostAgent(host, "start");
+                            _alertMgr.sendAlert(
+                                AlertManager.AlertType.ALERT_TYPE_HOST,
+                                host.getDataCenterId(),
+                                host.getId(),
+                                "License valid for host " + host.getName(),
+                                "The license is valid. Agent has been started for host " + host.getName()
+                            );
+                        } else {
+                            controlHostAgent(host, "stop");
+                            handleExpiredLicense(host);
+                            _alertMgr.sendAlert(
+                                AlertManager.AlertType.ALERT_TYPE_HOST,
+                                host.getDataCenterId(),
+                                host.getId(),
+                                "License expired or not yet valid for host " + host.getName(),
+                                "The license has expired or is not yet valid. Agent has been stopped for host " + host.getName()
+                            );
+                        }
+                    }
+                } else {
+                    response.setHasLicense(false);
+                    response.setSuccess(false);
+                    response.setExpiryDate(null);
+                }
+            } finally {
+                if (connection != null) {
+                    connection.disconnect();
+                }
+            }
+            return response;
+        } catch (Exception e) {
+            logger.error("Error checking license for host: " + host.getId(), e);
+            throw new CloudRuntimeException("라이선스 체크 실패: " + e.getMessage());
+        }
+    }
+    private boolean handleExpiredLicense(HostVO host) {
+        HttpsURLConnection connection = null;
+        boolean licenseHostValue = false;
+        String ipAddress = host.getPrivateIpAddress();
+
+        try {
+            // HA 비활성화 처리
+            HAConfigVO haConfig = (HAConfigVO) haConfigDao.findHAResource(host.getId(), HAResource.ResourceType.Host);
+            if (haConfig != null) {
+                try {
+                    haConfig.setEnabled(false);
+                    haConfigDao.update(haConfig.getId(), haConfig);
+                    boolean result = haConfigManager.disableHA(host.getId(), HAResource.ResourceType.Host);
+                    if (!result) {
+                        logger.warn("Failed to disable HA for host " + host.getId() + " (IP: " + ipAddress + ")");
+                    } else {
+                        logger.info("Successfully disabled HA for host " + host.getId() + " (IP: " + ipAddress + ")");
+                    }
+                } catch (Exception e) {
+                    logger.error("Failed to disable HA for host " + host.getId() + " (IP: " + ipAddress + ")", e);
+                }
+            }
+
+            // 라이센스 체크 로직
+            String glueEndpoint = "https://" + ipAddress + ":8080/api/v1/license/controlHostAgent/stop";
+
+            // SSL 인증서 에러 우회 처리
+            final SSLContext sslContext = SSLUtils.getSSLContext();
+            sslContext.init(null, new TrustManager[]{new TrustAllManager()}, new SecureRandom());
+
+            URL url = new URL(glueEndpoint);
+            connection = (HttpsURLConnection) url.openConnection();
+            connection.setSSLSocketFactory(sslContext.getSocketFactory());
+            connection.setHostnameVerifier((hostname, session) -> hostname.equals(ipAddress));
+            connection.setDoOutput(true);
+            connection.setRequestMethod("GET");
+            connection.setConnectTimeout(10000);
+            connection.setReadTimeout(180000);
+            connection.setRequestProperty("Accept", "application/json");
+            connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+
+            // 연결 시도 전에 소켓 설정
+            System.setProperty("sun.net.client.defaultConnectTimeout", "5000");
+            System.setProperty("sun.net.client.defaultReadTimeout", "15000");
+
+            int responseCode = connection.getResponseCode();
+            if (responseCode == 200) {
+                try (BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
+                    StringBuilder response = new StringBuilder();
+                    String inputLine;
+
+                    while ((inputLine = in.readLine()) != null) {
+                        response.append(inputLine);
+                    }
+
+                    licenseHostValue = Boolean.parseBoolean(response.toString());
+
+                    // 라이센스 만료 알림 전송
+                    _alertMgr.sendAlert(
+                        AlertManager.AlertType.ALERT_TYPE_HOST,
+                        host.getDataCenterId(),
+                        host.getId(),
+                        "The host's license has expired or the file is missing. Please renew the license.",
+                        "The license for host " + host.getName() + " has expired. Please renew the license."
+                    );
+
+                    logger.warn("License has expired. Host ID: " + host.getId() + " (IP: " + ipAddress + ")");
+                }
+            } else {
+                logger.error("Failed to handle expired license for host: " + host.getId() + " (IP: " + ipAddress + "). Response code: " + responseCode);
+            }
+        } catch (SocketTimeoutException e) {
+            logger.error("Connection timed out while handling expired license for host: " + host.getId() + " (IP: " + ipAddress + ")", e);
+        } catch (Exception e) {
+            logger.error("Error handling expired license for host: " + host.getId() + " (IP: " + ipAddress + ")", e);
+        } finally {
+            if (connection != null) {
+                connection.disconnect();
+            }
+        }
+
+        return licenseHostValue;
     }
 }

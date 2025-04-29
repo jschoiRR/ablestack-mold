@@ -19,7 +19,8 @@
 set -e
 set -x
 
-CLOUDSTACK_RELEASE=4.20.0
+CLOUDSTACK_RELEASE=4.21.0
+CREATE_DATE=
 
 function configure_apache2() {
    # Enable ssl, rewrite and auth
@@ -39,9 +40,10 @@ function configure_strongswan() {
 function configure_issue() {
   cat > /etc/issue <<EOF
 
-   __?.o/  Apache CloudStack SystemVM $CLOUDSTACK_RELEASE
-  (  )#    https://cloudstack.apache.org
+   __?.o/  ABLECLOUD Mold SystemVM $CLOUDSTACK_RELEASE
+  (  )#    https://www.ablecloud.io
  (___(_)   Debian GNU/Linux 12 \n \l
+ ########  SystemVM Template Creation Date : $CREATE_DATE
 
 EOF
 }
@@ -134,7 +136,7 @@ function configure_services() {
 
   # Disable cloud init by default
 cat <<EOF > /etc/cloud/cloud.cfg.d/cloudstack.cfg
-datasource_list: ['CloudStack']
+datasource_list: [ ConfigDrive, CloudStack, None ]
 datasource:
   CloudStack:
     max_wait: 120

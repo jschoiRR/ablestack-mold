@@ -194,7 +194,13 @@
             v-model:value="form.hypervisorsnapshotreserve"
             :placeholder="apiParams.hypervisorsnapshotreserve.description"/>
         </a-form-item>
-        <a-form-item name="shareable" ref="shareable">
+        <a-form-item v-if="!form.shareable" name="kvdoenable" ref="kvdoenable">
+          <template #label>
+            <tooltip-label :title="$t('label.kvdoenable')" :tooltip="apiParams.kvdoenable.description"/>
+          </template>
+          <a-switch v-model:checked="form.kvdoenable" />
+        </a-form-item>
+        <a-form-item v-if="!form.kvdoenable" name="shareable" ref="shareable">
           <template #label>
             <tooltip-label :title="$t('label.shareable')" :tooltip="apiParams.shareable.description"/>
           </template>
@@ -376,6 +382,7 @@ export default {
         ispublic: this.isPublic,
         disksizestrictness: this.disksizestrictness,
         encryptdisk: this.encryptdisk,
+        kvdoenable: false,
         shareable: false
       })
       this.rules = reactive({
@@ -507,6 +514,7 @@ export default {
           customized: values.customdisksize,
           disksizestrictness: values.disksizestrictness,
           encrypt: values.encryptdisk,
+          kvdoEnable: values.kvdoenable,
           shareable: values.shareable
         }
         if (values.shareable === true) {

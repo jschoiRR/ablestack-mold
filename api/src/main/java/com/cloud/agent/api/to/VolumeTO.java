@@ -44,6 +44,7 @@ public class VolumeTO implements InternalIdentity {
     private String cacheMode;
     private Long chainSize;
     private boolean shareable;
+    private boolean kvdoEnable;
 
     public VolumeTO(long id, Volume.Type type, StoragePoolType poolType, String poolUuid, String name, String mountPoint, String path, long size, String chainInfo) {
         this.id = id;
@@ -194,6 +195,14 @@ public class VolumeTO implements InternalIdentity {
 
     public boolean getShareable() {
         return shareable;
+    }
+
+    public void setKvdoEnable(boolean kvdoEnable) {
+        this.kvdoEnable = kvdoEnable;
+    }
+
+    public boolean getKvdoEnable() {
+        return kvdoEnable;
     }
 
     public Long getChainSize() {

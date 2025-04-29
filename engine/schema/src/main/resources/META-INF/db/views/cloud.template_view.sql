@@ -99,6 +99,7 @@ SELECT
            '_',
            IFNULL(`data_center`.`id`, 0)) AS `temp_zone_pair`,
     `vm_template`.`direct_download` AS `direct_download`,
+    `vm_template`.`kvdo_enable` AS `kvdo_enable`,
     `vm_template`.`deploy_as_is` AS `deploy_as_is`,
     `user_data`.`id` AS `user_data_id`,
     `user_data`.`uuid` AS `user_data_uuid`,

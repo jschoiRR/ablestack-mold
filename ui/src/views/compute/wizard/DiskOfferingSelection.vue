@@ -57,7 +57,7 @@
         size="small"
         :current="options.page"
         :pageSize="options.pageSize"
-        :total="rowCount"
+        :total="rowCountNum"
         :showTotal="total => `${$t('label.total')} ${total} ${$t('label.items')}`"
         :pageSizeOptions="['10', '20', '40', '80', '100', '200']"
         @change="onChangePage"
@@ -131,6 +131,7 @@ export default {
       ],
       selectedRowKeys: ['0'],
       dataItems: [],
+      rowCountNum: 0,
       oldZoneId: null,
       options: {
         page: 1,
@@ -143,7 +144,14 @@ export default {
   created () {
     this.initDataItem()
     if (this.items) {
-      this.dataItems = this.dataItems.concat(this.items)
+      var diskFilter = this.items
+      if (this.preFillContent.kvdoenable && this.preFillContent.kvdoenable !== undefined) {
+        diskFilter = this.items.filter(items => items.kvdoenable)
+      } else if (!this.preFillContent.kvdoenable && this.preFillContent.kvdoenable !== undefined) {
+        diskFilter = this.items.filter(items => !items.kvdoenable)
+      }
+      this.rowCountNum = diskFilter.length
+      this.dataItems = this.dataItems.concat(diskFilter)
     }
   },
   computed: {
@@ -178,7 +186,16 @@ export default {
       deep: true,
       handler (newData) {
         this.initDataItem()
-        this.dataItems = this.dataItems.concat(newData)
+        if (newData) {
+          var diskFilter = newData
+          if (this.preFillContent.kvdoenable && this.preFillContent.kvdoenable !== undefined) {
+            diskFilter = newData.filter(newData => newData.kvdoenable)
+          } else if (!this.preFillContent.kvdoenable && this.preFillContent.kvdoenable !== undefined) {
+            diskFilter = this.newData.filter(newData => !newData.kvdoenable)
+          }
+          this.rowCountNum = diskFilter.length
+          this.dataItems = this.dataItems.concat(diskFilter)
+        }
       }
     },
     loading () {

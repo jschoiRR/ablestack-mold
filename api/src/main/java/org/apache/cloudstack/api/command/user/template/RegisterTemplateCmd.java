@@ -163,6 +163,11 @@ public class RegisterTemplateCmd extends BaseCmd implements UserCmd {
                 description = "true if template should bypass Secondary Storage and be downloaded to Primary Storage on deployment")
     private Boolean directDownload;
 
+    @Parameter(name=ApiConstants.KVDO_ENABLE,
+                type = CommandType.BOOLEAN,
+                description = "Whether to KVDO compression and deduplication the volume", since = "4.20")
+    private Boolean kvdoEnable;
+
     @Parameter(name=ApiConstants.DEPLOY_AS_IS,
             type = CommandType.BOOLEAN,
             description = "(VMware only) true if VM deployments should preserve all the configurations defined for this template", since = "4.15.1")
@@ -337,6 +342,18 @@ public class RegisterTemplateCmd extends BaseCmd implements UserCmd {
         return directDownload == null ? false : directDownload;
     }
 
+    public boolean geKvdoEnable() {
+        return kvdoEnable;
+    }
+
+    public void setKvdoEnable(boolean kvdoEnable) {
+        this.kvdoEnable = kvdoEnable;
+    }
+
+    public boolean isKvdoEnable() {
+        return kvdoEnable == null ? false : kvdoEnable;
+    }
+
     public boolean isDeployAsIs() {
         return Hypervisor.HypervisorType.VMware.toString().equalsIgnoreCase(hypervisor) &&
                 Boolean.TRUE.equals(deployAsIs);
@@ -417,9 +434,17 @@ public class RegisterTemplateCmd extends BaseCmd implements UserCmd {
                     "Parameter zoneids cannot combine all zones (-1) option with other zones");
 
         String customHypervisor = HypervisorGuru.HypervisorCustomDisplayName.value();
-        if (isDirectDownload() && !(getHypervisor().equalsIgnoreCase(Hypervisor.HypervisorType.KVM.toString())
+        if (isDirectDownload() &&
+                !(Hypervisor.HypervisorType.getType(getHypervisor())
+                        .isFunctionalitySupported(Hypervisor.HypervisorType.Functionality.DirectDownloadTemplate)
                 || getHypervisor().equalsIgnoreCase(customHypervisor))) {
             throw new ServerApiException(ApiErrorCode.PARAM_ERROR, String.format("Parameter directdownload " +
+                    "is only allowed for KVM or %s templates", customHypervisor));
+        }
+
+        if (isKvdoEnable() && !(getHypervisor().equalsIgnoreCase(Hypervisor.HypervisorType.KVM.toString())
+                || getHypervisor().equalsIgnoreCase(customHypervisor))) {
+            throw new ServerApiException(ApiErrorCode.PARAM_ERROR, String.format("Parameter kvdoenable " +
                     "is only allowed for KVM or %s templates", customHypervisor));
         }
 

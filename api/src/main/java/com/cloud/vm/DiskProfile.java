@@ -46,6 +46,7 @@ public class DiskProfile {
     private Long maxIops;
     private boolean requiresEncryption;
     private boolean shareable;
+    private boolean kvdoEnable;
 
     private HypervisorType hyperType;
 
@@ -66,9 +67,17 @@ public class DiskProfile {
     }
 
     public DiskProfile(long volumeId, Volume.Type type, String name, long diskOfferingId, long size, String[] tags, boolean useLocalStorage, boolean recreatable,
-            Long templateId, boolean requiresEncryption) {
+        Long templateId, boolean requiresEncryption) {
+    this(volumeId, type, name, diskOfferingId, size, tags, useLocalStorage, recreatable, templateId);
+    this.requiresEncryption = requiresEncryption;
+    }
+
+    public DiskProfile(long volumeId, Volume.Type type, String name, long diskOfferingId, long size, String[] tags, boolean useLocalStorage, boolean recreatable,
+            Long templateId, boolean requiresEncryption, boolean shareable, boolean kvdoEnable) {
         this(volumeId, type, name, diskOfferingId, size, tags, useLocalStorage, recreatable, templateId);
         this.requiresEncryption = requiresEncryption;
+        this.shareable = shareable;
+        this.kvdoEnable = kvdoEnable;
     }
 
     public DiskProfile(Volume vol, DiskOffering offering, HypervisorType hyperType) {
@@ -245,6 +254,14 @@ public class DiskProfile {
 
     public boolean getShareable() {
         return shareable;
+    }
+
+    public void setKvdoEnable(boolean kvdoEnable) {
+        this.kvdoEnable = kvdoEnable;
+    }
+
+    public boolean getKvdoEnable() {
+        return kvdoEnable;
     }
 
     public Long getMinIops() {

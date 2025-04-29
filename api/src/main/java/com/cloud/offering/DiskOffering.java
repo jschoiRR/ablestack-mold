@@ -157,4 +157,8 @@ public interface DiskOffering extends InfrastructureEntity, Identity, InternalId
     boolean getShareable();
 
     void setShareable(boolean shareable);
+
+    boolean getKvdoEnable();
+
+    void setKvdoEnable(boolean kvdoEnable);
 }

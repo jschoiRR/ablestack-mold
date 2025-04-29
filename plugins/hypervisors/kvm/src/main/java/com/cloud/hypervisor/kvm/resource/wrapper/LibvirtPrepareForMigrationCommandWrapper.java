@@ -104,7 +104,8 @@ public final class LibvirtPrepareForMigrationCommandWrapper extends CommandWrapp
                     if (store.getPoolType() == StoragePoolType.RBD) {
                         KVMPhysicalDisk physicalDisk = storagePoolMgr.getPhysicalDisk(store.getPoolType(), store.getUuid(), data.getPath());
                         if(store.getProvider() != null && !store.getProvider().isEmpty() && "ABLESTACK".equals(store.getProvider())){
-                            String device = libvirtComputingResource.mapRbdDevice(physicalDisk);
+                            final VolumeObjectTO volumeObject = (VolumeObjectTO)data;
+                            String device = libvirtComputingResource.mapRbdDevice(physicalDisk,volumeObject.getKvdoEnable());
                             if (device != null) {
                                 logger.debug("RBD device on host is: " + device);
                             } else {
@@ -133,7 +134,7 @@ public final class LibvirtPrepareForMigrationCommandWrapper extends CommandWrapp
 
             skipDisconnect = true;
 
-            if (!storagePoolMgr.connectPhysicalDisksViaVmSpec(vm)) {
+            if (!storagePoolMgr.connectPhysicalDisksViaVmSpec(vm, true)) {
                 return new PrepareForMigrationAnswer(command, "failed to connect physical disks to host");
             }
 

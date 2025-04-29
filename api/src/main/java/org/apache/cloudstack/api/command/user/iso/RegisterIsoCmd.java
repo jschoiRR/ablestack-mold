@@ -24,6 +24,7 @@ import org.apache.cloudstack.api.ApiCommandResourceType;
 import org.apache.cloudstack.api.ApiConstants;
 import org.apache.cloudstack.api.ApiErrorCode;
 import org.apache.cloudstack.api.BaseCmd;
+import org.apache.cloudstack.api.BaseCmd.CommandType;
 import org.apache.cloudstack.api.Parameter;
 import org.apache.cloudstack.api.ResponseObject.ResponseView;
 import org.apache.cloudstack.api.ServerApiException;
@@ -113,6 +114,11 @@ public class RegisterIsoCmd extends BaseCmd implements UserCmd {
             type = CommandType.BOOLEAN,
             description = "true if ISO should bypass Secondary Storage and be downloaded to Primary Storage on deployment")
     private Boolean directDownload;
+
+    @Parameter(name=ApiConstants.KVDO_ENABLE,
+            type = CommandType.BOOLEAN,
+            description = "Whether to KVDO compression and deduplication the volume", since = "4.20")
+    private Boolean kvdoEnable;
 
     @Parameter(name = ApiConstants.PASSWORD_ENABLED,
             type = CommandType.BOOLEAN,
@@ -225,6 +231,10 @@ public class RegisterIsoCmd extends BaseCmd implements UserCmd {
 
     public boolean isDirectDownload() {
         return directDownload == null ? false : directDownload;
+    }
+
+    public boolean isKvdoEnable() {
+        return kvdoEnable == null ? false : kvdoEnable;
     }
 
     public void setDirectDownload(Boolean directDownload) {

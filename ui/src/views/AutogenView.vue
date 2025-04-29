@@ -635,7 +635,7 @@
 
     <div :style="this.$store.getters.shutdownTriggered ? 'margin-top: 24px; margin-bottom: 12px' : null">
       <div v-if="dataView">
-        <slot name="resource" v-if="$route.path.startsWith('/quotasummary') || $route.path.startsWith('/publicip')"></slot>
+        <slot name="resource" v-if="$route.path.startsWith('/publicip')"></slot>
         <resource-view
           v-else
           :resource="resource"
@@ -664,7 +664,9 @@
           :current="page"
           :pageSize="pageSize"
           :total="itemCount"
-          :showTotal="total => `${$t('label.showing')} ${Math.min(total, 1+((page-1)*pageSize))}-${Math.min(page*pageSize, total)} ${$t('label.of')} ${total} ${$t('label.items')}`"
+          :showTotal="total => this.$localStorage.get('LOCALE') == 'ko_KR' ?
+            `${$t('label.total')} ${total} ${$t('label.items')} ${$t('label.of')} ${Math.min(total, 1+((page-1)*pageSize))}-${Math.min(page*pageSize, total)} ${$t('label.showing')}` :
+            `${$t('label.showing')} ${Math.min(total, 1+((page-1)*pageSize))}-${Math.min(page*pageSize, total)} ${$t('label.of')} ${total} ${$t('label.items')}`"
           :pageSizeOptions="pageSizeOptions"
           @change="changePage"
           @showSizeChange="changePageSize"
@@ -775,6 +777,7 @@ export default {
     eventBus.off('desktop-refresh-data')
     eventBus.off('resource-request-refresh-data')
     eventBus.off('automation-refresh-data')
+    eventBus.off('dr-refresh-data')
   },
   mounted () {
     eventBus.on('exec-action', (args) => {
@@ -808,6 +811,11 @@ export default {
     // })
     eventBus.on('automation-controller-refresh-data', () => {
       if (this.$route.path === '/automationcontroller' || this.$route.path.includes('/automationcontroller/')) {
+        this.fetchData()
+      }
+    })
+    eventBus.on('dr-refresh-data', () => {
+      if (this.$route.path === '/disasterrecoverycluster' || this.$route.path.includes('/disasterrecoverycluster/')) {
         this.fetchData()
       }
     })
@@ -946,7 +954,7 @@ export default {
         return this.$route.query.filter
       }
       const routeName = this.$route.name
-      if ((this.projectView && routeName === 'vm') || (['Admin', 'DomainAdmin'].includes(this.$store.getters.userInfo.roletype) && ['vm', 'iso', 'template', 'pod', 'cluster', 'host', 'systemvm', 'router', 'storagepool'].includes(routeName)) || ['account', 'guestnetwork', 'guestvlans', 'oauthsetting', 'guestos', 'guestoshypervisormapping', 'kubernetes', 'asnumbers'].includes(routeName)) {
+      if ((this.projectView && routeName === 'vm') || (['Admin', 'DomainAdmin'].includes(this.$store.getters.userInfo.roletype) && ['vm', 'iso', 'template', 'pod', 'cluster', 'host', 'systemvm', 'router', 'storagepool'].includes(routeName)) || ['account', 'guestnetwork', 'guestvlans', 'oauthsetting', 'guestos', 'guestoshypervisormapping', 'kubernetes', 'asnumbers', 'networkoffering'].includes(routeName)) {
         return 'all'
       }
       if (['publicip'].includes(routeName)) {
@@ -975,8 +983,6 @@ export default {
       }
     },
     getCsvDownload (paramFields) {
-      console.log('123123123')
-      console.log(JSON.stringify(paramFields.resource))
       var csvFile = 'event.csv'
       var downloadLink
       var row = []

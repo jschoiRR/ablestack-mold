@@ -98,26 +98,29 @@ export default {
       }
 
       this.loading = true
-
       const vmId = this.form.virtualmachineid
       const hostDevicesName = this.resource.hostDevicesName
 
-      const xmlConfig = this.generateXmlConfig(hostDevicesName)
-
-      const apiName = 'updateVirtualMachine'
-
-      if (!(apiName in this.$store.getters.apis)) {
-        this.$message.error({
-          message: this.$t('error.execute.api.failed') + ' ' + apiName,
-          description: this.$t('message.user.not.permitted.api')
-        })
-        this.loading = false
-        return
-      }
-
-      api(apiName, {
+      api('listVirtualMachines', {
         id: vmId,
-        'details[0].extraconfig-1': xmlConfig
+        details: 'min'
+      }).then(response => {
+        const vm = response.listvirtualmachinesresponse.virtualmachine[0]
+        const details = vm.details || {}
+
+        const xmlConfig = this.generateXmlConfig(hostDevicesName)
+
+        const params = { id: vmId }
+
+        // 기존 details 값을 유지하면서 새로운 값 추가
+        Object.keys(details).forEach(key => {
+          params[`details[0].${key}`] = details[key]
+        })
+
+        // 필요한 추가 값 동적으로 설정
+        params[`details[0].extraconfig-1`] = xmlConfig
+
+        return api('updateVirtualMachine', params)
       }).then(() => {
         this.$message.success(this.$t('message.success.update.vm'))
         this.closeAction()
@@ -142,7 +145,7 @@ export default {
         </source>
       </hostdev>
       </devices>
-      `
+      `.trim()
     },
 
     closeAction () {

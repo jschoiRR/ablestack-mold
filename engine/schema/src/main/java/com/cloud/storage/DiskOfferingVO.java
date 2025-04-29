@@ -34,6 +34,7 @@ import javax.persistence.Transient;
 
 import com.cloud.offering.DiskOffering;
 import com.cloud.utils.db.GenericDao;
+import org.apache.cloudstack.utils.reflectiontostringbuilderutils.ReflectionToStringBuilderUtils;
 
 @Entity
 @Table(name = "disk_offering")
@@ -134,6 +135,9 @@ public class DiskOfferingVO implements DiskOffering {
 
     @Column(name = "shareable")
     private boolean shareable;
+
+    @Column(name = "kvdo_enable")
+    private boolean kvdoEnable;
 
     @Column(name = "cache_mode", updatable = true, nullable = false)
     @Enumerated(value = EnumType.STRING)
@@ -299,6 +303,16 @@ public class DiskOfferingVO implements DiskOffering {
     @Override
     public boolean getShareable() {
         return shareable;
+    }
+
+    @Override
+    public void setKvdoEnable(boolean kvdoEnable) {
+        this.kvdoEnable = kvdoEnable;
+    }
+
+    @Override
+    public boolean getKvdoEnable() {
+        return kvdoEnable;
     }
 
     @Override
@@ -600,5 +614,12 @@ public class DiskOfferingVO implements DiskOffering {
 
     public void setDiskSizeStrictness(boolean diskSizeStrictness) {
         this.diskSizeStrictness = diskSizeStrictness;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("DiskOffering %s.",
+                ReflectionToStringBuilderUtils.reflectOnlySelectedFields(
+                        this, "id", "uuid", "name"));
     }
 }

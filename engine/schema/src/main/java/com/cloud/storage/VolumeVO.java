@@ -48,31 +48,34 @@ public class VolumeVO implements Volume {
     @TableGenerator(name = "volume_sq", table = "sequence", pkColumnName = "name", valueColumnName = "value", pkColumnValue = "volume_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.TABLE)
     @Column(name = "id")
-    long id;
+    private long id;
+
+    @Column(name = "last_id")
+    private long lastId;
 
     @Column(name = "name")
-    String name;
+    private String name;
 
     @Column(name = "pool_id")
-    Long poolId;
+    private Long poolId;
 
     @Column(name = "last_pool_id")
-    Long lastPoolId;
+    private Long lastPoolId;
 
     @Column(name = "account_id")
-    long accountId;
+    private long accountId;
 
     @Column(name = "domain_id")
-    long domainId;
+    private long domainId;
 
     @Column(name = "instance_id")
-    Long instanceId = null;
+    private Long instanceId = null;
 
     @Column(name = "device_id")
-    Long deviceId = null;
+    private Long deviceId = null;
 
     @Column(name = "size")
-    Long size;
+    private Long size;
 
     @Column(name = "min_iops")
     private Long minIops;
@@ -81,50 +84,50 @@ public class VolumeVO implements Volume {
     private Long maxIops;
 
     @Column(name = "folder")
-    String folder;
+    private String folder;
 
     @Column(name = "path")
-    String path;
+    private String path;
 
     @Column(name = "pod_id")
-    Long podId;
+    private Long podId;
 
     @Column(name = "created")
-    Date created;
+    private Date created;
 
     @Column(name = "attached")
     @Temporal(value = TemporalType.TIMESTAMP)
-    Date attached;
+    private Date attached;
 
     @Column(name = "data_center_id")
-    long dataCenterId;
+    private long dataCenterId;
 
     @Column(name = "host_ip")
-    String hostip;
+    private String hostIp;
 
     @Column(name = "disk_offering_id")
-    long diskOfferingId;
+    private long diskOfferingId;
 
     @Column(name = "template_id")
-    Long templateId;
+    private Long templateId;
 
     @Column(name = "first_snapshot_backup_uuid")
-    String firstSnapshotBackupUuid;
+    private String firstSnapshotBackupUuid;
 
     @Column(name = "volume_type")
     @Enumerated(EnumType.STRING)
-    Type volumeType = Volume.Type.UNKNOWN;
+    private Type volumeType = Volume.Type.UNKNOWN;
 
     @Column(name = "pool_type")
     @Convert(converter = StoragePoolTypeConverter.class)
-    StoragePoolType poolType;
+    private StoragePoolType poolType;
 
     @Column(name = GenericDao.REMOVED_COLUMN)
-    Date removed;
+    private Date removed;
 
     @Column(name = "updated")
     @Temporal(value = TemporalType.TIMESTAMP)
-    Date updated;
+    private Date updated;
 
     @Column(name = "update_count", updatable = true, nullable = false)
     protected long updatedCount; // This field should be updated everytime the
@@ -133,17 +136,17 @@ public class VolumeVO implements Volume {
                                  // dao code.
 
     @Column(name = "recreatable")
-    boolean recreatable;
+    private boolean recreatable;
 
     @Column(name = "state")
     @Enumerated(value = EnumType.STRING)
     private State state;
 
     @Column(name = "chain_info", length = 65535)
-    String chainInfo;
+    private String chainInfo;
 
     @Column(name = "uuid")
-    String uuid;
+    private String uuid;
 
     @Column(name = "format")
     private Storage.ImageFormat format;
@@ -168,7 +171,7 @@ public class VolumeVO implements Volume {
 
     @Transient
     // @Column(name="reservation")
-    String reservationId;
+    private String reservationId;
 
     @Column(name = "hv_ss_reserve")
     private Integer hypervisorSnapshotReserve;
@@ -182,9 +185,20 @@ public class VolumeVO implements Volume {
     @Column(name = "encrypt_format")
     private String encryptFormat;
 
+    @Column(name = "compress")
+    private boolean compress;
+
+    @Column(name = "dedup")
+    private boolean dedup;
+
+    @Column(name = "used_fs_bytes")
+    private Long usedFsBytes;
+
+    @Column(name = "used_physical_size")
+    private Long usedPhysicalSize;
+
     @Column(name = "delete_protection")
     private boolean deleteProtection;
-
 
     // Real Constructor
     public VolumeVO(Type type, String name, long dcId, long domainId,
@@ -283,6 +297,10 @@ public class VolumeVO implements Volume {
         uuid = UUID.randomUUID().toString();
         deployAsIs = that.isDeployAsIs();
         externalUuid = that.getExternalUuid();
+        compress = that.getCompress();
+        dedup = that.getDedup();
+        usedFsBytes = that.getUsedFsBytes();
+        usedPhysicalSize = that.getUsedPhysicalSize();
     }
 
     @Override
@@ -428,11 +446,11 @@ public class VolumeVO implements Volume {
     }
 
     public String getHostIp() {
-        return hostip;
+        return hostIp;
     }
 
     public void setHostIp(String hostip) {
-        this.hostip = hostip;
+        this.hostIp = hostip;
     }
 
     public void setPodId(Long podId) {
@@ -511,7 +529,9 @@ public class VolumeVO implements Volume {
 
     @Override
     public String toString() {
-        return new StringBuilder("Vol[").append(id).append("|name=").append(name).append("|vm=").append(instanceId).append("|").append(volumeType).append("]").toString();
+        return String.format("Volume %s",
+                ReflectionToStringBuilderUtils.reflectOnlySelectedFields(
+                        this, "id", "uuid", "name", "volumeType", "instanceId"));
     }
 
     @Override
@@ -682,6 +702,22 @@ public class VolumeVO implements Volume {
 
     public void setEncryptFormat(String encryptFormat) { this.encryptFormat = encryptFormat; }
 
+    public boolean getCompress() { return compress; }
+
+    public void setCompress(boolean compress) { this.compress = compress; }
+
+    public boolean getDedup() { return dedup; }
+
+    public void setDedup(boolean dedup) { this.dedup = dedup; }
+
+    public Long getUsedFsBytes() { return usedFsBytes; }
+
+    public void setUsedFsBytes(Long usedFsBytes) { this.usedFsBytes = usedFsBytes; }
+
+    public Long getUsedPhysicalSize() { return usedPhysicalSize; }
+
+    public void setUsedPhysicalSize(Long usedPhysicalSize) { this.usedPhysicalSize = usedPhysicalSize; }
+
     @Override
     public boolean isDeleteProtection() {
         return deleteProtection;
@@ -689,5 +725,13 @@ public class VolumeVO implements Volume {
 
     public void setDeleteProtection(boolean deleteProtection) {
         this.deleteProtection = deleteProtection;
+    }
+
+    public long getLastId() {
+        return lastId;
+    }
+
+    public void setLastId(long lastId) {
+        this.lastId = lastId;
     }
 }

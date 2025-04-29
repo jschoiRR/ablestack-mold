@@ -241,6 +241,9 @@ public class TemplateJoinVO extends BaseViewWithTagInformationVO implements Cont
     @Column(name = "direct_download")
     private boolean directDownload;
 
+    @Column(name = "kvdo_enable")
+    private boolean kvdoEnable;
+
     @Column(name = "deploy_as_is")
     private boolean deployAsIs;
 
@@ -516,6 +519,10 @@ public class TemplateJoinVO extends BaseViewWithTagInformationVO implements Cont
 
     public boolean isDirectDownload() {
         return directDownload;
+    }
+
+    public boolean isKvdoEnable() {
+        return kvdoEnable;
     }
 
     public boolean isDeployAsIs() {

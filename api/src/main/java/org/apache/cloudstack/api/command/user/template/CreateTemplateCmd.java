@@ -293,7 +293,6 @@ public class CreateTemplateCmd extends BaseAsyncCreateCmd implements UserCmd {
         CallContext.current().setEventDetails(
             "Template Id: " + getEntityUuid() + ((getSnapshotId() == null) ? " from volume Id: " + this._uuidMgr.getUuid(Volume.class, getVolumeId()) : " from snapshot Id: " + this._uuidMgr.getUuid(Snapshot.class, getSnapshotId())));
         VirtualMachineTemplate template = _templateService.createPrivateTemplate(this);
-
         if (template != null) {
             List<TemplateResponse> templateResponses;
             if (isBareMetal()) {

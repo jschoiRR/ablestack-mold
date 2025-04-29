@@ -373,7 +373,7 @@ public class ApiServlet extends HttpServlet {
             LOGGER.error("unknown exception writing api response", ex);
             auditTrailSb.append(" unknown exception writing api response");
         } finally {
-            LOGGER.info(auditTrailSb.toString());
+            LOGGER.debug(auditTrailSb.toString());
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("===END=== " + reqStr);
             }

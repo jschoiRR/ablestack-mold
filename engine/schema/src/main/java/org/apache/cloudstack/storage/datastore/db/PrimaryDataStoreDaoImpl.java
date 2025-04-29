@@ -32,6 +32,7 @@ import com.cloud.storage.Storage;
 import com.cloud.utils.Pair;
 import com.cloud.utils.db.Filter;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections4.ListUtils;
 
 import com.cloud.host.Status;
 import com.cloud.hypervisor.Hypervisor.HypervisorType;
@@ -534,6 +535,30 @@ public class PrimaryDataStoreDaoImpl extends GenericDaoBase<StoragePoolVO, Long>
             String sqlValues = getSqlValuesFromStorageTags(tags);
             String sql = getSqlPreparedStatement(ZoneWideTagsSqlPrefix, ZoneWideTagsSqlSuffix, sqlValues, null);
             return searchStoragePoolsPreparedStatement(sql, dcId, null, null, ScopeType.ZONE, tags.length);
+        }
+    }
+
+    @Override
+    public List<StoragePoolVO> findZoneWideScopeZoneOrClusterStoragePoolsByTags(long dcId, String[] tags, boolean validateTagRule) {
+        if (tags == null || tags.length == 0) {
+            QueryBuilder<StoragePoolVO> sc = QueryBuilder.create(StoragePoolVO.class);
+            sc.and(sc.entity().getDataCenterId(), Op.EQ, dcId);
+            sc.and(sc.entity().getStatus(), Op.EQ, Status.Up);
+            sc.and(sc.entity().getScope(), Op.IN, ScopeType.ZONE, ScopeType.CLUSTER);
+
+            List<StoragePoolVO> storagePools = sc.list();
+
+            if (validateTagRule) {
+                storagePools = getPoolsWithoutTagRule(storagePools);
+            }
+
+            return storagePools;
+        } else {
+            String sqlValues = getSqlValuesFromStorageTags(tags);
+            String sql = getSqlPreparedStatement(ZoneWideTagsSqlPrefix, ZoneWideTagsSqlSuffix, sqlValues, null);
+            List<StoragePoolVO> listScopeZnoe = searchStoragePoolsPreparedStatement(sql, dcId, null, null, ScopeType.ZONE, tags.length);
+            List<StoragePoolVO> listScopeCluster = searchStoragePoolsPreparedStatement(sql, dcId, null, null, ScopeType.CLUSTER, tags.length);
+            return ListUtils.union(listScopeZnoe,listScopeCluster);
         }
     }
 

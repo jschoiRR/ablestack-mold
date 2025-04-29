@@ -309,6 +309,30 @@ public class VolumeResponse extends BaseResponseWithTagInformation implements Co
     @Param(description = "the format of the disk encryption if applicable", since = "4.19.1")
     private String encryptionFormat;
 
+    @SerializedName(ApiConstants.KVDO_ENABLE)
+    @Param(description = "Whether to KVDO compression and deduplication the volume", since = "4.20")
+    private Boolean kvdoEnable;
+
+    @SerializedName(ApiConstants.COMPRESS)
+    @Param(description = "Whether to On or Off it as a KVDO compress volume", since = "4.20")
+    private Boolean compress;
+
+    @SerializedName(ApiConstants.DEDUP)
+    @Param(description = "Whether to On or Off it as a KVDO dedup volume", since = "4.20")
+    private Boolean dedup;
+
+    @SerializedName(ApiConstants.USED_FS_BYTES)
+    @Param(description = "Disk file system actual usage (qemu-guest-agnet must be installed on virtual machine)", since = "4.20")
+    private Long usedFsBytes;
+
+    @SerializedName(ApiConstants.USED_PHYSICAL_SIZE)
+    @Param(description = "Disk Physical actual usage (qemu-guest-agnet must be installed on virtual machine)", since = "4.20")
+    private Long usedPhysicalSize;
+
+    @SerializedName(ApiConstants.SAVING_RATE)
+    @Param(description = "Disk Physical actual usage (qemu-guest-agnet must be installed on virtual machine)", since = "4.20")
+    private String savingsRate;
+
     public String getPath() {
         return path;
     }
@@ -870,5 +894,53 @@ public class VolumeResponse extends BaseResponseWithTagInformation implements Co
 
     public void setEncryptionFormat(String encryptionFormat) {
         this.encryptionFormat = encryptionFormat;
+    }
+
+    public boolean getKvdoEnable() {
+        return kvdoEnable;
+    }
+
+    public void setKvdoEnable(boolean kvdoEnable) {
+        this.kvdoEnable = kvdoEnable;
+    }
+
+    public boolean getCompress() {
+        return compress;
+    }
+
+    public void setCompress(boolean compress) {
+        this.compress = compress;
+    }
+
+    public boolean getDedup() {
+        return dedup;
+    }
+
+    public void setDedup(boolean dedup) {
+        this.dedup = dedup;
+    }
+
+    public Long getUsedFsBytes() {
+        return usedFsBytes;
+    }
+
+    public void setUsedFsBytes(Long usedFsBytes) {
+        this.usedFsBytes = usedFsBytes;
+    }
+
+    public Long getUsedPhysicalSize() {
+        return usedPhysicalSize;
+    }
+
+    public void setUsedPhysicalSize(Long usedPhysicalSize) {
+        this.usedPhysicalSize = usedPhysicalSize;
+    }
+
+    public String getSavingsRate() {
+        return savingsRate;
+    }
+
+    public void setSavingsRate(String savingsRate) {
+        this.savingsRate = savingsRate;
     }
 }

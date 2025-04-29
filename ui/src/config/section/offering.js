@@ -38,9 +38,9 @@ export default {
         return params
       },
       filters: ['active', 'inactive'],
-      columns: ['name', 'displaytext', 'state', 'cpunumber', 'cpuspeed', 'memory', 'domain', 'zone', 'order'],
+      columns: ['name', 'displaytext', 'state', 'cpunumber', 'cpuspeed', 'memory', 'diskofferingname', 'domain', 'zone', 'order'],
       details: () => {
-        var fields = ['name', 'id', 'displaytext', 'offerha', 'provisioningtype', 'storagetype', 'iscustomized', 'iscustomizediops', 'limitcpuuse', 'cpunumber', 'cpuspeed', 'memory', 'hosttags', 'tags', 'storagetags', 'domain', 'zone', 'created', 'dynamicscalingenabled', 'diskofferingstrictness', 'encryptroot', 'shareable', 'purgeresources']
+        var fields = ['name', 'id', 'displaytext', 'offerha', 'provisioningtype', 'storagetype', 'iscustomized', 'iscustomizediops', 'limitcpuuse', 'cpunumber', 'cpuspeed', 'memory', 'hosttags', 'tags', 'storagetags', 'domain', 'zone', 'created', 'dynamicscalingenabled', 'diskofferingstrictness', 'encryptroot', 'shareable', 'kvdoenable', 'purgeresources']
         if (store.getters.apis.createServiceOffering &&
           store.getters.apis.createServiceOffering.params.filter(x => x.name === 'storagepolicy').length > 0) {
           fields.splice(6, 0, 'vspherestoragepolicy')
@@ -225,12 +225,12 @@ export default {
         }
         return params
       },
-      columns: ['name', 'displaytext', 'state', 'disksize', 'domain', 'zone', 'order'],
+      columns: ['name', 'displaytext', 'state', 'disksize', 'domain', 'zone', 'kvdoenable', 'order'],
       filters: ['active', 'inactive'],
       details: () => {
         var fields = ['name', 'id', 'displaytext', 'disksize', 'provisioningtype', 'storagetype', 'iscustomized', 'disksizestrictness', 'iscustomizediops',
           'diskIopsReadRate', 'diskIopsWriteRate', 'diskBytesReadRate', 'diskBytesReadRateMax', 'diskBytesWriteRate', 'diskBytesWriteRateMax', 'miniops', 'maxiops', 'tags',
-          'domain', 'zone', 'created', 'encrypt', 'shareable']
+          'domain', 'zone', 'created', 'encrypt', 'shareable', 'kvdoenable']
         if (store.getters.apis.createDiskOffering &&
           store.getters.apis.createDiskOffering.params.filter(x => x.name === 'storagepolicy').length > 0) {
           fields.splice(6, 0, 'vspherestoragepolicy')
@@ -373,10 +373,22 @@ export default {
       icon: 'wifi-outlined',
       docHelp: 'adminguide/networking.html#network-offerings',
       permission: ['listNetworkOfferings'],
-      searchFilters: ['name', 'zoneid', 'domainid', 'tags'],
+      filters: ['all', 'forvpc', 'guestnetwork'],
+      searchFilters: ['name', 'zoneid', 'domainid', 'guestiptype', 'tags'],
       columns: ['name', 'state', 'guestiptype', 'traffictype', 'networkrate', 'domain', 'zone', 'order'],
       details: ['name', 'id', 'displaytext', 'guestiptype', 'traffictype', 'internetprotocol', 'networkrate', 'ispersistent', 'egressdefaultpolicy', 'availability', 'conservemode', 'specifyvlan', 'routingmode', 'specifyasnumber', 'specifyipranges', 'supportspublicaccess', 'supportsstrechedl2subnet', 'forvpc', 'fornsx', 'networkmode', 'service', 'tags', 'domain', 'zone'],
       resourceType: 'NetworkOffering',
+      customParamHandler: (params, query) => {
+        const { filter } = query
+        if (!filter) {
+          return params
+        }
+        params.forvpc = filter === 'forvpc'
+        if (filter === 'all') {
+          delete params.forvpc
+        }
+        return params
+      },
       tabs: [
         {
           name: 'details',

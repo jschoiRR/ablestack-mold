@@ -46,6 +46,7 @@ public abstract class UploadParamsBase implements UploadParams {
     private boolean isDynamicallyScalable;
     private boolean isRoutingType;
     private boolean deployAsIs;
+    private boolean isKvdoEnable;
     private CPU.CPUArch arch;
 
     UploadParamsBase(long userId, String name, String displayText, CPU.CPUArch arch,
@@ -55,7 +56,7 @@ public abstract class UploadParamsBase implements UploadParams {
                                Long zoneId, Hypervisor.HypervisorType hypervisorType, String checksum,
                                String templateTag, long templateOwnerId,
                                Map details, boolean sshkeyEnabled,
-                               boolean isDynamicallyScalable, boolean isRoutingType, boolean deployAsIs) {
+                               boolean isDynamicallyScalable, boolean isRoutingType, boolean deployAsIs, boolean isKvdoEnable) {
         this.userId = userId;
         this.name = name;
         this.displayText = displayText;
@@ -78,6 +79,7 @@ public abstract class UploadParamsBase implements UploadParams {
         this.isDynamicallyScalable = isDynamicallyScalable;
         this.isRoutingType = isRoutingType;
         this.deployAsIs = deployAsIs;
+        this.isKvdoEnable = isKvdoEnable;
     }
 
     UploadParamsBase(long userId, String name, String displayText, boolean isPublic, boolean isFeatured,
@@ -217,6 +219,11 @@ public abstract class UploadParamsBase implements UploadParams {
     @Override
     public boolean isDirectDownload() {
         return false;
+    }
+
+    @Override
+    public boolean isKvdoEnable() {
+        return isKvdoEnable;
     }
 
     @Override

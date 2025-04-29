@@ -15,6 +15,7 @@
 // specific language governing permissions and limitations
 // under the License.
 import store from '@/store'
+import { vueProps } from '@/vue-app'
 
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
@@ -80,22 +81,31 @@ export function toLocaleDate ({ date, timezoneoffset = store.getters.timezoneoff
     return null
   }
 
-  let dateWithOffset = toLocalDate({ date, timezoneoffset, usebrowsertimezone }).toUTCString()
-
-  // e.g. "Mon, 03 Jun 2024 19:22:55 GMT" -> "03 Jun 2024 19:22:55 GMT"
-  dateWithOffset = dateWithOffset.substring(dateWithOffset.indexOf(', ') + 2)
-
-  // e.g. "03 Jun 2024 19:22:55 GMT" -> "03 Jun 2024 19:22:55"
-  dateWithOffset = dateWithOffset.substring(0, dateWithOffset.length - 4)
-
+  let dateWithOffset = toLocalDate({ date, timezoneoffset, usebrowsertimezone }).toLocaleString('ko-KR', { timeZone: 'UTC' })
   if (dateOnly) {
-    // e.g. "03 Jun 2024 19:22:55" -> "03 Jun 2024"
-    return dateWithOffset.substring(0, dateWithOffset.length - 9)
+    return dateWithOffset.substring(0, dateWithOffset.length - 10)
+  }
+  if (hourOnly) {
+    return dateWithOffset.substring(dateWithOffset.length - 10, dateWithOffset.length)
   }
 
-  if (hourOnly) {
-    // e.g. "03 Jun 2024 19:22:55" -> "19:22:55"
-    return dateWithOffset.substring(dateWithOffset.length - 8, dateWithOffset.length)
+  if (vueProps.$localStorage.get('LOCALE') !== 'ko_KR') {
+    dateWithOffset = toLocalDate({ date, timezoneoffset, usebrowsertimezone }).toUTCString()
+    // e.g. "Mon, 03 Jun 2024 19:22:55 GMT" -> "03 Jun 2024 19:22:55 GMT"
+    dateWithOffset = dateWithOffset.substring(dateWithOffset.indexOf(', ') + 2)
+
+    // e.g. "03 Jun 2024 19:22:55 GMT" -> "03 Jun 2024 19:22:55"
+    dateWithOffset = dateWithOffset.substring(0, dateWithOffset.length - 4)
+
+    if (dateOnly) {
+      // e.g. "03 Jun 2024 19:22:55" -> "03 Jun 2024"
+      return dateWithOffset.substring(0, dateWithOffset.length - 9)
+    }
+
+    if (hourOnly) {
+      // e.g. "03 Jun 2024 19:22:55" -> "19:22:55"
+      return dateWithOffset.substring(dateWithOffset.length - 8, dateWithOffset.length)
+    }
   }
 
   return dateWithOffset

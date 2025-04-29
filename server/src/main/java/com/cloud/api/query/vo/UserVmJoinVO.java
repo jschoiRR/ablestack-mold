@@ -229,6 +229,9 @@ public class UserVmJoinVO extends BaseViewWithTagInformationVO implements Contro
     @Column(name = "disk_offering_name")
     private String diskOfferingName;
 
+    @Column(name = "kvdo_enable")
+    private boolean kvdoEnable;
+
     @Column(name = "service_offering_id")
     private long serviceOfferingId;
 
@@ -469,6 +472,10 @@ public class UserVmJoinVO extends BaseViewWithTagInformationVO implements Contro
 
     public long getDiskOfferingId() {
         return diskOfferingId;
+    }
+
+    public boolean getKvdoEnable() {
+        return kvdoEnable;
     }
 
     public void setPassword(String password) {

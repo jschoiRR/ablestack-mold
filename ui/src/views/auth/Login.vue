@@ -191,6 +191,14 @@
         </a-button>
       </div>
     </div>
+    <div :class="['footer']" style="padding-bottom: 20px">
+      <div class="line">
+        <span v-html="$config.footer" />
+      </div>
+      <div class="line" v-if="$store.getters.userInfo.roletype === 'Admin','User'">
+        ABLESTACK {{ buildVersion }}
+      </div>
+    </div>
   </a-form>
 </template>
 
@@ -202,6 +210,8 @@ import { SERVER_MANAGER } from '@/store/mutation-types'
 import { sourceToken } from '@/utils/request'
 import { reactive, ref, toRaw } from 'vue'
 import { mapActions } from 'vuex'
+import semver from 'semver'
+import { getParsedVersion } from '@/utils/util'
 
 export default {
   components: {
@@ -230,7 +240,8 @@ export default {
         loginType: 0
       },
       server: '',
-      forgotPasswordEnabled: false
+      forgotPasswordEnabled: false,
+      buildVersion: this.$config.buildVersion
     }
   },
   created () {
@@ -257,6 +268,14 @@ export default {
       })
       this.rules = reactive({})
       this.setRules()
+    },
+    showVersionUpdate () {
+      if (this.$store.getters?.features?.cloudstackversion && this.$store.getters?.latestVersion?.version) {
+        const currentVersion = getParsedVersion(this.$store.getters?.features?.cloudstackversion)
+        const latestVersion = getParsedVersion(this.$store.getters?.latestVersion?.version)
+        return semver.valid(currentVersion) && semver.valid(latestVersion) && semver.gt(latestVersion, currentVersion)
+      }
+      return false
     },
     setRules () {
       if (this.customActiveKey === 'cs' && this.customActiveKeyOauth === false) {
@@ -299,7 +318,6 @@ export default {
         if (response) {
           const oauthproviders = response.listoauthproviderresponse.oauthprovider || []
           oauthproviders.forEach(item => {
-            this.socialLogin = true
             if (item.provider === 'google') {
               this.googleprovider = item.enabled
               this.googleclientid = item.clientid
@@ -311,6 +329,7 @@ export default {
               this.githubredirecturi = item.redirecturi
             }
           })
+          this.socialLogin = this.googleprovider || this.githubprovider
         }
       })
       api('forgotPassword', {}).then(response => {
@@ -551,6 +570,24 @@ export default {
         linear-gradient(#CCC 0 0) right;
       background-size: 40% 1px;
       background-repeat: no-repeat;
+    }
+    .footer {
+      position: fixed;
+      padding: 0 26px;
+      margin: 200px 0 24px;
+      text-align: center;
+      transition: all 0.8s ease;
+
+      &.expanded {
+        margin-bottom: 500px;
+      }
+
+      .line {
+        margin-bottom: 8px;
+      }
+      .copyright {
+        font-size: 14px;
+      }
     }
 }
 </style>

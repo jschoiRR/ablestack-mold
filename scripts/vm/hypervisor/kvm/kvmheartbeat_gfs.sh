@@ -95,7 +95,9 @@ done
 # fi
 
 hbFolder=$MountPoint/MOLD-HB
-hbFile=$hbFolder/$HostIP
+MPTitle=$(echo $MountPoint | sed 's/\//-/g' 2> /dev/null)
+
+hbFile=$hbFolder/$HostIP$MPTitle
 
 write_hbLog() {
 #write the heart beat log
@@ -112,17 +114,18 @@ write_hbLog() {
      fi
   fi
 
-  timestamp=$(date +%s)
-  echo $timestamp > $hbFile
-  return $?
+  Timestamp=$(date +%s)
+  echo $Timestamp > $hbFile
+  return 0
 }
 
 check_hbLog() {
   now=$(date +%s)
-  hb=$(cat $hbFile)
-  diff=`expr $now - $hb`
-  if [ $diff -gt $interval ]
-  then
+  getHbTime=$(cat $hbFile)
+
+  diff=$(expr $now - $getHbTime)
+
+  if [ $diff -gt $interval ]; then
     return $diff
   fi
   return 0
@@ -134,19 +137,19 @@ then
   diff=$?
   if [ $diff == 0 ]
   then
-    echo "### [HOST STATE : ALIVE] ###"
+    echo "### [HOST STATE : ALIVE] in [PoolType : SharedMountPoint] ###"
   else
-    echo "### [HOST STATE : DEAD] Set maximum interval: ($interval seconds), Actual difference: ($diff seconds) => Considered host down ###"
+    echo "### [HOST STATE : DEAD] Set maximum interval: ($interval seconds), Actual difference: ($diff seconds) => Considered host down in [PoolType : SharedMountPoint] ###"
   fi
   exit 0
 elif [ "$cflag" == "1" ]
 then
-  /usr/bin/logger -t heartbeat "kvmheartbeat_gluegfs.sh will reboot system because it was unable to write the heartbeat to the storage."
+  /usr/bin/logger -t heartbeat "kvmheartbeat_gfs.sh will reboot system because it was unable to write the heartbeat to the storage."
   sync &
   sleep 5
   echo b > /proc/sysrq-trigger
   exit $?
 else
   write_hbLog
-  exit $?
+  exit 0
 fi

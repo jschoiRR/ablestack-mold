@@ -84,7 +84,6 @@ public class DataMotionServiceImpl implements DataMotionService {
             invokeCallback(errMsg, callback);
             return;
         }
-
         strategy.copyAsync(srcData, destData, destHost, callback);
     }
 

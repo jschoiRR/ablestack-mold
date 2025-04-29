@@ -62,6 +62,7 @@ import org.apache.cloudstack.storage.datastore.db.ObjectStoreDetailsDao;
 import org.apache.cloudstack.storage.datastore.db.ObjectStoreVO;
 import org.apache.cloudstack.storage.object.BaseObjectStoreDriverImpl;
 import org.apache.cloudstack.storage.object.BucketObject;
+import org.apache.commons.lang3.ObjectUtils;
 import org.twonote.rgwadmin4j.model.BucketInfo;
 import org.twonote.rgwadmin4j.model.S3Credential;
 import org.twonote.rgwadmin4j.model.User;
@@ -267,7 +268,7 @@ public class CephObjectStoreDriverImpl extends BaseObjectStoreDriverImpl {
         RgwAdmin rgwAdmin = getRgwAdminClient(storeId);
         String username = account.getUuid();
 
-        logger.debug("Attempting to create Ceph RGW user for account " + account.getAccountName() + " with UUID " + username);
+        logger.debug("Attempting to create Ceph RGW user for account {} with UUID {}", account, username);
         try {
             Optional<User> user = rgwAdmin.getUserInfo(username);
             if (user.isPresent()) {
@@ -355,7 +356,9 @@ public class CephObjectStoreDriverImpl extends BaseObjectStoreDriverImpl {
             Map<String, Long> bucketsusage = new HashMap<String, Long>();
             for (BucketInfo bucket: bucketinfo) {
                 BucketInfo.Usage usage = bucket.getUsage();
-                bucketsusage.put(bucket.getBucket(), usage.getRgwMain().getSize_kb());
+                if (!ObjectUtils.isEmpty(usage) && usage.getRgwMain() != null){
+                    bucketsusage.put(bucket.getBucket(), usage.getRgwMain().getSize_kb());
+                }
             }
             return bucketsusage;
         } catch (Exception e) {

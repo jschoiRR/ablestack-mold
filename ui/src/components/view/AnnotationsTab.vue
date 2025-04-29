@@ -41,7 +41,9 @@
               </template>
               <template #actions>
                 <a-popconfirm
-                  :title="$t('label.make') + ' ' + (item.adminsonly ? $t('label.annotation.everyone') : $t('label.adminsonly')) + ' ?'"
+                  :title="this.$localStorage.get('LOCALE') == 'ko_KR' ?
+                          (item.adminsonly ? $t('label.annotation.everyone') : $t('label.adminsonly')) + $t('label.make') + '?' :
+                          $t('label.make') + ' ' + (item.adminsonly ? $t('label.annotation.everyone') : $t('label.adminsonly')) + '?'"
                   v-if="['Admin'].includes($store.getters.userInfo.roletype)"
                   key="visibility"
                   @confirm="updateVisibility(item)"
@@ -77,7 +79,9 @@
         :current="page"
         :pageSize="pageSize"
         :total="itemCount"
-        :showTotal="total => `${$t('label.showing')} ${Math.min(total, 1+((page-1)*pageSize))}-${Math.min(page*pageSize, total)} ${$t('label.of')} ${total} ${$t('label.items')}`"
+        :showTotal="total => this.$localStorage.get('LOCALE') == 'ko_KR' ?
+          `${$t('label.total')} ${total} ${$t('label.items')} ${$t('label.of')} ${Math.min(total, 1+((page-1)*pageSize))}-${Math.min(page*pageSize, total)} ${$t('label.showing')}` :
+          `${$t('label.showing')} ${Math.min(total, 1+((page-1)*pageSize))}-${Math.min(page*pageSize, total)} ${$t('label.of')} ${total} ${$t('label.items')}`"
         :pageSizeOptions="['10']"
         @change="changePage"
         showQuickJumper>
@@ -194,6 +198,7 @@ export default {
         case 'AutoScaleVmGroup': return 'AUTOSCALE_VM_GROUP'
         case 'ManagementServer': return 'MANAGEMENT_SERVER'
         case 'ObjectStorage': return 'OBJECT_STORAGE'
+        case 'DisasterRecoveryCluster': return 'DISASTER_RECOVERY_CLUSTER'
         default: return ''
       }
     },

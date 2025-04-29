@@ -964,7 +964,7 @@ public class VmwareHelper {
             for (VirtualDevice nic : nics) {
                 try {
                     VirtualEthernetCard ethCardDevice = (VirtualEthernetCard) nic;
-                    LOGGER.error(nic.getClass().getCanonicalName() + " " + nic.getBacking().getClass().getCanonicalName() + " " + ethCardDevice.getMacAddress());
+                    LOGGER.info(nic.getClass().getCanonicalName() + " " + nic.getBacking().getClass().getCanonicalName() + " " + ethCardDevice.getMacAddress());
                     UnmanagedInstanceTO.Nic instanceNic = new UnmanagedInstanceTO.Nic();
                     instanceNic.setNicId(ethCardDevice.getDeviceInfo().getLabel());
                     if (ethCardDevice instanceof VirtualPCNet32) {

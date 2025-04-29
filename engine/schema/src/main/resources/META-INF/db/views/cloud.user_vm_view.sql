@@ -104,6 +104,7 @@ SELECT
     `backup_offering`.`id` AS `backup_offering_id`,
     `service_offering`.`name` AS `service_offering_name`,
     `disk_offering`.`name` AS `disk_offering_name`,
+    `disk_offering`.`kvdo_enable` AS `kvdo_enable`,
     `backup_offering`.`name` AS `backup_offering_name`,
     `storage_pool`.`id` AS `pool_id`,
     `storage_pool`.`uuid` AS `pool_uuid`,

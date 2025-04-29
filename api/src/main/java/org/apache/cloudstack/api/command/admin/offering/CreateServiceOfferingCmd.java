@@ -249,12 +249,13 @@ public class CreateServiceOfferingCmd extends BaseCmd {
     @Parameter(name = ApiConstants.SHAREABLE, type = CommandType.BOOLEAN, required=false, description = "Whether to use it as a shared volume", since = "4.19")
     private Boolean shareable;
 
+    @Parameter(name = ApiConstants.KVDO_ENABLE, type = CommandType.BOOLEAN, required=false, description = "Whether to KVDO compression and deduplication the volume", since = "4.20")
+    private Boolean kvdoEnable;
+
     @Parameter(name = ApiConstants.PURGE_RESOURCES, type = CommandType.BOOLEAN,
             description = "Whether to cleanup instance and its associated resource from database upon expunge of the instance",
             since="4.20")
     private Boolean purgeResources;
-
-
 
     /////////////////////////////////////////////////////
     /////////////////// Accessors ///////////////////////
@@ -492,6 +493,10 @@ public class CreateServiceOfferingCmd extends BaseCmd {
 
     public boolean getShareable() {
         return shareable == null ? false : shareable;
+    }
+
+    public boolean getKvdoEnable() {
+        return kvdoEnable == null ? false : kvdoEnable;
     }
 
     public boolean isPurgeResources() {

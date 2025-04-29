@@ -82,7 +82,7 @@ export default {
   inject: ['parentFetchData'],
   data () {
     return {
-      providers: ['MinIO', 'Glue', 'Simulator'],
+      providers: ['Glue', 'MinIO', 'Simulator'],
       zones: [],
       loading: false
     }
@@ -95,7 +95,7 @@ export default {
     initForm () {
       this.formRef = ref()
       this.form = reactive({
-        provider: 'MinIO'
+        provider: 'Glue'
       })
       this.rules = reactive({
         url: [{ required: true, message: this.$t('label.required') }],

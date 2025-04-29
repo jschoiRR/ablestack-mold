@@ -296,6 +296,7 @@ public class EventTypes {
 
     //register for user API and secret keys
     public static final String EVENT_REGISTER_FOR_SECRET_API_KEY = "REGISTER.USER.KEY";
+    public static final String API_KEY_ACCESS_UPDATE = "API.KEY.ACCESS.UPDATE";
 
     // Template Events
     public static final String EVENT_TEMPLATE_CREATE = "TEMPLATE.CREATE";
@@ -329,6 +330,7 @@ public class EventTypes {
     public static final String EVENT_VOLUME_IMPORT = "VOLUME.IMPORT";
     public static final String EVENT_VOLUME_UNMANAGE = "VOLUME.UNMANAGE";
     public static final String EVENT_VOLUME_CHANGE_DISK_OFFERING = "VOLUME.CHANGE.DISK.OFFERING";
+    public static final String EVENT_VOLUME_COMPRESS_DEDUP_UPDATE = "VOLUME.COMPRESS.DEDUP.UPDATE";
 
     // Domains
     public static final String EVENT_DOMAIN_CREATE = "DOMAIN.CREATE";
@@ -792,6 +794,9 @@ public class EventTypes {
     public static final String EVENT_SHAREDFS_DESTROY = "SHAREDFS.DESTROY";
     public static final String EVENT_SHAREDFS_EXPUNGE = "SHAREDFS.EXPUNGE";
     public static final String EVENT_SHAREDFS_RECOVER = "SHAREDFS.RECOVER";
+
+    // DISASTER RECOVERY
+    public static final String EVENT_DISASTER_RECOVERY_CLUSTER = "DISASTER.RECOVERY.CLUSTER";
 
     static {
 
@@ -1285,6 +1290,9 @@ public class EventTypes {
         entityEventDetails.put(EVENT_SHAREDFS_DESTROY, SharedFS.class);
         entityEventDetails.put(EVENT_SHAREDFS_EXPUNGE, SharedFS.class);
         entityEventDetails.put(EVENT_SHAREDFS_RECOVER, SharedFS.class);
+
+        // Disaster Recovery Cluster
+        entityEventDetails.put(EVENT_DISASTER_RECOVERY_CLUSTER, "DisasterRecoveryCluster");
     }
 
     public static boolean isNetworkEvent(String eventType) {

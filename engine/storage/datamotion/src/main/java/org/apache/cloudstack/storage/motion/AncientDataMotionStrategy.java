@@ -18,14 +18,14 @@
  */
 package org.apache.cloudstack.storage.motion;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.naming.ConfigurationException;
 
-import com.cloud.agent.api.to.DiskTO;
-import com.cloud.storage.Storage;
 import org.apache.cloudstack.engine.subsystem.api.storage.ClusterScope;
 import org.apache.cloudstack.engine.subsystem.api.storage.CopyCommandResult;
 import org.apache.cloudstack.engine.subsystem.api.storage.DataMotionStrategy;
@@ -51,8 +51,10 @@ import org.apache.cloudstack.storage.datastore.db.VolumeDataStoreDao;
 import org.apache.cloudstack.storage.datastore.db.VolumeDataStoreVO;
 import org.apache.cloudstack.storage.image.datastore.ImageStoreEntity;
 import org.apache.cloudstack.storage.to.PrimaryDataStoreTO;
-import org.apache.logging.log4j.Logger;
+import org.apache.cloudstack.storage.to.SnapshotObjectTO;
+import org.apache.cloudstack.storage.to.VolumeObjectTO;
 import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 
 import com.cloud.agent.api.Answer;
@@ -61,6 +63,7 @@ import com.cloud.agent.api.storage.MigrateVolumeCommand;
 import com.cloud.agent.api.to.DataObjectType;
 import com.cloud.agent.api.to.DataStoreTO;
 import com.cloud.agent.api.to.DataTO;
+import com.cloud.agent.api.to.DiskTO;
 import com.cloud.agent.api.to.NfsTO;
 import com.cloud.agent.api.to.VirtualMachineTO;
 import com.cloud.configuration.Config;
@@ -69,8 +72,9 @@ import com.cloud.hypervisor.Hypervisor;
 import com.cloud.storage.DataStoreRole;
 import com.cloud.storage.Snapshot.Type;
 import com.cloud.storage.SnapshotVO;
-import com.cloud.storage.StorageManager;
+import com.cloud.storage.Storage;
 import com.cloud.storage.Storage.StoragePoolType;
+import com.cloud.storage.StorageManager;
 import com.cloud.storage.StoragePool;
 import com.cloud.storage.VolumeVO;
 import com.cloud.storage.dao.SnapshotDao;
@@ -78,6 +82,7 @@ import com.cloud.storage.dao.VolumeDao;
 import com.cloud.utils.NumbersUtil;
 import com.cloud.utils.db.DB;
 import com.cloud.utils.exception.CloudRuntimeException;
+import com.cloud.utils.script.Script;
 import com.cloud.vm.VirtualMachineManager;
 
 @Component
@@ -182,6 +187,14 @@ public class AncientDataMotionStrategy implements DataMotionStrategy {
                 answer = new Answer(cmd, false, NO_REMOTE_ENDPOINT_SSVM);
             } else {
                 answer = ep.sendMessage(cmd);
+            }
+
+            if (srcData.getType() == DataObjectType.VOLUME && destData.getType() == DataObjectType.TEMPLATE) {
+                final DataTO srcDataTo = cmd.getSrcTO();
+                final VolumeObjectTO volume = (VolumeObjectTO)srcDataTo;
+                if (volume.getKvdoEnable()) {
+                    convertKvdo(destData.getTO().getPath(), destData.getUuid());
+                }
             }
 
             if (cacheData != null) {
@@ -624,6 +637,18 @@ public class AncientDataMotionStrategy implements DataMotionStrategy {
             answer = ep.sendMessage(cmd);
         }
 
+        if (srcData.getType() == DataObjectType.SNAPSHOT && (destData.getType() == DataObjectType.VOLUME || destData.getType() == DataObjectType.TEMPLATE)) {
+            final DataTO srcDataTo = cmd.getSrcTO();
+            final SnapshotObjectTO snapObjTO = (SnapshotObjectTO)srcDataTo;
+            if (snapObjTO.getVolume().getKvdoEnable()) {
+                try {
+                    convertKvdo(destData.getTO().getPath(), destData.getUuid());
+                }  catch (Exception e) {
+                    throw new CloudRuntimeException(e.toString());
+                }
+            }
+        }
+
         // clean up snapshot copied to staging
         if (needCache && srcData != null) {
             cacheMgr.releaseCacheObject(srcData);  // reduce ref count, but keep it there on cache which is converted from previous secondary storage
@@ -760,6 +785,25 @@ public class AncientDataMotionStrategy implements DataMotionStrategy {
                 // still keep snapshot on cache which may be migrated from previous secondary storage
                 releaseSnapshotCacheChain((SnapshotInfo)srcData);
             }
+        }
+    }
+
+    protected void convertKvdo(String path, String uuid) throws ConfigurationException, IOException {
+        String scriptsDir = "scripts/storage/convert";
+        String convertKvdoTemp = Script.findScript(scriptsDir, "convert_kvdo_template.sh");
+        if (convertKvdoTemp == null) {
+            throw new ConfigurationException("Unable to find convert_kvdo_template.sh");
+        }
+        logger.info("convert_kvdo_template.sh found in " + convertKvdoTemp);
+
+        Script command = new Script(convertKvdoTemp, 60000, logger);
+
+        command.add("-p", path);
+        command.add("-u", uuid);
+        final String result = command.execute();
+        if (result != null) {
+            logger.error("Failed to reset compressed deduplication template PV, VG, LV. path : " + path);
+            throw new CloudRuntimeException("Failed to run script " + convertKvdoTemp);
         }
     }
 }

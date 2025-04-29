@@ -279,5 +279,21 @@ public interface Volume extends ControlledEntity, Identity, InternalIdentity, Ba
 
     void setEncryptFormat(String encryptFormat);
 
+    boolean getCompress();
+
+    void setCompress(boolean compress);
+
+    boolean getDedup();
+
+    void setDedup(boolean dedup);
+
+    Long getUsedFsBytes();
+
+    void setUsedFsBytes(Long usedFsBytes);
+
+    Long getUsedPhysicalSize();
+
+    void setUsedPhysicalSize(Long usedPhysicalSize);
+
     boolean isDeleteProtection();
 }

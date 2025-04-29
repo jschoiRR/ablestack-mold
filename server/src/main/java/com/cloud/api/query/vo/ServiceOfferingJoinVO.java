@@ -224,6 +224,9 @@ public class ServiceOfferingJoinVO extends BaseViewVO implements InternalIdentit
     @Column(name = "shareable")
     private boolean shareable;
 
+    @Column(name = "kvdo_enable")
+    private boolean kvdoEnable;
+
     public ServiceOfferingJoinVO() {
     }
 
@@ -464,4 +467,6 @@ public class ServiceOfferingJoinVO extends BaseViewVO implements InternalIdentit
     public boolean getEncryptRoot() { return encryptRoot; }
 
     public boolean getShareable() { return shareable; }
+
+    public boolean getKvdoEnable() { return kvdoEnable; }
 }

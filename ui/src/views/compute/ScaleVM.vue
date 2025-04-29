@@ -139,6 +139,7 @@ export default {
       api('listServiceOfferings', {
         virtualmachineid: this.resource.id,
         keyword: options.keyword,
+        kvdoenable: this.resource.kvdoenable,
         page: options.page,
         pageSize: options.pageSize,
         details: 'min',

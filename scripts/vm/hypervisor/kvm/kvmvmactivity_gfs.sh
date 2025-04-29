@@ -21,6 +21,7 @@ help() {
                     -m mount point
                     -h host
                     -u volume uuid list
+                    -i interval between read hb log
                     -t time on ms
                     -d suspect time\n"
   exit 1
@@ -33,8 +34,9 @@ HostIP=
 UUIDList=
 MSTime=
 SuspectTime=
+interval=
 
-while getopts 'm:u:t:h:d:' OPTION
+while getopts 'm:u:t:i:h:d:' OPTION
 do
   case $OPTION in
   m)
@@ -45,6 +47,9 @@ do
      ;;
   u)
      UUIDList="$OPTARG"
+     ;;
+  i)
+     interval="$OPTARG"
      ;;
   t)
      MSTime="$OPTARG"
@@ -63,10 +68,11 @@ then
    exit 2
 fi
 
-hbFile="$MountPoint/MOLD-HB/$HostIP"
-acFolder="$MountPoint/MOLD-AC"
-acFile="$acFolder/$HostIP"
+MPTitle=$(echo $MountPoint | sed 's/\//-/g' 2> /dev/null)
 
+hbFile=$MountPoint/MOLD-HB/$HostIP$MPTitle
+acFolder=$MountPoint/MOLD-AC
+acFile=$acFolder/$HostIP$MPTitle
 
 if [ ! -f $acFolder ]; then
     mkdir -p $acFolder &> /dev/null
@@ -76,15 +82,15 @@ fi
 now=$(date +%s)
 hb=$(cat $hbFile)
 diff=$(expr $now - $hb)
-if [ $diff -lt 61 ]
+if [ $diff -lt $interval ]
 then
-    echo "### [HOST STATE : ALIVE] ###"
+    echo "### [HOST STATE : ALIVE] in [PoolType : SharedMountPoint] ###"
     exit 0
 fi
 
 if [ -z "$UUIDList" ]
 then
-    echo " ### [HOST STATE : DEAD] Volume UUID list is empty => Considered host down ###"
+    echo " ### [HOST STATE : DEAD] Volume UUID list is empty => Considered host down in [PoolType : SharedMountPoint] ###"
     exit 0
 fi
 
@@ -96,9 +102,9 @@ if [ ! -f $acFile ]; then
     echo "$SuspectTime:$latestUpdateTime:$MSTime" > $acFile
 
     if [[ $latestUpdateTime -gt $SuspectTime ]]; then
-        echo "### [HOST STATE : ALIVE] ###"
+        echo "### [HOST STATE : ALIVE] in [PoolType : SharedMountPoint] ###"
     else
-         echo "### [HOST STATE : DEAD] Unable to confirm normal activity of volume image list => Considered host down ### "
+         echo "### [HOST STATE : DEAD] Unable to confirm normal activity of volume image list => Considered host down in [PoolType : SharedMountPoint] ### "
     fi
 else
     acTime=$(cat $acFile)
@@ -110,15 +116,15 @@ else
     suspectTimeDiff=$(expr $SuspectTime - $lastSuspectTime)
     if [[ $suspectTimeDiff -lt 0 ]]; then
         if [[ $latestUpdateTime -gt $SuspectTime ]]; then
-            echo "### [HOST STATE : ALIVE] ###"
+            echo "### [HOST STATE : ALIVE] in [PoolType : SharedMountPoint] ###"
         else
-            echo "### [HOST STATE : DEAD] Unable to confirm normal activity of volume image list => Considered host down ### "
+            echo "### [HOST STATE : DEAD] Unable to confirm normal activity of volume image list => Considered host down in [PoolType : SharedMountPoint] ### "
         fi
     else
         if [[ $latestUpdateTime -gt $lastUpdateTime ]]; then
-            echo "### [HOST STATE : ALIVE] ###"
+            echo "### [HOST STATE : ALIVE] in [PoolType : SharedMountPoint] ###"
         else
-         echo "### [HOST STATE : DEAD] Unable to confirm normal activity of volume image list => Considered host down ### "
+         echo "### [HOST STATE : DEAD] Unable to confirm normal activity of volume image list => Considered host down in [PoolType : SharedMountPoint] ### "
         fi
     fi
 fi

@@ -280,6 +280,21 @@ public class VolumeJoinVO extends BaseViewWithTagInformationVO implements Contro
     @Column(name = "encrypt_format")
     private String encryptionFormat = null;
 
+    @Column(name = "kvdo_enable")
+    private boolean kvdoEnable;
+
+    @Column(name = "compress")
+    private boolean compress;
+
+    @Column(name = "dedup")
+    private boolean dedup;
+
+    @Column(name = "used_fs_bytes")
+    private Long usedFsBytes;
+
+    @Column(name = "used_physical_size")
+    private Long usedPhysicalSize;
+
     @Column(name = "delete_protection")
     protected Boolean deleteProtection;
 
@@ -620,6 +635,26 @@ public class VolumeJoinVO extends BaseViewWithTagInformationVO implements Contro
 
     public String getEncryptionFormat() {
         return encryptionFormat;
+    }
+
+    public boolean getKvdoEnable() {
+        return kvdoEnable;
+    }
+
+    public boolean getCompress() {
+        return compress;
+    }
+
+    public boolean getDedup() {
+        return dedup;
+    }
+
+    public Long getUsedFsBytes() {
+        return usedFsBytes;
+    }
+
+    public Long getUsedPhysicalSize() {
+        return usedPhysicalSize;
     }
 
     public Boolean getDeleteProtection() {
