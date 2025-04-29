@@ -31,7 +31,7 @@
         height: $config.theme['@logo-height'],
         marginLeft: '8px',
         marginRight: '8px',
-        marginBottom: '-10px'
+        marginBottom: '-5px'
       }"
       :src="$config.logo" />
   </div>

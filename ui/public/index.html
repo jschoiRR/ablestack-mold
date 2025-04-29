@@ -23,7 +23,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link id="favicon" rel="icon" href="<%= BASE_URL %>assets/ablestack-favicon.png">
-    <title id="title" >Mold-ABLESTACK</title>
+    <title id="title" >Mold-CLOSTACK</title>
     <style>
       .loader {
         border: 16px solid #F3F3F3;
@@ -48,7 +48,7 @@
   </head>
   <body>
     <noscript>
-      <strong>We're sorry but ABLESTACK UI needs JavaScript enabled. Please enable it to continue.</strong>
+      <strong>We're sorry but CLOSTACK UI needs JavaScript enabled. Please enable it to continue.</strong>
     </noscript>
     <div id="app">
       <div class="loader"></div>
@@ -58,6 +58,7 @@
     fetch('./config.json')
       .then(response => response.json())
       .then(data => {
+        console.log('data.loginFavicon ;>> ', data.loginFavicon);
         document.getElementById("favicon").setAttribute("href", data.loginFavicon);
         document.getElementById("title").innerHTML = data.loginTitle;
       }).catch((err) => {});
