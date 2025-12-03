@@ -8806,9 +8806,9 @@ public class ManagementServerImpl extends ManagerBase implements ManagementServe
         synchronized (getVmExtraConfigLock(vmId)) {
             try {
                 // 현재 시점의 최신 extraconfig 목록 가져오기
-                List<UserVmDetailVO> existingConfigs = _vmDetailsDao.listDetails(vmId);
+                List<VMInstanceDetailVO> existingConfigs = _vmInstanceDetailsDao.listDetails(vmId);
 
-                for (UserVmDetailVO detail : existingConfigs) {
+                for (VMInstanceDetailVO detail : existingConfigs) {
                     if (detail.getName().startsWith("extraconfig-") && detail.getValue() != null) {
                         String value = detail.getValue();
                         boolean shouldRemove = false;
@@ -8854,7 +8854,7 @@ public class ManagementServerImpl extends ManagerBase implements ManagementServe
                         }
 
                         if (shouldRemove) {
-                            _vmDetailsDao.remove(detail.getId());
+                            _vmInstanceDetailsDao.remove(detail.getId());
                             break;
                         }
                     }
@@ -8863,7 +8863,7 @@ public class ManagementServerImpl extends ManagerBase implements ManagementServe
                 int nextConfigNum = 1;
                 Set<Integer> usedNums = new HashSet<>();
 
-                for (UserVmDetailVO detail : existingConfigs) {
+                for (VMInstanceDetailVO detail : existingConfigs) {
                     if (detail.getName().startsWith("extraconfig-") && detail.getName().matches("extraconfig-\\d+")) {
                         try {
                             int num = Integer.parseInt(detail.getName().split("-")[1]);
@@ -8880,7 +8880,7 @@ public class ManagementServerImpl extends ManagerBase implements ManagementServe
                 String extraConfigKey = "extraconfig-" + nextConfigNum;
 
                 // extraconfig에 디바이스 설정 추가
-                _vmDetailsDao.addDetail(vmId, extraConfigKey, xmlConfig, true);
+                _vmInstanceDetailsDao.addDetail(vmId, extraConfigKey, xmlConfig, true);
             } catch (Exception e) {
                 throw new CloudRuntimeException("Failed to add device " + deviceName + " to VM " + vmId + " extraconfig: " + e.getMessage(), e);
             }
@@ -9342,7 +9342,7 @@ public class ManagementServerImpl extends ManagerBase implements ManagementServe
 
             boolean removed = false;
 
-            for (UserVmDetailVO detail : existingConfigs) {
+            for (VMInstanceDetailVO detail : existingConfigs) {
                 if (detail.getName().startsWith("extraconfig-") && detail.getValue() != null) {
                     String value = detail.getValue();
                     boolean shouldRemove = false;
@@ -9426,7 +9426,7 @@ public class ManagementServerImpl extends ManagerBase implements ManagementServe
 
                     if (shouldRemove) {
                         removed = true;
-                        _vmDetailsDao.remove(detail.getId());
+                        _vmInstanceDetailsDao.remove(detail.getId());
                         try {
                             VMInstanceVO vm = _vmInstanceDao.findById(vmId);
                             if (vm != null && vm.getType() == VirtualMachine.Type.User) {

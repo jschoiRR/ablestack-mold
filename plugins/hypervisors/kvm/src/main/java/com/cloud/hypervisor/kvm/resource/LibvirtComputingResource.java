@@ -3284,9 +3284,9 @@ public class LibvirtComputingResource extends ServerResourceBase implements Serv
         }
 
         devices.addDevice(createChannelDef(vmTO));
-        devices.addDevice(createWatchDogDef());
-
-        // Add multiple video devices if configured
+        if (!isGuestS390x()) {
+            devices.addDevice(createWatchDogDef());
+        }
         List<VideoDef> videoDefs = createVideoDefs(vmTO);
         for (VideoDef videoDef : videoDefs) {
             devices.addDevice(videoDef);
@@ -3295,6 +3295,7 @@ public class LibvirtComputingResource extends ServerResourceBase implements Serv
         devices.addDevice(createConsoleDef());
         devices.addDevice(createGraphicDef(vmTO));
 
+        devices.addDevice(new LibvirtVMDef.USBDef());
         if (vmTO.getGpuDevice() != null && CollectionUtils.isNotEmpty(vmTO.getGpuDevice().getGpuDevices())) {
             attachGpuDevices(vmTO, devices);
         }
@@ -3302,8 +3303,6 @@ public class LibvirtComputingResource extends ServerResourceBase implements Serv
         if (!isGuestS390x()) {
             devices.addDevice(createTabletInputDef());
         }
-        devices.addDevice(createSoundDef(vmTO));
-        devices.addDevice(new LibvirtVMDef.USBDef());
 
         TpmDef tpmDef = createTpmDef(vmTO);
         if (tpmDef != null) {
@@ -3616,6 +3615,10 @@ public class LibvirtComputingResource extends ServerResourceBase implements Serv
 
     public boolean isGuestAarch64() {
         return AARCH64.equals(guestCpuArch);
+    }
+
+    private boolean isGuestS390x() {
+        return S390X.equals(guestCpuArch);
     }
 
     private String getExecutableFormat() {
