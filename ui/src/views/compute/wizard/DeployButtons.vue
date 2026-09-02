@@ -35,8 +35,8 @@
       {{ deployButtonText }}
       <template #icon><down-outlined /></template>
       <template #overlay>
-          <a-menu type="primary" @click="handleMenu" theme="dark" class="btn-stay-on-page">
-            <a-menu-item type="primary" v-for="(menuOpt, index) in deployButtonMenuOptions" :key="index + 1">
+          <a-menu @click="handleMenu" class="btn-stay-on-page">
+            <a-menu-item v-for="(menuOpt, index) in deployButtonMenuOptions" :key="index + 1">
                 <rocket-outlined />
                 {{ menuOpt }}
             </a-menu-item>
