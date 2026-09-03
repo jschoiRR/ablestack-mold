@@ -193,6 +193,9 @@
                                     >
                                       {{ lnk.label }}
                                     </a>
+                                    <span v-if="lnk.valueText" class="target-value-metric">
+                                      {{ lnk.valueText }}
+                                    </span>
                                   </div>
                                 </template>
 
@@ -209,6 +212,9 @@
                                     >
                                       {{ lnk.label }}
                                     </a>
+                                    <span v-if="lnk.valueText" class="target-value-metric">
+                                      {{ lnk.valueText }}
+                                    </span>
                                   </div>
                                 </template>
 
@@ -225,6 +231,9 @@
                                     >
                                       {{ lnk.label }}
                                     </a>
+                                    <span v-if="lnk.valueText" class="target-value-metric">
+                                      {{ lnk.valueText }}
+                                    </span>
                                   </div>
                                 </template>
 
@@ -241,6 +250,9 @@
                                     >
                                       {{ lnk.label }}
                                     </a>
+                                    <span v-if="lnk.valueText" class="target-value-metric">
+                                      {{ lnk.valueText }}
+                                    </span>
                                   </div>
                                 </template>
                               </div>
@@ -2362,9 +2374,7 @@ export default {
           seen.add(key)
 
           let valueText = ''
-          if (binary) {
-            valueText = tr('label.bad.state')
-          } else {
+          if (!binary) {
             const L = (a && (a.labels || a.metric || a.tags || a)) || {}
 
             const rawKeysToTry = [
@@ -2412,9 +2422,7 @@ export default {
         const label = kind === 'cloud' ? raw : (kind === 'host' ? hostDisplayLabel(raw) || raw : raw)
 
         let valueText = ''
-        if (binary) {
-          valueText = tr('label.bad.state')
-        } else {
+        if (!binary) {
           const n = valueMap.get(nk)
           if (typeof n === 'number' && Number.isFinite(n)) {
             valueText = formatMetric(n, unit)
@@ -3333,6 +3341,13 @@ export default {
 
 .target-value-link:hover {
   text-decoration: underline;
+}
+
+.target-value-metric {
+  margin-left: auto;
+  color: rgba(0, 0, 0, 0.58);
+  font-size: 12px;
+  white-space: nowrap;
 }
 
 .target-sep {

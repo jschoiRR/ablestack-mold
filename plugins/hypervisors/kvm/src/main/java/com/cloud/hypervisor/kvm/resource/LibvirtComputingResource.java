@@ -4148,13 +4148,18 @@ public class LibvirtComputingResource extends ServerResourceBase implements Serv
      *                disk controller.
      */
     protected void defineDiskForDefaultPoolType(DiskDef disk, DiskTO volume, boolean isWindowsTemplate,
-                    boolean isUefiEnabled, boolean isSecureBoot, KVMPhysicalDisk physicalDisk, int devId,
+                    boolean isUefiEnabled, boolean isSecureBoot, boolean isShareable, KVMPhysicalDisk physicalDisk, int devId,
                     DiskDef.DiskBus diskBusType, DiskDef.DiskBus diskBusTypeData, Map<String, String> details) {
         boolean skipForceDiskController = MapUtils.getBoolean(details, VmDetailConstants.KVM_SKIP_FORCE_DISK_CONTROLLER,
                 false);
         if (skipForceDiskController) {
             disk.defFileBasedDisk(physicalDisk.getPath(), devId, Volume.Type.DATADISK.equals(volume.getType()) ?
-                    diskBusTypeData : diskBusType, DiskDef.DiskFmtType.QCOW2);
+                    diskBusTypeData : diskBusType, isShareable ? DiskDef.DiskFmtType.RAW : DiskDef.DiskFmtType.QCOW2);
+            return;
+        }
+        if (isShareable) {
+            disk.defFileBasedDisk(physicalDisk.getPath(), devId, Volume.Type.DATADISK.equals(volume.getType()) ? diskBusTypeData : diskBusType,
+                    DiskDef.DiskFmtType.RAW);
             return;
         }
         if (volume.getType() == Volume.Type.DATADISK && !(isWindowsTemplate && isUefiEnabled)) {
@@ -4263,6 +4268,7 @@ public class LibvirtComputingResource extends ServerResourceBase implements Serv
 
             final DiskDef disk = new DiskDef();
             int devId = volume.getDiskSeq().intValue();
+            final boolean isShareableVolume = data instanceof VolumeObjectTO && ((VolumeObjectTO) data).getShareable();
             if (volume.getType() == Volume.Type.ISO) {
                 final DiskDef.DiskType diskType = getDiskType(physicalDisk);
                 disk.defISODisk(volPath, devId, isUefiEnabled, diskType);
@@ -4381,7 +4387,11 @@ public class LibvirtComputingResource extends ServerResourceBase implements Serv
                     }
 
                     defineDiskForDefaultPoolType(disk, volume, isWindowsTemplate, isUefiEnabled, isSecureBoot,
-                            physicalDisk, devId, diskBusType, diskBusTypeData, details);
+                            isShareableVolume, physicalDisk, devId, diskBusType, diskBusTypeData, details);
+                }
+                if (isShareableVolume) {
+                    disk.setDiskFormatType(DiskDef.DiskFmtType.RAW);
+                    disk.setSharable();
                 }
                 pool.customizeLibvirtDiskDef(disk);
             }
@@ -5763,9 +5773,21 @@ public class LibvirtComputingResource extends ServerResourceBase implements Serv
 
     public DiskDef getDiskWithPathOfVolumeObjectTO(List<DiskDef> disks, VolumeObjectTO vol) {
         return disks.stream()
-                .filter(diskDef -> diskDef.getDiskPath() != null && diskDef.getDiskPath().contains(vol.getPath()))
+                .filter(diskDef -> diskPathMatchesVolumePath(diskDef.getDiskPath(), vol.getPath()))
                 .findFirst()
                 .orElseThrow(() -> new CloudRuntimeException(String.format("Unable to find volume [%s].", vol.getUuid())));
+    }
+
+    private boolean diskPathMatchesVolumePath(final String diskPath, final String volumePath) {
+        if (StringUtils.isAnyBlank(diskPath, volumePath)) {
+            return false;
+        }
+
+        if (diskPath.equals(volumePath)) {
+            return true;
+        }
+
+        return diskPath.endsWith(File.separator + volumePath) || diskPath.endsWith(volumePath);
     }
 
     protected String getDiskPathFromDiskDef(DiskDef disk) {

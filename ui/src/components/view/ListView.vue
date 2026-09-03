@@ -555,6 +555,12 @@
           displayText
         />
       </template>
+      <template v-if="column.key === 'ispaused'">
+        <status
+          :text="text ? text : ''"
+          displayText
+        />
+      </template>
       <template v-if="column.key === 'availability' && $route.path.startsWith('/extension')">
         <status :text="text ? text : ''" displayText />
       </template>
