@@ -381,6 +381,30 @@ public class HATaskTest {
     }
 
     @Test
+    public void unknownActivityResultConsumesRequiredRecheckWithoutCreatingDeadEvidence() throws Exception {
+        long now = System.nanoTime();
+        counter.recordPowerOffObservation(now - TimeUnit.SECONDS.toNanos(61), 60, 3);
+        counter.recordPowerOffObservation(now, 60, 3);
+        assertFalse(counter.hasPendingPowerOffObservation(now, 60, 3));
+        activity(false, new IllegalStateException("storage unavailable"));
+        assertEquals(0, counter.getConsecutiveActivityCheckFailureCounter());
+        assertTrue(counter.hasPendingPowerOffObservation(now, 60, 3));
+    }
+
+    @Test
+    public void staleActivityResultCannotConsumeNewCycleRecheck() throws Exception {
+        ActivityCheckTask oldTask = bind(new ActivityCheckTask(resource, provider, config,
+                HAProvider.HAProviderConfig.ActivityCheckTimeout, null, 0), HAResourceCounter.Operation.ACTIVITY);
+        counter.resetForNewCycle();
+        long now = System.nanoTime();
+        counter.recordPowerOffObservation(now - TimeUnit.SECONDS.toNanos(61), 60, 3);
+        counter.recordPowerOffObservation(now, 60, 3);
+        oldTask.processResult(true, null);
+        assertFalse(counter.hasPendingPowerOffObservation(now, 60, 3));
+        assertEquals(0, counter.getConsecutiveActivityCheckSuccessCounter());
+    }
+
+    @Test
     public void singlePowerOffProbeDoesNotCountUntilItsValidatedResultArrives() throws Exception {
         config.setHastate(HAConfig.HAState.Available);
         when(provider.checkPowerState(resource)).thenReturn(HAProvider.PowerObservation.OFF);

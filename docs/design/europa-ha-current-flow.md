@@ -2,7 +2,9 @@
 
 > 작성일: 2026-09-11 · 대상: `codex/ha-safety` 현재 작업 트리
 >
-> `3934c8718a` 커밋 이후의 기본값 변경과 **Health 작업당 BMC 1회 조회·서로 다른 poll의 연속 OFF 3회 누적** 변경까지 포함한다. 운영 브랜치 `europa-2026`의 배포 상태를 설명하는 문서는 아니다. 아래 값은 **소스 기본값**이며, 운영 DB와 agent에 저장된 실제 적용값은 별도로 확인해야 한다.
+> `3934c8718a` 커밋 이후의 기본값 변경과 **Health 작업당 BMC 1회 조회·서로 다른 poll의 연속 OFF 3회 누적 및 OFF 증거 만료 시 Activity 복귀** 변경까지 포함한다. 운영 브랜치 `europa-2026`의 배포 상태를 설명하는 문서는 아니다. 아래 값은 **소스 기본값**이며, 운영 DB와 agent에 저장된 실제 적용값은 별도로 확인해야 한다.
+
+> 추가 검증: [권장 설정과 시나리오 검증](europa-ha-recommended-settings-validation.md). **OFF 증거가 만료되면 Health 우선 배정을 해제하여 Activity로 복귀하도록 수정했다.** `ha.checking.interval` 변경은 현재 관리 서버 재시작 후 반영된다.
 
 ## 1. 먼저 확인할 핵심
 
@@ -10,8 +12,8 @@
 |---|---|
 | 정상 상태 `Available` | Health 검사와 BMC 전원 조회를 주기적으로 수행한다. 별도 Activity 반복 검사는 하지 않는다. |
 | 빠른 장애 확인 | 서로 다른 Health 작업의 BMC 조회에서 실제 `OFF`가 연속 **3회** 확인되면 HB 만료를 기다리지 않고 `Fencing`에 진입한다. |
-| BMC 감지 기본값 | Health 작업당 STATUS **1회**, 조회 timeout **1초**. OFF가 누적되는 동안 다음 poll도 Health를 우선 배정한다. poll 기본값은 **10초**다. |
-| OFF 증거 유효성 | ON·UNKNOWN·오류로 연속성을 끊는다. 성공한 OFF 관찰 사이가 **60초**를 넘으면 이전 횟수를 버리고 다시 시작한다. |
+| BMC 감지 기본값 | Health 작업당 STATUS **1회**, 조회 timeout **1초**. 유효한 OFF 증거가 누적되는 동안 다음 poll도 Health를 우선 배정한다. poll 기본값은 **10초**다. |
+| OFF 증거 유효성 | ON·UNKNOWN·오류로 연속성을 끊는다. 성공한 OFF 관찰 사이가 **60초**를 넘으면 이전 횟수를 버리고 Activity로 복귀한다. 오래된 증거를 합쳐 OFF를 확정하지 않는다. |
 | Health / Fence timeout | 각각 **20초 / 60초** |
 | 지속 Activity 검사 | Health가 비정상이면 총 횟수 제한 없이 관찰한다. 7회는 검사 종료 횟수가 아니다. |
 | `Degraded` 진입 | Activity 연속 `ALIVE` **3회**. 진입 후에도 Health/Activity 검사를 계속한다. |
@@ -78,9 +80,9 @@ stateDiagram-v2
 ### 3.1 정상 상태와 Health 검사
 
 1. `Available`에서는 Health 작업만 배정한다. 한 Health 작업은 BMC STATUS를 한 번만 조회하며, 감지를 위한 내부 반복이나 3초 대기를 하지 않는다.
-2. OFF이면 호스트별 연속 횟수를 1 올린다. 첫 번째 OFF에서 Available은 Suspect로 전환해 관찰 소유권을 확보한다. 기존 Suspect/Degraded는 유지한다. 첫 번째와 두 번째 OFF에서는 일반 agent Health를 기다리지 않고 작업을 끝내며, 다음 poll도 Activity보다 Health를 우선 배정한다.
+2. OFF이면 호스트별 연속 횟수를 1 올린다. 첫 번째 OFF에서 Available은 Suspect로 전환해 관찰 소유권을 확보한다. 기존 Suspect/Degraded는 유지한다. 첫 번째와 두 번째 OFF에서는 일반 agent Health를 기다리지 않고 작업을 끝낸다. 다음 poll에서 증거가 유효하고 Activity 재확인이 필요하지 않으면 Health를 우선 배정한다.
 3. 서로 다른 Health 작업에서 OFF가 연속 3회 확인되면 `PowerOffConfirmed` 이벤트로 Fencing에 진입한다. 이 횟수는 BMC의 성공한 OFF 응답만 센다.
-4. ON·UNKNOWN·오류이면 OFF 연속성을 초기화하고 기존 Health 검사를 진행한다. 완료된 OFF 관찰 사이의 간격이 `kvm.ha.power.off.max.interval`을 넘으면 현재 OFF부터 1회로 새로 센다.
+4. ON·UNKNOWN·오류이면 OFF 연속성을 초기화하고 기존 Health 검사를 진행한다. 완료된 OFF 관찰 사이의 간격이 `kvm.ha.power.off.max.interval`을 넘으면 현재 OFF부터 1회로 새로 센다. 작업 선택 전에도 유효성을 확인하며, 만료된 경우 Health 우선권을 해제하고 일반 Activity 일정으로 복귀한다.
 5. Health가 정상이라면 Available을 유지한다. Suspect/Degraded에서 정상 Health가 확인되면 Available로 복귀하고 Activity 이력을 초기화한다. Health 비정상이면 Suspect로 관찰을 시작하며, 이미 Degraded이면 Degraded를 유지한다.
 6. 새 HA 주기, 소유권 변경·상실, provider 변경·상실, HA 비활성화 등의 자격 변경으로 이전 OFF 이력을 재사용하지 않는다. 이 횟수는 메모리 상태이므로 관리 서버 재시작 후에도 0에서 다시 시작한다.
 
@@ -96,7 +98,9 @@ poll은 작업 배정 주기다. 이미 대기·실행 중인 작업이 있으�
 
 ### 3.2 지속 Activity 검사와 Degraded
 
-Suspect/Degraded에서는 Activity 검사 후 Health 검사도 수행하도록 교대한다. 단, OFF가 1회 이상 누적되어 추가 확인이 필요한 동안에는 다음 poll의 Health를 우선하여 새 Activity 작업 때문에 OFF 확인이 밀리지 않도록 한다. 이미 실행 중인 Activity 작업을 강제로 중단하는 것은 아니다. 검사 사이에는 설정 간격과 poll을 적용하며, 한 작업 안에서 무한 반복하지 않는다.
+Suspect/Degraded에서는 Activity 검사 후 Health 검사도 수행하도록 교대한다. 단, 유효한 OFF가 1회 이상 누적되어 추가 확인이 필요한 동안에는 다음 poll의 Health를 우선하여 새 Activity 작업 때문에 OFF 확인이 밀리지 않도록 한다. 이미 실행 중인 Activity 작업을 강제로 중단하는 것은 아니다. 검사 사이에는 설정 간격과 poll을 적용하며, 한 작업 안에서 무한 반복하지 않는다.
+
+OFF 증거가 만료되면 Activity 재확인을 요청한다. Health 응답 처리 중 만료되어 새 OFF 1회가 기록되더라도 이 요청을 유지하여 다음 poll에서 Health만 다시 우선하지 않도록 한다. 실제 Activity 결과가 현재 작업으로 검증되어 처리될 때 재확인 요청을 해제한다. 작업 예약·제출 실패나 오래된 결과로 요청을 소모하지 않으며, 실행 중인 작업과 기존 Activity 최소 간격은 그대로 존중한다. 만료 자체는 Activity DEAD 누적을 지우지 않는다. UNKNOWN 응답도 재확인 수행으로 처리하지만, 아래와 같이 ALIVE/DEAD 연속성을 끊으므로 DEAD 증거가 되지 않는다.
 
 | Activity 결과 | 연속 카운터 처리 | 상태 처리 |
 |---|---|---|
@@ -181,7 +185,9 @@ HB가 만료됐다고 무조건 DEAD가 되는 것도 아니다. 후속 볼륨 �
 
 기존 DB에 감지 횟수 5회나 poll 5초가 저장돼 있으면 아래 소스 기본값 3회·10초로 자동 변경되지 않는다. 감지 횟수와 펜싱 검증 횟수를 별도로 확인한다. agent의 `agent.properties` 설정은 관리 서버 글로벌 설정과 별개다.
 
-`kvm.ha.power.off.max.interval`은 실제 OFF 조회 간격보다 충분히 길게 잡아야 한다. 예를 들어 기존 poll 60초가 저장돼 있는데 최대 허용 간격도 60초이면 조회·스케줄링 지연 때문에 매번 연속성이 초기화될 수 있다. poll과 대기열 지연을 함께 고려하며, 소스 기본 조합은 poll 10초 / 최대 간격 60초다.
+`kvm.ha.power.off.max.interval`은 실제 OFF 조회 간격보다 충분히 길게 잡아야 한다. 예를 들어 기존 poll 60초가 저장돼 있는데 최대 허용 간격도 60초이면 조회·스케줄링 지연 때문에 매번 연속성이 초기화될 수 있다. 수정 후에는 만료된 증거의 Health 우선권을 해제하여 Activity 관찰을 재개하지만, 이 조합으로 빠른 OFF 3회 확정을 보장하지는 않는다. 최대 간격을 코드에서 자동으로 늘리지 않는다. poll과 대기열 지연을 함께 고려하며, 소스 기본 조합은 poll 10초 / 최대 간격 60초다.
+
+OFF 누적 호스트를 처리할 때 최대 간격이 실제 등록된 poll 이하이면 경고한다. 경고는 provider·등록 poll·최대 간격 조합별로 관리 서버 실행 중 한 번 기록하며, UI에서 바뀐 값 대신 현재 스케줄에 등록된 간격을 사용한다. `ha.checking.interval`의 실행 중 재등록은 구현하지 않았으므로 변경 후 관리 서버 재시작이 필요하다.
 
 ### 6.2 전역 poll 및 작업 처리량
 
@@ -285,7 +291,7 @@ Fence는 `Fence timeout > B + 21`을 요구한다. 현재는 `60 > 17 + 21`로 �
 | 호스트 정상, BMC ON | Available에서 Health/BMC 확인. Activity 반복 검사 없음 |
 | 실제 전원 OFF, BMC 통신 가능 | 서로 다른 Health 작업에서 OFF 연속 3회 확정 후 HB 만료를 기다리지 않고 Fencing 경로로 진행 |
 | OFF 1~2회 뒤 ON·UNKNOWN·오류 | OFF 횟수 초기화 후 일반 Health로 관찰 |
-| OFF 응답 사이가 최대 허용 간격 60초 초과 | 현재 OFF부터 1회로 다시 누적하며, 오래된 OFF를 합쳐 확정하지 않음 |
+| OFF 응답 사이가 최대 허용 간격 60초 초과 | 이전 OFF 증거의 우선권을 해제하고 Activity 재확인. Activity DEAD가 누적되면 Recovering/Fencing 경로로 진행 |
 | ping·virsh·BMC 모두 불통 | 통신 불가만으로 완전 다운 확정 안 함. 최근 HB는 ALIVE일 수 있으며 후속 관찰 지속 |
 | Health 비정상, Activity ALIVE 3회 | Degraded 진입 후 지속 관찰. Available 복귀는 정상 Health가 필요 |
 | Activity가 ALIVE/DEAD/UNKNOWN 사이에서 변동 | 연속 기준을 채우지 못하면 검사를 계속함. UNKNOWN은 실패로 누적하지 않음 |
@@ -312,7 +318,9 @@ VM 복구 대상에는 기존 HA 정책이 적용된다. HA 비활성 VM, 로컬
 | agent HB 기본값 | [AgentProperties.java](../../agent/src/main/java/com/cloud/agent/properties/AgentProperties.java) |
 | HB / Activity 판정 스크립트 | [KVM 스크립트 디렉터리](../../scripts/vm/hypervisor/kvm) |
 
-이번 **Health 작업당 BMC 1회·poll 간 OFF 3회 누적** 변경은 **43개 모듈 빌드 성공, Java 회귀 테스트 236개 통과**를 확인했다. 실패·오류·제외는 0개다. STATUS 단일 조회, 작업 간 OFF 누적과 초기화, Health 우선 배정, 감지·펜싱 검증 설정 분리 및 기존 HA 복구 회귀를 검증했다. IPMI driver와 simulator도 빌드했다. 상세 결과와 재현 명령은 [HA 검증 기록](europa-ha-safety-validation.md)에 있다.
+**최신 OFF 증거 만료 보완은 Checkstyle을 활성화한 44개 모듈 빌드와 251개 회귀 테스트를 통과했다.** 실패·오류·제외 0개이며, 만료·지연 응답·Activity 복귀 및 기존 보호를 다루는 새 회귀 테스트 10개를 포함한다. 상세 결과는 [HA 검증 기록](europa-ha-safety-validation.md)에 있다.
+
+이전 **Health 작업당 BMC 1회·poll 간 OFF 3회 누적** 변경은 **43개 모듈 빌드 성공, Java 회귀 테스트 236개 통과**를 확인했다. 실패·오류·제외는 0개다. STATUS 단일 조회, 작업 간 OFF 누적과 초기화, Health 우선 배정, 감지·펜싱 검증 설정 분리 및 기존 HA 복구 회귀를 검증했다. IPMI driver와 simulator도 빌드했다. 상세 결과와 재현 명령은 [HA 검증 기록](europa-ha-safety-validation.md)에 있다.
 
 아래 수치는 이전 구현 단계의 별도 실행이며 현재 실행 수에 합산하지 않는다.
 

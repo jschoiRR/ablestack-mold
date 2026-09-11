@@ -10,7 +10,7 @@
 ## 실제 변경 흐름
 
 1. 각 Health 작업에서 관리 서버가 최신 BMC STATUS를 **한 번만** 조회한다. 서로 다른 작업의 OFF 응답이 기본 3회 연속 누적될 때 HB 만료 전 Fencing으로 진행할 수 있다. 조회당 timeout 1초이며 감지 중 내부 3초 대기는 없다. Ping 실패·BMC 무응답·PoweringOff는 OFF 증거가 아니다.
-2. OFF 1~2회이면 agent Health를 생략하고 작업을 반환하며, 다음 poll도 Health를 우선한다. ON·UNKNOWN·오류는 OFF 연속성을 초기화한 뒤 기존 Health/Activity 경로로 관찰한다. Activity는 초기 성공 표본 때문에 검사를 중단하지 않는다. 7회·50%는 연속 DEAD 4회, 9회·50%는 5회이며, ALIVE 또는 UNKNOWN이 끼면 실패 연속성이 끊어진다.
+2. OFF 1~2회이면 agent Health를 생략하고 작업을 반환하며, 증거가 유효하고 Activity 재확인이 필요하지 않으면 다음 poll도 Health를 우선한다. OFF 증거가 만료되면 우선권을 해제하여 Activity로 복귀한다. ON·UNKNOWN·오류는 OFF 연속성을 초기화한 뒤 기존 Health/Activity 경로로 관찰한다. Activity는 초기 성공 표본 때문에 검사를 중단하지 않는다. 7회·50%는 연속 DEAD 4회, 9회·50%는 5회이며, ALIVE 또는 UNKNOWN이 끼면 실패 연속성이 끊어진다.
 3. Fencing 작업은 Maintenance를 DB에 확정하고 agent 명령 전송을 차단한 뒤, 복구할 VM ID·UUID를 `host_details`에 저장한다.
 4. OFF 요청 → 조회 완료 후 3초 간격으로 실제 OFF 연속 5회 확인 → ON 요청 순으로 수행한다. 이 펜싱 검증 횟수는 감지용 3회와 별개다. 전원 변경 직전에 HA 활성화, 클러스터·존 설정, 관리 서버 소유권, Maintenance를 다시 확인한다.
 5. 성공한 fencing을 DB에 Fenced로 기록한다. 저장한 VM 목록으로 `HostFenced` HA 작업을 DB에 등록한 뒤에만 목록을 제거하고 호스트 HA를 비활성화한다. 원래 호스트의 Maintenance는 유지한다.
@@ -18,7 +18,26 @@
 
 조기 OFF 확인은 Activity DEAD 판정을 기다리거나 Activity 결과를 DEAD로 변환하는 절차가 아니다. 별도 `PowerOffConfirmed` 이벤트로 Fencing에 진입하고, 늦게 도착한 Activity 결과는 반영하지 않는다. 실제 순서는 Maintenance 확정이 전원 조작보다 먼저이며, VM 복구는 다른 호스트에서의 재시작이다.
 
-## 최신 변경: Health 작업당 BMC 1회 조회 및 poll 간 OFF 3회 누적
+## 최신 변경: OFF 증거 만료 시 Activity 정체 해소
+
+poll 60초 / OFF 최대 간격 60초에서 OFF 관찰 간격을 60.001초로 모의 처리했을 때, 수정 전에는 OFF 횟수가 매번 1로 초기화되지만 Health 우선 조건은 유지되어 Activity와 Fencing이 정체됐다. 이 결함을 다음과 같이 수정했다.
+
+| 지점 | 수정 후 동작 |
+|---|---|
+| Suspect/Degraded 작업 선택 | OFF 증거의 현재 유효성을 먼저 확인. 만료된 증거는 Health 우선권을 잃고 일반 Activity 일정으로 복귀 |
+| 지연된 Health 응답에서 만료 | 새 OFF 1회가 기록돼도 Activity 재확인 요청 유지. 다음 poll에서 새 증거만 보고 다시 Health를 우선하지 않음 |
+| Activity 재확인 요청 해제 | 현재 작업으로 검증된 결과 처리 때 해제. 단순 예약·제출 실패·오래된 결과로 소모하지 않음 |
+| Activity 결과 | 만료 자체로 DEAD 이력을 초기화하지 않으므로 후속 DEAD가 임계값에 이르면 Recovering/Fencing 진행. UNKNOWN은 재확인 수행으로 처리하되 ALIVE/DEAD 연속성을 끊음 |
+| 정상 OFF 관찰 | 유효 간격 안의 연속 OFF 3회 확정 경로 유지. 오래된 증거를 합쳐 확정하지 않음 |
+| 설정 진단 | 최대 간격이 실제 등록 poll 이하이면 provider·등록 poll·최대 간격 조합별로 한 번 경고 |
+
+실행 중인 작업, Activity 최소 간격, 기존 소유권·늦은 결과 보호를 유지한다. 최대 간격을 자동으로 늘리거나 poll을 실행 중 재등록하는 기능은 추가하지 않았다. `ha.checking.interval` 변경 후 관리 서버 재시작이 필요하다. 기본값은 poll 10초 / 최대 간격 60초 / STATUS timeout 1초로 그대로이며, [권장 설정](europa-ha-recommended-settings-validation.md)의 timeout 2초는 운영 권장값이다.
+
+**검증 완료: Checkstyle 활성화, 44개 reactor 모듈 BUILD SUCCESS, 19개 suite의 251개 회귀 테스트 통과.** 실패·오류·제외 0개이며 Checkstyle 감사 37개도 오류 없이 완료했다. 새 회귀 테스트 10개(counter 4개, manager 4개, task 2개)는 만료·지연 응답·Activity 복귀·DEAD 누적과 작업 제출 실패·중복·오래된 결과 보호를 다룬다. 독립 코드 검토에서도 필수 수정 사항은 발견되지 않았다.
+
+실행 로그: `/private/tmp/europa-ha-off-expiry-fix-tests.log`. 완료: `2026-09-11T16:47:38+09:00`. 실제 BMC/PCS/스토리지 장애 시험, RPM 패키징 및 운영 배포는 수행하지 않았다. 아래 검증 수치는 모두 이전 단계의 별도 결과이며 합산하지 않는다.
+
+## 이전 단계: Health 작업당 BMC 1회 조회 및 poll 간 OFF 3회 누적
 
 사용자가 한 Health 작업 안에서 5회 조회와 3초 대기를 반복하는 부담을 지적하여 감지 구조를 변경했다.
 
@@ -111,7 +130,7 @@ mvn -o -Psimulator \
 
 스토리지 HB의 60초 보호 시간을 삭제한 것이 아니다. 물리적으로 전원이 꺼졌다는 별도 증거가 확보되는 경우 그 만료를 기다리지 않는 경로를 추가했다.
 
-현재 poll 기본값은 10초다. 기존 설치의 저장된 `ha.checking.interval` 값은 자동 변경하지 않는다. OFF 응답이 이어지는 동안 각 Health 작업은 한 번 조회하고 끝내며, 다음 poll에 Health를 우선 배정한다. 지연 없이 각 poll에 배정된다면 첫 조회부터 세 번째 조회까지 약 두 poll 간격이지만 고정 완료 시간은 아니다. 검사 시작 전 poll·대기열·현재 실행 중인 작업의 잔여 시간, BMC 응답 시간은 여전히 영향을 준다. Activity timeout 기본값은 60초이므로 이미 실행 중인 긴 검사까지 포함하여 항상 60초 미만에 감지한다고 보장하지 않는다. OFF 관찰 사이의 최대 허용 간격 60초는 오래된 증거를 배제하는 값이며, HB의 60초를 기다리는 조건이 아니다.
+현재 poll 기본값은 10초다. 기존 설치의 저장된 `ha.checking.interval` 값은 자동 변경하지 않는다. 유효한 OFF 응답이 이어지고 Activity 재확인 요청이 없는 동안 각 Health 작업은 한 번 조회하고 끝내며, 다음 poll에 Health를 우선 배정한다. 만료가 반복되면 Activity 관찰로 복귀한다. 지연 없이 각 poll에 배정된다면 첫 조회부터 세 번째 조회까지 약 두 poll 간격이지만 고정 완료 시간은 아니다. 검사 시작 전 poll·대기열·현재 실행 중인 작업의 잔여 시간, BMC 응답 시간은 여전히 영향을 준다. Activity timeout 기본값은 60초이므로 이미 실행 중인 긴 검사까지 포함하여 항상 60초 미만에 감지한다고 보장하지 않는다. OFF 관찰 사이의 최대 허용 간격 60초는 오래된 증거를 배제하는 값이며, HB의 60초를 기다리는 조건이 아니다.
 
 BMC까지 전원이 끊겼거나 관리망이 단절되면 무응답을 완전 다운으로 바꾸지 않는다. 커널 정지처럼 전원은 ON인 장애도 조기 OFF 경로의 대상이 아니다. 기존 관찰과 검증된 fencing이 필요하다.
 
@@ -119,7 +138,7 @@ BMC까지 전원이 끊겼거나 관리망이 단절되면 무응답을 완전 �
 
 - 관리 서버, KVM agent, 변경한 HB/Activity 스크립트를 함께 갱신한다. 구형 일반 Answer는 UNKNOWN으로 처리되므로 혼용 기간의 HA 판단이 지연될 수 있다.
 - 실제 저장된 poll·Health/Activity/Fence timeout과 BMC 설정을 확인한다. 감지는 poll당 STATUS 1회와 연속 OFF 3회이며, 펜싱 검증은 별도로 5회·3초다. 조회당 timeout은 공통 1초다. 기존 DB에 감지 횟수 5회·poll 5초가 저장돼 있으면 자동 변경되지 않는다. 펜싱 관찰 예산 17초는 Health에 적용하지 않고 Fence timeout 60초 안에서 OFF·ON 여유와 함께 검증한다. BMC 응답이 1초를 넘으면 UNKNOWN으로 처리되어 조기 감지나 fencing 완료가 지연될 수 있다. 실제 호스트 수에 맞춰 조회·agent 부하와 대기열 지연을 현장에서 측정한다.
-- OFF 관찰 최대 간격은 실제 poll과 대기열 지연보다 충분히 길게 설정한다. 기존 DB의 poll 60초 이상과 최대 간격 60초 조합은 응답·스케줄링 지연 때문에 연속성이 반복 초기화될 수 있다. 소스 기본 조합은 poll 10초 / 최대 간격 60초다.
+- OFF 관찰 최대 간격은 실제 poll과 대기열 지연보다 충분히 길게 설정한다. 기존 DB의 poll 60초 이상과 최대 간격 60초 조합은 응답·스케줄링 지연 때문에 연속성이 반복 초기화될 수 있다. 수정 후에는 Activity 관찰로 복귀하지만 빠른 OFF 3회 확정을 보장하지 않는다. 소스 기본 조합은 poll 10초 / 최대 간격 60초다.
 - CLVM의 이웃 호스트 로컬 프로세스 검사는 장애 호스트 VM의 종료를 입증하지 못한다. HB 만료 후 이 근거만 있을 때 UNKNOWN을 반환한다.
 - 로컬 root volume, HA 비활성 VM, 이미 이동·제거된 VM 등 기존 복구 제외 조건을 유지한다. 모든 VM이 무조건 다른 호스트에서 시작된다는 의미는 아니다.
 - PCS 또는 libvirt의 외부 자동 시작은 Mold의 Start 차단만으로 통제되지 않는다. PCS가 Maintenance 확정보다 먼저 재부팅하는 시험과 libvirt 자동 시작 정책을 별도 확인해야 한다.

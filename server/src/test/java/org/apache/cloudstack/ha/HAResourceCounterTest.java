@@ -48,6 +48,52 @@ public class HAResourceCounterTest {
     }
 
     @Test
+    public void powerPriorityExpiresBeforeAnotherObservationWithoutLosingActivityEvidence() {
+        HAResourceCounter counter = new HAResourceCounter();
+        counter.incrActivityCounter(true);
+        counter.recordPowerOffObservation(TimeUnit.SECONDS.toNanos(10), 60, 3);
+        assertTrue(counter.hasPendingPowerOffObservation(TimeUnit.SECONDS.toNanos(70), 60, 3));
+        assertFalse(counter.hasPendingPowerOffObservation(TimeUnit.SECONDS.toNanos(70) + 1, 60, 3));
+        assertEquals(0, counter.getConsecutivePowerOffCounter());
+        assertEquals(1, counter.getConsecutiveActivityCheckFailureCounter());
+    }
+
+    @Test
+    public void delayedOffResultCannotTakePriorityUntilActivityHasBeenChecked() {
+        HAResourceCounter counter = new HAResourceCounter();
+        counter.recordPowerOffObservation(TimeUnit.SECONDS.toNanos(10), 60, 3);
+        assertEquals(1, counter.recordPowerOffObservation(TimeUnit.SECONDS.toNanos(71), 60, 3));
+        assertFalse(counter.hasPendingPowerOffObservation(TimeUnit.SECONDS.toNanos(72), 60, 3));
+        assertEquals(2, counter.recordPowerOffObservation(TimeUnit.SECONDS.toNanos(81), 60, 3));
+        assertFalse(counter.hasPendingPowerOffObservation(TimeUnit.SECONDS.toNanos(82), 60, 3));
+        counter.completeActivityRecheck();
+        assertTrue(counter.hasPendingPowerOffObservation(TimeUnit.SECONDS.toNanos(83), 60, 3));
+    }
+
+    @Test
+    public void reservingOrReleasingUnexecutedActivityDoesNotConsumeRecheck() {
+        HAResourceCounter counter = new HAResourceCounter();
+        counter.recordPowerOffObservation(TimeUnit.SECONDS.toNanos(10), 60, 3);
+        counter.recordPowerOffObservation(TimeUnit.SECONDS.toNanos(71), 60, 3);
+        HAResourceCounter.TaskToken token = counter.tryStartTask(HAResourceCounter.Operation.ACTIVITY);
+        counter.finishTask(token);
+        assertFalse(counter.hasPendingPowerOffObservation(TimeUnit.SECONDS.toNanos(72), 60, 3));
+        counter.resetForNewCycle();
+        counter.recordPowerOffObservation(TimeUnit.SECONDS.toNanos(73), 60, 3);
+        assertTrue(counter.hasPendingPowerOffObservation(TimeUnit.SECONDS.toNanos(74), 60, 3));
+    }
+
+    @Test
+    public void changedConfirmationRequirementCannotKeepPowerPriority() {
+        HAResourceCounter counter = new HAResourceCounter();
+        counter.recordPowerOffObservation(TimeUnit.SECONDS.toNanos(10), 60, 3);
+        assertFalse(counter.hasPendingPowerOffObservation(TimeUnit.SECONDS.toNanos(11), 60, 5));
+        assertEquals(0, counter.getConsecutivePowerOffCounter());
+        assertEquals(1, counter.recordPowerOffObservation(TimeUnit.SECONDS.toNanos(12), 60, 5));
+        assertFalse(counter.hasPendingPowerOffObservation(TimeUnit.SECONDS.toNanos(13), 60, 5));
+    }
+
+    @Test
     public void changingPowerOffConfirmationRequirementStartsNewEvidence() {
         HAResourceCounter counter = new HAResourceCounter();
         counter.recordPowerOffObservation(TimeUnit.SECONDS.toNanos(10), 60, 3);

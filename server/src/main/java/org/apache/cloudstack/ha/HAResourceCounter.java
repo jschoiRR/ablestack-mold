@@ -45,6 +45,7 @@ public final class HAResourceCounter {
     private long consecutivePowerOffCounter;
     private long lastPowerOffObservationNanos;
     private long powerOffRequiredConfirmations;
+    private boolean powerOffActivityRecheckRequired;
     private String powerObservationProvider;
     private AtomicLong activityCheckCounter = new AtomicLong(0);
     private AtomicLong activityCheckFailureCounter = new AtomicLong(0);
@@ -83,16 +84,21 @@ public final class HAResourceCounter {
         return consecutivePowerOffCounter;
     }
 
+    public synchronized boolean hasPendingPowerOffObservation(long nowNanos, long maxIntervalSeconds, long requiredConfirmations) {
+        if (!isPowerObservationConfigurationValid(maxIntervalSeconds, requiredConfirmations)) {
+            resetPowerOffCounter();
+            return false;
+        }
+        expirePowerOffObservation(nowNanos, maxIntervalSeconds, requiredConfirmations);
+        return consecutivePowerOffCounter > 0 && !powerOffActivityRecheckRequired;
+    }
+
     public synchronized long recordPowerOffObservation(long nowNanos, long maxIntervalSeconds, long requiredConfirmations) {
-        if (maxIntervalSeconds < 1 || maxIntervalSeconds > 3600 || requiredConfirmations < 3) {
+        if (!isPowerObservationConfigurationValid(maxIntervalSeconds, requiredConfirmations)) {
             resetPowerOffCounter();
             return 0;
         }
-        long elapsed = nowNanos - lastPowerOffObservationNanos;
-        if (consecutivePowerOffCounter > 0 && (powerOffRequiredConfirmations != requiredConfirmations
-                || elapsed < 0 || elapsed > TimeUnit.SECONDS.toNanos(maxIntervalSeconds))) {
-            resetPowerOffCounter();
-        }
+        expirePowerOffObservation(nowNanos, maxIntervalSeconds, requiredConfirmations);
         powerOffRequiredConfirmations = requiredConfirmations;
         lastPowerOffObservationNanos = nowNanos;
         if (consecutivePowerOffCounter < requiredConfirmations) {
@@ -101,10 +107,31 @@ public final class HAResourceCounter {
         return consecutivePowerOffCounter;
     }
 
+    private boolean isPowerObservationConfigurationValid(long maxIntervalSeconds, long requiredConfirmations) {
+        return maxIntervalSeconds >= 1 && maxIntervalSeconds <= 3600 && requiredConfirmations >= 3;
+    }
+
+    private void expirePowerOffObservation(long nowNanos, long maxIntervalSeconds, long requiredConfirmations) {
+        long elapsed = nowNanos - lastPowerOffObservationNanos;
+        if (consecutivePowerOffCounter > 0 && (powerOffRequiredConfirmations != requiredConfirmations
+                || elapsed < 0 || elapsed > TimeUnit.SECONDS.toNanos(maxIntervalSeconds))) {
+            resetPowerOffCounter();
+            // A delayed Health result can start a fresh OFF sequence after the
+            // poll has already selected Health. Keep Activity eligible even when
+            // that new OFF result is still fresh at the next poll.
+            powerOffActivityRecheckRequired = true;
+        }
+    }
+
+    public synchronized void completeActivityRecheck() {
+        powerOffActivityRecheckRequired = false;
+    }
+
     public synchronized void resetPowerOffCounter() {
         consecutivePowerOffCounter = 0;
         lastPowerOffObservationNanos = 0;
         powerOffRequiredConfirmations = 0;
+        powerOffActivityRecheckRequired = false;
     }
 
     public synchronized void synchronizePowerObservationProvider(String provider) {

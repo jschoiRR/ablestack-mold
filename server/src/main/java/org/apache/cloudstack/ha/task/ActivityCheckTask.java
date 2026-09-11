@@ -61,6 +61,9 @@ public class ActivityCheckTask extends BaseHATask {
         }
         final HAConfig haConfig = getHaConfig();
         final HAResourceCounter counter = getCounter();
+        // Only a validated Activity result consumes the fallback request. Merely
+        // reserving a task, or rejecting its submission, must not consume it.
+        counter.completeActivityRecheck();
 
         if (t != null) {
             // An unavailable witness proves neither activity nor inactivity.

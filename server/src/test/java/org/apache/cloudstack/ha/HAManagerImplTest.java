@@ -26,7 +26,9 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 import java.util.concurrent.RejectedExecutionException;
+import java.util.concurrent.TimeUnit;
 
+import com.cloud.event.ActionEventUtils;
 import com.cloud.host.HostVO;
 import com.cloud.host.Status;
 import com.cloud.host.dao.HostDao;
@@ -34,9 +36,11 @@ import com.cloud.dc.ClusterDetailsDao;
 import com.cloud.dc.dao.DataCenterDetailsDao;
 import com.cloud.resource.ResourceState;
 import com.cloud.utils.component.ComponentContext;
+import org.apache.cloudstack.context.CallContext;
 import org.apache.cloudstack.ha.dao.HAConfigDao;
 import org.apache.cloudstack.ha.provider.HAProvider;
 import org.apache.cloudstack.ha.task.BaseHATask;
+import org.apache.cloudstack.ha.task.ActivityCheckTask;
 import org.apache.cloudstack.kernel.Partition;
 import org.apache.cloudstack.utils.identity.ManagementServerNode;
 import org.junit.After;
@@ -47,12 +51,14 @@ import org.mockito.Mockito;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.spy;
@@ -242,6 +248,95 @@ public class HAManagerImplTest {
         verify(manager, never()).submitHATask(any(), any(), any(), any(), eq(HAResourceCounter.Operation.ACTIVITY));
         verify(manager, never()).transitionHAState(any(), any());
         assertEquals(HAConfig.HAState.Degraded, config.getState());
+    }
+
+    @Test
+    public void suspectWithExpiredOffEvidenceReturnsToActivityInsteadOfAnotherPowerPoll() {
+        recordExpiredPowerOffObservation();
+        manager.processHAResource(config, host, provider);
+        assertEquals(0, counter.getConsecutivePowerOffCounter());
+        verify(manager).transitionHAState(HAConfig.Event.PerformActivityCheck, config);
+        verify(manager, never()).submitHATask(any(), any(), any(), any(), eq(HAResourceCounter.Operation.HEALTH));
+    }
+
+    @Test
+    public void degradedWithExpiredOffEvidenceChecksActivityWithoutLosingState() {
+        config.setHastate(HAConfig.HAState.Degraded);
+        recordExpiredPowerOffObservation();
+        doReturn(true).when(manager).submitHATask(any(), any(), any(), any(), any());
+        manager.processHAResource(config, host, provider);
+        assertEquals(0, counter.getConsecutivePowerOffCounter());
+        verify(manager).submitHATask(host, provider, config, counter, HAResourceCounter.Operation.ACTIVITY);
+        verify(manager, never()).submitHATask(any(), any(), any(), any(), eq(HAResourceCounter.Operation.HEALTH));
+        verify(manager, never()).transitionHAState(any(), any());
+        assertEquals(HAConfig.HAState.Degraded, config.getState());
+    }
+
+    @Test
+    public void delayedOffCallbackCannotRestartPowerPriorityAndStarveActivity() {
+        recordExpiredPowerOffObservation();
+        assertEquals(1, counter.recordPowerOffObservation(System.nanoTime(), 60, 3));
+        manager.processHAResource(config, host, provider);
+        verify(manager).transitionHAState(HAConfig.Event.PerformActivityCheck, config);
+        verify(manager, never()).submitHATask(any(), any(), any(), any(), eq(HAResourceCounter.Operation.HEALTH));
+        verify(manager, never()).transitionHAState(eq(HAConfig.Event.PowerOffConfirmed), any());
+    }
+
+    @Test
+    public void recurringOffExpiryStillAllowsFourDeadActivitiesToReachRecovery() throws Exception {
+        config.setHastate(HAConfig.HAState.Degraded);
+        when(provider.getConfigValue(HAProvider.HAProviderConfig.MaxActivityChecks, host)).thenReturn(7L);
+        when(provider.getConfigValue(HAProvider.HAProviderConfig.MaxActivityCheckInterval, host)).thenReturn(0L);
+        doAnswer(invocation -> {
+            HAConfig.Event event = invocation.getArgument(0);
+            config.setHastate(HAConfig.HAState.getStateMachine().getNextState(config.getState(), event));
+            return true;
+        }).when(manager).transitionHAState(any(), eq(config));
+        doAnswer(invocation -> {
+            HAResourceCounter.Operation operation = invocation.getArgument(4);
+            HAResourceCounter.TaskToken token = counter.tryStartTask(operation);
+            assertNotNull(token);
+            try {
+                if (operation == HAResourceCounter.Operation.ACTIVITY) {
+                    ActivityCheckTask task = new ActivityCheckTask(host, provider, config,
+                            HAProvider.HAProviderConfig.ActivityCheckTimeout, null, 0);
+                    task.initialize(counter, token);
+                    Field taskManager = BaseHATask.class.getDeclaredField("haManager");
+                    taskManager.setAccessible(true);
+                    taskManager.set(task, manager);
+                    task.processResult(false, null);
+                } else {
+                    assertEquals(HAResourceCounter.Operation.HEALTH, operation);
+                    recordExpiredPowerOffObservation();
+                }
+            } finally {
+                counter.finishTask(token);
+            }
+            return true;
+        }).when(manager).submitHATask(any(), any(), any(), any(), any());
+        HAResourceCounter.TaskToken previousActivity = counter.tryStartTask(HAResourceCounter.Operation.ACTIVITY);
+        counter.finishTask(previousActivity);
+        try (MockedStatic<ActionEventUtils> events = Mockito.mockStatic(ActionEventUtils.class);
+             MockedStatic<CallContext> context = Mockito.mockStatic(CallContext.class)) {
+            context.when(CallContext::current).thenReturn(mock(CallContext.class));
+            for (int attempt = 1; attempt <= 4; attempt++) {
+                manager.processHAResource(config, host, provider);
+                assertEquals(1, counter.getConsecutivePowerOffCounter());
+                manager.processHAResource(config, host, provider);
+                assertEquals(0, counter.getConsecutivePowerOffCounter());
+                assertEquals(attempt < 4 ? HAConfig.HAState.Degraded : HAConfig.HAState.Recovering, config.getState());
+                assertEquals(attempt < 4 ? attempt : 0, counter.getConsecutiveActivityCheckFailureCounter());
+            }
+        }
+        verify(manager, times(4)).submitHATask(host, provider, config, counter, HAResourceCounter.Operation.HEALTH);
+        verify(manager, times(4)).submitHATask(host, provider, config, counter, HAResourceCounter.Operation.ACTIVITY);
+        verify(manager).transitionHAState(HAConfig.Event.ActivityCheckFailureOverThresholdRatio, config);
+        verify(manager, never()).transitionHAState(eq(HAConfig.Event.PowerOffConfirmed), any());
+    }
+
+    private void recordExpiredPowerOffObservation() {
+        long expiredObservation = System.nanoTime() - TimeUnit.SECONDS.toNanos(60) - TimeUnit.MILLISECONDS.toNanos(1);
+        assertEquals(1, counter.recordPowerOffObservation(expiredObservation, 60, 3));
     }
 
     @Test

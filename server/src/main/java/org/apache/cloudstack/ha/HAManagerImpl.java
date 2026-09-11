@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
@@ -113,6 +114,9 @@ import com.cloud.api.query.vo.UserVmJoinVO;
 import com.cloud.api.query.dao.UserVmJoinDao;
 
 public final class HAManagerImpl extends ManagerBase implements HAManager, ClusterManagerListener, PluggableService, Configurable, StateListener<HAConfig.HAState, HAConfig.Event, HAConfig> {
+
+    private volatile long scheduledCheckingIntervalSeconds;
+    private final Set<String> warnedPowerObservationIntervals = ConcurrentHashMap.newKeySet();
 
     @Inject
     private HAConfigDao haConfigDao;
@@ -1027,10 +1031,19 @@ public final class HAManagerImpl extends ManagerBase implements HAManager, Clust
                 case Suspect:
                 case Degraded:
                     if (counter.getConsecutivePowerOffCounter() > 0) {
-                        // One fresh power query on the next poll. A long Activity
-                        // probe must not delay the remaining OFF confirmations.
-                        submitHATask(resource, provider, config, counter, HAResourceCounter.Operation.HEALTH);
-                        break;
+                        long maxInterval = provider.getPowerOffMaxInterval(resource);
+                        if (scheduledCheckingIntervalSeconds > 0 && maxInterval <= scheduledCheckingIntervalSeconds
+                                && warnedPowerObservationIntervals.add(config.getHaProvider() + ":" + scheduledCheckingIntervalSeconds + ":" + maxInterval)) {
+                            logger.warn("BMC OFF maximum observation interval [{}s] is not greater than the scheduled HA poll interval [{}s] for provider [{}]. "
+                                    + "OFF evidence may expire before confirmation; Activity checks will resume instead of retaining Health priority.",
+                                    maxInterval, scheduledCheckingIntervalSeconds, config.getHaProvider());
+                        }
+                        if (counter.hasPendingPowerOffObservation(System.nanoTime(), maxInterval, provider.getPowerOffConfirmations(resource))) {
+                            // Only a still-valid OFF sequence takes priority over Activity.
+                            submitHATask(resource, provider, config, counter, HAResourceCounter.Operation.HEALTH);
+                            break;
+                        }
+                        logger.debug("BMC OFF evidence no longer takes Health priority for {}; allowing a scheduled Activity recheck", resource);
                     }
                     // Alternate witnesses when the activity interval is short: neither health
                     // recovery nor the independent power-off check may be starved.
@@ -1126,7 +1139,10 @@ public final class HAManagerImpl extends ManagerBase implements HAManager, Clust
 
         @Override
         public Long getDelay() {
-            return HACheckingInterval.value() * 1000L;
+            // The background scheduler reads this once at startup. Diagnostics
+            // must use that actual delay, not a later unscheduled config update.
+            scheduledCheckingIntervalSeconds = HACheckingInterval.value();
+            return scheduledCheckingIntervalSeconds * 1000L;
         }
     }
 }
