@@ -498,6 +498,7 @@ public class DatabaseUpgradeChecker implements SystemIntegrityChecker {
                 }
 
                 upgrade(dbVersion, currentVersion);
+                KvmHaActivityThresholdMigration.migrate();
             } finally {
                 ///////////////////// Ablestack 업그레이드 //////////////////////////
                 afterUpgradeAblestack("Bronto");

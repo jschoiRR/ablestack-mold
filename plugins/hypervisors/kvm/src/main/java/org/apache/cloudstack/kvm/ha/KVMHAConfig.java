@@ -30,11 +30,8 @@ public class KVMHAConfig {
     public static final ConfigKey<Long> KvmHAActivityCheckInterval = new ConfigKey<>("Advanced", Long.class, "kvm.ha.activity.check.interval", "5",
             "Minimum seconds between activity checks. HA polling and alternating health checks can extend the actual interval.", true, ConfigKey.Scope.Cluster);
 
-    public static final ConfigKey<Long> KvmHAActivityCheckMaxAttempts = new ConfigKey<>("Advanced", Long.class, "kvm.ha.activity.check.max.attempts", "7",
-            "The reference sample count for the consecutive activity failure threshold: floor(count * failure ratio) + 1. Activity observation continues until health recovers or the threshold is met.", true, ConfigKey.Scope.Cluster);
-
-    public static final ConfigKey<Double> KvmHAActivityCheckFailureThreshold = new ConfigKey<>("Advanced", Double.class, "kvm.ha.activity.check.failure.ratio", "0.5",
-            "The ratio used to compute the consecutive activity failure threshold: floor(max.attempts * ratio) + 1. Unknown results do not count as confirmed failures.",
+    public static final ConfigKey<Long> KvmHAActivityCheckFailureThreshold = new ConfigKey<>("Advanced", Long.class, "kvm.ha.activity.check.failure.threshold", "4",
+            "Consecutive DEAD activity observations required to enter recovery. Must be positive. ALIVE or UNKNOWN resets the failure sequence; observation has no total attempt limit.",
             true, ConfigKey.Scope.Cluster);
 
     public static final ConfigKey<Long> KvmHADegradedMaxPeriod = new ConfigKey<>("Advanced", Long.class, "kvm.ha.degraded.max.period", "60",

@@ -77,8 +77,7 @@ public class HATaskTest {
         config.setEnabled(true);
         config.setHastate(HAConfig.HAState.Checking);
         when(provider.getConfigValue(any(), eq(resource))).thenReturn(10L);
-        when(provider.getConfigValue(HAProvider.HAProviderConfig.MaxActivityChecks, resource)).thenReturn(7L);
-        when(provider.getConfigValue(HAProvider.HAProviderConfig.ActivityCheckFailureRatio, resource)).thenReturn(0.5D);
+        when(provider.getConfigValue(HAProvider.HAProviderConfig.ActivityCheckFailureThreshold, resource)).thenReturn(4L);
         when(provider.getConfigValue(HAProvider.HAProviderConfig.ActivityCheckSuccessThreshold, resource)).thenReturn(3L);
         when(provider.checkPowerState(resource)).thenReturn(HAProvider.PowerObservation.UNKNOWN);
         when(provider.getPowerOffConfirmations(resource)).thenReturn(3L);
@@ -137,7 +136,7 @@ public class HATaskTest {
     }
 
     @Test
-    public void initialFourSuccessesDoNotEndSevenAttemptObservation() throws Exception {
+    public void aliveSamplesDoNotCountTowardConsecutiveDeadThreshold() throws Exception {
         for (int i = 0; i < 4; i++) {
             activity(true, null);
             assertEquals(i < 2 ? HAConfig.HAState.Suspect : HAConfig.HAState.Degraded, config.getState());
@@ -152,8 +151,8 @@ public class HATaskTest {
     }
 
     @Test
-    public void nineAttemptSettingStillRequiresFiveConsecutiveFailures() throws Exception {
-        when(provider.getConfigValue(HAProvider.HAProviderConfig.MaxActivityChecks, resource)).thenReturn(9L);
+    public void explicitFailureThresholdRequiresExactlyFiveConsecutiveDeadSamples() throws Exception {
+        when(provider.getConfigValue(HAProvider.HAProviderConfig.ActivityCheckFailureThreshold, resource)).thenReturn(5L);
         for (int i = 0; i < 4; i++) {
             activity(true, null);
         }
@@ -229,8 +228,7 @@ public class HATaskTest {
 
     @Test
     public void invalidFailureConfigurationDoesNotBlockAliveEvidence() throws Exception {
-        when(provider.getConfigValue(HAProvider.HAProviderConfig.MaxActivityChecks, resource)).thenReturn(0L);
-        when(provider.getConfigValue(HAProvider.HAProviderConfig.ActivityCheckFailureRatio, resource)).thenReturn(Double.NaN);
+        when(provider.getConfigValue(HAProvider.HAProviderConfig.ActivityCheckFailureThreshold, resource)).thenReturn(0L);
         for (int i = 0; i < 3; i++) {
             activity(true, null);
         }
@@ -239,7 +237,63 @@ public class HATaskTest {
             activity(false, null);
         }
         assertEquals(HAConfig.HAState.Degraded, config.getState());
+        assertEquals(0, counter.getConsecutiveActivityCheckFailureCounter());
         verify(manager, never()).transitionHAState(eq(HAConfig.Event.ActivityCheckFailureOverThresholdRatio), any());
+    }
+
+    @Test
+    public void zeroFailureThresholdClearsDeadSequenceWithoutRecovery() throws Exception {
+        verifyInvalidFailureThresholdClearsSequence(0L);
+    }
+
+    @Test
+    public void negativeFailureThresholdClearsDeadSequenceWithoutRecovery() throws Exception {
+        verifyInvalidFailureThresholdClearsSequence(-1L);
+    }
+
+    private void verifyInvalidFailureThresholdClearsSequence(long invalidThreshold) throws Exception {
+        for (int i = 0; i < 3; i++) {
+            activity(false, null);
+        }
+        assertEquals(3, counter.getConsecutiveActivityCheckFailureCounter());
+        when(provider.getConfigValue(HAProvider.HAProviderConfig.ActivityCheckFailureThreshold, resource)).thenReturn(invalidThreshold);
+        for (int i = 0; i < 4; i++) {
+            activity(false, null);
+            assertEquals(0, counter.getConsecutiveActivityCheckFailureCounter());
+            assertEquals(HAConfig.HAState.Suspect, config.getState());
+        }
+        verify(manager, never()).transitionHAState(eq(HAConfig.Event.ActivityCheckFailureOverThresholdRatio), any());
+
+        when(provider.getConfigValue(HAProvider.HAProviderConfig.ActivityCheckFailureThreshold, resource)).thenReturn(4L);
+        for (int i = 1; i <= 3; i++) {
+            activity(false, null);
+            assertEquals(i, counter.getConsecutiveActivityCheckFailureCounter());
+            assertEquals(HAConfig.HAState.Suspect, config.getState());
+        }
+        activity(false, null);
+        assertEquals(HAConfig.HAState.Recovering, config.getState());
+        verify(manager, times(1)).transitionHAState(HAConfig.Event.ActivityCheckFailureOverThresholdRatio, config);
+    }
+
+    @Test
+    public void intermittentAliveKeepsObservationRunningUntilConsecutiveDeadThreshold() throws Exception {
+        for (int cycle = 0; cycle < 30; cycle++) {
+            activity(false, null);
+            activity(false, null);
+            activity(true, null);
+            assertEquals(0, counter.getConsecutiveActivityCheckFailureCounter());
+            assertEquals(HAConfig.HAState.Suspect, config.getState());
+        }
+        assertEquals(90, counter.getActivityCheckCounter());
+        verify(manager, never()).transitionHAState(eq(HAConfig.Event.ActivityCheckFailureOverThresholdRatio), any());
+        verify(manager, never()).transitionHAState(eq(HAConfig.Event.ActivityCheckFailureUnderThresholdRatio), any());
+        for (int i = 1; i <= 3; i++) {
+            activity(false, null);
+            assertEquals(i, counter.getConsecutiveActivityCheckFailureCounter());
+            assertEquals(HAConfig.HAState.Suspect, config.getState());
+        }
+        activity(false, null);
+        assertEquals(HAConfig.HAState.Recovering, config.getState());
     }
 
     @Test

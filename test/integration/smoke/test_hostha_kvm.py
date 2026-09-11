@@ -64,9 +64,8 @@ class TestHAKVM(cloudstackTestCase):
         s.close()
 
         # Set Cluster-level setting in order to run tests faster
-        self.updateConfiguration("kvm.ha.activity.check.failure.ratio", "0.6")
+        self.updateConfiguration("kvm.ha.activity.check.failure.threshold", "4")
         self.updateConfiguration("kvm.ha.activity.check.interval", "8")
-        self.updateConfiguration("kvm.ha.activity.check.max.attempts", "5")
         self.updateConfiguration("kvm.ha.activity.check.success.threshold", "3")
         self.updateConfiguration("kvm.ha.activity.check.timeout", "30")
         self.updateConfiguration("kvm.ha.degraded.max.period", "30")

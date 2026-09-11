@@ -322,9 +322,7 @@ public final class KVMHAProvider extends HAAbstractHostProvider implements HAPro
                 return KVMHAConfig.KvmHAActivityCheckTimeout.valueIn(clusterId);
             case MaxActivityCheckInterval:
                 return KVMHAConfig.KvmHAActivityCheckInterval.valueIn(clusterId);
-            case MaxActivityChecks:
-                return KVMHAConfig.KvmHAActivityCheckMaxAttempts.valueIn(clusterId);
-            case ActivityCheckFailureRatio:
+            case ActivityCheckFailureThreshold:
                 return KVMHAConfig.KvmHAActivityCheckFailureThreshold.valueIn(clusterId);
             case ActivityCheckSuccessThreshold:
                 return KVMHAConfig.KvmHAActivityCheckSuccessThreshold.valueIn(clusterId);
@@ -356,7 +354,6 @@ public final class KVMHAProvider extends HAAbstractHostProvider implements HAPro
             KVMHAConfig.KvmHARecoverTimeout,
             KVMHAConfig.KvmHAFenceTimeout,
             KVMHAConfig.KvmHAActivityCheckInterval,
-            KVMHAConfig.KvmHAActivityCheckMaxAttempts,
             KVMHAConfig.KvmHAActivityCheckFailureThreshold,
             KVMHAConfig.KvmHAActivityCheckSuccessThreshold,
             KVMHAConfig.KvmHADegradedMaxPeriod,

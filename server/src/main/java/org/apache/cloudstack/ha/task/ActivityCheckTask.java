@@ -38,16 +38,14 @@ public class ActivityCheckTask extends BaseHATask {
 
 
     private long disconnectTime;
-    private long maxActivityChecks;
-    private double activityCheckFailureRatio;
+    private long activityCheckFailureThreshold;
     private long activityCheckSuccessThreshold;
 
     public ActivityCheckTask(final HAResource resource, final HAProvider<HAResource> haProvider, final HAConfig haConfig, final HAProvider.HAProviderConfig haProviderConfig,
             final ExecutorService executor, final long disconnectTime) {
         super(resource, haProvider, haConfig, haProviderConfig, executor);
         this.disconnectTime = disconnectTime;
-        this.maxActivityChecks = (Long)haProvider.getConfigValue(HAProviderConfig.MaxActivityChecks, resource);
-        this.activityCheckFailureRatio = (Double)haProvider.getConfigValue(HAProviderConfig.ActivityCheckFailureRatio, resource);
+        this.activityCheckFailureThreshold = (Long)haProvider.getConfigValue(HAProviderConfig.ActivityCheckFailureThreshold, resource);
         this.activityCheckSuccessThreshold = (Long)haProvider.getConfigValue(HAProviderConfig.ActivityCheckSuccessThreshold, resource);
     }
 
@@ -73,8 +71,7 @@ public class ActivityCheckTask extends BaseHATask {
             return;
         }
 
-        final boolean validFailureThreshold = maxActivityChecks > 0 && Double.isFinite(activityCheckFailureRatio)
-                && activityCheckFailureRatio >= 0 && activityCheckFailureRatio < 1;
+        final boolean validFailureThreshold = activityCheckFailureThreshold > 0;
         if ((result && activityCheckSuccessThreshold < 1) || (!result && !validFailureThreshold)) {
             counter.breakActivitySequences();
             logger.warn("Invalid activity {} threshold for {}", result ? "success" : "failure", getResource());
@@ -84,14 +81,13 @@ public class ActivityCheckTask extends BaseHATask {
 
         counter.incrActivityCounter(!result);
 
-        final long requiredFailures = validFailureThreshold ? (long) Math.floor(maxActivityChecks * activityCheckFailureRatio) + 1 : Long.MAX_VALUE;
         final String message = String.format("[VM Activity Check] Observations: %d | Consecutive ALIVE: %d (Threshold: %d) | Consecutive DEAD: %d (Threshold: %s)",
                 counter.getActivityCheckCounter(), counter.getConsecutiveActivityCheckSuccessCounter(), activityCheckSuccessThreshold,
-                counter.getConsecutiveActivityCheckFailureCounter(), validFailureThreshold ? Long.toString(requiredFailures) : "invalid");
+                counter.getConsecutiveActivityCheckFailureCounter(), validFailureThreshold ? Long.toString(activityCheckFailureThreshold) : "invalid");
         // Continuous degraded observation must not create one database event per probe forever.
         logger.debug(message);
 
-        if (!result && counter.getConsecutiveActivityCheckFailureCounter() >= requiredFailures) {
+        if (!result && counter.getConsecutiveActivityCheckFailureCounter() >= activityCheckFailureThreshold) {
             if (getHaManager().transitionHAState(HAConfig.Event.ActivityCheckFailureOverThresholdRatio, haConfig)) {
                 recordDecision(haConfig, message);
                 counter.resetActivityCounter();

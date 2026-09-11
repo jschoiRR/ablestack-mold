@@ -111,13 +111,15 @@ OFF 증거가 만료되면 Activity 재확인을 요청한다. Health 응답 처
 실패 임계값은 다음과 같다.
 
 ```text
-필요한 연속 DEAD 횟수 = floor(max.attempts × failure.ratio) + 1
+필요한 연속 DEAD 횟수 = kvm.ha.activity.check.failure.threshold
 
-7 × 0.5 → 연속 DEAD 4회
-9 × 0.5 → 연속 DEAD 5회
+기본값 4 → 연속 DEAD 4회
+설정값 5 → 연속 DEAD 5회
 ```
 
-`max.attempts=7`은 관찰을 7회에서 끝내라는 뜻이 아니다. 실패 임계값 계산에 남겨 둔 기준값이다. 횟수는 양수, 실패 비율은 0 이상 1 미만이어야 한다.
+검사 총횟수 제한은 없다. 실패 임계값은 양의 정수여야 한다. 0 또는 음수이면 DEAD로 Recovery를 결정하지 않고 연속 카운터를 초기화하며 경고를 남긴다. ALIVE에 따른 Degraded 판단과 별도 BMC OFF 확정 경로는 유지한다.
+
+기존 `kvm.ha.activity.check.max.attempts`와 `kvm.ha.activity.check.failure.ratio`는 폐기했다. 관리 서버 시작 시 기존 글로벌·클러스터 조합을 `floor(max.attempts × failure.ratio) + 1`로 한 번 환산한 뒤 기존 설정을 삭제한다. 따라서 기존 7/0.5는 4, 9/0.5는 5가 된다. 새 설정이 이미 저장되어 있으면 보존하며, 클러스터별 부분 재정의도 기존 상속값을 적용해 환산한다. 잘못된 기존 값은 임의의 기본값으로 바꾸지 않고 0으로 이관하여 관리자가 유효한 임계값을 지정할 때까지 Activity 실패 결정을 보류한다.
 
 예를 들어 Health가 계속 비정상이고 `ALIVE, ALIVE, ALIVE, ALIVE, DEAD, DEAD, DEAD, DEAD`가 이어지면 세 번째 ALIVE에서 Degraded가 되고, 이후 네 번째 연속 DEAD에서 Recovering으로 넘어간다. 중간에 UNKNOWN이나 ALIVE가 끼면 DEAD 연속성은 끊긴다.
 
@@ -220,8 +222,7 @@ OFF 누적 호스트를 처리할 때 최대 간격이 실제 등록된 poll 이
 | `kvm.ha.health.check.timeout` | 20초 | Health 작업 제한시간. STATUS 한 번과 필요한 일반 Health 처리에 적용하며, 큐 대기시간은 포함하지 않음 |
 | `kvm.ha.activity.check.timeout` | 60초 | Activity 작업 제한시간. HB의 60초 유효시간과 다른 설정 |
 | `kvm.ha.activity.check.interval` | 5초 | Activity 검사 간 최소 간격. Health 교대·poll·실행시간에 따라 실제 간격은 더 길어짐 |
-| `kvm.ha.activity.check.max.attempts` | 7 | 연속 DEAD 임계값 계산용 기준 횟수. 전체 검사 횟수 제한 아님 |
-| `kvm.ha.activity.check.failure.ratio` | 0.5 | 실패 임계값 계산 비율. 현재 기본 조합은 연속 DEAD 4회 |
+| `kvm.ha.activity.check.failure.threshold` | 4 | Recovery에 필요한 연속 DEAD 횟수. 양의 정수, 검사 총횟수 제한 없음 |
 | `kvm.ha.activity.check.success.threshold` | 3회 | Health 비정상 중 Degraded 진입에 필요한 연속 ALIVE 횟수 |
 | `kvm.ha.degraded.max.period` | 60초 | 호환성 유지용 기존 키. 현재 지속 관찰에서 별도 60초 대기를 만들지 않음 |
 | `kvm.ha.recover.timeout` | 60초 | Recovery 작업 제한시간 |
@@ -300,6 +301,8 @@ Fence는 `Fence timeout > B + 21`을 요구한다. 현재는 `60 > 17 + 21`로 �
 
 배포 시 관리 서버, KVM agent, 관련 HA 스크립트를 함께 맞춘다. 구형 agent의 일반 Answer는 새 명시적 판정과 구분되어 UNKNOWN이 될 수 있다. 실제 저장된 설정, BMC 응답시간, 스토리지 HB 갱신, 부팅 후 Maintenance 유지와 원래 호스트 제외를 함께 확인한다.
 
+이번 설정 통합 빌드를 적용할 때는 모든 관리 서버를 중지하고 동일 빌드로 맞춘 뒤 시작한다. 시작 시 기존 두 설정이 새 실패 임계값으로 이관·삭제되므로 이전 빌드와 혼용하지 않는다. 이관 뒤 글로벌·클러스터의 `kvm.ha.activity.check.failure.threshold` 값을 확인한다.
+
 VM 복구 대상에는 기존 HA 정책이 적용된다. HA 비활성 VM, 로컬 root volume, 이미 다른 호스트로 이동했거나 제거된 VM 등은 동일하게 복구되지 않을 수 있다. Mold의 Start 차단은 PCS/libvirt 등 외부 실행 주체의 정책을 직접 변경하는 기능은 아니다.
 
 ## 9. 소스 위치와 검증 기록
@@ -307,6 +310,7 @@ VM 복구 대상에는 기존 HA 정책이 적용된다. HA 비활성 VM, 로컬
 | 확인할 내용 | 소스 |
 |---|---|
 | KVM HA 기본값 | [KVMHAConfig.java](../../plugins/hypervisors/kvm/src/main/java/org/apache/cloudstack/kvm/ha/KVMHAConfig.java) |
+| 기존 실패 설정의 자동 이관 | [KvmHaActivityThresholdMigration.java](../../engine/schema/src/main/java/com/cloud/upgrade/KvmHaActivityThresholdMigration.java) |
 | 전역 poll / 동시 작업 설정 | [HAManager.java](../../server/src/main/java/org/apache/cloudstack/ha/HAManager.java) |
 | 상태 전이 정의 | [HAConfig.java](../../api/src/main/java/org/apache/cloudstack/ha/HAConfig.java) |
 | 작업 배정과 소유권·중복 보호 | [HAManagerImpl.java](../../server/src/main/java/org/apache/cloudstack/ha/HAManagerImpl.java) |
@@ -318,7 +322,9 @@ VM 복구 대상에는 기존 HA 정책이 적용된다. HA 비활성 VM, 로컬
 | agent HB 기본값 | [AgentProperties.java](../../agent/src/main/java/com/cloud/agent/properties/AgentProperties.java) |
 | HB / Activity 판정 스크립트 | [KVM 스크립트 디렉터리](../../scripts/vm/hypervisor/kvm) |
 
-**최신 OFF 증거 만료 보완은 Checkstyle을 활성화한 44개 모듈 빌드와 251개 회귀 테스트를 통과했다.** 실패·오류·제외 0개이며, 만료·지연 응답·Activity 복귀 및 기존 보호를 다루는 새 회귀 테스트 10개를 포함한다. 상세 결과는 [HA 검증 기록](europa-ha-safety-validation.md)에 있다.
+**최신 단일 실패 임계값 변경은 Checkstyle을 활성화한 44개 모듈 빌드와 289개 회귀 테스트를 통과했다.** 실패·오류·제외 0개이며, 설정 이관·글로벌/클러스터 값 보존, 직접 지정한 DEAD 임계값, 지속 관찰 및 기존 HA 보호를 검증했다. 상세 결과는 [HA 검증 기록](europa-ha-safety-validation.md)에 있다.
+
+이전 OFF 증거 만료 보완은 Checkstyle을 활성화한 44개 모듈 빌드와 251개 회귀 테스트를 통과했다. 만료·지연 응답·Activity 복귀 및 기존 보호를 다루는 새 회귀 테스트 10개를 포함한다.
 
 이전 **Health 작업당 BMC 1회·poll 간 OFF 3회 누적** 변경은 **43개 모듈 빌드 성공, Java 회귀 테스트 236개 통과**를 확인했다. 실패·오류·제외는 0개다. STATUS 단일 조회, 작업 간 OFF 누적과 초기화, Health 우선 배정, 감지·펜싱 검증 설정 분리 및 기존 HA 복구 회귀를 검증했다. IPMI driver와 simulator도 빌드했다. 상세 결과와 재현 명령은 [HA 검증 기록](europa-ha-safety-validation.md)에 있다.
 

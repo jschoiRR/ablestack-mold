@@ -10,7 +10,7 @@
 ## 실제 변경 흐름
 
 1. 각 Health 작업에서 관리 서버가 최신 BMC STATUS를 **한 번만** 조회한다. 서로 다른 작업의 OFF 응답이 기본 3회 연속 누적될 때 HB 만료 전 Fencing으로 진행할 수 있다. 조회당 timeout 1초이며 감지 중 내부 3초 대기는 없다. Ping 실패·BMC 무응답·PoweringOff는 OFF 증거가 아니다.
-2. OFF 1~2회이면 agent Health를 생략하고 작업을 반환하며, 증거가 유효하고 Activity 재확인이 필요하지 않으면 다음 poll도 Health를 우선한다. OFF 증거가 만료되면 우선권을 해제하여 Activity로 복귀한다. ON·UNKNOWN·오류는 OFF 연속성을 초기화한 뒤 기존 Health/Activity 경로로 관찰한다. Activity는 초기 성공 표본 때문에 검사를 중단하지 않는다. 7회·50%는 연속 DEAD 4회, 9회·50%는 5회이며, ALIVE 또는 UNKNOWN이 끼면 실패 연속성이 끊어진다.
+2. OFF 1~2회이면 agent Health를 생략하고 작업을 반환하며, 증거가 유효하고 Activity 재확인이 필요하지 않으면 다음 poll도 Health를 우선한다. OFF 증거가 만료되면 우선권을 해제하여 Activity로 복귀한다. ON·UNKNOWN·오류는 OFF 연속성을 초기화한 뒤 기존 Health/Activity 경로로 관찰한다. Activity는 초기 성공 표본 때문에 검사를 중단하지 않는다. `kvm.ha.activity.check.failure.threshold`로 연속 DEAD 횟수를 직접 지정하며 기본값은 4다. ALIVE 또는 UNKNOWN이 끼면 실패 연속성이 끊어진다.
 3. Fencing 작업은 Maintenance를 DB에 확정하고 agent 명령 전송을 차단한 뒤, 복구할 VM ID·UUID를 `host_details`에 저장한다.
 4. OFF 요청 → 조회 완료 후 3초 간격으로 실제 OFF 연속 5회 확인 → ON 요청 순으로 수행한다. 이 펜싱 검증 횟수는 감지용 3회와 별개다. 전원 변경 직전에 HA 활성화, 클러스터·존 설정, 관리 서버 소유권, Maintenance를 다시 확인한다.
 5. 성공한 fencing을 DB에 Fenced로 기록한다. 저장한 VM 목록으로 `HostFenced` HA 작업을 DB에 등록한 뒤에만 목록을 제거하고 호스트 HA를 비활성화한다. 원래 호스트의 Maintenance는 유지한다.
@@ -18,7 +18,31 @@
 
 조기 OFF 확인은 Activity DEAD 판정을 기다리거나 Activity 결과를 DEAD로 변환하는 절차가 아니다. 별도 `PowerOffConfirmed` 이벤트로 Fencing에 진입하고, 늦게 도착한 Activity 결과는 반영하지 않는다. 실제 순서는 Maintenance 확정이 전원 조작보다 먼저이며, VM 복구는 다른 호스트에서의 재시작이다.
 
-## 최신 변경: OFF 증거 만료 시 Activity 정체 해소
+## 최신 변경: 연속 DEAD 임계값 설정 통합
+
+`kvm.ha.activity.check.failure.threshold` 하나로 Recovery 진입에 필요한 연속 DEAD 횟수를 지정한다. 기본값은 4이며 검사 총횟수 제한은 없다. KVM provider와 공통 Activity task에서 기존 횟수·비율 조합을 제거했고, 시뮬레이터와 KVM smoke test도 단일 임계값을 사용한다. ALIVE/UNKNOWN 초기화, Degraded 지속 관찰, OFF 증거 만료 시 Activity 복귀 및 펜싱 검증은 유지한다.
+
+기존 설정은 `DatabaseUpgradeChecker`가 DB 업그레이드 잠금을 보유한 상태에서 `KvmHaActivityThresholdMigration`으로 이관한다. 같은 버전의 관리 서버를 재시작할 때도 실행하며, 신규 기본값 등록 전에 처리한다. 글로벌·클러스터의 기존 두 값을 각각 상속 규칙에 맞춰 읽고 `floor(max.attempts × failure.ratio) + 1`을 저장한다. 기존 7/0.5는 4, 9/0.5는 5가 된다. 이미 존재하는 새 설정은 보존한다. 잘못된 기존 값은 0으로 이관하고 경고하여 Activity 실패 결정을 보류한다.
+
+모든 새 값을 기록한 뒤 기존 두 설정을 삭제하며, 실패하면 트랜잭션을 되돌리고 기동을 중단한다. 재실행 시 새 값을 덮어쓰지 않는다. 관리 서버가 여러 대이면 모두 중지한 상태에서 같은 새 빌드를 적용한 후 시작한다. 이전 빌드는 삭제된 설정을 계속 사용하므로 버전을 혼용하지 않는다. 배포 후 글로벌 및 클러스터의 신규 임계값을 확인한다.
+
+**검증 완료: Checkstyle 활성화, 44개 reactor 모듈 BUILD SUCCESS, 23개 suite의 289개 테스트 통과.** 실패·오류·제외 0개, Checkstyle 감사 37개 오류 0개다. 새 테스트 19개는 설정 이관 14개, KVM 설정 2개, HA task 3개다. 기존 `DatabaseUpgradeCheckerTest`/`DatabaseUpgradeCheckerDoUpgradesTest` 19개도 포함했다. 기존 HA 회귀 251개를 함께 실행했으며 각 실행의 수치를 중복 합산하지 않는다. 신규 기본값 등록보다 이관이 먼저 실행되는 Spring 순서와 같은 버전 재시작 경로를 독립 검토했다.
+
+실행 로그: `/private/tmp/europa-ha-activity-threshold-tests.log`. 완료: `2026-09-11T17:25:02+09:00`. KVM smoke test Python 구문 검사와 문서 링크 검사도 통과했다. 이관 테스트는 JDBC/Mockito를 사용하므로 실제 MySQL에서 SQL을 실행한 검증은 아니다. 실제 BMC/PCS/스토리지 장애 시험, RPM 패키징 및 운영 배포는 수행하지 않았다.
+
+재현 명령은 아래와 같다(JDK 17 및 로컬 Maven 의존성 사용).
+
+```bash
+JAVA_TOOL_OPTIONS='-javaagent:/Users/js/.m2/repository/net/bytebuddy/byte-buddy-agent/1.15.11/byte-buddy-agent-1.15.11.jar' \
+JAVA_HOME=/Library/Java/JavaVirtualMachines/zulu-17.jdk/Contents/Home \
+mvn -o -Psimulator \
+  -pl engine/orchestration,plugins/hypervisors/kvm,plugins/hypervisors/simulator,plugins/outofbandmanagement-drivers/ipmitool,plugins/outofbandmanagement-drivers/redfish -am \
+  -Ddownload.plugin.skip=true -Drat.skip=true -Dspotbugs.skip=true -Dpmd.skip=true -DskipITs \
+  -Dtest='KvmHaActivityThresholdMigrationTest,DatabaseUpgradeChecker*Test,KVMHAActivityConfigTest,CheckOnHostAnswerTest,HAResourceCounterTest,HAManagerImplTest,HATaskTest,FenceTaskTest,HAAbstractHostProviderTest,HostFencedRecoveryTest,HaSourceHostExclusionTest,HighAvailabilityManagerImplTest,HighAvailabilityDaoImplTest,DeploymentPlanningManagerImplTest,HostMaintenanceDispatchTest,KVMHAPowerSafetyTest,KVMHostHATest,KVMHostActivityCheckerTest,KVMHACheckerTest,KVMHAVMActivityCheckerTest,*SimulatorHA*Test,*OutOfBandManagement*Test' \
+  -DfailIfNoTests=false -Dsurefire.failIfNoSpecifiedTests=false test
+```
+
+## 이전 단계: OFF 증거 만료 시 Activity 정체 해소
 
 poll 60초 / OFF 최대 간격 60초에서 OFF 관찰 간격을 60.001초로 모의 처리했을 때, 수정 전에는 OFF 횟수가 매번 1로 초기화되지만 Health 우선 조건은 유지되어 Activity와 Fencing이 정체됐다. 이 결함을 다음과 같이 수정했다.
 

@@ -105,7 +105,7 @@ public class HAManagerImplTest {
         field(manager, "dataCenterDetailsDao", mock(DataCenterDetailsDao.class));
         provider = mock(HAProvider.class);
         when(provider.getConfigValue(any(), eq(host))).thenReturn(5L);
-        when(provider.getConfigValue(HAProvider.HAProviderConfig.ActivityCheckFailureRatio, host)).thenReturn(0.5D);
+        when(provider.getConfigValue(HAProvider.HAProviderConfig.ActivityCheckFailureThreshold, host)).thenReturn(4L);
         when(provider.getConfigValue(HAProvider.HAProviderConfig.ActivityCheckSuccessThreshold, host)).thenReturn(3L);
         when(provider.getPowerOffConfirmations(host)).thenReturn(3L);
         when(provider.getPowerOffMaxInterval(host)).thenReturn(60L);
@@ -285,7 +285,6 @@ public class HAManagerImplTest {
     @Test
     public void recurringOffExpiryStillAllowsFourDeadActivitiesToReachRecovery() throws Exception {
         config.setHastate(HAConfig.HAState.Degraded);
-        when(provider.getConfigValue(HAProvider.HAProviderConfig.MaxActivityChecks, host)).thenReturn(7L);
         when(provider.getConfigValue(HAProvider.HAProviderConfig.MaxActivityCheckInterval, host)).thenReturn(0L);
         doAnswer(invocation -> {
             HAConfig.Event event = invocation.getArgument(0);

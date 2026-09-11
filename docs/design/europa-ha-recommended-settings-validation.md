@@ -18,8 +18,7 @@
 | `kvm.ha.health.check.timeout` | 20 | BMC 확인을 포함한 Health 작업 제한 |
 | `kvm.ha.activity.check.interval` | 5 | Activity 배정 사이 최소 간격. 실제 간격은 poll/Health 교대/작업 지연에 따라 증가 |
 | `kvm.ha.activity.check.timeout` | 60 | Activity 작업 제한. 스토리지 HB 만료 기준과 별개 |
-| `kvm.ha.activity.check.max.attempts` | 7 | 전체 검사 제한이 아닌 DEAD 임계값 계산 기준 |
-| `kvm.ha.activity.check.failure.ratio` | 0.5 | 7과 조합하여 연속 DEAD 4회 필요 |
+| `kvm.ha.activity.check.failure.threshold` | 4 | Recovery에 필요한 연속 DEAD 횟수. 검사 총횟수 제한 없음 |
 | `kvm.ha.activity.check.success.threshold` | 3 | Health 비정상 중 연속 ALIVE 3회면 Degraded |
 | `kvm.ha.fence.power.off.confirmations` | 5 | 실제 펜싱 OFF 요청 후 OFF 확인 횟수 |
 | `kvm.ha.power.check.interval` | 3 | 펜싱의 반복 확인 사이 대기. 조기 감지에는 적용하지 않음 |
@@ -94,7 +93,7 @@ OFF 누적 처리에서 최대 간격이 실제 등록된 poll 이하이면 경�
 
 ## 5. 적용 확인
 
-1. 글로벌 값과 클러스터/스토리지 풀별 재정의 값을 함께 확인한다.
+1. 글로벌 값과 클러스터/스토리지 풀별 재정의 값을 함께 확인한다. 새 빌드로 관리 서버를 시작하면 기존 `kvm.ha.activity.check.max.attempts`/`kvm.ha.activity.check.failure.ratio`를 단일 `kvm.ha.activity.check.failure.threshold`로 환산한다. 기존 7/0.5는 4, 9/0.5는 5가 되며 이미 저장한 새 값은 보존한다. 클러스터별 재정의도 이관되고 기존 두 설정은 삭제된다. 기존 값이 유효하지 않아 새 값이 0으로 이관된 경우 경고 로그를 확인하고 양의 정수로 수정한다.
 2. `ha.checking.interval=10`을 저장한 후 관리 서버를 재시작하여 HA 스케줄을 다시 등록한다. 여러 관리 서버가 있다면 각 서버의 적용값과 담당 호스트를 확인한다. UI에 변경 이벤트가 있다고 기존 스케줄이 즉시 갱신된 것은 아니다.
 3. HA DEBUG 로그에서 대상 호스트의 `Fresh BMC OFF observations across health tasks`가 `1/3 → 2/3 → 3/3`으로 증가하는지 확인한다. STATUS 시작/완료 이벤트만으로 OFF 누적 여부를 판단하지 않는다.
 4. Activity는 `[VM Activity Check] Observations:` 로그의 ALIVE/DEAD 횟수로 확인한다. 각 관찰은 DEBUG 로그이며, 이벤트 목록에 매번 기록되지 않는다.
@@ -102,7 +101,13 @@ OFF 누적 처리에서 최대 간격이 실제 등록된 poll 이하이면 경�
 
 ## 6. 검증 기록
 
-### 최신 OFF 증거 만료 보완
+### 최신 단일 실패 임계값 변경
+
+`kvm.ha.activity.check.failure.threshold` 기본 4, 명시적 5, ALIVE/UNKNOWN 초기화 및 90회 혼합 관찰 뒤의 연속 DEAD 결정을 확인했다. 새 글로벌·클러스터 값 읽기, 기존 두 설정의 자동 환산·삭제, 이미 저장한 새 값 보존, 잘못된 기존 값의 0 이관, 재실행 및 DB 오류 rollback도 테스트했다.
+
+**44개 reactor 모듈 BUILD SUCCESS, 23개 suite의 289개 테스트 통과**, 실패·오류·제외 0개. Checkstyle 감사 37개도 오류 없이 완료했다. 새 테스트 19개(기존 HA task 추가 3개, KVM 설정 2개, 설정 이관 14개)와 기존 DB 업그레이드 테스트 19개를 포함한다. 실행 로그: `/private/tmp/europa-ha-activity-threshold-tests.log`. 완료: `2026-09-11T17:25:02+09:00`. KVM smoke test Python 구문 검사도 통과했다. 설정 이관은 JDBC/Mockito로 검증했으며 실제 MySQL 업그레이드·장비 장애 시험·운영 배포는 수행하지 않았다.
+
+### 이전 OFF 증거 만료 보완
 
 Checkstyle을 활성화한 **44개 reactor 모듈 BUILD SUCCESS, 19개 suite의 251개 회귀 테스트 통과**, 실패·오류·제외 0개다. Checkstyle 감사 37개도 오류 없이 완료했다. 새 회귀 테스트 10개(counter 4개, manager 4개, task 2개)를 포함한다. 작업 선택 전 만료, 지연된 Health 응답에서의 만료, 반복 만료 후 Activity DEAD 누적과 Recovering/Fencing 연결, UNKNOWN 처리, 정상 OFF 3회, 작업 제출 실패·중복·오래된 결과 보호를 확인했다.
 
