@@ -28,6 +28,7 @@ import java.util.concurrent.Future;
 import java.util.concurrent.RejectedExecutionException;
 
 import com.cloud.host.HostVO;
+import com.cloud.host.Status;
 import com.cloud.host.dao.HostDao;
 import com.cloud.dc.ClusterDetailsDao;
 import com.cloud.dc.dao.DataCenterDetailsDao;
@@ -86,6 +87,8 @@ public class HAManagerImplTest {
         field(manager, "dataCenterDetailsDao", mock(DataCenterDetailsDao.class));
         provider = mock(HAProvider.class);
         when(provider.getConfigValue(any(), eq(host))).thenReturn(5L);
+        when(provider.getConfigValue(HAProvider.HAProviderConfig.ActivityCheckFailureRatio, host)).thenReturn(0.5D);
+        when(provider.getConfigValue(HAProvider.HAProviderConfig.ActivityCheckSuccessThreshold, host)).thenReturn(3L);
         executor = mock(ExecutorService.class);
         when(executor.submit(any(Callable.class))).thenReturn(mock(Future.class));
         for (String name : new String[] {"healthCheckExecutor", "activityCheckExecutor", "recoveryExecutor", "fenceExecutor"}) {
@@ -113,6 +116,8 @@ public class HAManagerImplTest {
         config.setHastate(HAConfig.HAState.Fenced);
         assertSame(config, manager.getCurrentHAConfig(config, counter, token));
         config.setManagementServerId(ManagementServerNode.getManagementServerId() + 1);
+        assertNull(manager.getCurrentHAConfig(config, counter, token));
+        config.setManagementServerId(null);
         assertNull(manager.getCurrentHAConfig(config, counter, token));
         config.setManagementServerId(ManagementServerNode.getManagementServerId());
         config.setEnabled(false);
@@ -149,6 +154,23 @@ public class HAManagerImplTest {
     }
 
     @Test
+    public void activityResultsAcceptDegradedButRejectDisabledOrChangedOwner() {
+        config.setHastate(HAConfig.HAState.Degraded);
+        HAResourceCounter.TaskToken token = counter.tryStartTask(HAResourceCounter.Operation.ACTIVITY);
+        assertSame(config, manager.getCurrentHAConfig(config, counter, token));
+        config.setEnabled(false);
+        assertNull(manager.getCurrentHAConfig(config, counter, token));
+        config.setEnabled(true);
+        config.setManagementServerId(ManagementServerNode.getManagementServerId() + 1);
+        assertNull(manager.getCurrentHAConfig(config, counter, token));
+        config.setManagementServerId(null);
+        assertNull(manager.getCurrentHAConfig(config, counter, token));
+        config.setManagementServerId(ManagementServerNode.getManagementServerId());
+        config.setHastate(HAConfig.HAState.Fencing);
+        assertNull(manager.getCurrentHAConfig(config, counter, token));
+    }
+
+    @Test
     public void purgingCounterDoesNotUnlockStillRunningDestructiveTask() {
         HAResourceCounter.TaskToken token = counter.tryStartTask(HAResourceCounter.Operation.FENCE);
         manager.purgeHACounter(1L, HAResource.ResourceType.Host);
@@ -181,6 +203,82 @@ public class HAManagerImplTest {
         manager.processHAResource(config, host, provider);
         verify(manager).submitHATask(host, provider, config, counter, HAResourceCounter.Operation.HEALTH);
         verify(manager, never()).transitionHAState(eq(HAConfig.Event.PerformActivityCheck), any());
+    }
+
+    @Test
+    public void degradedPollSubmitsActivityWithoutChangingToSuspectOrChecking() {
+        config.setHastate(HAConfig.HAState.Degraded);
+        doReturn(true).when(manager).submitHATask(any(), any(), any(), any(), any());
+        manager.processHAResource(config, host, provider);
+        verify(manager).submitHATask(host, provider, config, counter, HAResourceCounter.Operation.ACTIVITY);
+        verify(manager, never()).transitionHAState(any(), any());
+        assertEquals(HAConfig.HAState.Degraded, config.getState());
+    }
+
+    @Test
+    public void degradedActivityCompletionStillAllowsHealthRecoveryAndPowerWitness() {
+        config.setHastate(HAConfig.HAState.Degraded);
+        HAResourceCounter.TaskToken token = counter.tryStartTask(HAResourceCounter.Operation.ACTIVITY);
+        counter.finishTask(token);
+        doReturn(true).when(manager).submitHATask(any(), any(), any(), any(), any());
+        manager.processHAResource(config, host, provider);
+        verify(manager).submitHATask(host, provider, config, counter, HAResourceCounter.Operation.HEALTH);
+        verify(manager, never()).submitHATask(any(), any(), any(), any(), eq(HAResourceCounter.Operation.ACTIVITY));
+        assertEquals(HAConfig.HAState.Degraded, config.getState());
+    }
+
+    @Test
+    public void degradedWaitsForConfiguredActivityIntervalWithoutLosingDeadStreak() {
+        config.setHastate(HAConfig.HAState.Degraded);
+        counter.incrActivityCounter(true);
+        counter.incrActivityCounter(true);
+        assertTrue(counter.canPerformActivityCheck(60L));
+        when(provider.getConfigValue(HAProvider.HAProviderConfig.MaxActivityCheckInterval, host)).thenReturn(60L);
+        doReturn(true).when(manager).submitHATask(any(), any(), any(), any(), any());
+        manager.processHAResource(config, host, provider);
+        verify(manager).submitHATask(host, provider, config, counter, HAResourceCounter.Operation.HEALTH);
+        verify(manager, never()).submitHATask(any(), any(), any(), any(), eq(HAResourceCounter.Operation.ACTIVITY));
+        assertEquals(2, counter.getConsecutiveActivityCheckFailureCounter());
+        assertEquals(HAConfig.HAState.Degraded, config.getState());
+    }
+
+    @Test
+    public void availableNeverStartsActivityEvenAfterPreviousActivityTurn() {
+        config.setHastate(HAConfig.HAState.Available);
+        HAResourceCounter.TaskToken token = counter.tryStartTask(HAResourceCounter.Operation.ACTIVITY);
+        counter.finishTask(token);
+        doReturn(true).when(manager).submitHATask(any(), any(), any(), any(), any());
+        manager.processHAResource(config, host, provider);
+        verify(manager).submitHATask(host, provider, config, counter, HAResourceCounter.Operation.HEALTH);
+        verify(manager, never()).submitHATask(any(), any(), any(), any(), eq(HAResourceCounter.Operation.ACTIVITY));
+        verify(manager, never()).transitionHAState(any(), any());
+    }
+
+    @Test
+    public void duplicateDegradedPollCannotSubmitOverlappingActivity() {
+        config.setHastate(HAConfig.HAState.Degraded);
+        try (MockedStatic<ComponentContext> context = Mockito.mockStatic(ComponentContext.class)) {
+            context.when(() -> ComponentContext.inject(any(BaseHATask.class))).thenAnswer(i -> i.getArgument(0));
+            manager.processHAResource(config, host, provider);
+            manager.processHAResource(config, host, provider);
+            verify(executor, times(1)).submit(any(Callable.class));
+            assertTrue(counter.hasActiveTask());
+            assertEquals(HAConfig.HAState.Degraded, config.getState());
+        }
+    }
+
+    @Test
+    public void degradedMeansDisconnectedButDoesNotAuthorizeLegacyVmRestart() throws Exception {
+        when(host.getId()).thenReturn(1L);
+        config.setHastate(HAConfig.HAState.Degraded);
+        assertEquals(Status.Disconnected, manager.getHostStatus(host));
+        assertEquals(Boolean.TRUE, manager.isVMAliveOnHost(host));
+    }
+
+    @Test
+    public void degradedClaimEventKeepsThePersistedDegradedState() throws Exception {
+        assertEquals(HAConfig.HAState.Degraded, HAConfig.HAState.getStateMachine().getNextState(
+                HAConfig.HAState.Degraded, HAConfig.Event.PeriodicRecheckResourceActivity));
     }
 
     @Test
@@ -238,6 +336,18 @@ public class HAManagerImplTest {
         assertFalse(manager.submitHATask(host, provider, config, counter, HAResourceCounter.Operation.FENCE));
         verify(manager).transitionHAState(HAConfig.Event.RetryFencing, config);
         verifyNoInteractions(executor);
+    }
+
+    @Test
+    public void ownerlessDegradedActivityMustClaimOwnershipBeforeSubmission() {
+        config.setHastate(HAConfig.HAState.Degraded);
+        config.setManagementServerId(null);
+        manager.processHAResource(config, host, provider);
+        verify(manager).transitionHAState(HAConfig.Event.PeriodicRecheckResourceActivity, config);
+        verify(manager, never()).submitHATask(any(), any(), any(), any(), any());
+        verifyNoInteractions(executor);
+        assertFalse(counter.hasActiveTask());
+        assertEquals(HAConfig.HAState.Degraded, config.getState());
     }
 
     @Test

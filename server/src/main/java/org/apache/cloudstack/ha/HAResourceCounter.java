@@ -43,6 +43,7 @@ public final class HAResourceCounter {
     private AtomicLong activityCheckCounter = new AtomicLong(0);
     private AtomicLong activityCheckFailureCounter = new AtomicLong(0);
     private AtomicLong consecutiveActivityCheckFailureCounter = new AtomicLong(0);
+    private AtomicLong consecutiveActivityCheckSuccessCounter = new AtomicLong(0);
     private AtomicLong recoveryOperationCounter = new AtomicLong(0);
 
     private Long firstHealthCheckFailureTimestamp;
@@ -64,6 +65,10 @@ public final class HAResourceCounter {
         return consecutiveActivityCheckFailureCounter.get();
     }
 
+    public long getConsecutiveActivityCheckSuccessCounter() {
+        return consecutiveActivityCheckSuccessCounter.get();
+    }
+
     public long getRecoveryCounter() {
         return recoveryOperationCounter.get();
     }
@@ -73,8 +78,10 @@ public final class HAResourceCounter {
         if (isFailure) {
             activityCheckFailureCounter.incrementAndGet();
             consecutiveActivityCheckFailureCounter.incrementAndGet();
+            consecutiveActivityCheckSuccessCounter.set(0);
         } else {
             consecutiveActivityCheckFailureCounter.set(0);
+            consecutiveActivityCheckSuccessCounter.incrementAndGet();
         }
     }
 
@@ -86,10 +93,16 @@ public final class HAResourceCounter {
         activityCheckCounter.set(0);
         activityCheckFailureCounter.set(0);
         consecutiveActivityCheckFailureCounter.set(0);
+        consecutiveActivityCheckSuccessCounter.set(0);
     }
 
     public synchronized void breakActivityFailureSequence() {
         consecutiveActivityCheckFailureCounter.set(0);
+    }
+
+    public synchronized void breakActivitySequences() {
+        consecutiveActivityCheckFailureCounter.set(0);
+        consecutiveActivityCheckSuccessCounter.set(0);
     }
 
     public synchronized TaskToken tryStartTask(Operation operation) {

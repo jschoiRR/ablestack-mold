@@ -46,6 +46,7 @@ public interface HAConfig extends StateObject<HAConfig.HAState>, InternalIdentit
         PeriodicRecheckResourceActivity,
         ActivityCheckFailureOverThresholdRatio,
         ActivityCheckFailureUnderThresholdRatio,
+        ActivityCheckSuccessThresholdReached,
         PowerCycle,
         Recovered,
         RetryRecovery,
@@ -118,6 +119,7 @@ public interface HAConfig extends StateObject<HAConfig.HAState>, InternalIdentit
             FSM.addTransition(Checking, Event.Ineligible, Ineligible);
             FSM.addTransition(Checking, Event.TooFewActivityCheckSamples, Suspect);
             FSM.addTransition(Checking, Event.ActivityCheckFailureUnderThresholdRatio, Degraded);
+            FSM.addTransition(Checking, Event.ActivityCheckSuccessThresholdReached, Degraded);
             FSM.addTransition(Checking, Event.ActivityCheckFailureOverThresholdRatio, Recovering);
             FSM.addTransition(Checking, Event.HealthCheckPassed, Available);
             FSM.addTransition(Checking, Event.PowerOffConfirmed, Fencing);
@@ -126,7 +128,8 @@ public interface HAConfig extends StateObject<HAConfig.HAState>, InternalIdentit
             FSM.addTransition(Degraded, Event.Ineligible, Ineligible);
             FSM.addTransition(Degraded, Event.HealthCheckFailed, Degraded);
             FSM.addTransition(Degraded, Event.HealthCheckPassed, Available);
-            FSM.addTransition(Degraded, Event.PeriodicRecheckResourceActivity, Suspect);
+            FSM.addTransition(Degraded, Event.PeriodicRecheckResourceActivity, Degraded);
+            FSM.addTransition(Degraded, Event.ActivityCheckFailureOverThresholdRatio, Recovering);
             FSM.addTransition(Degraded, Event.PowerOffConfirmed, Fencing);
 
             FSM.addTransition(Recovering, Event.Disabled, Disabled);

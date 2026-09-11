@@ -119,6 +119,8 @@ public class SimulatorHAProvider extends HAAbstractHostProvider implements HAPro
                 return 1L;
             case MaxActivityChecks:
                 return 3L;
+            case ActivityCheckSuccessThreshold:
+                return 3L;
             case ActivityCheckFailureRatio:
                 final SimulatorHAState haState = hostHAStateMap.get(host.getId());
                 return (haState != null && haState.hasActivity()) ? 1.0 : 0.0;

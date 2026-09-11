@@ -218,7 +218,8 @@ public final class HAManagerImpl extends ManagerBase implements HAManager, Clust
                 return current.getState() == HAConfig.HAState.Available || current.getState() == HAConfig.HAState.Suspect
                         || current.getState() == HAConfig.HAState.Degraded ? current : null;
             case ACTIVITY:
-                return current.getState() == HAConfig.HAState.Checking ? current : null;
+                return (current.getState() == HAConfig.HAState.Checking || current.getState() == HAConfig.HAState.Degraded)
+                        && current.getManagementServerId() != null ? current : null;
             case RECOVERY:
                 return current.getState() == HAConfig.HAState.Recovering && current.getManagementServerId() != null ? current : null;
             case FENCE:
@@ -1009,11 +1010,18 @@ public final class HAManagerImpl extends ManagerBase implements HAManager, Clust
                     // recovery nor the independent power-off check may be starved.
                     if (!counter.needsHealthCheck() && counter.canPerformActivityCheck(
                             (Long) provider.getConfigValue(HAProviderConfig.MaxActivityCheckInterval, resource))) {
-                        if (config.getState() == HAConfig.HAState.Degraded
-                                && !transitionHAState(HAConfig.Event.PeriodicRecheckResourceActivity, config)) {
-                            break;
+                        if (config.getState() == HAConfig.HAState.Degraded) {
+                            if (config.getManagementServerId() == null) {
+                                // Claim a persisted degraded host through CAS after MS restart.
+                                transitionHAState(HAConfig.Event.PeriodicRecheckResourceActivity, config);
+                                break;
+                            }
+                            // Preserve Degraded during the probe: old VM HA must continue to
+                            // see an unmanageable host with activity, not a transient Up state.
+                            submitHATask(resource, provider, config, counter, HAResourceCounter.Operation.ACTIVITY);
+                        } else {
+                            transitionHAState(HAConfig.Event.PerformActivityCheck, config);
                         }
-                        transitionHAState(HAConfig.Event.PerformActivityCheck, config);
                     } else {
                         submitHATask(resource, provider, config, counter, HAResourceCounter.Operation.HEALTH);
                     }
@@ -1021,7 +1029,7 @@ public final class HAManagerImpl extends ManagerBase implements HAManager, Clust
                 case Checking:
                     // Checking is persisted; its in-memory task is not. Resume safely after
                     // management restart or a rejected executor submission.
-                    counter.breakActivityFailureSequence();
+                    counter.breakActivitySequences();
                     transitionHAState(HAConfig.Event.TooFewActivityCheckSamples, config);
                     break;
                 case Recovering:

@@ -543,7 +543,8 @@ class TestHostHA(cloudstackTestCase):
         """
             Tests ha FSM transitions leading to degraded state
             Simulates health check failures with activity checks passing
-            FSM transitions should happen indefinitely between:
+            Consecutive ALIVE observations enter Degraded, which remains stable
+            during subsequent probes until host health recovers:
             Available->Suspect<->Checking->Degraded->Available
         """
         host = self.getHost()
@@ -565,7 +566,7 @@ class TestHostHA(cloudstackTestCase):
 
         if prevT:
             self.checkFSMTransition(prevT, 'performactivitycheck', 'checking', 'suspect', True, False)
-        self.checkFSMTransition(T, 'activitycheckfailureunderthresholdratio', 'degraded', 'checking', True, False)
+        self.checkFSMTransition(T, 'activitychecksuccessthresholdreached', 'degraded', 'checking', True, False)
 
 
     @attr(tags=["devcloud", "advanced", "advancedns", "smoke", "basic", "sg"], required_hardware="false")

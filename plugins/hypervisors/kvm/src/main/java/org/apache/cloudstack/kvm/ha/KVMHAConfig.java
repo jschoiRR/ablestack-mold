@@ -40,6 +40,9 @@ public class KVMHAConfig {
     public static final ConfigKey<Long> KvmHADegradedMaxPeriod = new ConfigKey<>("Advanced", Long.class, "kvm.ha.degraded.max.period", "60",
             "Legacy degraded wait setting retained for compatibility. Continuous HA observation now resumes activity checks at the regular activity interval without this pause.", true, ConfigKey.Scope.Cluster);
 
+    public static final ConfigKey<Long> KvmHAActivityCheckSuccessThreshold = new ConfigKey<>("Advanced", Long.class, "kvm.ha.activity.check.success.threshold", "3",
+            "Consecutive ALIVE activity observations required to enter Degraded while host health remains abnormal. Must be positive. Activity checks continue in Degraded; only a healthy host check restores Available.", true, ConfigKey.Scope.Cluster);
+
     public static final ConfigKey<Long> KvmHARecoverTimeout = new ConfigKey<>("Advanced", Long.class, "kvm.ha.recover.timeout", "60",
             "The maximum length of time, in seconds, expected for a recovery operation to complete.", true, ConfigKey.Scope.Cluster);
 

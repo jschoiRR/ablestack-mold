@@ -1,6 +1,7 @@
 # Europa HA 감지 및 재부팅 복구 구현계획서
 
 - 기준: `europa-2026`, 검토 시작 HEAD `1fcb1b0467`
+- 구현 작업 브랜치: `codex/ha-safety` (운영 브랜치와 분리)
 - 전원 정책: 사용자 선택에 따라 **재부팅 유지**. 부팅 후에도 Maintenance를 유지하고 VM은 다른 호스트에서 복구한다.
 - 범위: Mold 코드 구현, 자동화된 회귀 검증, 현장 인수시험 절차. 현장 PCS 설정 변경과 실제 호스트 전원 조작은 이 로컬 구현에 포함하지 않는다.
 
@@ -22,6 +23,7 @@
 - Ping 또는 libvirt 연결 실패 횟수만으로 완전 다운을 확정하지 않는다.
 - 조기 확정은 서로 분리된 **여러 번의 실시간 BMC OFF 확인**에 한정한다. On, Unknown, 오류가 끼면 OFF 확인은 성립하지 않는다.
 - 기존 Activity 실패 임계값 7/50%=4회, 9/50%=5회를 유지한다. 초기 성공 때문에 관찰을 중단하지 않는다.
+- Health가 비정상인 동안 Activity가 설정한 횟수 연속 ALIVE이면 Degraded로 진입한다. Degraded 상태에서도 주기적 검사를 계속하며, Activity 성공만으로 Available로 복귀하지 않는다.
 - VM 복구보다 먼저 DB Maintenance를 확정하고, 연결된 agent에도 명령 차단을 적용한다.
 - 전원 명령의 성공 응답만으로 격리됐다고 판단하지 않는다. OFF 단계와 실제 OFF 확인을 거친 뒤 재부팅 ON을 수행한다.
 - 부팅·재접속으로 Maintenance를 자동 해제하지 않는다. HA 복구 배치에서는 원래 장애 호스트를 명시적으로 제외한다.
@@ -35,7 +37,10 @@ flowchart TD
     B -->|예| F[HA Fencing 결정]
     B -->|아니오 / 확인 불가| C[기존 Health 및 Activity 관찰]
     C --> D{확인된 Activity 연속 실패 기준 충족?}
-    D -->|아니오| C
+    D -->|아니오| E{Activity 연속 ALIVE 기준 충족?}
+    E -->|예| G[Degraded 상태 유지하며 Health와 Activity 계속 검사]
+    E -->|아니오 / UNKNOWN| C
+    G --> C
     D -->|예| F
     F --> Q[DB Maintenance 확정 및 agent 명령 차단]
     Q --> S[복구할 VM ID와 UUID를 DB에 저장]
@@ -70,6 +75,8 @@ flowchart TD
 
 - `max.attempts`와 `failure.ratio` 키 및 임계값 수식은 유지한다. 고정된 배치 검사 후 대기하는 의미는 지속적인 연속 실패 관찰로 바뀌며 설정 설명도 변경한다.
 - `kvm.ha.degraded.max.period` 키는 호환성을 위해 남기지만, 지속 관찰에서는 이 대기 시간을 적용하지 않는다. Health와 Activity를 교대로 수행하므로 실제 Activity 간격은 설정값보다 길어질 수 있다.
+- `kvm.ha.activity.check.success.threshold` 기본값 3은 Degraded 진입에 필요한 연속 ALIVE 횟수다. 클러스터별 양의 정수로 설정한다. DEAD와 UNKNOWN은 ALIVE 연속성을 끊고, UNKNOWN은 DEAD 연속성도 끊는다.
+- Degraded 재검사는 DB 상태를 Suspect/Checking으로 바꾸지 않고 진행한다. 다음 단계가 확정되기 전까지 마지막으로 확인된 Degraded 상태를 유지한다. 정상 Health가 확인되면 Available로 복귀하고 양쪽 Activity 카운터를 초기화한다.
 - HB 60초를 일괄적으로 낮추지 않는다. 기존 storage 보호 여유는 유지하고, 확실한 OFF에 별도 조기 경로를 추가한다.
 - 조기 OFF 확인에는 최소 확인 횟수, 확인 간격, 개별 조회 timeout을 사용한다. 전체 Health/Fence 작업 timeout 안에서 종료되도록 검증한다.
 - 전체 HA poll 기본값을 60초에서 5초로 변경한다. 현장에 저장된 `ha.checking.interval` override는 자동으로 덮어쓰지 않는다. 기존 설치에서는 실제 저장값을 확인하고, 5초 적용 시 BMC·agent 부하를 함께 측정한다.
@@ -86,6 +93,7 @@ flowchart TD
 | `kvm.ha.power.off.confirmations` | 3 | 최소 3회; 중간 ON·UNKNOWN은 연속 확인을 끊음 |
 | `kvm.ha.power.check.interval` | 1초 | 이전 조회 완료 후 다음 조회까지 최소 간격 |
 | `kvm.ha.power.check.timeout` | 2초 | 실시간 BMC STATUS 한 번의 제한 시간 |
+| `kvm.ha.activity.check.success.threshold` | 3 | Health 비정상 중 Degraded 진입에 필요한 연속 ALIVE 횟수 |
 
 기본 Health timeout 10초, Fence timeout 60초 안에서 확인 횟수·간격·개별 timeout이 모두 들어가도록 검증한다. 잘못된 조합은 조기 확정 또는 전원 조작을 진행하지 않는다. 빠른 감지 시간에는 poll 대기, 작업 대기열, BMC 응답 시간이 추가되므로 고정된 몇 초 이내라는 SLA로 해석하지 않는다.
 

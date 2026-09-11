@@ -40,6 +40,7 @@ public class ActivityCheckTask extends BaseHATask {
     private long disconnectTime;
     private long maxActivityChecks;
     private double activityCheckFailureRatio;
+    private long activityCheckSuccessThreshold;
 
     public ActivityCheckTask(final HAResource resource, final HAProvider<HAResource> haProvider, final HAConfig haConfig, final HAProvider.HAProviderConfig haProviderConfig,
             final ExecutorService executor, final long disconnectTime) {
@@ -47,6 +48,7 @@ public class ActivityCheckTask extends BaseHATask {
         this.disconnectTime = disconnectTime;
         this.maxActivityChecks = (Long)haProvider.getConfigValue(HAProviderConfig.MaxActivityChecks, resource);
         this.activityCheckFailureRatio = (Double)haProvider.getConfigValue(HAProviderConfig.ActivityCheckFailureRatio, resource);
+        this.activityCheckSuccessThreshold = (Long)haProvider.getConfigValue(HAProviderConfig.ActivityCheckSuccessThreshold, resource);
     }
 
     public boolean performAction() throws HACheckerException {
@@ -61,42 +63,61 @@ public class ActivityCheckTask extends BaseHATask {
         final HAResourceCounter counter = getCounter();
 
         if (t != null) {
-            // An unavailable witness is not proof of inactivity and breaks consecutiveness.
-            counter.breakActivityFailureSequence();
+            // An unavailable witness proves neither activity nor inactivity.
+            counter.breakActivitySequences();
             logger.warn("Activity check is unknown for {}: {}", getResource(), t.toString());
-            getHaManager().transitionHAState(HAConfig.Event.TooFewActivityCheckSamples, haConfig);
+            continueObservation(haConfig);
             return;
         }
 
-        if (maxActivityChecks < 1 || !Double.isFinite(activityCheckFailureRatio)
-                || activityCheckFailureRatio < 0 || activityCheckFailureRatio >= 1) {
-            counter.breakActivityFailureSequence();
-            logger.warn("Invalid activity check threshold for {}", getResource());
-            getHaManager().transitionHAState(HAConfig.Event.TooFewActivityCheckSamples, haConfig);
+        final boolean validFailureThreshold = maxActivityChecks > 0 && Double.isFinite(activityCheckFailureRatio)
+                && activityCheckFailureRatio >= 0 && activityCheckFailureRatio < 1;
+        if ((result && activityCheckSuccessThreshold < 1) || (!result && !validFailureThreshold)) {
+            counter.breakActivitySequences();
+            logger.warn("Invalid activity {} threshold for {}", result ? "success" : "failure", getResource());
+            continueObservation(haConfig);
             return;
         }
 
         counter.incrActivityCounter(!result);
 
-        long requiredFailures = (long) Math.floor(maxActivityChecks * activityCheckFailureRatio) + 1;
+        final long requiredFailures = validFailureThreshold ? (long) Math.floor(maxActivityChecks * activityCheckFailureRatio) + 1 : Long.MAX_VALUE;
+        final String message = String.format("[VM Activity Check] Observations: %d | Consecutive ALIVE: %d (Threshold: %d) | Consecutive DEAD: %d (Threshold: %s)",
+                counter.getActivityCheckCounter(), counter.getConsecutiveActivityCheckSuccessCounter(), activityCheckSuccessThreshold,
+                counter.getConsecutiveActivityCheckFailureCounter(), validFailureThreshold ? Long.toString(requiredFailures) : "invalid");
+        // Continuous degraded observation must not create one database event per probe forever.
+        logger.debug(message);
 
-        int ratioPercent = (int) (activityCheckFailureRatio * 100);
-        String message = String.format("[VM Activity Check] Observations: %d | Configured Attempts: %d | Consecutive Failures: %d (Threshold: %d, Failure Ratio: %d%%)",
-                            counter.getActivityCheckCounter(),
-                            maxActivityChecks,
-                            counter.getConsecutiveActivityCheckFailureCounter(),
-                            requiredFailures,
-                            ratioPercent);
-        ActionEventUtils.onActionEvent(CallContext.current().getCallingUserId(), CallContext.current().getCallingAccountId(),
-                                        Domain.ROOT_DOMAIN, EventTypes.EVENT_HA_STATE_TRANSITION, message, haConfig.getResourceId(), ApiCommandResourceType.Host.toString());
-
-        if (counter.getConsecutiveActivityCheckFailureCounter() >= requiredFailures) {
+        if (!result && counter.getConsecutiveActivityCheckFailureCounter() >= requiredFailures) {
             if (getHaManager().transitionHAState(HAConfig.Event.ActivityCheckFailureOverThresholdRatio, haConfig)) {
+                recordDecision(haConfig, message);
                 counter.resetActivityCounter();
             }
             return;
         }
 
-        getHaManager().transitionHAState(HAConfig.Event.TooFewActivityCheckSamples, haConfig);
+        if (result && haConfig.getState() == HAConfig.HAState.Checking
+                && counter.getConsecutiveActivityCheckSuccessCounter() >= activityCheckSuccessThreshold) {
+            if (getHaManager().transitionHAState(HAConfig.Event.ActivityCheckSuccessThresholdReached, haConfig)) {
+                counter.markResourceDegraded();
+                recordDecision(haConfig, message);
+            }
+            return;
+        }
+
+        continueObservation(haConfig);
+    }
+
+    private void continueObservation(HAConfig haConfig) {
+        if (haConfig.getState() == HAConfig.HAState.Checking) {
+            getHaManager().transitionHAState(HAConfig.Event.TooFewActivityCheckSamples, haConfig);
+        }
+        // Keep the last confirmed Degraded state while observing ALIVE, UNKNOWN,
+        // or fewer than the required consecutive DEAD results.
+    }
+
+    private void recordDecision(HAConfig haConfig, String message) {
+        ActionEventUtils.onActionEvent(CallContext.current().getCallingUserId(), CallContext.current().getCallingAccountId(),
+                Domain.ROOT_DOMAIN, EventTypes.EVENT_HA_STATE_TRANSITION, message, haConfig.getResourceId(), ApiCommandResourceType.Host.toString());
     }
 }

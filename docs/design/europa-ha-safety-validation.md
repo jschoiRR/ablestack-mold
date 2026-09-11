@@ -1,6 +1,6 @@
 # Europa HA 변경 및 검증 기록
 
-- 대상 브랜치: `europa-2026`
+- 대상 브랜치: `codex/ha-safety` (운영 기준 브랜치: `europa-2026`)
 - 검토 기준 HEAD: `1fcb1b0467`
 - 구현계획: [europa-ha-safety-implementation-plan.md](europa-ha-safety-implementation-plan.md)
 - 선택한 정책: 재부팅 유지, 원래 호스트 Maintenance 유지, 복구 가능한 HA VM은 다른 호스트에서 재시작
@@ -13,6 +13,40 @@
 4. OFF 요청 → 시간 간격을 둔 실제 OFF 반복 확인 → ON 요청 순으로 수행한다. 전원 변경 직전에 HA 활성화, 클러스터·존 설정, 관리 서버 소유권, Maintenance를 다시 확인한다.
 5. 성공한 fencing을 DB에 Fenced로 기록한다. 저장한 VM 목록으로 `HostFenced` HA 작업을 DB에 등록한 뒤에만 목록을 제거하고 호스트 HA를 비활성화한다. 원래 호스트의 Maintenance는 유지한다.
 6. VM 작업은 stop 상태 정리를 재개할 수 있는 단계로 먼저 저장된다. 복구 배치에서는 작업에 기록된 원래 호스트를 제외한다. 이미 다른 호스트로 이동했거나 제거된 VM에는 이전 복구 작업을 적용하지 않는다.
+
+## Degraded 지속 관찰 추가
+
+사용자와 합의한 흐름에 따라 총 검사 횟수 제한 없이 Activity를 관찰하면서, 연속 ALIVE 기준으로 Degraded에 진입하도록 보완했다.
+
+| 조건 | 동작 |
+|---|---|
+| Available | Health 및 전원 상태 확인만 주기적으로 수행; Activity 반복 검사 없음 |
+| Health 비정상 + Activity ALIVE 3회 연속 | Degraded 진입 (새 설정으로 횟수 변경 가능) |
+| Degraded의 후속 ALIVE 또는 실패 기준 미달 | Degraded 상태에서 Health/Activity 계속 수행 |
+| Activity UNKNOWN·timeout·오류 | 성공/실패 연속성 모두 초기화, 경고 로그 출력, 관찰 지속 |
+| Activity DEAD 연속 4회 (기존 7회·50% 설정) | Checking 또는 Degraded에서 Recovering으로 전환, 기존 fencing 절차 연결 |
+| 관찰 중 대상 호스트 Health 정상 | Available 복귀, Activity 이력 초기화 |
+| Fencing/Fenced | 늦은 Activity 결과로 상태를 되돌리지 않음 |
+
+- 신규 클러스터 설정: `kvm.ha.activity.check.success.threshold`, 기본값 **3**, 양의 정수. 총 검사 횟수와 별개인 Degraded 진입 기준이다.
+- Available 복귀 기준은 기존 Health 정상 1회다. 이번 변경에서 별도의 연속 Health 성공 횟수를 추가하지 않았다.
+- Degraded에서 검사할 때도 DB HA 상태를 유지한다. 기존 VM HA에는 계속 Disconnected 및 VM 생존으로 전달되어, 새 검사마다 일시적으로 Up으로 보이지 않는다.
+- UNKNOWN 이후 유지되는 Degraded는 마지막 확인 상태이며, 매 순간 최신 ALIVE가 확인됐다는 뜻은 아니다. UNKNOWN 자체로 새로운 Degraded 진입이나 fencing을 결정하지 않는다.
+- 일반 Activity 결과는 DEBUG 로그로 남기고, 성공한 Degraded/Recovering 판정에만 상세 DB 이벤트를 기록한다. 지속 검사에 따른 동일 이벤트의 무제한 누적을 줄인다.
+- 관리 서버 재시작으로 Degraded의 소유권이 비어 있으면 DB CAS로 소유권을 확보한 뒤 다음 주기에 관찰을 재개한다. 관찰 카운터는 재시작 후 새로 시작한다.
+
+추가 검증(2026-09-11): **42개 모듈 BUILD SUCCESS, 선택한 Java 회귀 테스트 195개 통과**, 실패·오류·제외 0개. 서버 146개, engine/orchestration 5개, KVM 44개이며, 새 연속 ALIVE/Degraded 동작을 다루는 counter·manager·task 테스트는 기존 포함 52개다. 수정한 KVM·시뮬레이터 smoke test 두 파일은 Python 구문 검사를 통과했다. 실제 smoke 환경·실장비 인수시험은 실행하지 않았다.
+
+시뮬레이터는 별도 Maven profile로 등록되므로 다음 명령으로 빌드·회귀 검증했다. JDK 및 Mockito agent 설정은 아래 최초 검증 환경과 같다.
+
+```sh
+mvn -o -Psimulator \
+  -pl engine/orchestration,plugins/hypervisors/kvm,plugins/hypervisors/simulator -am \
+  -Ddownload.plugin.skip=true -Dcheckstyle.skip=true -Drat.skip=true \
+  -Dspotbugs.skip=true -Dpmd.skip=true -DskipITs \
+  -Dtest='HAResourceCounterTest,HAManagerImplTest,HATaskTest,FenceTaskTest,HAAbstractHostProviderTest,HostFencedRecoveryTest,HaSourceHostExclusionTest,HighAvailabilityManagerImplTest,HighAvailabilityDaoImplTest,DeploymentPlanningManagerImplTest,HostMaintenanceDispatchTest,KVMHAPowerSafetyTest,KVMHostHATest,KVMHostActivityCheckerTest,KVMHACheckerTest,*SimulatorHA*Test' \
+  -DfailIfNoTests=false -Dsurefire.failIfNoSpecifiedTests=false test
+```
 
 ## 관련 보완
 
@@ -42,7 +76,7 @@ BMC까지 전원이 끊겼거나 관리망이 단절되면 무응답을 완전 �
 - PCS 또는 libvirt의 외부 자동 시작은 Mold의 Start 차단만으로 통제되지 않는다. PCS가 Maintenance 확정보다 먼저 재부팅하는 시험과 libvirt 자동 시작 정책을 별도 확인해야 한다.
 - 외부 전원 명령과 DB 기록은 원자적으로 묶이지 않는다. ON 성공 직후 Fenced 기록 전 관리 서버가 종료되면 재시도에서 전원 시퀀스가 반복될 수 있다. 관리 서버 장애를 포함한 전원 명령의 정확히 한 번 실행을 보장하지 않는다.
 
-## 자동 검증
+## 최초 HA 변경 검증
 
 검증일: 2026-09-11. 최종 Maven 실행은 **BUILD SUCCESS**, 42개 reactor 모듈 모두 성공했다.
 

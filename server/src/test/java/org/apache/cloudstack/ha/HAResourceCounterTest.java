@@ -40,12 +40,53 @@ public class HAResourceCounterTest {
         HAResourceCounter counter = new HAResourceCounter();
         counter.incrActivityCounter(true);
         counter.incrActivityCounter(true);
-        counter.breakActivityFailureSequence();
+        counter.breakActivitySequences();
         assertEquals(2, counter.getActivityCheckCounter());
         assertEquals(2, counter.getActivityCheckFailureCounter());
         assertEquals(0, counter.getConsecutiveActivityCheckFailureCounter());
         counter.incrActivityCounter(true);
         assertEquals(1, counter.getConsecutiveActivityCheckFailureCounter());
+    }
+
+    @Test
+    public void aliveAndDeadObservationsResetTheOppositeSequence() {
+        HAResourceCounter counter = new HAResourceCounter();
+        counter.incrActivityCounter(false);
+        counter.incrActivityCounter(false);
+        assertEquals(2, counter.getConsecutiveActivityCheckSuccessCounter());
+        assertEquals(0, counter.getConsecutiveActivityCheckFailureCounter());
+        counter.incrActivityCounter(true);
+        assertEquals(0, counter.getConsecutiveActivityCheckSuccessCounter());
+        assertEquals(1, counter.getConsecutiveActivityCheckFailureCounter());
+        counter.incrActivityCounter(false);
+        assertEquals(1, counter.getConsecutiveActivityCheckSuccessCounter());
+        assertEquals(0, counter.getConsecutiveActivityCheckFailureCounter());
+        assertEquals(4, counter.getActivityCheckCounter());
+    }
+
+    @Test
+    public void unknownBreaksAliveSequenceWithoutInventingAnObservation() {
+        HAResourceCounter counter = new HAResourceCounter();
+        counter.incrActivityCounter(false);
+        counter.incrActivityCounter(false);
+        counter.breakActivitySequences();
+        assertEquals(2, counter.getActivityCheckCounter());
+        assertEquals(0, counter.getActivityCheckFailureCounter());
+        assertEquals(0, counter.getConsecutiveActivityCheckSuccessCounter());
+        assertEquals(0, counter.getConsecutiveActivityCheckFailureCounter());
+    }
+
+    @Test
+    public void activityAndCycleResetsClearAliveSequence() {
+        HAResourceCounter counter = new HAResourceCounter();
+        counter.incrActivityCounter(false);
+        counter.resetActivityCounter();
+        assertEquals(0, counter.getConsecutiveActivityCheckSuccessCounter());
+        assertEquals(0, counter.getActivityCheckCounter());
+        counter.incrActivityCounter(false);
+        counter.resetForNewCycle();
+        assertEquals(0, counter.getConsecutiveActivityCheckSuccessCounter());
+        assertEquals(0, counter.getActivityCheckCounter());
     }
 
     @Test

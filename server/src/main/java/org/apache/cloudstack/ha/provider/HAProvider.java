@@ -31,6 +31,7 @@ public interface HAProvider<R extends HAResource> extends Adapter {
         RecoveryTimeout,
         FenceTimeout,
         ActivityCheckFailureRatio,
+        ActivityCheckSuccessThreshold,
         MaxActivityChecks,
         MaxRecoveryAttempts,
         MaxActivityCheckInterval,
