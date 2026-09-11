@@ -23,9 +23,12 @@ import com.cloud.storage.Storage.StoragePoolType;
 import org.joda.time.Duration;
 import org.junit.Test;
 import java.util.Collections;
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
-import static org.mockito.ArgumentMatchers.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 
 public class KVMHACheckerTest {
     private HAStoragePool pool(Boolean active) {
