@@ -18,9 +18,62 @@
 package org.apache.cloudstack.ha;
 
 import org.junit.Test;
+import java.util.concurrent.TimeUnit;
 import static org.junit.Assert.*;
 
 public class HAResourceCounterTest {
+    @Test
+    public void powerOffEvidenceAccumulatesAcrossCompletedHealthTasks() {
+        HAResourceCounter counter = new HAResourceCounter();
+        for (int i = 1; i <= 3; i++) {
+            HAResourceCounter.TaskToken task = counter.tryStartTask(HAResourceCounter.Operation.HEALTH);
+            assertNotNull(task);
+            assertEquals(i, counter.recordPowerOffObservation(TimeUnit.SECONDS.toNanos(i * 10L), 60, 3));
+            counter.finishTask(task);
+            assertEquals(i, counter.getConsecutivePowerOffCounter());
+        }
+    }
+
+    @Test
+    public void expiredPowerOffEvidenceRestartsWithOneFreshObservation() {
+        HAResourceCounter counter = new HAResourceCounter();
+        assertEquals(1, counter.recordPowerOffObservation(TimeUnit.SECONDS.toNanos(10), 60, 3));
+        assertEquals(2, counter.recordPowerOffObservation(TimeUnit.SECONDS.toNanos(70), 60, 3));
+        assertEquals(1, counter.recordPowerOffObservation(TimeUnit.SECONDS.toNanos(131), 60, 3));
+        assertEquals(1, counter.getConsecutivePowerOffCounter());
+    }
+
+    @Test
+    public void changingPowerOffConfirmationRequirementStartsNewEvidence() {
+        HAResourceCounter counter = new HAResourceCounter();
+        counter.recordPowerOffObservation(TimeUnit.SECONDS.toNanos(10), 60, 3);
+        counter.recordPowerOffObservation(TimeUnit.SECONDS.toNanos(20), 60, 3);
+        assertEquals(1, counter.recordPowerOffObservation(TimeUnit.SECONDS.toNanos(30), 60, 5));
+        assertEquals(2, counter.recordPowerOffObservation(TimeUnit.SECONDS.toNanos(40), 60, 5));
+    }
+
+    @Test
+    public void explicitAndNewCycleResetsDiscardPowerOffEvidence() {
+        HAResourceCounter counter = new HAResourceCounter();
+        counter.recordPowerOffObservation(100, 60, 3);
+        counter.resetPowerOffCounter();
+        assertEquals(0, counter.getConsecutivePowerOffCounter());
+        assertEquals(1, counter.recordPowerOffObservation(200, 60, 3));
+        counter.resetForNewCycle();
+        assertEquals(0, counter.getConsecutivePowerOffCounter());
+        assertEquals(1, counter.recordPowerOffObservation(300, 60, 3));
+    }
+
+    @Test
+    public void invalidPowerConfirmationConfigurationCannotRetainOrCreateEvidence() {
+        HAResourceCounter counter = new HAResourceCounter();
+        for (long[] invalid : new long[][] {{60, 0}, {60, 1}, {60, 2}, {0, 3}, {-1, 3}, {3601, 3}}) {
+            counter.recordPowerOffObservation(100, 60, 3);
+            assertEquals(0, counter.recordPowerOffObservation(200, invalid[0], invalid[1]));
+            assertEquals(0, counter.getConsecutivePowerOffCounter());
+        }
+    }
+
     @Test
     public void invalidationKeepsRunningReservationUntilWorkerFinishes() {
         HAResourceCounter counter = new HAResourceCounter();

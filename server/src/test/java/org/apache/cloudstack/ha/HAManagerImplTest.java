@@ -89,6 +89,8 @@ public class HAManagerImplTest {
         when(provider.getConfigValue(any(), eq(host))).thenReturn(5L);
         when(provider.getConfigValue(HAProvider.HAProviderConfig.ActivityCheckFailureRatio, host)).thenReturn(0.5D);
         when(provider.getConfigValue(HAProvider.HAProviderConfig.ActivityCheckSuccessThreshold, host)).thenReturn(3L);
+        when(provider.getPowerOffConfirmations(host)).thenReturn(3L);
+        when(provider.getPowerOffMaxInterval(host)).thenReturn(60L);
         executor = mock(ExecutorService.class);
         when(executor.submit(any(Callable.class))).thenReturn(mock(Future.class));
         for (String name : new String[] {"healthCheckExecutor", "activityCheckExecutor", "recoveryExecutor", "fenceExecutor"}) {
@@ -98,6 +100,7 @@ public class HAManagerImplTest {
             f.set(null, executor);
         }
         counter = manager.getHACounter(1L, HAResource.ResourceType.Host);
+        counter.synchronizePowerObservationProvider("kvm");
         doReturn(true).when(manager).transitionHAState(any(), any());
     }
 
@@ -203,6 +206,114 @@ public class HAManagerImplTest {
         manager.processHAResource(config, host, provider);
         verify(manager).submitHATask(host, provider, config, counter, HAResourceCounter.Operation.HEALTH);
         verify(manager, never()).transitionHAState(eq(HAConfig.Event.PerformActivityCheck), any());
+    }
+
+    @Test
+    public void suspectWithPendingOffEvidencePrioritizesAnotherHealthPoll() {
+        counter.recordPowerOffObservation(System.nanoTime(), 60, 3);
+        assertFalse(counter.needsHealthCheck());
+        doReturn(true).when(manager).submitHATask(any(), any(), any(), any(), any());
+        manager.processHAResource(config, host, provider);
+        verify(manager).submitHATask(host, provider, config, counter, HAResourceCounter.Operation.HEALTH);
+        verify(manager, never()).transitionHAState(eq(HAConfig.Event.PerformActivityCheck), any());
+        verify(manager, never()).submitHATask(any(), any(), any(), any(), eq(HAResourceCounter.Operation.ACTIVITY));
+    }
+
+    @Test
+    public void degradedWithPendingOffEvidencePrioritizesHealthWithoutLosingState() {
+        config.setHastate(HAConfig.HAState.Degraded);
+        counter.recordPowerOffObservation(System.nanoTime(), 60, 3);
+        assertFalse(counter.needsHealthCheck());
+        doReturn(true).when(manager).submitHATask(any(), any(), any(), any(), any());
+        manager.processHAResource(config, host, provider);
+        verify(manager).submitHATask(host, provider, config, counter, HAResourceCounter.Operation.HEALTH);
+        verify(manager, never()).submitHATask(any(), any(), any(), any(), eq(HAResourceCounter.Operation.ACTIVITY));
+        verify(manager, never()).transitionHAState(any(), any());
+        assertEquals(HAConfig.HAState.Degraded, config.getState());
+    }
+
+    @Test
+    public void repeatedPollsDoNotQueueDuplicatePowerObservationTasks() {
+        counter.recordPowerOffObservation(System.nanoTime(), 60, 3);
+        try (MockedStatic<ComponentContext> context = Mockito.mockStatic(ComponentContext.class)) {
+            context.when(() -> ComponentContext.inject(any(BaseHATask.class))).thenAnswer(i -> i.getArgument(0));
+            for (int i = 0; i < 5; i++) {
+                manager.processHAResource(config, host, provider);
+            }
+            verify(executor, times(1)).submit(any(Callable.class));
+            assertTrue(counter.hasActiveTask());
+            assertEquals(1, counter.getConsecutivePowerOffCounter());
+            verify(manager, times(1)).submitHATask(host, provider, config, counter, HAResourceCounter.Operation.HEALTH);
+        }
+    }
+
+    @Test
+    public void foreignOwnershipDiscardsLocalOffEvidenceBeforeLaterReclaim() throws Exception {
+        counter.recordPowerOffObservation(System.nanoTime(), 60, 3);
+        counter.recordPowerOffObservation(System.nanoTime(), 60, 3);
+        config.setManagementServerId(ManagementServerNode.getManagementServerId() + 1);
+        Method checkOwnership = HAManagerImpl.class.getDeclaredMethod("checkHAOwnership", HAConfig.class);
+        checkOwnership.setAccessible(true);
+        assertEquals(false, checkOwnership.invoke(manager, config));
+        assertEquals(0, counter.getConsecutivePowerOffCounter());
+        config.setManagementServerId(ManagementServerNode.getManagementServerId());
+        assertEquals(true, checkOwnership.invoke(manager, config));
+        assertEquals(1, counter.recordPowerOffObservation(System.nanoTime(), 60, 3));
+    }
+
+    @Test
+    public void changedProviderInvalidatesPowerEvidenceFromQueuedHealthTask() {
+        HAConfigVO expected = new HAConfigVO();
+        expected.setResourceId(1L);
+        expected.setResourceType(HAResource.ResourceType.Host);
+        expected.setHaProvider("kvm");
+        counter.recordPowerOffObservation(System.nanoTime(), 60, 3);
+        counter.recordPowerOffObservation(System.nanoTime(), 60, 3);
+        HAResourceCounter.TaskToken token = counter.tryStartTask(HAResourceCounter.Operation.HEALTH);
+        config.setHaProvider("other");
+        assertNull(manager.getCurrentHAConfig(expected, counter, token));
+        assertEquals(0, counter.getConsecutivePowerOffCounter());
+    }
+
+    @Test
+    public void disabledConfigurationDiscardsOffEvidenceFromQueuedHealthTask() {
+        counter.recordPowerOffObservation(System.nanoTime(), 60, 3);
+        counter.recordPowerOffObservation(System.nanoTime(), 60, 3);
+        HAResourceCounter.TaskToken token = counter.tryStartTask(HAResourceCounter.Operation.HEALTH);
+        config.setEnabled(false);
+        assertNull(manager.getCurrentHAConfig(config, counter, token));
+        assertEquals(0, counter.getConsecutivePowerOffCounter());
+    }
+
+    @Test
+    public void ownerlessPollCannotReusePreviousOwnersOffEvidence() {
+        counter.recordPowerOffObservation(System.nanoTime(), 60, 3);
+        counter.recordPowerOffObservation(System.nanoTime(), 60, 3);
+        config.setManagementServerId(null);
+        manager.processHAResource(config, host, provider);
+        assertEquals(0, counter.getConsecutivePowerOffCounter());
+        verify(manager, never()).submitHATask(any(), any(), any(), any(), eq(HAResourceCounter.Operation.HEALTH));
+    }
+
+    @Test
+    public void missingProviderDiscardsPreviouslyCollectedOffEvidence() throws Exception {
+        counter.recordPowerOffObservation(System.nanoTime(), 60, 3);
+        counter.recordPowerOffObservation(System.nanoTime(), 60, 3);
+        field(manager, "haProviderMap", new HashMap<String, HAProvider<HAResource>>());
+        Method validate = HAManagerImpl.class.getDeclaredMethod("validateAndFindHAProvider", HAConfig.class, HAResource.class);
+        validate.setAccessible(true);
+        assertNull(validate.invoke(manager, config, host));
+        assertEquals(0, counter.getConsecutivePowerOffCounter());
+    }
+
+    @Test
+    public void changedProviderBetweenPollsCannotContinuePreviousOffSequence() {
+        counter.recordPowerOffObservation(System.nanoTime(), 60, 3);
+        counter.recordPowerOffObservation(System.nanoTime(), 60, 3);
+        config.setHaProvider("other");
+        manager.processHAResource(config, host, provider);
+        assertEquals(0, counter.getConsecutivePowerOffCounter());
+        verify(manager, never()).submitHATask(any(), any(), any(), any(), eq(HAResourceCounter.Operation.HEALTH));
     }
 
     @Test

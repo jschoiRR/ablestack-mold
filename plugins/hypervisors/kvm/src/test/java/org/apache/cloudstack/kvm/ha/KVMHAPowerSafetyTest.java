@@ -47,6 +47,8 @@ import org.apache.cloudstack.ha.HAManager;
 import org.apache.cloudstack.ha.HAResource;
 import org.apache.cloudstack.ha.dao.HAConfigDao;
 import org.apache.cloudstack.ha.provider.HAFenceException;
+import org.apache.cloudstack.ha.provider.HACheckerException;
+import org.apache.cloudstack.ha.provider.HAProvider.PowerObservation;
 import org.apache.cloudstack.outofbandmanagement.OutOfBandManagement.PowerOperation;
 import org.apache.cloudstack.outofbandmanagement.OutOfBandManagement.PowerState;
 import org.apache.cloudstack.outofbandmanagement.OutOfBandManagementService;
@@ -82,6 +84,8 @@ public class KVMHAPowerSafetyTest {
                 .when(provider).waitForPowerObservation(anyLong());
         doReturn(true).when(provider).isPowerOffCheckEnabled(host);
         doReturn(3L).when(provider).getPowerOffConfirmations(host);
+        doReturn(60L).when(provider).getPowerOffMaxInterval(host);
+        doReturn(3L).when(provider).getFencePowerOffConfirmations(host);
         doReturn(1L).when(provider).getPowerCheckInterval(host);
         doReturn(2L).when(provider).getPowerCheckTimeout(host);
         doReturn(10L).when(provider).getHealthCheckTimeout(host);
@@ -106,29 +110,70 @@ public class KVMHAPowerSafetyTest {
         return response;
     }
 
+    private void useDefaultPowerCheckSettings() {
+        doReturn(Long.parseLong(KVMHAConfig.KvmHAPowerOffConfirmations.defaultValue())).when(provider).getPowerOffConfirmations(host);
+        doReturn(Long.parseLong(KVMHAConfig.KvmHAPowerOffMaxInterval.defaultValue())).when(provider).getPowerOffMaxInterval(host);
+        doReturn(Long.parseLong(KVMHAConfig.KvmHAFencePowerOffConfirmations.defaultValue())).when(provider).getFencePowerOffConfirmations(host);
+        doReturn(Long.parseLong(KVMHAConfig.KvmHAPowerCheckInterval.defaultValue())).when(provider).getPowerCheckInterval(host);
+        doReturn(Long.parseLong(KVMHAConfig.KvmHAPowerCheckTimeout.defaultValue())).when(provider).getPowerCheckTimeout(host);
+        doReturn(Long.parseLong(KVMHAConfig.KvmHAHealthCheckTimeout.defaultValue())).when(provider).getHealthCheckTimeout(host);
+        doReturn(Long.parseLong(KVMHAConfig.KvmHAFenceTimeout.defaultValue())).when(provider).getFenceTimeout(host);
+    }
+
     @Test
-    public void requiresThreeSeparatedFreshOffResponses() throws Exception {
-        when(powerService.executePowerOperation(host, PowerOperation.STATUS, 2L)).thenReturn(response(PowerState.Off));
-        assertTrue(provider.isPowerOffConfirmed(host));
-        verify(powerService, times(3)).executePowerOperation(host, PowerOperation.STATUS, 2L);
-        assertEquals(TimeUnit.SECONDS.toNanos(2), now.get());
+    public void defaultHealthObservationQueriesOnceWithoutWaiting() throws Exception {
+        useDefaultPowerCheckSettings();
+        when(powerService.executePowerOperation(host, PowerOperation.STATUS, 1L)).thenAnswer(call -> {
+            now.addAndGet(TimeUnit.SECONDS.toNanos(1));
+            return response(PowerState.Off);
+        });
+        assertEquals(PowerObservation.OFF, provider.checkPowerState(host));
+        verify(powerService, times(1)).executePowerOperation(host, PowerOperation.STATUS, 1L);
+        verify(provider, never()).waitForPowerObservation(anyLong());
+        assertEquals(TimeUnit.SECONDS.toNanos(1), now.get());
         verify(powerService, never()).executePowerOperation(eq(host), eq(PowerOperation.OFF), anyLong());
         verify(powerService, never()).executePowerOperation(eq(host), eq(PowerOperation.ON), anyLong());
     }
 
     @Test
-    public void onResponseBreaksEarlyConfirmation() throws Exception {
-        when(powerService.executePowerOperation(host, PowerOperation.STATUS, 2L))
-                .thenReturn(response(PowerState.Off), response(PowerState.On), response(PowerState.Off));
-        assertFalse(provider.isPowerOffConfirmed(host));
-        verify(powerService, times(2)).executePowerOperation(host, PowerOperation.STATUS, 2L);
+    public void separateCallsEachReturnExactlyOneObservation() throws Exception {
+        useDefaultPowerCheckSettings();
+        when(powerService.executePowerOperation(host, PowerOperation.STATUS, 1L)).thenReturn(
+                response(PowerState.Off), response(PowerState.On), response(PowerState.Unknown));
+        assertEquals(PowerObservation.OFF, provider.checkPowerState(host));
+        verify(powerService, times(1)).executePowerOperation(host, PowerOperation.STATUS, 1L);
+        assertEquals(PowerObservation.ON, provider.checkPowerState(host));
+        verify(powerService, times(2)).executePowerOperation(host, PowerOperation.STATUS, 1L);
+        assertEquals(PowerObservation.UNKNOWN, provider.checkPowerState(host));
+        verify(powerService, times(3)).executePowerOperation(host, PowerOperation.STATUS, 1L);
+        verify(provider, never()).waitForPowerObservation(anyLong());
     }
 
     @Test
-    public void unknownDoesNotConfirmPowerOff() throws Exception {
-        when(powerService.executePowerOperation(host, PowerOperation.STATUS, 2L))
-                .thenReturn(response(PowerState.Off), response(PowerState.Unknown));
-        assertFalse(provider.isPowerOffConfirmed(host));
+    public void singleObservationFitsLegacyHealthTimeoutIndependentlyOfFenceSettings() throws Exception {
+        useDefaultPowerCheckSettings();
+        doReturn(10L).when(provider).getHealthCheckTimeout(host);
+        doReturn(300L).when(provider).getPowerCheckInterval(host);
+        doReturn(1L).when(provider).getFencePowerOffConfirmations(host);
+        when(powerService.executePowerOperation(host, PowerOperation.STATUS, 1L)).thenReturn(response(PowerState.Off));
+        assertEquals(PowerObservation.OFF, provider.checkPowerState(host));
+        verify(powerService, times(1)).executePowerOperation(host, PowerOperation.STATUS, 1L);
+        verify(provider, never()).waitForPowerObservation(anyLong());
+    }
+
+    @Test
+    public void defaultFenceBudgetAllowsPowerOperationsAndFiveOffConfirmations() throws Exception {
+        useDefaultPowerCheckSettings();
+        when(powerService.executePowerOperation(eq(host), any(PowerOperation.class), anyLong())).thenAnswer(call -> {
+            now.addAndGet(TimeUnit.SECONDS.toNanos(call.getArgument(2, Long.class)));
+            return response(PowerState.Off);
+        });
+        assertTrue(provider.fence(host));
+        InOrder ordered = inOrder(powerService);
+        ordered.verify(powerService).executePowerOperation(host, PowerOperation.OFF, 10L);
+        ordered.verify(powerService, times(5)).executePowerOperation(host, PowerOperation.STATUS, 1L);
+        ordered.verify(powerService).executePowerOperation(host, PowerOperation.ON, 10L);
+        assertEquals(TimeUnit.SECONDS.toNanos(37), now.get());
     }
 
     @Test
@@ -136,38 +181,68 @@ public class KVMHAPowerSafetyTest {
         OutOfBandManagementResponse failed = response(PowerState.Off);
         failed.setSuccess(false);
         when(powerService.executePowerOperation(host, PowerOperation.STATUS, 2L)).thenReturn(failed);
-        assertFalse(provider.isPowerOffConfirmed(host));
+        assertEquals(PowerObservation.UNKNOWN, provider.checkPowerState(host));
     }
 
     @Test
-    public void nullOrExceptionNeverConfirmsOff() throws Exception {
+    public void nullOrExceptionNeverBecomesOff() throws Exception {
         when(powerService.executePowerOperation(host, PowerOperation.STATUS, 2L)).thenReturn(null);
-        assertFalse(provider.isPowerOffConfirmed(host));
+        assertEquals(PowerObservation.UNKNOWN, provider.checkPowerState(host));
         when(powerService.executePowerOperation(host, PowerOperation.STATUS, 2L)).thenThrow(new IllegalStateException("BMC timeout"));
-        assertFalse(provider.isPowerOffConfirmed(host));
+        assertEquals(PowerObservation.UNKNOWN, provider.checkPowerState(host));
     }
 
     @Test
-    public void tooFewConfirmationsDisableFastProof() throws Exception {
+    public void disabledEarlyDetectionDoesNotQueryPower() throws Exception {
+        doReturn(false).when(provider).isPowerOffCheckEnabled(host);
+        assertEquals(PowerObservation.UNKNOWN, provider.checkPowerState(host));
+        verify(powerService, never()).executePowerOperation(eq(host), eq(PowerOperation.STATUS), anyLong());
+    }
+
+    @Test
+    public void tooFewConfirmationsDisableEarlyDetection() throws Exception {
         doReturn(2L).when(provider).getPowerOffConfirmations(host);
-        assertFalse(provider.isPowerOffConfirmed(host));
+        assertEquals(PowerObservation.UNKNOWN, provider.checkPowerState(host));
         verify(powerService, never()).executePowerOperation(eq(host), eq(PowerOperation.STATUS), anyLong());
     }
 
     @Test
-    public void observationBudgetMustFitHealthTimeout() throws Exception {
-        doReturn(5L).when(provider).getHealthCheckTimeout(host);
-        assertFalse(provider.isPowerOffConfirmed(host));
+    public void invalidFreshnessIntervalDoesNotQueryPower() throws Exception {
+        doReturn(0L).when(provider).getPowerOffMaxInterval(host);
+        assertEquals(PowerObservation.UNKNOWN, provider.checkPowerState(host));
         verify(powerService, never()).executePowerOperation(eq(host), eq(PowerOperation.STATUS), anyLong());
     }
 
     @Test
-    public void lateOffResponseIsNotFreshProof() throws Exception {
+    public void singleQueryMustFitHealthTimeout() throws Exception {
+        doReturn(3L).when(provider).getHealthCheckTimeout(host);
+        assertEquals(PowerObservation.UNKNOWN, provider.checkPowerState(host));
+        verify(powerService, never()).executePowerOperation(eq(host), eq(PowerOperation.STATUS), anyLong());
+    }
+
+    @Test
+    public void lateOffResponseIsNotFreshEvidence() throws Exception {
         when(powerService.executePowerOperation(host, PowerOperation.STATUS, 2L)).thenAnswer(call -> {
-            now.addAndGet(TimeUnit.SECONDS.toNanos(11));
+            now.addAndGet(TimeUnit.SECONDS.toNanos(2) + 1);
             return response(PowerState.Off);
         });
-        assertFalse(provider.isPowerOffConfirmed(host));
+        assertEquals(PowerObservation.UNKNOWN, provider.checkPowerState(host));
+    }
+
+    @Test
+    public void interruptedObservationCannotReturnOff() throws Exception {
+        when(powerService.executePowerOperation(host, PowerOperation.STATUS, 2L)).thenAnswer(call -> {
+            Thread.currentThread().interrupt();
+            return response(PowerState.Off);
+        });
+        try {
+            provider.checkPowerState(host);
+            fail("Interrupted BMC evidence must not be accepted");
+        } catch (HACheckerException expected) {
+            assertTrue(Thread.currentThread().isInterrupted());
+        } finally {
+            Thread.interrupted();
+        }
     }
 
     @Test

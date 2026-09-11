@@ -21,7 +21,7 @@ import org.apache.cloudstack.framework.config.ConfigKey;
 
 public class KVMHAConfig {
 
-    public static final ConfigKey<Long> KvmHAHealthCheckTimeout = new ConfigKey<>("Advanced", Long.class, "kvm.ha.health.check.timeout", "10",
+    public static final ConfigKey<Long> KvmHAHealthCheckTimeout = new ConfigKey<>("Advanced", Long.class, "kvm.ha.health.check.timeout", "20",
             "The maximum length of time, in seconds, expected for an health check to complete.", true, ConfigKey.Scope.Cluster);
 
     public static final ConfigKey<Long> KvmHAActivityCheckTimeout = new ConfigKey<>("Advanced", Long.class, "kvm.ha.activity.check.timeout", "60",
@@ -57,15 +57,21 @@ public class KVMHAConfig {
             "The maximum length of time, in seconds, expected for a fence operation to complete.", true, ConfigKey.Scope.Cluster);
 
     public static final ConfigKey<Boolean> KvmHAPowerOffCheckEnabled = new ConfigKey<>("Advanced", Boolean.class, "kvm.ha.power.off.check.enabled", "true",
-            "Use repeated fresh BMC OFF responses to detect a powered-off host before storage heartbeat expiry. Failed or unknown responses never confirm power off.", true, ConfigKey.Scope.Cluster);
+            "Query BMC power once per health task and count consecutive fresh OFF responses across HA polls. Failed or unknown responses reset the sequence.", true, ConfigKey.Scope.Cluster);
 
     public static final ConfigKey<Long> KvmHAPowerOffConfirmations = new ConfigKey<>("Advanced", Long.class, "kvm.ha.power.off.confirmations", "3",
-            "Minimum consecutive fresh OFF responses required for early detection and fencing verification. Must be at least 3 and fit within the HA task timeout.", true, ConfigKey.Scope.Cluster);
+            "Consecutive fresh OFF observations across separate health tasks required for early detection. Must be at least 3. Independent of fencing verification.", true, ConfigKey.Scope.Cluster);
 
-    public static final ConfigKey<Long> KvmHAPowerCheckInterval = new ConfigKey<>("Advanced", Long.class, "kvm.ha.power.check.interval", "1",
-            "Minimum seconds between completed BMC OFF observations. Must be at least 1.", true, ConfigKey.Scope.Cluster);
+    public static final ConfigKey<Long> KvmHAPowerOffMaxInterval = new ConfigKey<>("Advanced", Long.class, "kvm.ha.power.off.max.interval", "60",
+            "Maximum seconds between consecutive OFF observations for early detection. A longer gap starts a new sequence; this is not a wait. Must be between 1 and 3600.", true, ConfigKey.Scope.Cluster);
 
-    public static final ConfigKey<Long> KvmHAPowerCheckTimeout = new ConfigKey<>("Advanced", Long.class, "kvm.ha.power.check.timeout", "2",
-            "Maximum seconds for each live BMC power-status query. The full observation sequence must fit within the HA task timeout.", true, ConfigKey.Scope.Cluster);
+    public static final ConfigKey<Long> KvmHAFencePowerOffConfirmations = new ConfigKey<>("Advanced", Long.class, "kvm.ha.fence.power.off.confirmations", "5",
+            "Consecutive fresh OFF responses required after the fencing OFF command before ON. Must be at least 3 and fit within the fence timeout.", true, ConfigKey.Scope.Cluster);
+
+    public static final ConfigKey<Long> KvmHAPowerCheckInterval = new ConfigKey<>("Advanced", Long.class, "kvm.ha.power.check.interval", "3",
+            "Seconds to wait between BMC observations during fencing verification only. Early detection queries once per health task without this wait. Must be at least 1.", true, ConfigKey.Scope.Cluster);
+
+    public static final ConfigKey<Long> KvmHAPowerCheckTimeout = new ConfigKey<>("Advanced", Long.class, "kvm.ha.power.check.timeout", "1",
+            "Maximum seconds for each live BMC power-status query. One query must fit within the health timeout; repeated fencing queries must fit within the fence timeout.", true, ConfigKey.Scope.Cluster);
 
 }

@@ -17,7 +17,9 @@
 
 package org.apache.cloudstack.ha;
 
+import java.util.Objects;
 import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 
 public final class HAResourceCounter {
@@ -40,6 +42,10 @@ public final class HAResourceCounter {
     private long generation;
     private TaskToken activeTask;
     private Operation lastProbeOperation;
+    private long consecutivePowerOffCounter;
+    private long lastPowerOffObservationNanos;
+    private long powerOffRequiredConfirmations;
+    private String powerObservationProvider;
     private AtomicLong activityCheckCounter = new AtomicLong(0);
     private AtomicLong activityCheckFailureCounter = new AtomicLong(0);
     private AtomicLong consecutiveActivityCheckFailureCounter = new AtomicLong(0);
@@ -71,6 +77,41 @@ public final class HAResourceCounter {
 
     public long getRecoveryCounter() {
         return recoveryOperationCounter.get();
+    }
+
+    public synchronized long getConsecutivePowerOffCounter() {
+        return consecutivePowerOffCounter;
+    }
+
+    public synchronized long recordPowerOffObservation(long nowNanos, long maxIntervalSeconds, long requiredConfirmations) {
+        if (maxIntervalSeconds < 1 || maxIntervalSeconds > 3600 || requiredConfirmations < 3) {
+            resetPowerOffCounter();
+            return 0;
+        }
+        long elapsed = nowNanos - lastPowerOffObservationNanos;
+        if (consecutivePowerOffCounter > 0 && (powerOffRequiredConfirmations != requiredConfirmations
+                || elapsed < 0 || elapsed > TimeUnit.SECONDS.toNanos(maxIntervalSeconds))) {
+            resetPowerOffCounter();
+        }
+        powerOffRequiredConfirmations = requiredConfirmations;
+        lastPowerOffObservationNanos = nowNanos;
+        if (consecutivePowerOffCounter < requiredConfirmations) {
+            consecutivePowerOffCounter++;
+        }
+        return consecutivePowerOffCounter;
+    }
+
+    public synchronized void resetPowerOffCounter() {
+        consecutivePowerOffCounter = 0;
+        lastPowerOffObservationNanos = 0;
+        powerOffRequiredConfirmations = 0;
+    }
+
+    public synchronized void synchronizePowerObservationProvider(String provider) {
+        if (!Objects.equals(powerObservationProvider, provider)) {
+            resetPowerOffCounter();
+            powerObservationProvider = provider;
+        }
     }
 
     public synchronized void incrActivityCounter(final boolean isFailure) {
@@ -136,6 +177,7 @@ public final class HAResourceCounter {
 
     public synchronized void resetForNewCycle() {
         generation++;
+        resetPowerOffCounter();
         resetActivityCounter();
         resetRecoveryCounter();
         firstHealthCheckFailureTimestamp = null;

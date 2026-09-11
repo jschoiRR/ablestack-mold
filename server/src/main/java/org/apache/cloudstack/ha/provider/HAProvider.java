@@ -25,6 +25,8 @@ import com.cloud.utils.component.Adapter;
 
 public interface HAProvider<R extends HAResource> extends Adapter {
 
+    enum PowerObservation { ON, OFF, UNKNOWN }
+
     enum HAProviderConfig {
         HealthCheckTimeout,
         ActivityCheckTimeout,
@@ -52,11 +54,19 @@ public interface HAProvider<R extends HAResource> extends Adapter {
     boolean isHealthy(R r) throws HACheckerException;
 
     /**
-     * Independent, current evidence that the resource is powered off. An unanswered
-     * probe or an old cached power state must never satisfy this check.
+     * One fresh power observation. The caller accumulates OFF observations across
+     * separate health tasks; an unanswered probe or cached state is UNKNOWN.
      */
-    default boolean isPowerOffConfirmed(R r) throws HACheckerException {
-        return false;
+    default PowerObservation checkPowerState(R r) throws HACheckerException {
+        return PowerObservation.UNKNOWN;
+    }
+
+    default long getPowerOffConfirmations(R r) {
+        return 3L;
+    }
+
+    default long getPowerOffMaxInterval(R r) {
+        return 60L;
     }
 
     boolean hasActivity(R r, DateTime afterThis) throws HACheckerException;

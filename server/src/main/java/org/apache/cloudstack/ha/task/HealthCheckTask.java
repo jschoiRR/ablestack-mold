@@ -27,7 +27,10 @@ import java.util.concurrent.ExecutorService;
 
 public class HealthCheckTask extends BaseHATask {
 
-    private boolean powerOffConfirmed;
+    private HAProvider.PowerObservation powerObservation = HAProvider.PowerObservation.UNKNOWN;
+    private long requiredPowerOffConfirmations;
+    private long powerOffMaxInterval;
+    private boolean resultProcessed;
 
     public HealthCheckTask(final HAResource resource, final HAProvider<HAResource> haProvider, final HAConfig haConfig,
                            final HAProvider.HAProviderConfig haProviderConfig, final ExecutorService executor) {
@@ -36,29 +39,49 @@ public class HealthCheckTask extends BaseHATask {
 
     public boolean performAction() throws HACheckerException {
         try {
-            powerOffConfirmed = getHaProvider().isPowerOffConfirmed(getResource());
+            powerObservation = getHaProvider().checkPowerState(getResource());
+            if (powerObservation == HAProvider.PowerObservation.OFF) {
+                requiredPowerOffConfirmations = getHaProvider().getPowerOffConfirmations(getResource());
+                powerOffMaxInterval = getHaProvider().getPowerOffMaxInterval(getResource());
+            }
         } catch (HACheckerException e) {
             if (Thread.currentThread().isInterrupted()) {
                 throw e;
             }
-            powerOffConfirmed = false;
+            powerObservation = HAProvider.PowerObservation.UNKNOWN;
             logger.debug("Power state is unknown for {}; continuing health checks", getResource(), e);
         }
-        if (powerOffConfirmed) {
+        if (powerObservation == HAProvider.PowerObservation.OFF) {
+            // Return this single observation promptly. Do not wait for agent
+            // health or perform additional BMC queries in the same task.
             return false;
         }
         return getHaProvider().isHealthy(getResource());
     }
 
-    public void processResult(boolean result, Throwable e) {
-        if (!isCurrentResult()) {
+    public synchronized void processResult(boolean result, Throwable e) {
+        if (resultProcessed || !isCurrentResult()) {
             return;
         }
+        resultProcessed = true;
         final HAConfig haConfig = getHaConfig();
         final HAResourceCounter counter = getCounter();
-        if (e == null && powerOffConfirmed) {
-            getHaManager().transitionHAState(HAConfig.Event.PowerOffConfirmed, haConfig);
-            return;
+        if (e == null && powerObservation == HAProvider.PowerObservation.OFF) {
+            long confirmations = counter.recordPowerOffObservation(System.nanoTime(), powerOffMaxInterval, requiredPowerOffConfirmations);
+            if (confirmations > 0) {
+                logger.debug("Fresh BMC OFF observations across health tasks for {}: {}/{}",
+                        getResource(), confirmations, requiredPowerOffConfirmations);
+                if (confirmations >= requiredPowerOffConfirmations) {
+                    if (!getHaManager().transitionHAState(HAConfig.Event.PowerOffConfirmed, haConfig)) {
+                        counter.resetPowerOffCounter();
+                    }
+                    return;
+                }
+            } else {
+                logger.warn("Invalid consecutive power observation configuration for {}", getResource());
+            }
+        } else {
+            counter.resetPowerOffCounter();
         }
         if (result && e == null) {
             boolean alreadyAvailable = haConfig.getState() == HAConfig.HAState.Available;
@@ -66,9 +89,11 @@ public class HealthCheckTask extends BaseHATask {
                 counter.resetForNewCycle();
             }
         } else {
-            boolean alreadySuspect = haConfig.getState() == HAConfig.HAState.Suspect;
-            if (getHaManager().transitionHAState(HAConfig.Event.HealthCheckFailed, haConfig) || alreadySuspect) {
+            boolean alreadyInvestigating = haConfig.getState() == HAConfig.HAState.Suspect || haConfig.getState() == HAConfig.HAState.Degraded;
+            if (getHaManager().transitionHAState(HAConfig.Event.HealthCheckFailed, haConfig) || alreadyInvestigating) {
                 counter.markResourceSuspected();
+            } else {
+                counter.resetPowerOffCounter();
             }
         }
     }

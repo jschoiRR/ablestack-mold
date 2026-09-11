@@ -55,7 +55,7 @@ public class HATaskTest {
 
     @Before
     @SuppressWarnings("unchecked")
-    public void setUp() {
+    public void setUp() throws Exception {
         resource = mock(HAResource.class);
         provider = mock(HAProvider.class);
         manager = mock(HAManager.class);
@@ -69,6 +69,9 @@ public class HATaskTest {
         when(provider.getConfigValue(HAProvider.HAProviderConfig.MaxActivityChecks, resource)).thenReturn(7L);
         when(provider.getConfigValue(HAProvider.HAProviderConfig.ActivityCheckFailureRatio, resource)).thenReturn(0.5D);
         when(provider.getConfigValue(HAProvider.HAProviderConfig.ActivityCheckSuccessThreshold, resource)).thenReturn(3L);
+        when(provider.checkPowerState(resource)).thenReturn(HAProvider.PowerObservation.UNKNOWN);
+        when(provider.getPowerOffConfirmations(resource)).thenReturn(3L);
+        when(provider.getPowerOffMaxInterval(resource)).thenReturn(60L);
         when(manager.getCurrentHAConfig(any(), eq(counter), any())).thenAnswer(invocation ->
                 config.isEnabled() && counter.isCurrentTask(invocation.getArgument(2)) ? config : null);
         when(manager.transitionHAState(any(), eq(config))).thenAnswer(invocation -> {
@@ -104,6 +107,19 @@ public class HATaskTest {
                 HAProvider.HAProviderConfig.ActivityCheckTimeout, null, 0), HAResourceCounter.Operation.ACTIVITY);
         try {
             task.processResult(alive, error);
+        } finally {
+            counter.finishTask(token);
+        }
+    }
+
+    private void health(HAProvider.PowerObservation power, boolean healthy, Throwable error) throws Exception {
+        when(provider.checkPowerState(resource)).thenReturn(power);
+        when(provider.isHealthy(resource)).thenReturn(healthy);
+        HealthCheckTask task = bind(new HealthCheckTask(resource, provider, config,
+                HAProvider.HAProviderConfig.HealthCheckTimeout, null), HAResourceCounter.Operation.HEALTH);
+        try {
+            boolean result = task.performAction();
+            task.processResult(result, error);
         } finally {
             counter.finishTask(token);
         }
@@ -340,38 +356,171 @@ public class HATaskTest {
     }
 
     @Test
-    public void confirmedPowerOffUsesSeparateEventWithoutFakeActivitySamples() throws Exception {
+    public void threeSeparateHealthResultsConfirmPowerOffWithoutFakeActivitySamples() throws Exception {
         config.setHastate(HAConfig.HAState.Available);
-        when(provider.isPowerOffConfirmed(resource)).thenReturn(true);
+        for (int i = 1; i <= 3; i++) {
+            health(HAProvider.PowerObservation.OFF, true, null);
+            assertEquals(i, counter.getConsecutivePowerOffCounter());
+            assertEquals(i < 3 ? HAConfig.HAState.Suspect : HAConfig.HAState.Fencing, config.getState());
+            verify(provider, times(i)).checkPowerState(resource);
+        }
+        assertEquals(0, counter.getActivityCheckCounter());
+        verify(provider, never()).isHealthy(resource);
+        verify(manager, times(1)).transitionHAState(HAConfig.Event.PowerOffConfirmed, config);
+    }
+
+    @Test
+    public void singlePowerOffProbeDoesNotCountUntilItsValidatedResultArrives() throws Exception {
+        config.setHastate(HAConfig.HAState.Available);
+        when(provider.checkPowerState(resource)).thenReturn(HAProvider.PowerObservation.OFF);
         HealthCheckTask task = bind(new HealthCheckTask(resource, provider, config,
                 HAProvider.HAProviderConfig.HealthCheckTimeout, null), HAResourceCounter.Operation.HEALTH);
         assertFalse(task.performAction());
+        assertEquals(0, counter.getConsecutivePowerOffCounter());
         task.processResult(false, null);
-        assertEquals(HAConfig.HAState.Fencing, config.getState());
-        assertEquals(0, counter.getActivityCheckCounter());
+        assertEquals(1, counter.getConsecutivePowerOffCounter());
+        assertEquals(HAConfig.HAState.Suspect, config.getState());
+        verify(provider, times(1)).checkPowerState(resource);
         verify(provider, never()).isHealthy(resource);
+        verify(manager, never()).transitionHAState(eq(HAConfig.Event.PowerOffConfirmed), any());
+    }
+
+    @Test
+    public void duplicatePowerOffCallbackCannotSupplyMultipleConfirmations() throws Exception {
+        config.setHastate(HAConfig.HAState.Available);
+        when(provider.checkPowerState(resource)).thenReturn(HAProvider.PowerObservation.OFF);
+        HealthCheckTask task = bind(new HealthCheckTask(resource, provider, config,
+                HAProvider.HAProviderConfig.HealthCheckTimeout, null), HAResourceCounter.Operation.HEALTH);
+        task.performAction();
+        task.processResult(false, null);
+        task.processResult(false, null);
+        task.processResult(false, null);
+        assertEquals(1, counter.getConsecutivePowerOffCounter());
+        assertEquals(HAConfig.HAState.Suspect, config.getState());
+        verify(manager, never()).transitionHAState(eq(HAConfig.Event.PowerOffConfirmed), any());
+    }
+
+    @Test
+    public void powerOnBreaksOffSequenceEvenWhenTheHostIsStillUnhealthy() throws Exception {
+        config.setHastate(HAConfig.HAState.Available);
+        health(HAProvider.PowerObservation.OFF, false, null);
+        health(HAProvider.PowerObservation.OFF, false, null);
+        health(HAProvider.PowerObservation.ON, false, null);
+        assertEquals(0, counter.getConsecutivePowerOffCounter());
+        assertEquals(HAConfig.HAState.Suspect, config.getState());
+        health(HAProvider.PowerObservation.OFF, false, null);
+        assertEquals(1, counter.getConsecutivePowerOffCounter());
+        verify(provider, times(1)).isHealthy(resource);
+        verify(manager, never()).transitionHAState(eq(HAConfig.Event.PowerOffConfirmed), any());
+    }
+
+    @Test
+    public void unknownPowerBreaksOffSequenceWithoutAuthorizingFencing() throws Exception {
+        config.setHastate(HAConfig.HAState.Available);
+        health(HAProvider.PowerObservation.OFF, false, null);
+        health(HAProvider.PowerObservation.OFF, false, null);
+        health(HAProvider.PowerObservation.UNKNOWN, false, null);
+        assertEquals(0, counter.getConsecutivePowerOffCounter());
+        health(HAProvider.PowerObservation.OFF, false, null);
+        assertEquals(1, counter.getConsecutivePowerOffCounter());
+        assertEquals(HAConfig.HAState.Suspect, config.getState());
+        verify(manager, never()).transitionHAState(eq(HAConfig.Event.PowerOffConfirmed), any());
     }
 
     @Test
     public void unavailablePowerWitnessFallsBackToExistingHealthCheck() throws Exception {
-        when(provider.isPowerOffConfirmed(resource)).thenThrow(new HACheckerException("BMC unavailable", null));
+        config.setHastate(HAConfig.HAState.Suspect);
+        counter.recordPowerOffObservation(System.nanoTime(), 60, 3);
+        counter.recordPowerOffObservation(System.nanoTime(), 60, 3);
+        when(provider.checkPowerState(resource)).thenThrow(new HACheckerException("BMC unavailable", null));
         when(provider.isHealthy(resource)).thenReturn(true);
         HealthCheckTask task = bind(new HealthCheckTask(resource, provider, config,
                 HAProvider.HAProviderConfig.HealthCheckTimeout, null), HAResourceCounter.Operation.HEALTH);
         assertTrue(task.performAction());
+        task.processResult(true, null);
+        assertEquals(0, counter.getConsecutivePowerOffCounter());
+        assertEquals(HAConfig.HAState.Available, config.getState());
         verify(provider).isHealthy(resource);
     }
 
     @Test
     public void powerOffObservationThatTimesOutCannotFence() throws Exception {
         config.setHastate(HAConfig.HAState.Available);
-        when(provider.isPowerOffConfirmed(resource)).thenReturn(true);
+        counter.recordPowerOffObservation(System.nanoTime(), 60, 3);
+        counter.recordPowerOffObservation(System.nanoTime(), 60, 3);
+        when(provider.checkPowerState(resource)).thenReturn(HAProvider.PowerObservation.OFF);
         HealthCheckTask task = bind(new HealthCheckTask(resource, provider, config,
                 HAProvider.HAProviderConfig.HealthCheckTimeout, null), HAResourceCounter.Operation.HEALTH);
         task.performAction();
         task.processResult(false, new TimeoutException());
+        task.processResult(false, null);
+        assertEquals(0, counter.getConsecutivePowerOffCounter());
         assertEquals(HAConfig.HAState.Suspect, config.getState());
         verify(manager, never()).transitionHAState(eq(HAConfig.Event.PowerOffConfirmed), any());
+    }
+
+    @Test
+    public void degradedHostCanFenceAfterThreeFreshPowerOffResults() throws Exception {
+        config.setHastate(HAConfig.HAState.Degraded);
+        for (int i = 1; i <= 3; i++) {
+            health(HAProvider.PowerObservation.OFF, false, null);
+            assertEquals(i < 3 ? HAConfig.HAState.Degraded : HAConfig.HAState.Fencing, config.getState());
+        }
+        verify(provider, never()).isHealthy(resource);
+        verify(manager, times(1)).transitionHAState(HAConfig.Event.PowerOffConfirmed, config);
+    }
+
+    @Test
+    public void failedHealthCallbackDiscardsPreviouslyCollectedOffEvidence() throws Exception {
+        config.setHastate(HAConfig.HAState.Suspect);
+        counter.recordPowerOffObservation(System.nanoTime(), 60, 3);
+        counter.recordPowerOffObservation(System.nanoTime(), 60, 3);
+        health(HAProvider.PowerObservation.OFF, false, new HACheckerException("worker failed", null));
+        assertEquals(0, counter.getConsecutivePowerOffCounter());
+        verify(manager, never()).transitionHAState(eq(HAConfig.Event.PowerOffConfirmed), any());
+    }
+
+    @Test
+    public void stalePowerOffResultCannotRestoreEvidenceAfterCycleReset() throws Exception {
+        config.setHastate(HAConfig.HAState.Suspect);
+        counter.recordPowerOffObservation(System.nanoTime(), 60, 3);
+        counter.recordPowerOffObservation(System.nanoTime(), 60, 3);
+        when(provider.checkPowerState(resource)).thenReturn(HAProvider.PowerObservation.OFF);
+        HealthCheckTask task = bind(new HealthCheckTask(resource, provider, config,
+                HAProvider.HAProviderConfig.HealthCheckTimeout, null), HAResourceCounter.Operation.HEALTH);
+        task.performAction();
+        counter.resetForNewCycle();
+        task.processResult(false, null);
+        assertEquals(0, counter.getConsecutivePowerOffCounter());
+        verify(manager, never()).transitionHAState(any(), any());
+    }
+
+    @Test
+    public void disabledPowerOffCallbackCannotAddEvidenceOrFence() throws Exception {
+        config.setHastate(HAConfig.HAState.Suspect);
+        counter.recordPowerOffObservation(System.nanoTime(), 60, 3);
+        counter.recordPowerOffObservation(System.nanoTime(), 60, 3);
+        when(provider.checkPowerState(resource)).thenReturn(HAProvider.PowerObservation.OFF);
+        HealthCheckTask task = bind(new HealthCheckTask(resource, provider, config,
+                HAProvider.HAProviderConfig.HealthCheckTimeout, null), HAResourceCounter.Operation.HEALTH);
+        task.performAction();
+        config.setEnabled(false);
+        task.processResult(false, null);
+        assertTrue(counter.getConsecutivePowerOffCounter() < 3);
+        verify(manager, never()).transitionHAState(any(), any());
+    }
+
+    @Test
+    public void healthyHostClearsOffHistoryBeforeANewFailureSequence() throws Exception {
+        config.setHastate(HAConfig.HAState.Available);
+        health(HAProvider.PowerObservation.OFF, false, null);
+        health(HAProvider.PowerObservation.OFF, false, null);
+        health(HAProvider.PowerObservation.ON, true, null);
+        assertEquals(HAConfig.HAState.Available, config.getState());
+        assertEquals(0, counter.getConsecutivePowerOffCounter());
+        health(HAProvider.PowerObservation.OFF, false, null);
+        assertEquals(HAConfig.HAState.Suspect, config.getState());
+        assertEquals(1, counter.getConsecutivePowerOffCounter());
     }
 
     @Test

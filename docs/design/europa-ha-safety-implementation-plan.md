@@ -1,11 +1,13 @@
 # Europa HA 감지 및 재부팅 복구 구현계획서
 
+> 현재 구현 전체 흐름과 설정은 [Europa HA 현재 구현 구조와 설정](europa-ha-current-flow.md)을 참고한다. 1절은 최초 검토 당시의 운영 기준 동작이며, 이후 절은 추가 합의한 poll당 BMC 1회 감지까지 반영한 계획이다. 과거 검증과 이번 변경의 검증은 별도로 기록한다.
+
 - 기준: `europa-2026`, 검토 시작 HEAD `1fcb1b0467`
 - 구현 작업 브랜치: `codex/ha-safety` (운영 브랜치와 분리)
 - 전원 정책: 사용자 선택에 따라 **재부팅 유지**. 부팅 후에도 Maintenance를 유지하고 VM은 다른 호스트에서 복구한다.
 - 범위: Mold 코드 구현, 자동화된 회귀 검증, 현장 인수시험 절차. 현장 PCS 설정 변경과 실제 호스트 전원 조작은 이 로컬 구현에 포함하지 않는다.
 
-## 1. 확인한 현재 흐름
+## 1. 최초 검토한 운영 기준 흐름
 
 `Health 실패 → Suspect → Activity 검사 → 연속 실패 임계값 → Recovering → Fencing → 전원 CYCLE → VM 복구 예약 → Maintenance`
 
@@ -21,7 +23,8 @@
 
 - 조회 실패, timeout, 인증 오류, 응답 파싱 실패는 UNKNOWN이다. ALIVE나 확인된 DEAD 표본으로 변환하지 않는다.
 - Ping 또는 libvirt 연결 실패 횟수만으로 완전 다운을 확정하지 않는다.
-- 조기 확정은 서로 분리된 **여러 번의 실시간 BMC OFF 확인**에 한정한다. On, Unknown, 오류가 끼면 OFF 확인은 성립하지 않는다.
+- 조기 감지는 Health 작업당 BMC STATUS를 한 번만 조회하고, 서로 다른 poll에서 **연속 OFF 3회**를 누적한다. On, Unknown, 오류가 끼면 OFF 확인은 성립하지 않는다. 작업 안에서 간격 대기로 worker를 점유하지 않는다.
+- OFF 1~2회에서는 일반 agent Health를 생략하고 다음 poll의 Health를 우선한다. 최초 OFF에서 Available은 Suspect로 전환해 관찰 소유권을 확보하며, 기존 Suspect/Degraded는 유지한다. 오래된 OFF 증거, 다른 소유권·provider의 증거, 관리 서버 재시작 전 이력을 합쳐 장애를 확정하지 않는다.
 - 기존 Activity 실패 임계값 7/50%=4회, 9/50%=5회를 유지한다. 초기 성공 때문에 관찰을 중단하지 않는다.
 - Health가 비정상인 동안 Activity가 설정한 횟수 연속 ALIVE이면 Degraded로 진입한다. Degraded 상태에서도 주기적 검사를 계속하며, Activity 성공만으로 Available로 복귀하지 않는다.
 - VM 복구보다 먼저 DB Maintenance를 확정하고, 연결된 agent에도 명령 차단을 적용한다.
@@ -33,9 +36,13 @@
 
 ```mermaid
 flowchart TD
-    A[주기적 Health 검사] --> B{연속된 실시간 BMC OFF 확인?}
-    B -->|예| F[HA Fencing 결정]
-    B -->|아니오 / 확인 불가| C[기존 Health 및 Activity 관찰]
+    A[HA poll에서 Health 배정] --> B[BMC STATUS 1회]
+    B -->|OFF| X{poll 간 OFF 연속 3회?}
+    X -->|예| F[HA Fencing 결정]
+    X -->|아니오| W[작업 반환 / 다음 poll Health 우선]
+    W --> A
+    B -->|ON / UNKNOWN / 오류| Y[OFF 연속 이력 초기화]
+    Y --> C[기존 Health 및 Activity 관찰]
     C --> D{확인된 Activity 연속 실패 기준 충족?}
     D -->|아니오| E{Activity 연속 ALIVE 기준 충족?}
     E -->|예| G[Degraded 상태 유지하며 Health와 Activity 계속 검사]
@@ -44,7 +51,7 @@ flowchart TD
     D -->|예| F
     F --> Q[DB Maintenance 확정 및 agent 명령 차단]
     Q --> S[복구할 VM ID와 UUID를 DB에 저장]
-    S --> P[전원 OFF 단계와 실시간 OFF 재확인]
+    S --> P[전원 OFF 요청 / 3초 간격 OFF 5회 재확인]
     P -->|확인 불가| R[격리 상태 유지 / 재시도 / 이벤트]
     R --> P
     P -->|격리 확인| O[재부팅 ON]
@@ -63,7 +70,7 @@ flowchart TD
 | 묶음 | 변경 내용 | 주요 대상 |
 |---|---|---|
 | A. 전원 증거 | STATUS 단일 조회, fresh 결과 반환, 전환 중 상태 구분, timeout·null 처리 | OOBM service, IPMI/Redfish driver 및 client |
-| B. 빠른 확인 | 제한 시간 안의 반복 OFF 확인을 별도 HA 이벤트로 전달. 단일 조회 실패로 확정하지 않음 | KVMHAProvider, KVMHAConfig, HAConfig, HealthCheckTask |
+| B. 빠른 확인 | 각 Health 작업에서 STATUS 1회, poll 간 OFF 3회 누적 후 별도 HA 이벤트. OFF 누적 중 다음 Health 우선, 오류·장기간 간격·소유권 변경 시 초기화 | KVMHAProvider, KVMHAConfig, HAResourceCounter, HAConfig, HealthCheckTask, HAManagerImpl |
 | C. 지속 관찰 | 초기 성공에 따른 Degraded 대기 제거, 연속 실패 보존, UNKNOWN 제외, 이벤트 문구 정리 | ActivityCheckTask, HAResourceCounter, KVM HA 설정 설명 |
 | D. 작업 순서 | 같은 호스트 작업 중복 억제, 현재 상태·소유권·작업 세대 확인, timeout 이후 늦은 결과 차단 | BaseHATask, HAManagerImpl, Health/Recovery/FenceTask |
 | E. 격리와 복구 | Maintenance 선행 및 성공 검증, fencing 중 자격 예외, OFF 확인 후 ON, 원래 호스트 배치 제외 | HAAbstractHostProvider, KVMHAProvider, VM HA manager, deployment planner |
@@ -78,8 +85,8 @@ flowchart TD
 - `kvm.ha.activity.check.success.threshold` 기본값 3은 Degraded 진입에 필요한 연속 ALIVE 횟수다. 클러스터별 양의 정수로 설정한다. DEAD와 UNKNOWN은 ALIVE 연속성을 끊고, UNKNOWN은 DEAD 연속성도 끊는다.
 - Degraded 재검사는 DB 상태를 Suspect/Checking으로 바꾸지 않고 진행한다. 다음 단계가 확정되기 전까지 마지막으로 확인된 Degraded 상태를 유지한다. 정상 Health가 확인되면 Available로 복귀하고 양쪽 Activity 카운터를 초기화한다.
 - HB 60초를 일괄적으로 낮추지 않는다. 기존 storage 보호 여유는 유지하고, 확실한 OFF에 별도 조기 경로를 추가한다.
-- 조기 OFF 확인에는 최소 확인 횟수, 확인 간격, 개별 조회 timeout을 사용한다. 전체 Health/Fence 작업 timeout 안에서 종료되도록 검증한다.
-- 전체 HA poll 기본값을 60초에서 5초로 변경한다. 현장에 저장된 `ha.checking.interval` override는 자동으로 덮어쓰지 않는다. 기존 설치에서는 실제 저장값을 확인하고, 5초 적용 시 BMC·agent 부하를 함께 측정한다.
+- 조기 OFF 감지는 Health 작업당 STATUS 1회와 poll 간 누적을 사용한다. 감지 확인 횟수와 펜싱 단계의 반복 확인 횟수를 분리한다. 전원 확인의 3초 간격은 펜싱 검증에서만 사용한다.
+- 전체 HA poll 기본값은 최초 60초에서 5초로 변경한 뒤, 이번에는 10초로 조정한다. 현장에 저장된 `ha.checking.interval` override는 자동으로 덮어쓰지 않는다. 기존 설치에서는 실제 저장값과 BMC·agent 부하를 함께 확인한다.
 - BMC에도 전원이 없거나 관리망이 끊긴 경우에는 60초 미만 확정을 보장하지 않는다. 이 경우 UNKNOWN과 기존 관찰·fencing 확인 절차를 유지한다.
 - 관리 서버·KVM agent·HA 스크립트를 함께 갱신해야 한다. 구형 agent의 일반 Answer는 명시적 관찰 결과를 구분할 수 없어 UNKNOWN으로 처리한다.
 - CLVM의 이웃 호스트 로컬 프로세스 목록은 장애 호스트의 VM 정지를 입증할 수 없다. HB 만료 이후 이 검사만으로 DEAD를 반환하지 않는다. BMC OFF 증거도 없으면 복구가 지연될 수 있다.
@@ -89,13 +96,22 @@ flowchart TD
 
 | 키 | 기본값 | 의미 |
 |---|---:|---|
-| `kvm.ha.power.off.check.enabled` | true | HB 만료 전 반복 OFF 확인 경로 |
-| `kvm.ha.power.off.confirmations` | 3 | 최소 3회; 중간 ON·UNKNOWN은 연속 확인을 끊음 |
-| `kvm.ha.power.check.interval` | 1초 | 이전 조회 완료 후 다음 조회까지 최소 간격 |
-| `kvm.ha.power.check.timeout` | 2초 | 실시간 BMC STATUS 한 번의 제한 시간 |
+| `kvm.ha.power.off.check.enabled` | true | HB 만료 전 poll 간 OFF 누적 감지 경로 |
+| `kvm.ha.power.off.confirmations` | 3 | 서로 다른 Health 작업에서 누적할 감지 횟수. 허용 최소값은 3회 |
+| `kvm.ha.power.off.max.interval` | 60초 | 성공한 OFF 관찰 사이에 허용할 최대 간격. 초과하면 현재 OFF부터 다시 누적하며, 대기시간이 아님 |
+| `kvm.ha.fence.power.off.confirmations` | 5 | OFF 요청 뒤 펜싱 검증에 필요한 반복 OFF 횟수 |
+| `kvm.ha.power.check.interval` | 3초 | 펜싱 검증에서만 이전 STATUS 완료 후 다음 조회까지 최소 간격 |
+| `kvm.ha.power.check.timeout` | 1초 | 실시간 BMC STATUS 한 번의 제한 시간 |
+| `kvm.ha.health.check.timeout` | 20초 | STATUS 1회 및 필요한 일반 Health 처리를 위한 작업 제한시간. 기존 20초 유지 |
 | `kvm.ha.activity.check.success.threshold` | 3 | Health 비정상 중 Degraded 진입에 필요한 연속 ALIVE 횟수 |
 
-기본 Health timeout 10초, Fence timeout 60초 안에서 확인 횟수·간격·개별 timeout이 모두 들어가도록 검증한다. 잘못된 조합은 조기 확정 또는 전원 조작을 진행하지 않는다. 빠른 감지 시간에는 poll 대기, 작업 대기열, BMC 응답 시간이 추가되므로 고정된 몇 초 이내라는 SLA로 해석하지 않는다.
+조기 감지는 Health 작업당 1회 조회이므로 Health 시간 예산에 3초 대기 4번을 더하지 않는다. OFF 1~2회 응답 후 agent Health를 생략하고 worker를 반환한다. ON·UNKNOWN 뒤에는 일반 Health가 이어질 수 있으므로 전체 Health가 1초 안에 끝난다는 의미는 아니다. OFF 응답 사이 60초 초과, ON·UNKNOWN·오류, 소유권·provider 상실이나 새 HA 주기는 감지 연속성을 초기화하며 관리 서버 재시작 후에도 0부터 센다.
+
+펜싱 검증의 기본 예산은 별도로 `5회 × 1초 + 4회 × 3초 = 17초`다. Fence timeout 60초는 OFF·ON 요청과 종료 여유를 포함한 `17 + 21`초보다 크다. 이 단계의 반복 검증과 감지 증거 재사용 여부는 변경하지 않는다.
+
+기존 DB에 저장된 설정값은 자동으로 덮어쓰지 않는다. 감지 횟수가 5회로 저장돼 있다면 새 소스 기본값 3회로 자동 변경되지 않는다. 잘못된 조합은 조기 확정 또는 전원 조작을 진행하지 않는다. 조회 timeout 1초보다 BMC 응답이 느리면 UNKNOWN으로 처리되어 조기 감지나 fencing 완료가 지연될 수 있다. 빠른 감지 시간에는 poll 대기, 작업 대기열, BMC 응답 시간이 추가되므로 고정된 몇 초 이내라는 SLA로 해석하지 않는다.
+
+OFF 최대 허용 간격 60초는 실제 poll·대기열 지연보다 충분히 길어야 한다. 기존 poll이 60초 이상으로 저장돼 있으면 최대 간격 60초를 그대로 조합했을 때 조회 지연만으로 연속성이 끊길 수 있다. 기본 조합 10초 / 60초와 현장 저장값을 대조한다.
 
 ## 6. 자동 검증 항목
 
@@ -108,6 +124,10 @@ flowchart TD
 | cached Off + fresh On | 조기 장애 확정 금지 |
 | cached On + 반복 fresh Off + 60초 이내 HB | 조기 fencing 경로 가능 |
 | OFF 관찰 중 On/Unknown/오류 | OFF 확정 취소 |
+| 서로 다른 Health 작업의 OFF, OFF, OFF | 각 작업은 STATUS 1회만 실행; 세 번째에만 Fencing |
+| OFF 1~2회 및 Activity 재검사 예정 | 일반 agent Health 대기 없이 작업 종료, 다음 poll Health 우선 |
+| OFF 사이 최대 허용 간격 초과 / 소유권·provider 변경 | 이전 증거를 합치지 않고 새로 누적 |
+| OFF 확인 진행 중 HA 비활성화·재시작 | 이전 주기의 연속 카운터를 재사용하지 않음 |
 | Redfish PoweringOff | 완전 OFF로 취급하지 않음 |
 | Maintenance 저장 실패 | 전원 조작과 VM 복구 작업 등록 없음 |
 | 전원 명령 성공, 실제 OFF 미확인 | VM 복구 시작 없음 |
@@ -131,12 +151,13 @@ flowchart TD
 5. PCS/libvirt 등 Mold 밖의 자동 시작 정책은 별도 확인한다. Mold의 배치 차단만으로 외부 실행 주체까지 통제한다고 가정하지 않는다.
 6. 여러 관리 서버 간 소유권 이전과 OFF/ON 도중 관리 서버 강제 종료를 시험한다. 외부 BMC 명령과 DB 갱신은 하나의 원자적 트랜잭션이 아니므로, ON 성공 직후 Fenced 저장 전 프로세스가 종료되면 다음 시도에서 전원 시퀀스가 반복될 수 있다. 전원 명령의 정확히 한 번 실행을 보장하지 않는다.
 
-## 8. 진행 상태
+## 8. 진행 상태와 검증 단계
 
 - [x] 현재 HA 전체 호출·상태 흐름 검토
 - [x] 사용자 전원 정책 확인: 재부팅 유지
 - [x] 구현 전 계획 공개
 - [x] 코드 구현
-- [x] 회귀 테스트 및 모듈 빌드: 42개 모듈 성공, Java 250개·스크립트 14개 통과
+- [x] 최초 변경의 회귀 테스트 및 모듈 빌드: 42개 모듈 성공, Java 250개·스크립트 14개 통과
 - [x] 최종 차이 검토와 [검증 결과 기록](europa-ha-safety-validation.md)
+- [x] poll당 1회 BMC 조회·연속 OFF 3회 변경: 43개 모듈 성공, Java 236개 통과 (실패·오류·제외 0개). 최초 단계와 별도로 검증했다.
 - [ ] 현장 인수시험 (운영 환경에서 별도 수행)

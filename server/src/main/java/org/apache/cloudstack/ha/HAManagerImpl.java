@@ -207,10 +207,12 @@ public final class HAManagerImpl extends ManagerBase implements HAManager, Clust
         HAConfig current = haConfigDao.findHAResource(expected.getResourceId(), expected.getResourceType());
         if (current == null || !current.isEnabled() || !checkHAOwnership(current)
                 || !StringUtils.equals(current.getHaProvider(), expected.getHaProvider())) {
+            counter.resetPowerOffCounter();
             return null;
         }
         HAResource resource = current.getResourceType() == HAResource.ResourceType.Host ? hostDao.findById(current.getResourceId()) : null;
         if (resource == null || !isHAEnabledForZone(resource) || !isHAEnabledForCluster(resource)) {
+            counter.resetPowerOffCounter();
             return null;
         }
         switch (token.getOperation()) {
@@ -287,8 +289,15 @@ public final class HAManagerImpl extends ManagerBase implements HAManager, Clust
 
     private boolean checkHAOwnership(final HAConfig haConfig) {
         // Skip for resources not owned by this mgmt server
-        return !(haConfig.getManagementServerId() != null
+        boolean owned = !(haConfig.getManagementServerId() != null
                 && haConfig.getManagementServerId() != ManagementServerNode.getManagementServerId());
+        if (!owned) {
+            HAResourceCounter counter = haCounterMap.get(resourceCounterKey(haConfig.getResourceId(), haConfig.getResourceType()));
+            if (counter != null) {
+                counter.resetPowerOffCounter();
+            }
+        }
+        return owned;
     }
 
     private HAResource validateAndFindHAResource(final HAConfig haConfig) {
@@ -325,7 +334,11 @@ public final class HAManagerImpl extends ManagerBase implements HAManager, Clust
             return null;
         }
         final HAProvider<HAResource> haProvider = haProviderMap.get(haConfig.getHaProvider());
-        if (haProvider != null && haConfig.getState() != HAConfig.HAState.Fencing
+        if (haProvider == null) {
+            getHACounter(haConfig.getResourceId(), haConfig.getResourceType()).resetPowerOffCounter();
+            return null;
+        }
+        if (haConfig.getState() != HAConfig.HAState.Fencing
                 && haConfig.getState() != HAConfig.HAState.Fenced && !haProvider.isEligible(resource)) {
             if (haConfig.getState() != HAConfig.HAState.Ineligible) {
                 transitionHAState(HAConfig.Event.Ineligible, haConfig);
@@ -841,6 +854,7 @@ public final class HAManagerImpl extends ManagerBase implements HAManager, Clust
             if (stopping || counter.hasActiveTask()) {
                 return false;
             }
+            counter.synchronizePowerObservationProvider(config.getHaProvider());
             // Claim an orphaned destructive stage through the existing DB compare-and-set.
             if (config.getManagementServerId() == null
                     && (operation == HAResourceCounter.Operation.RECOVERY || operation == HAResourceCounter.Operation.FENCE)) {
@@ -1000,12 +1014,24 @@ public final class HAManagerImpl extends ManagerBase implements HAManager, Clust
             if (stopping || counter.hasActiveTask()) {
                 return;
             }
+            counter.synchronizePowerObservationProvider(config.getHaProvider());
+            if (config.getManagementServerId() == null) {
+                // A pending sequence belongs to the owner that claimed Suspect
+                // after its first OFF result. Reclaimed hosts start from zero.
+                counter.resetPowerOffCounter();
+            }
             switch (config.getState()) {
                 case Available:
                     submitHATask(resource, provider, config, counter, HAResourceCounter.Operation.HEALTH);
                     break;
                 case Suspect:
                 case Degraded:
+                    if (counter.getConsecutivePowerOffCounter() > 0) {
+                        // One fresh power query on the next poll. A long Activity
+                        // probe must not delay the remaining OFF confirmations.
+                        submitHATask(resource, provider, config, counter, HAResourceCounter.Operation.HEALTH);
+                        break;
+                    }
                     // Alternate witnesses when the activity interval is short: neither health
                     // recovery nor the independent power-off check may be starved.
                     if (!counter.needsHealthCheck() && counter.canPerformActivityCheck(

@@ -78,22 +78,37 @@ public final class KVMHAProvider extends HAAbstractHostProvider implements HAPro
     }
 
     @Override
-    public boolean isPowerOffConfirmed(final Host host) throws HACheckerException {
+    public PowerObservation checkPowerState(final Host host) throws HACheckerException {
         if (!isPowerOffCheckEnabled(host) || !outOfBandManagementService.isOutOfBandManagementEnabled(host)) {
-            return false;
+            return PowerObservation.UNKNOWN;
         }
         try {
             final long budget = getHealthCheckTimeout(host);
-            final PowerCheckSettings settings = powerCheckSettings(host, budget);
-            return confirmPowerOff(host, settings, deadlineAfterSeconds(budget - 1), false);
+            final long timeout = getPowerCheckTimeout(host);
+            final long maxInterval = getPowerOffMaxInterval(host);
+            if (budget < 2 || budget > 3600 || timeout < 1 || timeout >= budget - 1
+                    || getPowerOffConfirmations(host) < 3 || maxInterval < 1 || maxInterval > 3600) {
+                throw new IllegalArgumentException("Invalid single power observation configuration");
+            }
+            checkInterrupted();
+            final long deadline = deadlineAfterSeconds(timeout);
+            final OutOfBandManagementResponse response = outOfBandManagementService.executePowerOperation(host, PowerOperation.STATUS, timeout);
+            checkInterrupted();
+            if (nanoTime() > deadline || response == null || !Boolean.TRUE.equals(response.getSuccess())) {
+                return PowerObservation.UNKNOWN;
+            }
+            if (response.getPowerState() == PowerState.Off) {
+                return PowerObservation.OFF;
+            }
+            return response.getPowerState() == PowerState.On ? PowerObservation.ON : PowerObservation.UNKNOWN;
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
-            throw new HACheckerException("Interrupted while confirming host power state", e);
+            throw new HACheckerException("Interrupted while observing host power state", e);
         } catch (Exception e) {
             // An unavailable BMC never proves that the host is dead. Continue the
             // independent health/activity path instead of inventing a DEAD sample.
-            logger.warn("Unable to confirm fresh power-off evidence for {}: {}", host, e.getMessage());
-            return false;
+            logger.warn("Unable to obtain a fresh power observation for {}: {}", host, e.getMessage());
+            return PowerObservation.UNKNOWN;
         }
     }
 
@@ -136,7 +151,7 @@ public final class KVMHAProvider extends HAAbstractHostProvider implements HAPro
             // CYCLE request alone is not evidence that the old VMs have stopped.
             executeFencingPowerOperation(r, PowerOperation.OFF, deadline);
             final long verificationDeadline = deadline - TimeUnit.SECONDS.toNanos(10);
-            if (!confirmPowerOff(r, settings, verificationDeadline, true)) {
+            if (!confirmPowerOff(r, settings, verificationDeadline)) {
                 logger.warn("Host {} remains quarantined: power off was not confirmed", r);
                 return false;
             }
@@ -176,7 +191,7 @@ public final class KVMHAProvider extends HAAbstractHostProvider implements HAPro
         }
     }
 
-    private boolean confirmPowerOff(Host host, PowerCheckSettings settings, long deadline, boolean waitForShutdown) throws InterruptedException {
+    private boolean confirmPowerOff(Host host, PowerCheckSettings settings, long deadline) throws InterruptedException {
         long consecutiveOff = 0;
         while (remainingSeconds(deadline) >= settings.timeout) {
             checkInterrupted();
@@ -201,9 +216,6 @@ public final class KVMHAProvider extends HAAbstractHostProvider implements HAPro
                 }
             } else {
                 consecutiveOff = 0;
-                if (!waitForShutdown) {
-                    return false;
-                }
             }
             if (remainingSeconds(deadline) < settings.interval + settings.timeout) {
                 return false;
@@ -214,7 +226,7 @@ public final class KVMHAProvider extends HAAbstractHostProvider implements HAPro
     }
 
     private PowerCheckSettings powerCheckSettings(Host host, long budget) {
-        final long confirmations = getPowerOffConfirmations(host);
+        final long confirmations = getFencePowerOffConfirmations(host);
         final long interval = getPowerCheckInterval(host);
         final long timeout = getPowerCheckTimeout(host);
         if (budget < 2 || budget > 3600 || confirmations < 3 || interval < 1 || timeout < 1) {
@@ -231,8 +243,18 @@ public final class KVMHAProvider extends HAAbstractHostProvider implements HAPro
         return Boolean.TRUE.equals(KVMHAConfig.KvmHAPowerOffCheckEnabled.valueIn(host.getClusterId()));
     }
 
-    protected long getPowerOffConfirmations(Host host) {
+    @Override
+    public long getPowerOffConfirmations(Host host) {
         return KVMHAConfig.KvmHAPowerOffConfirmations.valueIn(host.getClusterId());
+    }
+
+    @Override
+    public long getPowerOffMaxInterval(Host host) {
+        return KVMHAConfig.KvmHAPowerOffMaxInterval.valueIn(host.getClusterId());
+    }
+
+    protected long getFencePowerOffConfirmations(Host host) {
+        return KVMHAConfig.KvmHAFencePowerOffConfirmations.valueIn(host.getClusterId());
     }
 
     protected long getPowerCheckInterval(Host host) {
@@ -342,6 +364,8 @@ public final class KVMHAProvider extends HAAbstractHostProvider implements HAPro
             KVMHAConfig.KvmHARecoverAttemptThreshold,
             KVMHAConfig.KvmHAPowerOffCheckEnabled,
             KVMHAConfig.KvmHAPowerOffConfirmations,
+            KVMHAConfig.KvmHAPowerOffMaxInterval,
+            KVMHAConfig.KvmHAFencePowerOffConfirmations,
             KVMHAConfig.KvmHAPowerCheckInterval,
             KVMHAConfig.KvmHAPowerCheckTimeout,
         };
