@@ -19,12 +19,10 @@ package org.apache.cloudstack.ha.task;
 
 import java.util.concurrent.ExecutorService;
 
-import javax.inject.Inject;
 
 import org.apache.cloudstack.api.ApiCommandResourceType;
 import org.apache.cloudstack.context.CallContext;
 import org.apache.cloudstack.ha.HAConfig;
-import org.apache.cloudstack.ha.HAManager;
 import org.apache.cloudstack.ha.HAResource;
 import org.apache.cloudstack.ha.HAResourceCounter;
 import org.apache.cloudstack.ha.provider.HACheckerException;
@@ -38,9 +36,6 @@ import com.cloud.event.EventTypes;
 
 public class ActivityCheckTask extends BaseHATask {
 
-
-    @Inject
-    private HAManager haManager;
 
     private long disconnectTime;
     private long maxActivityChecks;
@@ -59,23 +54,34 @@ public class ActivityCheckTask extends BaseHATask {
     }
 
     public synchronized void processResult(boolean result, Throwable t) {
+        if (!isCurrentResult()) {
+            return;
+        }
         final HAConfig haConfig = getHaConfig();
-        final HAResourceCounter counter = haManager.getHACounter(haConfig.getResourceId(), haConfig.getResourceType());
+        final HAResourceCounter counter = getCounter();
 
-        if (t != null && t instanceof HACheckerException) {
-            haManager.transitionHAState(HAConfig.Event.Ineligible, getHaConfig());
-            counter.resetActivityCounter();
+        if (t != null) {
+            // An unavailable witness is not proof of inactivity and breaks consecutiveness.
+            counter.breakActivityFailureSequence();
+            logger.warn("Activity check is unknown for {}: {}", getResource(), t.toString());
+            getHaManager().transitionHAState(HAConfig.Event.TooFewActivityCheckSamples, haConfig);
+            return;
+        }
+
+        if (maxActivityChecks < 1 || !Double.isFinite(activityCheckFailureRatio)
+                || activityCheckFailureRatio < 0 || activityCheckFailureRatio >= 1) {
+            counter.breakActivityFailureSequence();
+            logger.warn("Invalid activity check threshold for {}", getResource());
+            getHaManager().transitionHAState(HAConfig.Event.TooFewActivityCheckSamples, haConfig);
             return;
         }
 
         counter.incrActivityCounter(!result);
 
         long requiredFailures = (long) Math.floor(maxActivityChecks * activityCheckFailureRatio) + 1;
-        long remainingChecks = maxActivityChecks - counter.getActivityCheckCounter();
-        long maxPossibleConsecutiveFailures = counter.getConsecutiveActivityCheckFailureCounter() + remainingChecks;
 
         int ratioPercent = (int) (activityCheckFailureRatio * 100);
-        String message = String.format("[VM Activity Check] Executions: %d/%d | Consecutive Failures: %d (Threshold: %d, Failure Ratio: %d%%)",
+        String message = String.format("[VM Activity Check] Observations: %d | Configured Attempts: %d | Consecutive Failures: %d (Threshold: %d, Failure Ratio: %d%%)",
                             counter.getActivityCheckCounter(),
                             maxActivityChecks,
                             counter.getConsecutiveActivityCheckFailureCounter(),
@@ -85,24 +91,12 @@ public class ActivityCheckTask extends BaseHATask {
                                         Domain.ROOT_DOMAIN, EventTypes.EVENT_HA_STATE_TRANSITION, message, haConfig.getResourceId(), ApiCommandResourceType.Host.toString());
 
         if (counter.getConsecutiveActivityCheckFailureCounter() >= requiredFailures) {
-            haManager.transitionHAState(HAConfig.Event.ActivityCheckFailureOverThresholdRatio, haConfig);
-            counter.resetActivityCounter();
-            return;
-        }
-
-        if (maxPossibleConsecutiveFailures < requiredFailures) {
-            if (haManager.transitionHAState(HAConfig.Event.ActivityCheckFailureUnderThresholdRatio, haConfig)) {
-                counter.markResourceDegraded();
+            if (getHaManager().transitionHAState(HAConfig.Event.ActivityCheckFailureOverThresholdRatio, haConfig)) {
+                counter.resetActivityCounter();
             }
-            counter.resetActivityCounter();
             return;
         }
 
-        if (counter.getActivityCheckCounter() < maxActivityChecks) {
-            haManager.transitionHAState(HAConfig.Event.TooFewActivityCheckSamples, haConfig);
-            return;
-        }
-
-        counter.resetActivityCounter();
+        getHaManager().transitionHAState(HAConfig.Event.TooFewActivityCheckSamples, haConfig);
     }
 }

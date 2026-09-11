@@ -27,11 +27,17 @@ public class KVMHAVMActivityChecker extends KVMHABase implements Callable<Boolea
     private final HAStoragePool storagePool;
     private final String volumeUuidList;
     private final String vmActivityCheckPath;
-    private final Duration activityScriptTimeout = Duration.standardSeconds(3600L);
+    private final Duration activityScriptTimeout;
     private final long suspectTimeInSeconds;
     private final HostTO host;
 
     public KVMHAVMActivityChecker(final HAStoragePool pool, final HostTO host, final String volumeUUIDListString, String vmActivityCheckPath, final long suspectTime) {
+        this(pool, host, volumeUUIDListString, vmActivityCheckPath, suspectTime, 60L);
+    }
+
+    public KVMHAVMActivityChecker(final HAStoragePool pool, final HostTO host, final String volumeUUIDListString,
+            String vmActivityCheckPath, final long suspectTime, final long timeoutSeconds) {
+        this.activityScriptTimeout = Duration.standardSeconds(timeoutSeconds);
         this.storagePool = pool;
         this.volumeUuidList = volumeUUIDListString;
         this.vmActivityCheckPath = vmActivityCheckPath;
@@ -44,7 +50,7 @@ public class KVMHAVMActivityChecker extends KVMHABase implements Callable<Boolea
         if (storagePool.getPool().isPoolSupportHA()) {
             return this.storagePool.getPool().vmActivityCheck(storagePool, host, activityScriptTimeout, volumeUuidList, vmActivityCheckPath, suspectTimeInSeconds);
         }
-        return false;
+        return null;
     }
 
     @Override

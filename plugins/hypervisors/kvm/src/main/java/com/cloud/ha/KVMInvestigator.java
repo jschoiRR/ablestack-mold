@@ -21,6 +21,7 @@ package com.cloud.ha;
 import com.cloud.agent.AgentManager;
 import com.cloud.agent.api.Answer;
 import com.cloud.agent.api.CheckOnHostCommand;
+import com.cloud.agent.api.CheckOnHostAnswer;
 import com.cloud.host.Host;
 import com.cloud.host.HostVO;
 import com.cloud.host.Status;
@@ -102,7 +103,7 @@ public class KVMInvestigator extends AdapterBase implements Investigator {
         try {
             Answer answer = _agentMgr.easySend(agent.getId(), cmd);
             if (answer != null) {
-                hostStatus = answer.getResult() ? Status.Down : Status.Up;
+                hostStatus = heartbeatStatus(answer);
             }
         } catch (Exception e) {
             logger.debug("Failed to send command to host: {}", agent);
@@ -122,7 +123,7 @@ public class KVMInvestigator extends AdapterBase implements Investigator {
             try {
                 Answer answer = _agentMgr.easySend(neighbor.getId(), cmd);
                 if (answer != null) {
-                    neighbourStatus = answer.getResult() ? Status.Down : Status.Up;
+                    neighbourStatus = heartbeatStatus(answer);
                     logger.debug("Neighbouring host:{} returned status:{} for the investigated host:{}", neighbor, neighbourStatus, agent);
                     if (neighbourStatus == Status.Up) {
                         break;
@@ -140,6 +141,13 @@ public class KVMInvestigator extends AdapterBase implements Investigator {
         }
         logger.debug("HA: HOST is ineligible legacy state {} for host {}", hostStatus, agent);
         return hostStatus;
+    }
+
+    protected Status heartbeatStatus(Answer answer) {
+        if (answer instanceof CheckOnHostAnswer && ((CheckOnHostAnswer) answer).isDetermined()) {
+            return ((CheckOnHostAnswer) answer).isAlive() ? Status.Up : Status.Down;
+        }
+        return Status.Disconnected;
     }
 
     private boolean storageSupportHa(List<StoragePoolVO> pools) {

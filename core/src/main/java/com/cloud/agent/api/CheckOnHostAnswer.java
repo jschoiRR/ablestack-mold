@@ -40,6 +40,13 @@ public class CheckOnHostAnswer extends Answer {
         super(cmd, false, details);
     }
 
+    /** KVM historically encodes a stopped heartbeat as result=true. */
+    public static CheckOnHostAnswer forKvm(CheckOnHostCommand command, Boolean alive, String details) {
+        CheckOnHostAnswer answer = new CheckOnHostAnswer(command, alive, details);
+        answer.result = Boolean.FALSE.equals(alive);
+        return answer;
+    }
+
     public boolean isDetermined() {
         return determined;
     }

@@ -72,4 +72,44 @@ public class ProcessRunnerTest {
         Assert.assertFalse(log.contains(newPassword));
         Assert.assertTrue(log.contains("password **** ****"));
     }
+    @Test(timeout = 5000)
+    public void subsecondOperationBudgetIsSupported() {
+        ExecutorService executor = java.util.concurrent.Executors.newSingleThreadExecutor();
+        try {
+            ProcessResult result = new ProcessRunner(executor).executeCommands(java.util.Arrays.asList("/bin/sh", "-c", "exit 0"),
+                    org.joda.time.Duration.millis(750));
+            Assert.assertTrue(result.isSuccess());
+        } finally {
+            executor.shutdownNow();
+        }
+    }
+
+    @Test(timeout = 5000)
+    public void subsecondTimeoutReturnsFailure() {
+        ExecutorService executor = java.util.concurrent.Executors.newSingleThreadExecutor();
+        try {
+            ProcessResult result = new ProcessRunner(executor).executeCommands(java.util.Arrays.asList("/bin/sleep", "2"),
+                    org.joda.time.Duration.millis(100));
+            Assert.assertFalse(result.isSuccess());
+            Assert.assertTrue(result.getStdError().contains("timed out"));
+        } finally {
+            executor.shutdownNow();
+        }
+    }
+
+    @Test(timeout = 5000)
+    public void interruptionIsPreservedWithoutWaitingForProcessOutput() {
+        ExecutorService executor = java.util.concurrent.Executors.newSingleThreadExecutor();
+        Thread.currentThread().interrupt();
+        try {
+            ProcessResult result = new ProcessRunner(executor).executeCommands(java.util.Arrays.asList("/bin/sleep", "2"),
+                    org.joda.time.Duration.standardSeconds(2));
+            Assert.assertFalse(result.isSuccess());
+            Assert.assertTrue(Thread.currentThread().isInterrupted());
+            Assert.assertTrue(result.getStdError().contains("interrupted"));
+        } finally {
+            Thread.interrupted();
+            executor.shutdownNow();
+        }
+    }
 }

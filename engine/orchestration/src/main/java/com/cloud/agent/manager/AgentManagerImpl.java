@@ -82,6 +82,7 @@ import com.cloud.agent.api.ReadyAnswer;
 import com.cloud.agent.api.ReadyCommand;
 import com.cloud.agent.api.SetHostParamsCommand;
 import com.cloud.agent.api.ShutdownCommand;
+import com.cloud.agent.api.StartCommand;
 import com.cloud.agent.api.StartupAnswer;
 import com.cloud.agent.api.StartupCommand;
 import com.cloud.agent.api.StartupProxyCommand;
@@ -1937,6 +1938,16 @@ public class AgentManagerImpl extends ManagerBase implements AgentManager, Handl
             attache.setMaintenanceMode(true);
             // Now cancel all of the commands except for the active one.
             attache.cancelAllCommands(Status.Disconnected, false);
+        }
+    }
+
+    protected void checkHostMaintenanceBeforeStart(final long hostId, final Command[] commands) throws AgentUnavailableException {
+        if (commands == null || Arrays.stream(commands).noneMatch(command -> command instanceof StartCommand)) {
+            return;
+        }
+        final HostVO host = _hostDao.findById(hostId);
+        if (host == null || host.isInMaintenanceStates()) {
+            throw new AgentUnavailableException("Cannot start a VM on a missing host or a host in maintenance: " + hostId, hostId);
         }
     }
 

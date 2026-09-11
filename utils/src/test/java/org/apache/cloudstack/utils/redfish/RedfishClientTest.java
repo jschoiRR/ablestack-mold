@@ -229,4 +229,37 @@ public class RedfishClientTest {
         Mockito.verify(newRedfishClientspy, Mockito.times(1)).retryHttpRequest(Mockito.anyString(), Mockito.any(), Mockito.any());
         Mockito.verify(client, Mockito.times(REDFISHT_REQUEST_RETRIES)).execute(Mockito.any());
     }
+    @Test(expected = RedfishException.class)
+    public void statusRequestsShareOneDeadline() {
+        try (RedfishClient bounded = Mockito.spy(new RedfishClient(USERNAME, PASSWORD, true, false, 0,
+                org.joda.time.Duration.standardSeconds(2)))) {
+            Mockito.doAnswer(invocation -> {
+                Mockito.doReturn(System.nanoTime() + java.util.concurrent.TimeUnit.SECONDS.toNanos(3)).when(bounded).nanoTime();
+                return systemId;
+            }).when(bounded).getSystemId(oobAddress);
+            try {
+                bounded.getSystemPowerState(oobAddress);
+            } finally {
+                Mockito.verify(bounded, Mockito.never()).executeGetRequest(Mockito.anyString());
+            }
+        }
+    }
+
+    @Test
+    public void interruptedStatusDoesNotMakeARequest() {
+        RedfishClient bounded = Mockito.spy(new RedfishClient(USERNAME, PASSWORD, true, false, 0,
+                org.joda.time.Duration.standardSeconds(2)));
+        Thread.currentThread().interrupt();
+        try {
+            bounded.getSystemPowerState(oobAddress);
+            Assert.fail("Interrupted status must remain unknown");
+        } catch (RedfishException expected) {
+            Assert.assertTrue(Thread.currentThread().isInterrupted());
+            Mockito.verify(bounded, Mockito.never()).getSystemId(Mockito.anyString());
+        } finally {
+            Thread.interrupted();
+            bounded.close();
+        }
+    }
+
 }

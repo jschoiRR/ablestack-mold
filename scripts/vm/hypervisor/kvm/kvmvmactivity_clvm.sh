@@ -77,22 +77,29 @@ Timestamp=$(date +%s)
 CurrentTime=$(date +"%Y-%m-%d %H:%M:%S")
 if [ -n "$RbdPoolName" ]; then
    getHbTime=$(rbd -p $RbdPoolName --id $RbdPoolAuthUserName image-meta get MOLD-HB-$HostIP-$poolPath $HostIP-$poolPath)
-   if [ $? -eq 0 ]; then
+   if [ $? -eq 0 ] && [[ $getHbTime =~ ^[0-9]+$ ]]; then
       diff=$(expr $Timestamp - $getHbTime)
       getHbTimeFmt=$(date -d @${getHbTime} '+%Y-%m-%d %H:%M:%S')
       logger -p user.info -t MOLD-HA-AC "[Checking] 호스트:$HostIP | HB 파일 체크(CLVM with RBD, 스토리지:$poolPath) > [현 시간:$CurrentTime | HB 파일 시간:$getHbTimeFmt | 시간 차이:$diff초]"
-      if [ $diff -le $interval ]; then
+      if [ "$diff" -ge 0 ] && [ "$diff" -le "$interval" ]; then
          logger -p user.info -t MOLD-HA-AC "[Result]   호스트:$HostIP | HB 체크 결과(CLVM with RBD, 스토리지:$poolPath) > [HOST STATE : ALIVE]"
          echo "### [HOST STATE : ALIVE] in [PoolType : CLVM] ###"
          exit 0
       fi
+   else
+      echo "### [HOST STATE : UNKNOWN] Heartbeat could not be read ###"
+      exit 2
    fi
 elif [ -n "$GfsPoolPath" ]; then
-   getHbTime=$(cat $hbFile)
+   getHbTime=$(cat "$hbFile" 2>/dev/null)
+   if [ $? -ne 0 ] || ! [[ $getHbTime =~ ^[0-9]+$ ]]; then
+      echo "### [HOST STATE : UNKNOWN] Heartbeat could not be read ###"
+      exit 2
+   fi
    diff=$(expr $Timestamp - $getHbTime)
    getHbTimeFmt=$(date -d @${getHbTime} '+%Y-%m-%d %H:%M:%S')
    logger -p user.info -t MOLD-HA-AC "[Checking] 호스트:$HostIP | HB 파일 체크(CLVM with GFS, 스토리지:$poolPath) > [현 시간:$CurrentTime | HB 파일 시간:$getHbTimeFmt | 시간 차이:$diff초]"
-   if [ $diff -le $interval ]; then
+   if [ "$diff" -ge 0 ] && [ "$diff" -le "$interval" ]; then
       logger -p user.info -t MOLD-HA-AC "[Result]   호스트:$HostIP | HB 체크 결과(CLVM with GFS, 스토리지:$poolPath) > [HOST STATE : ALIVE]"
       echo "### [HOST STATE : ALIVE] in [PoolType : CLVM] ###"
       exit 0
@@ -100,7 +107,12 @@ elif [ -n "$GfsPoolPath" ]; then
 else
    logger -p user.info -t MOLD-HA-AC "[Writing]  호스트:$HostIP | HB 파일 갱신(CLVM, 스토리지:$poolPath) 실패!!! > RBD 또는 GFS 형식의 스토리지가 존재하지 않습니다."
    printf "There is no storage information of type RBD or SharedMountPoint."
-   return 0
+   exit 2
+fi
+
+if [ "$diff" -lt 0 ]; then
+   echo "### [HOST STATE : UNKNOWN] Heartbeat clock is ahead ###"
+   exit 2
 fi
 
 if [ -z "$UUIDList" ]; then
@@ -109,21 +121,7 @@ if [ -z "$UUIDList" ]; then
    exit 0
 fi
 
-# Second check: disk activity check
-statusFlag=false
-for img in $(echo $UUIDList | sed 's/,/ /g'); do
-
-   if ps aux | grep "[q]emu.*${img}" >/dev/null; then
-      statusFlag=true
-      logger -p user.info -t MOLD-HA-AC "[Result]   호스트:${HostIP} | AC 체크 결과(CLVM, 스토리지:$poolPath) > [HOST STATE : ALIVE] ${img} 볼륨이 QEMU 프로세스에서 사용중으로 확인됨"
-      echo "### [HOST STATE : ALIVE] in [PoolType : CLVM] ###"
-      break
-      echo "true"
-   fi
-
-done
-
-# 빠져나왔으면 DEAD
-logger -p user.info -t MOLD-HA-AC "[Result]   호스트:${HostIP} | HB 체크 결과(CLVM, 스토리지:$poolPath) > [HOST STATE : DEAD] 볼륨 이미지 목록의 정상 동작을 확인할 수 없음 => 호스트가 다운된 것으로 간주됨"
-echo "### [HOST STATE : DEAD] Unable to confirm normal activity of volume image list => Considered host down in [PoolType : CLVM] ### "
-exit 0
+# This script runs on a neighbour. Its local QEMU processes cannot establish
+# whether VMs on HostIP have stopped. A stale heartbeat alone is insufficient.
+echo "### [HOST STATE : UNKNOWN] Remote CLVM activity cannot be verified ###"
+exit 2

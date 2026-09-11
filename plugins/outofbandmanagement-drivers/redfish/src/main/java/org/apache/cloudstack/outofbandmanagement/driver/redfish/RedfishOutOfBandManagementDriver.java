@@ -81,22 +81,22 @@ public class RedfishOutOfBandManagementDriver extends AdapterBase implements Out
         String username = outOfBandOptions.get(OutOfBandManagement.Option.USERNAME);
         String password = outOfBandOptions.get(OutOfBandManagement.Option.PASSWORD);
         String hostAddress = outOfBandOptions.get(OutOfBandManagement.Option.ADDRESS);
-        RedfishClient redfishClient = new RedfishClient(username, password, USE_HTTPS.value(), IGNORE_SSL_CERTIFICATE.value(), REDFISHT_REQUEST_MAX_RETRIES.value());
+        try (RedfishClient redfishClient = new RedfishClient(username, password, USE_HTTPS.value(), IGNORE_SSL_CERTIFICATE.value(),
+                REDFISHT_REQUEST_MAX_RETRIES.value(), cmd.getTimeout())) {
+            RedfishClient.RedfishPowerState powerState = null;
+            if (cmd.getPowerOperation() == OutOfBandManagement.PowerOperation.STATUS) {
+                powerState = redfishClient.getSystemPowerState(hostAddress);
+            } else {
+                RedfishResetCmd redfishCmd = redfishWrapper.parsePowerCommand(cmd.getPowerOperation());
+                redfishClient.executeComputerSystemReset(hostAddress, redfishCmd);
+            }
 
-        RedfishClient.RedfishPowerState powerState = null;
-        if (cmd.getPowerOperation() == OutOfBandManagement.PowerOperation.STATUS) {
-            powerState = redfishClient.getSystemPowerState(hostAddress);
-        } else {
-            RedfishResetCmd redfishCmd = redfishWrapper.parsePowerCommand(cmd.getPowerOperation());
-            redfishClient.executeComputerSystemReset(hostAddress, redfishCmd);
+            OutOfBandManagementDriverResponse response = new OutOfBandManagementDriverResponse(HTTP_STATUS_OK, null, true);
+            if (powerState != null) {
+                response.setPowerState(redfishWrapper.parseRedfishPowerStateToOutOfBand(powerState));
+            }
+            return response;
         }
-
-        OutOfBandManagementDriverResponse response = new OutOfBandManagementDriverResponse(HTTP_STATUS_OK, null, true);
-        if (powerState != null) {
-            OutOfBandManagement.PowerState oobPowerState = redfishWrapper.parseRedfishPowerStateToOutOfBand(powerState);
-            response.setPowerState(oobPowerState);
-        }
-        return response;
     }
 
     /**

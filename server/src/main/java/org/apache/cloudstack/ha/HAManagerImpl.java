@@ -27,7 +27,6 @@ import java.util.Map.Entry;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Future;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
@@ -55,6 +54,7 @@ import org.apache.cloudstack.ha.dao.HAConfigDao;
 import org.apache.cloudstack.ha.provider.HAProvider;
 import org.apache.cloudstack.ha.provider.HAProvider.HAProviderConfig;
 import org.apache.cloudstack.ha.task.ActivityCheckTask;
+import org.apache.cloudstack.ha.task.BaseHATask;
 import org.apache.cloudstack.ha.task.FenceTask;
 import org.apache.cloudstack.ha.task.HealthCheckTask;
 import org.apache.cloudstack.ha.task.RecoveryTask;
@@ -158,6 +158,7 @@ public final class HAManagerImpl extends ManagerBase implements HAManager, Clust
 
     private List<HAProvider<HAResource>> haProviders;
     private Map<String, HAProvider<HAResource>> haProviderMap = new HashMap<>();
+    private volatile boolean stopping;
 
     private static ExecutorService healthCheckExecutor;
     private static ExecutorService activityCheckExecutor;
@@ -189,10 +190,42 @@ public final class HAManagerImpl extends ManagerBase implements HAManager, Clust
         return haCounterMap.get(key);
     }
 
-    public synchronized void purgeHACounter(final Long resourceId, final HAResource.ResourceType resourceType) {
+    public void purgeHACounter(final Long resourceId, final HAResource.ResourceType resourceType) {
         final String key = resourceCounterKey(resourceId, resourceType);
-        if (haCounterMap.containsKey(key)) {
-            haCounterMap.remove(key);
+        HAResourceCounter counter = haCounterMap.get(key);
+        if (counter != null) {
+            counter.resetForNewCycle();
+        }
+    }
+
+    @Override
+    public HAConfig getCurrentHAConfig(HAConfig expected, HAResourceCounter counter, HAResourceCounter.TaskToken token) {
+        if (stopping || haCounterMap.get(resourceCounterKey(expected.getResourceId(), expected.getResourceType())) != counter
+                || !counter.isCurrentTask(token)) {
+            return null;
+        }
+        HAConfig current = haConfigDao.findHAResource(expected.getResourceId(), expected.getResourceType());
+        if (current == null || !current.isEnabled() || !checkHAOwnership(current)
+                || !StringUtils.equals(current.getHaProvider(), expected.getHaProvider())) {
+            return null;
+        }
+        HAResource resource = current.getResourceType() == HAResource.ResourceType.Host ? hostDao.findById(current.getResourceId()) : null;
+        if (resource == null || !isHAEnabledForZone(resource) || !isHAEnabledForCluster(resource)) {
+            return null;
+        }
+        switch (token.getOperation()) {
+            case HEALTH:
+                return current.getState() == HAConfig.HAState.Available || current.getState() == HAConfig.HAState.Suspect
+                        || current.getState() == HAConfig.HAState.Degraded ? current : null;
+            case ACTIVITY:
+                return current.getState() == HAConfig.HAState.Checking ? current : null;
+            case RECOVERY:
+                return current.getState() == HAConfig.HAState.Recovering && current.getManagementServerId() != null ? current : null;
+            case FENCE:
+                return (current.getState() == HAConfig.HAState.Fencing || current.getState() == HAConfig.HAState.Fenced)
+                        && current.getManagementServerId() != null ? current : null;
+            default:
+                return null;
         }
     }
 
@@ -200,11 +233,21 @@ public final class HAManagerImpl extends ManagerBase implements HAManager, Clust
         if (event == null || haConfig == null) {
             return false;
         }
+        synchronized (getHACounter(haConfig.getResourceId(), haConfig.getResourceType())) {
+            return transitionHAStateLocked(event, haConfig);
+        }
+    }
+
+    private boolean transitionHAStateLocked(final HAConfig.Event event, final HAConfig haConfig) {
         final HAConfig.HAState currentHAState = haConfig.getState();
         try {
             final HAConfig.HAState nextState = HAConfig.HAState.getStateMachine().getNextState(currentHAState, event);
             boolean result = HAConfig.HAState.getStateMachine().transitTo(haConfig, event, null, haConfigDao);
             if (result) {
+                if (nextState == HAConfig.HAState.Disabled || nextState == HAConfig.HAState.Ineligible
+                        || nextState == HAConfig.HAState.Available) {
+                    purgeHACounter(haConfig.getResourceId(), haConfig.getResourceType());
+                }
                 final String message = String.format("Transitioned host HA state from: %s to: %s due to event:%s for the host %s with id: %d",
                         currentHAState, nextState, event, hostDao.findByIdIncludingRemoved(haConfig.getResourceId()), haConfig.getResourceId());
                 logger.debug(message);
@@ -234,8 +277,9 @@ public final class HAManagerImpl extends ManagerBase implements HAManager, Clust
 
         boolean result = true;
         for (final HAResource resource: resources) {
-            result = result && transitionHAState(HAConfig.Event.Disabled,
+            boolean transitioned = transitionHAState(HAConfig.Event.Disabled,
                     haConfigDao.findHAResource(resource.getId(), resource.resourceType()));
+            result = transitioned && result;
         }
         return result;
     }
@@ -280,7 +324,8 @@ public final class HAManagerImpl extends ManagerBase implements HAManager, Clust
             return null;
         }
         final HAProvider<HAResource> haProvider = haProviderMap.get(haConfig.getHaProvider());
-        if (haProvider != null && !haProvider.isEligible(resource)) {
+        if (haProvider != null && haConfig.getState() != HAConfig.HAState.Fencing
+                && haConfig.getState() != HAConfig.HAState.Fenced && !haProvider.isEligible(resource)) {
             if (haConfig.getState() != HAConfig.HAState.Ineligible) {
                 transitionHAState(HAConfig.Event.Ineligible, haConfig);
             }
@@ -774,46 +819,78 @@ public final class HAManagerImpl extends ManagerBase implements HAManager, Clust
 
         final HAResourceCounter counter = getHACounter(haConfig.getResourceId(), haConfig.getResourceType());
 
-        // Perform activity checks
         if (newState == HAConfig.HAState.Checking) {
-            final ActivityCheckTask job = ComponentContext.inject(new ActivityCheckTask(resource, haProvider, haConfig,
-                    HAProviderConfig.ActivityCheckTimeout, activityCheckExecutor, counter.getSuspectTimeStamp()));
-            activityCheckExecutor.submit(job);
+            submitHATask(resource, haProvider, haConfig, counter, HAResourceCounter.Operation.ACTIVITY);
         }
-
-        // Attempt recovery
         if (newState == HAConfig.HAState.Recovering) {
             if (counter.getRecoveryCounter() >= (Long) (haProvider.getConfigValue(HAProviderConfig.MaxRecoveryAttempts, resource))) {
                 return false;
             }
-            final RecoveryTask task = ComponentContext.inject(new RecoveryTask(resource, haProvider, haConfig,
-                    HAProviderConfig.RecoveryTimeout, recoveryExecutor));
-            final Future<Boolean> recoveryFuture = recoveryExecutor.submit(task);
-            counter.setRecoveryFuture(recoveryFuture);
+            submitHATask(resource, haProvider, haConfig, counter, HAResourceCounter.Operation.RECOVERY);
         }
-
-        // Fencing
-        if (newState == HAConfig.HAState.Fencing) {
-            final FenceTask task = ComponentContext.inject(new FenceTask(resource, haProvider, haConfig,
-                    HAProviderConfig.FenceTimeout, fenceExecutor));
-            final Future<Boolean> fenceFuture = fenceExecutor.submit(task);
-            counter.setFenceFuture(fenceFuture);
+        if (newState == HAConfig.HAState.Fencing || newState == HAConfig.HAState.Fenced) {
+            submitHATask(resource, haProvider, haConfig, counter, HAResourceCounter.Operation.FENCE);
         }
         return true;
     }
 
+    boolean submitHATask(HAResource resource, HAProvider<HAResource> provider, HAConfig config,
+            HAResourceCounter counter, HAResourceCounter.Operation operation) {
+        synchronized (counter) {
+            if (stopping || counter.hasActiveTask()) {
+                return false;
+            }
+            // Claim an orphaned destructive stage through the existing DB compare-and-set.
+            if (config.getManagementServerId() == null
+                    && (operation == HAResourceCounter.Operation.RECOVERY || operation == HAResourceCounter.Operation.FENCE)) {
+                transitionHAState(operation == HAResourceCounter.Operation.RECOVERY
+                        ? HAConfig.Event.RetryRecovery : HAConfig.Event.RetryFencing, config);
+                return false;
+            }
+            HAResourceCounter.TaskToken token = counter.tryStartTask(operation);
+            if (token == null) {
+                return false;
+            }
+            try {
+                BaseHATask task;
+                ExecutorService executor;
+                switch (operation) {
+                    case HEALTH:
+                        executor = healthCheckExecutor;
+                        task = new HealthCheckTask(resource, provider, config, HAProviderConfig.HealthCheckTimeout, executor);
+                        break;
+                    case ACTIVITY:
+                        executor = activityCheckExecutor;
+                        task = new ActivityCheckTask(resource, provider, config, HAProviderConfig.ActivityCheckTimeout,
+                                executor, counter.getSuspectTimeStamp());
+                        break;
+                    case RECOVERY:
+                        executor = recoveryExecutor;
+                        task = new RecoveryTask(resource, provider, config, HAProviderConfig.RecoveryTimeout, executor);
+                        break;
+                    case FENCE:
+                        executor = fenceExecutor;
+                        task = new FenceTask(resource, provider, config, HAProviderConfig.FenceTimeout, executor);
+                        break;
+                    default:
+                        throw new IllegalArgumentException("Unsupported HA operation " + operation);
+                }
+                task.initialize(counter, token);
+                BaseHATask injectedTask = ComponentContext.inject(task);
+                executor.submit(injectedTask);
+                return true;
+            } catch (RuntimeException e) {
+                counter.finishTask(token);
+                logger.warn("Unable to submit {} for {}; it will be retried", operation, resource, e);
+                return false;
+            }
+        }
+    }
+
     @Override
     public boolean preStateTransitionEvent(final HAConfig.HAState oldState, final HAConfig.Event event, final HAConfig.HAState newState, final HAConfig haConfig, final boolean status, final Object opaque) {
-        if (oldState != newState || newState == HAConfig.HAState.Suspect || newState == HAConfig.HAState.Checking) {
-            return false;
-        }
-
-        logger.debug(String.format("HA state pre-transition:: new state=[%s], old state=[%s], for resource id=[%s], status=[%s], ha config state=[%s]." , newState, oldState, haConfig.getResourceId(), status, haConfig.getState()));
-
-        if (status && haConfig.getState() != newState) {
-            logger.warn(String.format("HA state pre-transition:: HA state is not equal to transition state, HA state=[%s], new state=[%s].", haConfig.getState(), newState));
-        }
-        return processHAStateChange(haConfig, newState, status);
+        // No I/O or task submission before the state update succeeds.
+        return true;
     }
 
     @Override
@@ -832,6 +909,7 @@ public final class HAManagerImpl extends ManagerBase implements HAManager, Clust
 
     @Override
     public boolean start() {
+        stopping = false;
         haProviderMap.clear();
         for (final HAProvider<HAResource> haProvider : haProviders) {
             haProviderMap.put(haProvider.getClass().getSimpleName().toLowerCase(), haProvider);
@@ -841,6 +919,10 @@ public final class HAManagerImpl extends ManagerBase implements HAManager, Clust
 
     @Override
     public boolean stop() {
+        stopping = true;
+        for (HAResourceCounter counter : haCounterMap.values()) {
+            counter.resetForNewCycle();
+        }
         haConfigDao.expireServerOwnership(ManagementServerNode.getManagementServerId());
         return true;
     }
@@ -852,28 +934,28 @@ public final class HAManagerImpl extends ManagerBase implements HAManager, Clust
         final int healthCheckQueueSize = MaxPendingHealthCheckOperations.value();
         healthCheckExecutor = new ThreadPoolExecutor(healthCheckWorkers, healthCheckWorkers,
                 0L, TimeUnit.MILLISECONDS,
-                new ArrayBlockingQueue<Runnable>(healthCheckQueueSize, true), new ThreadPoolExecutor.CallerRunsPolicy());
+                new ArrayBlockingQueue<Runnable>(healthCheckQueueSize, true), new ThreadPoolExecutor.AbortPolicy());
 
         // Activity Check
         final int activityCheckWorkers = MaxConcurrentActivityCheckOperations.value();
         final int activityCheckQueueSize = MaxPendingActivityCheckOperations.value();
         activityCheckExecutor = new ThreadPoolExecutor(activityCheckWorkers, activityCheckWorkers,
                 0L, TimeUnit.MILLISECONDS,
-                new ArrayBlockingQueue<Runnable>(activityCheckQueueSize, true), new ThreadPoolExecutor.CallerRunsPolicy());
+                new ArrayBlockingQueue<Runnable>(activityCheckQueueSize, true), new ThreadPoolExecutor.AbortPolicy());
 
         // Recovery
         final int recoveryOperationWorkers = MaxConcurrentRecoveryOperations.value();
         final int recoveryOperationQueueSize = MaxPendingRecoveryOperations.value();
         recoveryExecutor = new ThreadPoolExecutor(recoveryOperationWorkers, recoveryOperationWorkers,
                 0L, TimeUnit.MILLISECONDS,
-                new ArrayBlockingQueue<Runnable>(recoveryOperationQueueSize, true), new ThreadPoolExecutor.CallerRunsPolicy());
+                new ArrayBlockingQueue<Runnable>(recoveryOperationQueueSize, true), new ThreadPoolExecutor.AbortPolicy());
 
         // Fence
         final int fenceOperationWorkers = MaxConcurrentFenceOperations.value();
         final int fenceOperationQueueSize = MaxPendingFenceOperations.value();
         fenceExecutor = new ThreadPoolExecutor(fenceOperationWorkers, fenceOperationWorkers,
                 0L, TimeUnit.MILLISECONDS,
-                new ArrayBlockingQueue<Runnable>(fenceOperationQueueSize, true), new ThreadPoolExecutor.CallerRunsPolicy());
+                new ArrayBlockingQueue<Runnable>(fenceOperationQueueSize, true), new ThreadPoolExecutor.AbortPolicy());
 
         pollManager.submitTask(new HAManagerBgPollTask());
         HAConfig.HAState.getStateMachine().registerListener(this);
@@ -911,6 +993,62 @@ public final class HAManagerImpl extends ManagerBase implements HAManager, Clust
     //////////////// Poll Tasks /////////////////////
     /////////////////////////////////////////////////
 
+    void processHAResource(HAConfig config, HAResource resource, HAProvider<HAResource> provider) {
+        HAResourceCounter counter = getHACounter(config.getResourceId(), config.getResourceType());
+        synchronized (counter) {
+            if (stopping || counter.hasActiveTask()) {
+                return;
+            }
+            switch (config.getState()) {
+                case Available:
+                    submitHATask(resource, provider, config, counter, HAResourceCounter.Operation.HEALTH);
+                    break;
+                case Suspect:
+                case Degraded:
+                    // Alternate witnesses when the activity interval is short: neither health
+                    // recovery nor the independent power-off check may be starved.
+                    if (!counter.needsHealthCheck() && counter.canPerformActivityCheck(
+                            (Long) provider.getConfigValue(HAProviderConfig.MaxActivityCheckInterval, resource))) {
+                        if (config.getState() == HAConfig.HAState.Degraded
+                                && !transitionHAState(HAConfig.Event.PeriodicRecheckResourceActivity, config)) {
+                            break;
+                        }
+                        transitionHAState(HAConfig.Event.PerformActivityCheck, config);
+                    } else {
+                        submitHATask(resource, provider, config, counter, HAResourceCounter.Operation.HEALTH);
+                    }
+                    break;
+                case Checking:
+                    // Checking is persisted; its in-memory task is not. Resume safely after
+                    // management restart or a rejected executor submission.
+                    counter.breakActivityFailureSequence();
+                    transitionHAState(HAConfig.Event.TooFewActivityCheckSamples, config);
+                    break;
+                case Recovering:
+                    if (counter.getRecoveryCounter() >= (Long) provider.getConfigValue(HAProviderConfig.MaxRecoveryAttempts, resource)) {
+                        transitionHAState(HAConfig.Event.RecoveryOperationThresholdExceeded, config);
+                    } else {
+                        submitHATask(resource, provider, config, counter, HAResourceCounter.Operation.RECOVERY);
+                    }
+                    break;
+                case Recovered:
+                    counter.markRecoveryStarted();
+                    if (counter.canExitRecovery((Long) provider.getConfigValue(HAProviderConfig.RecoveryWaitTimeout, resource))) {
+                        if (transitionHAState(HAConfig.Event.RecoveryWaitPeriodTimeout, config)) {
+                            counter.markRecoveryCompleted();
+                        }
+                    }
+                    break;
+                case Fencing:
+                case Fenced:
+                    submitHATask(resource, provider, config, counter, HAResourceCounter.Operation.FENCE);
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
     private final class HAManagerBgPollTask extends ManagedContextRunnable implements BackgroundPollTask {
         @Override
         protected void runInContext() {
@@ -941,53 +1079,7 @@ public final class HAManagerImpl extends ManagerBase implements HAManager, Clust
                         continue;
                     }
 
-                    switch (haConfig.getState()) {
-                        case Available:
-                        case Suspect:
-                        case Degraded:
-                        case Fenced:
-                            final HealthCheckTask task = ComponentContext.inject(new HealthCheckTask(resource, haProvider, haConfig,
-                                    HAProviderConfig.HealthCheckTimeout, healthCheckExecutor));
-                            healthCheckExecutor.submit(task);
-                            break;
-                    default:
-                        break;
-                    }
-
-                    final HAResourceCounter counter = getHACounter(haConfig.getResourceId(), haConfig.getResourceType());
-
-                    if (haConfig.getState() == HAConfig.HAState.Suspect) {
-                        if (counter.canPerformActivityCheck((Long)(haProvider.getConfigValue(HAProviderConfig.MaxActivityCheckInterval, resource)))) {
-                            transitionHAState(HAConfig.Event.PerformActivityCheck, haConfig);
-                        }
-                    }
-
-                    if (haConfig.getState() == HAConfig.HAState.Degraded) {
-                        if (counter.canRecheckActivity((Long)(haProvider.getConfigValue(HAProviderConfig.MaxDegradedWaitTimeout, resource)))) {
-                            transitionHAState(HAConfig.Event.PeriodicRecheckResourceActivity, haConfig);
-                        }
-                    }
-
-                    if (haConfig.getState() == HAConfig.HAState.Recovering) {
-                        if (counter.getRecoveryCounter() >= (Long) (haProvider.getConfigValue(HAProviderConfig.MaxRecoveryAttempts, resource))) {
-                            transitionHAState(HAConfig.Event.RecoveryOperationThresholdExceeded, haConfig);
-                        } else {
-                            transitionHAState(HAConfig.Event.RetryRecovery, haConfig);
-                        }
-                    }
-
-                    if (haConfig.getState() == HAConfig.HAState.Recovered) {
-                        counter.markRecoveryStarted();
-                        if (counter.canExitRecovery((Long)(haProvider.getConfigValue(HAProviderConfig.RecoveryWaitTimeout, resource)))) {
-                            if (transitionHAState(HAConfig.Event.RecoveryWaitPeriodTimeout, haConfig)) {
-                                counter.markRecoveryCompleted();
-                            }
-                        }
-                    }
-
-                    if (haConfig.getState() == HAConfig.HAState.Fencing && counter.canAttemptFencing()) {
-                        transitionHAState(HAConfig.Event.RetryFencing, haConfig);
-                    }
+                    processHAResource(haConfig, resource, haProvider);
                 }
             } catch (Throwable t) {
                 if (currentHaConfig != null) {

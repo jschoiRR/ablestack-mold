@@ -21,6 +21,25 @@ import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicLong;
 
 public final class HAResourceCounter {
+    public enum Operation { HEALTH, ACTIVITY, RECOVERY, FENCE }
+
+    public static final class TaskToken {
+        private final long generation;
+        private final Operation operation;
+
+        private TaskToken(long generation, Operation operation) {
+            this.generation = generation;
+            this.operation = operation;
+        }
+
+        public Operation getOperation() {
+            return operation;
+        }
+    }
+
+    private long generation;
+    private TaskToken activeTask;
+    private Operation lastProbeOperation;
     private AtomicLong activityCheckCounter = new AtomicLong(0);
     private AtomicLong activityCheckFailureCounter = new AtomicLong(0);
     private AtomicLong consecutiveActivityCheckFailureCounter = new AtomicLong(0);
@@ -69,6 +88,50 @@ public final class HAResourceCounter {
         consecutiveActivityCheckFailureCounter.set(0);
     }
 
+    public synchronized void breakActivityFailureSequence() {
+        consecutiveActivityCheckFailureCounter.set(0);
+    }
+
+    public synchronized TaskToken tryStartTask(Operation operation) {
+        if (activeTask != null) {
+            return null;
+        }
+        activeTask = new TaskToken(generation, operation);
+        return activeTask;
+    }
+
+    public synchronized boolean isCurrentTask(TaskToken token) {
+        return token != null && activeTask == token && token.generation == generation;
+    }
+
+    public synchronized boolean hasActiveTask() {
+        return activeTask != null;
+    }
+
+    public synchronized void finishTask(TaskToken token) {
+        if (activeTask == token) {
+            if (token.operation == Operation.HEALTH || token.operation == Operation.ACTIVITY) {
+                lastProbeOperation = token.operation;
+            }
+            activeTask = null;
+        }
+    }
+
+    public synchronized boolean needsHealthCheck() {
+        return lastProbeOperation == Operation.ACTIVITY;
+    }
+
+    public synchronized void resetForNewCycle() {
+        generation++;
+        resetActivityCounter();
+        resetRecoveryCounter();
+        firstHealthCheckFailureTimestamp = null;
+        lastActivityCheckTimestamp = null;
+        degradedTimestamp = null;
+        lastProbeOperation = null;
+        // Keep the reservation until the real worker exits, including after a timeout.
+    }
+
     public synchronized void resetRecoveryCounter() {
         recoverTimestamp = null;
         recoveryFuture = null;
@@ -84,7 +147,7 @@ public final class HAResourceCounter {
     }
 
     public synchronized boolean canPerformActivityCheck(final Long activityCheckInterval) {
-        if (lastActivityCheckTimestamp == null || (System.currentTimeMillis() - lastActivityCheckTimestamp) > (activityCheckInterval * 1000)) {
+        if (lastActivityCheckTimestamp == null || (System.currentTimeMillis() - lastActivityCheckTimestamp) >= (activityCheckInterval * 1000)) {
             lastActivityCheckTimestamp = System.currentTimeMillis();
             return true;
         }
@@ -99,7 +162,7 @@ public final class HAResourceCounter {
         return recoverTimestamp != null && (System.currentTimeMillis() - recoverTimestamp) > (maxRecoveryWaitPeriod * 1000);
     }
 
-    public long getSuspectTimeStamp() {
+    public synchronized long getSuspectTimeStamp() {
         if (firstHealthCheckFailureTimestamp == null) {
             firstHealthCheckFailureTimestamp = System.currentTimeMillis();
         }
@@ -107,7 +170,9 @@ public final class HAResourceCounter {
     }
 
     public synchronized void markResourceSuspected() {
-        firstHealthCheckFailureTimestamp = System.currentTimeMillis();
+        if (firstHealthCheckFailureTimestamp == null) {
+            firstHealthCheckFailureTimestamp = System.currentTimeMillis();
+        }
     }
 
     public synchronized void markResourceDegraded() {

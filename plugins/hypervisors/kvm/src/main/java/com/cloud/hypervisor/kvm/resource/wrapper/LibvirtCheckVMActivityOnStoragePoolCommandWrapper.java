@@ -21,6 +21,10 @@ package com.cloud.hypervisor.kvm.resource.wrapper;
 
 import com.cloud.agent.api.Answer;
 import com.cloud.agent.api.CheckVMActivityOnStoragePoolCommand;
+import com.cloud.agent.api.CheckVMActivityOnStoragePoolAnswer;
+import com.cloud.agent.api.CheckVMActivityOnStoragePoolAnswer.ActivityState;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import com.cloud.agent.api.to.StorageFilerTO;
 import com.cloud.hypervisor.kvm.resource.KVMHABase.HAStoragePool;
 import com.cloud.hypervisor.kvm.storage.KVMStoragePool;
@@ -43,40 +47,39 @@ public final class LibvirtCheckVMActivityOnStoragePoolCommandWrapper extends Com
     @Override
     public Answer execute(final CheckVMActivityOnStoragePoolCommand command, final LibvirtComputingResource libvirtComputingResource) {
         final ExecutorService executors = Executors.newSingleThreadExecutor();
-        final KVMHAMonitor monitor = libvirtComputingResource.getMonitor();
-        final StorageFilerTO pool = command.getPool();
-        final KVMStoragePoolManager storagePoolMgr = libvirtComputingResource.getStoragePoolMgr();
-
-        HAStoragePool haStoragePool = getMonitoredStoragePool(monitor, pool);
-        if (haStoragePool == null) {
-            executors.shutdownNow();
-            return new Answer(command, false, "Unsupported Storage or HA pool not found");
-        }
-
-        KVMStoragePool primaryPool = storagePoolMgr.getStoragePool(pool.getType(), pool.getUuid());
-        if (primaryPool.isPoolSupportHA()){
-            String vmActivityCheckPath = getVmActivityCheckPath(libvirtComputingResource, pool);
-
-            final KVMHAVMActivityChecker ha = new KVMHAVMActivityChecker(haStoragePool, command.getHost(), command.getVolumeList(), vmActivityCheckPath, command.getSuspectTimeInSeconds());
-            final Future<Boolean> future = executors.submit(ha);
-            try {
-                final Boolean result = future.get();
-                if (result) {
-                    return new Answer(command, false, "VMHA disk activity detected ...");
-                } else {
-                    return new Answer(command);
-                }
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-                return new Answer(command, false, "CheckVMActivityOnStoragePoolCommand: can't get status of host: InterruptedException");
-            } catch (ExecutionException e) {
-                return new Answer(command, false, "CheckVMActivityOnStoragePoolCommand: can't get status of host: ExecutionException");
-            } finally {
-                executors.shutdownNow();
+        Future<Boolean> future = null;
+        try {
+            final KVMHAMonitor monitor = libvirtComputingResource.getMonitor();
+            final StorageFilerTO pool = command.getPool();
+            final KVMStoragePoolManager storagePoolMgr = libvirtComputingResource.getStoragePoolMgr();
+            HAStoragePool haStoragePool = getMonitoredStoragePool(monitor, pool);
+            if (haStoragePool == null) {
+                return new CheckVMActivityOnStoragePoolAnswer(command, ActivityState.UNKNOWN, "HA pool not found");
             }
+            KVMStoragePool primaryPool = storagePoolMgr.getStoragePool(pool.getType(), pool.getUuid());
+            if (primaryPool == null || !primaryPool.isPoolSupportHA()) {
+                return new CheckVMActivityOnStoragePoolAnswer(command, ActivityState.UNKNOWN, "Unsupported storage");
+            }
+            String vmActivityCheckPath = getVmActivityCheckPath(libvirtComputingResource, pool);
+            final KVMHAVMActivityChecker ha = new KVMHAVMActivityChecker(haStoragePool, command.getHost(), command.getVolumeList(),
+                    vmActivityCheckPath, command.getSuspectTimeInSeconds(), command.getActivityTimeoutSeconds());
+            future = executors.submit(ha);
+            final Boolean result = future.get(command.getActivityTimeoutSeconds(), TimeUnit.SECONDS);
+            return new CheckVMActivityOnStoragePoolAnswer(command,
+                    result == null ? ActivityState.UNKNOWN : result ? ActivityState.ALIVE : ActivityState.DEAD,
+                    "VM activity check completed");
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            return new CheckVMActivityOnStoragePoolAnswer(command, ActivityState.UNKNOWN, "VM activity check interrupted");
+        } catch (TimeoutException | ExecutionException | RuntimeException e) {
+            logger.warn("Unable to establish VM activity", e);
+            return new CheckVMActivityOnStoragePoolAnswer(command, ActivityState.UNKNOWN, "VM activity check failed or timed out");
+        } finally {
+            if (future != null && !future.isDone()) {
+                future.cancel(true);
+            }
+            executors.shutdownNow();
         }
-        executors.shutdownNow();
-        return new Answer(command, false, "Unsupported Storage");
     }
 
     protected HAStoragePool getMonitoredStoragePool(final KVMHAMonitor monitor, final StorageFilerTO pool) {

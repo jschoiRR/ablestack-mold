@@ -186,13 +186,15 @@ public abstract class AgentAttache {
     }
 
     protected void checkAvailability(final Command[] cmds) throws AgentUnavailableException {
+        // A reconnect may have captured an older resource state; check the persisted state at dispatch.
+        _agentMgr.checkHostMaintenanceBeforeStart(_id, cmds);
         if (!_maintenance && _status != Status.Connecting) {
             return;
         }
 
         if (_maintenance) {
             for (final Command cmd : cmds) {
-                if (Arrays.binarySearch(s_commandsAllowedInMaintenanceMode, cmd.getClass().toString()) < 0 && !cmd.isBypassHostMaintenance()) {
+                if (cmd instanceof StartCommand || Arrays.binarySearch(s_commandsAllowedInMaintenanceMode, cmd.getClass().toString()) < 0 && !cmd.isBypassHostMaintenance()) {
                     throw new AgentUnavailableException("Unable to send " + cmd.getClass().toString() + " because agent " + _name + " is in maintenance mode", _id);
                 }
             }
@@ -521,20 +523,19 @@ public abstract class AgentAttache {
 
     protected synchronized void sendNext(final long seq) {
         _currentSequence = null;
-        if (_requests.isEmpty()) {
-            logger.debug(LOG_SEQ_FORMATTED_STRING, seq, "No more commands found");
-            return;
+        while (!_requests.isEmpty()) {
+            final Request req = _requests.pop();
+            try {
+                checkAvailability(req.getCommands());
+                send(req);
+                _currentSequence = req.getSequence();
+                return;
+            } catch (AgentUnavailableException e) {
+                logger.debug(LOG_SEQ_FORMATTED_STRING, req.getSequence(), "Unable to send the next sequence: " + e.getMessage());
+                cancel(req.getSequence());
+            }
         }
-
-        Request req = _requests.pop();
-        logger.debug(LOG_SEQ_FORMATTED_STRING, req.getSequence(), "Sending now.  is current sequence.");
-        try {
-            send(req);
-        } catch (AgentUnavailableException e) {
-            logger.debug(LOG_SEQ_FORMATTED_STRING, req.getSequence(), "Unable to send the next sequence");
-            cancel(req.getSequence());
-        }
-        _currentSequence = req.getSequence();
+        logger.debug(LOG_SEQ_FORMATTED_STRING, seq, "No more commands found");
     }
 
     public void process(final Answer[] answers) {

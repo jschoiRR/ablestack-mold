@@ -34,8 +34,19 @@ public final class CheckVMActivityOnStoragePoolCommand extends Command {
     private StorageFilerTO pool;
     private String volumeList;
     private long suspectTimeSeconds;
+    private long activityTimeoutSeconds;
 
     public CheckVMActivityOnStoragePoolCommand(final Host host, final StoragePool pool, final List<Volume> volumeList, final DateTime suspectTime) {
+        this(host, pool, volumeList, suspectTime, 60L);
+    }
+
+    public CheckVMActivityOnStoragePoolCommand(final Host host, final StoragePool pool, final List<Volume> volumeList,
+            final DateTime suspectTime, final long activityTimeoutSeconds) {
+        if (activityTimeoutSeconds <= 0) {
+            throw new IllegalArgumentException("Activity timeout must be positive");
+        }
+        this.activityTimeoutSeconds = activityTimeoutSeconds;
+        setWait((int) Math.min(Integer.MAX_VALUE, activityTimeoutSeconds));
         this.host = new HostTO(host);
         this.pool = new StorageFilerTO(pool);
         this.suspectTimeSeconds = suspectTime.getMillis()/1000L;
@@ -44,7 +55,12 @@ public final class CheckVMActivityOnStoragePoolCommand extends Command {
             stringBuilder.append(v.getPath()).append(",");
         }
 
-        this.volumeList = stringBuilder.deleteCharAt(stringBuilder.length() - 1).toString();
+        this.volumeList = stringBuilder.length() == 0 ? "" : stringBuilder.deleteCharAt(stringBuilder.length() - 1).toString();
+    }
+
+    public long getActivityTimeoutSeconds() {
+        // Old management servers do not send this field.
+        return activityTimeoutSeconds > 0 ? activityTimeoutSeconds : 60L;
     }
 
     public String getVolumeList() {

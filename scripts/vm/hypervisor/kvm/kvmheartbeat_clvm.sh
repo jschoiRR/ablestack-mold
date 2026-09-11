@@ -132,10 +132,15 @@ check_hbLog() {
 
   if [ -n "$RbdPoolName" ]; then
     getHbTime=$(rbd -p $RbdPoolName --id $RbdPoolAuthUserName image-meta get MOLD-HB-$HostIP-$poolPath $HostIP-$poolPath)
-    if [ $? -gt 0 ] || [ -z "$getHbTime" ]; then
-      return 1
+    if [ $? -gt 0 ] || ! [[ $getHbTime =~ ^[0-9]+$ ]]; then
+      echo "### [HOST STATE : UNKNOWN] Heartbeat could not be read ###"
+      return 2
     fi
     diff=$(expr $Timestamp - $getHbTime)
+  if [ "$diff" -lt 0 ]; then
+    echo "### [HOST STATE : UNKNOWN] Heartbeat clock is ahead ###"
+    return 2
+  fi
     getHbTimeFmt=$(date -d @${getHbTime} '+%Y-%m-%d %H:%M:%S')
     logger -p user.info -t MOLD-HA-HB "[Checking] 호스트:$HostIP | HB 파일 체크(CLVM with RBD, 스토리지:$poolPath) > [현 시간:$CurrentTime | HB 파일 시간:$getHbTimeFmt | 시간 차이:$diff초]"
     if { [ "$diff" -gt 30 ] && [ "$diff" -le 45 ]; } || { [ "$diff" -gt 60 ] && [ "$diff" -le 75 ]; }; then
@@ -154,8 +159,16 @@ check_hbLog() {
       "
     fi
   elif [ -n "$GfsPoolPath" ]; then
-    getHbTime=$(cat $hbFile)
+    getHbTime=$(cat "$hbFile" 2>/dev/null)
+  if [ $? -ne 0 ] || ! [[ $getHbTime =~ ^[0-9]+$ ]]; then
+    echo "### [HOST STATE : UNKNOWN] Heartbeat could not be read ###"
+    return 2
+  fi
     diff=$(expr $Timestamp - $getHbTime)
+  if [ "$diff" -lt 0 ]; then
+    echo "### [HOST STATE : UNKNOWN] Heartbeat clock is ahead ###"
+    return 2
+  fi
     getHbTimeFmt=$(date -d @${getHbTime} '+%Y-%m-%d %H:%M:%S')
     logger -p user.info -t MOLD-HA-HB "[Checking] 호스트:$HostIP | HB 파일 체크(CLVM with GFS, 스토리지:$poolPath) > [현 시간:$CurrentTime | HB 파일 시간:$getHbTimeFmt | 시간 차이:$diff초]"
         timeout 1 ssh ccvm "
@@ -189,7 +202,7 @@ check_hbLog() {
 
 if [ "$rflag" == "1" ]; then
   check_hbLog
-  exit 0
+  exit $?
 elif [ "$cflag" == "1" ]; then
   /usr/bin/logger -t heartbeat "kvmheartbeat_clvm.sh will reboot system because it was unable to write the heartbeat to the storage."
   sync &

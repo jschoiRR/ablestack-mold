@@ -309,6 +309,7 @@ StateListener<State, VirtualMachine.Event, VirtualMachine>, Configurable {
     @Override
     public DeployDestination planDeployment(VirtualMachineProfile vmProfile, DeploymentPlan plan, ExcludeList avoids, DeploymentPlanner planner)
             throws InsufficientServerCapacityException, AffinityConflictException {
+        avoidHaSourceHost(vmProfile, avoids);
         logger.debug(logDeploymentWithoutException(vmProfile.getVirtualMachine(), plan, avoids, planner));
 
         ServiceOffering offering = vmProfile.getServiceOffering();
@@ -450,6 +451,13 @@ StateListener<State, VirtualMachine.Event, VirtualMachine>, Configurable {
             }
         }
         return dest;
+    }
+
+    protected void avoidHaSourceHost(VirtualMachineProfile vmProfile, ExcludeList avoids) {
+        final Long sourceHostId = (Long) vmProfile.getParameter(VirtualMachineProfile.Param.HaSourceHostId);
+        if (sourceHostId != null) {
+            avoids.addHost(sourceHostId);
+        }
     }
 
     private void avoidDifferentArchResources(VirtualMachineProfile vmProfile, DataCenter dc, ExcludeList avoids) {

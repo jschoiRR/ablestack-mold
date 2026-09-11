@@ -28,17 +28,17 @@ public class KVMHAConfig {
             "The maximum length of time, in seconds, expected for an activity check to complete.", true, ConfigKey.Scope.Cluster);
 
     public static final ConfigKey<Long> KvmHAActivityCheckInterval = new ConfigKey<>("Advanced", Long.class, "kvm.ha.activity.check.interval", "5",
-            "The interval, in seconds, between activity checks.", true, ConfigKey.Scope.Cluster);
+            "Minimum seconds between activity checks. HA polling and alternating health checks can extend the actual interval.", true, ConfigKey.Scope.Cluster);
 
     public static final ConfigKey<Long> KvmHAActivityCheckMaxAttempts = new ConfigKey<>("Advanced", Long.class, "kvm.ha.activity.check.max.attempts", "7",
-            "The maximum number of activity check attempts to perform before deciding to recover or degrade a resource.", true, ConfigKey.Scope.Cluster);
+            "The reference sample count for the consecutive activity failure threshold: floor(count * failure ratio) + 1. Activity observation continues until health recovers or the threshold is met.", true, ConfigKey.Scope.Cluster);
 
     public static final ConfigKey<Double> KvmHAActivityCheckFailureThreshold = new ConfigKey<>("Advanced", Double.class, "kvm.ha.activity.check.failure.ratio", "0.5",
-            "The activity check failure threshold ratio. This is used with the activity check maximum attempts for deciding to recover or degrade a resource. For most environments, please keep this value above 0.5.",
+            "The ratio used to compute the consecutive activity failure threshold: floor(max.attempts * ratio) + 1. Unknown results do not count as confirmed failures.",
             true, ConfigKey.Scope.Cluster);
 
     public static final ConfigKey<Long> KvmHADegradedMaxPeriod = new ConfigKey<>("Advanced", Long.class, "kvm.ha.degraded.max.period", "60",
-            "The maximum length of time, in seconds, a resource can be in degraded state where only health checks are performed.", true, ConfigKey.Scope.Cluster);
+            "Legacy degraded wait setting retained for compatibility. Continuous HA observation now resumes activity checks at the regular activity interval without this pause.", true, ConfigKey.Scope.Cluster);
 
     public static final ConfigKey<Long> KvmHARecoverTimeout = new ConfigKey<>("Advanced", Long.class, "kvm.ha.recover.timeout", "60",
             "The maximum length of time, in seconds, expected for a recovery operation to complete.", true, ConfigKey.Scope.Cluster);
@@ -52,5 +52,17 @@ public class KVMHAConfig {
 
     public static final ConfigKey<Long> KvmHAFenceTimeout = new ConfigKey<>("Advanced", Long.class, "kvm.ha.fence.timeout", "60",
             "The maximum length of time, in seconds, expected for a fence operation to complete.", true, ConfigKey.Scope.Cluster);
+
+    public static final ConfigKey<Boolean> KvmHAPowerOffCheckEnabled = new ConfigKey<>("Advanced", Boolean.class, "kvm.ha.power.off.check.enabled", "true",
+            "Use repeated fresh BMC OFF responses to detect a powered-off host before storage heartbeat expiry. Failed or unknown responses never confirm power off.", true, ConfigKey.Scope.Cluster);
+
+    public static final ConfigKey<Long> KvmHAPowerOffConfirmations = new ConfigKey<>("Advanced", Long.class, "kvm.ha.power.off.confirmations", "3",
+            "Minimum consecutive fresh OFF responses required for early detection and fencing verification. Must be at least 3 and fit within the HA task timeout.", true, ConfigKey.Scope.Cluster);
+
+    public static final ConfigKey<Long> KvmHAPowerCheckInterval = new ConfigKey<>("Advanced", Long.class, "kvm.ha.power.check.interval", "1",
+            "Minimum seconds between completed BMC OFF observations. Must be at least 1.", true, ConfigKey.Scope.Cluster);
+
+    public static final ConfigKey<Long> KvmHAPowerCheckTimeout = new ConfigKey<>("Advanced", Long.class, "kvm.ha.power.check.timeout", "2",
+            "Maximum seconds for each live BMC power-status query. The full observation sequence must fit within the HA task timeout.", true, ConfigKey.Scope.Cluster);
 
 }

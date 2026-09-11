@@ -108,4 +108,36 @@ public class ScriptTest {
         Assert.assertEquals("test.sh -y ****** ", commandLine);
     }
 
+    @Test(timeout = 5000)
+    public void interruptibleProbeStopsWhenCancelled() throws Exception {
+        Script script = new Script("/bin/sh", org.joda.time.Duration.standardSeconds(30), null);
+        script.add("-c", "exec sleep 30");
+        script.setInterruptible(true);
+        java.util.concurrent.CountDownLatch started = new java.util.concurrent.CountDownLatch(1);
+        java.util.concurrent.atomic.AtomicReference<String> result = new java.util.concurrent.atomic.AtomicReference<>();
+        java.util.concurrent.atomic.AtomicBoolean interrupted = new java.util.concurrent.atomic.AtomicBoolean();
+        Thread worker = new Thread(() -> {
+            result.set(script.execute(new OutputInterpreter() {
+                @Override public boolean drain() { started.countDown(); return true; }
+                @Override public String interpret(java.io.BufferedReader reader) { return null; }
+            }));
+            interrupted.set(Thread.currentThread().isInterrupted());
+        });
+        worker.setDaemon(true);
+        worker.start();
+        try {
+            Assert.assertTrue(started.await(2, TimeUnit.SECONDS));
+            worker.interrupt();
+            worker.join(2000);
+            Assert.assertFalse("Cancelled probe must release its worker", worker.isAlive());
+            Assert.assertNotNull(result.get());
+            Assert.assertTrue(interrupted.get());
+            Assert.assertTrue(script._process.waitFor(500, TimeUnit.MILLISECONDS));
+        } finally {
+            worker.interrupt();
+            if (script._process != null) {
+                script._process.destroyForcibly();
+            }
+        }
+    }
 }

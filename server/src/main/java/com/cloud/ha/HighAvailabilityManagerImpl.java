@@ -28,6 +28,7 @@ import java.util.Optional;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 import javax.naming.ConfigurationException;
@@ -74,6 +75,7 @@ import com.cloud.host.dao.HostDao;
 import com.cloud.hypervisor.Hypervisor.HypervisorType;
 import com.cloud.network.VpcVirtualNetworkApplianceService;
 import com.cloud.resource.ResourceManager;
+import com.cloud.resource.ResourceState;
 import com.cloud.server.ManagementServer;
 import com.cloud.service.dao.ServiceOfferingDao;
 import com.cloud.storage.Storage.StoragePoolType;
@@ -307,13 +309,22 @@ public class HighAvailabilityManagerImpl extends ManagerBase implements Configur
                 logger.debug(message);
             }
             sendHostAlert(host, message);
+            if (reasonType == ReasonType.HostFenced) {
+                throw new CloudRuntimeException(message);
+            }
             return;
         }
 
         logger.warn("Scheduling restart for VMs on host {}", host);
 
         final List<VMInstanceVO> vms = _instanceDao.listByHostId(host.getId());
-        final List<HaWorkVO> pendingHaWorks = _haDao.listPendingHAWorkForHost(host.getId());
+        List<HaWorkVO> pendingHaWorks = _haDao.listPendingHAWorkForHost(host.getId());
+        if (reasonType == ReasonType.HostFenced) {
+            // An earlier investigation can be cancelled after the fenced host boots again.
+            // It must not suppress the durable work that carries confirmed fencing evidence.
+            pendingHaWorks = pendingHaWorks.stream().filter(work -> work.getReasonType() == ReasonType.HostFenced)
+                    .collect(Collectors.toList());
+        }
         final DataCenterVO dcVO = _dcDao.findById(host.getDataCenterId());
 
         // send an email alert that the host is down
@@ -366,7 +377,37 @@ public class HighAvailabilityManagerImpl extends ManagerBase implements Configur
                 logger.debug("Instance {} is not on down host {} it is on other host {} Instance HA is done", vm, host, hostId);
                 continue;
             }
+            if (reasonType == ReasonType.HostFenced && hostId == null
+                    && (vm.getLastHostId() == null || vm.getLastHostId() != host.getId())) {
+                logger.info("Instance {} no longer belongs to fenced host {}; skipping", vm, host);
+                continue;
+            }
             scheduleRestart(vm, investigate, reasonType);
+        }
+    }
+
+    @Override
+    public void scheduleRestartForFencedVms(final HostVO host, final Map<Long, String> recordedVms) {
+        if (!VmHaEnabled.valueIn(host.getDataCenterId())) {
+            throw new CloudRuntimeException("VM HA is disabled; retaining fenced host recovery roster " + host.getId());
+        }
+        final List<HaWorkVO> pending = _haDao.listPendingHAWorkForHost(host.getId()).stream()
+                .filter(work -> work.getReasonType() == ReasonType.HostFenced).collect(Collectors.toList());
+        for (Map.Entry<Long, String> entry : recordedVms.entrySet()) {
+            final VMInstanceVO vm = _instanceDao.findById(entry.getKey());
+            if (vm == null || !entry.getValue().equals(vm.getUuid()) || isFtctlLifecycleGuarded(vm)
+                    || _itMgr.isRootVolumeOnLocalStorage(vm.getId()) || vmHasPendingHAJob(pending, vm)) {
+                continue;
+            }
+            if (vm.getHostId() != null && vm.getHostId() != host.getId()
+                    || vm.getHostId() == null && (vm.getLastHostId() == null || vm.getLastHostId() != host.getId())) {
+                logger.info("Recorded fenced VM {} has moved away from host {}; skipping", vm, host);
+                continue;
+            }
+            if (vm.getState() == VirtualMachine.State.Destroyed || vm.getState() == VirtualMachine.State.Expunging) {
+                continue;
+            }
+            scheduleFencedRestart(vm, host.getId());
         }
     }
 
@@ -444,11 +485,19 @@ public class HighAvailabilityManagerImpl extends ManagerBase implements Configur
                 logger.debug(message);
             }
             sendVMAlert(vm, message);
+            if (reasonType == ReasonType.HostFenced) {
+                throw new CloudRuntimeException(message);
+            }
             return;
         }
 
         if (isFtctlLifecycleGuarded(vm)) {
             logger.info(String.format("Skipping Cloud HA restart for VM %s because FTCTL lifecycle guard is active", vm.getInstanceName()));
+            return;
+        }
+
+        if (reasonType == ReasonType.HostFenced) {
+            scheduleFencedRestart(vm);
             return;
         }
 
@@ -549,6 +598,77 @@ public class HighAvailabilityManagerImpl extends ManagerBase implements Configur
         scheduleRestart(vm, investigate, null);
     }
 
+    private void scheduleFencedRestart(final VMInstanceVO vm) {
+        final Long sourceHostId = vm.getHostId() != null ? vm.getHostId() : vm.getLastHostId();
+        if (sourceHostId == null) {
+            throw new CloudRuntimeException("Cannot register fenced VM recovery without its source host: " + vm);
+        }
+        scheduleFencedRestart(vm, sourceHostId);
+    }
+
+    private void scheduleFencedRestart(final VMInstanceVO vm, final long sourceHostId) {
+        final HaWorkVO work = new HaWorkVO(vm.getId(), vm.getType(), WorkType.HA, Step.Stopping,
+                sourceHostId, vm.getState(), 0, vm.getUpdated(), ReasonType.HostFenced);
+        // Persist BEFORE force-stop clears host_id. The worker can resume this step after an MS restart.
+        if (_haDao.persist(work) == null) {
+            throw new CloudRuntimeException("Failed to register recovery for fenced VM " + vm);
+        }
+        wakeupWorkers();
+    }
+
+    protected VirtualMachine prepareFencedVmForRestart(final HaWorkVO work, VirtualMachine vm) {
+        final Long currentHostId = vm.getHostId();
+        if (currentHostId != null && currentHostId != work.getHostId()
+                || currentHostId == null && (vm.getLastHostId() == null || vm.getLastHostId() != work.getHostId())) {
+            logger.info("VM {} has moved since host {} was fenced; discarding {}", vm, work.getHostId(), work);
+            return null;
+        }
+
+        final boolean alreadyStopped = vm.getState() == VirtualMachine.State.Stopped && currentHostId == null;
+        if (!alreadyStopped) {
+            if (vm.getState() != VirtualMachine.State.Stopping
+                    && (vm.getState() != work.getPreviousState() || vm.getUpdated() != work.getUpdateTime())) {
+                logger.info("VM {} has changed since fencing was recorded; discarding {}", vm, work);
+                return null;
+            }
+            final HostVO source = _hostDao.findById(work.getHostId());
+            if (source == null || source.getResourceState() != ResourceState.Maintenance) {
+                throw new CloudRuntimeException("Fenced host must remain in maintenance before VM stop: " + work.getHostId());
+            }
+            try {
+                _itMgr.advanceStop(vm.getUuid(), true);
+            } catch (ResourceUnavailableException | OperationTimedoutException | ConcurrentOperationException e) {
+                throw new CloudRuntimeException("Unable to finish stop for fenced VM " + vm, e);
+            }
+            vm = _itMgr.findById(vm.getId());
+        }
+        if (vm == null || vm.getState() != VirtualMachine.State.Stopped || vm.getHostId() != null) {
+            throw new CloudRuntimeException("Fenced VM stop has not completed for " + work);
+        }
+        work.setPreviousState(vm.getState());
+        work.setUpdateTime(vm.getUpdated());
+        work.setStep(Step.Scheduled);
+        if (!_haDao.update(work.getId(), work)) {
+            work.setStep(Step.Stopping);
+            throw new CloudRuntimeException("Failed to checkpoint fenced VM stop for " + work);
+        }
+        return vm;
+    }
+
+    protected Map<VirtualMachineProfile.Param, Object> getHaRestartParameters(final HaWorkVO work) {
+        final Map<VirtualMachineProfile.Param, Object> params = new HashMap<>();
+        if (_haTag != null) {
+            params.put(VirtualMachineProfile.Param.HaTag, _haTag);
+        }
+        if (work.getWorkType() == WorkType.HA) {
+            params.put(VirtualMachineProfile.Param.HaOperation, true);
+            if (work.getReasonType() == ReasonType.HostFenced || work.getReasonType() == ReasonType.HostDown) {
+                params.put(VirtualMachineProfile.Param.HaSourceHostId, work.getHostId());
+            }
+        }
+        return params;
+    }
+
     private boolean isFtctlLifecycleGuarded(VMInstanceVO vm) {
         if (vm == null || vm.getType() != VirtualMachine.Type.User) {
             return false;
@@ -590,6 +710,11 @@ public class HighAvailabilityManagerImpl extends ManagerBase implements Configur
     protected Long restart(final HaWorkVO work) {
         logger.debug("RESTART with HAWORK");
         List<HaWorkVO> items = _haDao.listFutureHaWorkForVm(work.getInstanceId(), work.getId());
+        if (work.getReasonType() == ReasonType.HostFenced) {
+            // A reconnect can enqueue an unverified investigation after the durable fencing job.
+            // Preserve confirmed recovery; a VM that moved or changed is checked independently below.
+            items = items.stream().filter(item -> item.getReasonType() == ReasonType.HostFenced).collect(Collectors.toList());
+        }
         if (items.size() > 0) {
             StringBuilder str = new StringBuilder("Cancelling this work item because newer ones have been scheduled.  Work Ids = [");
             for (HaWorkVO item : items) {
@@ -600,7 +725,8 @@ public class HighAvailabilityManagerImpl extends ManagerBase implements Configur
             return null;
         }
 
-        items = _haDao.listRunningHaWorkForVm(work.getInstanceId());
+        items = _haDao.listRunningHaWorkForVm(work.getInstanceId()).stream()
+                .filter(item -> item.getId() != work.getId()).collect(Collectors.toList());
         if (items.size() > 0) {
             StringBuilder str = new StringBuilder("Waiting because there's HA work being executed on an item currently.  Work Ids =[");
             for (HaWorkVO item : items) {
@@ -617,6 +743,14 @@ public class HighAvailabilityManagerImpl extends ManagerBase implements Configur
         if (vm == null) {
             logger.info("Unable to find vm: " + vmId);
             return null;
+        }
+        if (work.getReasonType() == ReasonType.HostFenced
+                && (work.getStep() == Step.Stopping || work.getStep() == Step.Investigating)) {
+            // Bootstrap can reset pending steps to Investigating; the persisted reason retains the fencing proof.
+            vm = prepareFencedVmForRestart(work, vm);
+            if (vm == null) {
+                return null;
+            }
         }
         if (checkAndCancelWorkIfNeeded(work)) {
             return null;
@@ -760,14 +894,7 @@ public class HighAvailabilityManagerImpl extends ManagerBase implements Configur
         }
 
         try {
-            HashMap<VirtualMachineProfile.Param, Object> params = new HashMap<VirtualMachineProfile.Param, Object>();
-            if (_haTag != null) {
-                params.put(VirtualMachineProfile.Param.HaTag, _haTag);
-            }
-            WorkType wt = work.getWorkType();
-            if (wt.equals(WorkType.HA)) {
-                params.put(VirtualMachineProfile.Param.HaOperation, true);
-            }
+            final Map<VirtualMachineProfile.Param, Object> params = getHaRestartParameters(work);
 
             try{
                 if (HypervisorType.KVM == host.getHypervisorType()) {

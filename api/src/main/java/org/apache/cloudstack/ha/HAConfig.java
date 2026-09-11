@@ -40,6 +40,7 @@ public interface HAConfig extends StateObject<HAConfig.HAState>, InternalIdentit
         Enabled,
         HealthCheckPassed,
         HealthCheckFailed,
+        PowerOffConfirmed,
         PerformActivityCheck,
         TooFewActivityCheckSamples,
         PeriodicRecheckResourceActivity,
@@ -104,12 +105,14 @@ public interface HAConfig extends StateObject<HAConfig.HAState>, InternalIdentit
             FSM.addTransition(Available, Event.Ineligible, Ineligible);
             FSM.addTransition(Available, Event.HealthCheckPassed, Available);
             FSM.addTransition(Available, Event.HealthCheckFailed, Suspect);
+            FSM.addTransition(Available, Event.PowerOffConfirmed, Fencing);
 
             FSM.addTransition(Suspect, Event.Disabled, Disabled);
             FSM.addTransition(Suspect, Event.Ineligible, Ineligible);
             FSM.addTransition(Suspect, Event.HealthCheckFailed, Suspect);
             FSM.addTransition(Suspect, Event.PerformActivityCheck, Checking);
             FSM.addTransition(Suspect, Event.HealthCheckPassed, Available);
+            FSM.addTransition(Suspect, Event.PowerOffConfirmed, Fencing);
 
             FSM.addTransition(Checking, Event.Disabled, Disabled);
             FSM.addTransition(Checking, Event.Ineligible, Ineligible);
@@ -117,12 +120,14 @@ public interface HAConfig extends StateObject<HAConfig.HAState>, InternalIdentit
             FSM.addTransition(Checking, Event.ActivityCheckFailureUnderThresholdRatio, Degraded);
             FSM.addTransition(Checking, Event.ActivityCheckFailureOverThresholdRatio, Recovering);
             FSM.addTransition(Checking, Event.HealthCheckPassed, Available);
+            FSM.addTransition(Checking, Event.PowerOffConfirmed, Fencing);
 
             FSM.addTransition(Degraded, Event.Disabled, Disabled);
             FSM.addTransition(Degraded, Event.Ineligible, Ineligible);
             FSM.addTransition(Degraded, Event.HealthCheckFailed, Degraded);
             FSM.addTransition(Degraded, Event.HealthCheckPassed, Available);
             FSM.addTransition(Degraded, Event.PeriodicRecheckResourceActivity, Suspect);
+            FSM.addTransition(Degraded, Event.PowerOffConfirmed, Fencing);
 
             FSM.addTransition(Recovering, Event.Disabled, Disabled);
             FSM.addTransition(Recovering, Event.Ineligible, Ineligible);
@@ -140,6 +145,7 @@ public interface HAConfig extends StateObject<HAConfig.HAState>, InternalIdentit
             FSM.addTransition(Fencing, Event.Fenced, Fenced);
 
             FSM.addTransition(Fenced, Event.Disabled, Disabled);
+            FSM.addTransition(Fenced, Event.RetryFencing, Fenced);
             FSM.addTransition(Fenced, Event.HealthCheckPassed, Ineligible);
             FSM.addTransition(Fenced, Event.HealthCheckFailed, Fenced);
         }

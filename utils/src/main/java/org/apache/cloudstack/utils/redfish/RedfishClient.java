@@ -60,6 +60,10 @@ import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.config.RequestConfig;
+import org.joda.time.Duration;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
@@ -85,7 +89,7 @@ import com.google.gson.JsonParser;
  * RedfishClient allows to gather the server Power State, and execute Reset
  * actions such as 'On', 'ForceOff', 'GracefulShutdown', 'GracefulRestart' etc.
  */
-public class RedfishClient {
+public class RedfishClient implements AutoCloseable {
 
     protected Logger logger = LogManager.getLogger(getClass());
 
@@ -94,6 +98,14 @@ public class RedfishClient {
     private boolean useHttps;
     private boolean ignoreSsl;
     private int redfishRequestMaxRetries;
+    private Long operationDeadlineNanos;
+    private final List<CloseableHttpClient> operationClients = new java.util.ArrayList<>();
+    private final List<ScheduledFuture<?>> requestDeadlines = new java.util.ArrayList<>();
+    private static final ScheduledExecutorService deadlineExecutor = Executors.newSingleThreadScheduledExecutor(runnable -> {
+        Thread thread = new Thread(runnable, "RedfishRequestDeadline");
+        thread.setDaemon(true);
+        return thread;
+    });
 
     private final static String SYSTEMS_URL_PATH = "redfish/v1/Systems/";
     private final static String MANAGERS_URL_PATH = "redfish/v1/Managers/";
@@ -168,6 +180,56 @@ public class RedfishClient {
         this.useHttps = useHttps;
         this.ignoreSsl = ignoreSsl;
         this.redfishRequestMaxRetries = redfishRequestRetries;
+    }
+
+    public RedfishClient(String username, String password, boolean useHttps, boolean ignoreSsl, int redfishRequestRetries, Duration timeout) {
+        this(username, password, useHttps, ignoreSsl, redfishRequestRetries);
+        if (timeout == null || timeout.getMillis() <= 0) {
+            throw new IllegalArgumentException("Redfish operation timeout must be positive");
+        }
+        operationDeadlineNanos = System.nanoTime() + TimeUnit.MILLISECONDS.toNanos(timeout.getMillis());
+    }
+
+    protected long nanoTime() {
+        return System.nanoTime();
+    }
+
+    protected int remainingOperationMillis() {
+        if (Thread.currentThread().isInterrupted()) {
+            throw new RedfishException("Redfish operation interrupted");
+        }
+        if (operationDeadlineNanos == null) {
+            return Integer.MAX_VALUE;
+        }
+        long remaining = TimeUnit.NANOSECONDS.toMillis(operationDeadlineNanos - nanoTime());
+        if (remaining <= 0) {
+            throw new RedfishException("Redfish operation timed out");
+        }
+        return (int) Math.min(Integer.MAX_VALUE, remaining);
+    }
+
+    private void configureRequestTimeout(HttpRequestBase request) {
+        if (operationDeadlineNanos != null) {
+            int remaining = remainingOperationMillis();
+            request.setConfig(RequestConfig.custom().setConnectTimeout(remaining).setSocketTimeout(remaining)
+                    .setConnectionRequestTimeout(remaining).build());
+        }
+    }
+
+    @Override
+    public void close() {
+        for (ScheduledFuture<?> deadline : requestDeadlines) {
+            deadline.cancel(false);
+        }
+        for (CloseableHttpClient client : operationClients) {
+            try {
+                client.close();
+            } catch (IOException e) {
+                logger.debug("Failed to close Redfish HTTP client", e);
+            }
+        }
+        requestDeadlines.clear();
+        operationClients.clear();
     }
 
     protected String buildRequestUrl(String hostAddress, RedfishCmdType cmd, String resourceId) {
@@ -247,6 +309,12 @@ public class RedfishClient {
             client = HttpClientBuilder.create().build();
         }
 
+        configureRequestTimeout(httpReq);
+        if (operationDeadlineNanos != null) {
+            operationClients.add((CloseableHttpClient) client);
+            // Includes response-body reads, retries, and the second STATUS GET.
+            requestDeadlines.add(deadlineExecutor.schedule(httpReq::abort, remainingOperationMillis(), TimeUnit.MILLISECONDS));
+        }
         try {
             return client.execute(httpReq);
         } catch (IOException e) {
@@ -262,11 +330,19 @@ public class RedfishClient {
         HttpResponse response = null;
         for (int attempt = 1; attempt < redfishRequestMaxRetries + 1; attempt++) {
             try {
+                int remaining = remainingOperationMillis();
+                if (remaining <= TimeUnit.SECONDS.toMillis(WAIT_FOR_REQUEST_RETRY)) {
+                    throw new RedfishException("Insufficient time to retry Redfish request");
+                }
                 TimeUnit.SECONDS.sleep(WAIT_FOR_REQUEST_RETRY);
+                configureRequestTimeout(httpReq);
                 logger.debug(String.format("HTTP %s request retry attempt %d/%d [URL: %s].", httpReq.getMethod(), attempt, redfishRequestMaxRetries, url));
                 response = client.execute(httpReq);
                 break;
-            } catch (IOException | InterruptedException e) {
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                throw new RedfishException("Redfish request retry interrupted", e);
+            } catch (IOException e) {
                 if (attempt == redfishRequestMaxRetries) {
                     throw new RedfishException(String.format("Failed to execute HTTP %s request retry attempt %d/%d [URL: %s] due to exception %s", httpReq.getMethod(), attempt, redfishRequestMaxRetries,url, e));
                 } else {
@@ -403,7 +479,9 @@ public class RedfishClient {
      * Returns the Redfish system Power State ({@link RedfishPowerState}).
      */
     public RedfishPowerState getSystemPowerState(String hostAddress) {
+        remainingOperationMillis();
         String systemId = getSystemId(hostAddress);
+        remainingOperationMillis();
 
         String url = buildRequestUrl(hostAddress, RedfishCmdType.GetPowerState, systemId);
         CloseableHttpResponse response = (CloseableHttpResponse)executeGetRequest(url);
@@ -415,6 +493,7 @@ public class RedfishClient {
         }
 
         RedfishPowerState powerState = processGetSystemRequestResponse(response);
+        remainingOperationMillis();
         logger.debug(String.format("Retrieved System power state '%s' with request '%s: %s'", powerState, HttpGet.METHOD_NAME, url));
         return powerState;
     }

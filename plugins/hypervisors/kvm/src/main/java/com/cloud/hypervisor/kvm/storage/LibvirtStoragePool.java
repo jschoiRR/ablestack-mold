@@ -403,9 +403,14 @@ public class LibvirtStoragePool implements KVMStoragePool {
 
     @Override
     public Boolean checkingHeartBeat(HAStoragePool pool, HostTO host) {
+        return checkingHeartBeat(pool, host, new Duration(HeartBeatCheckerTimeout));
+    }
+
+    @Override
+    public Boolean checkingHeartBeat(HAStoragePool pool, HostTO host, Duration timeout) {
         logger.info("### [HA Checking] checkingHeartBeat Method Start!!!");
-        boolean validResult = false;
-        Script cmd = new Script(getHearthBeatPath(), HeartBeatCheckerTimeout, logger);
+        Script cmd = new Script(getHearthBeatPath(), timeout, logger);
+        cmd.setInterruptible(true);
         if (pool.getPool().getType() == StoragePoolType.NetworkFilesystem) {
             cmd.add("-i", pool.getPoolIp());
             cmd.add("-p", pool.getPoolMountSourcePath());
@@ -430,7 +435,7 @@ public class LibvirtStoragePool implements KVMStoragePool {
             } else if ("general-virtualization".equalsIgnoreCase(glueBlockPool) || "ablestack-vm".equalsIgnoreCase(glueBlockPool)) {
                 cmd.add("-g", "/mnt/glue-gfs");
             } else {
-                return true;
+                return null;
             }
         }
 
@@ -441,20 +446,19 @@ public class LibvirtStoragePool implements KVMStoragePool {
         logger.debug(String.format("Checking heart beat with KVMHAChecker [{command=\"%s\", result: \"%s\", log: \"%s\", pool: \"%s\"}].", cmd.toString(), result, parsedLine,
                 pool.getPoolIp()));
 
-        if (result == null && parsedLine.contains("DEAD")) {
-            logger.info(String.format("Checking heart beat with KVMHAChecker command [%s] returned [%s]. [%s]. It may cause a shutdown of host IP [%s].", cmd.toString(),
-                    result, parsedLine, host.getPrivateNetwork().getIp()));
-        } else {
-            validResult = true;
-        }
-        return validResult;
+        return parseActivityResult(result, parsedLine);
     }
 
     @Override
     public Boolean checkingHeartBeatRBD(HAStoragePool pool, HostTO host, String volumeList) {
+        return checkingHeartBeatRBD(pool, host, volumeList, new Duration(HeartBeatCheckerTimeout));
+    }
+
+    @Override
+    public Boolean checkingHeartBeatRBD(HAStoragePool pool, HostTO host, String volumeList, Duration timeout) {
         logger.info("### [HA RBD Checking] checkingHeartBeatRBD Method Start!!!");
-        boolean validResult = false;
-        Script cmd = new Script(getHearthBeatPath(), HeartBeatCheckerTimeout, logger);
+        Script cmd = new Script(getHearthBeatPath(), timeout, logger);
+        cmd.setInterruptible(true);
         cmd.add("-i", pool.getPoolSourceHost());
         cmd.add("-p", pool.getPoolMountSourcePath());
         cmd.add("-n", pool.getPoolAuthUserName());
@@ -471,19 +475,14 @@ public class LibvirtStoragePool implements KVMStoragePool {
         logger.debug(String.format("Checking heart beat with KVMHAChecker [{command=\"%s\", result: \"%s\", log: \"%s\", pool: \"%s\"}].", cmd.toString(), result, parsedLine,
                 pool.getPoolIp()));
 
-        if (result == null && parsedLine.contains("DEAD")) {
-            logger.info(String.format("Checking heart beat with KVMHAChecker command [%s] returned [%s]. [%s]. It may cause a shutdown of host IP [%s].", cmd.toString(),
-                    result, parsedLine, host.getPrivateNetwork().getIp()));
-        } else {
-            validResult = true;
-        }
-        return validResult;
+        return parseActivityResult(result, parsedLine);
     }
 
     @Override
     public Boolean vmActivityCheck(HAStoragePool pool, HostTO host, Duration activityScriptTimeout, String volumeUUIDListString, String vmActivityCheckPath, long duration) {
         logger.info("### [HA AC Checking] vmActivityCheck Method Start!!!");
-        Script cmd = new Script(vmActivityCheckPath, activityScriptTimeout.getStandardSeconds(), logger);
+        Script cmd = new Script(vmActivityCheckPath, activityScriptTimeout, logger);
+        cmd.setInterruptible(true);
         if (pool.getPool().getType() == StoragePoolType.NetworkFilesystem) {
             cmd.add("-i", pool.getPoolIp());
             cmd.add("-p", pool.getPoolMountSourcePath());
@@ -508,7 +507,7 @@ public class LibvirtStoragePool implements KVMStoragePool {
             cmd.add("-u", volumeUUIDListString);
             cmd.add("-t", String.valueOf(HeartBeatCheckerFreq / 1000));
         } else if (pool.getPool().getType() == StoragePoolType.CLVM) {
-            cmd.add("-h", host.getPublicNetwork().getIp());
+            cmd.add("-h", host.getPrivateNetwork().getIp());
             cmd.add("-q", pool.getPoolMountSourcePath());
             cmd.add("-u", volumeUUIDListString);
             cmd.add("-t", String.valueOf(HeartBeatCheckerFreq / 1000));
@@ -520,7 +519,7 @@ public class LibvirtStoragePool implements KVMStoragePool {
             } else if ("general-virtualization".equalsIgnoreCase(glueBlockPool) || "ablestack-vm".equalsIgnoreCase(glueBlockPool)) {
                 cmd.add("-g", "/mnt/glue-gfs");
             } else {
-                return true;
+                return null;
             }
         }
 
@@ -530,12 +529,21 @@ public class LibvirtStoragePool implements KVMStoragePool {
 
         logger.debug(String.format("Checking heart beat with KVMHAVMActivityChecker [{command=\"%s\", result: \"%s\", log: \"%s\", pool: \"%s\"}].", cmd.toString(), result, parsedLine, pool.getPoolIp()));
 
-        if (result == null && parsedLine.contains("DEAD")) {
-            logger.info(String.format("Checking heart beat with KVMHAVMActivityChecker command [%s] returned [%s]. It is [%s]. It may cause a shutdown of host IP [%s].", cmd.toString(), result, parsedLine, host.getPrivateNetwork().getIp()));
-            return false;
-        } else {
+        return parseActivityResult(result, parsedLine);
+    }
+
+    protected Boolean parseActivityResult(String executionError, String output) {
+        if (executionError != null || output == null) {
+            return null;
+        }
+        String line = output.trim();
+        if (line.startsWith("### [HOST STATE : ALIVE]")) {
             return true;
         }
+        if (line.startsWith("### [HOST STATE : DEAD]")) {
+            return false;
+        }
+        return null;
     }
 
     public void createRBDSecretKeyFileIfNoExist(String uuid, String localPath, String skey) {

@@ -20,6 +20,7 @@ import java.nio.channels.ClosedChannelException;
 
 
 import com.cloud.agent.transport.Request;
+import com.cloud.agent.transport.Response;
 import com.cloud.exception.AgentUnavailableException;
 import com.cloud.host.Status;
 import com.cloud.hypervisor.Hypervisor;
@@ -39,6 +40,9 @@ public class ConnectedAgentAttache extends AgentAttache {
 
     @Override
     public synchronized void send(final Request req) throws AgentUnavailableException {
+        if (!(req instanceof Response)) {
+            _agentMgr.checkHostMaintenanceBeforeStart(_id, req.getCommands());
+        }
         try {
             _link.send(req.toBytes());
         } catch (ClosedChannelException e) {

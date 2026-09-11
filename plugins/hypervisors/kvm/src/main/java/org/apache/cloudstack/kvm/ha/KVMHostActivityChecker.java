@@ -18,9 +18,21 @@
 package org.apache.cloudstack.kvm.ha;
 
 import com.cloud.agent.AgentManager;
+import com.cloud.agent.Listener;
+import com.cloud.agent.manager.Commands;
+import com.cloud.agent.api.CheckOnHostAnswer;
+import com.cloud.agent.api.Command;
+import com.cloud.agent.api.StartupCommand;
+import com.cloud.agent.api.AgentControlCommand;
+import com.cloud.agent.api.AgentControlAnswer;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import com.cloud.agent.api.Answer;
 import com.cloud.agent.api.CheckOnHostCommand;
 import com.cloud.agent.api.CheckVMActivityOnStoragePoolCommand;
+import com.cloud.agent.api.CheckVMActivityOnStoragePoolAnswer;
+import com.cloud.agent.api.CheckVMActivityOnStoragePoolAnswer.ActivityState;
 import com.cloud.agent.api.DeleteACfileToFencedHostCommand;
 import com.cloud.dc.dao.ClusterDao;
 import com.cloud.exception.StorageUnavailableException;
@@ -44,9 +56,6 @@ import org.apache.cloudstack.ha.provider.ActivityCheckerInterface;
 import org.apache.cloudstack.ha.provider.HACheckerException;
 import org.apache.cloudstack.ha.provider.HealthCheckerInterface;
 import org.apache.cloudstack.storage.datastore.db.PrimaryDataStoreDao;
-import org.apache.cloudstack.outofbandmanagement.dao.OutOfBandManagementDao;
-import org.apache.cloudstack.outofbandmanagement.OutOfBandManagement.PowerState;
-import org.apache.cloudstack.outofbandmanagement.OutOfBandManagement;
 import org.apache.commons.lang.ArrayUtils;
 
 import javax.inject.Inject;
@@ -71,8 +80,6 @@ public class KVMHostActivityChecker extends AdapterBase implements ActivityCheck
     private StorageManager storageManager;
     @Inject
     private ResourceManager resourceManager;
-    @Inject
-    private OutOfBandManagementDao outOfBandManagementDao;
 
     @Override
     public boolean isActive(Host r, DateTime suspectTime) throws HACheckerException {
@@ -97,6 +104,7 @@ public class KVMHostActivityChecker extends AdapterBase implements ActivityCheck
         if (agent.getHypervisorType() != Hypervisor.HypervisorType.KVM && agent.getHypervisorType() != Hypervisor.HypervisorType.LXC) {
             throw new IllegalStateException(String.format("Calling KVM investigator for non KVM Host of type [%s].", agent.getHypervisorType()));
         }
+        final long deadline = System.nanoTime() + TimeUnit.SECONDS.toNanos(KVMHAConfig.KvmHAHealthCheckTimeout.valueIn(agent.getClusterId()));
         Status hostStatus = Status.Unknown;
         Status neighbourStatus = Status.Unknown;
         CheckOnHostCommand cmd = null;
@@ -105,7 +113,7 @@ public class KVMHostActivityChecker extends AdapterBase implements ActivityCheck
         try {
             HashMap<StoragePool, List<Volume>> poolVolMap = getVolumeUuidOnHost(agent);
             for (StoragePool pool : poolVolMap.keySet()) {
-                if(pool.getPoolType().equals(StoragePoolType.RBD)){
+                if (pool != null && pool.getPoolType() == StoragePoolType.RBD) {
                     volume_list.addAll(poolVolMap.get(pool));
                 }
             }
@@ -115,9 +123,9 @@ public class KVMHostActivityChecker extends AdapterBase implements ActivityCheck
                 cmd = new CheckOnHostCommand(agent, HighAvailabilityManager.KvmHAFenceHostIfHeartbeatFailsOnStorage.value());
             }
             logger.debug(String.format("Checking %s status...", agent.toString()));
-            Answer answer = agentMgr.easySend(agent.getId(), cmd);
+            Answer answer = sendHealthCheck(agent.getId(), cmd, deadline);
             if (answer != null) {
-                hostStatus = answer.getResult() ? Status.Down : Status.Up;
+                hostStatus = healthStatus(answer);
                 logger.debug(String.format("%s has the status [%s].", agent.toString(), hostStatus));
 
                 if ( hostStatus == Status.Up ){
@@ -134,6 +142,9 @@ public class KVMHostActivityChecker extends AdapterBase implements ActivityCheck
 
         List<HostVO> neighbors = resourceManager.listHostsInClusterByStatus(agent.getClusterId(), Status.Up);
         for (HostVO neighbor : neighbors) {
+            if (Thread.currentThread().isInterrupted() || System.nanoTime() >= deadline) {
+                return false;
+            }
             if (neighbor.getId() == agent.getId() || (neighbor.getHypervisorType() != Hypervisor.HypervisorType.KVM && neighbor.getHypervisorType() != Hypervisor.HypervisorType.LXC)) {
                 continue;
             }
@@ -142,9 +153,9 @@ public class KVMHostActivityChecker extends AdapterBase implements ActivityCheck
             try {
                 logger.debug(String.format("Investigating %s via neighbouring %s.", agent.toString(), neighbor.toString()));
 
-                Answer answer = agentMgr.easySend(neighbor.getId(), cmd);
+                Answer answer = sendHealthCheck(neighbor.getId(), cmd, deadline);
                 if (answer != null) {
-                    neighbourStatus = answer.getResult() ? Status.Down : Status.Up;
+                    neighbourStatus = healthStatus(answer);
 
                     logger.debug(String.format("Neighbouring %s returned status [%s] for the investigated %s.", neighbor.toString(), neighbourStatus, agent.toString()));
 
@@ -159,48 +170,98 @@ public class KVMHostActivityChecker extends AdapterBase implements ActivityCheck
             }
         }
 
-        final OutOfBandManagement oobm = outOfBandManagementDao.findByHost(agent.getId());
-        if(oobm.getPowerState() == PowerState.Disabled || oobm.getPowerState() == PowerState.On){
-            if (neighbourStatus == Status.Up && (hostStatus == Status.Disconnected || hostStatus == Status.Down)) {
-                hostStatus = Status.Disconnected;
-            }
-            if (neighbourStatus == Status.Down && (hostStatus == Status.Disconnected || hostStatus == Status.Down)) {
-                hostStatus = Status.Down;
-            }
-        }
-        if(oobm.getPowerState() == PowerState.Off || oobm.getPowerState() == PowerState.Unknown){
-            if (neighbourStatus == Status.Up && (hostStatus == Status.Disconnected || hostStatus == Status.Down)) {
-                hostStatus = Status.Down;
-            }
-            if (neighbourStatus == Status.Down && (hostStatus == Status.Disconnected || hostStatus == Status.Down)) {
-                hostStatus = Status.Down;
-            }
-        }
-
         logger.debug(String.format("%s has the status [%s].", agent.toString(), hostStatus));
 
         return hostStatus == Status.Up;
+    }
+
+    protected Status healthStatus(Answer answer) {
+        if (answer instanceof CheckOnHostAnswer && ((CheckOnHostAnswer) answer).isDetermined()) {
+            return ((CheckOnHostAnswer) answer).isAlive() ? Status.Up : Status.Down;
+        }
+        return Status.Unknown;
+    }
+
+    protected Answer sendHealthCheck(long hostId, CheckOnHostCommand command, long deadline) throws Exception {
+        return sendProbe(hostId, command, deadline);
+    }
+
+    protected Answer sendProbe(long hostId, Command command, long deadline) throws Exception {
+        long remaining = deadline - System.nanoTime();
+        if (remaining <= 0 || Thread.currentThread().isInterrupted()) {
+            throw new TimeoutException("Health check budget exhausted");
+        }
+        final int waitSeconds = (int) Math.max(1L, Math.min(Integer.MAX_VALUE,
+                TimeUnit.NANOSECONDS.toSeconds(remaining) + 1));
+        command.setWait(waitSeconds);
+        final CompletableFuture<Answer> reply = new CompletableFuture<>();
+        Listener listener = new Listener() {
+            @Override public boolean processAnswers(long id, long sequence, Answer[] answers) {
+                reply.complete(answers == null || answers.length == 0 ? null : answers[0]);
+                return true;
+            }
+            @Override public boolean processDisconnect(long id, Status status) { reply.complete(null); return true; }
+            @Override public boolean processTimeout(long id, long sequence) { reply.complete(null); return true; }
+            @Override public int getTimeout() { return waitSeconds; }
+            @Override public boolean isRecurring() { return false; }
+            @Override public boolean processCommands(long id, long sequence, Command[] commands) { return false; }
+            @Override public AgentControlAnswer processControlCommand(long id, AgentControlCommand command) { return null; }
+            @Override public void processHostAdded(long id) { }
+            @Override public void processConnect(Host host, StartupCommand command, boolean rebalance) { }
+            @Override public void processHostAboutToBeRemoved(long id) { }
+            @Override public void processHostRemoved(long id, long clusterId) { }
+        };
+        try {
+            // The synchronous AgentManager API may wait twice and override its timeout.
+            agentMgr.send(hostId, new Commands(command), listener);
+            remaining = deadline - System.nanoTime();
+            if (remaining <= 0) {
+                throw new TimeoutException("Health check budget exhausted");
+            }
+            Answer answer = reply.get(remaining, TimeUnit.NANOSECONDS);
+            if (System.nanoTime() >= deadline || Thread.currentThread().isInterrupted()) {
+                throw new TimeoutException("Health observation arrived after its deadline");
+            }
+            return answer;
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            throw e;
+        } finally {
+            reply.cancel(false);
+        }
     }
 
     private boolean isVMActivityOnHost(Host agent, DateTime suspectTime) throws HACheckerException {
         if (agent.getHypervisorType() != Hypervisor.HypervisorType.KVM && agent.getHypervisorType() != Hypervisor.HypervisorType.LXC) {
             throw new IllegalStateException(String.format("Calling KVM investigator for non KVM Host of type [%s].", agent.getHypervisorType()));
         }
-        boolean activityStatus = true;
+        final long deadline = System.nanoTime() + TimeUnit.SECONDS.toNanos(KVMHAConfig.KvmHAActivityCheckTimeout.valueIn(agent.getClusterId()));
+        boolean checkedPool = false;
+        HACheckerException unknown = null;
         HashMap<StoragePool, List<Volume>> poolVolMap = getVolumeUuidOnHost(agent);
         for (StoragePool pool : poolVolMap.keySet()) {
             if (!isStoragePoolHeartbeatEnabled(pool)) {
-                logger.debug("Skipping VM activity check for {} on storage pool [{}] because KVM HA storage heartbeat is not enabled for the pool.", agent, pool);
                 continue;
             }
-            activityStatus = verifyActivityOfStorageOnHost(poolVolMap, pool, agent, suspectTime, activityStatus);
-            if (!activityStatus) {
-                logger.warn("It seems that the storage pool [{}] does not have activity on {}.", pool, agent);
-                break;
+            checkedPool = true;
+            try {
+                if (verifyActivityOfStorageOnHost(poolVolMap, pool, agent, suspectTime, true, deadline)) {
+                    return true;
+                }
+            } catch (HACheckerException e) {
+                unknown = e;
+            } catch (RuntimeException e) {
+                unknown = new HACheckerException("Unable to verify storage activity", e);
             }
         }
-
-        return activityStatus;
+        if (unknown != null) {
+            throw unknown;
+        }
+        if (!checkedPool) {
+            throw new HACheckerException("No storage activity observation is available for host " + agent.getId(), null);
+        }
+        // Only explicit DEAD on every applicable pool establishes no activity.
+        return false;
     }
 
     protected boolean isStoragePoolHeartbeatEnabled(StoragePool pool) {
@@ -222,30 +283,49 @@ public class KVMHostActivityChecker extends AdapterBase implements ActivityCheck
     }
 
     protected boolean verifyActivityOfStorageOnHost(HashMap<StoragePool, List<Volume>> poolVolMap, StoragePool pool, Host agent, DateTime suspectTime, boolean activityStatus) throws HACheckerException, IllegalStateException {
-        List<Volume> volume_list = poolVolMap.get(pool);
-        final CheckVMActivityOnStoragePoolCommand cmd = new CheckVMActivityOnStoragePoolCommand(agent, pool, volume_list, suspectTime);
-
-        logger.debug("Checking VM activity for {} on storage pool [{}].", agent.toString(), pool);
-        try {
-            Answer answer = storageManager.sendToPool(pool, getNeighbors(agent), cmd);
-
-            if (answer != null) {
-                activityStatus = !answer.getResult();
-                logger.debug("{} {} activity on storage pool [{}]", agent.toString(), activityStatus ? "has" : "does not have", pool);
-            } else {
-                String message = String.format("Did not get a valid response for VM activity check for %s on storage pool [%s].", agent.toString(), pool);
-                logger.debug(message);
-                throw new IllegalStateException(message);
-            }
-        } catch (StorageUnavailableException e){
-            String message = String.format("Storage [%s] is unavailable to do the check, probably the %s is not reachable.", pool, agent);
-            logger.warn(message, e);
-            throw new HACheckerException(message, e);
-        }
-        return activityStatus;
+        long deadline = System.nanoTime() + TimeUnit.SECONDS.toNanos(KVMHAConfig.KvmHAActivityCheckTimeout.valueIn(agent.getClusterId()));
+        return verifyActivityOfStorageOnHost(poolVolMap, pool, agent, suspectTime, activityStatus, deadline);
     }
 
-    private HashMap<StoragePool, List<Volume>> getVolumeUuidOnHost(Host agent) {
+    protected boolean verifyActivityOfStorageOnHost(HashMap<StoragePool, List<Volume>> poolVolMap, StoragePool pool, Host agent,
+            DateTime suspectTime, boolean activityStatus, long deadline) throws HACheckerException {
+        List<Long> connected = storageManager.getUpHostsInPool(pool.getId());
+        List<Long> witnesses = new ArrayList<>();
+        for (long neighbour : getNeighbors(agent)) {
+            if (neighbour != agent.getId() && connected != null && connected.contains(neighbour)) {
+                witnesses.add(neighbour);
+            }
+        }
+        Exception lastError = null;
+        for (int index = 0; index < witnesses.size(); index++) {
+            long remaining = deadline - System.nanoTime();
+            if (remaining <= 0 || Thread.currentThread().isInterrupted()) {
+                break;
+            }
+            long witnessDeadline = System.nanoTime() + remaining / (witnesses.size() - index);
+            long timeoutSeconds = Math.max(1L, TimeUnit.NANOSECONDS.toSeconds(witnessDeadline - System.nanoTime()));
+            CheckVMActivityOnStoragePoolCommand cmd = new CheckVMActivityOnStoragePoolCommand(agent, pool, poolVolMap.get(pool),
+                    suspectTime, timeoutSeconds);
+            try {
+                Answer answer = sendProbe(witnesses.get(index), cmd, Math.min(deadline, witnessDeadline));
+                if (answer instanceof CheckVMActivityOnStoragePoolAnswer) {
+                    ActivityState state = ((CheckVMActivityOnStoragePoolAnswer) answer).getActivityState();
+                    if (state != ActivityState.UNKNOWN) {
+                        return state == ActivityState.ALIVE;
+                    }
+                }
+            } catch (Exception e) {
+                lastError = e;
+                if (Thread.currentThread().isInterrupted()) {
+                    break;
+                }
+            }
+        }
+        throw new HACheckerException("No explicit VM activity observation from an available storage-connected witness for host "
+                + agent.getId() + " on storage " + pool.getId(), lastError);
+    }
+
+    protected HashMap<StoragePool, List<Volume>> getVolumeUuidOnHost(Host agent) {
         List<VMInstanceVO> vm_list = vmInstanceDao.listByHostId(agent.getId());
         List<VolumeVO> volume_list = new ArrayList<VolumeVO>();
         for (VirtualMachine vm : vm_list) {

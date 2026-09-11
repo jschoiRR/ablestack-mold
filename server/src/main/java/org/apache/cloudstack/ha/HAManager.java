@@ -28,7 +28,7 @@ public interface HAManager extends HAConfigManager, Configurable {
 
     ConfigKey<Integer> HACheckingInterval = new ConfigKey<>("Advanced", Integer.class,
         "ha.checking.interval",
-        "60",
+        "5",
         "The interval at which the garbage collector background tasks in seconds", true);
 
     ConfigKey<Integer> MaxConcurrentHealthCheckOperations = new ConfigKey<>("Advanced", Integer.class,
@@ -80,6 +80,7 @@ public interface HAManager extends HAConfigManager, Configurable {
     boolean transitionHAState(final HAConfig.Event event, final HAConfig haConfig);
     HAProvider getHAProvider(final String name);
     HAResourceCounter getHACounter(final Long resourceId, final HAResource.ResourceType resourceType);
+    HAConfig getCurrentHAConfig(HAConfig expected, HAResourceCounter counter, HAResourceCounter.TaskToken token);
     void purgeHACounter(final Long resourceId, final HAResource.ResourceType resourceType);
 
     boolean isHAEligible(final HAResource resource);

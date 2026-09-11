@@ -98,4 +98,15 @@ public class LibvirtStoragePoolTest extends TestCase {
         LibvirtStoragePool clvmPool = new LibvirtStoragePool(uuid, name, StoragePoolType.CLVM, adapter, storage);
         assertTrue(clvmPool.isExternalSnapshot());
     }
+    @Test
+    public void activityProbeErrorsAreUnknown() {
+        LibvirtStoragePool pool = new LibvirtStoragePool("uuid", "pool", StoragePoolType.NetworkFilesystem, null, null);
+        assertNull(pool.parseActivityResult("timed out", "### [HOST STATE : DEAD] ###"));
+        assertNull(pool.parseActivityResult(null, null));
+        assertNull(pool.parseActivityResult(null, "cat: missing heartbeat file"));
+        assertNull(pool.parseActivityResult(null, "### [HOST STATE : UNKNOWN] ###"));
+        assertEquals(Boolean.TRUE, pool.parseActivityResult(null, "### [HOST STATE : ALIVE] in [PoolType : NFS] ###"));
+        assertEquals(Boolean.FALSE, pool.parseActivityResult(null, " ### [HOST STATE : DEAD] No activity ###"));
+    }
+
 }

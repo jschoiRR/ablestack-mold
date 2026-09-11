@@ -43,6 +43,21 @@ public class HighAvailabilityDaoImplTest {
     HighAvailabilityDaoImpl highAvailabilityDaoImpl = new HighAvailabilityDaoImpl();
 
     @Test
+    public void haWorkQueriesFilterWorkTypeRatherThanVmType() {
+        Mockito.doReturn(List.of()).when(highAvailabilityDaoImpl).search(Mockito.any(SearchCriteria.class), Mockito.isNull());
+        highAvailabilityDaoImpl.listFutureHaWorkForVm(7L, 10L);
+        highAvailabilityDaoImpl.listRunningHaWorkForVm(7L);
+        highAvailabilityDaoImpl.listPendingHaWorkForVm(7L);
+        org.mockito.ArgumentCaptor<SearchCriteria> criteria = org.mockito.ArgumentCaptor.forClass(SearchCriteria.class);
+        Mockito.verify(highAvailabilityDaoImpl, Mockito.times(3)).search(criteria.capture(), Mockito.isNull());
+        for (SearchCriteria<?> query : criteria.getAllValues()) {
+            Assert.assertTrue(query.getWhereClause().contains("type"));
+            Assert.assertFalse(query.getWhereClause().contains("vm_type"));
+            Assert.assertTrue(query.getValues().stream().anyMatch(value -> value.second() == HighAvailabilityManager.WorkType.HA));
+        }
+    }
+
+    @Test
     public void testExpungeByVmListNoVms() {
         Assert.assertEquals(0, highAvailabilityDaoImpl.expungeByVmList(
                 new ArrayList<>(), 100L));

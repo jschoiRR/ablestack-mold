@@ -18,20 +18,15 @@
 package org.apache.cloudstack.ha.task;
 
 import org.apache.cloudstack.ha.HAConfig;
-import org.apache.cloudstack.ha.HAManager;
 import org.apache.cloudstack.ha.HAResource;
 import org.apache.cloudstack.ha.HAResourceCounter;
 import org.apache.cloudstack.ha.provider.HACheckerException;
 import org.apache.cloudstack.ha.provider.HAFenceException;
 import org.apache.cloudstack.ha.provider.HAProvider;
 
-import javax.inject.Inject;
 import java.util.concurrent.ExecutorService;
 
 public class FenceTask extends BaseHATask {
-
-    @Inject
-    private HAManager haManager;
 
     public FenceTask(final HAResource resource, final HAProvider<HAResource> haProvider, final HAConfig haConfig,
                      final HAProvider.HAProviderConfig haProviderConfig, final ExecutorService executor) {
@@ -39,19 +34,47 @@ public class FenceTask extends BaseHATask {
     }
 
     public boolean performAction() throws HACheckerException, HAFenceException {
+        if (!isCurrentTask()) {
+            return false;
+        }
+        getHaProvider().enableMaintenance(getResource());
+        if (!isCurrentTask()) {
+            return false;
+        }
+        // A durable Fenced checkpoint resumes VM work registration without power cycling again.
+        if (getHaConfig().getState() == HAConfig.HAState.Fenced) {
+            return true;
+        }
+        getHaProvider().prepareFenceSubResources(getResource());
+        if (!isCurrentTask()) {
+            return false;
+        }
         return getHaProvider().fence(getResource());
     }
 
     public void processResult(boolean result, Throwable e) {
-        final HAConfig haConfig = getHaConfig();
-        final HAResourceCounter counter = haManager.getHACounter(haConfig.getResourceId(), haConfig.getResourceType());
-        if (result) {
-            counter.resetRecoveryCounter();
-            haManager.transitionHAState(HAConfig.Event.Fenced, haConfig);
-            getHaProvider().fenceSubResources(getResource());
+        final HAResourceCounter counter = getCounter();
+        synchronized (counter) {
+            if (!result || e != null || !isCurrentTask()) {
+                return;
+            }
+            if (getHaConfig().getState() != HAConfig.HAState.Fenced
+                    && !getHaManager().transitionHAState(HAConfig.Event.Fenced, getHaConfig())) {
+                return;
+            }
+            if (!isCurrentTask()) {
+                return;
+            }
+            // Errors propagate: keep Fenced and retry finalization before disabling host HA.
             getHaProvider().enableMaintenance(getResource());
-            haManager.disableHA(haConfig.getResourceId(), haConfig.getResourceType());
+            getHaProvider().fenceSubResources(getResource());
+            if (!isCurrentTask()) {
+                return;
+            }
+            counter.resetRecoveryCounter();
+            final HAConfig haConfig = getHaConfig();
+            getHaManager().disableHA(haConfig.getResourceId(), haConfig.getResourceType());
+            getHaProvider().sendAlert(getResource(), HAConfig.HAState.Fencing);
         }
-        getHaProvider().sendAlert(getResource(), HAConfig.HAState.Fencing);
     }
 }

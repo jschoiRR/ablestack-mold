@@ -80,8 +80,16 @@ fi
 Timestamp=$(date +%s)
 CurrentTime=$(date +"%Y-%m-%d %H:%M:%S")
 
-getHbTime=$(cat $hbFile)
+getHbTime=$(cat "$hbFile" 2>/dev/null)
+if [ $? -ne 0 ] || ! [[ $getHbTime =~ ^[0-9]+$ ]]; then
+    echo "### [HOST STATE : UNKNOWN] Heartbeat could not be read ###"
+    exit 2
+fi
 diff=$(expr $Timestamp - $getHbTime)
+if [ "$diff" -lt 0 ]; then
+    echo "### [HOST STATE : UNKNOWN] Heartbeat clock is ahead ###"
+    exit 2
+fi
 
 getHbTimeFmt=$(date -d @${getHbTime} '+%Y-%m-%d %H:%M:%S')
 logger -p user.info -t MOLD-HA-AC "[Checking] 호스트:$HostIP | HB 파일 체크(GFS, 스토리지:$MountPoint) > [현 시간:$CurrentTime | HB 파일 시간:$getHbTimeFmt | 시간 차이:$diff초]"
@@ -99,8 +107,18 @@ if [ -z "$UUIDList" ]; then
 fi
 
 # Second check: disk activity check
-cd $MountPoint
-latestUpdateTime=$(stat -c %Y $(echo $UUIDList | sed 's/,/ /g') 2>/dev/null | sort -nr | head -1)
+cd "$MountPoint" || exit 2
+IFS=',' read -r -a volumes <<< "$UUIDList"
+updateTimes=$(stat -c %Y -- "${volumes[@]}" 2>/dev/null)
+if [ $? -ne 0 ]; then
+    echo "### [HOST STATE : UNKNOWN] Volume activity could not be read ###"
+    exit 2
+fi
+latestUpdateTime=$(printf '%s\n' "$updateTimes" | sort -nr | head -1)
+if ! [[ $latestUpdateTime =~ ^[0-9]+$ ]]; then
+    echo "### [HOST STATE : UNKNOWN] Invalid volume activity timestamp ###"
+    exit 2
+fi
 
 if [ ! -f $acFile ]; then
     echo "$SuspectTime:$latestUpdateTime:$MSTime" >$acFile

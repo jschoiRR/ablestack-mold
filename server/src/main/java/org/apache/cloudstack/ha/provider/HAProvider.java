@@ -50,11 +50,23 @@ public interface HAProvider<R extends HAResource> extends Adapter {
 
     boolean isHealthy(R r) throws HACheckerException;
 
+    /**
+     * Independent, current evidence that the resource is powered off. An unanswered
+     * probe or an old cached power state must never satisfy this check.
+     */
+    default boolean isPowerOffConfirmed(R r) throws HACheckerException {
+        return false;
+    }
+
     boolean hasActivity(R r, DateTime afterThis) throws HACheckerException;
 
     boolean recover(R r) throws HARecoveryException;
 
     boolean fence(R r) throws HAFenceException;
+
+    /** Persist the recovery roster before reboot can erase the source host's VM associations. */
+    default void prepareFenceSubResources(R r) {
+    }
 
     void fenceSubResources(R r);
 
