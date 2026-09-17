@@ -27,6 +27,7 @@ import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicBoolean;
 import javax.inject.Inject;
 import com.cloud.utils.concurrency.NamedThreadFactory;
+import com.cloud.utils.db.TransactionLegacy;
 
 import org.apache.cloudstack.ha.HAConfig;
 import org.apache.cloudstack.ha.HAResource;
@@ -129,6 +130,12 @@ public abstract class BaseHATask implements Callable<Boolean> {
 
     @Override
     public Boolean call() {
+        try (TransactionLegacy txn = TransactionLegacy.open("HA-task-" + getTaskType())) {
+            return callWithDatabaseContext();
+        }
+    }
+
+    private Boolean callWithDatabaseContext() {
         if (counter == null) {
             throw new IllegalStateException("HA task must be reserved before submission");
         }
@@ -148,7 +155,7 @@ public abstract class BaseHATask implements Callable<Boolean> {
                 synchronized (workerLock) {
                     workerThread = Thread.currentThread();
                 }
-                try {
+                try (TransactionLegacy txn = TransactionLegacy.open("HA-action-" + getTaskType())) {
                     if (abandoned || !isCurrentTask()) {
                         throw new HACheckerException("HA task is no longer current", null);
                     }

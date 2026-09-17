@@ -234,16 +234,16 @@ export default {
 
 .bullet { margin: 0; padding-left: 18px; }
 .bullet.tight li { margin: 2px 0; }
-.bullet li { font-size: 12px; color: rgba(0, 0, 0, 0.65); }
+.bullet li { font-size: 12px; color: var(--ui-text-secondary); }
 
 .list { display: flex; flex-direction: column; gap: 6px; }
-.item { border: 1px solid #f0f0f0; border-radius: 6px; padding: 8px 10px; }
-.item:hover { background: #fafafa; }
+.item { border: 1px solid var(--ui-border); border-radius: 6px; padding: 8px 10px; }
+.item:hover { background: var(--ui-bg-elevated); }
 
 .row { display: flex; align-items: center; gap: 10px; }
 .text { display: flex; flex-direction: column; }
 .main { font-size: 14px; line-height: 1.2; }
-.sub { margin-top: 2px; font-size: 12px; color: rgba(0, 0, 0, 0.45); }
+.sub { margin-top: 2px; font-size: 12px; color: var(--ui-text-secondary); }
 
 .actions { display: flex; justify-content: flex-end; gap: 8px; }
 

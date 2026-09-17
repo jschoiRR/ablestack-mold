@@ -62,6 +62,7 @@ CloudStack is a highly-scalable elastic, open source,
 intelligent IaaS cloud implementation.
 
 %package management
+Requires: sshpass
 Summary:   CloudStack management server UI
 Requires: (java-17-openjdk or java-21-openjdk)
 Requires: (tzdata-java or timezone-java)
@@ -109,6 +110,7 @@ The Apache CloudStack files shared between agent and management server
 %global __requires_exclude libc\\.so\\..*|libc\\.so\\.6\\(GLIBC_.*\\)|^(libuuid\\.so\\.1|/usr/bin/python)$
 
 %package agent
+Requires: cloudstack-network-runtime >= 1.0.0
 Summary: CloudStack Agent for KVM hypervisors
 Requires: (openssh-clients or openssh)
 Requires: (java-17-openjdk or java-21-openjdk)
@@ -136,6 +138,8 @@ Requires: rng-tools
 Requires: (libgcrypt > 1.8.3 or libgcrypt20)
 Requires: (selinux-tools if selinux-tools)
 Requires: sysstat
+Requires: python3-libnbd
+Requires: socat
 Provides: cloud-agent
 Group: System Environment/Libraries
 %description agent
@@ -416,7 +420,7 @@ install cloud-cli/cloudapis/cloud.py ${RPM_BUILD_ROOT}%{python_sitearch}/cloudap
 
 # Marvin
 mkdir -p ${RPM_BUILD_ROOT}%{_datadir}/%{name}-marvin
-cp tools/marvin/dist/Marvin-*.tar.gz ${RPM_BUILD_ROOT}%{_datadir}/%{name}-marvin/
+cp tools/marvin/dist/[Mm]arvin-*.tar.gz ${RPM_BUILD_ROOT}%{_datadir}/%{name}-marvin/
 
 # integration-tests
 mkdir -p ${RPM_BUILD_ROOT}%{_datadir}/%{name}-integration-tests
@@ -621,8 +625,8 @@ fi
 
 %post marvin
 pip install --upgrade https://files.pythonhosted.org/packages/ca/ea/1e2553b088bad2f9fa8120c2624f797b2d7450d3b61bb492d29c72e3d3c2/mysql_connector_python-8.0.20-cp27-cp27mu-manylinux1_x86_64.whl
-pip install --upgrade /usr/share/cloudstack-marvin/Marvin-*.tar.gz
-pip3 install --upgrade /usr/share/cloudstack-marvin/Marvin-*.tar.gz
+pip install --upgrade /usr/share/cloudstack-marvin/[Mm]arvin-*.tar.gz
+pip3 install --upgrade /usr/share/cloudstack-marvin/[Mm]arvin-*.tar.gz
 pip3 install --upgrade nose
 pip3 install --upgrade urllib3
 
@@ -679,6 +683,7 @@ pip3 install --upgrade urllib3
 %{_datadir}/%{name}-management/setup/wheel/*.whl
 %dir %attr(0755,cloud,cloud) %{_sysconfdir}/%{name}/extensions
 %attr(0755,cloud,cloud) %{_sysconfdir}/%{name}/extensions/*
+%exclude %{_sysconfdir}/%{name}/extensions/network-namespace/network-namespace-wrapper.sh
 
 %files agent
 %attr(0755,root,root) %{_bindir}/%{name}-setup-agent
@@ -742,7 +747,7 @@ pip3 install --upgrade urllib3
 %{_defaultdocdir}/%{name}-cli-%{version}/NOTICE
 
 %files marvin
-%attr(0644,root,root) %{_datadir}/%{name}-marvin/Marvin*.tar.gz
+%attr(0644,root,root) %{_datadir}/%{name}-marvin/[Mm]arvin*.tar.gz
 %{_defaultdocdir}/%{name}-marvin-%{version}/LICENSE
 %{_defaultdocdir}/%{name}-marvin-%{version}/NOTICE
 

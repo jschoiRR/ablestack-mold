@@ -16,8 +16,8 @@
 // under the License.
 
 <template>
-  <div :class="['form-layout', { 'form-list': selectedRowKeys.length > 0 }]" v-ctrl-enter="handleSubmit">
-    <div v-if="selectedRowKeys.length === 0">
+  <div :class="['form-layout', { 'form-list': operationKeys.length > 0 }]" v-ctrl-enter="handleSubmit">
+    <div v-if="operationKeys.length === 0">
       <a-alert type="warning">
         <template #message>
           <span v-html="resource.backupofferingid ? $t('message.action.destroy.instance.with.backups') : $t('message.action.destroy.instance')"></span>
@@ -82,19 +82,19 @@
           <a-alert type="error">
             <message-outlined type="exclamation-circle" style="color: red; fontSize: 30px; display: inline-flex" />
             <template #message>
-              <span style="padding-left: 5px" v-html="`<b>${selectedRowKeys.length} ` + $t('label.items.selected') + `. </b>&nbsp`" />
+              <span style="padding-left: 5px" v-html="`<b>${operationKeys.length} ` + $t('label.items.selected') + `. </b>&nbsp`" />
               <span v-html="$t(action.currentAction.message)" />
             </template>
           </a-alert>
         </div>
-        <div v-if="selectedRowKeys.length > 0" class="row-keys">
+        <div v-if="operationKeys.length > 0" class="row-keys">
           <a-divider />
           <a-form layout="vertical">
             <a-table
-              v-if="selectedRowKeys.length > 0"
+              v-if="operationKeys.length > 0"
               size="middle"
               :columns="chosenColumns"
-              :dataSource="selectedItems"
+              :dataSource="operationItems"
               :rowKey="(record, idx) => record.id || record.name || record.usageType || idx + '-' + Math.random()"
               :pagination="true"
               style="overflow-y: auto"
@@ -182,6 +182,10 @@ export default {
   inject: ['parentFetchData'],
   data () {
     return {
+      operationKeys: [...this.selectedRowKeys],
+      operationItems: this.selectedItems.map(item => ({ ...item })),
+      operationStarted: false,
+      actionClosed: false,
       volumes: [],
       diskOffering: [],
       loading: false,
@@ -205,13 +209,16 @@ export default {
     })
     this.fetchData()
   },
+  beforeUnmount () {
+    this.actionClosed = true
+  },
   methods: {
     fetchData () {
-      if (this.selectedRowKeys.length === 0) {
+      if (this.operationKeys.length === 0) {
         this.fetchVolumes()
       } else {
         const promises = []
-        this.selectedRowKeys.forEach(vmId => {
+        this.operationKeys.forEach(vmId => {
           this.listVolumes[vmId] = {
             loading: true,
             opts: []
@@ -273,16 +280,16 @@ export default {
       this.volumeIds[vmId] = volumes
     },
     handleCancel () {
+      this.closeAction()
       this.$emit('cancel-bulk-action')
       this.showGroupActionModal = false
       this.selectedItemsProgress = []
       this.selectedColumns = []
-      this.closeAction()
     },
     handleSubmit (e) {
-      e.preventDefault()
-      if (this.loading) return
-      if (this.selectedRowKeys.length > 0) {
+      if (e) e.preventDefault()
+      if (this.loading || this.operationStarted || this.actionClosed) return
+      if (this.operationKeys.length > 0) {
         this.destroyGroupVMs()
       } else {
         this.formRef.value.validate().then(async () => {
@@ -340,8 +347,11 @@ export default {
       })
     },
     destroyGroupVMs () {
-      this.selectedColumns = Array.from(this.chosenColumns)
-      this.selectedItemsProgress = Array.from(this.selectedItems)
+      if (this.operationStarted || this.actionClosed) return
+      this.operationStarted = true
+      this.loading = true
+      this.selectedColumns = this.chosenColumns.filter(column => column.key !== 'status').map(column => ({ ...column }))
+      this.selectedItemsProgress = this.operationItems.map(item => ({ ...item }))
       this.selectedItemsProgress = this.selectedItemsProgress.map(v => ({ ...v, status: 'InProgress' }))
       this.selectedColumns.splice(0, 0, {
         key: 'status',
@@ -357,7 +367,7 @@ export default {
       this.modalInfo.title = this.action.currentAction.label
       this.modalInfo.docHelp = this.action.currentAction.docHelp
       const promises = []
-      this.selectedRowKeys.forEach(vmId => {
+      this.operationKeys.forEach(vmId => {
         const params = {}
         params.id = vmId
         if (this.volumeIds[vmId] && this.volumeIds[vmId].length > 0) {
@@ -374,14 +384,14 @@ export default {
         duration: 3
       })
       this.loading = true
-      Promise.all(promises).finally(() => {
+      return Promise.allSettled(promises).finally(() => {
         this.loading = false
-        this.parentFetchData()
+        if (!this.actionClosed) this.parentFetchData()
       })
     },
     callGroupApi (params) {
       return new Promise((resolve, reject) => {
-        const resource = this.selectedItems.filter(item => item.id === params.id)[0] || {}
+        const resource = this.operationItems.filter(item => item.id === params.id)[0] || {}
         this.destroyVM(params).then(jobId => {
           this.updateResourceState(resource.id, 'InProgress', jobId)
           this.$pollJob({
@@ -397,6 +407,7 @@ export default {
             },
             errorMethod: () => {
               this.updateResourceState(resource.id, 'failed')
+              resolve()
             },
             action: {
               isFetchData: false
@@ -407,8 +418,6 @@ export default {
           this.updateResourceState(resource.id, 'failed')
           return reject(error)
         })
-      }).catch(error => {
-        this.formRef.value.scrollToField(error.errorFields[0].name)
       })
     },
     updateResourceState (resource, state, jobId) {
@@ -421,6 +430,7 @@ export default {
       }
     },
     closeAction () {
+      this.actionClosed = true
       this.$emit('close-action')
     }
   }

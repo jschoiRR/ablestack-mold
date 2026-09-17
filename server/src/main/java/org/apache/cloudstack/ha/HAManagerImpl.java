@@ -363,6 +363,7 @@ public final class HAManagerImpl extends ManagerBase implements HAManager, Clust
     }
 
     private boolean isHAEnabledForCluster(final HAResource resource) {
+        // HA is enabled by default when cluster details doesn't exist
         if (resource == null || resource.getClusterId() == null) {
             return true;
         }
@@ -374,14 +375,10 @@ public final class HAManagerImpl extends ManagerBase implements HAManager, Clust
         if (resource == null || resource.getId() < 1L) {
             return false;
         }
-        HAResource.ResourceType resourceType = null;
-        if (resource instanceof Host) {
-            resourceType = HAResource.ResourceType.Host;
-        }
-        if (resourceType == null) {
+        if (!(resource instanceof Host)) {
             return false;
         }
-        final HAConfig haConfig = haConfigDao.findHAResource(resource.getId(), resourceType);
+        final HAConfig haConfig = haConfigDao.findHAResource(resource.getId(), HAResource.ResourceType.Host);
         return haConfig != null && haConfig.isEnabled()
                 && haConfig.getState() != HAConfig.HAState.Disabled
                 && haConfig.getState() != HAConfig.HAState.Ineligible;
@@ -432,19 +429,23 @@ public final class HAManagerImpl extends ManagerBase implements HAManager, Clust
         throw new Investigator.UnknownVM();
     }
 
-    public Status getHostStatus(final Host host) {
+    public Status getHostStatusFromHAConfig(final Host host) {
         final HAConfig haConfig = haConfigDao.findHAResource(host.getId(), HAResource.ResourceType.Host);
-        if (haConfig != null) {
-            if (haConfig.getState() == HAConfig.HAState.Fenced) {
-                logger.debug("HA: Agent [{}] is available/suspect/checking Up.", host);
-                return Status.Down;
-            } else if (haConfig.getState() == HAConfig.HAState.Degraded || haConfig.getState() == HAConfig.HAState.Recovering || haConfig.getState() == HAConfig.HAState.Fencing) {
-                logger.debug("HA: Agent [{}] is disconnected. State: {}, {}.", host, haConfig.getState(), haConfig.getState().getDescription());
-                return Status.Disconnected;
-            }
-            return Status.Up;
+        if (haConfig == null) {
+            logger.warn("HA: Agent [{}] config is not available.", host);
+            return Status.Unknown;
         }
-        return Status.Unknown;
+        if (haConfig.getState() == HAConfig.HAState.Fenced) {
+            logger.debug("HA: Agent [{}] is fenced.", host);
+            return Status.Down;
+        }
+        if (haConfig.getState() == HAConfig.HAState.Degraded || haConfig.getState() == HAConfig.HAState.Recovering || haConfig.getState() == HAConfig.HAState.Fencing) {
+            logger.debug("HA: Agent [{}] is disconnected. State: {}, {}.", host, haConfig.getState(), haConfig.getState().getDescription());
+            return Status.Disconnected;
+        }
+
+        logger.debug("HA: Agent [{}] is considered Up (HA state can be Available/Suspect/Checking/Recovered). State: {}, {}.", host, haConfig.getState(), haConfig.getState().getDescription());
+        return Status.Up;
     }
 
     //////////////////////////////////////////////////////
@@ -677,7 +678,7 @@ public final class HAManagerImpl extends ManagerBase implements HAManager, Clust
         Entry<Long, Long> minEntry = Collections.min(hostMemMap.entrySet(), comparator);
 
         logger.info("===2-2.host max/min memoryUsed===");
-        logger.info("maxEntry : " + maxEntry.getValue() + ", minEntry : " + minEntry.getValue() + ", persent : " + (maxEntry.getValue() - minEntry.getValue()));
+        logger.info("maxEntry : " + maxEntry.getValue() + ", minEntry : " + minEntry.getValue() + ", present : " + (maxEntry.getValue() - minEntry.getValue()));
 
         //메모리used 값이 10% 이상 차이나면 메모리used가 가장 작은 호스트로 vm migration
         if ((maxEntry.getValue() - minEntry.getValue()) > 10 ) {
@@ -841,7 +842,10 @@ public final class HAManagerImpl extends ManagerBase implements HAManager, Clust
             submitHATask(resource, haProvider, haConfig, counter, HAResourceCounter.Operation.ACTIVITY);
         }
         if (newState == HAConfig.HAState.Recovering) {
-            if (counter.getRecoveryCounter() >= (Long) (haProvider.getConfigValue(HAProviderConfig.MaxRecoveryAttempts, resource))) {
+            long recoveryCounter = counter.getRecoveryCounter();
+            Long maxRecoveryAttempts = (Long) (haProvider.getConfigValue(HAProviderConfig.MaxRecoveryAttempts, resource));
+            if (recoveryCounter >= maxRecoveryAttempts) {
+                logger.debug("Recovery attempts have reached the configured limit: {} for the resource [{}].", maxRecoveryAttempts, resource);
                 return false;
             }
             submitHATask(resource, haProvider, haConfig, counter, HAResourceCounter.Operation.RECOVERY);
@@ -914,10 +918,10 @@ public final class HAManagerImpl extends ManagerBase implements HAManager, Clust
 
     @Override
     public boolean postStateTransitionEvent(final StateMachine2.Transition<HAConfig.HAState, HAConfig.Event> transition, final HAConfig haConfig, final boolean status, final Object opaque) {
-        logger.debug(String.format("HA state post-transition:: new state=[%s], old state=[%s], for resource id=[%s], status=[%s], ha config state=[%s].", transition.getToState(), transition.getCurrentState(),  haConfig.getResourceId(), status, haConfig.getState()));
+        logger.debug("HA state post-transition:: new state=[{}], old state=[{}], for resource id=[{}], status=[{}], ha config state=[{}].", transition.getToState(), transition.getCurrentState(), haConfig.getResourceId(), status, haConfig.getState());
 
         if (status && haConfig.getState() != transition.getToState()) {
-            logger.warn(String.format("HA state post-transition:: HA state is not equal to transition state, HA state=[%s], new state=[%s].", haConfig.getState(), transition.getToState()));
+            logger.warn("HA state post-transition:: HA state is not equal to transition state, HA state=[{}], new state=[{}].", haConfig.getState(), transition.getToState());
         }
         return processHAStateChange(haConfig, transition.getToState(), status);
     }
@@ -1104,7 +1108,7 @@ public final class HAManagerImpl extends ManagerBase implements HAManager, Clust
             try {
                 logger.debug("HA health check task is running...");
 
-                final List<HAConfig> haConfigList = new ArrayList<HAConfig>(haConfigDao.listAll());
+                final List<HAConfig> haConfigList = new ArrayList<>(haConfigDao.listAll());
                 for (final HAConfig haConfig : haConfigList) {
                     currentHaConfig = haConfig;
 
@@ -1130,7 +1134,7 @@ public final class HAManagerImpl extends ManagerBase implements HAManager, Clust
                 }
             } catch (Throwable t) {
                 if (currentHaConfig != null) {
-                    logger.error(String.format("Error trying to perform health checks in HA manager [%s].", currentHaConfig.getHaProvider()), t);
+                    logger.error("Error trying to perform health checks in HA manager [{}].", currentHaConfig.getHaProvider(), t);
                 } else {
                     logger.error("Error trying to perform health checks in HA manager.", t);
                 }

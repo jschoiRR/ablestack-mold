@@ -17,6 +17,7 @@
 
 <template>
   <a-spin :spinning="componentLoading">
+    <p v-if="listRefreshFailed" role="status">{{ $t('message.list.refresh.stale') }}</p>
     <a-alert
       v-if="this.resource.ip4routing"
       type="info">
@@ -342,6 +343,8 @@
 </template>
 
 <script>
+import { listRefreshMixin } from '@/utils/listRefreshMixin'
+
 import { ref, reactive, toRaw } from 'vue'
 import { getAPI, postAPI } from '@/api'
 import ResourceIcon from '@/components/view/ResourceIcon'
@@ -350,6 +353,7 @@ import ChangeBgpPeersForNetwork from '@/views/network/ChangeBgpPeerForNetwork.vu
 import ChangeBgpPeersForVpc from '@/views/network/ChangeBgpPeerForVpc.vue'
 
 export default {
+  mixins: [listRefreshMixin(['fetchZoneBgpPeer'])],
   name: 'BgpPeersTab',
   components: {
     ChangeBgpPeersForNetwork,
@@ -483,19 +487,32 @@ export default {
       }
     },
     fetchZoneBgpPeer () {
-      this.componentLoading = true
-      getAPI('listBgpPeers', {
+      const listRequest = this.listRequestToken('fetchZoneBgpPeer')
+      this.componentLoading = !listRequest.loaded
+      return getAPI('listBgpPeers', {
         zoneid: this.resource.id,
         projectid: -1,
         showicon: true,
         page: this.bgpPeersPage,
         pagesize: this.bgpPeersPageSize
       }).then(response => {
+        if (!this.isListRequestCurrent('fetchZoneBgpPeer', listRequest)) return
+
         this.bgpPeers = response?.listbgppeersresponse?.bgppeer || []
         this.bgpPeersTotal = response?.listbgppeersresponse?.count || 0
       }).catch(error => {
+        if (!this.isListRequestCurrent('fetchZoneBgpPeer', listRequest)) return
+        listRequest.failed = true
+        this.listRefreshFailed = true
+        if (listRequest.loaded) return
+
         this.$notifyError(error)
       }).finally(() => {
+        if (!this.isListRequestCurrent('fetchZoneBgpPeer', listRequest)) return
+
+        this.componentLoading = false
+      }).finally(() => {
+        if (!this.isListRequestCurrent('fetchZoneBgpPeer', listRequest)) return
         this.componentLoading = false
       })
     },

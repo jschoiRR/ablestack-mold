@@ -16,11 +16,14 @@
 // under the License.
 
 <template>
-  <div>
+  <div ref="deployLayout" class="deploy-vm-layout" :class="{ 'deploy-vm-layout--bounded': deployViewportHeight }" :style="{ '--deploy-viewport-height': deployViewportHeight }">
     <a-row :gutter="12">
-      <a-col :md="24" :lg="17">
+      <a-col :md="24" :lg="17" class="deploy-vm-form-column">
         <a-card :bordered="true" :title="$t('label.newinstance')">
           <a-form
+            class="deploy-vm-form-scroll"
+            tabindex="0"
+            :aria-label="$t('label.newinstance')"
             v-ctrl-enter="handleSubmit"
             :ref="formRef"
             :model="form"
@@ -205,6 +208,14 @@
                         </a-form-item>
                       </div>
                     </a-card>
+                    <additional-iso-selection
+                      v-if="imageType === 'isoid'"
+                      :zone-id="form.zoneid"
+                      :primary-id="form.isoid"
+                      :owner="owner"
+                      :project-id="$store.getters.project?.id"
+                      :supported="!!apiParams?.additionalisoids && form.hypervisor === 'KVM'"
+                      @change="additionalIsoSelection = $event" />
                     <a-form-item class="form-item-hidden">
                       <a-input v-model:value="form.templateid" />
                     </a-form-item>
@@ -345,15 +356,19 @@
                               @handle-search-filter="($event) => handleSearchFilter('diskOfferings', $event)"
                             ></disk-offering-selection>
                             <disk-size-selection
-                              v-if="overrideDiskOffering && (overrideDiskOffering.iscustomized || overrideDiskOffering.iscustomizediops)"
+                              v-if="(overrideDiskOffering && (overrideDiskOffering.iscustomized || overrideDiskOffering.iscustomizediops || overrideDiskOffering.encrypt)) || (serviceOffering && serviceOffering.encryptroot)"
                               input-decorator="rootdisksize"
                               :preFillContent="dataPreFill"
                               :minDiskSize="dataPreFill.minrootdisksize"
                               :rootDiskSelected="overrideDiskOffering"
-                              :isCustomized="overrideDiskOffering.iscustomized"
+                              :isCustomized="overrideDiskOffering && overrideDiskOffering.iscustomized"
+                              :kmsKeys="options.kmsKeys"
+                              :loadingKmsKeys="loading.kmsKeys"
+                              :computeOfferingEncryptRoot="serviceOffering && serviceOffering.encryptroot"
                               @handler-error="handlerError"
                               @update-disk-size="updateFieldValue"
-                              @update-root-disk-iops-value="updateIOPSValue"/>
+                              @update-root-disk-iops-value="updateIOPSValue"
+                              @update-root-kms-key="updateRootKmsKey"/>
                             <a-form-item class="form-item-hidden">
                               <a-input v-model:value="form.rootdisksize"/>
                             </a-form-item>
@@ -401,14 +416,17 @@
                       @handle-search-filter="($event) => handleSearchFilter('diskOfferings', $event)"
                     ></disk-offering-selection>
                     <disk-size-selection
-                      v-if="diskOffering && (diskOffering.iscustomized || diskOffering.iscustomizediops)"
+                      v-if="diskOffering && (diskOffering.iscustomized || diskOffering.iscustomizediops || diskOffering.encrypt)"
                       input-decorator="size"
                       :preFillContent="dataPreFill"
                       :diskSelected="diskSelected"
                       :isCustomized="diskOffering.iscustomized"
+                      :kmsKeys="options.kmsKeys"
+                      :loadingKmsKeys="loading.kmsKeys"
                       @handler-error="handlerError"
                       @update-disk-size="updateFieldValue"
-                      @update-iops-value="updateIOPSValue"/>
+                      @update-iops-value="updateIOPSValue"
+                      @update-data-kms-key="updateDataKmsKey"/>
                     <a-form-item class="form-item-hidden">
                       <a-input v-model:value="form.size"/>
                     </a-form-item>
@@ -617,9 +635,10 @@
                         </a-select-option>
                       </a-select>
                     </a-form-item>
-                    <a-form-item :label="$t('label.tpm')" name="tpmversion" ref="tpmversion">
+                    <a-form-item v-if="hypervisor === 'KVM'" :label="$t('label.tpm')" name="tpmversion" ref="tpmversion">
                       <a-select
                         v-model:value="form.tpmversion"
+                        @change="form.tpmmodel = 'tpm-tis'"
                         showSearch
                         optionFilterProp="label"
                         :filterOption="filterOption">
@@ -627,6 +646,9 @@
                           {{ tpmversion.description }}
                         </a-select-option>
                       </a-select>
+                    </a-form-item>
+                    <a-form-item v-if="hypervisor === 'KVM' && ['V1_2', 'V2_0'].includes(form.tpmversion)" :label="$t('label.tpm.model')" name="tpmmodel">
+                      <a-select v-model:value="form.tpmmodel" :options="form.tpmversion === 'V1_2' ? [{ value: 'tpm-tis', label: 'TIS' }] : [{ value: 'tpm-tis', label: 'TIS' }, { value: 'tpm-crb', label: 'CRB' }]" />
                     </a-form-item>
                     <a-form-item
                       :label="$t('label.bootintosetup')"
@@ -942,8 +964,8 @@
           </a-form>
         </a-card>
       </a-col>
-      <a-col :md="24" :lg="7" v-if="!isMobile()">
-        <a-affix :offsetTop="75" class="vm-info-card">
+      <a-col :md="24" :lg="7" v-if="!isMobile()" class="deploy-vm-summary-column">
+        <div class="vm-info-card">
           <info-card :footerVisible="true" :resource="vm" :title="$t('label.yourinstance')" @change-resource="(data) => resource = data">
             <template #footer-content>
               <deploy-buttons
@@ -955,13 +977,15 @@
                 @handle-deploy-menu="(index, e) => handleSubmitAndStay(e)" />
             </template>
           </info-card>
-        </a-affix>
+        </div>
       </a-col>
     </a-row>
   </div>
 </template>
 
 <script>
+import { deploymentTpmParams } from '@/utils/tpm'
+import AdditionalIsoSelection from './AdditionalIsoSelection.vue'
 import { ref, reactive, toRaw, nextTick, h } from 'vue'
 import { Button, message } from 'ant-design-vue'
 import { getAPI, postAPI } from '@/api'
@@ -998,6 +1022,7 @@ import DeployInstanceBackupSelection from '@views/compute/wizard/DeployInstanceB
 export default {
   name: 'Wizard',
   components: {
+    AdditionalIsoSelection,
     OwnershipSelection,
     InfoCard,
     DeployButtons,
@@ -1034,6 +1059,7 @@ export default {
   mixins: [mixin, mixinDevice],
   data () {
     return {
+      deployViewportHeight: '',
       zoneId: '',
       podId: null,
       clusterId: null,
@@ -1041,6 +1067,7 @@ export default {
       isZoneSelectedMultiArch: false,
       dynamicscalingenabled: true,
       imageType: 'templateid',
+      additionalIsoSelection: { enabled: false, ids: [], valid: true },
       imageSearchFilters: null,
       templateKey: 0,
       showRegisteredUserdata: true,
@@ -1090,7 +1117,8 @@ export default {
         tpmversion: [],
         ioPolicyTypes: [],
         dynamicScalingVmConfig: false,
-        storagePoolObjects: []
+        storagePoolObjects: [],
+        kmsKeys: []
       },
       rowCount: {},
       loading: {
@@ -1111,7 +1139,8 @@ export default {
         pods: false,
         clusters: false,
         hosts: false,
-        groups: false
+        groups: false,
+        kmsKeys: false
       },
       owner: {
         projectid: store.getters.project?.id,
@@ -1771,6 +1800,22 @@ export default {
   serviceOffering (oldValue, newValue) {
     if (oldValue && newValue && oldValue.id !== newValue.id) {
       this.dynamicscalingenabled = this.isDynamicallyScalable()
+      // Fetch KMS keys if encryption is enabled
+      if (newValue && newValue.encryptroot && this.zoneId) {
+        this.fetchKmsKeys()
+      }
+    }
+  },
+  diskOffering (newValue) {
+    // Fetch KMS keys if encryption is enabled
+    if (newValue && newValue.encrypt && this.zoneId) {
+      this.fetchKmsKeys()
+    }
+  },
+  overrideDiskOffering (newValue) {
+    // Fetch KMS keys if encryption is enabled
+    if (newValue && newValue.encrypt && this.zoneId) {
+      this.fetchKmsKeys()
     }
   },
   template (oldValue, newValue) {
@@ -1795,7 +1840,31 @@ export default {
       vmFetchNetworks: this.fetchNetwork
     }
   },
+  mounted () {
+    this.deployResizeObserver = new ResizeObserver(this.updateDeployViewportHeight)
+    const layout = this.$refs.deployLayout
+    const content = layout.closest('.layout-content')
+    if (content) {
+      this.deployResizeObserver.observe(content)
+      this.deployResizeObserver.observe(layout)
+    }
+    this.updateDeployViewportHeight()
+  },
+  beforeUnmount () {
+    if (this.deployResizeObserver) this.deployResizeObserver.disconnect()
+  },
   methods: {
+    updateDeployViewportHeight () {
+      const layout = this.$refs.deployLayout
+      const content = layout?.closest('.layout-content')
+      if (!content || !layout.getClientRects().length) return
+      // Measure the actual workspace, including header/banner and page padding.
+      // Adding scrollTop keeps this offset stable when an outer scroll is restored.
+      const top = layout.getBoundingClientRect().top - content.getBoundingClientRect().top + content.scrollTop - content.clientTop
+      const bottom = parseFloat(getComputedStyle(content).paddingBottom) || 0
+      const height = Math.max(0, Math.floor(content.clientHeight - top - bottom))
+      this.deployViewportHeight = height ? `${height}px` : ''
+    },
     updateTemplateKey () {
       this.templateKey += 1
     },
@@ -1981,6 +2050,7 @@ export default {
         ['name', 'keyboard', 'boottype', 'bootmode', 'userdata', 'tpmversion', 'iothreadsenabled', 'iodriverpolicy', 'nicmultiqueuenumber', 'nicpackedvirtqueues'].forEach(this.fillValue)
         this.form.boottype = this.defaultBootType ? this.defaultBootType : this.options.bootTypes && this.options.bootTypes.length > 0 ? this.options.bootTypes[0].id : undefined
         this.form.bootmode = this.defaultBootMode ? this.defaultBootMode : this.options.bootModes && this.options.bootModes.length > 0 ? this.options.bootModes[0].id : undefined
+        this.form.tpmmodel = 'tpm-tis'
         this.form.tpmversion = this.defaultTPM ? this.defaultTPM : this.options.tpmversion && this.options.tpmversion.length > 0 ? this.options.tpmversion[0].id : undefined
         this.form.machinecompatibility = this.form.machinecompatibility || 'standard'
         this.instanceConfig = toRaw(this.form)
@@ -2027,7 +2097,9 @@ export default {
     },
     fetchTpm () {
       this.options.tpmversion = [
-        { id: 'NONE', description: 'Disabled' },
+        { id: 'INHERIT', description: this.$t('label.tpm.inherit') },
+        { id: 'NONE', description: this.$t('label.disabled') },
+        { id: 'V1_2', description: 'TPM Version 1.2' },
         { id: 'V2_0', description: 'TPM Version 2.0' }
       ]
     },
@@ -2056,6 +2128,31 @@ export default {
       const param = this.params.networks
       this.fetchOptions(param, 'networks')
     },
+    fetchKmsKeys () {
+      if (!this.zoneId) {
+        return
+      }
+      this.loading.kmsKeys = true
+      this.options.kmsKeys = []
+      getAPI('listKMSKeys', {
+        zoneid: this.zoneId,
+        account: this.owner.account,
+        domainid: this.owner.domainid,
+        projectid: this.owner.projectid,
+        purpose: 'volume'
+      }).then(response => {
+        const kmskeyMap = response.listkmskeysresponse.kmskey || []
+        if (kmskeyMap.length > 0) {
+          this.options.kmsKeys = kmskeyMap
+        } else {
+          this.options.kmsKeys = null
+        }
+      }).catch(() => {
+        this.options.kmsKeys = null
+      }).finally(() => {
+        this.loading.kmsKeys = false
+      })
+    },
     resetData () {
       this.vm = {
         name: null,
@@ -2079,6 +2176,12 @@ export default {
       this.zoneSelected = false
       this.formRef.value.resetFields()
       this.fetchData()
+    },
+    updateRootKmsKey (value) {
+      this.form.rootkmskeyid = value
+    },
+    updateDataKmsKey (value) {
+      this.form.datakmskeyid = value
     },
     updateFieldValue (name, value) {
       if (name === 'templateid') {
@@ -2366,6 +2469,7 @@ export default {
       this.updateImages()
     },
     changeImageType (imageType) {
+      this.additionalIsoSelection = { enabled: false, ids: [], valid: true }
       this.imageType = imageType
       this.updateImages()
     },
@@ -2378,6 +2482,13 @@ export default {
       if (this.loading.deploy) return
       this.formRef.value.validate().then(async () => {
         const values = toRaw(this.form)
+        if (this.imageType === 'isoid' && this.additionalIsoSelection.enabled && !this.additionalIsoSelection.valid) {
+          this.$notification.error({
+            message: this.$t('message.request.failed'),
+            description: this.$t('message.additional.iso.required')
+          })
+          return
+        }
         if (!values.templateid && !values.isoid && !values.volumeid && !values.snapshotid) {
           this.$notification.error({
             message: this.$t('message.request.failed'),
@@ -2421,7 +2532,7 @@ export default {
           deployVmData.boottype = values.boottype
           deployVmData.bootmode = values.bootmode
         }
-        deployVmData.tpmversion = values.tpmversion
+        Object.assign(deployVmData, deploymentTpmParams(this.hypervisor, values))
         deployVmData.dynamicscalingenabled = values.dynamicscalingenabled
         deployVmData.iothreadsenabled = values.iothreadsenabled
         deployVmData.iodriverpolicy = values.iodriverpolicy
@@ -2452,6 +2563,9 @@ export default {
           deployVmData.snapshotid = values.snapshotid
         } else {
           deployVmData.templateid = values.isoid
+          if (this.additionalIsoSelection.enabled) {
+            deployVmData.additionalisoids = this.additionalIsoSelection.ids.join(',')
+          }
         }
 
         if (this.showRootDiskSizeChanger && values.rootdisksize && values.rootdisksize > 0) {
@@ -2478,6 +2592,10 @@ export default {
           if (values.memory && (this.serviceOffering.memory == null || this.serviceOffering.memory === undefined)) {
             deployVmData['details[0].memory'] = values.memory
           }
+        }
+        // Add root disk KMS key if selected (optional - falls back to legacy passphrase if not provided)
+        if (values.rootkmskeyid) {
+          deployVmData.rootdiskkmskeyid = values.rootkmskeyid
         }
         if (this.selectedTemplateConfiguration) {
           deployVmData['details[0].configurationId'] = this.selectedTemplateConfiguration.id
@@ -2508,12 +2626,29 @@ export default {
             })
           }
         } else {
-          deployVmData.diskofferingid = values.diskofferingid
-          if (values.size) {
-            deployVmData.size = values.size
+          // When a KMS key is selected for data disk, we must use datadisksdetails format
+          if (values.datakmskeyid) {
+            deployVmData['datadisksdetails[0].diskofferingid'] = values.diskofferingid
+            deployVmData['datadisksdetails[0].deviceid'] = 1 // Device ID 1 for first data disk (0=root, 3=CD-ROM reserved)
+            if (values.size) {
+              deployVmData['datadisksdetails[0].size'] = values.size
+            }
+            deployVmData['datadisksdetails[0].kmskeyid'] = values.datakmskeyid
+            // Add IOPS if customized
+            if (this.isCustomizedDiskIOPS) {
+              deployVmData['datadisksdetails[0].miniops'] = this.diskIOpsMin
+              deployVmData['datadisksdetails[0].maxiops'] = this.diskIOpsMax
+            }
+          } else {
+            // Legacy format when no KMS key
+            deployVmData.diskofferingid = values.diskofferingid
+            if (values.size) {
+              deployVmData.size = values.size
+            }
           }
         }
-        if (this.isCustomizedDiskIOPS) {
+        // IOPS for non-KMS data disks (KMS data disks IOPS handled above in datadisksdetails)
+        if (this.isCustomizedDiskIOPS && !values.datakmskeyid) {
           deployVmData['details[0].minIopsDo'] = this.diskIOpsMin
           deployVmData['details[0].maxIopsDo'] = this.diskIOpsMax
         }
@@ -2728,7 +2863,7 @@ export default {
           this.loading.deploy = false
         }
       }).catch(err => {
-        this.formRef.value.scrollToField(err.errorFields[0].name)
+        this.formRef.value.scrollToField(err.errorFields[0].name, { block: 'center' })
         if (err) {
           if (err.licensesaccepted) {
             this.$notification.error({
@@ -3251,6 +3386,7 @@ export default {
       this.selectedBackupOffering = null
       this.fetchZoneOptions()
       this.updateZoneAllowsBackupOperations()
+      this.fetchKmsKeys()
     },
     onSelectPodId (value) {
       this.podId = value
@@ -3768,6 +3904,80 @@ export default {
 </script>
 
 <style lang="less" scoped>
+  @media (min-width: 992px) {
+    .deploy-vm-layout--bounded {
+      height: var(--deploy-viewport-height);
+      min-height: 0;
+
+      > .ant-row,
+      .deploy-vm-form-column,
+      .deploy-vm-summary-column,
+      .vm-info-card {
+        height: 100%;
+        min-height: 0;
+      }
+
+      .deploy-vm-form-column > .ant-card,
+      .vm-info-card :deep(.spin-content) {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        min-height: 0;
+      }
+
+      .deploy-vm-form-column > .ant-card > :deep(.ant-card-head),
+      .vm-info-card :deep(.spin-content > .ant-card-head) {
+        flex-shrink: 0;
+      }
+
+      .deploy-vm-form-column > .ant-card > :deep(.ant-card-body),
+      .vm-info-card :deep(.spin-content > .ant-card-body) {
+        flex: 1;
+        min-height: 0;
+      }
+
+      .deploy-vm-form-column > .ant-card > :deep(.ant-card-body) {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .deploy-vm-form-scroll {
+        flex: 1;
+        min-height: 0;
+        overflow-y: auto;
+        overscroll-behavior-y: contain;
+        scrollbar-width: none;
+
+        &::-webkit-scrollbar {
+          display: none;
+        }
+      }
+
+      .vm-info-card {
+        > :deep(.ant-spin-nested-loading),
+        > :deep(.ant-spin-nested-loading > .ant-spin-container) {
+          height: 100%;
+          min-height: 0;
+        }
+
+        :deep(.ant-card-body) {
+          overflow: hidden;
+        }
+
+        :deep(.card-content) {
+          flex: 1;
+          min-height: 0;
+          overflow-y: auto;
+          overscroll-behavior-y: contain;
+        }
+
+        :deep(.card-footer) {
+          flex-shrink: 0;
+        }
+      }
+    }
+  }
+
   .card-footer {
     text-align: right;
     margin-top: 2rem;
@@ -3799,23 +4009,6 @@ export default {
   }
 
   .vm-info-card {
-    .ant-card-body {
-      min-height: 250px;
-      max-height: calc(100vh - 140px);
-      overflow: hidden; // Prevent the entire card from scrolling
-    }
-
-    .card-content {
-      max-height: calc(100vh - 240px); // Reserve space for footer and card header/padding
-      overflow-y: auto;
-      scroll-behavior: smooth;
-    }
-
-    .card-footer {
-      border-top: 1px solid #f0f0f0;
-      flex-shrink: 0; // Ensure footer doesn't shrink
-    }
-
     .resource-detail-item__label {
       font-weight: normal;
     }
@@ -3826,6 +4019,18 @@ export default {
         cursor: default;
         pointer-events: none;
       }
+    }
+  }
+
+  // Keep invalid input text on the same dark surface as valid inputs.
+  .dark-mode .deploy-vm-layout .ant-form-item-has-error {
+    .ant-input,
+    .ant-input:hover,
+    .ant-input-affix-wrapper,
+    .ant-input-affix-wrapper:hover,
+    .ant-select:not(.ant-select-customize-input) .ant-select-selector {
+      // Override the shared dark theme error background.
+      background-color: transparent !important;
     }
   }
 

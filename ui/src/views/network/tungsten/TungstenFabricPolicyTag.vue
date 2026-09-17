@@ -17,6 +17,7 @@
 
 <template>
   <div>
+    <p v-if="listRefreshFailed" role="status">{{ $t('message.list.refresh.stale') }}</p>
     <a-button
       :disabled="!('applyTungstenFabricTag' in $store.getters.apis)"
       type="dashed"
@@ -30,7 +31,7 @@
       :loading="fetchLoading"
       :columns="columns"
       :dataSource="dataSource"
-      :rowKey="(item, index) => index"
+      :rowKey="listRowKey"
       :pagination="false">
       <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'policy'">
@@ -106,6 +107,8 @@
 </template>
 
 <script>
+import { listRefreshMixin } from '@/utils/listRefreshMixin'
+
 import { ref, reactive, toRaw } from 'vue'
 import { getAPI, postAPI } from '@/api'
 import { mixinDevice } from '@/utils/mixin.js'
@@ -118,7 +121,7 @@ export default {
     TooltipButton,
     TooltipLabel
   },
-  mixins: [mixinDevice],
+  mixins: [listRefreshMixin(['fetchData']), mixinDevice],
   props: {
     resource: {
       type: Object,
@@ -197,6 +200,7 @@ export default {
       })
     },
     fetchData () {
+      const listRequest = this.listRequestToken('fetchData')
       if (!this.resource.uuid || !('zoneid' in this.$route.query)) {
         return
       }
@@ -206,13 +210,26 @@ export default {
       params.zoneid = this.zoneId
       params.policyuuid = this.resource.uuid
 
-      this.fetchLoading = true
-      getAPI('listTungstenFabricTag', params).then(json => {
+      this.fetchLoading = !listRequest.loaded
+      return getAPI('listTungstenFabricTag', params).then(json => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+
         this.dataSource = json?.listtungstenfabrictagresponse?.tag || []
         this.itemCount = json?.listtungstenfabrictagresponse?.count || 0
       }).catch(error => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+        listRequest.failed = true
+        this.listRefreshFailed = true
+        if (listRequest.loaded) return
+
         this.$notifyError(error)
-      }).finally(() => { this.fetchLoading = false })
+      }).finally(() => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+        this.fetchLoading = false
+      }).finally(() => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+        this.fetchLoading = false
+      })
     },
     onShowAction () {
       this.showAction = true

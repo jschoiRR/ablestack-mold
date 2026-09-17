@@ -166,6 +166,14 @@ public class UserVmResponse extends BaseResponseWithTagInformation implements Co
     @Param(description = "An alternate display text of the ISO attached to the Instance")
     private String isoDisplayText;
 
+    @SerializedName("isos")
+    @Param(description = "All ISOs attached to the Instance, keyed by cdrom slot. The first entry mirrors isoid/isoname for back-compat.", responseObject = AttachedIsoResponse.class, since = "4.23.0")
+    private List<AttachedIsoResponse> isos;
+
+    @SerializedName("isomaxcount")
+    @Param(description = "Maximum number of ISOs that may be attached to this Instance, after applying the cluster-scoped vm.iso.max.count and the hypervisor's own cap.", since = "4.23.0")
+    private Integer isoMaxCount;
+
     @SerializedName(ApiConstants.SERVICE_OFFERING_ID)
     @Param(description = "The ID of the service offering of the Instance")
     private String serviceOfferingId;
@@ -225,6 +233,10 @@ public class UserVmResponse extends BaseResponseWithTagInformation implements Co
     @SerializedName(ApiConstants.BACKUP_OFFERING_NAME)
     @Param(description = "The name of the backup offering of the Instance", since = "4.14")
     private String backupOfferingName;
+
+    @SerializedName(ApiConstants.BACKUP_PROVIDER)
+    @Param(description = "The name of the backup provider of the offering attached to the Instance", since = "4.23.0")
+    private String backupProvider;
 
     @SerializedName("forvirtualnetwork")
     @Param(description = "The virtual Network for the service offering")
@@ -343,6 +355,26 @@ public class UserVmResponse extends BaseResponseWithTagInformation implements Co
     @SerializedName("clonefaststatus")
     @Param(description = "SharedMountPoint fast clone flatten status of the virtual machine.")
     private String cloneFastStatus;
+
+    @SerializedName("clonefastsourcepowerallowed")
+    @Param(description = "whether the SharedMountPoint clone source is ready for power operations.")
+    private Boolean cloneFastSourcePowerAllowed;
+
+    @SerializedName("clonefastpowerallowed")
+    @Param(description = "whether the SharedMountPoint clone VM permits coordinated power operations.")
+    private Boolean cloneFastPowerAllowed;
+
+    @SerializedName("clonefastphase")
+    @Param(description = "role-qualified SharedMountPoint clone phase, including preparation, pause and recovery-required states.")
+    private String cloneFastPhase;
+
+    @SerializedName("clonefastflattenbandwidth")
+    @Param(description = "Configured per-disk clone flatten bandwidth limit in MiB/s. Zero means unlimited.")
+    private Integer cloneFastFlattenBandwidth;
+
+    @SerializedName("clonefastflattenbandwidthstatus")
+    @Param(description = "Result of the latest bandwidth request: applying, applied, pending or failed.")
+    private String cloneFastFlattenBandwidthStatus;
 
     @SerializedName("clonefastflattenprogress")
     @Param(description = "SharedMountPoint fast clone flatten progress percentage of the virtual machine.")
@@ -935,6 +967,22 @@ public class UserVmResponse extends BaseResponseWithTagInformation implements Co
         this.isoId = isoId;
     }
 
+    public void setIsos(List<AttachedIsoResponse> isos) {
+        this.isos = isos;
+    }
+
+    public List<AttachedIsoResponse> getIsos() {
+        return isos;
+    }
+
+    public void setIsoMaxCount(Integer isoMaxCount) {
+        this.isoMaxCount = isoMaxCount;
+    }
+
+    public Integer getIsoMaxCount() {
+        return isoMaxCount;
+    }
+
     public void setIsoName(String isoName) {
         this.isoName = isoName;
     }
@@ -1161,6 +1209,46 @@ public class UserVmResponse extends BaseResponseWithTagInformation implements Co
 
     public void setCloneFastStatus(String cloneFastStatus) {
         this.cloneFastStatus = cloneFastStatus;
+    }
+
+    public void setCloneFastSourcePowerAllowed(Boolean allowed) {
+        this.cloneFastSourcePowerAllowed = allowed;
+    }
+
+    public Boolean getCloneFastSourcePowerAllowed() {
+        return cloneFastSourcePowerAllowed;
+    }
+
+    public void setCloneFastPowerAllowed(Boolean allowed) {
+        this.cloneFastPowerAllowed = allowed;
+    }
+
+    public Boolean getCloneFastPowerAllowed() {
+        return cloneFastPowerAllowed;
+    }
+
+    public void setCloneFastPhase(String phase) {
+        this.cloneFastPhase = phase;
+    }
+
+    public String getCloneFastPhase() {
+        return cloneFastPhase;
+    }
+
+    public Integer getCloneFastFlattenBandwidth() {
+        return cloneFastFlattenBandwidth;
+    }
+
+    public void setCloneFastFlattenBandwidth(Integer bandwidth) {
+        this.cloneFastFlattenBandwidth = bandwidth;
+    }
+
+    public String getCloneFastFlattenBandwidthStatus() {
+        return cloneFastFlattenBandwidthStatus;
+    }
+
+    public void setCloneFastFlattenBandwidthStatus(String status) {
+        this.cloneFastFlattenBandwidthStatus = status;
     }
 
     public void setCloneFastFlattenProgress(String cloneFastFlattenProgress) {
@@ -1491,4 +1579,11 @@ public class UserVmResponse extends BaseResponseWithTagInformation implements Co
         this.leaseExpiryDate = leaseExpiryDate;
     }
 
+    public String getBackupProvider() {
+        return backupProvider;
+    }
+
+    public void setBackupProvider(String backupProvider) {
+        this.backupProvider = backupProvider;
+    }
 }

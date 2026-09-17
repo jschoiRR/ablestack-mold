@@ -17,6 +17,7 @@
 
 <template>
   <div>
+    <p v-if="listRefreshFailed" role="status">{{ $t('message.list.refresh.stale') }}</p>
     <a-row :gutter="12">
       <a-col :md="24" :lg="24">
         <a-table
@@ -87,10 +88,12 @@
 </template>
 
 <script>
+import { listRefreshMixin } from '@/utils/listRefreshMixin'
 import { getAPI, postAPI } from '@/api'
 import TooltipButton from '@/components/widgets/TooltipButton'
 
 export default {
+  mixins: [listRefreshMixin(['fetchProjectAccounts'])],
   name: 'AccountsTab',
   components: {
     TooltipButton
@@ -220,12 +223,16 @@ export default {
         this.loading.roles = false
       })
     },
-    fetchProjectAccounts (params) {
-      this.loading.projectAccount = true
-      getAPI('listProjectAccounts', params).then(json => {
+    fetchProjectAccounts (params = { projectId: this.resource.id, page: this.page, pageSize: this.pageSize }) {
+      if (!this.resource.id) return
+      const request = this.listRequestToken('fetchProjectAccounts')
+      this.loading.projectAccount = !request.loaded
+      return getAPI('listProjectAccounts', params).then(json => {
+        if (!this.isListRequestCurrent('fetchProjectAccounts', request)) return
         const listProjectAccount = json.listprojectaccountsresponse.projectaccount
         const itemCount = json.listprojectaccountsresponse.count
         if (!listProjectAccount || listProjectAccount.length === 0) {
+          this.itemCount = 0
           this.dataSource = []
           return
         }
@@ -239,8 +246,13 @@ export default {
         this.itemCount = itemCount
         this.dataSource = listProjectAccount
       }).catch(error => {
+        if (!this.isListRequestCurrent('fetchProjectAccounts', request)) return
+        request.failed = true
+        this.listRefreshFailed = true
+        if (request.loaded) return
         this.$notifyError(error)
       }).finally(() => {
+        if (!this.isListRequestCurrent('fetchProjectAccounts', request)) return
         this.loading.projectAccount = false
       })
     },

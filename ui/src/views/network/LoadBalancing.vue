@@ -17,6 +17,7 @@
 
 <template>
   <div>
+    <p v-if="listRefreshFailed" role="status">{{ $t('message.list.refresh.stale') }}</p>
     <div @keyup.ctrl.enter="handleOpenAddVMModal">
       <div class="form">
         <div class="form__item" ref="newRuleName">
@@ -818,6 +819,8 @@
 </template>
 
 <script>
+import { listRefreshMixin } from '@/utils/listRefreshMixin'
+
 import { ref, reactive, toRaw, nextTick } from 'vue'
 import { getAPI, postAPI } from '@/api'
 import { mixinForm } from '@/utils/mixin'
@@ -829,7 +832,7 @@ import TooltipLabel from '@/components/widgets/TooltipLabel'
 
 export default {
   name: 'LoadBalancing',
-  mixins: [mixinForm],
+  mixins: [listRefreshMixin(['fetchLBRules']), mixinForm],
   components: {
     Status,
     TooltipButton,
@@ -1144,16 +1147,18 @@ export default {
       }).finally(() => { this.tiers.loading = false })
     },
     fetchLBRules () {
-      this.loading = true
-      this.lbRules = []
-      this.stickinessPolicies = []
+      const listRequest = this.listRequestToken('fetchLBRules')
+      this.loading = !listRequest.loaded
 
-      getAPI('listLoadBalancerRules', {
+      return getAPI('listLoadBalancerRules', {
         listAll: true,
         publicipid: this.resource.id,
         page: this.page,
         pageSize: this.pageSize
       }).then(response => {
+        if (!this.isListRequestCurrent('fetchLBRules', listRequest)) return
+        this.lbRules = []
+        this.stickinessPolicies = []
         this.lbRules = response.listloadbalancerrulesresponse.loadbalancerrule || []
         this.totalCount = response.listloadbalancerrulesresponse.count || 0
       }).then(() => {
@@ -1168,7 +1173,15 @@ export default {
         }
         this.loading = false
       }).catch(error => {
+        if (!this.isListRequestCurrent('fetchLBRules', listRequest)) return
+        listRequest.failed = true
+        this.listRefreshFailed = true
+        if (listRequest.loaded) return
+
         this.$notifyError(error)
+        this.loading = false
+      }).finally(() => {
+        if (!this.isListRequestCurrent('fetchLBRules', listRequest)) return
         this.loading = false
       })
     },

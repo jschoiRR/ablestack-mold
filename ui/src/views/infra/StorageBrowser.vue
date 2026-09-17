@@ -17,6 +17,7 @@
 
 <template>
   <div>
+    <p v-if="listRefreshFailed" role="status">{{ $t('message.list.refresh.stale') }}</p>
     <a-card class="breadcrumb-card">
       <a-row>
         <a-col :span="24" style="padding-left: 12px">
@@ -259,6 +260,8 @@
 </template>
 
 <script>
+import { listRefreshMixin } from '@/utils/listRefreshMixin'
+
 import { getAPI, postAPI } from '@/api'
 import { ref, reactive } from 'vue'
 import InfoCard from '@/components/view/InfoCard'
@@ -267,6 +270,7 @@ import MigrateImageStoreResource from '@/views/storage/MigrateImageStoreResource
 import CreateRbdImage from '@/views/storage/CreateRbdImage'
 
 export default {
+  mixins: [listRefreshMixin(['fetchImageStoreObjects', 'fetchPrimaryStoreObjects'], { interval: 60000, select: vm => vm.resourceType === 'ImageStore' ? ['fetchImageStoreObjects'] : vm.resourceType === 'PrimaryStorage' ? ['fetchPrimaryStoreObjects'] : [] })],
   name: 'StorageBrowser',
   components: {
     InfoCard,
@@ -433,31 +437,57 @@ export default {
       })
     },
     fetchImageStoreObjects () {
-      this.loading = true
-      getAPI('listImageStoreObjects', {
+      const listRequest = this.listRequestToken('fetchImageStoreObjects')
+      this.loading = !listRequest.loaded
+      return getAPI('listImageStoreObjects', {
         path: this.browserPath,
         id: this.resource.id,
         page: this.page,
         pagesize: this.pageSize
       }).then(json => {
+        if (!this.isListRequestCurrent('fetchImageStoreObjects', listRequest)) return
+
         this.dataSource = json.listimagestoreobjectsresponse.datastoreobject
         this.total = json.listimagestoreobjectsresponse.count
       }).finally(() => {
+        if (!this.isListRequestCurrent('fetchImageStoreObjects', listRequest)) return
+
+        this.loading = false
+      }).catch(error => {
+        if (!this.isListRequestCurrent('fetchImageStoreObjects', listRequest)) return
+        listRequest.failed = true
+        this.listRefreshFailed = true
+        if (!listRequest.loaded) this.$notifyError(error)
+      }).finally(() => {
+        if (!this.isListRequestCurrent('fetchImageStoreObjects', listRequest)) return
         this.loading = false
       })
     },
     fetchPrimaryStoreObjects () {
-      this.loading = true
-      getAPI('listStoragePoolObjects', {
+      const listRequest = this.listRequestToken('fetchPrimaryStoreObjects')
+      this.loading = !listRequest.loaded
+      return getAPI('listStoragePoolObjects', {
         path: this.browserPath,
         id: this.resource.id,
         page: this.page,
         pagesize: this.pageSize,
         keyword: this.keyword
       }).then(json => {
+        if (!this.isListRequestCurrent('fetchPrimaryStoreObjects', listRequest)) return
+
         this.dataSource = json.liststoragepoolobjectsresponse.datastoreobject
         this.total = json.liststoragepoolobjectsresponse.count
       }).finally(() => {
+        if (!this.isListRequestCurrent('fetchPrimaryStoreObjects', listRequest)) return
+
+        this.loading = false
+      }).catch(error => {
+        if (!this.isListRequestCurrent('fetchPrimaryStoreObjects', listRequest)) return
+        listRequest.failed = true
+        this.listRefreshFailed = true
+        if (!listRequest.loaded) this.$notifyError(error)
+      }).finally(() => {
+        if (!this.isListRequestCurrent('fetchPrimaryStoreObjects', listRequest)) return
         this.loading = false
       })
     },
@@ -479,7 +509,6 @@ export default {
       this.fetchData()
     },
     fetchData () {
-      this.dataSource = []
       this.$router.replace(
         {
           path: this.$route.path,

@@ -17,6 +17,7 @@
 
 <template>
   <div>
+    <p v-if="listRefreshFailed" role="status">{{ $t('message.list.refresh.stale') }}</p>
     <a-modal
       v-model:visible="showTimeFilterModal"
       :title="$t('label.select.period')"
@@ -114,6 +115,8 @@
 </template>
 
 <script>
+import { listRefreshMixin } from '@/utils/listRefreshMixin'
+
 import { getAPI, postAPI } from '@/api'
 import { isAdmin } from '@/role'
 import { genericCompare } from '@/utils/sort.js'
@@ -123,6 +126,7 @@ import SearchView from '@/components/view/SearchView'
 import ListView from '@/components/view/ListView'
 
 export default {
+  mixins: [listRefreshMixin(['fetchDeliveries'])],
   name: 'WebhookDeliveriesTab',
   components: {
     DateTimeFilter,
@@ -229,7 +233,8 @@ export default {
       this.fetchDeliveries()
     },
     fetchDeliveries () {
-      this.deliveries = []
+      const listRequest = this.listRequestToken('fetchDeliveries')
+
       if (!this.resource.id) {
         return
       }
@@ -254,12 +259,21 @@ export default {
       if (this.searchParams?.eventtype) {
         params.eventtype = this.searchParams.eventtype
       }
-      this.tabLoading = true
-      getAPI('listWebhookDeliveries', params).then(json => {
+      this.tabLoading = !listRequest.loaded
+      return getAPI('listWebhookDeliveries', params).then(json => {
+        if (!this.isListRequestCurrent('fetchDeliveries', listRequest)) return
         this.deliveries = []
         this.totalCount = json?.listwebhookdeliveriesresponse?.count || 0
         this.deliveries = json?.listwebhookdeliveriesresponse?.webhookdelivery || []
         this.formatTimeFilterPeriod()
+        this.tabLoading = false
+      }).catch(error => {
+        if (!this.isListRequestCurrent('fetchDeliveries', listRequest)) return
+        listRequest.failed = true
+        this.listRefreshFailed = true
+        if (!listRequest.loaded) this.$notifyError(error)
+      }).finally(() => {
+        if (!this.isListRequestCurrent('fetchDeliveries', listRequest)) return
         this.tabLoading = false
       })
     },

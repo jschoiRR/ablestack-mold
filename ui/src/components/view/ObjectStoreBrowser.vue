@@ -323,6 +323,7 @@
 </template>
 
 <script>
+import { listRefreshMixin } from '@/utils/listRefreshMixin'
 import * as Minio from 'minio'
 import { getAPI } from '@/api'
 import { genericCompare } from '@/utils/sort.js'
@@ -343,6 +344,7 @@ const pageSize = 20
 const deleteBatchSize = 1000
 
 export default {
+  mixins: [listRefreshMixin(['listObjects'], { interval: 60000, active: vm => !!vm.client })],
   name: 'ObjectStoreBrowser',
   components: {
     InfoCard,
@@ -510,8 +512,6 @@ export default {
       }
     },
     fetchData () {
-      this.loading = true
-      this.records = []
       this.$router.replace(
         {
           query: {
@@ -562,28 +562,36 @@ export default {
       this.fetchData()
     },
     listObjects () {
-      if (this.fetching) {
-        return
-      }
+      if (!this.client) return
+      const request = this.listRequestToken('listObjects')
+      this.loading = !request.loaded
       this.fetching = true
-      this.records = []
       const currentPath = normalizeObjectStorePath(this.browserPath)
-      var stream = this.client.extensions.listObjectsV2WithMetadata(this.resource.name, currentPath + this.searchPrefix, false, '')
-      stream.on('data', obj => {
-        if (this.isCurrentDirectoryMarker(obj, currentPath)) {
-          return
-        }
-        this.records.push(obj)
-      })
-      stream.on('end', obj => {
-        this.total = this.records.length
-        this.loading = false
-        this.fetching = false
-      })
-      stream.on('error', err => {
-        console.log(err)
-        this.loading = false
-        this.fetching = false
+      const records = []
+      return new Promise(resolve => {
+        const stream = this.client.extensions.listObjectsV2WithMetadata(this.resource.name, currentPath + this.searchPrefix, false, '')
+        stream.on('data', obj => {
+          if (!this.isCurrentDirectoryMarker(obj, currentPath)) records.push(obj)
+        })
+        stream.on('end', () => {
+          if (this.isListRequestCurrent('listObjects', request)) {
+            this.records = records
+            this.total = records.length
+            this.loading = false
+            this.fetching = false
+          }
+          resolve()
+        })
+        stream.on('error', error => {
+          if (this.isListRequestCurrent('listObjects', request)) {
+            request.failed = true
+            this.listRefreshFailed = true
+            this.loading = false
+            this.fetching = false
+            if (!request.loaded) this.$notifyError(error)
+          }
+          resolve()
+        })
       })
     },
     isCurrentDirectoryMarker (obj, currentPath) {

@@ -488,7 +488,7 @@ public class HAManagerImplTest {
     public void degradedMeansDisconnectedButDoesNotAuthorizeLegacyVmRestart() throws Exception {
         when(host.getId()).thenReturn(1L);
         config.setHastate(HAConfig.HAState.Degraded);
-        assertEquals(Status.Disconnected, manager.getHostStatus(host));
+        assertEquals(Status.Disconnected, manager.getHostStatusFromHAConfig(host));
         assertEquals(Boolean.TRUE, manager.isVMAliveOnHost(host));
     }
 

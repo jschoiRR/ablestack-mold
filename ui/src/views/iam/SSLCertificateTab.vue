@@ -17,6 +17,7 @@
 
 <template>
   <div>
+    <p v-if="listRefreshFailed" role="status">{{ $t('message.list.refresh.stale') }}</p>
     <a-row :gutter="12">
       <a-spin :spinning="loading">
         <a-button
@@ -184,12 +185,15 @@
 </template>
 
 <script>
+import { listRefreshMixin } from '@/utils/listRefreshMixin'
+
 import { getAPI, postAPI } from '@/api'
 import TooltipButton from '@/components/widgets/TooltipButton'
 import TooltipLabel from '@/components/widgets/TooltipLabel.vue'
 import { ref, reactive, toRaw } from 'vue'
 
 export default {
+  mixins: [listRefreshMixin(['fetchData'])],
   name: 'SSLCertificate',
   components: {
     TooltipLabel,
@@ -282,6 +286,7 @@ export default {
       })
     },
     fetchData () {
+      const listRequest = this.listRequestToken('fetchData')
       const params = {}
       params.page = this.page
       params.pageSize = this.pageSize
@@ -292,9 +297,11 @@ export default {
         params.projectid = this.resource.id
       }
 
-      this.loading = true
+      this.loading = !listRequest.loaded
 
-      getAPI('listSslCerts', params).then(json => {
+      return getAPI('listSslCerts', params).then(json => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+
         const listSslResponse = json.listsslcertsresponse.sslcert
 
         // check exists json response
@@ -305,8 +312,18 @@ export default {
 
         this.dataSource = listSslResponse
       }).catch(error => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+        listRequest.failed = true
+        this.listRefreshFailed = true
+        if (listRequest.loaded) return
+
         this.$notifyError(error)
       }).finally(() => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+
+        this.loading = false
+      }).finally(() => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
         this.loading = false
       })
     },

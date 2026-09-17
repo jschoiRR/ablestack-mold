@@ -297,8 +297,9 @@ export default {
 }
 
 .ant-alert-warning {
-  border: 1px solid #ffe58f;
-  background-color: #fffbe6;
+  border: 1px solid var(--ui-warning-border);
+  background-color: var(--ui-warning-bg);
+  color: var(--ui-warning-text);
 }
 
 .test-con-content {

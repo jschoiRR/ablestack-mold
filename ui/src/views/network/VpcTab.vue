@@ -17,6 +17,7 @@
 
 <template>
   <a-spin :spinning="fetchLoading">
+    <p v-if="listRefreshFailed" role="status">{{ $t('message.list.refresh.stale') }}</p>
     <a-tabs
       :activeKey="currentTab"
       :tabPosition="device === 'mobile' ? 'top' : 'left'"
@@ -405,6 +406,9 @@
       <a-tab-pane :tab="$t('label.vnf.appliances')" key="vnf" v-if="'deployVnfAppliance' in $store.getters.apis">
         <VnfAppliancesTab :resource="resource" :loading="loading" />
       </a-tab-pane>
+      <a-tab-pane :tab="$t('label.custom.actions')" key="customactions" v-if="'runCustomAction' in $store.getters.apis && 'listCustomActions' in $store.getters.apis && resource.service && resource.service.some(s => s.name === 'CustomAction')">
+        <RunCustomAction :resource="resource" />
+      </a-tab-pane>
       <a-tab-pane :tab="$t('label.events')" key="events" v-if="'listEvents' in $store.getters.apis">
         <events-tab :resource="resource" resourceType="Vpc" :loading="loading" />
       </a-tab-pane>
@@ -419,6 +423,7 @@
 </template>
 
 <script>
+import { listRefreshMixin } from '@/utils/listRefreshMixin'
 import { ref, reactive, toRaw } from 'vue'
 import { getAPI, postAPI } from '@/api'
 import { mixinDevice } from '@/utils/mixin.js'
@@ -433,8 +438,10 @@ import AnnotationsTab from '@/components/view/AnnotationsTab'
 import ResourceIcon from '@/components/view/ResourceIcon'
 import BgpPeersTab from '@/views/infra/zone/BgpPeersTab.vue'
 import StaticRoutesTab from './StaticRoutesTab'
+import RunCustomAction from '@/views/extension/RunCustomAction'
 
 export default {
+  mixins: [mixinDevice, listRefreshMixin(['fetchComments', 'fetchPrivateGateways', 'fetchVpnConnections', 'fetchAclList'], { select: vm => ({ pgw: ['fetchPrivateGateways'], vpnc: ['fetchVpnConnections'], acl: ['fetchAclList'], comments: ['fetchComments'] }[vm.currentTab] || []) })],
   name: 'VpcTab',
   components: {
     BgpPeersTab,
@@ -445,11 +452,11 @@ export default {
     VpcTiersTab,
     VnfAppliancesTab,
     StaticRoutesTab,
+    RunCustomAction,
     EventsTab,
     AnnotationsTab,
     ResourceIcon
   },
-  mixins: [mixinDevice],
   props: {
     resource: {
       type: Object,
@@ -621,47 +628,43 @@ export default {
       }
     },
     fetchComments () {
-      this.fetchLoading = true
-      getAPI('listAnnotations', { entityid: this.resource.id, entitytype: 'VPC', annotationfilter: 'all' }).then(json => {
-        if (json.listannotationsresponse && json.listannotationsresponse.annotation) {
-          this.annotations = json.listannotationsresponse.annotation
-        }
+      if (!this.resource.id) return
+      const request = this.listRequestToken('fetchComments')
+      this.fetchLoading = !request.loaded
+      return getAPI('listAnnotations', { entityid: this.resource.id, entitytype: 'VPC', annotationfilter: 'all' }).then(json => {
+        if (!this.isListRequestCurrent('fetchComments', request)) return
+        this.annotations = json.listannotationsresponse?.annotation || []
       }).catch(error => {
-        this.$notifyError(error)
+        if (!this.isListRequestCurrent('fetchComments', request)) return
+        request.failed = true
+        this.listRefreshFailed = true
+        if (!request.loaded) this.$notifyError(error)
       }).finally(() => {
-        this.fetchLoading = false
+        if (this.isListRequestCurrent('fetchComments', request)) this.fetchLoading = false
       })
     },
     fetchPrivateGateways () {
-      this.fetchLoading = true
-      getAPI('listPrivateGateways', {
-        vpcid: this.resource.id,
-        listAll: true,
-        page: this.page,
-        pagesize: this.pageSize
-      }).then(json => {
-        this.privateGateways = json.listprivategatewaysresponse.privategateway
-        this.itemCounts.privateGateways = json.listprivategatewaysresponse.count
-      }).catch(error => {
-        this.$notifyError(error)
-      }).finally(() => {
-        this.fetchLoading = false
-      })
-      this.associatedNetworks = []
-      getAPI('listNetworks', {
-        domainid: this.resource.domainid,
-        account: this.resource.account,
-        listAll: true,
-        networkfilter: 'Account'
-      }).then(json => {
-        var networks = json.listnetworksresponse.network || []
-        for (const network of networks) {
-          if (network.type === 'Isolated' || network.type === 'L2') {
-            this.associatedNetworks.push(network)
-          }
+      if (!this.resource.id) return
+      const request = this.listRequestToken('fetchPrivateGateways')
+      this.fetchLoading = !request.loaded
+      return getAPI('listPrivateGateways', { vpcid: this.resource.id, listall: true, page: this.page, pagesize: this.pageSize }).then(json => {
+        if (!this.isListRequestCurrent('fetchPrivateGateways', request)) return
+        this.privateGateways = json.listprivategatewaysresponse?.privategateway || []
+        this.itemCounts.privateGateways = json.listprivategatewaysresponse?.count || 0
+
+        if (!request.loaded) {
+          getAPI('listNetworks', { domainid: this.resource.domainid, account: this.resource.account, listall: true, networkfilter: 'Account' }).then(result => {
+            if (!this.isListRequestCurrent('fetchPrivateGateways', request)) return
+            this.associatedNetworks = (result.listnetworksresponse?.network || []).filter(n => n.type === 'Isolated' || n.type === 'L2')
+          }).catch(error => this.$notifyError(error))
         }
       }).catch(error => {
-        this.$notifyError(error)
+        if (!this.isListRequestCurrent('fetchPrivateGateways', request)) return
+        request.failed = true
+        this.listRefreshFailed = true
+        if (!request.loaded) this.$notifyError(error)
+      }).finally(() => {
+        if (this.isListRequestCurrent('fetchPrivateGateways', request)) this.fetchLoading = false
       })
     },
     fetchVpnGateways () {
@@ -701,38 +704,38 @@ export default {
       })
     },
     fetchVpnConnections () {
-      this.fetchLoading = true
-      getAPI('listVpnConnections', {
-        vpcid: this.resource.id,
-        listAll: true,
-        page: this.page,
-        pagesize: this.pageSize
-      }).then(json => {
-        this.vpnConnections = json.listvpnconnectionsresponse.vpnconnection
-        this.itemCounts.vpnConnections = json.listvpnconnectionsresponse.count
+      if (!this.resource.id) return
+      const request = this.listRequestToken('fetchVpnConnections')
+      this.fetchLoading = !request.loaded
+      return getAPI('listVpnConnections', { vpcid: this.resource.id, listall: true, page: this.page, pagesize: this.pageSize }).then(json => {
+        if (!this.isListRequestCurrent('fetchVpnConnections', request)) return
+        this.vpnConnections = json.listvpnconnectionsresponse?.vpnconnection || []
+        this.itemCounts.vpnConnections = json.listvpnconnectionsresponse?.count || 0
       }).catch(error => {
-        this.$notifyError(error)
+        if (!this.isListRequestCurrent('fetchVpnConnections', request)) return
+        request.failed = true
+        this.listRefreshFailed = true
+        if (!request.loaded) this.$notifyError(error)
       }).finally(() => {
-        this.fetchLoading = false
+        if (this.isListRequestCurrent('fetchVpnConnections', request)) this.fetchLoading = false
       })
     },
     fetchAclList () {
-      this.fetchLoading = true
-      getAPI('listNetworkACLLists', {
-        vpcid: this.resource.id,
-        listAll: true,
-        page: this.page,
-        pagesize: this.pageSize
-      }).then(json => {
-        this.networkAcls = json.listnetworkacllistsresponse.networkacllist
-        this.itemCounts.networkAcls = json.listnetworkacllistsresponse.count
-        if (this.modals.gateway === true) {
-          this.form.acl = this.networkAcls[0].id
-        }
+      if (!this.resource.id) return
+      const request = this.listRequestToken('fetchAclList')
+      this.fetchLoading = !request.loaded
+      return getAPI('listNetworkACLLists', { vpcid: this.resource.id, listall: true, page: this.page, pagesize: this.pageSize }).then(json => {
+        if (!this.isListRequestCurrent('fetchAclList', request)) return
+        this.networkAcls = json.listnetworkacllistsresponse?.networkacllist || []
+        this.itemCounts.networkAcls = json.listnetworkacllistsresponse?.count || 0
+        if (this.modals.gateway && !request.loaded) this.form.acl = this.networkAcls[0]?.id
       }).catch(error => {
-        this.$notifyError(error)
+        if (!this.isListRequestCurrent('fetchAclList', request)) return
+        request.failed = true
+        this.listRefreshFailed = true
+        if (!request.loaded) this.$notifyError(error)
       }).finally(() => {
-        this.fetchLoading = false
+        if (this.isListRequestCurrent('fetchAclList', request)) this.fetchLoading = false
       })
     },
     fetchPhysicalNetworks () {

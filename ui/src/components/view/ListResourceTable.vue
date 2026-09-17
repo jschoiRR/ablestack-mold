@@ -17,6 +17,7 @@
 
 <template>
   <div>
+    <p v-if="listRefreshFailed" role="status">{{ $t('message.list.refresh.stale') }}</p>
     <a-input-search
       v-if="showSearch"
       style="width: 25vw;float: right;margin-bottom: 10px; z-index: 8"
@@ -82,6 +83,8 @@
 </template>
 
 <script>
+import { listRefreshMixin } from '@/utils/listRefreshMixin'
+
 import { getAPI } from '@/api'
 import { mixinDevice } from '@/utils/mixin.js'
 import Status from '@/components/widgets/Status'
@@ -91,7 +94,7 @@ export default {
   components: {
     Status
   },
-  mixins: [mixinDevice],
+  mixins: [listRefreshMixin(['fetchData']), mixinDevice],
   props: {
     resource: {
       type: Object,
@@ -164,6 +167,7 @@ export default {
   },
   methods: {
     fetchData () {
+      const listRequest = this.listRequestToken('fetchData')
       if (this.items && this.items.length > 0) {
         this.dataSource = this.items
         this.defaultPagination = {
@@ -172,12 +176,14 @@ export default {
         }
         return
       }
-      this.loading = true
+      this.loading = !listRequest.loaded
       var params = { ...this.params, ...this.options }
       params.listall = true
       params.response = 'json'
       params.details = 'min'
-      getAPI(this.apiName, params).then(json => {
+      return getAPI(this.apiName, params).then(json => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+
         var responseName
         var objectName
         for (const key in json) {
@@ -199,6 +205,16 @@ export default {
           this.dataSource = []
         }
       }).finally(() => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+
+        this.loading = false
+      }).catch(error => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+        listRequest.failed = true
+        this.listRefreshFailed = true
+        if (!listRequest.loaded) this.$notifyError(error)
+      }).finally(() => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
         this.loading = false
       })
     },

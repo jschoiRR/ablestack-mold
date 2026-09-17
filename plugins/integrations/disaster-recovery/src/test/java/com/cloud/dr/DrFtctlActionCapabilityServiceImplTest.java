@@ -1,8 +1,20 @@
 // Licensed to the Apache Software Foundation (ASF) under one
-// or more contributor license agreements. See the NOTICE file
+// or more contributor license agreements.  See the NOTICE file
 // distributed with this work for additional information
-// regarding copyright ownership. The ASF licenses this file
-// to you under the Apache License, Version 2.0.
+// regarding copyright ownership.  The ASF licenses this file
+// to you under the Apache License, Version 2.0 (the
+// "License"); you may not use this file except in compliance
+// with the License.  You may obtain a copy of the License at
+//
+//   http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing,
+// software distributed under the License is distributed on an
+// "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+// KIND, either express or implied.  See the License for the
+// specific language governing permissions and limitations
+// under the License.
+
 package com.cloud.dr;
 
 import java.util.Arrays;
@@ -53,6 +65,32 @@ public class DrFtctlActionCapabilityServiceImplTest {
         Assert.assertEquals(DrFtctlActionCapabilityServiceImpl.CAPABILITY_MISMATCH,
                 snapshot.getBlockingReason("reprotect"));
         Assert.assertNull(snapshot.getBlockingReason("failover"));
+    }
+
+    @Test
+    public void sourceOutageDoesNotBlockTargetRecoveryCapabilities() throws Exception {
+        com.cloud.agent.AgentManager agents = org.mockito.Mockito.mock(com.cloud.agent.AgentManager.class);
+        com.cloud.dr.adapter.ftctl.DrRemoteAgentClient remote =
+                org.mockito.Mockito.mock(com.cloud.dr.adapter.ftctl.DrRemoteAgentClient.class);
+        DrWorkerPlacementService placement = org.mockito.Mockito.mock(DrWorkerPlacementService.class);
+        org.apache.commons.lang3.reflect.FieldUtils.writeField(service, "agentManager", agents, true);
+        org.apache.commons.lang3.reflect.FieldUtils.writeField(service, "drRemoteAgentClient", remote, true);
+        org.apache.commons.lang3.reflect.FieldUtils.writeField(service, "drWorkerPlacementService", placement, true);
+        DrPlanVO plan = org.mockito.Mockito.mock(DrPlanVO.class);
+        org.mockito.Mockito.when(plan.getDirection()).thenReturn(DrConstants.DIRECTION_KVM_TO_KVM);
+        org.mockito.Mockito.when(plan.getSourceVmId()).thenReturn(null);
+        org.mockito.Mockito.when(plan.getSourceExternalRef()).thenReturn("remote-vm");
+        org.mockito.Mockito.when(plan.getActiveSide()).thenReturn("SOURCE");
+        org.mockito.Mockito.when(placement.resolveWorkerHostId(plan, DrWorkerRole.TARGET)).thenReturn(7L);
+        org.mockito.Mockito.when(agents.easySend(org.mockito.ArgumentMatchers.eq(7L),
+                org.mockito.ArgumentMatchers.any(FtctlDrCapabilitiesCommand.class))).thenReturn(completeAnswer());
+        DrFtctlActionCapabilitySnapshot snapshot = service.evaluate(plan);
+        Assert.assertEquals(DrFtctlActionCapabilityServiceImpl.CAPABILITY_UNAVAILABLE,
+                snapshot.getBlockingReason("sync"));
+        Assert.assertNull(snapshot.getBlockingReason("testFailover"));
+        Assert.assertNull(snapshot.getBlockingReason("stopTestFailover"));
+        Assert.assertNull(snapshot.getBlockingReason("failover"));
+        org.mockito.Mockito.verify(placement).resolveWorkerHostId(plan, DrWorkerRole.TARGET);
     }
 
     private FtctlDrCapabilitiesAnswer completeAnswer() {

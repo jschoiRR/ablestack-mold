@@ -17,6 +17,7 @@
 
 <template>
   <div>
+    <p v-if="listRefreshFailed" role="status">{{ $t('message.list.refresh.stale') }}</p>
     <div>
       <a-alert type="info" v-if="resource.state !== 'DISABLED'">
         <template #message>
@@ -323,12 +324,15 @@
 </template>
 
 <script>
+import { listRefreshMixin } from '@/utils/listRefreshMixin'
+
 import { getAPI, postAPI } from '@/api'
 import Status from '@/components/widgets/Status'
 import TooltipButton from '@/components/widgets/TooltipButton'
 import TooltipLabel from '@/components/widgets/TooltipLabel'
 
 export default {
+  mixins: [listRefreshMixin(['fetchData'])],
   name: 'conditionsTab',
   components: {
     Status,
@@ -463,13 +467,26 @@ export default {
       })
     },
     fetchData () {
-      this.loading = true
-      getAPI('listAutoScalePolicies', {
+      const listRequest = this.listRequestToken('fetchData')
+      this.loading = !listRequest.loaded
+      return getAPI('listAutoScalePolicies', {
         listAll: true,
         id: this.selectedPolicyId
       }).then(response => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+
         this.policy = response.listautoscalepoliciesresponse?.autoscalepolicy[0]
       }).finally(() => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+
+        this.loading = false
+      }).catch(error => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+        listRequest.failed = true
+        this.listRefreshFailed = true
+        if (!listRequest.loaded) this.$notifyError(error)
+      }).finally(() => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
         this.loading = false
       })
     },

@@ -17,6 +17,7 @@
 
 <template>
   <div class="row-invitation">
+    <p v-if="listRefreshFailed" role="status">{{ $t('message.list.refresh.stale') }}</p>
     <a-row :gutter="12">
       <a-col :md="24" :lg="24">
         <a-input-search
@@ -81,11 +82,14 @@
 </template>
 
 <script>
+import { listRefreshMixin } from '@/utils/listRefreshMixin'
+
 import { getAPI, postAPI } from '@/api'
 import Status from '@/components/widgets/Status'
 import TooltipButton from '@/components/widgets/TooltipButton'
 
 export default {
+  mixins: [listRefreshMixin(['fetchData'])],
   name: 'InvitationsTemplate',
   components: {
     Status,
@@ -172,6 +176,7 @@ export default {
   },
   methods: {
     fetchData () {
+      const listRequest = this.listRequestToken('fetchData')
       const params = {}
 
       params.page = this.page
@@ -182,11 +187,12 @@ export default {
       params.keyword = this.searchQuery
       params.listAll = true
 
-      this.loading = true
-      this.dataSource = []
-      this.itemCount = 0
+      this.loading = !listRequest.loaded
 
-      getAPI('listProjectInvitations', params).then(json => {
+      return getAPI('listProjectInvitations', params).then(json => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+        this.dataSource = []
+        this.itemCount = 0
         const listProjectInvitations = json.listprojectinvitationsresponse.projectinvitation
         const itemCount = json.listprojectinvitationsresponse.count
 
@@ -197,8 +203,18 @@ export default {
         this.dataSource = listProjectInvitations
         this.itemCount = itemCount
       }).catch(error => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+        listRequest.failed = true
+        this.listRefreshFailed = true
+        if (listRequest.loaded) return
+
         this.$notifyError(error)
       }).finally(() => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+
+        this.loading = false
+      }).finally(() => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
         this.loading = false
       })
     },

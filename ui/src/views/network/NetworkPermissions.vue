@@ -17,6 +17,7 @@
 
 <template>
   <div>
+    <p v-if="listRefreshFailed" role="status">{{ $t('message.list.refresh.stale') }}</p>
     <a-spin :spinning="fetchLoading">
       <a-button
         shape="round"
@@ -97,10 +98,13 @@
   </div>
 </template>
 <script>
+import { listRefreshMixin } from '@/utils/listRefreshMixin'
+
 import { getAPI, postAPI } from '@/api'
 import CreateNetworkPermission from '@/views/network/CreateNetworkPermission'
 import TooltipButton from '@/components/widgets/TooltipButton'
 export default {
+  mixins: [listRefreshMixin(['fetchData'])],
   name: 'NetworkPermissions',
   components: {
     CreateNetworkPermission,
@@ -161,14 +165,27 @@ export default {
   },
   methods: {
     fetchData () {
+      const listRequest = this.listRequestToken('fetchData')
       const params = {
         networkid: this.resource.id
       }
-      this.fetchLoading = true
-      getAPI('listNetworkPermissions', params).then(json => {
+      this.fetchLoading = !listRequest.loaded
+      return getAPI('listNetworkPermissions', params).then(json => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+
         this.total = json.listnetworkpermissionsresponse.count || 0
         this.networkpermissions = json.listnetworkpermissionsresponse.networkpermission || []
       }).finally(() => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+
+        this.fetchLoading = false
+      }).catch(error => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+        listRequest.failed = true
+        this.listRefreshFailed = true
+        if (!listRequest.loaded) this.$notifyError(error)
+      }).finally(() => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
         this.fetchLoading = false
       })
     },

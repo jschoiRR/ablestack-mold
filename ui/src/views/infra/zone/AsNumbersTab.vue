@@ -17,6 +17,7 @@
 
 <template>
   <div>
+    <p v-if="listRefreshFailed" role="status">{{ $t('message.list.refresh.stale') }}</p>
     <a-button
       type="primary"
       style="width: 100%; margin-bottom: 10px"
@@ -108,6 +109,7 @@
   </div>
 </template>
 <script>
+import { listRefreshMixin } from '@/utils/listRefreshMixin'
 
 import { ref, reactive, toRaw } from 'vue'
 import { getAPI, postAPI } from '@/api'
@@ -118,7 +120,7 @@ export default {
   components: {
     TooltipButton
   },
-  mixins: [mixinDevice],
+  mixins: [listRefreshMixin(['fetchData']), mixinDevice],
   props: {
     resource: {
       type: Object,
@@ -162,10 +164,24 @@ export default {
       })
     },
     fetchData () {
-      this.fetchLoading = true
-      getAPI('listASNRanges', { zoneid: this.resource.id }).then(json => {
+      const listRequest = this.listRequestToken('fetchData')
+      this.fetchLoading = !listRequest.loaded
+      return getAPI('listASNRanges', { zoneid: this.resource.id }).then(json => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+
         this.asnRanges = json?.listasnrangesresponse?.asnumberrange || []
-      }).finally(() => { this.fetchLoading = false })
+      }).finally(() => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+        this.fetchLoading = false
+      }).catch(error => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+        listRequest.failed = true
+        this.listRefreshFailed = true
+        if (!listRequest.loaded) this.$notifyError(error)
+      }).finally(() => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+        this.fetchLoading = false
+      })
     },
     showCreateASRange () {
       this.addASRangeModal = true

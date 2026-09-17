@@ -17,6 +17,7 @@
 
 <template>
   <a-spin :spinning="fetchLoading">
+    <p v-if="listRefreshFailed" role="status">{{ $t('message.list.refresh.stale') }}</p>
     <a-divider style="margin-top: 0px; margin-bottom: 0px;"/>
     <a-list size="small">
       <a-list-item v-if="host.hypervisorversion || (host.details && host.details['Host.OS'])">
@@ -206,9 +207,12 @@
 </template>
 
 <script>
+import { listRefreshMixin } from '@/utils/listRefreshMixin'
+
 import { getAPI } from '@/api'
 
 export default {
+  mixins: [listRefreshMixin(['fetchData'])],
   name: 'HostInfo',
   props: {
     resource: {
@@ -246,8 +250,11 @@ export default {
   },
   methods: {
     fetchData () {
-      this.fetchLoading = true
-      getAPI('listHosts', { id: this.resource.id }).then(json => {
+      const listRequest = this.listRequestToken('fetchData')
+      this.fetchLoading = !listRequest.loaded
+      return getAPI('listHosts', { id: this.resource.id }).then(json => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+
         this.host = json.listhostsresponse.host[0]
         const hosttags = this.host.hosttags?.split(',') || []
         const explicithosttags = this.host.explicithosttags?.split(',') || []
@@ -266,8 +273,18 @@ export default {
         }
         this.host.allhosttags = allHostTags
       }).catch(error => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+        listRequest.failed = true
+        this.listRefreshFailed = true
+        if (listRequest.loaded) return
+
         this.$notifyError(error)
       }).finally(() => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+
+        this.fetchLoading = false
+      }).finally(() => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
         this.fetchLoading = false
       })
     }

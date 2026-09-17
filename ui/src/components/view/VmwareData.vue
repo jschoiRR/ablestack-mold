@@ -35,9 +35,12 @@
 </template>
 
 <script>
+import { listRefreshMixin } from '@/utils/listRefreshMixin'
+
 import { getAPI } from '@/api'
 
 export default {
+  mixins: [listRefreshMixin(['fetchData'])],
   props: {
     resource: {
       type: Object,
@@ -64,14 +67,22 @@ export default {
   },
   methods: {
     fetchData () {
+      const listRequest = this.listRequestToken('fetchData')
       if (!this.resource.id) return
       getAPI('listVmwareDcs', {
         zoneid: this.resource.id
       }).then(response => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+
         if (response.listvmwaredcsresponse.VMwareDC && response.listvmwaredcsresponse.VMwareDC.length > 0) {
           this.vmwaredc = response.listvmwaredcsresponse.VMwareDC[0]
         }
       }).catch(error => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+        listRequest.failed = true
+        this.listRefreshFailed = true
+        if (listRequest.loaded) return
+
         this.$notifyError(error)
       })
     }

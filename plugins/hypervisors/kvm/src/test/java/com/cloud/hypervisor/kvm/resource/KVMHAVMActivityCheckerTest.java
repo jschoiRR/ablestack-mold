@@ -34,9 +34,9 @@ public class KVMHAVMActivityCheckerTest {
         HostTO host = mock(HostTO.class);
         when(monitored.getPool()).thenReturn(pool);
         when(pool.isPoolSupportHA()).thenReturn(true);
-        when(pool.vmActivityCheck(eq(monitored), eq(host), eq(Duration.standardSeconds(17)), eq("vol"), eq("script"), eq(123L)))
+        when(pool.hasVmActivity(eq(monitored), eq(host), eq(Duration.standardSeconds(17)), eq("vol"), eq("script"), eq(123L)))
                 .thenReturn(null);
-        assertNull(new KVMHAVMActivityChecker(monitored, host, "vol", "script", 123L, 17L).checkingHeartBeat());
-        verify(pool).vmActivityCheck(monitored, host, Duration.standardSeconds(17), "vol", "script", 123L);
+        assertNull(new KVMHAVMActivityChecker(monitored, host, "vol", "script", 123L, 17L).hasHeartBeat());
+        verify(pool).hasVmActivity(monitored, host, Duration.standardSeconds(17), "vol", "script", 123L);
     }
 }

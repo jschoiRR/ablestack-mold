@@ -40,25 +40,27 @@
     <template #footer>
       <a-button key="back" @click="handleCancel"> {{ $t('label.close') }} </a-button>
     </template>
-    <a-card :bordered="false" style="background:#f1f1f1">
+    <a-card :bordered="false" class="bulk-action-summary">
       <div><check-circle-outlined style="color: #52c41a; margin-right: 8px"/> {{ $t('label.success') + ': ' + succeededCount }}</div>
       <div><close-circle-outlined style="color: #f5222d; margin-right: 8px"/> {{ $t('state.failed') + ': ' + failedCount }}</div>
-      <div><sync-outlined style="color: #1890ff; margin-right: 8px"/> {{ $t('state.inprogress') + ': ' + selectedItems.filter(item => item.status === 'InProgress').length || 0 }}</div>
+      <div><sync-outlined style="color: #1890ff; margin-right: 8px"/> {{ $t('state.inprogress') + ': ' + inProgressCount }}</div>
     </a-card>
     <a-divider />
     <div v-if="showGroupActionModal">
       <a-table
         v-if="selectedItems.length > 0"
         size="middle"
-        :columns="selectedColumns"
-        :dataSource="tableChanged ? filteredItems : selectedItems"
+        :columns="progressColumns"
+        :dataSource="filteredItems"
         :rowKey="record => ($route.path.includes('/template') || $route.path.includes('/iso')) ? record.zoneid: record.id"
         :pagination="true"
         @change="handleTableChange"
         style="overflow-y: auto">
         <template #bodyCell="{ column, text, record }">
           <template v-if="column.key === 'status'">
-            <status :text=" text ? text : $t('state.inprogress') " displayText></status>
+            <a-badge
+              :status="text === 'success' ? 'success' : text === 'failed' ? 'error' : 'processing'"
+              :text="$t(text === 'success' ? 'label.success' : text === 'failed' ? 'state.failed' : 'state.inprogress')" />
           </template>
           <template v-if="column.key === 'algorithm'">
             {{ returnAlgorithmName(record.algorithm) }}
@@ -91,13 +93,9 @@
   </a-modal>
 </template>
 <script>
-import Status from '@/components/widgets/Status'
 
 export default {
   name: 'BulkActionProgress',
-  components: {
-    Status
-  },
   props: {
     showGroupActionModal: {
       type: Boolean,
@@ -116,31 +114,50 @@ export default {
       default: () => {}
     }
   },
-  created () {
-    this.filteredItems = this.selectedItems
-  },
   data () {
-    return {
-      appliedFilterStatus: {},
-      filteredItems: [],
-      filterItemsTimer: null,
-      tableChanged: false
-    }
+    return { appliedFilterStatus: [], refreshTimer: null }
   },
   inject: ['parentFetchData'],
+  beforeUnmount () {
+    clearTimeout(this.refreshTimer)
+  },
   watch: {
-    succeededCount (count) {
-      if (count > 0) {
-        this.filterItemsDelayed()
-      }
+    statusSignature () {
+      if (!this.showGroupActionModal) return
+      clearTimeout(this.refreshTimer)
+      this.refreshTimer = setTimeout(() => {
+        // fetchData keeps the current rows while the new response is loading.
+        Promise.resolve(this.parentFetchData()).catch(() => {})
+      }, 50)
     },
-    failedCount (count) {
-      if (count > 0) {
-        this.filterItemsDelayed()
+    showGroupActionModal (visible) {
+      if (!visible) {
+        clearTimeout(this.refreshTimer)
+        this.appliedFilterStatus = []
       }
     }
   },
   computed: {
+    statusSignature () {
+      return JSON.stringify(this.selectedItems.map(item => [item.id, item.zoneid, item.status, item.jobid]))
+    },
+    progressColumns () {
+      let hasStatus = false
+      return this.selectedColumns.filter(column => {
+        if (column.key !== 'status') return true
+        if (hasStatus) return false
+        hasStatus = true
+        return true
+      })
+    },
+    filteredItems () {
+      return this.appliedFilterStatus?.length
+        ? this.selectedItems.filter(item => this.appliedFilterStatus.includes(item.status))
+        : this.selectedItems
+    },
+    inProgressCount () {
+      return this.selectedItems.filter(item => !['success', 'failed'].includes(item.status)).length
+    },
     succeededCount () {
       return this.selectedItems.filter(item => item.status === 'success').length || 0
     },
@@ -149,32 +166,14 @@ export default {
     }
   },
   methods: {
-    handleTableChange (pagination, filters, sorter) {
-      this.filteredItems = this.selectedItems
-      this.appliedFilterStatus = filters.status
-      this.filterItems()
-      this.tableChanged = true
-    },
-    filterItems () {
-      if (this.appliedFilterStatus?.length > 0) {
-        this.filteredItems = this.selectedItems.filter(item => {
-          if (this.appliedFilterStatus.includes(item.status)) {
-            return item
-          }
-        })
-      }
-    },
-    filterItemsDelayed () {
-      clearTimeout(this.filterItemsTimer)
-      this.filterItemsTimer = setTimeout(() => {
-        this.filterItems()
-      }, 50)
+    handleTableChange (pagination, filters) {
+      this.appliedFilterStatus = filters.status || []
     },
     handleCancel () {
-      this.filteredItems = []
-      this.tableChanged = false
+      clearTimeout(this.refreshTimer)
+      this.appliedFilterStatus = []
       this.$emit('handle-cancel')
-      this.parentFetchData()
+      Promise.resolve(this.parentFetchData()).catch(() => {})
     },
     returnAlgorithmName (name) {
       switch (name) {
@@ -195,3 +194,10 @@ export default {
   }
 }
 </script>
+
+<style scoped lang="less">
+.bulk-action-summary {
+  background: var(--ui-bg-elevated, #f1f1f1);
+  color: var(--ui-text-primary, #262626);
+}
+</style>

@@ -17,6 +17,7 @@
 
 <template>
   <div>
+    <p v-if="listRefreshFailed" role="status">{{ $t('message.list.refresh.stale') }}</p>
     <a-button
       v-if="(('deleteIso' in $store.getters.apis) && this.selectedItems.length > 0)"
       type="primary"
@@ -210,6 +211,8 @@
 </template>
 
 <script>
+import { listRefreshMixin } from '@/utils/listRefreshMixin'
+
 import { ref, reactive, toRaw } from 'vue'
 import { getAPI, postAPI } from '@/api'
 import TooltipButton from '@/components/widgets/TooltipButton'
@@ -219,6 +222,7 @@ import BulkActionView from '@/components/view/BulkActionView'
 import eventBus from '@/config/eventBus'
 
 export default {
+  mixins: [listRefreshMixin(['fetchData'])],
   name: 'IsoZones',
   components: {
     TooltipButton,
@@ -364,6 +368,7 @@ export default {
       })
     },
     fetchData () {
+      const listRequest = this.listRequestToken('fetchData')
       const params = {}
       params.id = this.resource.id
       params.isofilter = 'executable'
@@ -371,20 +376,30 @@ export default {
       params.page = this.page
       params.pagesize = this.pageSize
 
-      this.dataSource = []
-      this.itemCount = 0
-      this.fetchLoading = true
-      getAPI('listIsos', params).then(json => {
+      this.fetchLoading = !listRequest.loaded
+      if (!listRequest.loaded) {
+        this.fetchZoneData()
+        this.fetchOsCategoryId()
+      }
+      return getAPI('listIsos', params).then(json => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+        this.dataSource = []
+        this.itemCount = 0
         this.dataSource = json.listisosresponse.iso || []
         this.itemCount = json.listisosresponse.count || 0
       }).catch(error => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+        listRequest.failed = true
+        this.listRefreshFailed = true
+        if (listRequest.loaded) return
+
         this.$notifyError(error)
       }).finally(() => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+
         this.fetchLoading = false
         this.updateImageZones()
       })
-      this.fetchZoneData()
-      this.fetchOsCategoryId()
     },
     handleChangePage (page, pageSize) {
       this.page = page

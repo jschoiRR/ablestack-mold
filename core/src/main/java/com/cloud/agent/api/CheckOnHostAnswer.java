@@ -38,6 +38,8 @@ public class CheckOnHostAnswer extends Answer {
 
     public CheckOnHostAnswer(CheckOnHostCommand cmd, String details) {
         super(cmd, false, details);
+        determined = false;
+        alive = false;
     }
 
     /** KVM historically encodes a stopped heartbeat as result=true. */
@@ -54,5 +56,4 @@ public class CheckOnHostAnswer extends Answer {
     public boolean isAlive() {
         return alive;
     }
-
 }

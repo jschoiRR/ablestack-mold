@@ -17,6 +17,7 @@
 
 <template>
   <a-spin :spinning="spinning" :tip="$t('message.redfishdata.loading')">
+    <p v-if="listRefreshFailed" role="status">{{ $t('message.list.refresh.stale') }}</p>
   <a-tabs
     :activeKey="category"
     :tabPosition="device === 'mobile' ? 'top' : 'left'"
@@ -369,9 +370,12 @@
   </a-spin>
 </template>
 <script>
+import { listRefreshMixin } from '@/utils/listRefreshMixin'
+
 import { getAPI } from '@/api'
 import Status from '@/components/widgets/Status'
 export default {
+  mixins: [listRefreshMixin(['fetchData'])],
   name: 'HostRedfishTab',
   components: {
     Status
@@ -822,14 +826,24 @@ export default {
       return obj
     },
     fetchData () {
+      const listRequest = this.listRequestToken('fetchData')
       this.spinning = true
       this.dataMap[this.category] = []
-      getAPI('listHostRedfishData', { category: this.category, hostid: this.resource.id }).then(json => {
+      return getAPI('listHostRedfishData', { category: this.category, hostid: this.resource.id }).then(json => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+
         var items = json.listhostredfishdataresponse.outofbandmanagement
         this.jsonObject = JSON.parse(items.redfishdata)
       }).finally(() => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+
         this.makeData(this.jsonObject)
         this.spinning = false
+      }).catch(error => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+        listRequest.failed = true
+        this.listRefreshFailed = true
+        if (!listRequest.loaded) this.$notifyError(error)
       })
     },
     makeData (obj) {

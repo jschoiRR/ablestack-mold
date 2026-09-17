@@ -18,7 +18,9 @@
 -->
 <template>
   <a-spin :spinning="loading">
+    <p v-if="listRefreshFailed" role="status">{{ $t('message.list.refresh.stale') }}</p>
     <div class="cross-dr-tab-toolbar">
+      <dr-checkpoint-manager :planId="planId" />
       <a-button size="small" @click="fetchData">
         <template #icon><ReloadOutlined /></template>
         {{ $t('label.refresh') }}
@@ -67,12 +69,15 @@
 </template>
 
 <script>
+import { listRefreshMixin } from '@/utils/listRefreshMixin'
+import DrCheckpointManager from '@/components/dr/DrCheckpointManager.vue'
 import DrStatusPill from '@/components/dr/DrStatusPill.vue'
 import { listDrRestorePoints, listDrSyncCheckpoints } from '@/api/dr'
 
 export default {
+  mixins: [listRefreshMixin(['fetchData'])],
   name: 'DrSyncCheckpointsTab',
-  components: { DrStatusPill },
+  components: { DrStatusPill, DrCheckpointManager },
   props: {
     planId: { type: String, required: true }
   },
@@ -110,6 +115,7 @@ export default {
   created () { this.fetchData() },
   methods: {
     fetchData () {
+      const listRequest = this.listRequestToken('fetchData')
       if (!this.planId) {
         this.checkpoints = []
         return
@@ -120,14 +126,23 @@ export default {
         this.checkpoints = []
         return
       }
-      this.loading = true
+      this.loading = !listRequest.loaded
       const request = hasNewApi ? listDrSyncCheckpoints : listDrRestorePoints
-      request({ planid: this.planId }).then(result => {
+      return request({ planid: this.planId }).then(result => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
         this.checkpoints = (result.items || []).map(item => ({
           ...item,
           transferratio: this.transferRatio(item)
         }))
-      }).finally(() => { this.loading = false })
+      }).catch(error => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+        listRequest.failed = true
+        this.listRefreshFailed = true
+        if (!listRequest.loaded) this.$notifyError(error)
+      }).finally(() => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+        this.loading = false
+      })
     },
     formatSeconds (seconds) {
       const value = Number(seconds)

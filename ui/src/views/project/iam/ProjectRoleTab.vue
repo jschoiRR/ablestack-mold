@@ -16,6 +16,7 @@
 // under the License.
 <template>
   <div>
+    <p v-if="listRefreshFailed" role="status">{{ $t('message.list.refresh.stale') }}</p>
     <a-button type="dashed" style="width: 100%; margin-bottom: 15px" @click="openCreateModal">
       <template #icon><plus-outlined /></template>
       {{ $t('label.create.project.role') }}
@@ -27,7 +28,7 @@
           :loading="loading"
           :columns="columns"
           :dataSource="dataSource"
-          :rowKey="(record, index) => record.projectid + '-' + index"
+          :rowKey="listRowKey"
           :pagination="false"
           :expandRowByClick="true">
           <template #expandedRowRender="{ record }">
@@ -120,12 +121,15 @@
   </div>
 </template>
 <script>
+import { listRefreshMixin } from '@/utils/listRefreshMixin'
+
 import { ref, reactive, toRaw } from 'vue'
 import { getAPI, postAPI } from '@/api'
 import ProjectRolePermissionTab from '@/views/project/iam/ProjectRolePermissionTab'
 import TooltipButton from '@/components/widgets/TooltipButton'
 
 export default {
+  mixins: [listRefreshMixin(['fetchData'])],
   name: 'ProjectRoleTab',
   props: {
     resource: {
@@ -181,8 +185,11 @@ export default {
       this.rules = reactive({})
     },
     fetchData () {
-      this.loading = true
-      getAPI('listProjectRoles', { projectid: this.resource.id }).then(json => {
+      const listRequest = this.listRequestToken('fetchData')
+      this.loading = !listRequest.loaded
+      return getAPI('listProjectRoles', { projectid: this.resource.id }).then(json => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+
         const projectRoles = json.listprojectrolesresponse.projectrole
         if (!projectRoles || projectRoles.length === 0) {
           this.dataSource = []
@@ -190,8 +197,18 @@ export default {
         }
         this.dataSource = projectRoles
       }).catch(error => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+        listRequest.failed = true
+        this.listRefreshFailed = true
+        if (listRequest.loaded) return
+
         this.$notifyError(error)
       }).finally(() => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+
+        this.loading = false
+      }).finally(() => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
         this.loading = false
       })
     },

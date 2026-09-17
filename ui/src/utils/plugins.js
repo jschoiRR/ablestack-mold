@@ -21,7 +21,7 @@ import { getAPI } from '@/api'
 import { message, notification, Modal } from 'ant-design-vue'
 import eventBus from '@/config/eventBus'
 import store from '@/store'
-import { sourceToken } from '@/utils/request'
+import { createJobTracker } from '@/utils/jobTracker'
 import { toLocalDate, toLocaleDate } from '@/utils/date'
 
 function normalizePath (path) {
@@ -40,245 +40,84 @@ function isBase64 (str) {
 
 export const pollJobPlugin = {
   install (app) {
-    app.config.globalProperties.$pollJob = function (options) {
-      /**
-       * @param {String} jobId
-       * @param {String} [name='']
-       * @param {String} [title='']
-       * @param {String} [description='']
-       * @param {Boolean} [showSuccessMessage=true]
-       * @param {String} [successMessage=Success]
-       * @param {Function} [successMethod=() => {}]
-       * @param {String} [errorMessage=Error]
-       * @param {Function} [errorMethod=() => {}]
-       * @param {Object} [showLoading=true]
-       * @param {String} [loadingMessage=Loading...]
-       * @param {String} [catchMessage=Error caught]
-       * @param {Function} [catchMethod=() => {}]
-       * @param {Object} [action=null]
-       * @param {Object} [bulkAction=false]
-       * @param {String} resourceId
-       */
-      const {
-        jobId,
-        name = '',
-        title = '',
-        description = '',
-        showSuccessMessage = true,
-        successMessage = i18n.global.t('label.success'),
-        successMethod = () => {},
-        errorMessage = i18n.global.t('label.error'),
-        errorMethod = () => {},
-        loadingMessage = `${i18n.global.t('label.loading')}...`,
-        showLoading = true,
-        catchMessage = i18n.global.t('label.error.caught'),
-        catchMethod = () => {},
-        action = null,
-        bulkAction = false,
-        resourceId = null
-      } = options
-
-      // 디버그: 폴링 시작 로그
-      console.debug('[pollJob] start', { jobId, name, resourceId })
-
-      store.dispatch('AddHeaderNotice', {
-        key: jobId,
-        title,
-        description,
-        status: 'progress',
-        timestamp: new Date()
+    const safe = fn => { try { fn() } catch (e) { console.error('[pollJob] callback failed', e) } }
+    const notifyError = config => {
+      store.commit('SET_COUNT_NOTIFY', store.getters.countNotify + 1)
+      notification.error({
+        top: '65px',
+        duration: 0,
+        ...config,
+        onClose: () => store.commit('SET_COUNT_NOTIFY', Math.max(0, store.getters.countNotify - 1))
       })
-
-      // 리스너 중복 등록 방지: 기존 핸들러가 있으면 제거
-      // - eventBus에 'update-job-details' 이벤트 리스너가 중복 등록되는 것을 막음
-      // - 이전 등록된 핸들러(this._pollJobUpdateHandler)가 있으면 off()로 제거
-      if (this._pollJobUpdateHandler) {
-        eventBus.off('update-job-details', this._pollJobUpdateHandler)
-      }
-
-      // 디버그 강화된 핸들러
-      const updateHandler = (args) => {
-        const { jobId: evtJobId, resourceId: evtResourceId } = args || {}
-        const fullPath = this.$route.fullPath
-        const path = this.$route.path
-
-        console.debug('[pollJob] on update-job-details', {
-          evtJobId, evtResourceId, fullPath, path
-        })
-
-        const jobs = this.$store.getters.headerNotices.map(job => {
-          if (job.key === evtJobId) {
-            let targetPath = path
-            // 변경 사항:
-            // - 기존에는 단순히 path + resourceId로 이동 시도
-            // - 이제 this.$router.resolve()로 해당 경로가 실제 라우터에 매칭되는지 검증
-            // - 매칭 실패 시 404 이동 방지하고 경고 로그 출력
-            if (evtResourceId && !path.includes(evtResourceId)) {
-              const candidate = normalizePath(path) + '/' + evtResourceId
-              const resolved = this.$router.resolve(candidate)
-              if (resolved.matched.length > 0) {
-                targetPath = candidate
-              } else {
-                console.warn('[pollJob] Invalid resourceId path skipped:', candidate)
-                console.warn('[pollJob]   Current route path:', path)
-                console.warn('[pollJob]   Resource ID:', evtResourceId)
-                console.warn('[pollJob]   Router matched length:', resolved.matched.length)
-                try {
-                  console.warn('[pollJob]   Available routes:', this.$router.getRoutes().map(r => r.path))
-                } catch (e) {
-                  console.warn('[pollJob]   Available routes: <unavailable in this env>')
-                }
-              }
-            } else {
-              targetPath = fullPath
+    }
+    const tracker = createJobTracker({
+      query: jobId => getAPI('queryAsyncJobResult', { jobId }, { timeout: 15000, backgroundJob: true }).then(json => json.queryasyncjobresultresponse),
+      onState: (jobId, result, meta) => {
+        const { options, router, originalPage, path } = meta
+        const {
+          title = '', description = '', name = '', action = null, bulkAction = false,
+          showLoading = true, showSuccessMessage = true,
+          successMessage = i18n.global.t('label.success'),
+          errorMessage = i18n.global.t('label.error'),
+          loadingMessage = `${i18n.global.t('label.loading')}...`
+        } = options
+        const terminal = result.jobstatus === 1 || result.jobstatus === 2
+        const interrupted = Boolean(result.trackingStatus)
+        // Clean up before invoking application callbacks or event listeners.
+        if (terminal || interrupted) message.destroy(jobId)
+        if (terminal && options.retry && options.batchKey) notification.close(options.batchKey)
+        if (result.trackingStatus === 'cancelled') {
+          safe(() => store.commit('SET_HEADER_NOTICES', store.getters.headerNotices.map(notice => notice.key === jobId ? { ...notice, status: 'unknown' } : notice)))
+          return
+        }
+        const status = result.jobstatus === 1 ? 'done' : result.jobstatus === 2 ? 'failed' : interrupted ? 'unknown' : 'progress'
+        safe(() => store.dispatch('AddHeaderNotice', {
+          key: jobId, title, description, path, status, timestamp: new Date()
+        }))
+        if (result.jobstatus === 0) {
+          if (showLoading) message.loading({ content: loadingMessage, key: jobId, duration: 0 })
+          return
+        }
+        if (result.trackingStatus === 'retrying') return
+        if (result.trackingStatus === 'unknown') {
+          notification.warning({
+            key: jobId,
+            top: '65px',
+            duration: 0,
+            message: title,
+            description: i18n.global.t('message.job.result.unknown'),
+            onClick: () => {
+              notification.close(jobId)
+              app.config.globalProperties.$pollJob.call(meta.context, { ...options, retry: true })
             }
-            job.path = targetPath
-          }
-          return job
-        })
-        this.$store.commit('SET_HEADER_NOTICES', jobs)
-      }
-
-      this._pollJobUpdateHandler = updateHandler
-      eventBus.on('update-job-details', updateHandler)
-
-      options.originalPage = options.originalPage || normalizePath(this.$router.currentRoute.value.path)
-      console.debug('[pollJob] originalPage:', options.originalPage)
-
-      getAPI('queryAsyncJobResult', { jobId }).then(json => {
-        const result = json.queryasyncjobresultresponse
-        eventBus.emit('update-job-details', { jobId, resourceId })
-
-        // 폴링 성공 시 처리 부분
+          })
+          return
+        }
         if (result.jobstatus === 1) {
-          if (showSuccessMessage) {
-            let content = successMessage
-            if (successMessage === 'Success' && action && action.label) {
-              content = i18n.global.t(action.label)
-            }
-            if (name) content = content + ' - ' + name
-            message.success({
-              content,
-              key: jobId,
-              duration: 2
-            })
-          } else {
-            message.destroy(jobId)
-          }
-          store.dispatch('AddHeaderNotice', {
-            key: jobId,
-            title,
-            description,
-            status: 'done',
-            duration: 2,
-            timestamp: new Date()
-          })
-
-          const currentPage = normalizePath(this.$router.currentRoute.value.path)
-          const originalPage = normalizePath(options.originalPage)
-          const samePage = currentPage === originalPage
-          console.debug('[pollJob] success', { currentPage, originalPage, samePage, action })
-
-          // 변경 사항:
-          // - 라우트 존재 여부를 this.$router.resolve()로 검증 후 이벤트 실행
-          // - 존재하지 않으면 404로 가는 것을 방지하고 경고 로그 출력
-          if (samePage && (!action || !('isFetchData' in action) || action.isFetchData)) {
-            const resolved = this.$router.resolve(currentPage)
-            if (resolved.matched.length > 0) {
-              eventBus.emit('async-job-complete', action)
-            } else {
-              console.warn('[pollJob] Prevented navigation to non-existent route:', currentPage)
-              console.warn('[pollJob]   Original page:', originalPage)
-              console.warn('[pollJob]   Router matched length:', resolved.matched.length)
-              try {
-                console.warn('[pollJob]   Available routes:', this.$router.getRoutes().map(r => r.path))
-              } catch (e) {
-                console.warn('[pollJob]   Available routes: <unavailable in this env>')
-              }
-            }
-          }
-          successMethod(result)
+          if (showSuccessMessage || options.retry) message.success({ content: name ? `${successMessage} - ${name}` : successMessage, key: jobId, duration: 2 })
         } else if (result.jobstatus === 2) {
-          // 실패
-          if (!bulkAction) {
-            message.error({ content: errorMessage, key: jobId, duration: 1 })
-          }
-          let errMessage = errorMessage
-          if (action && action.label) errMessage = i18n.global.t(action.label)
-
-          let desc = result.jobresult?.errortext
-          if (name) desc = `(${name}) ${desc}`
-
-          let onClose = () => {}
-          if (!bulkAction) {
-            let countNotify = store.getters.countNotify
-            countNotify++
-            store.commit('SET_COUNT_NOTIFY', countNotify)
-            onClose = () => {
-              let c = store.getters.countNotify
-              c > 0 ? c-- : c = 0
-              store.commit('SET_COUNT_NOTIFY', c)
-            }
-          }
-          notification.error({
-            top: '65px',
-            message: errMessage,
-            description: desc,
-            key: jobId,
-            duration: 0,
-            onClose
-          })
-          store.dispatch('AddHeaderNotice', {
-            key: jobId,
-            title,
-            description: desc,
-            status: 'failed',
-            duration: 2,
-            timestamp: new Date()
-          })
-
-          eventBus.emit('update-job-details', { jobId, resourceId })
-
-          const currentPage = this.$router.currentRoute.value.path
-          const samePage = options.originalPage === currentPage || options.originalPage.startsWith(currentPage + '/')
-          console.debug('[pollJob] failed', { currentPage, originalPage: options.originalPage, samePage })
-
-          if (samePage && (!action || !('isFetchData' in action) || (action.isFetchData))) {
-            eventBus.emit('async-job-complete', action)
-          }
-          errorMethod(result)
-        } else if (result.jobstatus === 0) {
-          // 진행중 → 폴링
-          if (showLoading) {
-            message.loading({
-              content: loadingMessage,
-              key: jobId,
-              duration: 0
-            })
-          }
-          setTimeout(() => {
-            this.$pollJob(options, action)
-          }, 3000)
+          if (!bulkAction) message.error({ content: errorMessage, key: jobId, duration: 1 })
+          safe(() => notifyError({ key: jobId, message: action?.label ? i18n.global.t(action.label) : errorMessage, description: result.jobresult?.errortext }))
         }
-      }).catch(e => {
-        console.error(`${catchMessage} - ${e}`)
-        if (!sourceToken.isCancel(e)) {
-          let countNotify = store.getters.countNotify
-          countNotify++
-          store.commit('SET_COUNT_NOTIFY', countNotify)
-          notification.error({
-            top: '65px',
-            message: i18n.global.t('label.error'),
-            description: catchMessage,
-            duration: 0,
-            onClose: () => {
-              let c = store.getters.countNotify
-              c > 0 ? c-- : c = 0
-              store.commit('SET_COUNT_NOTIFY', c)
-            }
-          })
+        safe(() => eventBus.emit('update-job-details', { jobId, resourceId: options.resourceId }))
+        const samePage = normalizePath(router.currentRoute.value.path) === originalPage
+        if (samePage && (options.retry || !action || !('isFetchData' in action) || action.isFetchData)) {
+          safe(() => eventBus.emit('async-job-complete', action))
         }
-        catchMethod && catchMethod()
+      }
+    })
+    // A route change may cancel one query; retry it. A security scope change must stop tracking.
+    store.watch(() => [store.state.user.token, store.getters.userInfo?.id, store.getters.project?.id].join('|'), () => tracker.clear())
+    app.config.globalProperties.$pollJob = function (options) {
+      if (options.retry) options = { ...tracker.metadata(options.jobId)?.options, ...options }
+      const originalPage = normalizePath(options.originalPage || this.$router.currentRoute.value.path)
+      options = { ...options, originalPage }
+      const meta = { options, router: this.$router, originalPage, path: this.$route.fullPath, context: this }
+      return tracker.track(options.jobId, meta, options.retry).then(result => {
+        if (result.jobstatus === 1) safe(() => options.successMethod?.(result))
+        else if (result.jobstatus === 2) safe(() => options.errorMethod?.(result))
+        else safe(() => options.catchMethod?.(result))
+        return result
       })
     }
   }

@@ -21,6 +21,8 @@ package com.cloud.hypervisor.kvm.storage;
 import static com.cloud.utils.NumbersUtil.toHumanReadableSize;
 import static com.cloud.utils.storage.S3.S3Utils.putFile;
 
+import com.cloud.template.TemplateManager;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -57,6 +59,7 @@ import javax.xml.xpath.XPathFactory;
 
 import com.cloud.agent.api.Command;
 import com.cloud.hypervisor.kvm.resource.LibvirtXMLParser;
+import com.cloud.storage.clvm.ClvmPoolManager;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -88,6 +91,7 @@ import org.apache.cloudstack.storage.command.SnapshotAndCopyAnswer;
 import org.apache.cloudstack.storage.command.SnapshotAndCopyCommand;
 import org.apache.cloudstack.storage.command.SyncVolumePathCommand;
 import org.apache.cloudstack.storage.formatinspector.Qcow2Inspector;
+import org.apache.cloudstack.storage.to.BackupDeltaTO;
 import org.apache.cloudstack.storage.to.PrimaryDataStoreTO;
 import org.apache.cloudstack.storage.to.SnapshotObjectTO;
 import org.apache.cloudstack.storage.to.TemplateObjectTO;
@@ -114,6 +118,7 @@ import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 import org.libvirt.Connect;
 import org.libvirt.Domain;
+import org.libvirt.DomainBlockJobInfo;
 import org.libvirt.DomainInfo;
 import org.libvirt.DomainSnapshot;
 import org.libvirt.Error.ErrorNumber;
@@ -248,6 +253,27 @@ public class KVMStorageProcessor implements StorageProcessor {
             "  </devices>\n" +
             "</domain>";
 
+    private static final String DUMMY_VM_XML_BLOCK = "<domain type='qemu'>\n" +
+            "  <name>%s</name>\n" +
+            "  <memory unit='MiB'>256</memory>\n" +
+            "  <currentMemory unit='MiB'>256</currentMemory>\n" +
+            "  <vcpu>1</vcpu>\n" +
+            "  <os>\n" +
+            "    <type arch='%s' machine='%s'>hvm</type>\n" +
+            "    <boot dev='hd'/>\n" +
+            "  </os>\n" +
+            "  <devices>\n" +
+            "    <emulator>%s</emulator>\n" +
+            "    <disk type='block' device='disk'>\n" +
+            "      <driver name='qemu' type='qcow2' cache='none'/>\n"+
+            "      <source dev='%s'/>\n" +
+            "      <target dev='sda'/>\n" +
+            "    </disk>\n" +
+            "    <graphics type='vnc' port='-1'/>\n" +
+            "  </devices>\n" +
+            "</domain>";
+
+    public static final List<StoragePoolType> poolTypesToDeleteChainInfo = Arrays.asList(StoragePoolType.Filesystem, StoragePoolType.NetworkFilesystem, StoragePoolType.SharedMountPoint);
 
     public KVMStorageProcessor(final KVMStoragePoolManager storagePoolMgr, final LibvirtComputingResource resource) {
         this.storagePoolMgr = storagePoolMgr;
@@ -370,15 +396,28 @@ public class KVMStorageProcessor implements StorageProcessor {
                     path = destTempl.getUuid();
                 }
 
-                if (path != null && !storagePoolMgr.connectPhysicalDisk(primaryStore.getPoolType(), primaryStore.getUuid(), path, details)) {
-                    logger.warn("Failed to connect physical disk at path: {}, in storage pool [id: {}, name: {}]", path, primaryStore.getUuid(), primaryStore.getName());
-                    return new PrimaryStorageDownloadAnswer("Failed to spool template disk at path: " + path + ", in storage pool id: " + primaryStore.getUuid());
-                }
+                if (primaryPool.getType() == StoragePoolType.CLVM_NG) {
+                    logger.info("Copying template {} to CLVM_NG pool {}",
+                                destTempl.getUuid(), primaryPool.getUuid());
 
-                primaryVol = storagePoolMgr.copyPhysicalDisk(tmplVol, path != null ? path : destTempl.getUuid(), primaryPool, cmd.getWaitInMillSeconds());
+                    try {
+                        storagePoolMgr.createTemplateOnClvmNg(tmplVol.getPath(), path, cmd.getWaitInMillSeconds(), primaryPool);
+                        primaryVol = primaryPool.getPhysicalDisk("template-" + path);
+                    } catch (Exception e) {
+                        logger.error("Failed to create CLVM_NG template: {}", e.getMessage(), e);
+                        return new PrimaryStorageDownloadAnswer("Failed to create CLVM_NG template: " + e.getMessage());
+                    }
+                } else {
+                    if (path != null && !storagePoolMgr.connectPhysicalDisk(primaryStore.getPoolType(), primaryStore.getUuid(), path, details)) {
+                        logger.warn("Failed to connect physical disk at path: {}, in storage pool [id: {}, name: {}]", path, primaryStore.getUuid(), primaryStore.getName());
+                        return new PrimaryStorageDownloadAnswer("Failed to spool template disk at path: " + path + ", in storage pool id: " + primaryStore.getUuid());
+                    }
 
-                if (!storagePoolMgr.disconnectPhysicalDisk(primaryStore.getPoolType(), primaryStore.getUuid(), path)) {
-                    logger.warn("Failed to disconnect physical disk at path: {}, in storage pool [id: {}, name: {}]", path, primaryStore.getUuid(), primaryStore.getName());
+                    primaryVol = storagePoolMgr.copyPhysicalDisk(tmplVol, path != null ? path : destTempl.getUuid(), primaryPool, cmd.getWaitInMillSeconds());
+
+                    if (!storagePoolMgr.disconnectPhysicalDisk(primaryStore.getPoolType(), primaryStore.getUuid(), path)) {
+                        logger.warn("Failed to disconnect physical disk at path: {}, in storage pool [id: {}, name: {}]", path, primaryStore.getUuid(), primaryStore.getName());
+                    }
                 }
             } else {
                 primaryVol = storagePoolMgr.copyPhysicalDisk(tmplVol, UUID.randomUUID().toString(), primaryPool, cmd.getWaitInMillSeconds());
@@ -398,7 +437,8 @@ public class KVMStorageProcessor implements StorageProcessor {
                     StoragePoolType.RBD,
                     StoragePoolType.PowerFlex,
                     StoragePoolType.Linstor,
-                    StoragePoolType.FiberChannel).contains(primaryPool.getType())) {
+                    StoragePoolType.FiberChannel,
+                    StoragePoolType.CLVM).contains(primaryPool.getType())) {
                     newTemplate.setFormat(ImageFormat.RAW);
                 } else {
                     newTemplate.setFormat(ImageFormat.QCOW2);
@@ -556,7 +596,11 @@ public class KVMStorageProcessor implements StorageProcessor {
 
             final VolumeObjectTO newVol = new VolumeObjectTO();
             newVol.setPath(vol.getName());
-            newVol.setSize(volume.getSize());
+            if (StoragePoolType.CLVM_NG.equals(primaryStore.getPoolType()) && vol != null && vol.getVirtualSize() > 0) {
+                newVol.setSize(vol.getVirtualSize());
+            } else {
+                newVol.setSize(volume.getSize());
+            }
             if (vol.getQemuEncryptFormat() != null) {
                 newVol.setEncryptFormat(vol.getQemuEncryptFormat().toString());
             }
@@ -612,7 +656,9 @@ public class KVMStorageProcessor implements StorageProcessor {
 
             String path = details != null ? details.get(DiskTO.IQN) : null;
 
-            storagePoolMgr.connectPhysicalDisk(primaryStore.getPoolType(), primaryStore.getUuid(), path, details);
+            if (!ClvmPoolManager.isClvmPoolType(primaryStore.getPoolType())) {
+                storagePoolMgr.connectPhysicalDisk(primaryStore.getPoolType(), primaryStore.getUuid(), path, details);
+            }
 
             final String volumeName = UUID.randomUUID().toString();
 
@@ -641,7 +687,9 @@ public class KVMStorageProcessor implements StorageProcessor {
             final KVMPhysicalDisk newDisk = storagePoolMgr.copyPhysicalDisk(volume, path != null ? path : volumeName, primaryPool, cmd.getWaitInMillSeconds());
             resource.createOrUpdateLogFileForCommand(cmd, Command.State.COMPLETED);
 
-            storagePoolMgr.disconnectPhysicalDisk(primaryStore.getPoolType(), primaryStore.getUuid(), path);
+            if (!ClvmPoolManager.isClvmPoolType(primaryStore.getPoolType())) {
+                storagePoolMgr.disconnectPhysicalDisk(primaryStore.getPoolType(), primaryStore.getUuid(), path);
+            }
 
             final VolumeObjectTO newVol = new VolumeObjectTO();
 
@@ -1141,8 +1189,14 @@ public class KVMStorageProcessor implements StorageProcessor {
                 }
             } else {
                 final Script command = new Script(_manageSnapshotPath, cmd.getWaitInMillSeconds(), logger);
-
-                command.add("-b", isCreatedFromVmSnapshot ? snapshotDisk.getPath() : snapshot.getPath());
+                String backupPath;
+                if (primaryPool.getType() == StoragePoolType.CLVM || primaryPool.getType() == StoragePoolType.CLVM_NG) {
+                    backupPath = snapshotDisk.getPath();
+                    logger.debug("Using snapshotDisk path for CLVM/CLVM_NG backup: " + backupPath);
+                } else {
+                    backupPath = isCreatedFromVmSnapshot ? snapshotDisk.getPath() : snapshot.getPath();
+                }
+                command.add("-b", backupPath);
                 command.add(NAME_OPTION, snapshotName);
                 command.add("-p", snapshotDestPath);
 
@@ -1187,6 +1241,90 @@ public class KVMStorageProcessor implements StorageProcessor {
         }
     }
 
+    /**
+     * Parse CLVM/CLVM_NG snapshot path and compute MD5 hash.
+     * Snapshot path format: /dev/vgname/volumeuuid/snapshotuuid
+     *
+     * @param snapshotPath The snapshot path from database
+     * @param poolType Storage pool type (for logging)
+     * @return Array of [vgName, volumeUuid, snapshotUuid, md5Hash] or null if invalid
+     */
+    private String[] parseClvmSnapshotPath(String snapshotPath, StoragePoolType poolType) {
+        String[] pathParts = snapshotPath.split("/");
+        if (pathParts.length < 5) {
+            logger.warn("Invalid {} snapshot path format: {}, expected format: /dev/vgname/volume-uuid/snapshot-uuid",
+                        poolType, snapshotPath);
+            return null;
+        }
+
+        String vgName = pathParts[2];
+        String volumeUuid = pathParts[3];
+        String snapshotUuid = pathParts[4];
+
+        logger.info("Parsed {} snapshot path - VG: {}, Volume: {}, Snapshot: {}",
+                    poolType, vgName, volumeUuid, snapshotUuid);
+
+        String md5Hash = computeMd5Hash(snapshotUuid);
+        logger.debug("Computed MD5 hash for snapshot UUID {}: {}", snapshotUuid, md5Hash);
+
+        return new String[]{vgName, volumeUuid, snapshotUuid, md5Hash};
+    }
+
+    /**
+     * Delete a CLVM or CLVM_NG snapshot using managesnapshot.sh script.
+     * For both CLVM and CLVM_NG, the snapshot path stored in DB is: /dev/vgname/volumeuuid/snapshotuuid
+     * The script handles MD5 transformation and pool-specific deletion commands internally:
+     * - CLVM: Uses lvremove to delete LVM snapshot
+     * - CLVM_NG: Uses qemu-img snapshot -d to delete QCOW2 internal snapshot
+     * This approach is consistent with snapshot creation and backup which also use the script.
+     *
+     * @param snapshotPath The snapshot path from database
+     * @param poolType Storage pool type (CLVM or CLVM_NG)
+     * @param checkExistence If true, checks if snapshot exists before cleanup (for explicit deletion)
+     *                       If false, always performs cleanup (for post-backup cleanup)
+     * @return true if cleanup was performed, false if snapshot didn't exist (when checkExistence=true)
+     */
+    private boolean deleteClvmSnapshot(String snapshotPath, StoragePoolType poolType, boolean checkExistence) {
+        logger.info("Starting {} snapshot deletion for path: {}, checkExistence: {}", poolType, snapshotPath, checkExistence);
+
+        try {
+            String[] parsed = parseClvmSnapshotPath(snapshotPath, poolType);
+            if (parsed == null) {
+                return false;
+            }
+
+            String vgName = parsed[0];
+            String volumeUuid = parsed[1];
+            String snapshotUuid = parsed[2];
+            String volumePath = "/dev/" + vgName + "/" + volumeUuid;
+
+            // Use managesnapshot.sh script for deletion (consistent with create/backup)
+            // Script handles MD5 transformation and pool-specific commands internally
+            Script deleteCommand = new Script(_manageSnapshotPath, 30000, logger);
+            deleteCommand.add("-d", volumePath);
+            deleteCommand.add("-n", snapshotUuid);
+
+            logger.info("Executing: managesnapshot.sh -d {} -n {}", volumePath, snapshotUuid);
+            String result = deleteCommand.execute();
+
+            if (result == null) {
+                logger.info("Successfully deleted {} snapshot: {}", poolType, snapshotPath);
+                return true;
+            } else {
+                if (checkExistence && result.contains("does not exist")) {
+                    logger.info("{} snapshot {} already deleted, no cleanup needed", poolType, snapshotPath);
+                    return true;
+                }
+                logger.warn("Failed to delete {} snapshot {}: {}", poolType, snapshotPath, result);
+                return false;
+            }
+
+        } catch (Exception ex) {
+            logger.error("Exception while deleting {} snapshot {}", poolType, snapshotPath, ex);
+            return false;
+        }
+    }
+
     private void deleteSnapshotOnPrimary(final CopyCommand cmd, final SnapshotObjectTO snapshot,
             KVMStoragePool primaryPool) {
         String snapshotPath = snapshot.getPath();
@@ -1199,7 +1337,19 @@ public class KVMStorageProcessor implements StorageProcessor {
 
         if ((backupSnapshotAfterTakingSnapshot == null || BooleanUtils.toBoolean(backupSnapshotAfterTakingSnapshot)) && deleteSnapshotOnPrimary) {
             try {
-                Files.deleteIfExists(Paths.get(snapshotPath));
+                if (primaryPool.getType() == StoragePoolType.CLVM || primaryPool.getType() == StoragePoolType.CLVM_NG) {
+                    // Both CLVM and CLVM_NG use the same deletion method via managesnapshot.sh script
+                    boolean cleanedUp = deleteClvmSnapshot(snapshotPath, primaryPool.getType(), false);
+                    if (!cleanedUp) {
+                        String[] parsedPath = parseClvmSnapshotPath(snapshotPath, primaryPool.getType());
+                        String snapMd5 = (parsedPath != null) ? computeMd5Hash(parsedPath[2]) : computeMd5Hash(snapshotPath);
+                        logger.warn("Deletion of Snapshot: {} on primary store may have failed as it doesn't exist: {} " +
+                                "(MD5 of snapshot UUID: {} - admins can use this to manually locate and delete the LV via managesnapshot.sh or lvremove)",
+                                primaryPool.getType(), snapshotPath, snapMd5);
+                    }
+                } else {
+                    Files.deleteIfExists(Paths.get(snapshotPath));
+                }
             } catch (IOException ex) {
                 logger.error("Failed to delete snapshot [{}] on primary storage [{}].", snapshot.getId(), snapshot.getName(), ex);
             }
@@ -1208,10 +1358,31 @@ public class KVMStorageProcessor implements StorageProcessor {
         }
     }
 
-    protected synchronized void attachOrDetachISO(final Connect conn, final String vmName, String isoPath, final boolean isAttach, Map<String, String> params, DataStoreTO store) throws
+
+    /**
+     * Compute MD5 hash of a string, matching what managesnapshot.sh does:
+     * echo "${snapshot}" | md5sum -t | awk '{ print $1 }'
+     */
+    private String computeMd5Hash(String input) {
+        try {
+            java.security.MessageDigest md = java.security.MessageDigest.getInstance("MD5");
+            byte[] array = md.digest((input + "\n").getBytes("UTF-8"));
+            StringBuilder sb = new StringBuilder();
+            for (byte b : array) {
+                sb.append(String.format("%02x", b));
+            }
+            return sb.toString();
+        } catch (Exception e) {
+            logger.error("Failed to compute MD5 hash for: {}", input, e);
+            return input;
+        }
+    }
+
+    protected synchronized void attachOrDetachISO(final Connect conn, final String vmName, String isoPath, final boolean isAttach, Map<String, String> params, DataStoreTO store, Integer deviceSeq) throws
             LibvirtException, InternalErrorException {
         DiskDef iso = new DiskDef();
         boolean isUefiEnabled = MapUtils.isNotEmpty(params) && params.containsKey("UEFI");
+        Integer devId = (deviceSeq != null) ? deviceSeq : TemplateManager.CDROM_PRIMARY_DEVICE_SEQ;
         if (isoPath != null && isAttach) {
             final int index = isoPath.lastIndexOf("/");
             final String path = isoPath.substring(0, index);
@@ -1227,16 +1398,16 @@ public class KVMStorageProcessor implements StorageProcessor {
             final DiskDef.DiskType isoDiskType = LibvirtComputingResource.getDiskType(isoVol);
             isoPath = isoVol.getPath();
 
-            iso.defISODisk(isoPath, isUefiEnabled, isoDiskType);
+            iso.defISODisk(isoPath, devId, isUefiEnabled, isoDiskType);
         } else {
-            iso.defISODisk(null, isUefiEnabled, DiskDef.DiskType.FILE);
+            iso.defISODisk(null, devId, isUefiEnabled, DiskDef.DiskType.FILE);
         }
 
         final List<DiskDef> disks = resource.getDisks(conn, vmName);
         updateOrAttachIsoDevice(conn, vmName, iso);
         if (!isAttach) {
             for (final DiskDef disk : disks) {
-                if (disk.getDeviceType() == DiskDef.DeviceType.CDROM) {
+                if (disk.getDeviceType() == DiskDef.DeviceType.CDROM && iso.getDiskLabel().equals(disk.getDiskLabel())) {
                     resource.cleanupDisk(disk);
                 }
             }
@@ -1279,11 +1450,12 @@ public class KVMStorageProcessor implements StorageProcessor {
         final DiskTO disk = cmd.getDisk();
         final TemplateObjectTO isoTO = (TemplateObjectTO)disk.getData();
         final DataStoreTO store = isoTO.getDataStore();
+        final Integer deviceSeq = (disk.getDiskSeq() != null) ? disk.getDiskSeq().intValue() : null;
 
         try {
             String dataStoreUrl = getDataStoreUrlFromStore(store);
             final Connect conn = LibvirtConnection.getConnectionByVmName(cmd.getVmName());
-            attachOrDetachISO(conn, cmd.getVmName(), dataStoreUrl + File.separator + isoTO.getPath(), true, cmd.getControllerInfo(), store);
+            attachOrDetachISO(conn, cmd.getVmName(), dataStoreUrl + File.separator + isoTO.getPath(), true, cmd.getControllerInfo(), store, deviceSeq);
         } catch (final LibvirtException e) {
             return new Answer(cmd, false, e.toString());
         } catch (final InternalErrorException e) {
@@ -1300,11 +1472,12 @@ public class KVMStorageProcessor implements StorageProcessor {
         final DiskTO disk = cmd.getDisk();
         final TemplateObjectTO isoTO = (TemplateObjectTO)disk.getData();
         final DataStoreTO store = isoTO.getDataStore();
+        final Integer deviceSeq = (disk.getDiskSeq() != null) ? disk.getDiskSeq().intValue() : null;
 
         try {
             String dataStoreUrl = getDataStoreUrlFromStore(store);
             final Connect conn = LibvirtConnection.getConnectionByVmName(cmd.getVmName());
-            attachOrDetachISO(conn, cmd.getVmName(), dataStoreUrl + File.separator + isoTO.getPath(), false, cmd.getParams(), store);
+            attachOrDetachISO(conn, cmd.getVmName(), dataStoreUrl + File.separator + isoTO.getPath(), false, cmd.getParams(), store, deviceSeq);
         } catch (final LibvirtException e) {
             return new Answer(cmd, false, e.toString());
         } catch (final InternalErrorException e) {
@@ -1615,6 +1788,10 @@ public class KVMStorageProcessor implements StorageProcessor {
                     if (attachingDisk.getFormat() == PhysicalDiskFormat.QCOW2) {
                         diskdef.setDiskFormatType(DiskDef.DiskFmtType.QCOW2);
                     }
+                } else if (attachingPool.getType() == StoragePoolType.CLVM_NG) {
+                    // CLVM_NG uses QCOW2 format on block devices
+                    diskdef.defBlockBasedDisk(attachingDisk.getPath(), devId, busT);
+                    diskdef.setDiskFormatType(DiskDef.DiskFmtType.QCOW2);
                 } else if (attachingDisk.getFormat() == PhysicalDiskFormat.QCOW2) {
                     diskdef.defFileBasedDisk(attachingDisk.getPath(), devId, busT, DiskDef.DiskFmtType.QCOW2);
                 } else if (attachingDisk.getFormat() == PhysicalDiskFormat.RAW) {
@@ -1988,8 +2165,18 @@ public class KVMStorageProcessor implements StorageProcessor {
             primaryPool = storagePoolMgr.getStoragePool(primaryStore.getPoolType(), primaryStore.getUuid());
             disksize = volume.getSize();
             PhysicalDiskFormat format;
-            if (volume.getFormat() == null || StoragePoolType.RBD.equals(primaryStore.getPoolType())) {
+
+            MigrationOptions migrationOptions = volume.getMigrationOptions();
+            boolean useDstPoolFormat = useDestPoolFormat(migrationOptions, primaryStore);
+
+            if (volume.getFormat() == null || StoragePoolType.RBD.equals(primaryStore.getPoolType()) || useDstPoolFormat) {
                 format = primaryPool.getDefaultFormat();
+                if (useDstPoolFormat) {
+                    logger.debug("Using destination pool default format {} for volume {} due to CLVM migration (src: {}, dst: {})",
+                               format, volume.getUuid(),
+                               migrationOptions != null ? migrationOptions.getSrcPoolType() : "unknown",
+                               primaryStore.getPoolType());
+                }
             } else {
                 format = PhysicalDiskFormat.valueOf(volume.getFormat().toString().toUpperCase());
             }
@@ -1997,7 +2184,6 @@ public class KVMStorageProcessor implements StorageProcessor {
                 format = PhysicalDiskFormat.RAW;
             }
 
-            MigrationOptions migrationOptions = volume.getMigrationOptions();
             if (migrationOptions != null) {
                 int timeout = migrationOptions.getTimeout();
 
@@ -2022,7 +2208,11 @@ public class KVMStorageProcessor implements StorageProcessor {
                     format = vol.getFormat();
                 }
             }
-            newVol.setSize(volume.getSize());
+            if (StoragePoolType.CLVM_NG.equals(primaryStore.getPoolType()) && vol != null && vol.getVirtualSize() > 0) {
+                newVol.setSize(vol.getVirtualSize());
+            } else {
+                newVol.setSize(volume.getSize());
+            }
             newVol.setFormat(ImageFormat.valueOf(format.toString().toUpperCase()));
 
             return new CreateObjectAnswer(newVol);
@@ -2032,6 +2222,29 @@ public class KVMStorageProcessor implements StorageProcessor {
         } finally {
             volume.clearPassphrase();
         }
+    }
+
+    /**
+     * For migration involving CLVM (RAW format), use destination pool's default format
+     * CLVM uses RAW format which may not match destination pool's format (e.g., NFS uses QCOW2)
+     * This specifically handles:
+     *   - CLVM (RAW) -> NFS/Local/CLVM_NG (QCOW2)
+     *   - NFS/Local/CLVM_NG (QCOW2) -> CLVM (RAW)
+     * @param migrationOptions
+     * @param primaryStore
+     * @return
+     */
+    private boolean useDestPoolFormat(MigrationOptions migrationOptions, PrimaryDataStoreTO primaryStore) {
+        boolean useDstPoolFormat = false;
+        if (migrationOptions != null && migrationOptions.getSrcPoolType() != null) {
+            StoragePoolType srcPoolType = migrationOptions.getSrcPoolType();
+            StoragePoolType dstPoolType = primaryStore.getPoolType();
+
+            if (srcPoolType != dstPoolType) {
+                useDstPoolFormat = (srcPoolType == StoragePoolType.CLVM || dstPoolType == StoragePoolType.CLVM);
+            }
+        }
+        return useDstPoolFormat;
     }
 
     /**
@@ -2126,7 +2339,7 @@ public class KVMStorageProcessor implements StorageProcessor {
                     String directoryPath = fullSnapPathAndDirPath.second();
                     String convertResult = convertBaseFileToSnapshotFileInStorageDir(primaryPool, disk, snapshotPath, directoryPath, volume, cmd.getWait());
 
-                    resource.mergeSnapshotIntoBaseFile(vm, diskLabel, diskPath, null, true, snapshotName, volume, conn);
+                    resource.mergeDeltaIntoBaseFile(vm, diskLabel, diskPath, null, true, snapshotName, volume, conn);
 
                     validateConvertResult(convertResult, snapshotPath);
                 } catch (LibvirtException e) {
@@ -2173,6 +2386,22 @@ public class KVMStorageProcessor implements StorageProcessor {
                         r.ioCtxDestroy(io);
                     } catch (final Exception e) {
                         logger.error("A RBD snapshot operation on " + disk.getName() + " failed. The error was: " + e.getMessage());
+                    }
+                } else if (primaryPool.getType() == StoragePoolType.CLVM || primaryPool.getType() == StoragePoolType.CLVM_NG) {
+                    if (primaryPool.getType() == StoragePoolType.CLVM_NG && snapshotTO.isKvmIncrementalSnapshot()) {
+                        if (secondaryPool == null) {
+                            String errorMsg = String.format("Incremental snapshots for CLVM_NG require secondary storage. " +
+                                    "Please configure secondary storage or disable incremental snapshots for volume [%s].", volume.getName());
+                            logger.error(errorMsg);
+                            return new CreateObjectAnswer(errorMsg);
+                        }
+                        logger.info("Taking incremental snapshot of CLVM_NG volume [{}] using QCOW2 backup to secondary storage.", volume.getName());
+                        newSnapshot = takeIncrementalVolumeSnapshotOfStoppedVm(snapshotTO, primaryPool, secondaryPool,
+                                imageStoreTo.getUrl(), snapshotName, volume, conn, cmd.getWait());
+                    } else {
+                        CreateObjectAnswer result = takeClvmVolumeSnapshotOfStoppedVm(disk, snapshotName);
+                        if (result != null) return result;
+                        newSnapshot.setPath(snapshotPath);
                     }
                 } else {
                     if (primaryPool.getType() == StoragePoolType.CLVM) {
@@ -2255,7 +2484,11 @@ public class KVMStorageProcessor implements StorageProcessor {
         String machine = resource.isGuestAarch64() ? LibvirtComputingResource.VIRT : LibvirtComputingResource.PC;
         String cpuArch = resource.getGuestCpuArch() != null ? resource.getGuestCpuArch() : "x86_64";
 
-        return String.format(DUMMY_VM_XML, vmName, cpuArch, machine, resource.getHypervisorPath(), primaryPool.getLocalPathFor(volumeObjectTo.getPath()));
+        String volumePath = primaryPool.getLocalPathFor(volumeObjectTo.getPath());
+        boolean isClvmNg = StoragePoolType.CLVM_NG == primaryPool.getType();
+
+        String xmlTemplate = isClvmNg ? DUMMY_VM_XML_BLOCK : DUMMY_VM_XML;
+        return String.format(xmlTemplate, vmName, cpuArch, machine, resource.getHypervisorPath(), volumePath);
     }
 
     private SnapshotObjectTO takeIncrementalVolumeSnapshotOfRunningVm(SnapshotObjectTO snapshotObjectTO, KVMStoragePool primaryPool, KVMStoragePool secondaryPool,
@@ -2356,7 +2589,7 @@ public class KVMStorageProcessor implements StorageProcessor {
             try {
                 Thread.sleep(10000);
             } catch (InterruptedException e) {
-                throw new CloudRuntimeException(e);
+                logger.trace("Thread that was tracking the progress for backup of VM [{}] was interrupted. Ignoring.", vmName);
             }
         }
 
@@ -2401,23 +2634,24 @@ public class KVMStorageProcessor implements StorageProcessor {
 
         logger.debug("Rebasing snapshot [{}] with parent [{}].", snapshotName, parentSnapshotPath);
 
+        long snapshotTimeoutInMillis = wait * 1000L;
         try {
-            QemuImg qemuImg = new QemuImg(wait);
+            QemuImg qemuImg = new QemuImg(snapshotTimeoutInMillis);
             qemuImg.rebase(snapshotFile, parentSnapshotFile, PhysicalDiskFormat.QCOW2.toString(), false);
         } catch (LibvirtException | QemuImgException e) {
             if (!StringUtils.contains(e.getMessage(), "Is another process using the image")) {
                 logger.error("Exception while rebasing incremental snapshot [{}] due to: [{}].", snapshotName, e.getMessage(), e);
                 throw new CloudRuntimeException(e);
             }
-            retryRebase(snapshotName, wait, e, snapshotFile, parentSnapshotFile);
+            retryRebase(snapshotName, snapshotTimeoutInMillis, e, snapshotFile, parentSnapshotFile);
         }
     }
 
-    private void retryRebase(String snapshotName, int wait, Exception e, QemuImgFile snapshotFile, QemuImgFile parentSnapshotFile) {
+    private void retryRebase(String snapshotName, long waitInMilliseconds, Exception e, QemuImgFile snapshotFile, QemuImgFile parentSnapshotFile) {
         logger.warn("Libvirt still has not released the lock, will wait [{}] milliseconds and try again later.", incrementalSnapshotRetryRebaseWait);
         try {
             Thread.sleep(incrementalSnapshotRetryRebaseWait);
-            QemuImg qemuImg = new QemuImg(wait);
+            QemuImg qemuImg = new QemuImg(waitInMilliseconds);
             qemuImg.rebase(snapshotFile, parentSnapshotFile, PhysicalDiskFormat.QCOW2.toString(), false);
         } catch (LibvirtException | QemuImgException | InterruptedException ex) {
             logger.error("Unable to rebase snapshot [{}].", snapshotName, ex);
@@ -2574,7 +2808,7 @@ public class KVMStorageProcessor implements StorageProcessor {
 
             String convertResult = convertBaseFileToSnapshotFileInStorageDir(ObjectUtils.defaultIfNull(secondaryPool, primaryPool), disk, snapshotPath, directoryPath, volume, cmd.getWait());
 
-            resource.mergeSnapshotIntoBaseFile(vm, diskLabel, diskPath, null, true, snapshotName, volume, conn);
+            resource.mergeDeltaIntoBaseFile(vm, diskLabel, diskPath, null, true, snapshotName, volume, conn);
 
             validateConvertResult(convertResult, snapshotPath);
         } catch (LibvirtException e) {
@@ -2837,7 +3071,8 @@ public class KVMStorageProcessor implements StorageProcessor {
 
         QemuImgFile destFile = new QemuImgFile(snapshotPath);
         destFile.setFormat(PhysicalDiskFormat.QCOW2);
-        QemuImg q = new QemuImg(wait);
+
+        QemuImg q = new QemuImg(wait * 1000L);
         q.convert(srcFile, destFile, options, qemuObjects, qemuImageOpts, null, true);
     }
 
@@ -2995,13 +3230,19 @@ public class KVMStorageProcessor implements StorageProcessor {
             if (deleteSharedMountPointRelativePathIfNeeded(pool, vol.getPath())) {
                 return new Answer(null);
             }
-            try {
-                pool.getPhysicalDisk(vol.getPath());
-            } catch (final Exception e) {
-                logger.debug(String.format("can't find volume: %s, return true", vol));
-                return new Answer(null);
+            if (pool.getType() != StoragePoolType.CLVM && pool.getType() != StoragePoolType.CLVM_NG) {
+                try {
+                    pool.getPhysicalDisk(vol.getPath());
+                } catch (final Exception e) {
+                    logger.debug(String.format("can't find volume: %s, return true", vol));
+                    return new Answer(null);
+                }
             }
             pool.deletePhysicalDisk(vol.getPath(), vol.getFormat());
+            if (vol.getChainInfo() != null && poolTypesToDeleteChainInfo.contains(pool.getType()) && vol.getFormat() == ImageFormat.QCOW2 && cmd.isDeleteChain()) {
+                logger.debug("Deleting leftover backup delta at [{}].", vol.getChainInfo());
+                pool.deletePhysicalDisk(vol.getChainInfo(), vol.getFormat());
+            }
             return new Answer(null);
         } catch (final CloudRuntimeException e) {
             logger.debug("Failed to delete volume: ", e);
@@ -3363,13 +3604,30 @@ public class KVMStorageProcessor implements StorageProcessor {
         String vmName = cmd.getOptions() != null ? cmd.getOptions().get("vmName") : null;
 
         try {
-            if ("commitSourceOverlay".equals(operation)) {
+            // A distinct operation prevents older agents from deleting the overlay before the DB update.
+            if ("commitSourceOverlayPreserveOverlay".equals(operation)) {
                 String backingPath = cmd.getOptions().get("backingPath");
                 if (StringUtils.isBlank(backingPath)) {
                     throw new CloudRuntimeException("backingPath option is required for source overlay commit.");
                 }
-                commitSourceOverlay(pool, volumePath, resolveSharedMountPointPath(pool, backingPath), vmName);
+                commitSourceOverlay(pool, volumePath, resolveSharedMountPointPath(pool, backingPath), vmName, cmd.getOptions().get("sourceVmState"));
                 return new FlattenCmdAnswer(volume, cmd, true, "committed");
+            }
+
+            if ("cleanupSourceOverlay".equals(operation)) {
+                String backingPath = cmd.getOptions().get("backingPath");
+                String overlayPath = cmd.getOptions().get("overlayPath");
+                if (StringUtils.isBlank(backingPath) || StringUtils.isBlank(overlayPath)
+                        || !volumePath.equals(resolveSharedMountPointPath(pool, backingPath))) {
+                    throw new CloudRuntimeException("Source volume must point to the committed base before overlay cleanup.");
+                }
+                cleanupSourceOverlay(pool, resolveSharedMountPointPath(pool, overlayPath), volumePath, vmName, cmd.getOptions().get("sourceVmState"));
+                return new FlattenCmdAnswer(volume, cmd, true, "cleaned");
+            }
+
+            if ("pauseCloneVolume".equals(operation) || "checkStoppedCloneVolume".equals(operation)
+                    || "checkFlattenCloneVolumeManaged".equals(operation) || "setCloneFlattenBandwidth".equals(operation)) {
+                return manageCloneVolumePower(cmd, volume, pool, volumePath, vmName, operation);
             }
 
             if (!SHARED_MOUNT_POINT_FLATTEN_OPERATION.equals(operation) && !SHARED_MOUNT_POINT_FLATTEN_CHECK_OPERATION.equals(operation)) {
@@ -3412,37 +3670,226 @@ public class KVMStorageProcessor implements StorageProcessor {
         }
     }
 
-    protected void commitSourceOverlay(KVMStoragePool pool, Path overlayPath, Path backingPath, String vmName) throws IOException, LibvirtException {
-        if (StringUtils.isNotBlank(vmName)) {
-            Connect conn = LibvirtConnection.getConnectionByVmName(vmName);
-            Domain vm = resource.getDomain(conn, vmName);
-            try {
-                if (vm.getInfo().state == DomainInfo.DomainState.VIR_DOMAIN_RUNNING) {
-                    String diskLabel = getDiskLabelForPath(conn, vm, vmName, overlayPath.toString());
-                    if (StringUtils.isBlank(diskLabel)) {
-                        throw new CloudRuntimeException("Could not find source overlay disk " + overlayPath + " in VM " + vmName);
-                    }
-                    String command = String.format("virsh blockcommit %s %s --base %s --active --wait --pivot", shellQuote(vm.getName()), shellQuote(diskLabel), shellQuote(backingPath.toString()));
-                    String result = Script.runSimpleBashScript(command);
-                    if (result != null) {
-                        throw new CloudRuntimeException("Failed to commit source overlay using command [" + command + "]. Result: " + result);
-                    }
-                    Files.deleteIfExists(overlayPath);
-                    logger.info("Committed running source overlay [{}] into backing [{}] for VM [{}].", overlayPath, backingPath, vmName);
-                    return;
+    protected Answer manageCloneVolumePower(FlattenSharedMountPointCommand cmd, VolumeObjectTO volume, KVMStoragePool pool,
+            Path volumePath, String vmName, String operation) throws LibvirtException, IOException {
+        String expectedState = cmd.getOptions().get("cloneVmState");
+        if (("checkStoppedCloneVolume".equals(operation) && !"Stopped".equals(expectedState))
+                || (("checkFlattenCloneVolumeManaged".equals(operation) || "setCloneFlattenBandwidth".equals(operation))
+                        && !"Running".equals(expectedState))) {
+            throw new CloudRuntimeException("Clone VM state does not match the requested disk operation.");
+        }
+        Domain vm = getSourceDomainForFinalization(vmName, expectedState);
+        try {
+            String diskLabel = null;
+            DomainBlockJobInfo job = null;
+            if ("Running".equals(expectedState)) {
+                diskLabel = getDiskLabelForPath(LibvirtConnection.getConnectionByVmName(vmName), vm, vmName, volumePath.toString());
+                if (StringUtils.isBlank(diskLabel)) {
+                    throw new CloudRuntimeException("Active clone disk does not match the recorded volume path.");
                 }
-            } finally {
+                job = getClonePullJob(vm, diskLabel);
+                if ("pauseCloneVolume".equals(operation) && job != null) {
+                    try {
+                        vm.blockJobAbort(diskLabel, 0); // Synchronous cancellation, never pivot or delete.
+                    } catch (LibvirtException e) {
+                        if (getClonePullJob(vm, diskLabel) != null) {
+                            throw e;
+                        }
+                        // Completion may have won the race with cancellation. Verify again below.
+                    }
+                    if (getClonePullJob(vm, diskLabel) != null) {
+                        throw new CloudRuntimeException("Clone blockpull cancellation has not completed.");
+                    }
+                }
+            }
+            boolean hasBacking = validateManagedCloneImage(pool, volumePath, cmd.getOptions().get("backingPath"));
+            if ("setCloneFlattenBandwidth".equals(operation)) {
+                int bandwidth = Integer.parseInt(cmd.getOptions().get("bandwidth"));
+                if (bandwidth < 0) {
+                    throw new CloudRuntimeException("Clone flatten bandwidth must not be negative.");
+                }
+                if (job == null) {
+                    return new FlattenCmdAnswer(volume, cmd, true, "bandwidthPending");
+                }
+                Pair<Integer, String> result = runBashCommand(String.format("virsh blockjob %s %s --bandwidth %d",
+                        shellQuote(vmName), shellQuote(diskLabel), bandwidth));
+                DomainBlockJobInfo current = getClonePullJob(vm, diskLabel);
+                if (current == null) {
+                    // The job may complete while its limit is being changed. Never restart it here.
+                    return new FlattenCmdAnswer(volume, cmd, true, "bandwidthPending");
+                }
+                if (result.first() != 0 || current.bandwidth != bandwidth) {
+                    throw new CloudRuntimeException("Unable to confirm clone blockpull bandwidth: " + result.second());
+                }
+                return new FlattenCmdAnswer(volume, cmd, true, "bandwidthApplied");
+            }
+            if ("pauseCloneVolume".equals(operation)) {
+                return new FlattenCmdAnswer(volume, cmd, true, "paused");
+            }
+            if ("Stopped".equals(expectedState)) {
+                return new FlattenCmdAnswer(volume, cmd, true, hasBacking ? "paused" : SHARED_MOUNT_POINT_FLATTENED);
+            }
+            if (job != null) {
+                double progress = job.end > 0 ? Math.min(100, Math.max(0, 100.0 * job.cur / job.end)) : 0;
+                return new FlattenCmdAnswer(volume, cmd, true, SHARED_MOUNT_POINT_FLATTEN_RUNNING_DETAIL_PREFIX + progress);
+            }
+            if (!hasBacking) {
+                return new FlattenCmdAnswer(volume, cmd, true, SHARED_MOUNT_POINT_FLATTENED);
+            }
+            int bandwidth = Math.max(0, NumberUtils.toInt(cmd.getOptions().get("bandwidth"), SHARED_MOUNT_POINT_BLOCKPULL_BANDWIDTH_MIB));
+            Pair<Integer, String> result = runBashCommand(String.format("virsh blockpull %s %s --bandwidth %d",
+                    shellQuote(vmName), shellQuote(diskLabel), bandwidth));
+            if (result.first() != 0) {
+                throw new CloudRuntimeException("Unable to resume clone blockpull: " + result.second());
+            }
+            return new FlattenCmdAnswer(volume, cmd, true, SHARED_MOUNT_POINT_FLATTEN_RUNNING_DETAIL_PREFIX + "0");
+        } finally {
+            if (vm != null) {
                 vm.free();
             }
         }
+    }
 
-        String command = String.format("qemu-img commit %s", shellQuote(overlayPath.toString()));
-        String result = Script.runSimpleBashScript(command);
-        if (result != null) {
-            throw new CloudRuntimeException("Failed to commit stopped source overlay using command [" + command + "]. Result: " + result);
+    protected DomainBlockJobInfo getClonePullJob(Domain vm, String diskLabel) throws LibvirtException {
+        DomainBlockJobInfo info = vm.getBlockJobInfo(diskLabel, 0);
+        if (info == null || info.type == 0) {
+            return null;
         }
-        Files.deleteIfExists(overlayPath);
-        logger.info("Committed stopped source overlay [{}] into backing [{}].", overlayPath, backingPath);
+        // libvirt VIR_DOMAIN_BLOCK_JOB_TYPE_PULL = 1; never cancel commit/copy/backup jobs.
+        if (info.type != 1) {
+            throw new CloudRuntimeException("A non-flatten block job is active on clone disk " + diskLabel);
+        }
+        return info;
+    }
+
+    protected boolean validateManagedCloneImage(KVMStoragePool pool, Path volumePath, String expectedBacking) throws IOException {
+        if (StringUtils.isBlank(expectedBacking) || !Files.isRegularFile(volumePath)) {
+            throw new CloudRuntimeException("Clone image or expected backing path is missing.");
+        }
+        Path backing = resolveSharedMountPointPath(pool, expectedBacking);
+        if (volumePath.equals(backing)) {
+            throw new CloudRuntimeException("A clone image cannot be its own backing file.");
+        }
+        Pair<Integer, String> result = runBashCommand("qemu-img info --output=json -U " + shellQuote(volumePath.toString()));
+        if (result.first() != 0) {
+            throw new CloudRuntimeException("Unable to inspect clone image: " + result.second());
+        }
+        JsonNode info = new ObjectMapper().readTree(result.second());
+        if (info == null || !"qcow2".equals(info.path("format").asText())) {
+            throw new CloudRuntimeException("Clone image is not QCOW2.");
+        }
+        String actualBacking = info.path("full-backing-filename").asText(info.path("backing-filename").asText());
+        if (StringUtils.isBlank(actualBacking)) {
+            return false;
+        }
+        Path actual = Paths.get(actualBacking);
+        if (!actual.isAbsolute()) {
+            actual = volumePath.getParent().resolve(actual);
+        }
+        if (!Files.isRegularFile(backing) || !Files.isSameFile(backing, actual.normalize())) {
+            throw new CloudRuntimeException("Clone backing chain does not match the recorded dependency.");
+        }
+        return true;
+    }
+
+    protected void validateSourceOverlayPaths(KVMStoragePool pool, Path overlayPath, Path backingPath) {
+        Path overlayDirectory = resolveSharedMountPointPath(pool, "clone/overlay");
+        if (overlayPath.equals(backingPath) || overlayPath.equals(overlayDirectory) || !overlayPath.startsWith(overlayDirectory)
+                || !Files.isRegularFile(backingPath)) {
+            throw new CloudRuntimeException("Invalid source overlay or backing path for finalization.");
+        }
+    }
+
+    protected Domain getSourceDomainForFinalization(String vmName, String expectedState) throws LibvirtException {
+        if (StringUtils.isBlank(vmName) || (!"Running".equals(expectedState) && !"Stopped".equals(expectedState))) {
+            throw new CloudRuntimeException("Source VM name and stable power state are required for overlay finalization.");
+        }
+        Domain vm;
+        try {
+            Connect conn = LibvirtConnection.getConnectionByVmName(vmName);
+            vm = resource.getDomain(conn, vmName);
+        } catch (LibvirtException e) {
+            if ("Stopped".equals(expectedState) && isLibvirtNoDomain(e)) {
+                return null;
+            }
+            throw e;
+        }
+        try {
+            DomainInfo.DomainState actualState = vm.getInfo().state;
+            boolean matches = "Running".equals(expectedState) ? actualState == DomainInfo.DomainState.VIR_DOMAIN_RUNNING
+                    : actualState == DomainInfo.DomainState.VIR_DOMAIN_SHUTOFF;
+            if (!matches) {
+                throw new CloudRuntimeException("Source VM power state changed before overlay finalization: " + actualState);
+            }
+            return vm;
+        } catch (RuntimeException | LibvirtException e) {
+            vm.free();
+            throw e;
+        }
+    }
+
+    protected void commitSourceOverlay(KVMStoragePool pool, Path overlayPath, Path backingPath, String vmName, String expectedState) throws IOException, LibvirtException {
+        validateSourceOverlayPaths(pool, overlayPath, backingPath);
+        Domain vm = getSourceDomainForFinalization(vmName, expectedState);
+        try {
+            if ("Running".equals(expectedState)) {
+                Connect conn = LibvirtConnection.getConnectionByVmName(vmName);
+                String diskLabel = getDiskLabelForPath(conn, vm, vmName, overlayPath.toString());
+                if (StringUtils.isBlank(diskLabel)) {
+                    String baseDiskLabel = getDiskLabelForPath(conn, vm, vmName, backingPath.toString());
+                    if (StringUtils.isNotBlank(baseDiskLabel) && !hasActiveSourceBlockJob(vmName, baseDiskLabel)) {
+                        return; // The pivot completed before a previous answer was lost.
+                    }
+                    throw new CloudRuntimeException("Could not find source overlay disk " + overlayPath + " in VM " + vmName);
+                }
+                if (hasActiveSourceBlockJob(vmName, diskLabel)) {
+                    throw new CloudRuntimeException("A source disk block job is still active; preserve the overlay.");
+                }
+                String command = String.format("virsh blockcommit %s %s --base %s --active --wait --pivot", shellQuote(vmName), shellQuote(diskLabel), shellQuote(backingPath.toString()));
+                requireSuccessfulSourceCommand(command);
+            } else {
+                requireSuccessfulSourceCommand(String.format("qemu-img commit -f qcow2 %s", shellQuote(overlayPath.toString())));
+            }
+            logger.info("Committed source overlay [{}] into backing [{}] for VM [{}]. Retaining overlay until DB path restoration is acknowledged.", overlayPath, backingPath, vmName);
+        } finally {
+            if (vm != null) {
+                vm.free();
+            }
+        }
+    }
+
+    protected void requireSuccessfulSourceCommand(String command) {
+        Pair<Integer, String> result = runBashCommand(command);
+        if (result.first() != 0) {
+            throw new CloudRuntimeException("Source overlay command failed: " + command + "; exit=" + result.first() + "; output=" + result.second());
+        }
+    }
+
+    protected void cleanupSourceOverlay(KVMStoragePool pool, Path overlayPath, Path backingPath, String vmName, String expectedState) throws IOException, LibvirtException {
+        validateSourceOverlayPaths(pool, overlayPath, backingPath);
+        Domain vm = getSourceDomainForFinalization(vmName, expectedState);
+        try {
+            if ("Running".equals(expectedState)) {
+                Connect conn = LibvirtConnection.getConnectionByVmName(vmName);
+                String baseDiskLabel = getDiskLabelForPath(conn, vm, vmName, backingPath.toString());
+                if (StringUtils.isNotBlank(getDiskLabelForPath(conn, vm, vmName, overlayPath.toString()))
+                        || StringUtils.isBlank(baseDiskLabel) || hasActiveSourceBlockJob(vmName, baseDiskLabel)) {
+                    throw new CloudRuntimeException("Source disk is not fully pivoted to the base; preserve the overlay.");
+                }
+            }
+            Files.deleteIfExists(overlayPath);
+            logger.info("Removed committed source overlay [{}] after DB path restoration for VM [{}].", overlayPath, vmName);
+        } finally {
+            if (vm != null) {
+                vm.free();
+            }
+        }
+    }
+
+    protected boolean hasActiveSourceBlockJob(String vmName, String diskLabel) {
+        String info = getBlockJobInfo(vmName, diskLabel);
+        // Source cleanup must also wait for commit/copy jobs, not just clone blockpull.
+        return StringUtils.isNotBlank(info) && !StringUtils.containsIgnoreCase(info, NO_CURRENT_BLOCK_JOB);
     }
 
     protected String getDiskLabelForPath(Connect conn, Domain vm, String vmName, String diskPath) throws LibvirtException {
@@ -3611,6 +4058,25 @@ public class KVMStorageProcessor implements StorageProcessor {
                 deleteSnapshotFile(snapshotTO);
                 if (snapshotTO.isKvmIncrementalSnapshot()) {
                     deleteCheckpoint(snapshotTO);
+                }
+            } else if (primaryPool.getType() == StoragePoolType.CLVM || primaryPool.getType() == StoragePoolType.CLVM_NG) {
+                // For CLVM/CLVM_NG, snapshots are typically already deleted from primary storage during backup
+                // via deleteSnapshotOnPrimary in the backupSnapshot finally block.
+                // This is called when the user explicitly deletes the snapshot via UI/API.
+                // We check if the snapshot still exists and clean it up if needed.
+                logger.info("Processing CLVM/CLVM_NG snapshot deletion (id={}, name={}, path={}) on primary storage",
+                        snapshotTO.getId(), snapshotTO.getName(), snapshotTO.getPath());
+
+                String snapshotPath = snapshotTO.getPath();
+                if (snapshotPath != null && !snapshotPath.isEmpty()) {
+                    boolean wasDeleted = deleteClvmSnapshot(snapshotPath, primaryPool.getType(), true);
+                    if (wasDeleted) {
+                        logger.info("Successfully cleaned up {} snapshot {} from primary storage", primaryPool.getType(), snapshotName);
+                    } else {
+                        logger.info("{} snapshot {} was already deleted from primary storage during backup, no cleanup needed", primaryPool.getType(), snapshotName);
+                    }
+                } else {
+                    logger.debug("{} snapshot path is null or empty, assuming already cleaned up", primaryPool.getType());
                 }
             } else {
                 logger.warn("Operation not implemented for storage pool type of " + primaryPool.getType().toString());
@@ -3887,7 +4353,8 @@ public class KVMStorageProcessor implements StorageProcessor {
                 StoragePoolType.RBD,
                 StoragePoolType.PowerFlex,
                 StoragePoolType.Linstor,
-                StoragePoolType.FiberChannel).contains(poolType)) {
+                StoragePoolType.FiberChannel,
+                StoragePoolType.CLVM).contains(poolType)) {
             return ImageFormat.RAW;
         } else {
             return ImageFormat.QCOW2;
@@ -3934,6 +4401,20 @@ public class KVMStorageProcessor implements StorageProcessor {
     public Answer syncVolumePath(SyncVolumePathCommand cmd) {
         logger.info("SyncVolumePathCommand not currently applicable for KVMStorageProcessor");
         return new Answer(cmd, false, "Not currently applicable for KVMStorageProcessor");
+    }
+
+    @Override
+    public Answer deleteBackup(DeleteCommand cmd) {
+        BackupDeltaTO delta = (BackupDeltaTO)cmd.getData();
+        logger.debug("Deleting backup delta [{}].", delta);
+        PrimaryDataStoreTO primaryStore = (PrimaryDataStoreTO)delta.getDataStore();
+        KVMStoragePool pool = storagePoolMgr.getStoragePool(primaryStore.getPoolType(), primaryStore.getUuid());
+        try {
+            pool.deletePhysicalDisk(delta.getPath(), delta.getFormat());
+        } catch (CloudRuntimeException e) {
+            return new Answer(cmd, e);
+        }
+        return new Answer(cmd);
     }
 
     /**

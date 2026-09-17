@@ -17,6 +17,7 @@
 
 <template>
   <div>
+    <p v-if="listRefreshFailed" role="status">{{ $t('message.list.refresh.stale') }}</p>
     <a-spin :spinning="fetchLoading">
       <a-button
         :disabled="!('associateIpAddress' in $store.getters.apis) || resource.type === 'Shared'"
@@ -204,6 +205,8 @@
 </template>
 
 <script>
+import { listRefreshMixin } from '@/utils/listRefreshMixin'
+
 import { getAPI, postAPI } from '@/api'
 import Status from '@/components/widgets/Status'
 import TooltipButton from '@/components/widgets/TooltipButton'
@@ -212,6 +215,7 @@ import eventBus from '@/config/eventBus'
 import InfiniteScrollSelect from '@/components/widgets/InfiniteScrollSelect'
 
 export default {
+  mixins: [listRefreshMixin(['fetchData'])],
   name: 'IpAddressesTab',
   components: {
     Status,
@@ -322,6 +326,7 @@ export default {
   },
   methods: {
     fetchData () {
+      const listRequest = this.listRequestToken('fetchData')
       const params = {
         listall: true,
         page: this.page,
@@ -344,11 +349,23 @@ export default {
       if (['nsx', 'netris'].includes(this.zoneExtNetProvider?.toLowerCase())) {
         params.forprovider = true
       }
-      this.fetchLoading = true
-      getAPI('listPublicIpAddresses', params).then(json => {
+      this.fetchLoading = !listRequest.loaded
+      return getAPI('listPublicIpAddresses', params).then(json => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+
         this.totalIps = json.listpublicipaddressesresponse.count || 0
         this.ips = json.listpublicipaddressesresponse.publicipaddress || []
       }).finally(() => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+
+        this.fetchLoading = false
+      }).catch(error => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+        listRequest.failed = true
+        this.listRefreshFailed = true
+        if (!listRequest.loaded) this.$notifyError(error)
+      }).finally(() => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
         this.fetchLoading = false
       })
     },

@@ -18,8 +18,10 @@
 import { shallowRef, defineAsyncComponent } from 'vue'
 import store from '@/store'
 import { isZoneCreated } from '@/utils/zone'
+import { escapeHtml } from '@/utils/util'
 import { getAPI, postAPI, getBaseUrl } from '@/api'
 import { getLatestKubernetesIsoParams } from '@/utils/acsrepo'
+import { isFastClonePowerOperationBlocked, getFastClonePowerBlockedLabel, getFastClonePhase } from '@/utils/fastClone'
 import kubernetesIcon from '@/assets/icons/kubernetes.svg?inline'
 
 const activeFastCloneStatuses = ['pending', 'running']
@@ -37,7 +39,7 @@ const getActiveBackupStatus = (record) => {
 }
 
 const isFastCloneFlattenActive = (record) => {
-  return activeFastCloneStatuses.includes(getFastCloneStatus(record))
+  return !!getFastClonePhase(record) || activeFastCloneStatuses.includes(getFastCloneStatus(record))
 }
 
 const isBackupActive = (record) => {
@@ -45,7 +47,7 @@ const isBackupActive = (record) => {
 }
 
 const isFastCloneFlattenRunning = (record) => {
-  return runningFastCloneStatuses.includes(getFastCloneStatus(record))
+  return !!getFastClonePhase(record) || runningFastCloneStatuses.includes(getFastCloneStatus(record))
 }
 
 const hasFastCloneFlattenSelection = (selectedItems) => {
@@ -93,9 +95,19 @@ const getCloneOperationTooltip = (record, store, selectedItems) => {
   )
 }
 
-const getFastCloneRunningOperationTooltip = (record, store, selectedItems, fallbackLabel) => {
-  return disableDuringFastCloneFlattenRunning(record, store, selectedItems) ? fastCloneOperationBlockedLabel : fallbackLabel
+const getFastClonePowerOperationTooltip = (record, selectedItems, fallbackLabel, starting = false) => {
+  return isFastClonePowerOperationBlocked(record, selectedItems, starting)
+    ? getFastClonePowerBlockedLabel(record, selectedItems, starting) : fallbackLabel
 }
+
+const attachedIsoCount = (record) => (record.isos && record.isos.length) || (record.isoid ? 1 : 0)
+// Server pre-computes the effective cap (cluster-scoped vm.iso.max.count clamped to the
+// hypervisor's own limit). Fall back to the hypervisor floor for older servers.
+const isoMaxCount = (record) => record.isomaxcount != null
+  ? record.isomaxcount
+  : (record.hypervisor === 'KVM' ? 2 : 1)
+const isoActionAvailable = (record) =>
+  record.hypervisor !== 'External' && ['Running', 'Stopped'].includes(record.state) && record.vmtype !== 'sharedfsvm'
 
 export default {
   name: 'compute',
@@ -202,8 +214,7 @@ export default {
           dataView: true,
           popup: true,
           show: (record) => { return record.vmtype !== 'sharedfsvm' },
-          disabled: disableDuringFastCloneFlatten,
-          tooltip: (record, store, selectedItems) => getFastCloneOperationTooltip(record, store, selectedItems, 'label.action.edit.instance'),
+          tooltip: () => 'label.action.edit.instance',
           component: shallowRef(defineAsyncComponent(() => import('@/views/compute/EditVM.vue')))
         },
         {
@@ -224,8 +235,8 @@ export default {
             return []
           },
           show: (record) => { return ['Stopped'].includes(record.state) },
-          disabled: disableDuringFastCloneFlattenRunning,
-          tooltip: (record, store, selectedItems) => getFastCloneRunningOperationTooltip(record, store, selectedItems, 'label.action.start.instance'),
+          disabled: (record, store, selectedItems) => isFastClonePowerOperationBlocked(record, selectedItems, true),
+          tooltip: (record, store, selectedItems) => getFastClonePowerOperationTooltip(record, selectedItems, 'label.action.start.instance', true),
           component: shallowRef(defineAsyncComponent(() => import('@/views/compute/StartVirtualMachine.vue')))
         },
         {
@@ -242,8 +253,8 @@ export default {
               ? ['forced'] : []
           },
           show: (record) => { return ['Running'].includes(record.state) },
-          disabled: disableDuringFastCloneFlatten,
-          tooltip: (record, store, selectedItems) => getFastCloneOperationTooltip(record, store, selectedItems, 'label.action.stop.instance')
+          disabled: (record, store, selectedItems) => isFastClonePowerOperationBlocked(record, selectedItems),
+          tooltip: (record, store, selectedItems) => getFastClonePowerOperationTooltip(record, selectedItems, 'label.action.stop.instance')
         },
         {
           api: 'rebootVirtualMachine',
@@ -253,8 +264,8 @@ export default {
           docHelp: 'adminguide/virtual_machines.html#stopping-and-starting-vms',
           dataView: true,
           show: (record) => { return ['Running'].includes(record.state) },
-          disabled: (record, store, selectedItems) => { return record.hostcontrolstate === 'Offline' || disableDuringFastCloneFlatten(record, store, selectedItems) },
-          tooltip: (record, store, selectedItems) => getFastCloneOperationTooltip(record, store, selectedItems, 'label.action.reboot.instance'),
+          disabled: (record, store, selectedItems) => { return record.hostcontrolstate === 'Offline' || isFastClonePowerOperationBlocked(record, selectedItems) },
+          tooltip: (record, store, selectedItems) => getFastClonePowerOperationTooltip(record, selectedItems, 'label.action.reboot.instance'),
           args: (record, store) => {
             var fields = []
             fields.push('forced')
@@ -294,7 +305,8 @@ export default {
           dataView: true,
           popup: true,
           show: (record) => { return record.hypervisor !== 'External' && ['Running', 'Stopped'].includes(record.state) && record.vmtype !== 'sharedfsvm' },
-          disabled: (record) => { return record.hostcontrolstate === 'Offline' },
+          disabled: (record, store, selectedItems) => { return record.hostcontrolstate === 'Offline' || disableDuringFastCloneFlatten(record, store, selectedItems) },
+          tooltip: (record, store, selectedItems) => getFastCloneOperationTooltip(record, store, selectedItems, 'label.reinstall.vm'),
           component: shallowRef(defineAsyncComponent(() => import('@/views/compute/ReinstallVm.vue')))
         },
         {
@@ -407,13 +419,28 @@ export default {
           }
         },
         {
+          api: 'finishBackupChain',
+          icon: 'vertical-align-middle-outlined',
+          label: 'label.backup.chain.finish',
+          dataView: true,
+          args: ['virtualmachineid'],
+          show: (record) => {
+            return ['Running', 'Stopped', 'BackupError'].includes(record.state) && record.backupofferingid && record.backupprovider === 'kboss'
+          },
+          mapping: {
+            virtualmachineid: {
+              value: (record, params) => { return record.id }
+            }
+          }
+        },
+        {
           api: 'attachIso',
           icon: 'paper-clip-outlined',
           label: 'label.action.attach.iso',
           docHelp: 'adminguide/templates.html#attaching-an-iso-to-a-vm',
           dataView: true,
           popup: true,
-          show: (record) => { return record.hypervisor !== 'External' && ['Running', 'Stopped'].includes(record.state) && !record.isoid && record.vmtype !== 'sharedfsvm' },
+          show: (record) => isoActionAvailable(record) && attachedIsoCount(record) < isoMaxCount(record),
           disabled: (record) => { return record.hostcontrolstate === 'Offline' || record.hostcontrolstate === 'Maintenance' },
           component: shallowRef(defineAsyncComponent(() => import('@/views/compute/AttachIso.vue')))
         },
@@ -421,22 +448,11 @@ export default {
           api: 'detachIso',
           icon: 'link-outlined',
           label: 'label.action.detach.iso',
-          message: 'message.detach.iso.confirm',
           dataView: true,
-          args: (record, store) => {
-            var args = ['virtualmachineid']
-            if (record && record.hypervisor && record.hypervisor === 'VMware') {
-              args.push('forced')
-            }
-            return args
-          },
-          show: (record) => { return record.hypervisor !== 'External' && ['Running', 'Stopped'].includes(record.state) && 'isoid' in record && record.isoid && record.vmtype !== 'sharedfsvm' },
+          popup: true,
+          show: (record) => isoActionAvailable(record) && attachedIsoCount(record) > 0,
           disabled: (record) => { return record.hostcontrolstate === 'Offline' || record.hostcontrolstate === 'Maintenance' },
-          mapping: {
-            virtualmachineid: {
-              value: (record, params) => { return record.id }
-            }
-          }
+          component: shallowRef(defineAsyncComponent(() => import('@/views/compute/DetachIso.vue')))
         },
         {
           api: 'updateVMAffinityGroup',
@@ -524,7 +540,7 @@ export default {
           show: (record) => { return record.hypervisor !== 'External' && ['Stopped'].includes(record.state) && record.passwordenabled },
           response: (result) => {
             return {
-              message: result.virtualmachine && result.virtualmachine.password ? `The password of VM <b>${result.virtualmachine.displayname}</b> is <b>${result.virtualmachine.password}</b>` : null,
+              message: result.virtualmachine && result.virtualmachine.password ? `The password of VM <b>${escapeHtml(result.virtualmachine.displayname)}</b> is <b>${result.virtualmachine.password}</b>` : null,
               copybuttontext: result.virtualmachine.password ? 'label.copy.password' : null,
               copytext: result.virtualmachine.password ? result.virtualmachine.password : null
             }
@@ -727,7 +743,12 @@ export default {
           api: 'deleteVMSnapshot',
           icon: 'delete-outlined',
           label: 'label.action.vmsnapshot.delete',
-          message: 'message.action.vmsnapshot.delete',
+          message: (record) => {
+            if (record.hypervisor !== 'KVM' || record.type === 'Disk') {
+              return 'message.action.vmsnapshot.disk-only.delete'
+            }
+            return 'message.action.vmsnapshot.delete'
+          },
           dataView: true,
           show: (record) => { return ['Ready', 'Expunging', 'Error'].includes(record.state) },
           args: ['vmsnapshotid'],
@@ -1101,6 +1122,12 @@ export default {
           component: shallowRef(defineAsyncComponent(() => import('@/views/compute/AutoScaleDownPolicyTab.vue')))
         },
         {
+          name: 'schedules',
+          resourceType: 'AutoScaleVmGroup',
+          component: shallowRef(defineAsyncComponent(() => import('@/views/compute/ResourceSchedules.vue'))),
+          show: () => { return 'listResourceSchedule' in store.getters.apis }
+        },
+        {
           name: 'events',
           resourceType: 'AutoScaleVmGroup',
           component: shallowRef(defineAsyncComponent(() => import('@/components/view/EventsTab.vue'))),
@@ -1149,9 +1176,9 @@ export default {
           dataView: true,
           args: (record, store) => {
             var args = ['name']
+            args.push('maxmembers')
+            args.push('minmembers')
             if (record.state === 'DISABLED') {
-              args.push('maxmembers')
-              args.push('minmembers')
               args.push('interval')
             }
             return args

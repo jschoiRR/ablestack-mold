@@ -33,6 +33,7 @@ const additionalGetAPICommandsList = [
   'quotatarifflist',
   'quotaisenabled',
   'quotastatement',
+  'quotaemailtemplatelist',
   'verifyoauthcodeandgetuser'
 ]
 
@@ -44,7 +45,7 @@ function hasSessionKey () {
   return !!getSessionKey()
 }
 
-export function getAPI (command, args = {}) {
+export function getAPI (command, args = {}, { optionalDiscovery = false, timeout, backgroundJob = false } = {}) {
   args.command = command
   args.response = 'json'
 
@@ -58,7 +59,10 @@ export function getAPI (command, args = {}) {
       ...args
     },
     url: '/',
-    method: 'GET'
+    method: 'GET',
+    ...(optionalDiscovery ? { optionalDiscovery: true, timeout: 15000 } : {}),
+    ...(timeout ? { timeout } : {}),
+    ...(backgroundJob ? { backgroundJob: true } : {})
   })
 }
 

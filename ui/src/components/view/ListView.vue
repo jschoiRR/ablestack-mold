@@ -22,7 +22,7 @@
       :loading="loading"
       :columns="isOrderUpdatable() ? columns : columns.filter(x => x.dataIndex !== 'order')"
       :dataSource="items"
-      :rowKey="(record, idx) => record.uid || (record.metadata && record.metadata.rule_uid) || record.id || record.name || record.usageType || (idx + '-' + Math.random())"
+      :rowKey="listRowKey"
       :pagination="false"
       :rowSelection="explicitlyAllowRowSelection || enableGroupAction() || $route.name === 'event' ? {selectedRowKeys: selectedRowKeys, onChange: onSelectChange, columnWidth: 30} : null"
       :rowClassName="getRowClassName"
@@ -209,6 +209,9 @@
         </span>
       </template>
       <template v-if="column.key === 'templatetype'">
+        <router-link :to="{ path: $route.path + '/' + record.templatetype }">{{ text }}</router-link>
+      </template>
+      <template v-if="$route.path.startsWith('/dnsserver') && !['name', 'provider', 'state', 'ispublic'].includes(column.key)">
         <span>{{ text }}</span>
       </template>
       <template v-if="column.key === 'gpu'">
@@ -480,31 +483,15 @@
       <template v-if="column.key === 'isuserdefined'">
         <span>{{ text ? $t('label.yes') : $t('label.no') }}</span>
       </template>
+      <template v-if="column.key === 'ispublic'">
+        <span>{{ text ? $t('label.yes') : $t('label.no') }}</span>
+      </template>
       <template v-if="column.key === 'state'">
-        <status v-if="$route.path.startsWith('/host')" :text="getHostState(record)" displayText />
-        <status v-else-if="isFastCloneFlattenVisible(record)" :text="text ? text : ''" displayText :styles="{ 'min-width': '80px' }">
-          <template #tooltip>
-            <div class="clone-fast-flatten-list-tooltip">
-              <div class="clone-fast-flatten-list-tooltip-title">{{ getCloneFastListTooltipTitle(record) }}</div>
-              <div
-                v-for="item in getCloneFastFlattenTooltipItems(record)"
-                :key="item.label"
-                class="clone-fast-flatten-list-tooltip-row">
-                <span class="clone-fast-flatten-list-tooltip-label">{{ item.label }} :</span>
-                <span class="clone-fast-flatten-list-tooltip-value">{{ item.value }}</span>
-              </div>
-            </div>
-          </template>
-        </status>
-        <status v-else-if="isFastCloneSourceFlattenActive(record)" :text="text ? text : ''" displayText :styles="{ 'min-width': '80px' }">
-          <template #tooltip>
-            <div class="clone-fast-flatten-list-tooltip">
-              <div class="clone-fast-flatten-list-tooltip-title">{{ getCloneFastSourceTooltipTitle(record) }}</div>
-              <div class="clone-fast-flatten-list-tooltip-description">{{ getCloneFastSourceTooltipDescription(record) }}</div>
-            </div>
-          </template>
-        </status>
-        <status v-else :text="text ? text : ''" displayText :styles="{ 'min-width': '80px' }" />
+        <span class="list-state-with-flatten">
+          <status v-if="$route.path.startsWith('/host')" :text="getHostState(record)" displayText />
+          <status v-else :text="text ? text : ''" displayText />
+          <clone-flatten-control :record="record" @refresh="$emit('refresh')" />
+        </span>
       </template>
       <template v-if="column.key === 'status'">
         <status
@@ -513,10 +500,16 @@
         />
       </template>
       <template v-if="column.key === 'clonefaststatus'">
-        <a-tag v-if="isFastCloneFlattenVisible(record)" color="processing">
+        <a-tag v-if="isFastCloneFlattenActive(record)" :color="getFastClonePhaseColor(record)">
           {{ getCloneFastStatusLabel(record) }}
         </a-tag>
         <span v-else>-</span>
+      </template>
+      <template v-if="column.key === 'compressionstatus'">
+        <status :text="text ? text : $t('label.unknown')" displayText />
+      </template>
+      <template v-if="column.key === 'validationstatus'">
+        <status :text="text ? text : $t('label.unknown')" displayText />
       </template>
       <template v-if="column.key === 'allocationstate'">
         <status
@@ -722,6 +715,10 @@
       <template v-if="column.key === 'objectstore'">
         <router-link :to="{ path: '/objectstore/' + record.objectstorageid }">{{ text }}</router-link>
       </template>
+      <template v-if="column.key === 'hsmprofile'">
+        <router-link v-if="record.hsmprofileid" :to="{ path: '/hsmprofile/' + record.hsmprofileid }">{{ text }}</router-link>
+        <span v-else>{{ text }}</span>
+      </template>
       <template v-if="column.key === 'podname'">
         <router-link :to="{ path: '/pod/' + record.podid }">{{ text }}</router-link>
       </template>
@@ -746,20 +743,25 @@
             </span>
           </template>
         </template>
-        <template v-if="text && !text.startsWith('PrjAcct-')">
-          <router-link
-            v-if="'quota' in record && $router.resolve(`${$route.path}/${record.account}`).matched[0].redirect !== '/exception/404'"
-            :to="{ path: `${$route.path}/${record.account}`, query: { account: record.account, domainid: record.domainid, quota: true } }"
-          >{{ text }}</router-link>
-          <router-link
-            :to="{ path: '/account/' + record.accountid }"
-            v-else-if="record.accountid"
-          >{{ text }}</router-link>
-          <router-link
-            :to="{ path: '/account', query: { name: record.account, domainid: record.domainid, dataView: true } }"
-            v-else-if="$store.getters.userInfo.roletype !== 'User'"
-          >{{ text }}</router-link>
-          <span v-else>{{ text }}</span>
+        <template v-if="text">
+          <template v-if="!text.startsWith('PrjAcct-')">
+            <router-link
+              v-if="$route.path.startsWith('/quotasummary')"
+              :to="{ path: `${$route.path}/${record.accountid}` }">{{ text }}</router-link>
+            <router-link v-else-if="record.accountid" :to="{ path: '/account/' + record.accountid }">{{ text }}</router-link>
+            <router-link
+              v-else-if="$store.getters.userInfo.roletype !== 'User'"
+              :to="{ path: '/account', query: { name: record.account, domainid: record.domainid, dataView: true } }">
+              {{ text }}
+            </router-link>
+            <span v-else>{{ text }}</span>
+          </template>
+          <template v-else-if="$route.path.startsWith('/quotasummary')">
+            <router-link :to="{ path: `${$route.path}/${record.accountid}` }">
+              {{ (record.projectname || record.account).concat(' (').concat($t('label.project')).concat(')') }}
+            </router-link>
+          </template>
+          <span v-else>{{ (record.projectname || record.account).concat(' (').concat($t('label.project')).concat(')') }}</span>
         </template>
       </template>
       <template v-if="column.key === 'resource'">
@@ -866,12 +868,12 @@
         {{ record.enabled ? 'Enabled' : 'Disabled' }}
       </template>
       <template
-        v-if="['created', 'sent', 'removed', 'effectiveDate', 'endDate', 'allocated'].includes(column.key) || (['startdate'].includes(column.key) && ['webhook'].includes($route.path.split('/')[1])) || (column.key === 'allocated' && ['asnumbers', 'publicip', 'ipv4subnets'].includes($route.meta.name) && text)"
+        v-if="['created', 'sent', 'removed', 'effectiveDate', 'endDate', 'allocated', 'startdate', 'enddate'].includes(column.key) || (['startdate'].includes(column.key) && ['webhook'].includes($route.path.split('/')[1])) || (column.key === 'allocated' && ['asnumbers', 'publicip', 'ipv4subnets'].includes($route.meta.name) && text)"
       >
         {{ text && $toLocaleDate(text) }}
       </template>
       <template
-        v-if="['startdate', 'enddate'].includes(column.key) && ['vm', 'vnfapp'].includes($route.path.split('/')[1])"
+        v-if="['startdate', 'enddate'].includes(column.key) && ['vm', 'vnfapp', 'autoscalevmgroup'].includes($route.path.split('/')[1])"
       >
         {{ getDateAtTimeZone(text, record.timezone) }}
       </template>
@@ -1042,7 +1044,7 @@
             style="margin-left: 5px"
             :actions="actions"
             :resource="record"
-            :enabled="quickViewEnabled() && actions.length > 0"
+            :enabled="quickViewEnabled(actions, columns, column.key)"
             @exec-action="$parent.execAction"
           />
         </template>
@@ -1130,21 +1132,11 @@
         />
         <slot></slot>
       </template>
-      <template v-if="column.key === 'vmScheduleActions'">
-        <tooltip-button
-          :tooltip="$t('label.edit')"
-          :disabled="!('updateVMSchedule' in $store.getters.apis)"
-          icon="edit-outlined"
-          @onClick="updateVMSchedule(record)"
-        />
-        <tooltip-button
-          :tooltip="$t('label.remove')"
-          :disabled="!('deleteVMSchedule' in $store.getters.apis)"
-          icon="delete-outlined"
-          :danger="true"
-          type="primary"
-          @onClick="removeVMSchedule(record)"
-        />
+      <template v-if="column.key === 'scheduleActions'">
+        <slot
+          name="scheduleActions"
+          :record="record"
+        ></slot>
       </template>
       <template v-if="column.key === 'vgpuActions'">
         <slot name="actionButtons" :record="record" :actions="actions"></slot>
@@ -1176,9 +1168,12 @@
 </template>
 
 <script>
+import { listRowKey } from '@/utils/listRefresh'
 import { getAPI, postAPI } from '@/api'
 import OsLogo from '@/components/widgets/OsLogo'
 import Status from '@/components/widgets/Status'
+import CloneFlattenControl from '@/components/widgets/CloneFlattenControl'
+import { getFastClonePhase, getFastClonePhaseLabel, getFastClonePhaseColor } from '@/utils/fastClone'
 import ResourceContextMenu from '@/components/view/ResourceContextMenu'
 import ResourceIcon from '@/components/view/ResourceIcon'
 import CopyLabel from '@/components/widgets/CopyLabel'
@@ -1197,6 +1192,7 @@ export default {
   components: {
     OsLogo,
     Status,
+    CloneFlattenControl,
     ResourceContextMenu,
     CopyLabel,
     GuestNetworkSummary,
@@ -1306,6 +1302,9 @@ export default {
       deep: true,
       handler (newData, oldData) {
         if (newData === oldData) return
+        const selected = new Set(this.selectedRowKeys)
+        const rows = this.items.filter(record => selected.has(listRowKey(record)))
+        if (selected.size) this.onSelectChange(rows.map(listRowKey), rows)
         this.items.forEach(record => {
           this.resourceIdToValidLinksMap[record.id] = validateLinks(this.$router, false, record)
         })
@@ -1384,6 +1383,7 @@ export default {
     }
   },
   methods: {
+    listRowKey,
     translateEventType (type) {
       if (!type || typeof type !== 'string') {
         return type
@@ -1479,7 +1479,7 @@ export default {
           '/zone', '/pod', '/cluster', '/host', '/storagepool', '/imagestore', '/systemvm', '/router', '/ilbvm', '/annotation',
           '/computeoffering', '/systemoffering', '/diskoffering', '/backupoffering', '/networkoffering', '/vpcoffering',
           '/tungstenfabric', '/oauthsetting', '/guestos', '/guestoshypervisormapping', '/webhook', 'webhookdeliveries', 'webhookfilters', '/quotatariff', '/sharedfs',
-          '/ipv4subnets', '/disasterrecoverycluster', '/managementserver', '/gpucard', '/gpudevices', '/vgpuprofile', '/extension', '/snapshotpolicy', '/backupschedule', '/alertRules', '/alert', ''].join('|'))
+          '/ipv4subnets', '/disasterrecoverycluster', '/managementserver', '/gpucard', '/gpudevices', '/vgpuprofile', '/extension', '/snapshotpolicy', '/backupschedule', '/alertRules', '/alert', '/kmskey', '/hsmprofile', '/dnsserver', '/dnszone', ''].join('|'))
           .test(this.$route.path)
     },
     enableGroupAction () {
@@ -1487,8 +1487,8 @@ export default {
         'vmsnapshot', 'backup', 'guestnetwork', 'vpc', 'publicip', 'vpnuser', 'vpncustomergateway', 'vnfapp',
         'project', 'account', 'systemvm', 'router', 'computeoffering', 'systemoffering',
         'diskoffering', 'backupoffering', 'networkoffering', 'vpcoffering', 'ilbvm', 'kubernetes', 'comment', 'buckets',
-        'webhook', 'webhookdeliveries', 'sharedfs', 'ipv4subnets', 'asnumbers', 'guestos', 'gpucard', 'gpudevices', 'vgpuprofile'
-      ].includes(this.$route.name)
+        'webhook', 'webhookdeliveries', 'sharedfs', 'ipv4subnets', 'asnumbers', 'guestos', 'gpucard', 'gpudevices', 'vgpuprofile',
+        'quotatariff'].includes(this.$route.name)
     },
     getDateAtTimeZone (date, timezone) {
       return date ? moment(date).tz(timezone).format('YYYY-MM-DD HH:mm:ss') : null
@@ -1513,7 +1513,7 @@ export default {
       return 'dark-row'
     },
     setSelection (selection) {
-      this.selectedRowKeys = selection
+      if (JSON.stringify(this.selectedRowKeys) !== JSON.stringify(selection)) this.selectedRowKeys = selection
       this.$emit('selection-change', this.selectedRowKeys)
     },
     resetSelection () {
@@ -1657,12 +1657,6 @@ export default {
     editTariffValue (record) {
       this.$emit('edit-tariff-action', true, record)
     },
-    updateVMSchedule (record) {
-      this.$emit('update-vm-schedule', record)
-    },
-    removeVMSchedule (record) {
-      this.$emit('remove-vm-schedule', record)
-    },
     ipAddress (text, record) {
       if (!record || !record.nic || record.nic.length === 0) {
         return text
@@ -1768,23 +1762,14 @@ export default {
     getCloneFastStatus (record) {
       return String(record?.clonefaststatus || record?.details?.['clone.fast.status'] || '').toLowerCase()
     },
+    getFastClonePhase,
+    getFastClonePhaseColor,
     isFastCloneFlattenActive (record) {
-      return ['pending', 'running'].includes(this.getCloneFastStatus(record))
-    },
-    hasCloneFastFlattenVolumeInfo (record) {
-      return [
-        record?.clonefastflattenvolumetype,
-        record?.clonefastflattenvolumename,
-        record?.clonefastflattendeviceid
-      ].some(value => value !== undefined && value !== null && value !== '')
-    },
-    isFastCloneFlattenVisible (record) {
-      return this.isFastCloneFlattenActive(record) && this.hasCloneFastFlattenVolumeInfo(record)
-    },
-    isFastCloneSourceFlattenActive (record) {
-      return this.isFastCloneFlattenActive(record) && !this.hasCloneFastFlattenVolumeInfo(record)
+      return !!getFastClonePhase(record) || ['pending', 'running'].includes(this.getCloneFastStatus(record))
     },
     getCloneFastStatusLabel (record) {
+      const phaseLabel = getFastClonePhaseLabel(record)
+      if (phaseLabel) return this.$t(phaseLabel)
       const status = this.getCloneFastStatus(record)
       if (status === 'running') {
         return this.$t('label.sharedmountpoint.clone.flatten.running')
@@ -1793,54 +1778,6 @@ export default {
         return this.$t('label.sharedmountpoint.clone.flatten.pending')
       }
       return ''
-    },
-    getCloneFastSourceTooltipTitle (record) {
-      const status = this.getCloneFastStatus(record)
-      if (status === 'pending') {
-        return this.$t('message.sharedmountpoint.clone.source.flatten.pending.summary')
-      }
-      return this.$t('message.sharedmountpoint.clone.source.flatten.running.summary')
-    },
-    getCloneFastSourceTooltipDescription (record) {
-      const status = this.getCloneFastStatus(record)
-      if (status === 'pending') {
-        return this.$t('message.sharedmountpoint.clone.source.flatten.pending')
-      }
-      return this.$t('message.sharedmountpoint.clone.source.flatten.running')
-    },
-    getCloneFastListTooltipTitle (record) {
-      const status = this.getCloneFastStatus(record)
-      if (status === 'running') {
-        return this.$t('message.sharedmountpoint.clone.flatten.running.summary')
-      }
-      if (status === 'pending') {
-        return this.$t('message.sharedmountpoint.clone.flatten.pending.summary')
-      }
-      return this.$t('label.sharedmountpoint.clone.flatten.status')
-    },
-    getCloneFastFlattenVolumeTypeLabel (record) {
-      const volumeType = record?.clonefastflattenvolumetype
-      return volumeType ? volumeType + ' ' + this.$t('label.volume') : ''
-    },
-    getCloneFastFlattenProgress (record) {
-      const rawProgress = record?.clonefastflattenprogress ?? record?.details?.['clone.fast.flatten.progress']
-      const progress = Number.parseFloat(rawProgress)
-      if (!Number.isFinite(progress)) {
-        return null
-      }
-      return Math.min(Math.max(progress, 0), 100)
-    },
-    formatCloneFastFlattenProgress (record) {
-      const progress = this.getCloneFastFlattenProgress(record)
-      return progress === null ? '' : progress.toFixed(2) + '%'
-    },
-    getCloneFastFlattenTooltipItems (record) {
-      return [
-        { label: this.$t('label.type'), value: this.getCloneFastFlattenVolumeTypeLabel(record) },
-        { label: this.$t('label.name'), value: record?.clonefastflattenvolumename },
-        { label: this.$t('label.deviceid'), value: record?.clonefastflattendeviceid },
-        { label: this.$t('label.progress'), value: this.formatCloneFastFlattenProgress(record) }
-      ].filter(item => item.value !== undefined && item.value !== null && item.value !== '')
     },
     getColumnKey (name) {
       if (typeof name !== 'object' || name === null) {
@@ -1998,38 +1935,19 @@ export default {
   background-color: transparent;
 }
 
-.clone-fast-flatten-list-tooltip {
-  min-width: 220px;
-}
-
-.clone-fast-flatten-list-tooltip-title {
-  font-weight: 600;
-  margin-bottom: 6px;
-}
-
-.clone-fast-flatten-list-tooltip-description {
-  line-height: 20px;
-}
-
-.clone-fast-flatten-list-tooltip-row {
-  display: grid;
-  gap: 8px;
-  grid-template-columns: max-content minmax(0, 1fr);
-  line-height: 20px;
-}
-
-.clone-fast-flatten-list-tooltip-label {
-  color: rgba(255, 255, 255, 0.85);
-  white-space: nowrap;
-}
-
-.clone-fast-flatten-list-tooltip-value {
-  color: #fff;
-  overflow-wrap: anywhere;
-}
 </style>
 
 <style scoped lang="scss">
+.list-state-with-flatten {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+
+  :deep(.clone-flatten-control) {
+    margin-left: 0;
+  }
+}
+
   .shift-btns {
     display: flex;
   }

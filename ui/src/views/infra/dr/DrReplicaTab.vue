@@ -18,6 +18,7 @@
 -->
 <template>
   <a-spin :spinning="loading">
+    <p v-if="listRefreshFailed" role="status">{{ $t('message.list.refresh.stale') }}</p>
     <div class="cross-dr-tab-toolbar">
       <a-button size="small" @click="fetchData">
         <template #icon><ReloadOutlined /></template>
@@ -48,10 +49,12 @@
 </template>
 
 <script>
+import { listRefreshMixin } from '@/utils/listRefreshMixin'
 import DrStatusPill from '@/components/dr/DrStatusPill.vue'
 import { listDrReplicas } from '@/api/dr'
 
 export default {
+  mixins: [listRefreshMixin(['fetchData'])],
   name: 'DrReplicaTab',
   components: {
     DrStatusPill
@@ -87,14 +90,23 @@ export default {
   },
   methods: {
     fetchData () {
+      const listRequest = this.listRequestToken('fetchData')
       if (!this.planId || !('listDrReplicas' in this.$store.getters.apis)) {
         this.replicas = []
         return
       }
-      this.loading = true
-      listDrReplicas({ planid: this.planId }).then(result => {
+      this.loading = !listRequest.loaded
+      return listDrReplicas({ planid: this.planId }).then(result => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
         this.replicas = result.items || []
+      }).catch(error => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+        listRequest.failed = true
+        this.listRefreshFailed = true
+        if (!listRequest.loaded) this.$notifyError(error)
       }).finally(() => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+
         this.loading = false
       })
     }

@@ -632,6 +632,8 @@
 </template>
 
 <script>
+import { listRefreshMixin } from '@/utils/listRefreshMixin'
+
 import { ref, reactive, toRaw } from 'vue'
 import { postAPI, getAPI } from '@/api'
 import _ from 'lodash'
@@ -645,6 +647,7 @@ import TooltipLabel from '@/components/widgets/TooltipLabel.vue'
 import ImportVmTasks from '@/views/tools/ImportVmTasks.vue'
 
 export default {
+  mixins: [listRefreshMixin(['fetchImportVmTasks'], { active: vm => String(vm.activeTabKey) === '2' && !!vm.zoneId && vm.isAblestackCloudMigration })],
   components: {
     TooltipLabel,
     Breadcrumb,
@@ -1364,13 +1367,7 @@ export default {
       }
     },
     startImportVmTasksAutoRefresh () {
-      this.stopImportVmTasksAutoRefresh()
-      this.importVmTasksAutoRefreshTimer = window.setInterval(() => {
-        if (String(this.activeTabKey) !== '2' || !this.zoneId || !this.isAblestackCloudMigration || this.loadingImportVmTasks) {
-          return
-        }
-        this.fetchImportVmTasks()
-      }, 10000)
+      if (this.listRefreshController) this.listRefreshController.schedule()
     },
     stopImportVmTasksAutoRefresh () {
       if (this.importVmTasksAutoRefreshTimer) {
@@ -1477,7 +1474,8 @@ export default {
       })
     },
     fetchImportVmTasks () {
-      this.loadingImportVmTasks = true
+      const listRequest = this.listRequestToken('fetchImportVmTasks')
+      this.loadingImportVmTasks = !listRequest.loaded
       const params = {
         zoneid: this.zoneId,
         page: this.page.tasks,
@@ -1492,12 +1490,24 @@ export default {
         params.sourceprovider = 'nutanix'
         params.migrationtool = 'ablestack_n2k'
       }
-      getAPI('listImportVmTasks', params).then(response => {
+      return getAPI('listImportVmTasks', params).then(response => {
+        if (!this.isListRequestCurrent('fetchImportVmTasks', listRequest)) return
+
         this.itemCount.tasks = response.listimportvmtasksresponse.count
         this.importVmTasks = response.listimportvmtasksresponse.importvmtask || []
       }).catch(error => {
+        if (!this.isListRequestCurrent('fetchImportVmTasks', listRequest)) return
+        listRequest.failed = true
+        this.listRefreshFailed = true
+        if (listRequest.loaded) return
+
         this.$notifyError(error)
       }).finally(() => {
+        if (!this.isListRequestCurrent('fetchImportVmTasks', listRequest)) return
+
+        this.loadingImportVmTasks = false
+      }).finally(() => {
+        if (!this.isListRequestCurrent('fetchImportVmTasks', listRequest)) return
         this.loadingImportVmTasks = false
       })
     },

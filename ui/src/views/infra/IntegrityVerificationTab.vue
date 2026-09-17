@@ -17,6 +17,7 @@
 
 <template>
   <div>
+    <p v-if="listRefreshFailed" role="status">{{ $t('message.list.refresh.stale') }}</p>
     <a-button
       v-if="(this.selectedRowKeys.length > 0)"
       type="primary"
@@ -124,6 +125,8 @@
 </template>
 
 <script>
+import { listRefreshMixin } from '@/utils/listRefreshMixin'
+
 import { ref, reactive } from 'vue'
 import { getAPI } from '@/api'
 import Status from '@/components/widgets/Status'
@@ -136,6 +139,7 @@ import eventBus from '@/config/eventBus'
 import { genericCompare } from '@/utils/sort'
 
 export default {
+  mixins: [listRefreshMixin(['fetchData'])],
   name: 'IntegrityVerificationTab',
   components: {
     Status,
@@ -257,30 +261,28 @@ export default {
       // const failedList = index.integrityverificationsfailedlist
       // this.integrityVerificationFinalResultTwo = failedList.split(', ').filter(item => item.trim() !== '')
     },
-    fetchData () {
-      const params = {}
-      params.managementserverid = this.resource.id
-      this.integrityVerification = []
-      this.integrityVerificationFinalResult = []
-      this.itemCount = 0
-      this.fetchLoading = true
-      getAPI('getIntegrityVerificationFinalResult', params).then(json => {
-        this.integrityVerificationFinalResult =
-          (json.getintegrityverificationfinalresultresponse.integrityverificationsfinalresults || []).map(item => {
-            return {
-              ...item,
-              parsedFailedList: item.integrityverificationsfailedlist
-                ? item.integrityverificationsfailedlist.split(', ').filter(i => i.trim() !== '')
-                : []
-            }
-          })
-      })
-      getAPI('getIntegrityVerification', { managementserverid: this.resource.id }).then(json => {
-        this.integrityVerification = json.getintegrityverificationresponse.integrityverificationsresult.integrityverificationsresult || []
-      }).catch(error => {
-        this.$notifyError(error)
-      }).finally(f => {
-      })
+    async fetchData () {
+      const request = this.listRequestToken('fetchData')
+      this.fetchLoading = !request.loaded
+      try {
+        const [final, current] = await Promise.all([
+          getAPI('getIntegrityVerificationFinalResult', { managementserverid: this.resource.id }),
+          getAPI('getIntegrityVerification', { managementserverid: this.resource.id })
+        ])
+        if (!this.isListRequestCurrent('fetchData', request)) return
+        this.integrityVerificationFinalResult = (final.getintegrityverificationfinalresultresponse.integrityverificationsfinalresults || []).map(item => ({
+          ...item,
+          parsedFailedList: item.integrityverificationsfailedlist ? item.integrityverificationsfailedlist.split(', ').filter(Boolean) : []
+        }))
+        this.integrityVerification = current.getintegrityverificationresponse.integrityverificationsresult.integrityverificationsresult || []
+      } catch (error) {
+        if (!this.isListRequestCurrent('fetchData', request)) return
+        request.failed = true
+        this.listRefreshFailed = true
+        if (!request.loaded) this.$notifyError(error)
+      } finally {
+        if (this.isListRequestCurrent('fetchData', request)) this.fetchLoading = false
+      }
     },
     handleChangePage (page, pageSize) {
       this.page = page

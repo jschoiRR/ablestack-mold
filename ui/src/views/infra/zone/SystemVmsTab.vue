@@ -17,6 +17,7 @@
 
 <template>
   <a-spin :spinning="fetchLoading">
+    <p v-if="listRefreshFailed" role="status">{{ $t('message.list.refresh.stale') }}</p>
     <a-list class="list">
       <a-list-item v-for="vm in vms" :key="vm.id" class="list__item">
         <div class="list__item-outer-container">
@@ -69,10 +70,13 @@
 </template>
 
 <script>
+import { listRefreshMixin } from '@/utils/listRefreshMixin'
+
 import { getAPI } from '@/api'
 import Status from '@/components/widgets/Status'
 
 export default {
+  mixins: [listRefreshMixin(['fetchData'])],
   name: 'SystemVmsTab',
   components: {
     Status
@@ -109,12 +113,25 @@ export default {
   },
   methods: {
     fetchData () {
-      this.fetchLoading = true
-      getAPI('listSystemVms', { zoneid: this.resource.id }).then(json => {
+      const listRequest = this.listRequestToken('fetchData')
+      this.fetchLoading = !listRequest.loaded
+      return getAPI('listSystemVms', { zoneid: this.resource.id }).then(json => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+
         this.vms = json.listsystemvmsresponse.systemvm || []
       }).catch(error => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+        listRequest.failed = true
+        this.listRefreshFailed = true
+        if (listRequest.loaded) return
+
         this.$notifyError(error)
       }).finally(() => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+
+        this.fetchLoading = false
+      }).finally(() => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
         this.fetchLoading = false
       })
     }

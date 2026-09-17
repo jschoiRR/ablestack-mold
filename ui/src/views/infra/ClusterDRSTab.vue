@@ -151,11 +151,13 @@
 </template>
 
 <script>
+import { listRefreshMixin } from '@/utils/listRefreshMixin'
 
 import { reactive } from 'vue'
 import { getAPI, postAPI } from '@/api'
 
 export default {
+  mixins: [listRefreshMixin(['fetchDRSPlans'])],
   name: 'ClusterDrsTab',
   props: {
     resource: {
@@ -244,9 +246,17 @@ export default {
   },
   methods: {
     fetchDRSPlans () {
+      const listRequest = this.listRequestToken('fetchDRSPlans')
       if (!this.resource || !this.resource.id) return
       getAPI('listClusterDrsPlan', { page: 1, pageSize: 500, clusterid: this.resource.id }).then(json => {
+        if (!this.isListRequestCurrent('fetchDRSPlans', listRequest)) return
+
         this.drsPlans = json.listclusterdrsplanresponse.drsPlan
+      }).catch(error => {
+        if (!this.isListRequestCurrent('fetchDRSPlans', listRequest)) return
+        listRequest.failed = true
+        this.listRefreshFailed = true
+        if (!listRequest.loaded) this.$notifyError(error)
       })
     },
     executeDrsPlan () {

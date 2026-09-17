@@ -18,6 +18,7 @@
 <template>
 
   <div class="account-center-team" v-if="annotationType && 'listAnnotations' in $store.getters.apis">
+    <p v-if="listRefreshFailed" role="status">{{ $t('message.list.refresh.stale') }}</p>
     <a-spin :spinning="loadingAnnotations">
       <div class="title">
         {{ $t('label.comments') }} ({{ itemCount }})
@@ -124,10 +125,12 @@
 </template>
 
 <script>
+import { listRefreshMixin } from '@/utils/listRefreshMixin'
 
 import { getAPI, postAPI } from '@/api'
 
 export default {
+  mixins: [listRefreshMixin(['getAnnotations'])],
   name: 'AnnotationsTab',
   props: {
     resource: {
@@ -219,17 +222,29 @@ export default {
       this.getAnnotations()
     },
     getAnnotations () {
+      const listRequest = this.listRequestToken('getAnnotations')
       if (!('listAnnotations' in this.$store.getters.apis) || !this.resource || !this.resource.id) {
         return
       }
-      this.loadingAnnotations = true
-      this.notes = []
-      getAPI('listAnnotations', { entityid: this.resource.id, entitytype: this.annotationType, annotationfilter: 'all', page: this.page, pagesize: this.pageSize }).then(json => {
+      this.loadingAnnotations = !listRequest.loaded
+      return getAPI('listAnnotations', { entityid: this.resource.id, entitytype: this.annotationType, annotationfilter: 'all', page: this.page, pagesize: this.pageSize }).then(json => {
+        if (!this.isListRequestCurrent('getAnnotations', listRequest)) return
+        this.notes = []
         if (json.listannotationsresponse && json.listannotationsresponse.annotation) {
           this.notes = json.listannotationsresponse.annotation
           this.itemCount = json.listannotationsresponse.count
         }
       }).finally(() => {
+        if (!this.isListRequestCurrent('getAnnotations', listRequest)) return
+
+        this.loadingAnnotations = false
+      }).catch(error => {
+        if (!this.isListRequestCurrent('getAnnotations', listRequest)) return
+        listRequest.failed = true
+        this.listRefreshFailed = true
+        if (!listRequest.loaded) this.$notifyError(error)
+      }).finally(() => {
+        if (!this.isListRequestCurrent('getAnnotations', listRequest)) return
         this.loadingAnnotations = false
       })
     },

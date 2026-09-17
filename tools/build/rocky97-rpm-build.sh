@@ -60,6 +60,12 @@ echo "USE_TIMESTAMP=$USE_TIMESTAMP"
 echo "LOCAL_FAST=$LOCAL_FAST"
 echo "ABLESTACK_UI_BUILD_VERSION=${ABLESTACK_UI_BUILD_VERSION:-<source-config>}"
 
+source /etc/os-release
+if [[ "$ID" != rocky || "$VERSION_ID" != 9.7 ]]; then
+    echo "This legacy helper requires Rocky 9.7; use rocky98-rpm-build.sh for 9.8" >&2
+    exit 1
+fi
+
 configure_rocky_vault_repositories() {
     local repo
 
@@ -251,6 +257,11 @@ verify_management_schema_resources() {
         cd "$extract_dir"
         rpm2cpio "$ROOT_DIR/$management_rpm" | cpio -idm --quiet
     )
+
+    if ! python3 "$ROOT_DIR/tools/build/verify_extensions_payload.py" "$ROOT_DIR" "$extract_dir"; then
+        rm -rf "$extract_dir"
+        return 1
+    fi
 
     mapfile -t packaged_jars < <(find "$extract_dir/usr/share/cloudstack-management/lib" -maxdepth 1 -type f -name 'cloudstack-*.jar' | sort)
     if [ "${#packaged_jars[@]}" -ne 1 ]; then

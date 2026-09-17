@@ -17,6 +17,7 @@
 
 <template>
   <a-spin :spinning="componentLoading">
+    <p v-if="listRefreshFailed" role="status">{{ $t('message.list.refresh.stale') }}</p>
     <a-button
       :disabled="!('createStorageNetworkIpRange' in $store.getters.apis)"
       type="dashed"
@@ -122,11 +123,14 @@
 </template>
 
 <script>
+import { listRefreshMixin } from '@/utils/listRefreshMixin'
+
 import { ref, reactive, toRaw } from 'vue'
 import { getAPI, postAPI } from '@/api'
 import TooltipButton from '@/components/widgets/TooltipButton'
 
 export default {
+  mixins: [listRefreshMixin(['fetchData'])],
   name: 'IpRangesTabStorage',
   components: {
     TooltipButton
@@ -212,18 +216,31 @@ export default {
       })
     },
     fetchData () {
+      const listRequest = this.listRequestToken('fetchData')
       this.fetchPods()
-      this.componentLoading = true
-      getAPI('listStorageNetworkIpRange', {
+      this.componentLoading = !listRequest.loaded
+      return getAPI('listStorageNetworkIpRange', {
         zoneid: this.resource.zoneid,
         page: this.page,
         pageSize: this.pageSize
       }).then(response => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+
         this.items = response.liststoragenetworkiprangeresponse.storagenetworkiprange || []
         this.total = response.liststoragenetworkiprangeresponse.count || 0
       }).catch(error => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+        listRequest.failed = true
+        this.listRefreshFailed = true
+        if (listRequest.loaded) return
+
         this.$notifyError(error)
       }).finally(() => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+
+        this.componentLoading = false
+      }).finally(() => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
         this.componentLoading = false
       })
     },

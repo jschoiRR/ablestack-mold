@@ -56,6 +56,7 @@ public final class LibvirtReadyCommandWrapper extends CommandWrapper<ReadyComman
             hostDetails.put(Host.HOST_OVFTOOL_VERSION, libvirtComputingResource.getHostOvfToolVersion());
         }
 
+        hostDetails.putAll(libvirtComputingResource.getTpmCapabilities());
         return new ReadyAnswer(command, hostDetails);
     }
 

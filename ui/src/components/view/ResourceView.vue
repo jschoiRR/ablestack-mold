@@ -35,6 +35,7 @@
         <keep-alive v-if="tabs.length === 1">
           <component
             :is="tabs[0].component"
+            :key="tabs[0].name"
             :resource="resource"
             :loading="loading"
             :tab="tabs[0].name"
@@ -44,7 +45,7 @@
           v-else
           style="width: 100%; margin-top: -12px"
           :animated="false"
-          :activeKey="activeTab || tabs[0].name"
+          :activeKey="activeTab"
           @change="onTabChange" >
           <template v-for="tab in tabs" :key="tab.name">
             <a-tab-pane
@@ -53,18 +54,10 @@
               v-if="showTab(tab)">
               <keep-alive>
                 <component
-                  v-if="tab.resourceType"
                   :is="tab.component"
+                  :key="tab.name"
                   :resource="resource"
                   :resourceType="tab.resourceType"
-                  :loading="loading"
-                  :tab="activeTab"
-                  @change-resource="$emit('change-resource', $event)"
-                  @wide-layout-change="onWideLayoutChange" />
-                <component
-                  v-else
-                  :is="tab.component"
-                  :resource="resource"
                   :loading="loading"
                   :tab="activeTab"
                   @change-resource="$emit('change-resource', $event)"
@@ -149,12 +142,12 @@ export default {
     }
   },
   created () {
-    const self = this
     this.setActiveTab()
-    window.addEventListener('popstate', function () {
-      self.setActiveTab()
-    })
+    window.addEventListener('popstate', this.setActiveTab)
     this.fetchData()
+  },
+  beforeUnmount () {
+    window.removeEventListener('popstate', this.setActiveTab)
   },
   methods: {
     fetchData () {
@@ -204,20 +197,9 @@ export default {
       }
     },
     setActiveTab () {
-      if (this.$route.query.tab) {
-        this.activeTab = this.$route.query.tab
-        return
-      }
-      if (!this.historyTab || !this.$route.meta.tabs || this.$route.meta.tabs.length === 0) {
-        this.activeTab = this.tabs[0].name
-        return
-      }
-      const tabIdx = this.$route.meta.tabs.findIndex(tab => tab.name === this.historyTab)
-      if (tabIdx === -1) {
-        this.activeTab = this.tabs[0].name
-      } else {
-        this.activeTab = this.historyTab
-      }
+      const requestedTab = this.$route.query.tab || this.historyTab
+      const selected = this.tabs.find(tab => tab.name === requestedTab) || this.tabs[0]
+      this.activeTab = selected ? selected.name : ''
     }
   }
 }

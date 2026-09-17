@@ -39,10 +39,13 @@
 </template>
 
 <script>
+import { listRefreshMixin } from '@/utils/listRefreshMixin'
+
 import { getAPI } from '@/api'
 import Status from '@/components/widgets/Status'
 
 export default {
+  mixins: [listRefreshMixin(['fetchData'])],
   name: 'GuestVlanNetworksTab',
   components: {
     Status
@@ -111,15 +114,28 @@ export default {
   },
   methods: {
     fetchData () {
+      const listRequest = this.listRequestToken('fetchData')
       var params = {
         id: this.resource.id
       }
-      this.fetchLoading = true
-      getAPI('listGuestVlans', params).then(json => {
+      this.fetchLoading = !listRequest.loaded
+      return getAPI('listGuestVlans', params).then(json => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+
         this.networks = json.listguestvlansresponse.guestvlan[0].network || []
       }).catch(error => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+        listRequest.failed = true
+        this.listRefreshFailed = true
+        if (listRequest.loaded) return
+
         this.$notifyError(error)
       }).finally(() => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+
+        this.fetchLoading = false
+      }).finally(() => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
         this.fetchLoading = false
       })
     }

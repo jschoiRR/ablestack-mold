@@ -1,7 +1,20 @@
 // Licensed to the Apache Software Foundation (ASF) under one
-// or more contributor license agreements. See the NOTICE file
-// distributed with this work for additional information.
-// The ASF licenses this file to you under the Apache License, Version 2.0.
+// or more contributor license agreements.  See the NOTICE file
+// distributed with this work for additional information
+// regarding copyright ownership.  The ASF licenses this file
+// to you under the Apache License, Version 2.0 (the
+// "License"); you may not use this file except in compliance
+// with the License.  You may obtain a copy of the License at
+//
+//   http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing,
+// software distributed under the License is distributed on an
+// "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+// KIND, either express or implied.  See the License for the
+// specific language governing permissions and limitations
+// under the License.
+
 package com.cloud.dr;
 
 import java.util.Date;
@@ -67,6 +80,26 @@ public class DrFailbackLifecycleServiceImplTest {
 
         Mockito.when(drFailbackSessionDao.findActiveByRunId(run.getId())).thenReturn(session);
         Mockito.when(drReplicaDao.listActiveByPlanId(plan.getId())).thenReturn(java.util.Collections.emptyList());
+    }
+
+    @Test public void liveResumeWorkerIsObservedWithoutRecreatingTransport() {
+        DrPlanVO plan = new DrPlanVO("resume", 1L, 2L, DrConstants.DIRECTION_KVM_TO_KVM);
+        plan.setActiveSide("SOURCE");
+        DrRunVO run = new DrRunVO(plan.getId(), DrConstants.RUN_TYPE_FAILBACK);
+        String worker = java.util.UUID.nameUUIDFromBytes((plan.getUuid()+":"+run.getUuid()+":RESUME_SYNC")
+                .getBytes(java.nio.charset.StandardCharsets.UTF_8)).toString();
+        JsonObject runtime = new JsonObject();
+        runtime.addProperty("active_worker_run_uuid",worker); runtime.addProperty("scheduler_pid_alive",true);
+        runtime.addProperty("control_state","RUNNING"); runtime.addProperty("scheduler_state","RUNNING");
+        runtime.addProperty("scheduler_health","HEALTHY");
+        Assert.assertTrue(service.ownedResumeWorkerActive(plan,run,runtime));
+        runtime.addProperty("control_state","PAUSED"); Assert.assertFalse(service.ownedResumeWorkerActive(plan,run,runtime));
+        runtime.addProperty("control_state","RUNNING"); runtime.addProperty("scheduler_pid_alive",false);
+        Assert.assertFalse(service.ownedResumeWorkerActive(plan,run,runtime));
+        runtime.addProperty("scheduler_pid_alive",true); runtime.addProperty("active_worker_run_uuid","stale");
+        Assert.assertFalse(service.ownedResumeWorkerActive(plan,run,runtime));
+        runtime.addProperty("active_worker_run_uuid",worker); runtime.addProperty("active_side","TARGET");
+        Assert.assertFalse(service.ownedResumeWorkerActive(plan,run,runtime));
     }
 
     @Test

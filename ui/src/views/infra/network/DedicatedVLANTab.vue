@@ -17,6 +17,7 @@
 
 <template>
   <a-spin :spinning="fetchLoading">
+    <p v-if="listRefreshFailed" role="status">{{ $t('message.list.refresh.stale') }}</p>
     <a-button
       :disabled="!('dedicateGuestVlanRange' in $store.getters.apis)"
       type="dashed"
@@ -173,12 +174,15 @@
 </template>
 
 <script>
+import { listRefreshMixin } from '@/utils/listRefreshMixin'
+
 import { ref, reactive, toRaw } from 'vue'
 import { getAPI, postAPI } from '@/api'
 import TooltipButton from '@/components/widgets/TooltipButton'
 import ResourceIcon from '@/components/view/ResourceIcon'
 
 export default {
+  mixins: [listRefreshMixin(['fetchData'])],
   name: 'DedicatedVLANTab',
   components: {
     TooltipButton,
@@ -251,23 +255,36 @@ export default {
       })
     },
     fetchData () {
-      this.formLoading = true
-      getAPI('listDedicatedGuestVlanRanges', {
+      const listRequest = this.listRequestToken('fetchData')
+      this.formLoading = !listRequest.loaded
+      return getAPI('listDedicatedGuestVlanRanges', {
         physicalnetworkid: this.resource.id,
         page: this.page,
         pageSize: this.pageSize
       }).then(response => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+
         this.items = response.listdedicatedguestvlanrangesresponse.dedicatedguestvlanrange || []
         this.totalCount = response.listdedicatedguestvlanrangesresponse.count || 0
       }).catch(error => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+        listRequest.failed = true
+        this.listRefreshFailed = true
+        if (listRequest.loaded) return
+
         this.$notification.error({
           message: `${this.$t('label.error')} ${error.response.status}`,
           description: error.response.data.errorresponse.errortext,
           duration: 0
         })
       }).finally(() => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+
         this.formLoading = false
         this.parentFinishLoading()
+      }).finally(() => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+        this.formLoading = false
       })
     },
     fetchDomains () {

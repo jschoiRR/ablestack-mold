@@ -31,36 +31,44 @@ public class KVMHAChecker extends KVMHABase implements Callable<Boolean> {
     private List<HAStoragePool> rbdStoragePools;
     private List<HAStoragePool> clvmStoragePools;
     private HostTO host;
-    private boolean reportFailureIfOneStorageIsDown;
+    private boolean reportIfHeartBeatFailedForOneStoragePool;
     private String volumeList;
     private long timeoutSeconds;
 
-    public KVMHAChecker(List<HAStoragePool> pools, List<HAStoragePool> gfspools, List<HAStoragePool> rbdpools, List<HAStoragePool> clvmpools, HostTO host, boolean reportFailureIfOneStorageIsDown, String volumeList) {
-        this(pools, gfspools, rbdpools, clvmpools, host, reportFailureIfOneStorageIsDown, volumeList, 20L);
+    public KVMHAChecker(List<HAStoragePool> pools, List<HAStoragePool> gfspools, List<HAStoragePool> rbdpools, List<HAStoragePool> clvmpools, HostTO host, boolean reportIfHeartBeatFailedForOneStoragePool, String volumeList) {
+        this(pools, gfspools, rbdpools, clvmpools, host, reportIfHeartBeatFailedForOneStoragePool, volumeList, 20L);
     }
 
     public KVMHAChecker(List<HAStoragePool> pools, List<HAStoragePool> gfspools, List<HAStoragePool> rbdpools,
-            List<HAStoragePool> clvmpools, HostTO host, boolean reportFailureIfOneStorageIsDown, String volumeList, long timeoutSeconds) {
+            List<HAStoragePool> clvmpools, HostTO host, boolean reportIfHeartBeatFailedForOneStoragePool, String volumeList, long timeoutSeconds) {
         this.timeoutSeconds = timeoutSeconds;
         this.storagePools = pools;
         this.gfsStoragePools = gfspools;
         this.rbdStoragePools = rbdpools;
         this.clvmStoragePools = clvmpools;
         this.host = host;
-        this.reportFailureIfOneStorageIsDown = reportFailureIfOneStorageIsDown;
+        this.reportIfHeartBeatFailedForOneStoragePool = reportIfHeartBeatFailedForOneStoragePool;
         this.volumeList = volumeList;
     }
 
     // True/false are determined heartbeat observations under the configured pool
     // policy; null means the available witnesses cannot determine the result.
     @Override
-    public Boolean checkingHeartBeat() {
+    public Boolean hasHeartBeat() {
         long deadline = System.nanoTime() + TimeUnit.SECONDS.toNanos(timeoutSeconds);
         List<HAStoragePool> allPools = new ArrayList<>();
-        allPools.addAll(storagePools);
-        allPools.addAll(gfsStoragePools);
-        allPools.addAll(rbdStoragePools);
-        allPools.addAll(clvmStoragePools);
+        if (storagePools != null) {
+            allPools.addAll(storagePools);
+        }
+        if (gfsStoragePools != null) {
+            allPools.addAll(gfsStoragePools);
+        }
+        if (rbdStoragePools != null) {
+            allPools.addAll(rbdStoragePools);
+        }
+        if (clvmStoragePools != null) {
+            allPools.addAll(clvmStoragePools);
+        }
         boolean unknown = allPools.isEmpty();
         for (HAStoragePool pool : allPools) {
             long remainingMillis = TimeUnit.NANOSECONDS.toMillis(deadline - System.nanoTime());
@@ -69,20 +77,20 @@ public class KVMHAChecker extends KVMHABase implements Callable<Boolean> {
             }
             Boolean active = pool.getPool().getType() == StoragePoolType.RBD
                     ? pool.getPool().checkingHeartBeatRBD(pool, host, volumeList, Duration.millis(remainingMillis))
-                    : pool.getPool().checkingHeartBeat(pool, host, Duration.millis(remainingMillis));
+                    : pool.getPool().hasHeartBeat(pool, host, Duration.millis(remainingMillis));
             if (active == null) {
                 unknown = true;
-            } else if (reportFailureIfOneStorageIsDown && !active) {
+            } else if (reportIfHeartBeatFailedForOneStoragePool && !active) {
                 return false;
-            } else if (!reportFailureIfOneStorageIsDown && active) {
+            } else if (!reportIfHeartBeatFailedForOneStoragePool && active) {
                 return true;
             }
         }
-        return unknown ? null : reportFailureIfOneStorageIsDown;
+        return unknown ? null : reportIfHeartBeatFailedForOneStoragePool;
     }
 
     @Override
     public Boolean call() throws Exception {
-        return checkingHeartBeat();
+        return hasHeartBeat();
     }
 }

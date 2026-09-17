@@ -77,6 +77,7 @@ import org.apache.cloudstack.storage.datastore.db.PrimaryDataStoreDao;
 import org.apache.cloudstack.storage.datastore.db.StoragePoolDetailsDao;
 import org.apache.cloudstack.storage.datastore.db.StoragePoolVO;
 import org.apache.cloudstack.vm.UnmanagedVMsManager;
+import org.apache.cloudstack.kms.KMSManager;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -475,6 +476,36 @@ public class ConfigurationManagerImplTest {
     }
 
     @Test
+    public void validateDrServiceToggleDoesNotQueryStorage() {
+        Mockito.doReturn(Boolean.class).when(configurationManagerImplSpy)
+                .getConfigurationTypeWrapperClass("cloud.dr.service.enabled");
+        // No pools are required, including an unconfigured or qcow2-only site.
+        for (String value : List.of("true", "false")) {
+            Assert.assertNull(configurationManagerImplSpy.validateConfigurationValue(
+                    "cloud.dr.service.enabled", value, ConfigKey.Scope.Global));
+        }
+        Mockito.verify(storagePoolDao, Mockito.never()).listAll();
+    }
+
+    @Test
+    public void validateDrServiceTogglePreservesBooleanValidation() {
+        Mockito.doReturn(Boolean.class).when(configurationManagerImplSpy)
+                .getConfigurationTypeWrapperClass("cloud.dr.service.enabled");
+        for (String value : List.of("yes", "1", "TRUE")) {
+            Assert.assertTrue(configurationManagerImplSpy.validateConfigurationValue(
+                    "cloud.dr.service.enabled", value, ConfigKey.Scope.Global).contains("is not a valid"));
+        }
+        Mockito.verify(storagePoolDao, Mockito.never()).listAll();
+    }
+
+    @Test
+    public void validateDrServiceTogglePreservesScopeValidation() {
+        Assert.assertTrue(configurationManagerImplSpy.validateConfigurationValue(
+                "cloud.dr.service.enabled", "true", ConfigKey.Scope.Domain).contains("Invalid scope"));
+        Mockito.verify(storagePoolDao, Mockito.never()).listAll();
+    }
+
+    @Test
     public void testValidateInvalidConfiguration() {
         Mockito.doReturn(null).when(configDao).findByName(Mockito.anyString());
         String msg = configurationManagerImplSpy.validateConfigurationValue("test.config.name", "testvalue", ConfigKey.Scope.Global);
@@ -538,6 +569,33 @@ public class ConfigurationManagerImplTest {
         configurationManagerImplSpy.populateConfigValuesForValidationSet();
         String msg = configurationManagerImplSpy.validateConfigurationValue(configKey.key(), "9", configKey.getScopes().get(0));
         Assert.assertNull(msg);
+    }
+
+    @Test
+    public void testValidateConfig_KMSDekSizeBits_Failure() {
+        ConfigurationVO cfg = mock(ConfigurationVO.class);
+        when(cfg.getScopes()).thenReturn(List.of(ConfigKey.Scope.Global));
+        ConfigKey<Integer> configKey = KMSManager.KMSDekSizeBits;
+        Mockito.doReturn(cfg).when(configDao).findByName(Mockito.anyString());
+        Mockito.doReturn(configKey).when(configurationManagerImplSpy._configDepot).get(configKey.key());
+
+        String result = configurationManagerImplSpy.validateConfigurationValue(configKey.key(), "512", configKey.getScopes().get(0));
+
+        Assert.assertNotNull(result);
+    }
+
+    @Test
+    public void testValidateConfig_KMSDekSizeBits_Success() {
+        ConfigurationVO cfg = mock(ConfigurationVO.class);
+        when(cfg.getScopes()).thenReturn(List.of(ConfigKey.Scope.Global));
+        ConfigKey<Integer> configKey = KMSManager.KMSDekSizeBits;
+        Mockito.doReturn(cfg).when(configDao).findByName(Mockito.anyString());
+        Mockito.doReturn(configKey).when(configurationManagerImplSpy._configDepot).get(configKey.key());
+
+        for (String validVal : List.of("128", "192", "256")) {
+            String msg = configurationManagerImplSpy.validateConfigurationValue(configKey.key(), validVal, configKey.getScopes().get(0));
+            Assert.assertNull(msg);
+        }
     }
 
     @Test
@@ -872,6 +930,7 @@ public class ConfigurationManagerImplTest {
         Mockito.when(cmd.getAccountId()).thenReturn(null);
         Mockito.when(cmd.getDomainId()).thenReturn(null);
         Mockito.when(cmd.getImageStoreId()).thenReturn(null);
+        Mockito.when(cmd.getManagementServerId()).thenReturn(null);
 
         ConfigurationVO cfg = new ConfigurationVO("Advanced", "DEFAULT", "test", "pool.storage.capacity.disablethreshold", null, "description");
         cfg.setScope(10);

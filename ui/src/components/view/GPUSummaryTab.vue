@@ -61,9 +61,12 @@
 </template>
 
 <script>
+import { listRefreshMixin } from '@/utils/listRefreshMixin'
+
 import { getAPI } from '@/api'
 
 export default {
+  mixins: [listRefreshMixin(['fetchSummaryData'])],
   name: 'GPUSummaryTab',
   props: {
     resource: {
@@ -100,11 +103,11 @@ export default {
   },
   methods: {
     fetchSummaryData () {
+      const listRequest = this.listRequestToken('fetchSummaryData')
       if (!this.resource.id) {
         return
       }
       // Reset expanded keys when fetching new data
-      this.expandedRowKeys = []
 
       const params = {}
       if (this.resourceType === 'Host') {
@@ -113,10 +116,17 @@ export default {
         params.virtualmachineid = this.resource.id
       }
 
-      getAPI('listGpuDevices', params).then(json => {
+      return getAPI('listGpuDevices', params).then(json => {
+        if (!this.isListRequestCurrent('fetchSummaryData', listRequest)) return
+        this.expandedRowKeys = []
         const devices = json?.listgpudevicesresponse?.gpudevice || []
         this.summaryData = this.buildSummaryData(devices)
       }).catch(error => {
+        if (!this.isListRequestCurrent('fetchSummaryData', listRequest)) return
+        listRequest.failed = true
+        this.listRefreshFailed = true
+        if (listRequest.loaded) return
+
         this.$notifyError(error)
       })
     },

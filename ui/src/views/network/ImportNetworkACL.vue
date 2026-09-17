@@ -25,7 +25,7 @@
         layout="vertical"
         @finish="handleSubmit">
 
-        <div class="info-section" style="margin-bottom: 24px; padding: 16px; background: #fafafa; border-radius: 4px;">
+        <div class="info-section" style="margin-bottom: 24px; padding: 16px; background: var(--ui-bg-elevated); color: var(--ui-text-primary); border-radius: 4px;">
           <a-descriptions :column="1" size="small">
             <a-descriptions-item :label="$t('label.acl.id')">
               <span style="font-family: monospace;">{{ resource.id }}</span>
@@ -374,7 +374,7 @@ export default {
   .csv-preview {
   max-height: 400px;
   overflow: auto;
-  border: 1px solid #d9d9d9;
+  border: 1px solid var(--ui-border);
   border-radius: 4px;
   padding: 10px;
 }

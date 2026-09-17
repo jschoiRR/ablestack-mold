@@ -57,10 +57,12 @@
 </template>
 
 <script>
+import { listRefreshMixin } from '@/utils/listRefreshMixin'
 import { getAPI } from '@/api'
 import ResourceIcon from '@/components/view/ResourceIcon.vue'
 import Status from '@/components/widgets/Status.vue'
 export default {
+  mixins: [listRefreshMixin(['getDrClusterList'])],
   name: 'DrTable',
   props: {
     resource: {
@@ -158,8 +160,12 @@ export default {
       this.getDrClusterList()
     },
     getDrClusterList () {
-      this.loading = true
-      getAPI('getDisasterRecoveryClusterList').then(json => {
+      const request = this.listRequestToken('getDrClusterList')
+      this.loading = !request.loaded
+      return getAPI('getDisasterRecoveryClusterList').then(json => {
+        if (!this.isListRequestCurrent('getDrClusterList', request)) return
+        this.drCluster = []
+        this.volList = []
         this.drClusterList = json.getdisasterrecoveryclusterlistresponse.disasterrecoverycluster || []
         for (const cluster of this.drClusterList) {
           const clusterId = cluster.id
@@ -173,7 +179,13 @@ export default {
             }
           }
         }
+      }).catch(error => {
+        if (!this.isListRequestCurrent('getDrClusterList', request)) return
+        request.failed = true
+        this.listRefreshFailed = true
+        if (!request.loaded) this.$notifyError(error)
       }).finally(() => {
+        if (!this.isListRequestCurrent('getDrClusterList', request)) return
         this.loading = false
       })
     }

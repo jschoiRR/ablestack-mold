@@ -17,6 +17,7 @@
 
 <template>
   <div>
+    <p v-if="listRefreshFailed" role="status">{{ $t('message.list.refresh.stale') }}</p>
     <a-card class="breadcrumb-card">
       <breadcrumb>
         <template #end>
@@ -77,11 +78,13 @@
 </template>
 
 <script>
+import { listRefreshMixin } from '@/utils/listRefreshMixin'
 import { getAPI } from '@/api'
 import { genericCompare } from '@/utils/sort.js'
 import Breadcrumb from '@/components/widgets/Breadcrumb'
 
 export default {
+  mixins: [listRefreshMixin(['fetchDetails'], { interval: 60000 })],
   name: 'Metrics',
   components: {
     Breadcrumb
@@ -115,22 +118,6 @@ export default {
   watch: {
   },
   methods: {
-    fetchDbMetrics () {
-      var metrics
-      getAPI('listDbMetrics').then(json => {
-        metrics = this.mapToArray(json.listdbmetricsresponse.dbMetrics)
-        this.dbMetrics = metrics
-      })
-      return metrics
-    },
-    fetchUsageMetrics () {
-      var metrics
-      getAPI('listUsageServerMetrics').then(json => {
-        metrics = this.mapToArray(json.listusageservermetricsresponse.usageMetrics)
-        this.usageMetrics = metrics
-      })
-      return metrics
-    },
     mapToArray (map) {
       /* eslint-disable no-unused-vars */
       var array = []
@@ -174,9 +161,19 @@ export default {
       /* eslint-enable no-unused-vars */
       return array
     },
-    fetchDetails () {
-      this.dbMetrics = this.fetchDbMetrics()
-      this.usageMetrics = this.fetchUsageMetrics()
+    async fetchDetails () {
+      const request = this.listRequestToken('fetchDetails')
+      try {
+        const [db, usage] = await Promise.all([getAPI('listDbMetrics'), getAPI('listUsageServerMetrics')])
+        if (!this.isListRequestCurrent('fetchDetails', request)) return
+        this.dbMetrics = this.mapToArray(db.listdbmetricsresponse.dbMetrics)
+        this.usageMetrics = this.mapToArray(usage.listusageservermetricsresponse.usageMetrics)
+      } catch (error) {
+        if (!this.isListRequestCurrent('fetchDetails', request)) return
+        request.failed = true
+        this.listRefreshFailed = true
+        if (!request.loaded) this.$notifyError(error)
+      }
     },
     fetchUsageListData () {
       this.columns = []

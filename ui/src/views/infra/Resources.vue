@@ -17,6 +17,7 @@
 
 <template>
   <a-spin :spinning="fetchLoading">
+    <p v-if="listRefreshFailed" role="status">{{ $t('message.list.refresh.stale') }}</p>
     <a-list>
       <a-list-item v-for="item in resourcesList" :key="item.id" class="list-item">
         <div class="list-item__container">
@@ -66,9 +67,12 @@
 </template>
 
 <script>
+import { listRefreshMixin } from '@/utils/listRefreshMixin'
+
 import { getAPI } from '@/api'
 
 export default {
+  mixins: [listRefreshMixin(['fetchData'])],
   name: 'Resources',
   props: {
     resource: {
@@ -98,17 +102,30 @@ export default {
   },
   methods: {
     fetchData () {
+      const listRequest = this.listRequestToken('fetchData')
       const entity = this.$route.meta.name + 'id'
       const params = {}
       params[entity] = this.resource.id
-      this.fetchLoading = true
-      getAPI('listCapacity', params).then(response => {
+      this.fetchLoading = !listRequest.loaded
+      return getAPI('listCapacity', params).then(response => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+
         this.resourcesList = response.listcapacityresponse.capacity
         this.updateTaggedCapacities()
-        this.animatePercentVals(this.resourcesList)
+        if (!listRequest.loaded) this.animatePercentVals(this.resourcesList)
       }).catch(error => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+        listRequest.failed = true
+        this.listRefreshFailed = true
+        if (listRequest.loaded) return
+
         this.$notifyError(error)
       }).finally(() => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+
+        this.fetchLoading = false
+      }).finally(() => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
         this.fetchLoading = false
       })
     },

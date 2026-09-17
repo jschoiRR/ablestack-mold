@@ -17,8 +17,9 @@
 
 <template>
   <div>
+    <p v-if="listRefreshFailed" role="status">{{ $t('message.list.refresh.stale') }}</p>
     <list-view
-      :tabLoading="tabLoading"
+      :loading="tabLoading"
       :columns="columns"
       :items="events"
       :actions="actions"
@@ -50,6 +51,8 @@
 </template>
 
 <script>
+import { listRefreshMixin } from '@/utils/listRefreshMixin'
+
 import { getAPI } from '@/api'
 import { genericCompare } from '@/utils/sort.js'
 import ListView from '@/components/view/ListView'
@@ -57,6 +60,7 @@ import ListView from '@/components/view/ListView'
 const EVENTS_TAB_COLUMNS_KEY = 'events_tab_columns'
 
 export default {
+  mixins: [listRefreshMixin(['fetchEvents'])],
   name: 'EventsTab',
   components: {
     ListView
@@ -127,7 +131,8 @@ export default {
       this.fetchEvents()
     },
     fetchEvents () {
-      this.events = []
+      const listRequest = this.listRequestToken('fetchEvents')
+
       if (!this.resource.id) {
         return
       }
@@ -138,11 +143,20 @@ export default {
         resourcetype: this.resourceType,
         listall: true
       }
-      this.tabLoading = true
-      getAPI('listEvents', params).then(json => {
+      this.tabLoading = !listRequest.loaded
+      return getAPI('listEvents', params).then(json => {
+        if (!this.isListRequestCurrent('fetchEvents', listRequest)) return
         this.events = []
         this.totalCount = json?.listeventsresponse?.count || 0
         this.events = json?.listeventsresponse?.event || []
+        this.tabLoading = false
+      }).catch(error => {
+        if (!this.isListRequestCurrent('fetchEvents', listRequest)) return
+        listRequest.failed = true
+        this.listRefreshFailed = true
+        if (!listRequest.loaded) this.$notifyError(error)
+      }).finally(() => {
+        if (!this.isListRequestCurrent('fetchEvents', listRequest)) return
         this.tabLoading = false
       })
     },

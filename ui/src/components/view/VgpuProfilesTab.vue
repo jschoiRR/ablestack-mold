@@ -17,6 +17,7 @@
 
 <template>
   <div>
+    <p v-if="listRefreshFailed" role="status">{{ $t('message.list.refresh.stale') }}</p>
     <a-button
       type="primary"
       @click="createVgpuProfile"
@@ -134,6 +135,8 @@
 </template>
 
 <script>
+import { listRefreshMixin } from '@/utils/listRefreshMixin'
+
 import { reactive, toRaw } from 'vue'
 import { getAPI, postAPI } from '@/api'
 import { genericCompare } from '@/utils/sort.js'
@@ -141,6 +144,7 @@ import ListView from '@/components/view/ListView'
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons-vue'
 
 export default {
+  mixins: [listRefreshMixin(['fetchVgpuProfiles'])],
   name: 'VgpuProfilesTab',
   components: {
     ListView,
@@ -394,10 +398,18 @@ export default {
       }
     },
     fetchVgpuProfiles () {
-      getAPI('listVgpuProfiles', {
+      const listRequest = this.listRequestToken('fetchVgpuProfiles')
+      return getAPI('listVgpuProfiles', {
         gpucardid: this.resource.id
       }).then(res => {
+        if (!this.isListRequestCurrent('fetchVgpuProfiles', listRequest)) return
+
         this.items = res?.listvgpuprofilesresponse?.vgpuprofile || []
+      }).catch(error => {
+        if (!this.isListRequestCurrent('fetchVgpuProfiles', listRequest)) return
+        listRequest.failed = true
+        this.listRefreshFailed = true
+        if (!listRequest.loaded) this.$notifyError(error)
       })
     }
   }

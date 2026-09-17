@@ -17,6 +17,7 @@
 
 <template>
   <div>
+    <p v-if="listRefreshFailed" role="status">{{ $t('message.list.refresh.stale') }}</p>
     <!-- Toolbar for bulk actions -->
     <div
       v-if="resourceType === 'Host'"
@@ -340,12 +341,15 @@
 </template>
 
 <script>
+import { listRefreshMixin } from '@/utils/listRefreshMixin'
+
 import { getAPI, postAPI } from '@/api'
 import { genericCompare } from '@/utils/sort.js'
 import Status from '@/components/widgets/Status'
 import { EditOutlined, DeleteOutlined, PlayCircleOutlined, PauseCircleOutlined } from '@ant-design/icons-vue'
 
 export default {
+  mixins: [listRefreshMixin(['fetchDevicesData'])],
   name: 'GPUDevicesTab',
   components: {
     Status,
@@ -428,11 +432,11 @@ export default {
   },
   methods: {
     fetchDevicesData () {
+      const listRequest = this.listRequestToken('fetchDevicesData')
       if (!this.resource.id) {
         return
       }
       // Reset expanded keys when fetching new data
-      this.expandedRowKeys = []
 
       const params = {}
       if (this.resourceType === 'Host') {
@@ -440,10 +444,17 @@ export default {
       } else if (this.resourceType === 'VirtualMachine') {
         params.virtualmachineid = this.resource.id
       }
-      getAPI('listGpuDevices', params).then(json => {
+      return getAPI('listGpuDevices', params).then(json => {
+        if (!this.isListRequestCurrent('fetchDevicesData', listRequest)) return
+        this.expandedRowKeys = []
         const devices = json?.listgpudevicesresponse?.gpudevice || []
         this.items = this.buildGpuTree(devices)
       }).catch(error => {
+        if (!this.isListRequestCurrent('fetchDevicesData', listRequest)) return
+        listRequest.failed = true
+        this.listRefreshFailed = true
+        if (listRequest.loaded) return
+
         this.$notifyError(error)
       })
     },

@@ -49,10 +49,13 @@
 </template>
 
 <script>
+import { listRefreshMixin } from '@/utils/listRefreshMixin'
+
 import { getAPI } from '@/api'
 import Status from '@/components/widgets/Status'
 
 export default {
+  mixins: [listRefreshMixin(['fetchData'])],
   name: 'VnfAppliancesTab',
   components: {
     Status
@@ -119,6 +122,7 @@ export default {
   },
   methods: {
     fetchData () {
+      const listRequest = this.listRequestToken('fetchData')
       var params = {
         details: 'group,nics,secgrp,tmpl,servoff,diskoff,iso,volume,affgrp,backoff,vnfnics',
         isVnf: true,
@@ -129,8 +133,10 @@ export default {
       } else {
         params.networkid = this.resource.id
       }
-      this.fetchLoading = true
-      getAPI('listVnfAppliances', params).then(json => {
+      this.fetchLoading = !listRequest.loaded
+      return getAPI('listVnfAppliances', params).then(json => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+
         this.virtualmachines = json.listvnfappliancesresponse.virtualmachine || []
         for (const vm of this.virtualmachines) {
           for (const vmnic of vm.nic) {
@@ -140,8 +146,18 @@ export default {
           }
         }
       }).catch(error => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+        listRequest.failed = true
+        this.listRefreshFailed = true
+        if (listRequest.loaded) return
+
         this.$notifyError(error)
       }).finally(() => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+
+        this.fetchLoading = false
+      }).finally(() => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
         this.fetchLoading = false
       })
     }

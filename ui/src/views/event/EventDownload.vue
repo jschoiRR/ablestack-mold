@@ -452,6 +452,7 @@ import SearchView from '@/components/view/SearchView'
 import OsLogo from '@/components/widgets/OsLogo'
 import ResourceIcon from '@/components/view/ResourceIcon'
 import BulkActionProgress from '@/components/view/BulkActionProgress'
+import { bulkColumns, updateBulkItem } from '@/utils/bulkAction'
 import TooltipLabel from '@/components/widgets/TooltipLabel'
 
 export default {
@@ -594,7 +595,7 @@ export default {
         state,
         jobid
       } = args
-      if (selectedItems.length === 0) {
+      if (selectedItems.length === 0 || (this.showGroupActionModal && selectedItems !== this.selectedItems)) {
         return
       }
       var tempResource = []
@@ -615,11 +616,8 @@ export default {
           } else {
             objIndex = selectedItems.findIndex(obj => (obj.id === tempResource[r] || obj.username === tempResource[r] || obj.name === tempResource[r]))
           }
-          if (state && objIndex !== -1) {
-            this.selectedItems[objIndex].status = state
-          }
-          if (jobid && objIndex !== -1) {
-            this.selectedItems[objIndex].jobid = jobid
+          if (objIndex !== -1) {
+            updateBulkItem(this.selectedItems[objIndex], state, jobid)
           }
         }
       }
@@ -1037,6 +1035,8 @@ export default {
       this.currentAction = {}
     },
     onRowSelectionChange (selection) {
+      // List refreshes must not replace the snapshot owned by active jobs.
+      if (this.showGroupActionModal) return
       this.selectedRowKeys = selection
       if (selection?.length > 0) {
         this.modalWidth = '50vw'
@@ -1223,7 +1223,7 @@ export default {
         param.loading = false
       })
     },
-    pollActionCompletion (jobId, action, resourceName, resource, showLoading = true) {
+    pollActionCompletion (jobId, action, resourceName, resource, showLoading = true, selectedItems = this.selectedItems) {
       if (this.shouldNavigateBack(action)) {
         action.isFetchData = false
       }
@@ -1234,8 +1234,8 @@ export default {
           description: resourceName,
           name: resourceName,
           successMethod: result => {
-            if (this.selectedItems.length > 0) {
-              eventBus.emit('update-resource-state', { selectedItems: this.selectedItems, resource, state: 'success' })
+            if (selectedItems === this.selectedItems && selectedItems.length > 0) {
+              eventBus.emit('update-resource-state', { selectedItems, resource, state: 'success' })
             }
             if (action.response) {
               const description = action.response(result.jobresult)
@@ -1253,8 +1253,8 @@ export default {
             resolve(true)
           },
           errorMethod: () => {
-            if (this.selectedItems.length > 0) {
-              eventBus.emit('update-resource-state', { selectedItems: this.selectedItems, resource, state: 'failed' })
+            if (selectedItems === this.selectedItems && selectedItems.length > 0) {
+              eventBus.emit('update-resource-state', { selectedItems, resource, state: 'failed' })
             }
             resolve(true)
           },
@@ -1262,7 +1262,7 @@ export default {
           showLoading: showLoading,
           catchMessage: this.$t('error.fetching.async.job.result'),
           action,
-          bulkAction: `${this.selectedItems.length > 0}` && this.showGroupActionModal,
+          bulkAction: `${selectedItems.length > 0}` && this.showGroupActionModal,
           resourceId: resource
         })
       })
@@ -1295,7 +1295,7 @@ export default {
       this.promises = []
       if (!this.dataView && this.currentAction.groupAction && this.selectedRowKeys.length > 0) {
         if (this.selectedRowKeys.length > 0) {
-          this.bulkColumns = this.chosenColumns
+          this.bulkColumns = bulkColumns(this.chosenColumns)
           this.selectedItems = this.selectedItems.map(v => ({ ...v, status: 'InProgress' }))
           this.bulkColumns.splice(0, 0, {
             dataIndex: 'status',
@@ -1341,19 +1341,22 @@ export default {
       }
     },
     callGroupApi (params, resourceName) {
+      const selectedItems = this.selectedItems
       return new Promise((resolve, reject) => {
         const action = this.currentAction
         getAPI(action.api, params).then(json => {
-          resolve(this.handleResponse(json, resourceName, this.getDataIdentifier(params), action, false))
+          resolve(this.handleResponse(json, resourceName, this.getDataIdentifier(params), action, false, selectedItems))
           this.closeAction()
         }).catch(error => {
           if ([401].includes(error.response.status)) {
+            resolve(false)
             return
           }
-          if (this.selectedItems.length !== 0) {
+          if (selectedItems === this.selectedItems && selectedItems.length !== 0) {
             this.$notifyError(error)
-            eventBus.emit('update-resource-state', { selectedItems: this.selectedItems, resource: this.getDataIdentifier(params), state: 'failed' })
+            eventBus.emit('update-resource-state', { selectedItems, resource: this.getDataIdentifier(params), state: 'failed' })
           }
+          resolve(false)
         })
       })
     },
@@ -1362,7 +1365,7 @@ export default {
       dataIdentifier = params.id || params.username || params.name || params.vmsnapshotid || params.ids
       return dataIdentifier
     },
-    handleResponse (response, resourceName, resource, action, showLoading = true) {
+    handleResponse (response, resourceName, resource, action, showLoading = true, selectedItems = this.selectedItems) {
       return new Promise(resolve => {
         let jobId = null
         for (const obj in response) {
@@ -1370,10 +1373,10 @@ export default {
             if (response[obj].jobid) {
               jobId = response[obj].jobid
             } else {
-              if (this.selectedItems.length > 0) {
-                eventBus.emit('update-resource-state', { selectedItems: this.selectedItems, resource, state: 'success' })
+              if (selectedItems === this.selectedItems && selectedItems.length > 0) {
+                eventBus.emit('update-resource-state', { selectedItems, resource, state: 'success' })
                 if (resource) {
-                  this.selectedItems.filter(item => item === resource)
+                  selectedItems.filter(item => item === resource)
                 }
               }
               var message = action.successMessage ? this.$t(action.successMessage) : this.$t(action.label) +
@@ -1383,7 +1386,7 @@ export default {
                 message = message + ' - ' + this.$t(action.successMessage)
                 duration = 5
               }
-              if (this.selectedItems.length === 0) {
+              if (selectedItems.length === 0) {
                 this.$message.success({
                   content: message,
                   key: action.label + resourceName,
@@ -1398,8 +1401,10 @@ export default {
           this.$store.dispatch('UpdateConfiguration')
         }
         if (jobId) {
-          eventBus.emit('update-resource-state', { selectedItems: this.selectedItems, resource, state: 'InProgress', jobid: jobId })
-          resolve(this.pollActionCompletion(jobId, action, resourceName, resource, showLoading))
+          if (selectedItems === this.selectedItems) {
+            eventBus.emit('update-resource-state', { selectedItems, resource, state: 'InProgress', jobid: jobId })
+          }
+          resolve(this.pollActionCompletion(jobId, action, resourceName, resource, showLoading, selectedItems))
         }
         resolve(false)
       })

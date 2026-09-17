@@ -88,6 +88,8 @@
 </template>
 
 <script>
+import { listRefreshMixin } from '@/utils/listRefreshMixin'
+
 import { getAPI } from '@/api'
 import { mixin, mixinDevice } from '@/utils/mixin.js'
 import Breadcrumb from '@/components/widgets/Breadcrumb'
@@ -111,7 +113,7 @@ export default {
     ConfigurationHierarchy,
     ConfigurationTable
   },
-  mixins: [mixin, mixinDevice],
+  mixins: [listRefreshMixin(['fetchConfigurationData']), mixin, mixinDevice],
   props: {
     loading: {
       type: Boolean,
@@ -188,7 +190,8 @@ export default {
       })
     },
     fetchConfigurationData () {
-      this.configLoading = true
+      const listRequest = this.listRequestToken('fetchConfigurationData')
+      this.configLoading = !listRequest.loaded
       const params = {
         listAll: true
       }
@@ -206,7 +209,9 @@ export default {
         params.keyword = this.filter
       }
 
-      getAPI('listConfigurations', params).then(response => {
+      return getAPI('listConfigurations', params).then(response => {
+        if (!this.isListRequestCurrent('fetchConfigurationData', listRequest)) return
+
         this.config = []
         let config = response.listconfigurationsresponse.configuration || []
         if (this.$store.getters.features.securityfeaturesenabled) {
@@ -240,11 +245,21 @@ export default {
           config = this.convertConfigToHierarchy(config)
         }
         this.config = config
-        window.scrollTo(0, 0)
+        if (!listRequest.loaded) window.scrollTo(0, 0)
       }).catch(error => {
+        if (!this.isListRequestCurrent('fetchConfigurationData', listRequest)) return
+        listRequest.failed = true
+        this.listRefreshFailed = true
+        if (listRequest.loaded) return
+
         console.error(error)
         this.$message.error(this.$t('message.error.loading.setting'))
       }).finally(() => {
+        if (!this.isListRequestCurrent('fetchConfigurationData', listRequest)) return
+
+        this.configLoading = false
+      }).finally(() => {
+        if (!this.isListRequestCurrent('fetchConfigurationData', listRequest)) return
         this.configLoading = false
       })
     },

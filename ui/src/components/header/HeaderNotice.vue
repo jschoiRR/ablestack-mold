@@ -40,9 +40,9 @@
             <template #title>{{ notice.path }} </template>
             <a-list-item-meta :title="notice.title">
               <template #avatar>
-                <a-avatar :style="notificationAvatar[notice.status].style">
+                <a-avatar :style="(notificationAvatar[notice.status] || notificationAvatar.unknown).style">
                   <template #icon>
-                    <render-icon :icon="notificationAvatar[notice.status].icon" />
+                    <render-icon :icon="(notificationAvatar[notice.status] || notificationAvatar.unknown).icon" />
                   </template>
                 </a-avatar>
               </template>
@@ -54,6 +54,9 @@
                   <router-link :to="{ path: notice.path, query: notice.query }">{{ notice.description }}</router-link>
                 </span>
                 <span v-else>{{ notice.description }}</span>
+                <a-button v-if="notice.status === 'unknown'" type="link" size="small" @click="$pollJob({ jobId: notice.key, title: notice.title, description: notice.description, originalPage: notice.path, retry: true })">
+                  {{ $t('label.job.check.result') }}
+                </a-button>
               </template>
             </a-list-item-meta>
           </a-list-item>
@@ -86,6 +89,7 @@ export default {
       notices: [],
       poller: null,
       notificationAvatar: {
+        unknown: { icon: 'question-circle-outlined', style: { backgroundColor: '#8c8c8c' } },
         done: { icon: 'check-circle-outlined', style: { backgroundColor: '#87d068' } },
         progress: { icon: 'loading-outlined', style: { backgroundColor: '#ffbf00' } },
         failed: { icon: 'close-circle-outlined', style: { backgroundColor: '#f56a00' } }

@@ -17,6 +17,7 @@
 
 <template>
   <a-spin :spinning="fetchLoading">
+    <p v-if="listRefreshFailed" role="status">{{ $t('message.list.refresh.stale') }}</p>
     <a-table
       size="small"
       style="overflow-y: auto; margin-bottom: 15px"
@@ -65,10 +66,13 @@
   </a-spin>
 </template>
 <script>
+import { listRefreshMixin } from '@/utils/listRefreshMixin'
+
 import { getAPI, postAPI } from '@/api'
 import TooltipButton from '@/components/widgets/TooltipButton'
 
 export default {
+  mixins: [listRefreshMixin(['fetchData'])],
   name: 'InternalLBAssignedVmTab',
   components: {
     TooltipButton
@@ -120,15 +124,28 @@ export default {
   },
   methods: {
     fetchData () {
-      this.fetchLoading = true
-      getAPI('listLoadBalancerRuleInstances', {
+      const listRequest = this.listRequestToken('fetchData')
+      this.fetchLoading = !listRequest.loaded
+      return getAPI('listLoadBalancerRuleInstances', {
         id: this.resource.id,
         page: this.page,
         pagesize: this.pageSize
       }).then(response => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+
         this.totalInstances = response.listloadbalancerruleinstancesresponse.count || 0
         this.assignedVms = response.listloadbalancerruleinstancesresponse.loadbalancerruleinstance || []
       }).finally(() => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+
+        this.fetchLoading = false
+      }).catch(error => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+        listRequest.failed = true
+        this.listRefreshFailed = true
+        if (!listRequest.loaded) this.$notifyError(error)
+      }).finally(() => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
         this.fetchLoading = false
       })
     },

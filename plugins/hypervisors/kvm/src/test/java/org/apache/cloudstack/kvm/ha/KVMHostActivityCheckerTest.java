@@ -16,6 +16,25 @@
 // under the License.
 package org.apache.cloudstack.kvm.ha;
 
+import org.junit.Before;
+import com.cloud.agent.api.CheckOnHostAnswer;
+import com.cloud.agent.api.CheckOnHostCommand;
+import com.cloud.host.HostVO;
+import com.cloud.host.Status;
+import com.cloud.hypervisor.Hypervisor.HypervisorType;
+import com.cloud.resource.ResourceManager;
+import com.cloud.storage.VolumeVO;
+import com.cloud.storage.Storage.StoragePoolType;
+import com.cloud.storage.dao.VolumeDao;
+import com.cloud.vm.VMInstanceVO;
+import com.cloud.vm.dao.VMInstanceDao;
+import org.apache.cloudstack.storage.datastore.db.PrimaryDataStoreDao;
+import org.apache.cloudstack.storage.datastore.db.StoragePoolVO;
+import org.apache.cloudstack.outofbandmanagement.OutOfBandManagement.PowerState;
+import org.apache.cloudstack.outofbandmanagement.OutOfBandManagementVO;
+import org.apache.cloudstack.outofbandmanagement.dao.OutOfBandManagementDao;
+import static org.junit.Assert.assertNull;
+import static org.mockito.Mockito.lenient;
 import com.cloud.agent.api.Answer;
 import com.cloud.agent.api.Command;
 import com.cloud.agent.api.CheckVMActivityOnStoragePoolAnswer;
@@ -53,6 +72,14 @@ public class KVMHostActivityCheckerTest {
     @Mock private StorageManager storageManager;
     @Mock private com.cloud.agent.AgentManager agentMgr;
     @Spy @InjectMocks private KVMHostActivityChecker checker = new KVMHostActivityChecker();
+
+    @Mock private VMInstanceDao vmInstanceDao;
+    @Mock private VolumeDao volumeDao;
+    @Mock private PrimaryDataStoreDao storagePoolDao;
+    @Mock private ResourceManager resourceManager;
+    @Mock private OutOfBandManagementDao outOfBandManagementDao;
+    private HostVO host;
+    private HostVO neighbor;
 
     private boolean check(Answer answer) throws Exception {
         Host host = mock(Host.class);
@@ -132,4 +159,75 @@ public class KVMHostActivityCheckerTest {
     @Test public void activityOutweighsUnavailableEarlierPool() throws Exception { assertTrue(mixedActivity(ActivityState.UNKNOWN, ActivityState.ALIVE)); }
     @Test(expected = HACheckerException.class) public void unavailablePoolPreventsAllDeadVerdict() throws Exception { mixedActivity(ActivityState.DEAD, ActivityState.UNKNOWN); }
     @Test public void allPoolsMustExplicitlyBeInactive() throws Exception { assertFalse(mixedActivity(ActivityState.DEAD, ActivityState.DEAD)); }
+    @Before
+    public void setUp() {
+        host = mock(HostVO.class);
+        neighbor = mock(HostVO.class);
+        lenient().when(host.getId()).thenReturn(1L);
+        lenient().when(host.getClusterId()).thenReturn(7L);
+        lenient().when(host.getHypervisorType()).thenReturn(HypervisorType.KVM);
+        lenient().when(neighbor.getId()).thenReturn(2L);
+        lenient().when(neighbor.getHypervisorType()).thenReturn(HypervisorType.KVM);
+        lenient().when(resourceManager.listHostsInClusterByStatus(7L, Status.Up)).thenReturn(List.of(host, neighbor));
+    }
+
+    private CheckOnHostAnswer observation(Boolean alive) {
+        return new CheckOnHostAnswer(new CheckOnHostCommand(host), alive, "fixture observation");
+    }
+
+    @Test
+    public void onlySuccessfulDeterminedAnswersEstablishLifeOrDeath() {
+        assertEquals(Status.Disconnected, checker.getDeterminedHostStatus(null));
+        assertEquals(Status.Disconnected, checker.getDeterminedHostStatus(new Answer(null, true, "wrong reply")));
+        assertEquals(Status.Disconnected, checker.getDeterminedHostStatus(new CheckOnHostAnswer(new CheckOnHostCommand(host), "transport error")));
+        assertEquals(Status.Disconnected, checker.getDeterminedHostStatus(observation(null)));
+        assertEquals(Status.Up, checker.getDeterminedHostStatus(observation(true)));
+        assertEquals(Status.Down, checker.getDeterminedHostStatus(observation(false)));
+    }
+
+    @Test
+    public void missingOrUnknownOobmCannotOverrideAliveNeighbor() throws Exception {
+        doReturn(null).when(checker).sendHealthCheck(eq(1L), any(CheckOnHostCommand.class), anyLong());
+        doReturn(observation(true)).when(checker).sendHealthCheck(eq(2L), any(CheckOnHostCommand.class), anyLong());
+        assertEquals(Status.Disconnected, checker.getHostAgentStatus(host));
+        OutOfBandManagementVO oobm = mock(OutOfBandManagementVO.class);
+        when(outOfBandManagementDao.findByHost(1L)).thenReturn(oobm);
+        when(oobm.getPowerState()).thenReturn(PowerState.Unknown);
+        assertEquals(Status.Disconnected, checker.getHostAgentStatus(host));
+        when(oobm.getPowerState()).thenReturn(PowerState.Off);
+        assertEquals(Status.Down, checker.getHostAgentStatus(host));
+    }
+
+    @Test
+    public void unknownNeighborsDoNotProveHostDeath() throws Exception {
+        doReturn(observation(null)).when(checker).sendHealthCheck(eq(1L), any(CheckOnHostCommand.class), anyLong());
+        doReturn(new Answer(null, false, "agent unavailable")).when(checker).sendHealthCheck(eq(2L), any(CheckOnHostCommand.class), anyLong());
+        assertEquals(Status.Disconnected, checker.getHostAgentStatus(host));
+        doReturn(observation(false)).when(checker).sendHealthCheck(eq(2L), any(CheckOnHostCommand.class), anyLong());
+        assertEquals(Status.Down, checker.getHostAgentStatus(host));
+        doReturn(observation(true)).when(checker).sendHealthCheck(eq(1L), any(CheckOnHostCommand.class), anyLong());
+        assertEquals(Status.Up, checker.getHostAgentStatus(host));
+    }
+
+    @Test
+    public void rbdVolumesAreForwardedOnlyForOptedInPool() {
+        VMInstanceVO vm = mock(VMInstanceVO.class);
+        when(vm.getId()).thenReturn(11L);
+        when(vmInstanceDao.listByHostId(1L)).thenReturn(List.of(vm));
+        VolumeVO volume = mock(VolumeVO.class);
+        when(volume.getPoolId()).thenReturn(21L);
+        when(volume.getPath()).thenReturn("rbd-volume-a");
+        when(volumeDao.findByInstance(11L)).thenReturn(List.of(volume));
+        StoragePoolVO pool = mock(StoragePoolVO.class);
+        when(pool.getPoolType()).thenReturn(StoragePoolType.RBD);
+        when(storagePoolDao.findById(21L)).thenReturn(pool);
+        KVMHostActivityChecker spy = checker;
+        doReturn(false).when(spy).isStoragePoolHeartbeatEnabled(pool);
+        assertNull(spy.createHostCheckCommand(host, false).getVolumeList());
+        doReturn(true).when(spy).isStoragePoolHeartbeatEnabled(pool);
+        CheckOnHostCommand command = spy.createHostCheckCommand(host, true);
+        assertEquals("rbd-volume-a", command.getVolumeList());
+        assertTrue(command.shouldReportIfHeartBeatFailedForOneStoragePool());
+        assertEquals(20, command.getWait());
+    }
 }

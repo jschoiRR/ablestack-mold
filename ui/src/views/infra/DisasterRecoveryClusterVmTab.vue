@@ -17,6 +17,7 @@
 
 <template>
   <a-spin :spinning="loading">
+    <p v-if="listRefreshFailed" role="status">{{ $t('message.list.refresh.stale') }}</p>
     <div class="container">
       <div class="search-container">
         <a-input-search
@@ -126,6 +127,8 @@
 </template>
 
 <script>
+import { listRefreshMixin } from '@/utils/listRefreshMixin'
+
 import { mixinDevice } from '@/utils/mixin.js'
 import { getAPI } from '@/api'
 import Status from '@/components/widgets/Status'
@@ -135,7 +138,7 @@ export default {
   components: {
     Status
   },
-  mixins: [mixinDevice],
+  mixins: [listRefreshMixin(['fetchData']), mixinDevice],
   props: {
     resource: {
       type: Object,
@@ -294,10 +297,8 @@ export default {
       }
     },
     fetchData () {
-      this.priVol = []
-      this.secVol = []
-      this.drCluster = []
-      this.itemCount = 0
+      const listRequest = this.listRequestToken('fetchData')
+
       if (this.items && this.items.length > 0) {
         this.dataSource = this.items
         this.defaultPagination = {
@@ -306,8 +307,13 @@ export default {
         }
         return
       }
-      this.loading = true
-      getAPI('getDisasterRecoveryClusterList', { name: this.resource.name }).then(json => {
+      this.loading = !listRequest.loaded
+      return getAPI('getDisasterRecoveryClusterList', { name: this.resource.name }).then(json => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+        this.priVol = []
+        this.secVol = []
+        this.drCluster = []
+        this.itemCount = 0
         this.drCluster = json.getdisasterrecoveryclusterlistresponse.disasterrecoverycluster
         this.disasterrecoveryclustervmlist = this.drCluster[0].drclustervmmap || []
         for (const clusterVm of this.disasterrecoveryclustervmlist) {
@@ -340,6 +346,16 @@ export default {
           }
         }
       }).finally(() => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+
+        this.loading = false
+      }).catch(error => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+        listRequest.failed = true
+        this.listRefreshFailed = true
+        if (!listRequest.loaded) this.$notifyError(error)
+      }).finally(() => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
         this.loading = false
       })
     },

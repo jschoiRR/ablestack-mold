@@ -106,6 +106,7 @@
 </template>
 
 <script>
+import { listRefreshMixin } from '@/utils/listRefreshMixin'
 import { DownOutlined, UpOutlined } from '@ant-design/icons-vue'
 import { getAPI } from '@/api'
 
@@ -116,6 +117,7 @@ const MAX_HEIGHT = 520
 const HEIGHT_STORAGE_KEY = 'ablestack.bottomActivityPanel.height.v1'
 
 export default {
+  mixins: [listRefreshMixin(['fetchEvents', 'fetchAlerts'], { interval: 5000, active: vm => vm.isVisible && !vm.collapsed, select: vm => [vm.activeTab === 'alerts' ? 'fetchAlerts' : 'fetchEvents'] })],
   name: 'EventSidebar',
   components: {
     DownOutlined,
@@ -252,15 +254,10 @@ export default {
       this.startRefresh()
     },
     startRefresh () {
-      this.stopRefresh()
-      if (!this.isVisible || this.collapsed) return
-      this.refreshInterval = window.setInterval(this.fetchActiveTab, 5000)
+      if (this.listRefreshController) this.listRefreshController.schedule()
     },
     stopRefresh () {
-      if (this.refreshInterval) {
-        window.clearInterval(this.refreshInterval)
-        this.refreshInterval = null
-      }
+      // The owner controller observes visibility and collapsed state.
     },
     async loadRecentMinutes () {
       if (this.$store.getters.userInfo.roletype !== 'Admin') return
@@ -277,20 +274,30 @@ export default {
     },
     async fetchEvents () {
       if (!this.canListEvents) return
+      const request = this.listRequestToken('fetchEvents')
       try {
         const response = await getAPI('listEvents', { page: 1, pagesize: 20, listall: true })
+        if (!this.isListRequestCurrent('fetchEvents', request)) return
         const events = response?.listeventsresponse?.event || []
         this.events = this.filterRecentEvents(events, this.eventListBarMinutes)
       } catch (error) {
+        if (!this.isListRequestCurrent('fetchEvents', request)) return
+        request.failed = true
+        this.listRefreshFailed = true
         console.error('Error getting event list:', error)
       }
     },
     async fetchAlerts () {
       if (!this.canListAlerts) return
+      const request = this.listRequestToken('fetchAlerts')
       try {
         const response = await getAPI('listAlerts', { page: 1, pagesize: 20, listall: true })
+        if (!this.isListRequestCurrent('fetchAlerts', request)) return
         this.alerts = response?.listalertsresponse?.alert || []
       } catch (error) {
+        if (!this.isListRequestCurrent('fetchAlerts', request)) return
+        request.failed = true
+        this.listRefreshFailed = true
         console.error('Error getting alert list:', error)
       }
     },

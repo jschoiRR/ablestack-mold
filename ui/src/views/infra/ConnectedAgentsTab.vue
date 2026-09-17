@@ -31,10 +31,13 @@
 </template>
 
 <script>
+import { listRefreshMixin } from '@/utils/listRefreshMixin'
+
 import { getAPI } from '@/api'
 import Status from '@/components/widgets/Status'
 
 export default {
+  mixins: [listRefreshMixin(['fetchData'])],
   name: 'ConnectedAgentsTab',
   components: {
     Status
@@ -75,12 +78,19 @@ export default {
   },
   methods: {
     fetchData () {
-      this.hostAgents = []
-      getAPI('listHosts', {
+      const listRequest = this.listRequestToken('fetchData')
+      return getAPI('listHosts', {
         listall: true,
         managementserverid: this.resource.id
       }).then(json => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+        this.hostAgents = []
         this.hostAgents = json.listhostsresponse.host || []
+      }).catch(error => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+        listRequest.failed = true
+        this.listRefreshFailed = true
+        if (!listRequest.loaded) this.$notifyError(error)
       })
     }
   }

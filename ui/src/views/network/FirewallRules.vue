@@ -17,6 +17,7 @@
 
 <template>
   <div>
+    <p v-if="listRefreshFailed" role="status">{{ $t('message.list.refresh.stale') }}</p>
     <div>
       <div class="form" v-ctrl-enter="addRule">
         <div class="form__item">
@@ -219,6 +220,8 @@
 </template>
 
 <script>
+import { listRefreshMixin } from '@/utils/listRefreshMixin'
+
 import { reactive, ref, toRaw } from 'vue'
 import { getAPI, postAPI } from '@/api'
 import Status from '@/components/widgets/Status'
@@ -227,6 +230,7 @@ import BulkActionView from '@/components/view/BulkActionView'
 import eventBus from '@/config/eventBus'
 
 export default {
+  mixins: [listRefreshMixin(['fetchData'])],
   components: {
     Status,
     TooltipButton,
@@ -392,18 +396,31 @@ export default {
       }
     },
     fetchData () {
-      this.loading = true
-      getAPI('listFirewallRules', {
+      const listRequest = this.listRequestToken('fetchData')
+      this.loading = !listRequest.loaded
+      return getAPI('listFirewallRules', {
         listAll: true,
         ipaddressid: this.resource.id,
         page: this.page,
         pageSize: this.pageSize
       }).then(response => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+
         this.firewallRules = response.listfirewallrulesresponse.firewallrule || []
         this.totalCount = response.listfirewallrulesresponse.count || 0
       }).catch(error => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+        listRequest.failed = true
+        this.listRefreshFailed = true
+        if (listRequest.loaded) return
+
         this.$notifyError(error)
       }).finally(() => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+
+        this.loading = false
+      }).finally(() => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
         this.loading = false
       })
     },

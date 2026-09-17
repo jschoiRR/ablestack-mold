@@ -17,6 +17,7 @@
 
 <template>
   <a-spin :spinning="loading">
+    <p v-if="listRefreshFailed" role="status">{{ $t('message.list.refresh.stale') }}</p>
     <div class="guest-network-tab">
     <div class="guest-network-header">
       <a-alert
@@ -317,8 +318,10 @@
 </template>
 
 <script>
+import { listRefreshMixin } from '@/utils/listRefreshMixin'
+
 import { InfoCircleOutlined, ReloadOutlined } from '@ant-design/icons-vue'
-import { getAPI } from '@/api'
+import { getAPI, postAPI } from '@/api'
 import { mixinDevice } from '@/utils/mixin.js'
 import CopyLabel from '@/components/widgets/CopyLabel'
 
@@ -329,7 +332,7 @@ export default {
     InfoCircleOutlined,
     ReloadOutlined
   },
-  mixins: [mixinDevice],
+  mixins: [listRefreshMixin(['fetchData']), mixinDevice],
   props: {
     resource: {
       type: Object,
@@ -462,13 +465,16 @@ export default {
   },
   methods: {
     fetchData () {
+      const listRequest = this.listRequestToken('fetchData')
       if (!this.resource.id) {
         return
       }
-      this.loading = true
-      getAPI('getVirtualMachineGuestNetworkState', {
+      this.loading = !listRequest.loaded
+      return getAPI('getVirtualMachineGuestNetworkState', {
         virtualmachineid: this.resource.id
       }).then(json => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+
         this.state = json.getvirtualmachineguestnetworkstateresponse.guestnetworkstate || {
           status: 'NOT_COLLECTED',
           interfaces: [],
@@ -478,8 +484,18 @@ export default {
           }
         }
       }).catch(error => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+        listRequest.failed = true
+        this.listRefreshFailed = true
+        if (listRequest.loaded) return
+
         this.$notifyError(error)
       }).finally(() => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+
+        this.loading = false
+      }).finally(() => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
         this.loading = false
       })
     },
@@ -489,7 +505,7 @@ export default {
       }
       const previousObserved = this.state.observed
       this.recollecting = true
-      getAPI('refreshVirtualMachineGuestNetworkState', {
+      postAPI('refreshVirtualMachineGuestNetworkState', {
         virtualmachineid: this.resource.id,
         sections: 'interfaces,routes,dns,readiness'
       }).then(json => {
@@ -497,7 +513,8 @@ export default {
         if (!response.guestnetworkrefresh || !response.guestnetworkrefresh.accepted) {
           this.$message.info(this.$t('message.guest.network.recollect.pending'))
         }
-        this.pollRecollection(previousObserved, Date.now() + 30000, 2000)
+        // Allow one scheduler interval plus a bounded collection cycle.
+        this.pollRecollection(previousObserved, Date.now() + 120000, 2000)
       }).catch(error => {
         this.recollecting = false
         this.$notifyError(error)
@@ -514,6 +531,9 @@ export default {
           }
           if ((next && next.observed && next.observed !== previousObserved) ||
               Date.now() >= deadline) {
+            if (!next?.observed || next.observed === previousObserved) {
+              this.$message.info(this.$t('message.guest.network.recollect.pending'))
+            }
             this.recollecting = false
             this.pollTimer = null
             return

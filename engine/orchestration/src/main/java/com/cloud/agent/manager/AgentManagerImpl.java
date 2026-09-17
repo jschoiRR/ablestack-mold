@@ -850,15 +850,13 @@ public class AgentManagerImpl extends ManagerBase implements AgentManager, Handl
                     }
                 }
 
-                String tpmEnabled = detailsMap.get(Host.HOST_TPM_ENABLE);
-                logger.debug(String.format("Got HOST_TPM_ENABLE [%s] for hostId [%s]:", tpmEnabled, host.getUuid()));
-                if (tpmEnabled != null) {
-                    _hostDao.loadDetails(host);
-                    if (!tpmEnabled.equals(host.getDetails().get(Host.HOST_TPM_ENABLE))) {
-                        host.getDetails().put(Host.HOST_TPM_ENABLE, tpmEnabled);
-                        _hostDao.saveDetails(host);
-                    }
+                _hostDao.loadDetails(host);
+                // Clear stale capability values when an older agent does not report TPM discovery.
+                for (String key : java.util.List.of(Host.HOST_TPM_ENABLE, com.cloud.vm.KvmTpmConfig.HOST_VERSIONS,
+                        com.cloud.vm.KvmTpmConfig.HOST_MODELS)) {
+                    host.getDetails().put(key, detailsMap.getOrDefault(key, key.equals(Host.HOST_TPM_ENABLE) ? "false" : ""));
                 }
+                _hostDao.saveDetails(host);
             }
         }
 

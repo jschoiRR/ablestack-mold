@@ -1,6 +1,20 @@
 // Licensed to the Apache Software Foundation (ASF) under one
-// or more contributor license agreements. See the NOTICE file
-// distributed with this work for additional information.
+// or more contributor license agreements.  See the NOTICE file
+// distributed with this work for additional information
+// regarding copyright ownership.  The ASF licenses this file
+// to you under the Apache License, Version 2.0 (the
+// "License"); you may not use this file except in compliance
+// with the License.  You may obtain a copy of the License at
+//
+//   http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing,
+// software distributed under the License is distributed on an
+// "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+// KIND, either express or implied.  See the License for the
+// specific language governing permissions and limitations
+// under the License.
+
 package com.cloud.dr;
 
 import org.apache.commons.lang3.StringUtils;
@@ -12,6 +26,7 @@ public final class DrTestSessionState {
     public static final String CLOUD_VOLUMES_IMPORTING = "CLOUD_VOLUMES_IMPORTING";
     public static final String CLOUD_VM_CREATING = "CLOUD_VM_CREATING";
     public static final String CLOUD_VM_STARTING = "CLOUD_VM_STARTING";
+    public static final String CLOUD_VM_VALIDATING = "CLOUD_VM_VALIDATING";
     public static final String ACTIVE = "ACTIVE";
     public static final String FAILED = "FAILED";
     public static final String CLOUD_CLEANUP_RUNNING = "CLOUD_CLEANUP_RUNNING";
@@ -23,7 +38,7 @@ public final class DrTestSessionState {
     }
 
     public static String projectEngineState(String currentState, String runtimeState) {
-        if (StringUtils.equalsAny(currentState, ACTIVE, CLOUD_CLEANUP_RUNNING,
+        if (StringUtils.equalsAny(currentState, ACTIVE, CLOUD_VM_VALIDATING, FAILED, CLOUD_CLEANUP_RUNNING,
                 CLOUD_RESOURCES_REMOVED, CLEANED, CLEANUP_FAILED)) {
             return currentState;
         }
@@ -41,7 +56,7 @@ public final class DrTestSessionState {
 
     public static boolean isMaterializationPending(String state) {
         return StringUtils.equalsAny(state, ARTIFACTS_READY, CLOUD_VOLUMES_IMPORTING,
-                CLOUD_VM_CREATING, CLOUD_VM_STARTING);
+                CLOUD_VM_CREATING, CLOUD_VM_STARTING, CLOUD_VM_VALIDATING);
     }
 
     public static boolean blocksNewTest(DrTestSessionVO session) {

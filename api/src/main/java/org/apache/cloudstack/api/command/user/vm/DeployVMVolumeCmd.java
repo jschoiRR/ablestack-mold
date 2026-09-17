@@ -326,11 +326,14 @@ public class DeployVMVolumeCmd extends BaseAsyncCreateCustomIdCmd implements Sec
     public ApiConstants.TpmVersion getTpmVersion() {
         if (StringUtils.isNotBlank(tpmversion)) {
             try {
-                String type = tpmversion.trim().toUpperCase();
+                String type = tpmversion.trim().toUpperCase(java.util.Locale.ROOT);
+                if ("2.0".equals(type)) { type = "V2_0"; }
+                if ("1.2".equals(type)) { type = "V1_2"; }
+                if ("TPM".equals(type)) { throw new IllegalArgumentException("Ambiguous TPM version"); }
                 return ApiConstants.TpmVersion.valueOf(type);
             } catch (IllegalArgumentException e) {
                 String errMesg = "Invalid TpmVersion " + tpmversion + "Specified for vm " + getName()
-                        + " Valid values are: " + Arrays.toString(ApiConstants.BootType.values());
+                        + " Valid values are: " + "[NONE, V1_2, V2_0, 1.2, 2.0]";
                 logger.warn(errMesg);
                 throw new InvalidParameterValueException(errMesg);
             }
@@ -351,14 +354,25 @@ public class DeployVMVolumeCmd extends BaseAsyncCreateCustomIdCmd implements Sec
         for (Map.Entry<String,String> entry: customparameterMap.entrySet()) {
             customparameterMap.put(entry.getKey(),entry.getValue());
         }
-        if(customparameterMap.containsKey(ApiConstants.TpmVersion.V2_0.toString())){
-            customparameterMap.put("tpmversion", customparameterMap.get(ApiConstants.TpmVersion.V2_0.toString()));
-        }else if(customparameterMap.containsKey("tpmversion")){
-            customparameterMap.put("tpmversion", customparameterMap.get("tpmversion"));
-        }else if(getTpmVersion() != null){
-            customparameterMap.put("tpmversion", getTpmVersion().toString());
-        }else{
-            customparameterMap.put("tpmversion", "NONE");
+        for (String alias : java.util.List.of("1.2", "2.0")) {
+            if (customparameterMap.containsKey(alias)) {
+                String value = customparameterMap.remove(alias);
+                if (customparameterMap.containsKey("tpmversion")
+                        && !java.util.Objects.equals(com.cloud.vm.KvmTpmConfig.normalizeVersion(customparameterMap.get("tpmversion")),
+                            com.cloud.vm.KvmTpmConfig.normalizeVersion(value))) {
+                    throw new InvalidParameterValueException("Conflicting legacy TPM detail values.");
+                }
+                customparameterMap.put("tpmversion", value);
+            }
+        }
+        if (getTpmVersion() != null) {
+            String value = getTpmVersion().toString();
+            if (customparameterMap.containsKey("tpmversion")
+                    && !java.util.Objects.equals(com.cloud.vm.KvmTpmConfig.normalizeVersion(customparameterMap.get("tpmversion")),
+                        com.cloud.vm.KvmTpmConfig.normalizeVersion(value))) {
+                throw new InvalidParameterValueException("Conflicting TPM API and details values.");
+            }
+            customparameterMap.put("tpmversion", value);
         }
 
         IoDriverPolicy ioPolicy = getIoDriverPolicy();

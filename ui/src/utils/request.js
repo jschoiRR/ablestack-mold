@@ -30,8 +30,30 @@ const service = axios.create({
   timeout: 600000
 })
 
+const jobScope = () => JSON.stringify([store.state?.user?.token, store.getters.userInfo?.id, store.getters.project?.id])
+
 const err = (error) => {
+  if (axios.isCancel(error)) {
+    return Promise.reject(error)
+  }
+
+  // Responses from a previous login must not affect the current session.
+  if (error.config?.optionalDiscovery && error.config.discoveryGeneration !== undefined &&
+      error.config.discoveryGeneration !== store.state?.user?.discoveryGeneration) {
+    return Promise.reject(error)
+  }
+
+  // Job tracking owns transient errors. Only a current-session 401 may log out.
+  if (error.config?.backgroundJob && (error.config.jobScope !== jobScope() || error.response?.status !== 401)) {
+    return Promise.reject(error)
+  }
+
   const response = error.response
+  // Optional discovery must not log out a valid session on transport/service
+  // failures. An actual authentication failure still follows the normal path.
+  if (error.config?.optionalDiscovery && response?.status !== 401) {
+    return Promise.reject(error)
+  }
   let countNotify = store.getters.countNotify
   if (response) {
     console.log(response)
@@ -182,6 +204,11 @@ const err = (error) => {
 service.interceptors.request.use(config => {
   source = sourceToken.getSource()
   config.cancelToken = source.token
+  if (config.backgroundJob) config.jobScope = jobScope()
+
+  if (config.optionalDiscovery) {
+    config.discoveryGeneration = store.state?.user?.discoveryGeneration
+  }
 
   handleGetRequestParams(config)
 

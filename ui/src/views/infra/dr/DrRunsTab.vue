@@ -18,6 +18,7 @@
 -->
 <template>
   <a-spin :spinning="loading">
+    <p v-if="listRefreshFailed" role="status">{{ $t('message.list.refresh.stale') }}</p>
     <div class="cross-dr-tab-toolbar">
       <a-button size="small" @click="fetchData">
         <template #icon><ReloadOutlined /></template>
@@ -51,12 +52,14 @@
 </template>
 
 <script>
+import { listRefreshMixin } from '@/utils/listRefreshMixin'
 import DrRunProgress from '@/components/dr/DrRunProgress.vue'
 import DrStatusPill from '@/components/dr/DrStatusPill.vue'
 import { listDrRuns } from '@/api/dr'
 import { drOperationProgress } from '@/utils/drProgress'
 
 export default {
+  mixins: [listRefreshMixin(['fetchData'], { interval: 5000, active: vm => !!vm.planId })],
   name: 'DrRunsTab',
   components: {
     DrRunProgress,
@@ -73,6 +76,7 @@ export default {
       loading: false,
       runs: [],
       pollTimer: null,
+      pollDisposed: false,
       pollInFlight: false,
       pollIntervalMs: 5000,
       columns: [
@@ -89,34 +93,30 @@ export default {
   },
   watch: {
     planId () {
-      this.stopPolling()
       this.fetchData()
     }
   },
   created () {
     this.fetchData()
   },
-  beforeUnmount () {
-    this.stopPolling()
-  },
   methods: {
-    fetchData (options = {}) {
+    fetchData () {
       if (!this.planId || !('listDrRuns' in this.$store.getters.apis)) {
         this.runs = []
-        this.stopPolling()
         return Promise.resolve()
       }
-      const silent = options.silent === true
-      if (!silent) {
-        this.loading = true
-      }
+      const request = this.listRequestToken('fetchData')
+      this.loading = !request.loaded
       return listDrRuns({ planid: this.planId }).then(result => {
+        if (!this.isListRequestCurrent('fetchData', request)) return
         this.runs = result.items || []
+      }).catch(error => {
+        if (!this.isListRequestCurrent('fetchData', request)) return
+        request.failed = true
+        this.listRefreshFailed = true
+        if (!request.loaded) this.$notifyError(error)
       }).finally(() => {
-        if (!silent) {
-          this.loading = false
-        }
-        this.schedulePolling()
+        if (this.isListRequestCurrent('fetchData', request)) this.loading = false
       })
     },
     isActiveRun (run) {
@@ -128,31 +128,6 @@ export default {
     },
     hasActiveRun () {
       return this.runs.some(run => this.isActiveRun(run))
-    },
-    schedulePolling () {
-      if (!this.hasActiveRun()) {
-        this.stopPolling()
-        return
-      }
-      if (this.pollTimer) {
-        return
-      }
-      this.pollTimer = window.setInterval(this.pollRuns, this.pollIntervalMs)
-    },
-    stopPolling () {
-      if (this.pollTimer) {
-        window.clearInterval(this.pollTimer)
-        this.pollTimer = null
-      }
-    },
-    pollRuns () {
-      if (this.pollInFlight || !this.planId) {
-        return
-      }
-      this.pollInFlight = true
-      this.fetchData({ silent: true }).finally(() => {
-        this.pollInFlight = false
-      })
     }
   }
 }

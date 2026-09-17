@@ -19,6 +19,7 @@
 
 <template>
   <a-spin :spinning="storageService.initialLoading">
+    <p v-if="listRefreshFailed" role="status">{{ $t('message.list.refresh.stale') }}</p>
     <a-tabs
       class="storage-service-tabs"
       :activeKey="currentTab"
@@ -2230,6 +2231,7 @@ wrapClassName="storage-service-action-modal"
   </a-spin>
 </template>
 <script>
+import { listRefreshMixin } from '@/utils/listRefreshMixin'
 
 import { h, resolveComponent } from 'vue'
 import { getAPI, postAPI } from '@/api'
@@ -2471,7 +2473,7 @@ export default {
     ReloadOutlined,
     SafetyCertificateOutlined
   },
-  mixins: [mixinDevice],
+  mixins: [listRefreshMixin(['fetchStorageServiceData'], { interval: 60000, active: vm => vm.hasStorageServiceApi }), mixinDevice],
   props: {
     resource: {
       type: Object,
@@ -4809,6 +4811,7 @@ export default {
       if (!this.hasStorageServiceApi || this.storageService.loading) {
         return
       }
+      const request = this.listRequestToken('fetchStorageServiceData')
       const initialLoad = !this.storageService.loaded
       this.storageService.loading = true
       this.storageService.initialLoading = initialLoad
@@ -4820,6 +4823,7 @@ export default {
           listall: true
         }
         const instances = await this.listApi('listStorageServiceInstances', params, 'storageserviceinstance')
+        if (!this.isListRequestCurrent('fetchStorageServiceData', request)) return
         const instance = instances.find(item => item.virtualmachineid === this.resource.virtualmachineid) || null
         if (!instance) {
           Object.assign(this.storageService, {
@@ -4852,7 +4856,7 @@ export default {
           this.listApi('listStorageIscsiTargets', { instanceid: instance.id }, 'storageiscsitarget'),
           this.fetchNvmeStorageSnapshot(instance.id)
         ])
-        if (refreshGeneration !== this.storageRefreshGeneration) {
+        if (refreshGeneration !== this.storageRefreshGeneration || !this.isListRequestCurrent('fetchStorageServiceData', request)) {
           return
         }
         const [health, protocols, domains, nfsExports, smbShares, iscsiTargets, nvmeSnapshot] = results
@@ -4864,7 +4868,7 @@ export default {
           iscsiTargets,
           nvmeNamespaces: nvmeSnapshot.nvmeNamespaces
         })
-        if (refreshGeneration !== this.storageRefreshGeneration) {
+        if (refreshGeneration !== this.storageRefreshGeneration || !this.isListRequestCurrent('fetchStorageServiceData', request)) {
           return
         }
         Object.assign(this.storageService, {
@@ -4884,11 +4888,16 @@ export default {
           loaded: true
         })
       } catch (error) {
-        this.$notifyError(error)
+        if (!this.isListRequestCurrent('fetchStorageServiceData', request)) return
+        request.failed = true
+        this.listRefreshFailed = true
+        if (initialLoad) this.$notifyError(error)
       } finally {
-        this.storageService.loading = false
-        this.storageService.initialLoading = false
-        this.storageService.refreshing = false
+        if (this.isListRequestCurrent('fetchStorageServiceData', request)) {
+          this.storageService.loading = false
+          this.storageService.initialLoading = false
+          this.storageService.refreshing = false
+        }
       }
     },
     clearStorageServiceRuntime () {

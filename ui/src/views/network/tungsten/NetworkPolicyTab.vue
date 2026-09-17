@@ -17,6 +17,7 @@
 
 <template>
   <div>
+    <p v-if="listRefreshFailed" role="status">{{ $t('message.list.refresh.stale') }}</p>
     <a-button
       :disabled="!('applyTungstenFabricPolicy' in $store.getters.apis)"
       type="dashed"
@@ -30,7 +31,7 @@
       :loading="fetchLoading"
       :columns="columns"
       :dataSource="dataSource"
-      :rowKey="(item, index) => index"
+      :rowKey="listRowKey"
       :pagination="false">
       <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'actions'">
@@ -112,6 +113,8 @@
 </template>
 
 <script>
+import { listRefreshMixin } from '@/utils/listRefreshMixin'
+
 import { ref, reactive, toRaw } from 'vue'
 import { getAPI, postAPI } from '@/api'
 import { mixinDevice } from '@/utils/mixin.js'
@@ -121,7 +124,7 @@ import TooltipLabel from '@/components/widgets/TooltipLabel'
 export default {
   name: 'NetworkPolicyTab',
   components: { TooltipButton, TooltipLabel },
-  mixins: [mixinDevice],
+  mixins: [listRefreshMixin(['fetchData']), mixinDevice],
   props: {
     resource: {
       type: Object,
@@ -204,6 +207,7 @@ export default {
       })
     },
     fetchData () {
+      const listRequest = this.listRequestToken('fetchData')
       if (Object.keys(this.resource).length === 0) {
         return
       }
@@ -214,16 +218,28 @@ export default {
       params.page = this.page
       params.pagesize = this.pageSize
 
-      this.itemCount = 0
-      this.dataSource = []
-      this.fetchLoading = true
+      this.fetchLoading = !listRequest.loaded
 
-      getAPI('listTungstenFabricPolicy', params).then(json => {
+      return getAPI('listTungstenFabricPolicy', params).then(json => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+        this.itemCount = 0
+        this.dataSource = []
         this.itemCount = json?.listtungstenfabricpolicyresponse?.count || 0
         this.dataSource = json?.listtungstenfabricpolicyresponse?.policy || []
       }).catch(error => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+        listRequest.failed = true
+        this.listRefreshFailed = true
+        if (listRequest.loaded) return
+
         this.$notifyError(error)
-      }).finally(() => { this.fetchLoading = false })
+      }).finally(() => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+        this.fetchLoading = false
+      }).finally(() => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+        this.fetchLoading = false
+      })
     },
     onShowAction () {
       this.initForm()

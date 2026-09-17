@@ -1,6 +1,20 @@
 // Licensed to the Apache Software Foundation (ASF) under one
-// or more contributor license agreements. See the NOTICE file
-// distributed with this work for additional information.
+// or more contributor license agreements.  See the NOTICE file
+// distributed with this work for additional information
+// regarding copyright ownership.  The ASF licenses this file
+// to you under the Apache License, Version 2.0 (the
+// "License"); you may not use this file except in compliance
+// with the License.  You may obtain a copy of the License at
+//
+//   http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing,
+// software distributed under the License is distributed on an
+// "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+// KIND, either express or implied.  See the License for the
+// specific language governing permissions and limitations
+// under the License.
+
 package com.cloud.dr;
 
 import java.util.Date;
@@ -343,9 +357,12 @@ public class DrFailbackLifecycleServiceImpl extends ManagerBase implements DrFai
             return;
         }
         if (StringUtils.equals(session.getState(), PROTECTION_RESUMING)) {
-            ensureRemoteSourceSchedulerResumedForProtectionResume(plan, run, session);
             JsonObject authorityRuntime = fetchStatusRuntime(plan, run,
                     FtctlDrStatusCommand.StatusScope.PLAN_AUTHORITY);
+            if (!ownedResumeWorkerActive(plan, run, authorityRuntime)) {
+                ensureRemoteSourceSchedulerResumedForProtectionResume(plan, run, session);
+                authorityRuntime = fetchStatusRuntime(plan, run, FtctlDrStatusCommand.StatusScope.PLAN_AUTHORITY);
+            }
             if (protectionResumed(plan, session, authorityRuntime)) {
                 completeLifecycle(plan, run, session, authorityRuntime);
             }
@@ -1563,6 +1580,21 @@ public class DrFailbackLifecycleServiceImpl extends ManagerBase implements DrFai
         step.setErrorMessage(null);
         step.markUpdated();
         drRunStepDao.update(step.getId(), step);
+    }
+
+    // #976: observing an in-flight resume must not revoke its export every projection tick.
+    boolean ownedResumeWorkerActive(DrPlanVO plan, DrRunVO run, JsonObject runtime) {
+        if (plan == null || run == null || runtime == null
+                || !StringUtils.equalsIgnoreCase(plan.getActiveSide(), "SOURCE")) { return false; }
+        String expected = UUID.nameUUIDFromBytes((plan.getUuid() + ":" + run.getUuid() + ":RESUME_SYNC")
+                .getBytes(java.nio.charset.StandardCharsets.UTF_8)).toString();
+        String side = stringValue(runtime, "active_side");
+        return (StringUtils.isBlank(side) || "SOURCE".equalsIgnoreCase(side))
+                && expected.equals(stringValue(runtime, "active_worker_run_uuid"))
+                && Boolean.TRUE.equals(booleanValue(runtime, "scheduler_pid_alive"))
+                && "RUNNING".equalsIgnoreCase(stringValue(runtime, "control_state"))
+                && StringUtils.equalsAnyIgnoreCase(stringValue(runtime, "scheduler_state"), "RUNNING", "ACTIVE")
+                && "HEALTHY".equalsIgnoreCase(stringValue(runtime, "scheduler_health"));
     }
 
     boolean protectionResumed(DrPlanVO plan, DrFailbackSessionVO session, JsonObject runtime) {

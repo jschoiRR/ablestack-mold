@@ -17,6 +17,7 @@
 
 <template>
   <a-spin :spinning="loading">
+    <p v-if="listRefreshFailed" role="status">{{ $t('message.list.refresh.stale') }}</p>
     <a-alert v-if="vm.qemuagentversion === 'Not Installed'" :message="$t('message.alert.qemuagentversion')" type="error" show-icon />
     <br/>
     <a-tabs
@@ -30,10 +31,15 @@
       <a-tab-pane :tab="$t('label.metrics')" key="stats">
         <StatsTab :resource="resource"/>
       </a-tab-pane>
-      <a-tab-pane :tab="$t('label.iso')" key="cdrom" v-if="vm.isoid">
-        <usb-outlined />
-        <router-link :to="{ path: '/iso/' + vm.isoid }">{{ vm.isoname }}</router-link> <br/>
-        <barcode-outlined /> {{ vm.isoid }}
+      <a-tab-pane :tab="$t('label.iso')" key="cdrom" v-if="attachedIsos.length > 0">
+        <div v-for="iso in attachedIsos" :key="iso.id" style="margin-bottom: 12px;">
+          <usb-outlined />
+          <router-link :to="{ path: '/iso/' + iso.id }">{{ iso.displaytext || iso.name }}</router-link>
+          <a-tag style="margin-left: 8px;">{{ slotLabel(iso.deviceseq) }}</a-tag>
+          <a-tag v-if="iso.bootable" color="blue" style="margin-left: 4px;">{{ $t('label.bootable') }}</a-tag>
+          <br/>
+          <barcode-outlined /> {{ iso.id }}
+        </div>
       </a-tab-pane>
       <a-tab-pane :tab="$t('label.volumes')" key="volumes" v-if="'listVolumes' in $store.getters.apis">
         <a-button
@@ -80,7 +86,9 @@
           apiName="listBackups"
           :resource="resource"
           :params="{virtualmachineid: dataResource.id}"
-          :columns="['name', 'status', 'size', 'virtualsize', 'type', 'intervaltype', 'created']"
+          :columns="dataResource.backupprovider === 'kboss'
+            ? ['name', 'status', 'compressionstatus', 'validationstatus', 'size', 'virtualsize', 'type', 'intervaltype', 'created']
+            : ['name', 'status', 'size', 'virtualsize', 'type', 'intervaltype', 'created']"
           :routerlinks="(record) => { return { name: '/backup/' + record.id } }"
           :showSearch="false"/>
       </a-tab-pane>
@@ -103,9 +111,14 @@
           :routerlinks="(record) => { return { name: '/securitygroups/' + record.id } }"
           :showSearch="false"/>
       </a-tab-pane>
-      <a-tab-pane :tab="$t('label.schedules')" key="schedules" v-if="'listVMSchedule' in $store.getters.apis">
-        <InstanceSchedules
-          :virtualmachine="vm"
+      <a-tab-pane
+        :tab="$t('label.schedules')"
+        key="schedules"
+        v-if="'listResourceSchedule' in $store.getters.apis && !dataResource.autoscalevmgroupid"
+      >
+        <ResourceSchedules
+          :resource="vm"
+          resourceType="VirtualMachine"
           :loading="loading"/>
       </a-tab-pane>
       <a-tab-pane
@@ -230,6 +243,7 @@
 
 <script>
 
+import { listRefreshMixin } from '@/utils/listRefreshMixin'
 import { getAPI, postAPI } from '@/api'
 import { h } from 'vue'
 import { mixinDevice } from '@/utils/mixin.js'
@@ -241,7 +255,7 @@ import DetailSettings from '@/components/view/DetailSettings'
 import CreateVolume from '@/views/storage/CreateVolume'
 import NicsTab from '@/views/network/NicsTab'
 import GuestNetworkTab from '@/views/compute/GuestNetworkTab'
-import InstanceSchedules from '@/views/compute/InstanceSchedules.vue'
+import ResourceSchedules from '@/views/compute/ResourceSchedules.vue'
 import ListResourceTable from '@/components/view/ListResourceTable'
 import ResourceIcon from '@/components/view/ResourceIcon'
 import AnnotationsTab from '@/components/view/AnnotationsTab'
@@ -265,14 +279,14 @@ export default {
     DrPlanVmTab,
     GPUTab,
     FtctlTab,
-    InstanceSchedules,
+    ResourceSchedules,
     ListResourceTable,
     SecurityGroupSelection,
     ResourceIcon,
     AnnotationsTab,
     VolumesTab
   },
-  mixins: [mixinDevice],
+  mixins: [listRefreshMixin(['loadDevicesFromDb'], { active: vm => !!vm.vm?.id && vm.currentTab === 'hostdevices' }), mixinDevice],
   props: {
     resource: {
       type: Object,
@@ -408,10 +422,24 @@ export default {
       this.setCurrentTab()
     }
   },
-  computed: {
-  },
   mounted () {
     this.setCurrentTab()
+  },
+  computed: {
+    attachedIsos () {
+      if (this.vm.isos && this.vm.isos.length > 0) {
+        return [...this.vm.isos].sort((a, b) => (a.deviceseq || 0) - (b.deviceseq || 0))
+      }
+      if (this.vm.isoid) {
+        return [{
+          id: this.vm.isoid,
+          name: this.vm.isoname,
+          displaytext: this.vm.isodisplaytext,
+          deviceseq: 3
+        }]
+      }
+      return []
+    }
   },
   methods: {
     // 디바이스 이름을 포맷팅하여 괄호 안의 내용을 줄바꿈으로 표시
@@ -477,6 +505,11 @@ export default {
       const withoutDevice = String(text).replace(/\s*Device:\s*\S+/gi, '')
       return this.formatHostDevicesText(withoutDevice)
     },
+    slotLabel (deviceseq) {
+      // 3 -> hdc, 4 -> hdd, ... matches LibvirtVMDef.getDevLabel for the IDE bus on KVM.
+      if (typeof deviceseq !== 'number') return ''
+      return 'hd' + String.fromCharCode('a'.charCodeAt(0) + deviceseq - 1)
+    },
     setCurrentTab () {
       const routeTab = this.resolveCurrentTabFromRoute()
       if (this.currentTab !== routeTab) {
@@ -498,14 +531,13 @@ export default {
       return tab || 'details'
     },
     async fetchData () {
-      this.annotations = []
       if (!this.vm || !this.vm.id) {
         return
       }
-      getAPI('listAnnotations', { entityid: this.dataResource.id, entitytype: 'VM', annotationfilter: 'all' }).then(json => {
-        if (json.listannotationsresponse && json.listannotationsresponse.annotation) {
-          this.annotations = json.listannotationsresponse.annotation
-        }
+      const annotationEntityId = this.dataResource.id
+      getAPI('listAnnotations', { entityid: annotationEntityId, entitytype: 'VM', annotationfilter: 'all' }).then(json => {
+        if (this.listRefreshDisposed || annotationEntityId !== this.dataResource.id) return
+        this.annotations = json.listannotationsresponse?.annotation || []
       })
       getAPI('listNetworks', { supportedservices: 'SecurityGroup' }).then(json => {
         if (json.listnetworksresponse && json.listnetworksresponse.network) {
@@ -623,17 +655,16 @@ export default {
       this.scsiDevices = []
     },
     async loadDevicesFromDb () {
-      if (this.deviceAssignmentsPromise) {
-        return this.deviceAssignmentsPromise
-      }
+      const request = this.listRequestToken('loadDevicesFromDb')
 
       const deviceTypes = ['pci', 'usb', 'lun', 'hba', 'vhba', 'scsi']
       this.deviceAssignmentsPromise = (async () => {
-        this.deviceLoadingStates.fetching = true
-        deviceTypes.forEach(type => { this.deviceLoadingStates[type] = true })
+        this.deviceLoadingStates.fetching = !request.loaded
+        deviceTypes.forEach(type => { this.deviceLoadingStates[type] = !request.loaded })
 
         try {
           const response = await getAPI('listVmDeviceAssignments', { virtualmachineid: this.vm.id })
+          if (!this.isListRequestCurrent('loadDevicesFromDb', request)) return
           const assignments = response?.listvmdeviceassignmentsresponse?.vmdeviceassignment
           const assignmentList = Array.isArray(assignments)
             ? assignments
@@ -698,7 +729,7 @@ export default {
 
           const hostId = this.vm?.hostid || categorized.lun?.[0]?.hostId
           if (hostId && categorized.lun.length > 0) {
-            const lunDetailMap = await this.fetchLunDetailMap(hostId)
+            const lunDetailMap = (request.loaded ? Object.fromEntries(this.lunDevices.map(device => [device.hostDevicesName, device.hostDevicesText])) : await this.fetchLunDetailMap(hostId))
             categorized.lun = categorized.lun.map(device => {
               if (device.hostDevicesText && String(device.hostDevicesText).trim().length > 0) {
                 return device
@@ -711,6 +742,7 @@ export default {
             })
           }
 
+          if (!this.isListRequestCurrent('loadDevicesFromDb', request)) return
           this.pciDevices = categorized.pci
           this.usbDevices = categorized.usb
           this.lunDevices = categorized.lun
@@ -718,6 +750,10 @@ export default {
           this.vhbaDevices = categorized.vhba
           this.scsiDevices = categorized.scsi
         } catch (error) {
+          if (!this.isListRequestCurrent('loadDevicesFromDb', request)) return
+          request.failed = true
+          this.listRefreshFailed = true
+          if (request.loaded) return
           console.error('Failed to load VM device assignments', error)
           this.pciDevices = []
           this.usbDevices = []
@@ -726,9 +762,11 @@ export default {
           this.vhbaDevices = []
           this.scsiDevices = []
         } finally {
-          deviceTypes.forEach(type => { this.deviceLoadingStates[type] = false })
-          this.deviceLoadingStates.fetching = false
-          this.deviceAssignmentsPromise = null
+          if (this.isListRequestCurrent('loadDevicesFromDb', request)) {
+            deviceTypes.forEach(type => { this.deviceLoadingStates[type] = false })
+            this.deviceLoadingStates.fetching = false
+            this.deviceAssignmentsPromise = null
+          }
         }
       })()
 

@@ -16,6 +16,9 @@
 // under the License.
 package com.cloud.hypervisor.kvm.resource;
 
+import java.util.ArrayList;
+import java.util.List;
+import org.mockito.Mockito;
 import com.cloud.hypervisor.kvm.resource.KVMHABase.HAStoragePool;
 import com.cloud.hypervisor.kvm.storage.KVMStoragePool;
 import com.cloud.agent.api.to.HostTO;
@@ -36,12 +39,12 @@ public class KVMHACheckerTest {
         KVMStoragePool pool = mock(KVMStoragePool.class);
         when(monitored.getPool()).thenReturn(pool);
         when(pool.getType()).thenReturn(StoragePoolType.NetworkFilesystem);
-        when(pool.checkingHeartBeat(eq(monitored), any(HostTO.class), any(Duration.class))).thenReturn(active);
+        when(pool.hasHeartBeat(eq(monitored), any(HostTO.class), any(Duration.class))).thenReturn(active);
         return monitored;
     }
     private Boolean check(boolean anyFailure, Boolean first, Boolean second) {
         return new KVMHAChecker(Collections.singletonList(pool(first)), Collections.singletonList(pool(second)),
-                Collections.emptyList(), Collections.emptyList(), mock(HostTO.class), anyFailure, "", 5).checkingHeartBeat();
+                Collections.emptyList(), Collections.emptyList(), mock(HostTO.class), anyFailure, "", 5).hasHeartBeat();
     }
     @Test public void failureInEarlierPoolTypeIsNotOverwritten() { assertEquals(Boolean.FALSE, check(true, false, true)); }
     @Test public void anyAliveSatisfiesAllFailedPolicy() { assertEquals(Boolean.TRUE, check(false, true, false)); }
@@ -50,6 +53,51 @@ public class KVMHACheckerTest {
     @Test public void allFailuresAreKnownInactive() { assertEquals(Boolean.FALSE, check(false, false, false)); }
     @Test public void noPoolsIsUnknown() {
         assertNull(new KVMHAChecker(Collections.emptyList(), Collections.emptyList(), Collections.emptyList(),
-                Collections.emptyList(), mock(HostTO.class), false, "").checkingHeartBeat());
+                Collections.emptyList(), mock(HostTO.class), false, "").hasHeartBeat());
+    }
+    @Test
+    public void combinesEveryStorageFamilyWithoutOverwritingEarlierResults() {
+        for (boolean reportOneFailure : new boolean[]{false, true}) {
+            for (int mask = 0; mask < 16; mask++) {
+                HostTO host = Mockito.mock(HostTO.class);
+                List<List<HAStoragePool>> groups = new ArrayList<>();
+                for (int family = 0; family < 4; family++) {
+                    HAStoragePool pool = Mockito.mock(HAStoragePool.class);
+                    KVMStoragePool storage = Mockito.mock(KVMStoragePool.class);
+                    Mockito.when(pool.getPool()).thenReturn(storage);
+                    boolean alive = (mask & (1 << family)) != 0;
+                    if (family == 2) {
+                        Mockito.when(storage.getType()).thenReturn(StoragePoolType.RBD);
+                        Mockito.when(storage.checkingHeartBeatRBD(eq(pool), eq(host), eq("volume-a,volume-b"), any(Duration.class))).thenReturn(alive);
+                    } else {
+                        Mockito.when(storage.hasHeartBeat(eq(pool), eq(host), any(Duration.class))).thenReturn(alive);
+                    }
+                    groups.add(List.of(pool));
+                }
+                KVMHAChecker checker = new KVMHAChecker(groups.get(0), groups.get(1), groups.get(2), groups.get(3),
+                        host, reportOneFailure, "volume-a,volume-b");
+                assertEquals("mask=" + mask + ", reportOneFailure=" + reportOneFailure,
+                        reportOneFailure ? mask == 15 : mask != 0, checker.hasHeartBeat());
+            }
+        }
+    }
+
+    @Test
+    public void noStorageObservationIsUndetermined() {
+        for (boolean reportOneFailure : new boolean[]{false, true}) {
+            assertNull(new KVMHAChecker(List.of(), List.of(), List.of(), List.of(), null, reportOneFailure, null).hasHeartBeat());
+        }
+    }
+
+    @Test
+    public void unknownStorageReplyIsNotProofOfDeath() {
+        HostTO host = Mockito.mock(HostTO.class);
+        HAStoragePool pool = Mockito.mock(HAStoragePool.class);
+        KVMStoragePool storage = Mockito.mock(KVMStoragePool.class);
+        Mockito.when(pool.getPool()).thenReturn(storage);
+        Mockito.when(storage.hasHeartBeat(eq(pool), eq(host), any(Duration.class))).thenReturn(null);
+        for (boolean reportOneFailure : new boolean[]{false, true}) {
+            assertNull(new KVMHAChecker(List.of(pool), List.of(), List.of(), List.of(), host, reportOneFailure, null).hasHeartBeat());
+        }
     }
 }

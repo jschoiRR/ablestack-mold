@@ -17,6 +17,7 @@
 
 <template>
   <div class="p-2">
+    <p v-if="listRefreshFailed" role="status">{{ $t('message.list.refresh.stale') }}</p>
     <div class="mb-2" style="display: flex; gap: 8px; align-items: center;">
       <a-select v-model:value="state" style="width: 160px" :options="stateOptions" />
 
@@ -92,9 +93,11 @@
 </template>
 
 <script>
+import { listRefreshMixin } from '@/utils/listRefreshMixin'
 import { getAPI, postAPI } from '@/api'
 
 export default {
+  mixins: [listRefreshMixin(['fetchSilences'])],
   name: 'WallAlertSilenceTab',
   props: {
     resource: { type: Object, default: () => ({}) },
@@ -276,8 +279,10 @@ export default {
 
     // ---- 데이터 로드 ----
     async fetchSilences () {
+      const request = this.listRequestToken('fetchSilences')
       const rec = this.getCurrentRecord()
       const labelMap = await this.getLabels()
+      if (!this.isListRequestCurrent('fetchSilences', request)) return
 
       if (!labelMap || Object.keys(labelMap).length === 0) {
         this.items = []
@@ -286,13 +291,14 @@ export default {
         return
       }
 
-      this.loading = true
+      this.loading = !request.loaded
       try {
         const params = { ...this.buildMapParams('labels', labelMap), state: this.state || undefined }
         console.log('[WallAlertSilenceTab] >>> CALL listWallAlertSilences', params)
 
         const resp = await getAPI('listWallAlertSilences', params)
 
+        if (!this.isListRequestCurrent('fetchSilences', request)) return
         const r0 = resp?.listwallalertsilencesresponse
         let rows =
           (Array.isArray(r0?.silence) && r0.silence) ||
@@ -317,9 +323,12 @@ export default {
 
         this.applySilenceSummary(rec, this.items)
       } catch (e) {
+        if (!this.isListRequestCurrent('fetchSilences', request)) return
+        request.failed = true
+        this.listRefreshFailed = true
         console.log('[WallAlertSilenceTab] list error:', e)
       } finally {
-        this.loading = false
+        if (this.isListRequestCurrent('fetchSilences', request)) this.loading = false
       }
     },
 

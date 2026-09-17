@@ -17,6 +17,7 @@
 
 <template>
   <a-spin :spinning="fetchLoading">
+    <p v-if="listRefreshFailed" role="status">{{ $t('message.list.refresh.stale') }}</p>
     <a-button
       type="dashed"
       style="width: 100%;margin-bottom: 20px;"
@@ -364,6 +365,7 @@
 </template>
 
 <script>
+import { listRefreshMixin } from '@/utils/listRefreshMixin'
 import { ref, reactive, toRaw } from 'vue'
 import { postAPI, getAPI } from '@/api'
 import { mixinForm } from '@/utils/mixin'
@@ -372,8 +374,8 @@ import TooltipLabel from '@/components/widgets/TooltipLabel'
 import { getNetmaskFromCidr } from '@/utils/network'
 
 export default {
+  mixins: [mixinForm, listRefreshMixin(['refreshTiers'])],
   name: 'VpcTiersTab',
-  mixins: [mixinForm],
   components: {
     Status,
     TooltipLabel
@@ -523,18 +525,48 @@ export default {
       }
     },
     fetchData () {
-      this.networks = this.resource.network
-      this.fetchMtuForZone()
-      this.getVpcNetworkOffering()
-      if (!this.networks || this.networks.length === 0) {
-        return
+      return this.refreshTiers()
+    },
+    async refreshTiers () {
+      if (!this.resource.id) return
+      const request = this.listRequestToken('refreshTiers')
+      this.fetchLoading = !request.loaded
+      try {
+        const networks = this.resource.network || []
+        const results = await Promise.all(networks.map(async network => {
+          const params = { networkid: network.id, page: this.page, pagesize: this.pageSize, listall: true }
+          const [lbs, vms] = await Promise.all([
+            getAPI('listLoadBalancers', params),
+            getAPI('listVirtualMachines', { ...params, vpcid: this.resource.id })
+          ])
+          return { network, lbs: lbs.listloadbalancersresponse, vms: vms.listvirtualmachinesresponse }
+        }))
+        if (!this.isListRequestCurrent('refreshTiers', request)) return
+        this.networks = networks
+        const nextVms = {}
+        const nextLbs = {}
+        for (const { network, lbs, vms } of results) {
+          nextVms[network.id] = vms.virtualmachine || []
+          nextLbs[network.id] = lbs.loadbalancer || []
+          this.itemCounts.vms[network.id] = vms.count || 0
+          this.itemCounts.internalLB[network.id] = lbs.count || 0
+          if (!(network.id in this.displayCollapsible)) this.updateDisplayCollapsible(network.networkofferingid, network)
+        }
+        this.vms = nextVms
+        this.internalLB = nextLbs
+        if (!request.loaded) {
+          this.fetchMtuForZone()
+          this.getVpcNetworkOffering()
+          this.publicLBNetworkExists()
+        }
+      } catch (error) {
+        if (!this.isListRequestCurrent('refreshTiers', request)) return
+        request.failed = true
+        this.listRefreshFailed = true
+        if (!request.loaded) this.$notifyError(error)
+      } finally {
+        if (this.isListRequestCurrent('refreshTiers', request)) this.fetchLoading = false
       }
-      for (const network of this.networks) {
-        this.fetchLoadBalancers(network.id)
-        this.fetchVMs(network.id)
-        this.updateDisplayCollapsible(network.networkofferingid, network)
-      }
-      this.publicLBNetworkExists()
     },
     fetchMtuForZone () {
       getAPI('listZones', {

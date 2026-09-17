@@ -18,20 +18,11 @@
 <template>
   <div class="guest-network-summary">
     <div class="summary-line summary-line-compact">
-      <a-tooltip v-if="primaryAddress" :title="primaryAddressTooltip">
-        <span class="primary-address">
-          <copy-label :label="primaryAddress.address" />
-        </span>
-      </a-tooltip>
-      <span v-else>-</span>
-      <a-tooltip
-        v-if="isCloudFallback"
-        :title="$t('message.representative.ip.cloud.fallback')">
-        <a-tag
-          class="cloud-fallback"
-          color="default">
-          {{ $t('label.cloud.ip') }}
-        </a-tag>
+      <span v-if="primaryAddress" class="primary-address">
+        <copy-label :label="primaryAddress.address" :tooltip="primaryAddressTooltip" />
+      </span>
+      <a-tooltip v-else :title="showStatus ? statusTooltip : ''">
+        <span>-</span>
       </a-tooltip>
       <a-popover
         v-if="remainingAddressCount > 0"
@@ -45,6 +36,11 @@
               <copy-label
                 :label="$t('label.copy.all')"
                 :copyValue="allAddressCopyValue" />
+            </div>
+            <div class="address-popover-metadata">
+              <span v-if="isCloudFallback">{{ $t('label.cloud.ip') }}</span>
+              <span v-if="showStatus" :title="statusTooltip">{{ statusLabel }}</span>
+              <span v-if="summary.observed">{{ $t('label.guest.network.observed') }}: {{ $toLocaleDate(summary.observed) }}</span>
             </div>
             <div
               v-for="item in allAddresses"
@@ -67,17 +63,7 @@
           +{{ remainingAddressCount }}
         </a-button>
       </a-popover>
-      <a-tag
-        v-if="hasIpv6"
-        class="address-family-indicator"
-        color="purple">
-        v6
-      </a-tag>
-      <a-tooltip v-if="showStatus" :title="statusTooltip">
-        <a-tag class="summary-status" :color="statusColor">
-          {{ statusLabel }}
-        </a-tag>
-      </a-tooltip>
+
     </div>
   </div>
 </template>
@@ -165,26 +151,11 @@ export default {
           this.normalizedAddress(this.primaryAddress.address))
       return Math.max(0, this.allAddresses.length - (included ? 1 : 0))
     },
-    hasIpv6 () {
-      return (this.summary.ipv6addresses || []).length > 0
-    },
     allAddressCopyValue () {
       return this.allAddresses.map(item => item.address).join('\n')
     },
     showStatus () {
       return Boolean(this.summary.status)
-    },
-    statusColor () {
-      const colors = {
-        OK: 'green',
-        PARTIAL: 'orange',
-        STALE: 'gold',
-        STOPPED: 'default',
-        UNSUPPORTED: 'red',
-        UNAVAILABLE: 'red',
-        NOT_COLLECTED: 'default'
-      }
-      return colors[this.summary.status] || 'default'
     },
     statusLabel () {
       const key = 'label.guest.network.status.' + String(this.summary.status || '').toLowerCase()
@@ -200,9 +171,11 @@ export default {
         this.$toLocaleDate(this.summary.observed)
     },
     primaryAddressTooltip () {
-      return this.primaryAddress.source === 'QGA'
+      const source = this.primaryAddress.source === 'QGA'
         ? this.$t('message.representative.ip.qga')
         : this.$t('message.representative.ip.cloud.fallback')
+      return [this.primaryAddress.address, source, this.showStatus ? this.statusTooltip : '']
+        .filter(Boolean).join(' · ')
     }
   },
   methods: {
@@ -215,7 +188,7 @@ export default {
 
 <style scoped lang="less">
 .guest-network-summary {
-  min-width: 220px;
+  min-width: 0;
 }
 
 .summary-line {
@@ -231,9 +204,17 @@ export default {
 
 .primary-address {
   color: inherit;
+  min-width: 0;
+  max-width: 180px;
+
+  :deep(a) {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 }
 
-.cloud-fallback,
 .popover-role {
   margin: 0;
   padding: 0 5px;
@@ -243,6 +224,7 @@ export default {
 }
 
 .summary-more {
+  flex: none;
   height: 20px;
   padding: 0 7px;
   color: #096dd9;
@@ -251,20 +233,18 @@ export default {
   border-radius: 10px;
 }
 
-.address-family-indicator,
-.summary-status {
-  margin: 0;
-  padding: 0 6px;
-  font-size: 10px;
-  line-height: 18px;
-  border-radius: 10px;
-}
-
 .address-popover {
-  min-width: 310px;
-  max-width: 520px;
+  width: max-content;
+  max-width: min(520px, calc(100vw - 48px));
   max-height: 280px;
   overflow-y: auto;
+}
+
+.address-popover-metadata {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  margin-bottom: 8px;
 }
 
 .address-popover-header,
@@ -281,6 +261,8 @@ export default {
 
 .address-popover-row {
   margin: 5px 0;
+  flex-wrap: wrap;
+  overflow-wrap: anywhere;
 }
 
 .address-popover-row .ant-tag {

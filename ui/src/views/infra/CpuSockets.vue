@@ -17,6 +17,7 @@
 
 <template>
   <div>
+    <p v-if="listRefreshFailed" role="status">{{ $t('message.list.refresh.stale') }}</p>
     <a-card class="breadcrumb-card">
       <a-row>
         <a-col :span="24" style="padding-left: 12px">
@@ -52,12 +53,14 @@
 </template>
 
 <script>
+import { listRefreshMixin } from '@/utils/listRefreshMixin'
 import { getAPI } from '@/api'
 import { genericCompare } from '@/utils/sort.js'
 import Breadcrumb from '@/components/widgets/Breadcrumb'
 import ListView from '@/components/view/ListView.vue'
 
 export default {
+  mixins: [listRefreshMixin(['fetchData'], { interval: 60000 })],
   name: 'CpuSockets',
   components: {
     ListView,
@@ -88,78 +91,44 @@ export default {
     }
   },
   methods: {
-    pushData (hypervisor) {
-      if (['BareMetal', 'LXC'].includes(hypervisor)) {
-        this.data[hypervisor].cpusockets = 'N/A'
+    async fetchData () {
+      const request = this.listRequestToken('fetchData')
+      this.loading = !request.loaded
+      if (!this.columns.length) {
+        this.columns = ['name', 'hosts', 'cpusockets'].map(key => ({
+          dataIndex: key,
+          title: this.$t('label.' + ({ name: 'hypervisor', hosts: 'hosts', cpusockets: 'cpu.sockets' })[key]),
+          sorter: (a, b) => genericCompare(a[key] || '', b[key] || '')
+        }))
       }
-      if (hypervisor === 'Hyperv') {
-        this.data[hypervisor].name = 'Hyper-V'
-      }
-      this.items.push(this.data[hypervisor])
-    },
-    callListHostsWithPage (hypervisor, currentPage) {
-      this.loading = true
-      const pageSize = 100
-      getAPI('listHosts', {
-        type: 'routing',
-        details: 'min',
-        hypervisor: hypervisor,
-        page: currentPage,
-        pagesize: pageSize
-      }).then(json => {
-        if (json.listhostsresponse.count === undefined) {
-          this.pushData(hypervisor)
-          return
+      const types = ['BareMetal', 'Hyperv', 'KVM', 'LXC', 'Ovm3', 'Simulator', 'VMware', 'XenServer']
+      const totals = Object.fromEntries(types.map(type => [type, { name: type === 'Hyperv' ? 'Hyper-V' : type, hosts: 0, cpusockets: 0 }]))
+      try {
+        let page = 1
+        let received = 0
+        while (true) {
+          const json = await getAPI('listHosts', { type: 'routing', details: 'min', page, pagesize: 100 })
+          if (!this.isListRequestCurrent('fetchData', request)) return
+          const response = json.listhostsresponse
+          const hosts = response.host || []
+          hosts.forEach(host => {
+            const total = totals[host.hypervisor]
+            if (total) { total.hosts += 1; total.cpusockets += Number(host.cpusockets) || 0 }
+          })
+          received += hosts.length
+          if (!hosts.length || received >= (response.count || received)) break
+          page += 1
         }
-
-        this.data[hypervisor].hosts = json.listhostsresponse.count
-        this.data[hypervisor].currentHosts += json.listhostsresponse.host.length
-
-        for (const host of json.listhostsresponse.host) {
-          if (host.cpusockets !== undefined && isNaN(host.cpusockets) === false) {
-            this.data[hypervisor].cpusockets += host.cpusockets
-          }
-        }
-
-        if (this.data[hypervisor].currentHosts < this.data[hypervisor].hosts) {
-          this.callListHostsWithPage(hypervisor, currentPage + 1)
-        } else {
-          this.pushData(hypervisor)
-        }
-      }).finally(() => {
-        this.loading = false
-      })
-    },
-    fetchData () {
-      this.columns = []
-      this.columns.push({
-        dataIndex: 'name',
-        title: this.$t('label.hypervisor'),
-        sorter: (a, b) => genericCompare(a?.name || '', b?.name || '')
-      })
-
-      this.columns.push({
-        dataIndex: 'hosts',
-        title: this.$t('label.hosts'),
-        sorter: (a, b) => genericCompare(a?.hosts || '', b?.hosts || '')
-      })
-      this.columns.push({
-        dataIndex: 'cpusockets',
-        title: this.$t('label.cpu.sockets'),
-        sorter: (a, b) => genericCompare(a?.cpusockets || '', b?.cpusockets || '')
-      })
-
-      this.items = []
-      this.data = {}
-      const hypervisors = ['BareMetal', 'Hyperv', 'KVM', 'LXC', 'Ovm3', 'Simulator', 'VMware', 'XenServer']
-      for (const hypervisor of hypervisors) {
-        this.data[hypervisor] = {
-          name: hypervisor,
-          hosts: 0,
-          cpusockets: 0,
-          currentHosts: 0
-        }
-        this.callListHostsWithPage(hypervisor, 1)
+        totals.BareMetal.cpusockets = 'N/A'
+        totals.LXC.cpusockets = 'N/A'
+        this.items = types.map(type => totals[type])
+      } catch (error) {
+        if (!this.isListRequestCurrent('fetchData', request)) return
+        request.failed = true
+        this.listRefreshFailed = true
+        if (!request.loaded) this.$notifyError(error)
+      } finally {
+        if (this.isListRequestCurrent('fetchData', request)) this.loading = false
       }
     }
   }

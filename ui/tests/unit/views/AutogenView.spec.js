@@ -195,6 +195,46 @@ const { ResizeObserver, ls } = window
 router.push('/')
 
 describe('Views > AutogenView.vue', () => {
+  describe('resource name confirmation', () => {
+    const confirmation = {
+      api: 'deleteProject',
+      requireNameConfirmation: true,
+      groupAction: true,
+      invokedAsGroupAction: false,
+      label: 'label.delete'
+    }
+
+    it('blocks a single deletion even when unrelated rows remain selected', async () => {
+      await wrapper.setData({ currentAction: confirmation, resource: { name: 'Europa' }, selectedRowKeys: ['other'] })
+      expect(wrapper.vm.requiresNameConfirmation).toBe(true)
+      expect(wrapper.vm.isSubmitDisabled).toBe(true)
+      const submit = jest.spyOn(wrapper.vm, 'execSubmit').mockImplementation(() => {})
+      await wrapper.vm.handleSubmit({ preventDefault: jest.fn() })
+      expect(submit).not.toHaveBeenCalled()
+      await wrapper.setData({ actionConfirmText: 'europa' })
+      expect(wrapper.vm.isSubmitDisabled).toBe(true)
+      await wrapper.setData({ actionConfirmText: ' Europa ' })
+      expect(wrapper.vm.isSubmitDisabled).toBe(false)
+      submit.mockRestore()
+    })
+
+    it('uses the existing bulk confirmation only for an actual group invocation', async () => {
+      await wrapper.setData({ currentAction: { ...confirmation, invokedAsGroupAction: true }, selectedRowKeys: ['id'], resource: {} })
+      expect(wrapper.vm.requiresNameConfirmation).toBe(false)
+      expect(wrapper.vm.isSubmitDisabled).toBe(false)
+      await wrapper.setData({ selectedRowKeys: [] })
+      expect(wrapper.vm.isSubmitDisabled).toBe(true)
+    })
+
+    it('clears the typed name when closing and does not affect other actions', async () => {
+      await wrapper.setData({ currentAction: confirmation, actionConfirmText: 'Europa', resource: { name: 'Europa' } })
+      wrapper.vm.closeAction()
+      expect(wrapper.vm.actionConfirmText).toBe('')
+      await wrapper.setData({ currentAction: { api: 'startVirtualMachine' } })
+      expect(wrapper.vm.isSubmitDisabled).toBe(false)
+    })
+  })
+
   beforeEach(async () => {
     jest.clearAllMocks()
     jest.spyOn(console, 'warn').mockImplementation(() => {})
@@ -416,6 +456,41 @@ describe('Views > AutogenView.vue', () => {
         expect(fetchData).toBeCalled()
         done()
       })
+    })
+  })
+
+  describe('background list refresh', () => {
+    const response = rows => ({ testapinamecase1response: { count: rows.length, testapinamecase1: rows } })
+    it('keeps rows and column objects while a refresh is pending, then applies new data', async () => {
+      mockAxios.mockResolvedValue(response([{ id: 'a', column1: 'old' }]))
+      await router.push({ name: 'testRouter7' })
+      await flushPromises()
+      const columns = wrapper.vm.columns
+      let finish
+      mockAxios.mockImplementationOnce(() => new Promise(resolve => { finish = resolve }))
+      const pending = wrapper.vm.fetchData({ irefresh: true, autoscheduled: true })
+      expect(wrapper.vm.loading).toBe(false)
+      expect(wrapper.vm.items[0].column1).toBe('old')
+      expect(wrapper.vm.columns).toBe(columns)
+      finish(response([{ id: 'a', column1: 'new' }]))
+      await pending
+      expect(wrapper.vm.items[0].column1).toBe('new')
+      expect(wrapper.vm.columns).toBe(columns)
+    })
+    it('keeps the last snapshot on failure and distinguishes a successful empty response', async () => {
+      mockAxios.mockResolvedValue(response([{ id: 'a' }]))
+      await router.push({ name: 'testRouter7' })
+      await flushPromises()
+      mockAxios.mockRejectedValueOnce(new Error('offline'))
+      await expect(wrapper.vm.fetchData({ irefresh: true, autoscheduled: true })).rejects.toThrow('offline')
+      expect(wrapper.vm.items[0].id).toBe('a')
+      expect(wrapper.vm.listRefreshError).toBe(true)
+      expect(wrapper.vm.loading).toBe(false)
+      mockAxios.mockResolvedValueOnce(response([]))
+      await wrapper.vm.fetchData({ irefresh: true, autoscheduled: true })
+      expect(wrapper.vm.items).toEqual([])
+      expect(wrapper.vm.itemCount).toBe(0)
+      expect(wrapper.vm.listRefreshError).toBe(false)
     })
   })
 
@@ -1570,6 +1645,8 @@ describe('Views > AutogenView.vue', () => {
         expect(mockAxios).toHaveBeenLastCalledWith({
           url: '/',
           method: 'GET',
+          timeout: 15000,
+          backgroundJob: true,
           params: {
             command: 'queryAsyncJobResult',
             response: 'json',
@@ -1611,6 +1688,8 @@ describe('Views > AutogenView.vue', () => {
         expect(mockAxios).toHaveBeenLastCalledWith({
           url: '/',
           method: 'GET',
+          timeout: 15000,
+          backgroundJob: true,
           params: {
             command: 'queryAsyncJobResult',
             response: 'json',
@@ -1621,7 +1700,7 @@ describe('Views > AutogenView.vue', () => {
         done()
       })
 
-      it('fetchData() should not be called when $pollJob error response', async (done) => {
+      it('refreshes resource data on a terminal job failure', async (done) => {
         originalFunc.fetchData = wrapper.vm.fetchData
         wrapper.vm.fetchData = jest.fn((args) => {})
         const fetchData = jest.spyOn(wrapper.vm, 'fetchData')
@@ -1642,11 +1721,13 @@ describe('Views > AutogenView.vue', () => {
         })
         await flushPromises()
 
-        expect(fetchData).not.toHaveBeenCalled()
+        expect(fetchData).toHaveBeenCalled()
         expect(mockAxios).toHaveBeenCalled()
         expect(mockAxios).toHaveBeenLastCalledWith({
           url: '/',
           method: 'GET',
+          timeout: 15000,
+          backgroundJob: true,
           params: {
             command: 'queryAsyncJobResult',
             response: 'json',

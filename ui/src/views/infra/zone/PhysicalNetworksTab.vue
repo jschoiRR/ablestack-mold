@@ -17,6 +17,7 @@
 
 <template>
   <a-spin :spinning="fetchLoading">
+    <p v-if="listRefreshFailed" role="status">{{ $t('message.list.refresh.stale') }}</p>
     <a-button
       type="primary"
       style="width: 100%; margin-bottom: 10px"
@@ -151,12 +152,15 @@
 </template>
 
 <script>
+import { listRefreshMixin } from '@/utils/listRefreshMixin'
+
 import { ref, reactive, toRaw } from 'vue'
 import { getAPI, postAPI } from '@/api'
 import Status from '@/components/widgets/Status'
 import TooltipLabel from '@/components/widgets/TooltipLabel'
 
 export default {
+  mixins: [listRefreshMixin(['fetchData'])],
   name: 'PhysicalNetworksTab',
   components: {
     Status,
@@ -205,12 +209,23 @@ export default {
   },
   methods: {
     fetchData () {
-      this.fetchLoading = true
-      getAPI('listPhysicalNetworks', { zoneid: this.resource.id }).then(json => {
+      const listRequest = this.listRequestToken('fetchData')
+      this.fetchLoading = !listRequest.loaded
+      return getAPI('listPhysicalNetworks', { zoneid: this.resource.id }).then(json => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+
         this.networks = json.listphysicalnetworksresponse.physicalnetwork || []
         this.fetchTrafficLabels()
       }).catch(error => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+        listRequest.failed = true
+        this.listRefreshFailed = true
+        if (listRequest.loaded) return
+
         this.$notifyError(error)
+      }).finally(() => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+        this.fetchLoading = false
       })
     },
     fetchTrafficLabels () {

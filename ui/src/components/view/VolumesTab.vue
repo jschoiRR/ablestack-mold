@@ -44,15 +44,22 @@
         <router-link v-if="record.storageid" :to="{ path: '/storagepool/' + encodeURIComponent(record.storageid) }">{{ text }}</router-link>
         <span v-else>{{ text }}</span>
       </template>
+      <template v-if="column.key === 'kmskey'">
+        <router-link v-if="record.kmskeyid" :to="{ path: '/kmskey/' + encodeURIComponent(record.kmskeyid) }">{{ text }}</router-link>
+        <span v-else>{{ text }}</span>
+      </template>
     </template>
   </a-table>
 </template>
 
 <script>
+import { listRefreshMixin } from '@/utils/listRefreshMixin'
+
 import { getAPI } from '@/api'
 import Status from '@/components/widgets/Status'
 
 export default {
+  mixins: [listRefreshMixin(['getVolumes'])],
   name: 'VolumesTab',
   components: {
     Status
@@ -80,7 +87,7 @@ export default {
     return {
       vm: {},
       volumes: [],
-      defaultColumns: ['name', 'state', 'type', 'size'],
+      defaultColumns: ['name', 'state', 'type', 'size', 'kmskey'],
       allColumns: [
         {
           key: 'name',
@@ -100,6 +107,11 @@ export default {
           key: 'size',
           title: this.$t('label.size'),
           dataIndex: 'size'
+        },
+        {
+          key: 'kmskey',
+          title: this.$t('label.kms.key'),
+          dataIndex: 'kmskey'
         },
         {
           key: 'storage',
@@ -132,11 +144,19 @@ export default {
       }
     },
     getVolumes () {
-      getAPI('listVolumes', { listall: true, listsystemvms: true, virtualmachineid: this.vm.id }).then(json => {
+      const listRequest = this.listRequestToken('getVolumes')
+      return getAPI('listVolumes', { listall: true, listsystemvms: true, virtualmachineid: this.vm.id }).then(json => {
+        if (!this.isListRequestCurrent('getVolumes', listRequest)) return
+
         this.volumes = json.listvolumesresponse.volume
         if (this.volumes) {
           this.volumes.sort((a, b) => { return a.deviceid - b.deviceid })
         }
+      }).catch(error => {
+        if (!this.isListRequestCurrent('getVolumes', listRequest)) return
+        listRequest.failed = true
+        this.listRefreshFailed = true
+        if (!listRequest.loaded) this.$notifyError(error)
       })
     }
   }

@@ -17,6 +17,7 @@
 
 <template>
   <a-spin :spinning="fetchLoading">
+    <p v-if="listRefreshFailed" role="status">{{ $t('message.list.refresh.stale') }}</p>
     <a-list size="small">
       <a-list-item v-if="host.outofbandmanagement">
         <div>
@@ -87,9 +88,12 @@
 </template>
 
 <script>
+import { listRefreshMixin } from '@/utils/listRefreshMixin'
+
 import { getAPI } from '@/api'
 
 export default {
+  mixins: [listRefreshMixin(['fetchData'])],
   name: 'HostInfo',
   props: {
     resource: {
@@ -125,12 +129,25 @@ export default {
   },
   methods: {
     fetchData () {
-      this.fetchLoading = true
-      getAPI('listHosts', { id: this.resource.id }).then(json => {
+      const listRequest = this.listRequestToken('fetchData')
+      this.fetchLoading = !listRequest.loaded
+      return getAPI('listHosts', { id: this.resource.id }).then(json => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+
         this.host = json.listhostsresponse.host[0]
       }).catch(error => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+        listRequest.failed = true
+        this.listRefreshFailed = true
+        if (listRequest.loaded) return
+
         this.$notifyError(error)
       }).finally(() => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+
+        this.fetchLoading = false
+      }).finally(() => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
         this.fetchLoading = false
       })
     }

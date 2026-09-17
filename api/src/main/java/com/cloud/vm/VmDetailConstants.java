@@ -42,6 +42,18 @@ public interface VmDetailConstants {
     String KVM_VNC_ADDRESS = "kvm.vnc.address";
     String TPM_VERSION = "tpmversion";
     String KVM_VNC_PASSWORD = "kvm.vnc.password";
+    String FAST_CLONE_SOURCE_PHASE = "clone.fast.source.phase";
+    String FAST_CLONE_SOURCE_PHASE_READY = "ready";
+    String FAST_CLONE_CLONE_PHASE = "clone.fast.clone.phase";
+    String FAST_CLONE_CLONE_READY = "ready";
+    String FAST_CLONE_CLONE_PAUSED = "paused";
+    String FAST_CLONE_CLONE_PREPARING = "preparing";
+    String FAST_CLONE_CLONE_CHECKING = "checking";
+    String FAST_CLONE_CLONE_PAUSING = "pausing";
+    String FAST_CLONE_CLONE_TRANSITIONING = "transitioning";
+    String FAST_CLONE_CLONE_FAILED = "failed";
+    String FAST_CLONE_BANDWIDTH = "clone.fast.flatten.bandwidth";
+    String FAST_CLONE_BANDWIDTH_STATUS = "clone.fast.flatten.bandwidth.status";
 
     // KVM specific, custom virtual GPU hardware
     String SOUND= "sound";
@@ -136,4 +148,20 @@ public interface VmDetailConstants {
     String CLOUDSTACK_VM_DETAILS = "cloudstack.vm.details";
     String CLOUDSTACK_VLAN = "cloudstack.vlan";
     String KVM_GUEST_OS_MACHINE_TYPE = "kvm.guest.os.machine.type";
+
+    // KVM Checkpoints related
+    String ACTIVE_CHECKPOINT_ID = "active.checkpoint.id";
+    String ACTIVE_CHECKPOINT_CREATE_TIME = "active.checkpoint.create.time";
+    String LAST_CHECKPOINT_ID = "last.checkpoint.id";
+    String LAST_CHECKPOINT_CREATE_TIME = "last.checkpoint.create.time";
+
+    // KBOSS specific
+    String LINKED_VOLUMES_SECONDARY_STORAGE_UUIDS = "linkedVolumesSecondaryStorageUuids";
+    String VALIDATION_COMMAND = "backupValidationCommand";
+    String VALIDATION_COMMAND_ARGUMENTS = "backupValidationCommandArguments";
+    String VALIDATION_COMMAND_EXPECTED_RESULT = "backupValidationCommandExpectedResult";
+    String VALIDATION_COMMAND_TIMEOUT = "backupValidationCommandTimeout";
+    String VALIDATION_SCREENSHOT_WAIT = "backupValidationScreenshotWait";
+    String VALIDATION_BOOT_TIMEOUT = "backupValidationBootTimeout";
+    String LAST_KNOWN_STATE = "last_known_state";
 }

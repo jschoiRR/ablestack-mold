@@ -17,6 +17,7 @@
 
 <template>
   <div>
+    <p v-if="listRefreshFailed" role="status">{{ $t('message.list.refresh.stale') }}</p>
     <a-button
       type="primary"
       style="width: 100%; margin-bottom: 10px"
@@ -122,6 +123,8 @@
 </template>
 
 <script>
+import { listRefreshMixin } from '@/utils/listRefreshMixin'
+
 import { getAPI, postAPI } from '@/api'
 import ObjectListTable from '@/components/view/ObjectListTable.vue'
 import TooltipButton from '@/components/widgets/TooltipButton'
@@ -130,6 +133,7 @@ import UpdateCustomAction from '@/views/extension/UpdateCustomAction.vue'
 import Status from '@/components/widgets/Status'
 
 export default {
+  mixins: [listRefreshMixin(['fetchCustomActions'])],
   name: 'ExtensionCustomActionsTab',
   components: {
     ObjectListTable,
@@ -202,7 +206,8 @@ export default {
       this.fetchCustomActions()
     },
     fetchCustomActions () {
-      this.extensionCustomActions = []
+      const listRequest = this.listRequestToken('fetchCustomActions')
+
       if (!this.resource.id) {
         return
       }
@@ -212,14 +217,23 @@ export default {
         extensionid: this.resource.id,
         listall: true
       }
-      this.tabLoading = true
-      getAPI('listCustomActions', params).then(json => {
+      this.tabLoading = !listRequest.loaded
+      return getAPI('listCustomActions', params).then(json => {
+        if (!this.isListRequestCurrent('fetchCustomActions', listRequest)) return
         this.extensionCustomActions = []
         this.totalCount = json?.listcustomactionsresponse?.count || 0
         this.extensionCustomActions = json?.listcustomactionsresponse?.extensioncustomaction || []
         this.tabLoading = false
       }).catch(error => {
+        if (!this.isListRequestCurrent('fetchCustomActions', listRequest)) return
+        listRequest.failed = true
+        this.listRefreshFailed = true
+        if (listRequest.loaded) return
+
         this.$notifyError(error)
+      }).finally(() => {
+        if (!this.isListRequestCurrent('fetchCustomActions', listRequest)) return
+        this.tabLoading = false
       })
     },
     showAddCustomActionModal () {

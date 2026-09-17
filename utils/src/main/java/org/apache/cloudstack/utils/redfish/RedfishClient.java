@@ -326,7 +326,7 @@ public class RedfishClient implements AutoCloseable {
     }
 
     protected HttpResponse retryHttpRequest(String url, HttpRequestBase httpReq, HttpClient client) {
-        logger.warn(String.format("Failed to execute HTTP %s request [URL: %s]. Executing the request again.", httpReq.getMethod(), url));
+        logger.warn("Failed to execute HTTP {} request [URL: {}]. Executing the request again.", httpReq.getMethod(), url);
         HttpResponse response = null;
         for (int attempt = 1; attempt < redfishRequestMaxRetries + 1; attempt++) {
             try {
@@ -336,7 +336,7 @@ public class RedfishClient implements AutoCloseable {
                 }
                 TimeUnit.SECONDS.sleep(WAIT_FOR_REQUEST_RETRY);
                 configureRequestTimeout(httpReq);
-                logger.debug(String.format("HTTP %s request retry attempt %d/%d [URL: %s].", httpReq.getMethod(), attempt, redfishRequestMaxRetries, url));
+                logger.debug("HTTP {} request retry attempt {}/{} [URL: {}].", httpReq.getMethod(), attempt, redfishRequestMaxRetries, url);
                 response = client.execute(httpReq);
                 break;
             } catch (InterruptedException e) {
@@ -346,9 +346,7 @@ public class RedfishClient implements AutoCloseable {
                 if (attempt == redfishRequestMaxRetries) {
                     throw new RedfishException(String.format("Failed to execute HTTP %s request retry attempt %d/%d [URL: %s] due to exception %s", httpReq.getMethod(), attempt, redfishRequestMaxRetries,url, e));
                 } else {
-                    logger.warn(
-                            String.format("Failed to execute HTTP %s request retry attempt %d/%d [URL: %s] due to exception %s", httpReq.getMethod(), attempt, redfishRequestMaxRetries,
-                                    url, e));
+                    logger.warn("Failed to execute HTTP {} request retry attempt {}/{} [URL: {}] due to exception {}", httpReq.getMethod(), attempt, redfishRequestMaxRetries, url, e);
                 }
             }
         }
@@ -419,7 +417,7 @@ public class RedfishClient implements AutoCloseable {
             throw new RedfishException(String.format("Failed to execute System power command for host by performing '%s' request on URL '%s' and host address '%s'. The expected HTTP status code is '%s' but it got '%s'.",
                     HttpPost.METHOD_NAME, url, hostAddress, EXPECTED_HTTP_STATUS, statusCode));
         }
-        logger.debug(String.format("Sending ComputerSystem.Reset Command '%s' to host '%s' with request '%s %s'", resetCommand, hostAddress, HttpPost.METHOD_NAME, url));
+        logger.debug("Sending ComputerSystem.Reset Command '{}' to host '{}' with request '{} {}'", resetCommand, hostAddress, HttpPost.METHOD_NAME, url);
     }
 
     /**
@@ -437,7 +435,7 @@ public class RedfishClient implements AutoCloseable {
 
         String systemId = processGetSystemIdResponse(response);
 
-        logger.debug(String.format("Retrieved System ID '%s' with request '%s: %s'", systemId, HttpGet.METHOD_NAME, url));
+        logger.debug("Retrieved System ID '{}' with request '{}: {}'", systemId, HttpGet.METHOD_NAME, url);
 
         return systemId;
     }
@@ -494,7 +492,7 @@ public class RedfishClient implements AutoCloseable {
 
         RedfishPowerState powerState = processGetSystemRequestResponse(response);
         remainingOperationMillis();
-        logger.debug(String.format("Retrieved System power state '%s' with request '%s: %s'", powerState, HttpGet.METHOD_NAME, url));
+        logger.debug("Retrieved System power state '{}' with request '{}: {}'", powerState, HttpGet.METHOD_NAME, url);
         return powerState;
     }
 

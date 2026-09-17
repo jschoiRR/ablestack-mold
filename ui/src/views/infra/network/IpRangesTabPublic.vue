@@ -17,6 +17,7 @@
 
 <template>
   <a-spin :spinning="componentLoading">
+    <p v-if="listRefreshFailed" role="status">{{ $t('message.list.refresh.stale') }}</p>
     <a-button
       :disabled="!('createVlanIpRange' in $store.getters.apis)"
       type="dashed"
@@ -379,12 +380,15 @@
 </template>
 
 <script>
+import { listRefreshMixin } from '@/utils/listRefreshMixin'
+
 import { ref, reactive, toRaw } from 'vue'
 import { getAPI, postAPI } from '@/api'
 import TooltipButton from '@/components/widgets/TooltipButton'
 import TooltipLabel from '@/components/widgets/TooltipLabel'
 
 export default {
+  mixins: [listRefreshMixin(['fetchData'])],
   name: 'IpRangesTabPublic',
   components: {
     TooltipButton,
@@ -517,21 +521,31 @@ export default {
       })
     },
     fetchData () {
-      this.componentLoading = true
-      getAPI('listVlanIpRanges', {
+      const listRequest = this.listRequestToken('fetchData')
+      this.componentLoading = !listRequest.loaded
+      if (!listRequest.loaded) this.fetchPods()
+      return getAPI('listVlanIpRanges', {
         networkid: this.network.id,
         zoneid: this.resource.zoneid,
         page: this.page,
         pagesize: this.pageSize
       }).then(response => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+
         this.items = response.listvlaniprangesresponse.vlaniprange ? response.listvlaniprangesresponse.vlaniprange : []
         this.total = response.listvlaniprangesresponse.count || 0
       }).catch(error => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+        listRequest.failed = true
+        this.listRefreshFailed = true
+        if (listRequest.loaded) return
+
         this.$notifyError(error)
       }).finally(() => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+
         this.componentLoading = false
       })
-      this.fetchPods()
     },
     fetchDomains () {
       this.domainsLoading = true
@@ -615,6 +629,10 @@ export default {
     handleShowAccountFields () {
       if (this.showAccountFields) {
         this.fetchDomains()
+      } else {
+        this.form.account = null
+        this.form.domain = null
+        this.form.forsystemvms = false
       }
     },
     handleOpenAddIpRangeModal () {

@@ -17,6 +17,7 @@
 
 <template>
   <a-spin :spinning="loading">
+    <p v-if="listRefreshFailed" role="status">{{ $t('message.list.refresh.stale') }}</p>
     <div>
       <a-table
         style="overflow-y: auto"
@@ -36,12 +37,15 @@
 </template>
 
 <script>
+import { listRefreshMixin } from '@/utils/listRefreshMixin'
+
 import { ref, reactive } from 'vue'
 import { getAPI } from '@/api'
 import Status from '@/components/widgets/Status'
 import TooltipLabel from '@/components/widgets/TooltipLabel'
 
 export default {
+  mixins: [listRefreshMixin(['fetchData'])],
   name: 'SecurityCheckTab',
   components: {
     Status,
@@ -88,12 +92,25 @@ export default {
       this.rules = reactive({})
     },
     fetchData () {
-      this.loading = true
-      getAPI('getSecurityCheck', { managementserverid: this.resource.id }).then(json => {
+      const listRequest = this.listRequestToken('fetchData')
+      this.loading = !listRequest.loaded
+      return getAPI('getSecurityCheck', { managementserverid: this.resource.id }).then(json => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+
         this.securityChecks = json.getsecuritycheckresponse.securitychecks.securitychecks
       }).catch(error => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+        listRequest.failed = true
+        this.listRefreshFailed = true
+        if (listRequest.loaded) return
+
         this.$notifyError(error)
       }).finally(f => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+
+        this.loading = false
+      }).finally(() => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
         this.loading = false
       })
     }

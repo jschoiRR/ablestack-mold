@@ -17,6 +17,7 @@
 
 <template>
   <a-spin :spinning="loading">
+    <p v-if="listRefreshFailed" role="status">{{ $t('message.list.refresh.stale') }}</p>
     <a-tabs
       :activeKey="currentTab"
       :tabPosition="device === 'mobile' ? 'top' : 'left'"
@@ -167,6 +168,7 @@
 </template>
 
 <script>
+import { listRefreshMixin } from '@/utils/listRefreshMixin'
 import { ref } from 'vue'
 import { getAPI } from '@/api'
 import { mixinDevice } from '@/utils/mixin.js'
@@ -187,7 +189,7 @@ export default {
     ListResourceTable,
     TooltipButton
   },
-  mixins: [mixinDevice],
+  mixins: [listRefreshMixin(['fetchData']), mixinDevice],
   props: {
     resource: {
       type: Object,
@@ -332,31 +334,25 @@ export default {
         }).join('&')
       )
     },
-    fetchData () {
-      this.desktopvms = this.resource.desktopvms || []
-      this.desktopvms.map(x => { x.ipaddress = x.nic[0].ipaddress })
-      this.controlvms = this.resource.controlvms || []
-      this.controlvms.map(x => { x.ipaddress = x.nic[0].ipaddress })
-      this.desktopnetworks = []
-      this.iprange = []
-      if (!this.vm || !this.vm.id) {
-        return
+    async fetchData () {
+      if (!this.resource.id) return
+      const request = this.listRequestToken('fetchData')
+      try {
+        const [networks, ranges] = await Promise.all([
+          getAPI('listNetworks', { id: this.resource.networkid }),
+          getAPI('listDesktopClusterIpRanges', { listall: true, desktopclusterid: this.resource.id })
+        ])
+        if (!this.isListRequestCurrent('fetchData', request)) return
+        this.desktopvms = (this.resource.desktopvms || []).map(vm => ({ ...vm, ipaddress: vm.nic?.[0]?.ipaddress }))
+        this.controlvms = (this.resource.controlvms || []).map(vm => ({ ...vm, ipaddress: vm.nic?.[0]?.ipaddress }))
+        this.desktopnetworks = networks.listnetworksresponse.network || []
+        this.iprange = ranges.listdesktopclusteriprangesresponse.desktopclusteriprange || []
+      } catch (error) {
+        if (!this.isListRequestCurrent('fetchData', request)) return
+        request.failed = true
+        this.listRefreshFailed = true
+        if (!request.loaded) this.$notifyError(error)
       }
-      getAPI('listNetworks', { id: this.resource.networkid }).then(json => {
-        this.desktopnetworks = json.listnetworksresponse.network
-        if (this.desktopnetworks) {
-          this.desktopnetworks.sort((a, b) => { return a.deviceid - b.deviceid })
-        }
-        // this.$set(this.resource, 'desktopnetworks', this.desktopnetworks)
-      }).finally(() => {
-      })
-      getAPI('listDesktopClusterIpRanges', { listall: true, desktopclusterid: this.resource.id }).then(json => {
-        this.iprange = json.listdesktopclusteriprangesresponse.desktopclusteriprange
-        if (this.iprange) {
-          this.iprange.sort((a, b) => { return a.deviceid - b.deviceid })
-        }
-        // this.$set(this.resource, 'iprange', this.iprange)
-      })
     },
     removeIpRange (id) {
       getAPI('deleteDesktopClusterIpRanges', { id: id }).then(json => {

@@ -17,6 +17,7 @@
 
 <template>
   <a-spin :spinning="componentLoading">
+    <p v-if="listRefreshFailed" role="status">{{ $t('message.list.refresh.stale') }}</p>
     <a-button
       :disabled="!('createIpv4SubnetForZone' in $store.getters.apis)"
       type="primary"
@@ -263,12 +264,15 @@
 </template>
 
 <script>
+import { listRefreshMixin } from '@/utils/listRefreshMixin'
+
 import { ref, reactive, toRaw } from 'vue'
 import { getAPI, postAPI } from '@/api'
 import ResourceIcon from '@/components/view/ResourceIcon'
 import TooltipButton from '@/components/widgets/TooltipButton'
 
 export default {
+  mixins: [listRefreshMixin(['fetchZoneIpv4Subnet'])],
   name: 'Ipv4GuestSubnetsTab',
   components: {
     ResourceIcon,
@@ -386,19 +390,32 @@ export default {
       this.fetchZoneIpv4Subnet()
     },
     fetchZoneIpv4Subnet () {
-      this.componentLoading = true
-      getAPI('listIpv4SubnetsForZone', {
+      const listRequest = this.listRequestToken('fetchZoneIpv4Subnet')
+      this.componentLoading = !listRequest.loaded
+      return getAPI('listIpv4SubnetsForZone', {
         zoneid: this.resource.id,
         projectid: -1,
         showicon: true,
         page: this.ipv4SubnetPage,
         pagesize: this.ipv4SubnetPageSize
       }).then(response => {
+        if (!this.isListRequestCurrent('fetchZoneIpv4Subnet', listRequest)) return
+
         this.ipv4Subnets = response?.listipv4subnetsforzoneresponse?.zoneipv4subnet || []
         this.ipv4SubnetsTotal = response?.listipv4subnetsforzoneresponse?.count || 0
       }).catch(error => {
+        if (!this.isListRequestCurrent('fetchZoneIpv4Subnet', listRequest)) return
+        listRequest.failed = true
+        this.listRefreshFailed = true
+        if (listRequest.loaded) return
+
         this.$notifyError(error)
       }).finally(() => {
+        if (!this.isListRequestCurrent('fetchZoneIpv4Subnet', listRequest)) return
+
+        this.componentLoading = false
+      }).finally(() => {
+        if (!this.isListRequestCurrent('fetchZoneIpv4Subnet', listRequest)) return
         this.componentLoading = false
       })
     },

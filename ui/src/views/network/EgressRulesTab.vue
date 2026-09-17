@@ -17,6 +17,7 @@
 
 <template>
   <div>
+    <p v-if="listRefreshFailed" role="status">{{ $t('message.list.refresh.stale') }}</p>
     <div>
       <a-alert
         type="info">
@@ -174,6 +175,8 @@
 </template>
 
 <script>
+import { listRefreshMixin } from '@/utils/listRefreshMixin'
+
 import { getAPI, postAPI } from '@/api'
 import Status from '@/components/widgets/Status'
 import TooltipButton from '@/components/widgets/TooltipButton'
@@ -181,6 +184,7 @@ import BulkActionView from '@/components/view/BulkActionView'
 import eventBus from '@/config/eventBus'
 
 export default {
+  mixins: [listRefreshMixin(['fetchData'])],
   name: 'EgressRulesTab',
   components: {
     Status,
@@ -302,16 +306,29 @@ export default {
       }
     },
     fetchData () {
-      this.loading = true
-      getAPI('listEgressFirewallRules', {
+      const listRequest = this.listRequestToken('fetchData')
+      this.loading = !listRequest.loaded
+      return getAPI('listEgressFirewallRules', {
         listAll: true,
         networkid: this.resource.id,
         page: this.page,
         pageSize: this.pageSize
       }).then(response => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+
         this.egressRules = response.listegressfirewallrulesresponse.firewallrule || []
         this.totalCount = response.listegressfirewallrulesresponse.count || 0
       }).finally(() => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+
+        this.loading = false
+      }).catch(error => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+        listRequest.failed = true
+        this.listRefreshFailed = true
+        if (!listRequest.loaded) this.$notifyError(error)
+      }).finally(() => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
         this.loading = false
       })
     },

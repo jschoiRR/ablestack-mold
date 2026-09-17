@@ -36,10 +36,13 @@
 </template>
 
 <script>
+import { listRefreshMixin } from '@/utils/listRefreshMixin'
+
 import { getAPI } from '@/api'
 import Status from '@/components/widgets/Status'
 
 export default {
+  mixins: [listRefreshMixin(['fetchData'])],
   name: 'ManagementServerPeerTab',
   components: {
     Status
@@ -98,12 +101,19 @@ export default {
   },
   methods: {
     fetchData () {
-      this.managementservers = []
-      getAPI('listManagementServers', {
+      const listRequest = this.listRequestToken('fetchData')
+      return getAPI('listManagementServers', {
         peers: true,
         id: this.resource.id
       }).then(json => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+        this.managementservers = []
         this.managementservers = json.listmanagementserversresponse.managementserver?.[0]?.peers || []
+      }).catch(error => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+        listRequest.failed = true
+        this.listRefreshFailed = true
+        if (!listRequest.loaded) this.$notifyError(error)
       })
     }
   }

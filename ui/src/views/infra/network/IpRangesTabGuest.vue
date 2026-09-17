@@ -17,6 +17,7 @@
 
 <template>
   <a-spin :spinning="componentLoading">
+    <p v-if="listRefreshFailed" role="status">{{ $t('message.list.refresh.stale') }}</p>
     <a-button
       :disabled="!('createNetwork' in $store.getters.apis)"
       type="dashed"
@@ -142,6 +143,8 @@
 </template>
 
 <script>
+import { listRefreshMixin } from '@/utils/listRefreshMixin'
+
 import { ref, reactive, toRaw } from 'vue'
 import { getAPI, postAPI } from '@/api'
 import CreateNetwork from '@/views/network/CreateNetwork'
@@ -149,6 +152,7 @@ import ResourceIcon from '@/components/view/ResourceIcon'
 import TooltipButton from '@/components/widgets/TooltipButton'
 
 export default {
+  mixins: [listRefreshMixin(['fetchData'])],
   name: 'IpRangesTabGuest',
   components: {
     CreateNetwork,
@@ -242,37 +246,29 @@ export default {
         prefix: [{ required: true, message: this.$t('label.required') }]
       })
     },
-    fetchData () {
-      this.componentLoading = true
-      getAPI('listNetworks', {
-        zoneid: this.resource.zoneid,
-        physicalnetworkid: this.resource.id,
-        showicon: true,
-        page: this.page,
-        pagesize: this.pageSize
-      }).then(response => {
-        this.items = response?.listnetworksresponse?.network || []
-        this.total = response?.listnetworksresponse?.count || 0
-      }).catch(error => {
-        this.$notifyError(error)
-      }).finally(() => {
-        this.componentLoading = false
-      })
-      this.fetchIpv6PrefixData()
+    async fetchData () {
+      const request = this.listRequestToken('fetchData')
+      this.componentLoading = !request.loaded
+      try {
+        const [networks, prefixes] = await Promise.all([
+          getAPI('listNetworks', { zoneid: this.resource.zoneid, physicalnetworkid: this.resource.id, showicon: true, page: this.page, pagesize: this.pageSize }),
+          getAPI('listGuestNetworkIpv6Prefixes', { zoneid: this.resource.zoneid, page: this.page, pagesize: this.pageSize })
+        ])
+        if (!this.isListRequestCurrent('fetchData', request)) return
+        this.items = networks?.listnetworksresponse?.network || []
+        this.total = networks?.listnetworksresponse?.count || 0
+        this.ipv6Prefixes = prefixes?.listguestnetworkipv6prefixesresponse?.guestnetworkipv6prefix || []
+      } catch (error) {
+        if (!this.isListRequestCurrent('fetchData', request)) return
+        request.failed = true
+        this.listRefreshFailed = true
+        if (!request.loaded) this.$notifyError(error)
+      } finally {
+        if (this.isListRequestCurrent('fetchData', request)) this.componentLoading = false
+      }
     },
     fetchIpv6PrefixData () {
-      getAPI('listGuestNetworkIpv6Prefixes', {
-        zoneid: this.resource.zoneid,
-        page: this.page,
-        pagesize: this.pageSize
-      }).then(response => {
-        this.ipv6Prefixes = response?.listguestnetworkipv6prefixesresponse?.guestnetworkipv6prefix || []
-        this.total = response?.listguestnetworkipv6prefixesresponse?.count || 0
-      }).catch(error => {
-        console.log(error)
-        this.$notifyError(error)
-      }).finally(() => {
-      })
+      return this.fetchData()
     },
     handleOpenShowCreateForm () {
       this.showCreateForm = true

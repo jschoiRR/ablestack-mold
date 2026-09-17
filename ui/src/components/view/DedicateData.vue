@@ -54,10 +54,13 @@
 </template>
 
 <script>
+import { listRefreshMixin } from '@/utils/listRefreshMixin'
+
 import { getAPI, postAPI } from '@/api'
 import DedicateModal from './DedicateModal'
 
 export default {
+  mixins: [listRefreshMixin(['fetchDedicatedZones', 'fetchDedicatedPods', 'fetchDedicatedClusters', 'fetchDedicatedHosts'], { select: vm => ({ zone: ['fetchDedicatedZones'], pod: ['fetchDedicatedPods'], cluster: ['fetchDedicatedClusters'], host: ['fetchDedicatedHosts'] })[vm.$route.meta.name] || [] })],
   props: {
     resource: {
       type: Object,
@@ -125,50 +128,86 @@ export default {
       }
     },
     fetchDedicatedZones () {
-      getAPI('listDedicatedZones', {
+      const listRequest = this.listRequestToken('fetchDedicatedZones')
+      return getAPI('listDedicatedZones', {
         zoneid: this.resource.id
       }).then(response => {
+        if (!this.isListRequestCurrent('fetchDedicatedZones', listRequest)) return
+        this.dedicatedDomainId = null
+        this.dedicatedAccountId = null
         if (response?.listdedicatedzonesresponse?.dedicatedzone?.length > 0) {
           this.dedicatedDomainId = response.listdedicatedzonesresponse.dedicatedzone[0].domainid
           this.dedicatedAccountId = response.listdedicatedzonesresponse.dedicatedzone[0].accountid
         }
       }).catch(error => {
+        if (!this.isListRequestCurrent('fetchDedicatedZones', listRequest)) return
+        listRequest.failed = true
+        this.listRefreshFailed = true
+        if (listRequest.loaded) return
+
         this.$notifyError(error)
       })
     },
     fetchDedicatedPods () {
-      getAPI('listDedicatedPods', {
+      const listRequest = this.listRequestToken('fetchDedicatedPods')
+      return getAPI('listDedicatedPods', {
         podid: this.resource.id
       }).then(response => {
+        if (!this.isListRequestCurrent('fetchDedicatedPods', listRequest)) return
+        this.dedicatedDomainId = null
+        this.dedicatedAccountId = null
         if (response?.listdedicatedpodsresponse?.dedicatedpod?.length > 0) {
           this.dedicatedDomainId = response.listdedicatedpodsresponse.dedicatedpod[0].domainid
           this.dedicatedAccountId = response.listdedicatedpodsresponse.dedicatedpod[0].accountid
         }
       }).catch(error => {
+        if (!this.isListRequestCurrent('fetchDedicatedPods', listRequest)) return
+        listRequest.failed = true
+        this.listRefreshFailed = true
+        if (listRequest.loaded) return
+
         this.$notifyError(error)
       })
     },
     fetchDedicatedClusters () {
-      getAPI('listDedicatedClusters', {
+      const listRequest = this.listRequestToken('fetchDedicatedClusters')
+      return getAPI('listDedicatedClusters', {
         clusterid: this.resource.id
       }).then(response => {
+        if (!this.isListRequestCurrent('fetchDedicatedClusters', listRequest)) return
+        this.dedicatedDomainId = null
+        this.dedicatedAccountId = null
         if (response?.listdedicatedclustersresponse?.dedicatedcluster?.length > 0) {
           this.dedicatedDomainId = response.listdedicatedclustersresponse.dedicatedcluster[0].domainid
           this.dedicatedAccountId = response.listdedicatedclustersresponse.dedicatedcluster[0].accountid
         }
       }).catch(error => {
+        if (!this.isListRequestCurrent('fetchDedicatedClusters', listRequest)) return
+        listRequest.failed = true
+        this.listRefreshFailed = true
+        if (listRequest.loaded) return
+
         this.$notifyError(error)
       })
     },
     fetchDedicatedHosts () {
-      getAPI('listDedicatedHosts', {
+      const listRequest = this.listRequestToken('fetchDedicatedHosts')
+      return getAPI('listDedicatedHosts', {
         hostid: this.resource.id
       }).then(response => {
+        if (!this.isListRequestCurrent('fetchDedicatedHosts', listRequest)) return
+        this.dedicatedDomainId = null
+        this.dedicatedAccountId = null
         if (response?.listdedicatedhostsresponse?.dedicatedhost?.length > 0) {
           this.dedicatedDomainId = response.listdedicatedhostsresponse.dedicatedhost[0].domainid
           this.dedicatedAccountId = response.listdedicatedhostsresponse.dedicatedhost[0].accountid
         }
       }).catch(error => {
+        if (!this.isListRequestCurrent('fetchDedicatedHosts', listRequest)) return
+        listRequest.failed = true
+        this.listRefreshFailed = true
+        if (listRequest.loaded) return
+
         this.$notifyError(error)
       })
     },

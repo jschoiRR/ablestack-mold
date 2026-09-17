@@ -17,6 +17,7 @@
 
 <template>
   <div>
+    <p v-if="listRefreshFailed" role="status">{{ $t('message.list.refresh.stale') }}</p>
     <a-spin :spinning="fetchLoading">
       <a-button
         shape="round"
@@ -133,12 +134,15 @@
   </div>
 </template>
 <script>
+import { listRefreshMixin } from '@/utils/listRefreshMixin'
+
 import { getAPI, postAPI } from '@/api'
 import CreateVlanIpRange from '@/views/network/CreateVlanIpRange'
 import TooltipButton from '@/components/widgets/TooltipButton'
 import { reactive, ref, toRaw } from 'vue'
 
 export default {
+  mixins: [listRefreshMixin(['fetchData'])],
   name: 'GuestIpRanges',
   components: {
     CreateVlanIpRange,
@@ -212,17 +216,30 @@ export default {
   },
   methods: {
     fetchData () {
+      const listRequest = this.listRequestToken('fetchData')
       const params = {
         zoneid: this.resource.zoneid,
         networkid: this.resource.id,
         page: this.page,
         pagesize: this.pageSize
       }
-      this.fetchLoading = true
-      getAPI('listVlanIpRanges', params).then(json => {
+      this.fetchLoading = !listRequest.loaded
+      return getAPI('listVlanIpRanges', params).then(json => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+
         this.total = json.listvlaniprangesresponse.count || 0
         this.ipranges = json.listvlaniprangesresponse.vlaniprange || []
       }).finally(() => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+
+        this.fetchLoading = false
+      }).catch(error => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+        listRequest.failed = true
+        this.listRefreshFailed = true
+        if (!listRequest.loaded) this.$notifyError(error)
+      }).finally(() => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
         this.fetchLoading = false
       })
     },

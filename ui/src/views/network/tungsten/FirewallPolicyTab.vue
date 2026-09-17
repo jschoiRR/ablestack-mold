@@ -17,6 +17,7 @@
 
 <template>
   <div>
+    <p v-if="listRefreshFailed" role="status">{{ $t('message.list.refresh.stale') }}</p>
     <a-spin :spinning="loading">
       <a-button
         :disabled="!('createTungstenFabricFirewallPolicy' in $store.getters.apis)"
@@ -117,12 +118,15 @@
 </template>
 
 <script>
+import { listRefreshMixin } from '@/utils/listRefreshMixin'
+
 import { ref, reactive, toRaw } from 'vue'
 import { getAPI, postAPI } from '@/api'
 import TooltipLabel from '@/components/widgets/TooltipLabel'
 import TooltipButton from '@/components/widgets/TooltipButton'
 
 export default {
+  mixins: [listRefreshMixin(['fetchData'])],
   name: 'FirewallPolicyTab',
   components: {
     TooltipLabel,
@@ -186,24 +190,37 @@ export default {
       })
     },
     fetchData () {
+      const listRequest = this.listRequestToken('fetchData')
       if (!this.resource.uuid || !('zoneid' in this.$route.query)) {
         return
       }
       this.zoneId = this.$route.query.zoneid
-      this.fetchLoading = true
-      this.dataSource = []
-      this.totalCount = 0
-      getAPI('listTungstenFabricFirewallPolicy', {
+      this.fetchLoading = !listRequest.loaded
+
+      return getAPI('listTungstenFabricFirewallPolicy', {
         zoneid: this.zoneId,
         applicationpolicysetuuid: this.resource.uuid,
         page: this.page,
         pagesize: this.pageSize
       }).then(json => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+        this.dataSource = []
+        this.totalCount = 0
         this.dataSource = json?.listtungstenfabricfirewallpolicyresponse?.firewallpolicy || []
         this.totalCount = json?.listtungstenfabricfirewallpolicyresponse?.count || 0
       }).catch(error => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+        listRequest.failed = true
+        this.listRefreshFailed = true
+        if (listRequest.loaded) return
+
         this.$notifyError(error)
       }).finally(() => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+
+        this.fetchLoading = false
+      }).finally(() => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
         this.fetchLoading = false
       })
     },

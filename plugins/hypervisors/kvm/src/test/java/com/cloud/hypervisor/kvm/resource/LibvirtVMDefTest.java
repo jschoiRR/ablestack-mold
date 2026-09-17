@@ -623,7 +623,20 @@ public class LibvirtVMDefTest extends TestCase {
         assertEquals(LibvirtVMDef.TpmDef.TpmModel.TIS, tpmDef.getModel());
         assertEquals(LibvirtVMDef.TpmDef.TpmVersion.V2_0, tpmDef.getVersion());
         assertEquals("<tpm model='tpm-tis'>\n" +
-                "<backend type='emulator' version='2.0'/>\n" +
+                "<backend type='emulator' version='2.0' persistent_state='yes'/>\n" +
                 "</tpm>\n", tpmDef.toString());
+    }
+
+    @Test
+    public void testInstallationIsoBootOrderDoesNotMakeDriverBootable() {
+        DiskDef installation = new DiskDef();
+        installation.defISODisk("/install.iso", 3, DiskDef.DiskType.FILE);
+        installation.setBootOrder(1);
+        DiskDef driver = new DiskDef();
+        driver.defISODisk("/virtio.iso", 4, DiskDef.DiskType.FILE);
+        assertTrue(installation.toString().contains("<boot order='1'/>"));
+        assertFalse(driver.toString().contains("<boot "));
+        assertTrue(installation.toString().contains("hdc"));
+        assertTrue(driver.toString().contains("hdd"));
     }
 }

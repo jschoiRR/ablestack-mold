@@ -36,10 +36,13 @@
 </template>
 
 <script>
+import { listRefreshMixin } from '@/utils/listRefreshMixin'
+
 import { getAPI } from '@/api'
 import Status from '@/components/widgets/Status'
 
 export default {
+  mixins: [listRefreshMixin(['fetchData'])],
   name: 'AsyncJobsTab',
   components: {
     Status
@@ -90,13 +93,20 @@ export default {
   },
   methods: {
     fetchData () {
-      this.jobs = []
-      getAPI('listAsyncJobs', {
+      const listRequest = this.listRequestToken('fetchData')
+      return getAPI('listAsyncJobs', {
         listall: true,
         isrecursive: true,
         managementserverid: this.resource.id
       }).then(json => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+        this.jobs = []
         this.jobs = json.listasyncjobsresponse.asyncjobs || []
+      }).catch(error => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+        listRequest.failed = true
+        this.listRefreshFailed = true
+        if (!listRequest.loaded) this.$notifyError(error)
       })
     }
   }

@@ -58,6 +58,9 @@ import org.apache.cloudstack.ha.provider.ActivityCheckerInterface;
 import org.apache.cloudstack.ha.provider.HACheckerException;
 import org.apache.cloudstack.ha.provider.HealthCheckerInterface;
 import org.apache.cloudstack.storage.datastore.db.PrimaryDataStoreDao;
+import org.apache.cloudstack.outofbandmanagement.dao.OutOfBandManagementDao;
+import org.apache.cloudstack.outofbandmanagement.OutOfBandManagement;
+import org.apache.cloudstack.outofbandmanagement.OutOfBandManagement.PowerState;
 import org.apache.commons.lang.ArrayUtils;
 
 import javax.inject.Inject;
@@ -86,6 +89,9 @@ public class KVMHostActivityChecker extends AdapterBase implements ActivityCheck
     @Inject
     private ResourceManager resourceManager;
 
+    @Inject
+    private OutOfBandManagementDao outOfBandManagementDao;
+
     @Override
     public boolean isActive(Host r, DateTime suspectTime) throws HACheckerException {
         try {
@@ -102,82 +108,106 @@ public class KVMHostActivityChecker extends AdapterBase implements ActivityCheck
 
     @Override
     public boolean isHealthy(Host r) {
-        return isAgentActive(r);
+        return isHostAgentUp(r);
     }
 
-    private boolean isAgentActive(Host agent) {
-        if (agent.getHypervisorType() != Hypervisor.HypervisorType.KVM && agent.getHypervisorType() != Hypervisor.HypervisorType.LXC) {
-            throw new IllegalStateException(String.format("Calling KVM investigator for non KVM Host of type [%s].", agent.getHypervisorType()));
+    private boolean isHostAgentUp(Host host) {
+        if (host.getHypervisorType() != Hypervisor.HypervisorType.KVM && host.getHypervisorType() != Hypervisor.HypervisorType.LXC) {
+            throw new IllegalStateException(String.format("Calling KVM investigator for non KVM Host of type [%s].", host.getHypervisorType()));
         }
-        final long deadline = System.nanoTime() + TimeUnit.SECONDS.toNanos(KVMHAConfig.KvmHAHealthCheckTimeout.valueIn(agent.getClusterId()));
-        Status hostStatus = Status.Unknown;
-        Status neighbourStatus = Status.Unknown;
-        CheckOnHostCommand cmd = null;
 
-        List<Volume> volume_list = new ArrayList<>();
+        Status hostStatus = getHostAgentStatus(host);
+
+        logger.debug("{} has the status [{}].", host.toString(), hostStatus);
+        return hostStatus == Status.Up;
+    }
+
+    public Status getHostAgentStatus(Host host) {
+        if (host.getHypervisorType() != Hypervisor.HypervisorType.KVM && host.getHypervisorType() != Hypervisor.HypervisorType.LXC) {
+            return null;
+        }
+
+        final long deadline = System.nanoTime() + TimeUnit.SECONDS.toNanos(KVMHAConfig.KvmHAHealthCheckTimeout.valueIn(host.getClusterId()));
+        Status hostStatusFromItself = checkHostStatusWithSameHost(host, deadline);
+        if (hostStatusFromItself == Status.Up) {
+            return Status.Up;
+        }
+
+        Status hostStatusFromNeighbour = checkHostStatusWithNeighbourHosts(host, deadline);
+        logger.debug("{} status reported from itself: {} and neighbor: {}", host.toString(), hostStatusFromItself, hostStatusFromNeighbour);
+        Status hostStatus = hostStatusFromItself;
+        if (hostStatusFromNeighbour == Status.Up && (hostStatusFromItself == Status.Disconnected || hostStatusFromItself == Status.Down)) {
+            hostStatus = Status.Disconnected;
+        }
+        if (hostStatusFromNeighbour == Status.Down && (hostStatusFromItself == Status.Disconnected || hostStatusFromItself == Status.Down)) {
+            hostStatus = Status.Down;
+        }
+
+        final OutOfBandManagement oobm = outOfBandManagementDao.findByHost(host.getId());
+        if (oobm != null && oobm.getPowerState() == PowerState.Off
+                && hostStatus == Status.Disconnected && hostStatusFromNeighbour == Status.Up) {
+            hostStatus = Status.Down;
+        }
+        logger.debug("HA: HOST is ineligible legacy state {} for host {}", hostStatus, host);
+        return hostStatus;
+    }
+
+    private Status checkHostStatusWithSameHost(Host host, long deadline) {
+        Status hostStatus;
+        boolean reportFailureIfOneStorageIsDown = HighAvailabilityManager.KvmHAFenceHostIfHeartbeatFailsOnStorage.value();
+        final CheckOnHostCommand cmd = createHostCheckCommand(host, reportFailureIfOneStorageIsDown);
         try {
-            HashMap<StoragePool, List<Volume>> poolVolMap = getVolumeUuidOnHost(agent);
-            for (StoragePool pool : poolVolMap.keySet()) {
-                if (pool != null && pool.getPoolType() == StoragePoolType.RBD) {
-                    volume_list.addAll(poolVolMap.get(pool));
-                }
-            }
-            if (!volume_list.isEmpty()) {
-                cmd = new CheckOnHostCommand(agent, HighAvailabilityManager.KvmHAFenceHostIfHeartbeatFailsOnStorage.value(), volume_list);
-            } else {
-                cmd = new CheckOnHostCommand(agent, HighAvailabilityManager.KvmHAFenceHostIfHeartbeatFailsOnStorage.value());
-            }
-            logger.debug(String.format("Checking %s status...", agent.toString()));
-            Answer answer = sendHealthCheck(agent.getId(), cmd, deadline);
+            logger.debug("Checking {} status...", host.toString());
+            Answer answer = sendHealthCheck(host.getId(), cmd, deadline);
             if (answer != null) {
-                hostStatus = healthStatus(answer);
-                logger.debug(String.format("%s has the status [%s].", agent.toString(), hostStatus));
-
-                if ( hostStatus == Status.Up ){
-                    return true;
-                }
-            }
-            else {
-                logger.debug(String.format("Setting %s to \"Disconnected\" status.", agent.toString()));
+                hostStatus = getDeterminedHostStatus(answer);
+                logger.debug("{} has the status [{}].", host.toString(), hostStatus);
+            } else {
+                logger.debug("Setting {} to \"Disconnected\" status.", host.toString());
                 hostStatus = Status.Disconnected;
             }
         } catch (Exception e) {
-            logger.warn(String.format("Failed to send command CheckOnHostCommand to %s.", agent.toString()), e);
+            logger.warn("Failed to send command CheckOnHostCommand to {}.", host.toString(), e);
+            hostStatus = Status.Disconnected;
         }
 
-        List<HostVO> neighbors = resourceManager.listHostsInClusterByStatus(agent.getClusterId(), Status.Up);
+        return hostStatus;
+    }
+
+    private Status checkHostStatusWithNeighbourHosts(Host host, long deadline) {
+        Status hostStatusFromNeighbour = Status.Unknown;
+        boolean reportFailureIfOneStorageIsDown = HighAvailabilityManager.KvmHAFenceHostIfHeartbeatFailsOnStorage.value();
+        final CheckOnHostCommand cmd = createHostCheckCommand(host, reportFailureIfOneStorageIsDown);
+        List<HostVO> neighbors = resourceManager.listHostsInClusterByStatus(host.getClusterId(), Status.Up);
         for (HostVO neighbor : neighbors) {
             if (Thread.currentThread().isInterrupted() || System.nanoTime() >= deadline) {
-                return false;
+                break;
             }
-            if (neighbor.getId() == agent.getId() || (neighbor.getHypervisorType() != Hypervisor.HypervisorType.KVM && neighbor.getHypervisorType() != Hypervisor.HypervisorType.LXC)) {
+            if (neighbor.getId() == host.getId()
+                    || (neighbor.getHypervisorType() != Hypervisor.HypervisorType.KVM && neighbor.getHypervisorType() != Hypervisor.HypervisorType.LXC)) {
                 continue;
             }
 
-            cmd = new CheckOnHostCommand(agent, HighAvailabilityManager.KvmHAFenceHostIfHeartbeatFailsOnStorage.value());
             try {
-                logger.debug(String.format("Investigating %s via neighbouring %s.", agent.toString(), neighbor.toString()));
-
+                logger.debug("Investigating {} via neighboring {}.", host.toString(), neighbor.toString());
                 Answer answer = sendHealthCheck(neighbor.getId(), cmd, deadline);
                 if (answer != null) {
-                    neighbourStatus = healthStatus(answer);
-
-                    logger.debug(String.format("Neighbouring %s returned status [%s] for the investigated %s.", neighbor.toString(), neighbourStatus, agent.toString()));
-
-                    if (neighbourStatus == Status.Up) {
-                        break;
+                    Status reportedStatus = getDeterminedHostStatus(answer);
+                    if (reportedStatus == Status.Up) {
+                        return reportedStatus;
+                    }
+                    if (reportedStatus == Status.Down) {
+                        hostStatusFromNeighbour = reportedStatus;
                     }
                 } else {
-                    logger.debug(String.format("Neighbouring %s is Disconnected.", neighbor.toString()));
+                    logger.debug("Neighboring {} is Disconnected.", neighbor.toString());
                 }
             } catch (Exception e) {
-                logger.warn(String.format("Failed to send command CheckOnHostCommand to %s.", neighbor.toString()), e);
+                logger.warn("Failed to send command CheckOnHostCommand to neighbor {}.", neighbor.toString(), e);
             }
         }
 
-        logger.debug(String.format("%s has the status [%s].", agent.toString(), hostStatus));
-
-        return hostStatus == Status.Up;
+        return hostStatusFromNeighbour;
     }
 
     protected Status healthStatus(Answer answer) {
@@ -409,6 +439,24 @@ public class KVMHostActivityChecker extends AdapterBase implements ActivityCheck
             neighbors.add(host.getId());
         }
         return ArrayUtils.toPrimitive(neighbors.toArray(new Long[neighbors.size()]));
+    }
+
+    protected Status getDeterminedHostStatus(Answer answer) {
+        // Older KVM agents use an inverted result flag; transport errors remain undetermined.
+        Status status = healthStatus(answer);
+        return status == Status.Unknown ? Status.Disconnected : status;
+    }
+
+    protected CheckOnHostCommand createHostCheckCommand(Host host, boolean reportFailureIfOneStorageIsDown) {
+        List<Volume> rbdVolumes = new ArrayList<>();
+        HashMap<StoragePool, List<Volume>> pools = getVolumeUuidOnHost(host);
+        for (StoragePool pool : pools.keySet()) {
+            if (pool != null && pool.getPoolType() == StoragePoolType.RBD && isStoragePoolHeartbeatEnabled(pool)) {
+                rbdVolumes.addAll(pools.get(pool));
+            }
+        }
+        return rbdVolumes.isEmpty() ? new CheckOnHostCommand(host, reportFailureIfOneStorageIsDown)
+                : new CheckOnHostCommand(host, reportFailureIfOneStorageIsDown, rbdVolumes);
     }
 
     public void deleteACfileToFencedHost(Host agent) throws HACheckerException, StorageUnavailableException {

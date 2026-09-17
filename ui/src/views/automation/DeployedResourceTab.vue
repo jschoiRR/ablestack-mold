@@ -144,6 +144,9 @@ export default {
   mounted () {
     this.setCurrentTab()
   },
+  watch: {
+    resource: { deep: true, handler () { this.fetchData() } }
+  },
   methods: {
     setCurrentTab () {
       this.currentTab = this.$route.query.tab ? this.$route.query.tab : 'details'

@@ -17,6 +17,7 @@
 
 <template>
   <a-spin :spinning="componentLoading">
+    <p v-if="listRefreshFailed" role="status">{{ $t('message.list.refresh.stale') }}</p>
     <div class="form" v-ctrl-enter="handleAdd">
       <div class="form__label">
         <a-input v-model:value="newRoute" :placeholder="$t('label.cidr.destination.network')" v-focus="true"></a-input>
@@ -102,12 +103,15 @@
 </template>
 
 <script>
+import { listRefreshMixin } from '@/utils/listRefreshMixin'
+
 import { ref, reactive, toRaw } from 'vue'
 import { getAPI, postAPI } from '@/api'
 import TooltipButton from '@/components/widgets/TooltipButton'
 import TooltipLabel from '@/components/widgets/TooltipLabel.vue'
 
 export default {
+  mixins: [listRefreshMixin(['fetchData'])],
   name: 'StaticRoutesTab',
   components: {
     TooltipLabel,
@@ -177,7 +181,8 @@ export default {
       })
     },
     fetchData () {
-      this.componentLoading = true
+      const listRequest = this.listRequestToken('fetchData')
+      this.componentLoading = !listRequest.loaded
       var params = {
         listAll: true
       }
@@ -186,11 +191,23 @@ export default {
       } else {
         params.gatewayid = this.resource.id
       }
-      getAPI('listStaticRoutes', params).then(json => {
+      return getAPI('listStaticRoutes', params).then(json => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+
         this.routes = json.liststaticroutesresponse.staticroute
       }).catch(error => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+        listRequest.failed = true
+        this.listRefreshFailed = true
+        if (listRequest.loaded) return
+
         this.$notifyError(error)
       }).finally(() => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+
+        this.componentLoading = false
+      }).finally(() => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
         this.componentLoading = false
       })
     },

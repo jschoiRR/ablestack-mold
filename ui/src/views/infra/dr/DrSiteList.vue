@@ -18,6 +18,7 @@
 -->
 <template>
   <div class="cross-dr-page cross-dr-standard-page">
+    <p v-if="listRefreshFailed" role="status">{{ $t('message.list.refresh.stale') }}</p>
     <a-affix
       :key="'affix-' + showSearchFilters"
       :offsetTop="this.$store.getters.maintenanceInitiated || this.$store.getters.shutdownTriggered ? 103 : 78">
@@ -427,6 +428,7 @@
 </template>
 
 <script>
+import { listRefreshMixin } from '@/utils/listRefreshMixin'
 import { notification } from 'ant-design-vue'
 import ActionButton from '@/components/view/ActionButton'
 import Breadcrumb from '@/components/widgets/Breadcrumb'
@@ -462,7 +464,7 @@ export default {
     Status,
     TooltipLabel
   },
-  mixins: [mixinDevice],
+  mixins: [mixinDevice, listRefreshMixin(['fetchList', 'refreshSiteDetail'], { select: vm => [vm.detailId ? 'refreshSiteDetail' : 'fetchList'] })],
   data () {
     return {
       loading: false,
@@ -804,12 +806,43 @@ export default {
       }
     },
     fetchList () {
-      this.loading = true
-      listDrSites().then(result => {
+      const listRequest = this.listRequestToken('fetchList')
+      this.loading = !listRequest.loaded
+      return listDrSites().then(result => {
+        if (!this.isListRequestCurrent('fetchList', listRequest)) return
         this.sites = result.items || []
+      }).catch(error => {
+        if (!this.isListRequestCurrent('fetchList', listRequest)) return
+        listRequest.failed = true
+        this.listRefreshFailed = true
+        if (!listRequest.loaded) this.$notifyError(error)
       }).finally(() => {
+        if (!this.isListRequestCurrent('fetchList', listRequest)) return
         this.loading = false
       })
+    },
+    async refreshSiteDetail () {
+      if (!this.detailId) return
+      const request = this.listRequestToken('refreshSiteDetail')
+      try {
+        const [site, plans, health] = await Promise.all([
+          getDrSite(this.detailId),
+          'listDrPlans' in this.$store.getters.apis ? listDrPlans() : Promise.resolve({ items: [] }),
+          this.activeTab === 'healthChecks' && 'listDrSiteHealthChecks' in this.$store.getters.apis
+            ? listDrSiteHealthChecks({ id: this.detailId, page: 1, pagesize: 50 }) : Promise.resolve(null)
+        ])
+        if (!this.isListRequestCurrent('refreshSiteDetail', request)) return
+        this.detailSite = site || {}
+        this.plans = plans.items || []
+        if (health) {
+          this.healthChecks = health.items || []
+          this.healthCheckCount = health.count || 0
+        }
+      } catch (error) {
+        if (!this.isListRequestCurrent('refreshSiteDetail', request)) return
+        request.failed = true
+        this.listRefreshFailed = true
+      }
     },
     fetchDetail () {
       if (!this.detailId) {

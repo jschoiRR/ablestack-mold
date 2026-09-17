@@ -17,6 +17,7 @@
 
 <template>
   <div>
+    <p v-if="listRefreshFailed" role="status">{{ $t('message.list.refresh.stale') }}</p>
     <a-button
       v-if="((deleteApi in $store.getters.apis) && this.selectedRowKeys.length > 0)"
       type="primary"
@@ -233,6 +234,8 @@
 </template>
 
 <script>
+import { listRefreshMixin } from '@/utils/listRefreshMixin'
+
 import { ref, reactive, toRaw } from 'vue'
 import { getAPI, postAPI } from '@/api'
 import { isAdmin } from '@/role'
@@ -245,6 +248,7 @@ import Status from '@/components/widgets/Status'
 import eventBus from '@/config/eventBus'
 
 export default {
+  mixins: [listRefreshMixin(['fetchData'])],
   name: 'SnapshotZones',
   components: {
     TooltipButton,
@@ -356,6 +360,7 @@ export default {
       })
     },
     fetchData () {
+      const listRequest = this.listRequestToken('fetchData')
       const params = {}
       params.id = this.resource.id
       params.showunique = false
@@ -363,21 +368,31 @@ export default {
       params.page = this.page
       params.pagesize = this.pageSize
 
-      this.dataSource = []
-      this.itemCount = 0
-      this.fetchLoading = true
-      getAPI('listSnapshots', params).then(json => {
+      this.fetchLoading = !listRequest.loaded
+      if (!listRequest.loaded) {
+        this.fetchZoneData()
+      }
+      return getAPI('listSnapshots', params).then(json => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+        this.dataSource = []
+        this.itemCount = 0
         this.dataSource = json.listsnapshotsresponse.snapshot || []
         this.itemCount = json.listsnapshotsresponse.count || 0
         if (this.itemCount > 0) {
           this.dataSource = this.dataSource.filter((obj, index) => this.dataSource.findIndex((item) => item.zoneid === obj.zoneid) === index)
         }
       }).catch(error => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+        listRequest.failed = true
+        this.listRefreshFailed = true
+        if (listRequest.loaded) return
+
         this.$notifyError(error)
       }).finally(() => {
+        if (!this.isListRequestCurrent('fetchData', listRequest)) return
+
         this.fetchLoading = false
       })
-      this.fetchZoneData()
     },
     fetchZoneIcon (zoneid) {
       const zoneItem = this.zones.filter(zone => zone.id === zoneid)

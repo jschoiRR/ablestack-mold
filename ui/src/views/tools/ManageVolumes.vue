@@ -458,6 +458,7 @@
 </template>
 
 <script>
+import { listRefreshMixin } from '@/utils/listRefreshMixin'
 import { ref, reactive, toRaw } from 'vue'
 import { getAPI, postAPI } from '@/api'
 import _ from 'lodash'
@@ -469,6 +470,7 @@ import TooltipLabel from '@/components/widgets/TooltipLabel.vue'
 import InfiniteScrollSelect from '@/components/widgets/InfiniteScrollSelect.vue'
 
 export default {
+  mixins: [listRefreshMixin(['fetchUnmanagedVolumes', 'fetchManagedVolumes'], { active: vm => !!vm.poolId })],
   components: {
     TooltipLabel,
     Breadcrumb,
@@ -1052,20 +1054,23 @@ export default {
       params.page = this.page.unmanaged
       this.pageSize.unmanaged = pageSize || this.pageSize.unmanaged
       params.pagesize = this.pageSize.unmanaged
-      this.unmanagedVolumes = []
-      this.unmanagedVolumesSelectedRowKeys = []
       if (this.searchParams.unmanaged.keyword) {
         params.keyword = this.searchParams.unmanaged.keyword
       }
       if (!this.poolId) {
         return
       }
-      this.unmanagedVolumesLoading = true
+      const listRequest = this.listRequestToken('fetchUnmanagedVolumes')
+      this.unmanagedVolumesLoading = !listRequest.loaded
       this.searchParams.unmanaged = params
 
       const apiName = this.listVolumesApi.unmanaged
 
-      getAPI(apiName, params).then(json => {
+      listRequest.key = this.listRefreshScope()
+      return getAPI(apiName, params).then(json => {
+        if (!this.isListRequestCurrent('fetchUnmanagedVolumes', listRequest)) return
+        const selectedIds = new Set(this.unmanagedVolumesSelectedRowKeys.map(index => this.unmanagedVolumes[index]).filter(Boolean).map(row => row.id || row.path))
+        this.unmanagedVolumes = []
         const response = json.listvolumesforimportresponse
         const listUnmanagedVolumes = response.volumeforimport
         if (this.arrayHasItems(listUnmanagedVolumes)) {
@@ -1075,8 +1080,15 @@ export default {
             }
           }
         }
+        this.unmanagedVolumesSelectedRowKeys = this.unmanagedVolumes.map((row, index) => selectedIds.has(row.id || row.path) ? index : -1).filter(index => index >= 0)
         this.itemCount.unmanaged = response.count
+      }).catch(error => {
+        if (!this.isListRequestCurrent('fetchUnmanagedVolumes', listRequest)) return
+        listRequest.failed = true
+        this.listRefreshFailed = true
+        if (!listRequest.loaded) this.$notifyError(error)
       }).finally(() => {
+        if (!this.isListRequestCurrent('fetchUnmanagedVolumes', listRequest)) return
         this.unmanagedVolumesLoading = false
       })
     },
@@ -1096,24 +1108,34 @@ export default {
       params.page = this.page.managed
       this.pageSize.managed = pageSize || this.pageSize.managed
       params.pagesize = this.pageSize.managed
-      this.managedVolumes = []
-      this.managedVolumesSelectedRowKeys = []
       if (this.searchParams.managed.keyword) {
         params.keyword = this.searchParams.managed.keyword
       }
       if (!this.poolId) {
         return
       }
-      this.managedVolumesLoading = true
+      const listRequest = this.listRequestToken('fetchManagedVolumes')
+      this.managedVolumesLoading = !listRequest.loaded
       this.searchParams.managed = params
-      getAPI(this.listVolumesApi.managed, params).then(json => {
+      listRequest.key = this.listRefreshScope()
+      return getAPI(this.listVolumesApi.managed, params).then(json => {
+        if (!this.isListRequestCurrent('fetchManagedVolumes', listRequest)) return
+        const selectedIds = new Set(this.managedVolumesSelectedRowKeys.map(index => this.managedVolumes[index]).filter(Boolean).map(row => row.id || row.path))
+        this.managedVolumes = []
         const response = json.listvolumesresponse
         const listManagedVolumes = response.volume
         if (this.arrayHasItems(listManagedVolumes)) {
           this.managedVolumes = this.managedVolumes.concat(listManagedVolumes)
         }
+        this.managedVolumesSelectedRowKeys = this.managedVolumes.map((row, index) => selectedIds.has(row.id || row.path) ? index : -1).filter(index => index >= 0)
         this.itemCount.managed = response.count
+      }).catch(error => {
+        if (!this.isListRequestCurrent('fetchManagedVolumes', listRequest)) return
+        listRequest.failed = true
+        this.listRefreshFailed = true
+        if (!listRequest.loaded) this.$notifyError(error)
       }).finally(() => {
+        if (!this.isListRequestCurrent('fetchManagedVolumes', listRequest)) return
         this.managedVolumesLoading = false
       })
     },

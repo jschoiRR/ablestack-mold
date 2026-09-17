@@ -124,7 +124,7 @@
 
             <a-divider/>
 
-            <div class="resource-detail-item" v-if="(resource.state || resource.status) && $route.meta.name !== 'zone'">
+            <div class="resource-detail-item" v-if="(resource.state || resource.status) && !['zone', 'keypair'].includes($route.meta.name)">
           <div class="resource-detail-item__label">{{ $t('label.status') }}</div>
           <div class="resource-detail-item__details">
             <status v-if="isFastCloneSourceFlattenActive(resource)" class="status" :text="resource.state || resource.status" displayText>
@@ -141,55 +141,28 @@
         <div class="resource-detail-item" v-if="isFastCloneFlattenActive(resource)">
           <div class="resource-detail-item__label">{{ $t('label.sharedmountpoint.clone.flatten.status') }}</div>
           <div class="resource-detail-item__details resource-detail-item__details--column">
-            <a-tooltip v-if="isFastCloneFlattenVisible(resource)" placement="topLeft">
-              <template #title>
-                <div class="clone-fast-flatten-tooltip">
-                  <div
-                    v-for="item in getCloneFastFlattenTooltipItems(resource)"
-                    :key="item.label"
-                    class="clone-fast-flatten-tooltip-row">
-                    <span class="clone-fast-flatten-tooltip-label">{{ item.label }} :</span>
-                    <span class="clone-fast-flatten-tooltip-value">{{ item.value }}</span>
-                  </div>
-                </div>
-              </template>
-              <div class="clone-fast-flatten-tooltip-area">
-                <div class="clone-fast-flatten-status-row">
-                  <a-tag :color="getCloneFastStatusTagColor(resource)" class="clone-fast-flatten-status">
-                    {{ getCloneFastStatusLabel(resource) }}
-                  </a-tag>
-                </div>
-                <div
-                  v-if="hasCloneFastFlattenProgress(resource)"
-                  class="clone-fast-flatten-progress-row">
-                  <a-progress
-                    class="progress-bar clone-fast-flatten-progress"
-                    size="small"
-                    :show-info="false"
-                    :status="getCloneFastStatus(resource) === 'running' ? 'active' : 'normal'"
-                    :percent="getCloneFastFlattenProgress(resource)" />
-                  <span
-                    class="clone-fast-flatten-percent">
-                    {{ formatCloneFastFlattenProgress(resource) }}
-                  </span>
-                </div>
-              </div>
-            </a-tooltip>
-            <a-tooltip v-else-if="isFastCloneSourceFlattenActive(resource)" placement="topLeft">
-              <template #title>
-                <div class="clone-fast-flatten-source-tooltip">
-                  <div class="clone-fast-flatten-source-tooltip-title">{{ getCloneFastSourceTooltipTitle(resource) }}</div>
-                  <div class="clone-fast-flatten-source-tooltip-description">{{ getCloneFastSourceTooltipDescription(resource) }}</div>
-                </div>
-              </template>
-              <div class="clone-fast-flatten-source-status-area">
-                <a-tag :color="getCloneFastStatusTagColor(resource)" class="clone-fast-flatten-status">
-                  {{ getCloneFastStatusLabel(resource) }}
-                </a-tag>
-              </div>
-            </a-tooltip>
+            <div class="clone-fast-flatten-status-row">
+              <clone-flatten-control :record="resource" show-status-label />
+            </div>
+            <div v-if="isFastCloneFlattenVisible(resource) && hasCloneFastFlattenProgress(resource)" class="clone-fast-flatten-progress-row">
+              <a-progress
+                class="progress-bar clone-fast-flatten-progress"
+                size="small"
+                :show-info="false"
+                :status="getCloneFastStatus(resource) === 'running' ? 'active' : 'normal'"
+                :percent="getCloneFastFlattenProgress(resource)" />
+              <span class="clone-fast-flatten-percent">
+                {{ formatCloneFastFlattenProgress(resource) }}
+              </span>
+            </div>
           </div>
         </div>
+            <div class="resource-detail-item" v-if="resource.apikeyaccess && $route.meta.name === 'accountuser'">
+              <div class="resource-detail-item__label">{{ $t('label.apikeyaccess') }}</div>
+              <div class="resource-detail-item__details">
+                <status class="status" :text="resource.apikeyaccess" displayText/>
+              </div>
+            </div>
         <div class="resource-detail-item" v-if="resource.allocationstate">
           <div class="resource-detail-item__label">{{ $t('label.allocationstate') }}</div>
           <div class="resource-detail-item__details">
@@ -268,6 +241,42 @@
             <span style="margin-left: 10px;"><copy-label :label="resource.id" /></span>
           </div>
         </div>
+            <div class="resource-detail-item" v-if="resource.apikey && resource.secretkey">
+              <div class="user-keys">
+                <key-outlined />
+                <strong>
+                  {{ $t('label.apikey') }}
+                  <tooltip-button
+                    tooltipPlacement="right"
+                    :tooltip="$t('label.copy') + ' ' + $t('label.apikey')"
+                    icon="CopyOutlined"
+                    type="dashed"
+                    size="small"
+                    @onClick="$message.success($t('label.copied.clipboard'))"
+                    :copyResource="resource.apikey" />
+                </strong>
+                <div>
+                  {{ resource.apikey.substring(0, 20) }}...
+                </div>
+              </div> <br/>
+              <div class="user-keys">
+                <lock-outlined />
+                <strong>
+                  {{ $t('label.secretkey') }}
+                  <tooltip-button
+                    tooltipPlacement="right"
+                    :tooltip="$t('label.copy') + ' ' + $t('label.secretkey')"
+                    icon="CopyOutlined"
+                    type="dashed"
+                    size="small"
+                    @onClick="$message.success($t('label.copied.clipboard'))"
+                    :copyResource="resource.secretkey" />
+                </strong>
+                <div>
+                  {{ resource.secretkey.substring(0, 20) }}...
+                </div>
+              </div>
+            </div>
         <div class="resource-detail-item" v-if="resource.ostypename && resource.ostypeid">
           <div class="resource-detail-item__label">{{ $t('label.ostypename') }}</div>
           <div class="resource-detail-item__details">
@@ -553,6 +562,30 @@
                 </span>
               </div>
             </div>
+            <div class="resource-detail-item" v-if="$route.meta.name === 'volume' && resource.kmskey">
+              <div class="resource-detail-item__label">{{ $t('label.kms.key') }}</div>
+              <div class="resource-detail-item__details">
+                <safety-outlined />
+                <router-link
+                  v-if="resource.kmskeyid && $router.resolve('/kmskey/' + resource.kmskeyid).matched[0].redirect !== '/exception/404'"
+                  :to="{ path: '/kmskey/' + resource.kmskeyid }">
+                  {{ resource.kmskey }}
+                </router-link>
+                <span v-else>{{ resource.kmskey }}</span>
+              </div>
+            </div>
+            <div class="resource-detail-item" v-if="$route.meta.name === 'kmskey' && resource.hsmprofile">
+              <div class="resource-detail-item__label">{{ $t('label.hsm.profile') }}</div>
+              <div class="resource-detail-item__details">
+                <safety-outlined />
+                <router-link
+                  v-if="resource.hsmprofileid && $router.resolve('/hsmprofile/' + resource.hsmprofileid).matched[0].redirect !== '/exception/404'"
+                  :to="{ path: '/hsmprofile/' + resource.hsmprofileid }">
+                  {{ resource.hsmprofile }}
+                </router-link>
+                <span v-else>{{ resource.hsmprofile }}</span>
+              </div>
+            </div>
             <div class="resource-detail-item" v-if="resource.nic || ('networkkbsread' in resource && 'networkkbswrite' in resource)">
               <div class="resource-detail-item__label">{{ $t('label.network') }}</div>
               <div class="resource-detail-item__details resource-detail-item__details--start">
@@ -622,7 +655,7 @@
                 </span>
                 <project-outlined v-else />
                 <router-link v-if="!isStatic && resource.projectid" :to="{ path: '/project/' + resource.projectid }">{{ resource.project || resource.projectname || resource.projectid }}</router-link>
-                <router-link v-else :to="{ path: '/project', query: { name: resource.projectname }}">{{ resource.projectname }}</router-link>
+                <span v-else>{{ resource.projectname || resource.projectid }}</span>
               </div>
             </div>
 
@@ -749,7 +782,8 @@
               <div class="resource-detail-item__details">
                 <resource-icon v-if="images.template || images.guestoscategory" :image="images.template || images.guestoscategory" size="1x" style="margin-right: 5px"/>
                 <SaveOutlined v-else />
-                <router-link :to="{ path: (resource.templateformat === 'ISO' ? '/iso/' : '/template/') + resource.templateid }">{{ resource.templatedisplaytext || resource.templatename || resource.templateid }} </router-link>
+                <router-link v-if="validLinks.template" :to="{ path: (resource.templateformat === 'ISO' ? '/iso/' : '/template/') + resource.templateid }">{{ resource.templatedisplaytext || resource.templatename || resource.templateid }} </router-link>
+                <span v-else>{{ resource.templatedisplaytext || resource.templatename || resource.templateid }}</span>
               </div>
             </div>
             <div class="resource-detail-item" v-if="resource.isoid">
@@ -757,7 +791,8 @@
               <div class="resource-detail-item__details">
                 <resource-icon v-if="images.iso || (resource.isoid === resource.templateid && images.guestoscategory)" :image="images.iso || images.guestoscategory" size="1x" style="margin-right: 5px"/>
                 <UsbOutlined v-else />
-                  <router-link :to="{ path: '/iso/' + resource.isoid }">{{ resource.isodisplaytext || resource.isoname || resource.isoid }} </router-link>
+                <router-link v-if="validLinks.iso" :to="{ path: '/iso/' + resource.isoid }">{{ resource.isodisplaytext || resource.isoname || resource.isoid }} </router-link>
+                <span v-else>{{ resource.isodisplaytext || resource.isoname || resource.isoid }}</span>
               </div>
             </div>
             <div class="resource-detail-item" v-if="resource.serviceofferingname && resource.serviceofferingid">
@@ -934,6 +969,14 @@
                 <span v-else>{{ resource.account }}</span>
               </div>
             </div>
+            <div class="resource-detail-item" v-if="resource.userid && $route.meta.name === 'keypair'">
+              <div class="resource-detail-item__label">{{ $t('label.user') }}</div>
+              <div class="resource-detail-item__details">
+                <user-outlined />
+                <router-link v-if="!isStatic && $router.resolve('/accountuser/' + resource.userid).matched[0].redirect !== '/exception/404'" :to="{ path: '/accountuser/' + resource.userid }">{{ resource.username }}</router-link>
+                <span v-else>{{ resource.username }}</span>
+              </div>
+            </div>
             <div class="resource-detail-item" v-if="resource.roleid">
               <div class="resource-detail-item__label">{{ $t('label.role') }}</div>
               <div class="resource-detail-item__details">
@@ -949,6 +992,18 @@
                 <block-outlined v-else />
                 <router-link v-if="!isStatic && $store.getters.userInfo.roletype !== 'User'" :to="{ path: '/domain/' + resource.domainid, query: { tab: 'details'}  }">{{ resource.domain || resource.domainid }}</router-link>
                 <span v-else>{{ resource.domain || resource.domainid }}</span>
+              </div>
+            </div>
+            <div class="resource-detail-item" v-if="resource.currency">
+              <div class="resource-detail-item__label">{{ $t('label.currency') }}</div>
+              <div class="resource-detail-item__details">
+                <span>{{ resource.currency }}</span>
+              </div>
+            </div>
+            <div class="resource-detail-item" v-if="resource.balance">
+              <div class="resource-detail-item__label">{{ $t('label.quota.current.balance') }}</div>
+              <div class="resource-detail-item__details">
+                <span>{{ resource.balance }}</span>
               </div>
             </div>
             <div class="resource-detail-item" v-if="resource.payloadurl">
@@ -1041,54 +1096,6 @@
               :osCategoryId="osCategoryId" />
           </div>
 
-          <div class="account-center-tags" v-if="showKeys || resource.apikeyaccess">
-            <a-divider/>
-          </div>
-          <div class="account-center-tags" v-if="resource.apikeyaccess && resource.account">
-            <div class="resource-detail-item">
-              <div class="resource-detail-item__label">{{ $t('label.apikeyaccess') }}</div>
-              <div class="resource-detail-item__details">
-                <status class="status" :text="resource.apikeyaccess" displayText/>
-              </div>
-            </div>
-          </div>
-          <div class="account-center-tags" v-if="showKeys">
-            <div class="user-keys">
-              <key-outlined />
-              <strong>
-                {{ $t('label.apikey') }}
-                <tooltip-button
-                  tooltipPlacement="right"
-                  :tooltip="$t('label.copy') + ' ' + $t('label.apikey')"
-                  icon="CopyOutlined"
-                  type="dashed"
-                  size="small"
-                  @onClick="$message.success($t('label.copied.clipboard'))"
-                  :copyResource="resource.apikey" />
-              </strong>
-              <div>
-                {{ resource.apikey.substring(0, 20) }}...
-              </div>
-            </div> <br/>
-            <div class="user-keys">
-              <lock-outlined />
-              <strong>
-                {{ $t('label.secretkey') }}
-                <tooltip-button
-                  tooltipPlacement="right"
-                  :tooltip="$t('label.copy') + ' ' + $t('label.secretkey')"
-                  icon="CopyOutlined"
-                  type="dashed"
-                  size="small"
-                  @onClick="$message.success($t('label.copied.clipboard'))"
-                  :copyResource="resource.secretkey" />
-              </strong>
-              <div>
-                {{ resource.secretkey.substring(0, 20) }}...
-              </div>
-            </div>
-          </div>
-
           <div class="account-center-tags" v-if="!isStatic && resourceType && tagsSupportingResourceTypes.includes(this.resourceType) && 'listTags' in $store.getters.apis">
             <a-divider/>
             <a-spin :spinning="loadingTags">
@@ -1146,11 +1153,14 @@
 
 <script>
 import { getAPI, postAPI } from '@/api'
+import axios from 'axios'
 import { createPathBasedOnVmType } from '@/utils/plugins'
-import { validateLinks } from '@/utils/links'
+import { validateLinksAsync } from '@/utils/links'
 import Console from '@/components/widgets/Console'
 import OsLogo from '@/components/widgets/OsLogo'
 import Status from '@/components/widgets/Status'
+import CloneFlattenControl from '@/components/widgets/CloneFlattenControl'
+import { getFastClonePhaseLabel, getFastClonePhaseDescription, isFastCloneFlattenStatusVisible } from '@/utils/fastClone'
 import CopyLabel from '@/components/widgets/CopyLabel'
 import TooltipButton from '@/components/widgets/TooltipButton'
 import UploadResourceIcon from '@/components/view/UploadResourceIcon'
@@ -1168,6 +1178,7 @@ export default {
     Console,
     OsLogo,
     Status,
+    CloneFlattenControl,
     CopyLabel,
     TooltipButton,
     UploadResourceIcon,
@@ -1251,14 +1262,14 @@ export default {
     },
     resource: {
       deep: true,
-      handler (newData, oldData) {
+      async handler (newData, oldData) {
         if (newData === oldData) return
         this.newResource = newData
         this.showKeys = false
         this.setData()
-        this.validLinks = validateLinks(this.$router, this.isStatic, this.resource)
+        this.validLinks = await validateLinksAsync(this.$router, this.isStatic, this.resource)
 
-        if ('apikey' in this.resource) {
+        if (this.$route.meta.name === 'accountuser' && 'apikey' in this.resource) {
           this.getUserKeys()
         }
         this.updateResourceAdditionalData()
@@ -1377,7 +1388,7 @@ export default {
       return String(record?.clonefaststatus || record?.details?.['clone.fast.status'] || '').toLowerCase()
     },
     isFastCloneFlattenActive (record) {
-      return ['pending', 'running'].includes(this.getCloneFastStatus(record))
+      return isFastCloneFlattenStatusVisible(record)
     },
     hasCloneFastFlattenVolumeInfo (record) {
       return [
@@ -1392,17 +1403,9 @@ export default {
     isFastCloneSourceFlattenActive (record) {
       return this.isFastCloneFlattenActive(record) && !this.hasCloneFastFlattenVolumeInfo(record)
     },
-    getCloneFastStatusLabel (record) {
-      const status = this.getCloneFastStatus(record)
-      if (status === 'running') {
-        return this.$t('label.sharedmountpoint.clone.flatten.running')
-      }
-      if (status === 'pending') {
-        return this.$t('label.sharedmountpoint.clone.flatten.pending')
-      }
-      return ''
-    },
     getCloneFastSourceTooltipTitle (record) {
+      const phaseLabel = getFastClonePhaseLabel(record)
+      if (phaseLabel) return this.$t(phaseLabel)
       const status = this.getCloneFastStatus(record)
       if (status === 'pending') {
         return this.$t('message.sharedmountpoint.clone.source.flatten.pending.summary')
@@ -1410,17 +1413,16 @@ export default {
       return this.$t('message.sharedmountpoint.clone.source.flatten.running.summary')
     },
     getCloneFastSourceTooltipDescription (record) {
+      const description = getFastClonePhaseDescription(record)
+      if (description) return this.$t(description)
       const status = this.getCloneFastStatus(record)
       if (status === 'pending') {
         return this.$t('message.sharedmountpoint.clone.source.flatten.pending')
       }
       return this.$t('message.sharedmountpoint.clone.source.flatten.running')
     },
-    getCloneFastStatusTagColor (record) {
-      return this.getCloneFastStatus(record) === 'running' ? 'processing' : 'default'
-    },
     hasCloneFastFlattenProgress (record) {
-      return this.getCloneFastFlattenProgress(record) !== null
+      return !getFastClonePhaseLabel(record) && this.getCloneFastFlattenProgress(record) !== null
     },
     getCloneFastFlattenProgress (record) {
       const rawProgress = record?.clonefastflattenprogress || record?.details?.['clone.fast.flatten.progress']
@@ -1433,17 +1435,6 @@ export default {
     formatCloneFastFlattenProgress (record) {
       const progress = this.getCloneFastFlattenProgress(record)
       return progress === null ? '' : progress.toFixed(2) + '%'
-    },
-    getCloneFastFlattenVolumeTypeLabel (record) {
-      const volumeType = record?.clonefastflattenvolumetype
-      return volumeType ? volumeType + ' ' + this.$t('label.volume') : ''
-    },
-    getCloneFastFlattenTooltipItems (record) {
-      return [
-        { label: this.$t('label.type'), value: this.getCloneFastFlattenVolumeTypeLabel(record) },
-        { label: this.$t('label.name'), value: record?.clonefastflattenvolumename },
-        { label: this.$t('label.deviceid'), value: record?.clonefastflattendeviceid }
-      ].filter(item => item.value !== undefined && item.value !== null && item.value !== '')
     },
     showUploadModal (show) {
       if (show) {
@@ -1564,8 +1555,6 @@ export default {
         return
       }
       getAPI('getUserKeys', { id: this.resource.id }).then(json => {
-        this.showKeys = true
-        this.newResource.secretkey = json.getuserkeysresponse.userkeys.secretkey
         if (!this.isAdmin()) {
           this.newResource.apikeyaccess = json.getuserkeysresponse.userkeys.apikeyaccess ? 'Enabled' : 'Disabled'
         }
@@ -1590,6 +1579,8 @@ export default {
         if (json.listtagsresponse && json.listtagsresponse.tag) {
           this.tags = json.listtagsresponse.tag
         }
+      }).catch(error => {
+        if (!axios.isCancel(error)) this.$notifyError(error)
       }).finally(() => {
         this.loadingTags = false
       })
@@ -1832,40 +1823,6 @@ export default {
   min-width: 0;
 }
 
-.clone-fast-flatten-status {
-  flex: 0 0 auto;
-  margin-right: 0;
-}
-
-.clone-fast-flatten-tooltip-area {
-  cursor: default;
-  display: inline-flex;
-  flex-direction: column;
-  max-width: 320px;
-  width: 100%;
-}
-
-.clone-fast-flatten-tooltip {
-  min-width: 220px;
-}
-
-.clone-fast-flatten-tooltip-row {
-  display: grid;
-  gap: 8px;
-  grid-template-columns: max-content minmax(0, 1fr);
-  line-height: 20px;
-}
-
-.clone-fast-flatten-tooltip-label {
-  color: rgba(255, 255, 255, 0.85);
-  white-space: nowrap;
-}
-
-.clone-fast-flatten-tooltip-value {
-  color: #fff;
-  overflow-wrap: anywhere;
-}
-
 .clone-fast-flatten-source-tooltip {
   max-width: 280px;
 }
@@ -1877,15 +1834,6 @@ export default {
 
 .clone-fast-flatten-source-tooltip-description {
   line-height: 20px;
-}
-
-.clone-fast-flatten-source-status-area {
-  align-items: center;
-  cursor: default;
-  display: inline-flex;
-  gap: 6px;
-  max-width: 320px;
-  min-width: 0;
 }
 
 .clone-fast-flatten-percent {

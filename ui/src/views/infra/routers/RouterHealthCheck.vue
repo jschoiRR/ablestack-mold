@@ -17,6 +17,7 @@
 
 <template>
   <a-spin :spinning="loading">
+    <p v-if="listRefreshFailed" role="status">{{ $t('message.list.refresh.stale') }}</p>
     <a-alert
       v-if="!routerHealthChecksEnabled"
       banner
@@ -80,12 +81,15 @@
 </template>
 
 <script>
+import { listRefreshMixin } from '@/utils/listRefreshMixin'
+
 import { ref, reactive, toRaw } from 'vue'
 import { getAPI } from '@/api'
 import Status from '@/components/widgets/Status'
 import TooltipLabel from '@/components/widgets/TooltipLabel'
 
 export default {
+  mixins: [listRefreshMixin(['getHealthChecks'])],
   name: 'RouterHealthCheck',
   components: {
     Status,
@@ -176,6 +180,7 @@ export default {
       })
     },
     checkConfigurationAndGetHealthChecks (performFreshChecks) {
+      if (this.routerHealthChecksEnabled) return this.getHealthChecks(performFreshChecks)
       var params = { name: 'router.health.checks.enabled' }
       this.loading = true
       getAPI('listConfigurations', params).then(json => {
@@ -196,16 +201,29 @@ export default {
       })
     },
     getHealthChecks (performFreshChecks) {
+      const listRequest = this.listRequestToken('getHealthChecks')
       var params = { routerid: this.resource.id }
       if (performFreshChecks) {
         params.performfreshchecks = performFreshChecks
       }
-      this.loading = true
-      getAPI('getRouterHealthCheckResults', params).then(json => {
+      this.loading = !listRequest.loaded
+      return getAPI('getRouterHealthCheckResults', params).then(json => {
+        if (!this.isListRequestCurrent('getHealthChecks', listRequest)) return
+
         this.healthChecks = json.getrouterhealthcheckresultsresponse.routerhealthchecks.healthchecks
       }).catch(error => {
+        if (!this.isListRequestCurrent('getHealthChecks', listRequest)) return
+        listRequest.failed = true
+        this.listRefreshFailed = true
+        if (listRequest.loaded) return
+
         this.$notifyError(error)
       }).finally(f => {
+        if (!this.isListRequestCurrent('getHealthChecks', listRequest)) return
+
+        this.loading = false
+      }).finally(() => {
+        if (!this.isListRequestCurrent('getHealthChecks', listRequest)) return
         this.loading = false
       })
     }

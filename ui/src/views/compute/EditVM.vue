@@ -25,7 +25,7 @@
       :rules="rules"
       v-ctrl-enter="handleSubmit"
       @finish="handleSubmit">
-      <a-alert style="margin-bottom: 5px" type="warning" show-icon>
+      <a-alert v-if="!cloneEditRestricted" style="margin-bottom: 5px" type="warning" show-icon>
         <template #message>
           <span v-html="$t('message.restart.vm.to.update.settings')" />
         </template>
@@ -38,7 +38,7 @@
           v-model:value="form.displayname"
           v-focus="true" />
       </a-form-item>
-      <a-form-item name="ostypeid" ref="ostypeid">
+      <a-form-item v-if="!cloneEditRestricted" name="ostypeid" ref="ostypeid">
         <template #label>
           <tooltip-label :title="$t('label.ostypeid')" :tooltip="apiParams.ostypeid.description"/>
         </template>
@@ -55,13 +55,13 @@
           </a-select-option>
         </a-select>
       </a-form-item>
-      <a-form-item name="isdynamicallyscalable" ref="isdynamicallyscalable">
+      <a-form-item v-if="!cloneEditRestricted" name="isdynamicallyscalable" ref="isdynamicallyscalable">
         <template #label>
           <tooltip-label :title="$t('label.isdynamicallyscalable')" :tooltip="apiParams.isdynamicallyscalable.description"/>
         </template>
         <a-switch v-model:checked="form.isdynamicallyscalable" />
       </a-form-item>
-      <a-form-item name="haenable" ref="haenable" v-if="serviceOffering ? serviceOffering.offerha : false">
+      <a-form-item name="haenable" ref="haenable" v-if="!cloneEditRestricted && serviceOffering?.offerha">
         <template #label>
           <tooltip-label :title="$t('label.haenable')" :tooltip="apiParams.haenable.description"/>
         </template>
@@ -78,20 +78,20 @@
           }"
           :options="groups.opts" />
       </a-form-item>
-      <a-form-item v-if="userDataEnabled">
+      <a-form-item v-if="!cloneEditRestricted && userDataEnabled">
         <template #label>
           <tooltip-label :title="$t('label.user.data')" :tooltip="apiParams.userdata.description"/>
         </template>
         <a-textarea v-model:value="form.userdata">
         </a-textarea>
       </a-form-item>
-      <a-form-item v-if="extraConfigEnabled">
+      <a-form-item v-if="!cloneEditRestricted && extraConfigEnabled">
         <template #label>
           <tooltip-label :title="$t('label.extraconfig')" :tooltip="$t('label.extraconfig.tooltip')"/>
         </template>
         <a-textarea v-model:value="form.extraconfig"/>
       </a-form-item>
-      <a-form-item ref="securitygroupids" name="securitygroupids" :label="$t('label.security.groups')" v-if="securityGroupsEnabled">
+      <a-form-item ref="securitygroupids" name="securitygroupids" :label="$t('label.security.groups')" v-if="!cloneEditRestricted && securityGroupsEnabled">
         <a-select
           mode="multiple"
           v-model:value="form.securitygroupids"
@@ -116,13 +116,13 @@
         </template>
         <a-switch v-model:checked="form.deleteprotection" />
       </a-form-item>
-      <a-form-item name="showLeaseOptions" ref="showLeaseOptions" v-if="isLeaseEditable">
+      <a-form-item name="showLeaseOptions" ref="showLeaseOptions" v-if="!cloneEditRestricted && isLeaseEditable">
         <template #label>
           <tooltip-label :title="$t('label.lease.enable')" :tooltip="$t('label.lease.enable.tooltip')" />
         </template>
         <a-switch v-model:checked="showLeaseOptions" @change="onToggleLeaseData"/>
       </a-form-item>
-      <a-row :gutter="12" v-if="showLeaseOptions">
+      <a-row :gutter="12" v-if="!cloneEditRestricted && showLeaseOptions">
         <a-col :md="12" :lg="12">
           <a-form-item name="leaseduration" ref="leaseduration">
             <template #label>
@@ -157,6 +157,7 @@
 import { ref, reactive, toRaw } from 'vue'
 import { getAPI, postAPI } from '@/api'
 import TooltipLabel from '@/components/widgets/TooltipLabel'
+import { getFastClonePhase } from '@/utils/fastClone'
 
 export default {
   name: 'EditVM',
@@ -204,6 +205,12 @@ export default {
     }
   },
   computed: {
+    cloneEditRestricted () {
+      const details = this.resource.details || {}
+      const status = String(this.resource.clonefaststatus || details['clone.fast.status'] || '').toLowerCase()
+      return !!getFastClonePhase(this.resource) || !!details['clone.fast.source.phase'] ||
+        !!details['clone.fast.clone.phase'] || ['pending', 'running'].includes(status)
+    },
     extraConfigEnabled () {
       return this.$store.getters.features.additionalconfigenabled
     },
@@ -429,6 +436,11 @@ export default {
           params.extraconfig = encodeURIComponent(values.extraconfig)
         } else if (this.combinedExtraConfig) {
           params.cleanupextraconfig = true
+        }
+        // Do not submit unchanged hardware or lifecycle settings during a clone operation.
+        if (this.cloneEditRestricted) {
+          const allowed = ['id', 'displayname', 'group', 'deleteprotection']
+          Object.keys(params).filter(key => !allowed.includes(key)).forEach(key => delete params[key])
         }
         this.loading = true
 
