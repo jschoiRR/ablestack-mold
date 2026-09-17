@@ -77,6 +77,7 @@ public class Script implements Callable<String> {
     String _workDir;
     ArrayList<String> _command;
     long _timeout;
+    private boolean interruptible;
     Process _process;
     Thread _thread;
 
@@ -86,6 +87,11 @@ public class Script implements Callable<String> {
 
     public int getExitValue() {
         return _process.exitValue();
+    }
+
+    /** Opt in for read-only probes that must stop when their HA task is cancelled. */
+    public void setInterruptible(boolean interruptible) {
+        this.interruptible = interruptible;
     }
 
     public void setAvoidLoggingCommand(boolean avoid) {
@@ -339,6 +345,18 @@ public class Script implements Callable<String> {
                         }
                     }
                 } catch (InterruptedException e) {
+                    if (interruptible && !_isTimeOut) {
+                        try {
+                            _process.descendants().forEach(handle -> handle.destroyForcibly());
+                        } catch (RuntimeException enumerationFailure) {
+                            // Some platforms restrict process enumeration. Still cancel
+                            // our own process and preserve the caller's interrupt.
+                            _logger.debug("Unable to enumerate probe subprocesses", enumerationFailure);
+                        }
+                        _process.destroyForcibly();
+                        Thread.currentThread().interrupt();
+                        return "Script interrupted";
+                    }
                     if (!_isTimeOut) {
                         _logger.debug(String.format(
                                 "Exception [%s] occurred; however, it was not a timeout. Therefore, proceeding with the execution of process [%s] for command [%s].",
@@ -349,7 +367,9 @@ public class Script implements Callable<String> {
                     if (future != null) {
                         future.cancel(false);
                     }
-                    Thread.interrupted();
+                    if (!interruptible || _isTimeOut) {
+                        Thread.interrupted();
+                    }
                 }
 
                 TimedOutLogger log = new TimedOutLogger(_process);
@@ -462,6 +482,18 @@ public class Script implements Callable<String> {
                         }
                     } //timeout
                 } catch (InterruptedException e) {
+                    if (interruptible && !_isTimeOut) {
+                        try {
+                            _process.descendants().forEach(handle -> handle.destroyForcibly());
+                        } catch (RuntimeException enumerationFailure) {
+                            // Some platforms restrict process enumeration. Still cancel
+                            // our own process and preserve the caller's interrupt.
+                            _logger.debug("Unable to enumerate probe subprocesses", enumerationFailure);
+                        }
+                        _process.destroyForcibly();
+                        Thread.currentThread().interrupt();
+                        return "Script interrupted";
+                    }
                     if (!_isTimeOut) {
                         /*
                          * This is not timeout, we are interrupted by others,
@@ -474,7 +506,9 @@ public class Script implements Callable<String> {
                     if (future != null) {
                         future.cancel(false);
                     }
-                    Thread.interrupted();
+                    if (!interruptible || _isTimeOut) {
+                        Thread.interrupted();
+                    }
                 }
 
                 //timeout without completing the process

@@ -22,6 +22,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Spy;
+import static org.mockito.ArgumentMatchers.anyLong;
 import org.mockito.junit.MockitoJUnitRunner;
 import com.cloud.agent.AgentManager;
 import com.cloud.agent.api.Answer;
@@ -48,14 +50,13 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.lenient;
-import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 
 @RunWith(MockitoJUnitRunner.class)
 public class KVMHostActivityCheckerTest {
-    @InjectMocks private KVMHostActivityChecker checker;
+    @Spy @InjectMocks private KVMHostActivityChecker checker = new KVMHostActivityChecker();
     @Mock private AgentManager agentMgr;
     @Mock private VMInstanceDao vmInstanceDao;
     @Mock private VolumeDao volumeDao;
@@ -92,9 +93,9 @@ public class KVMHostActivityCheckerTest {
     }
 
     @Test
-    public void missingOrUnknownOobmCannotOverrideAliveNeighbor() {
-        when(agentMgr.easySend(eq(1L), any(CheckOnHostCommand.class))).thenReturn(null);
-        doReturn(observation(true)).when(agentMgr).easySend(eq(2L), any(CheckOnHostCommand.class));
+    public void missingOrUnknownOobmCannotOverrideAliveNeighbor() throws Exception {
+        doReturn(null).when(checker).sendHealthCheck(eq(1L), any(CheckOnHostCommand.class), anyLong());
+        doReturn(observation(true)).when(checker).sendHealthCheck(eq(2L), any(CheckOnHostCommand.class), anyLong());
         assertEquals(Status.Disconnected, checker.getHostAgentStatus(host));
         OutOfBandManagementVO oobm = mock(OutOfBandManagementVO.class);
         when(outOfBandManagementDao.findByHost(1L)).thenReturn(oobm);
@@ -105,13 +106,13 @@ public class KVMHostActivityCheckerTest {
     }
 
     @Test
-    public void unknownNeighborsDoNotProveHostDeath() {
-        doReturn(observation(null)).when(agentMgr).easySend(eq(1L), any(CheckOnHostCommand.class));
-        when(agentMgr.easySend(eq(2L), any(CheckOnHostCommand.class))).thenReturn(new Answer(null, false, "agent unavailable"));
+    public void unknownNeighborsDoNotProveHostDeath() throws Exception {
+        doReturn(observation(null)).when(checker).sendHealthCheck(eq(1L), any(CheckOnHostCommand.class), anyLong());
+        doReturn(new Answer(null, false, "agent unavailable")).when(checker).sendHealthCheck(eq(2L), any(CheckOnHostCommand.class), anyLong());
         assertEquals(Status.Disconnected, checker.getHostAgentStatus(host));
-        doReturn(observation(false)).when(agentMgr).easySend(eq(2L), any(CheckOnHostCommand.class));
+        doReturn(observation(false)).when(checker).sendHealthCheck(eq(2L), any(CheckOnHostCommand.class), anyLong());
         assertEquals(Status.Down, checker.getHostAgentStatus(host));
-        doReturn(observation(true)).when(agentMgr).easySend(eq(1L), any(CheckOnHostCommand.class));
+        doReturn(observation(true)).when(checker).sendHealthCheck(eq(1L), any(CheckOnHostCommand.class), anyLong());
         assertEquals(Status.Up, checker.getHostAgentStatus(host));
     }
 
@@ -127,7 +128,7 @@ public class KVMHostActivityCheckerTest {
         StoragePoolVO pool = mock(StoragePoolVO.class);
         when(pool.getPoolType()).thenReturn(StoragePoolType.RBD);
         when(storagePoolDao.findById(21L)).thenReturn(pool);
-        KVMHostActivityChecker spy = spy(checker);
+        KVMHostActivityChecker spy = checker;
         doReturn(false).when(spy).isStoragePoolHeartbeatEnabled(pool);
         assertNull(spy.createHostCheckCommand(host, false).getVolumeList());
         doReturn(true).when(spy).isStoragePoolHeartbeatEnabled(pool);

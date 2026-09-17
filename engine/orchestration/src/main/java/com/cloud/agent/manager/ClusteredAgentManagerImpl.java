@@ -675,6 +675,10 @@ public class ClusteredAgentManagerImpl extends AgentManagerImpl implements Clust
                             throw new AgentUnavailableException("Unable to route to agent ", hostId);
                         }
 
+                        if (Request.isRequest(data)) {
+                            agent.checkAvailability(Request.parse(data).getCommands());
+                        }
+
                         if (Request.isRequest(data) && Request.requiresSequentialExecution(data)) {
                             // route it to the agent.
                             // But we have the serialize the control commands here so we have

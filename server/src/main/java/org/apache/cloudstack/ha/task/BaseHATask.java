@@ -24,11 +24,15 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
+import java.util.concurrent.atomic.AtomicBoolean;
+import javax.inject.Inject;
 import com.cloud.utils.concurrency.NamedThreadFactory;
 import com.cloud.utils.db.TransactionLegacy;
 
 import org.apache.cloudstack.ha.HAConfig;
 import org.apache.cloudstack.ha.HAResource;
+import org.apache.cloudstack.ha.HAManager;
+import org.apache.cloudstack.ha.HAResourceCounter;
 import org.apache.cloudstack.ha.provider.HACheckerException;
 import org.apache.cloudstack.ha.provider.HAFenceException;
 import org.apache.cloudstack.ha.provider.HAProvider;
@@ -43,7 +47,16 @@ public abstract class BaseHATask implements Callable<Boolean> {
 
     private final HAResource resource;
     private final HAProvider<HAResource> haProvider;
-    private final HAConfig haConfig;
+    private HAConfig haConfig;
+    @Inject
+    private HAManager haManager;
+    private HAResourceCounter counter;
+    private HAResourceCounter.TaskToken taskToken;
+    private final AtomicBoolean workerFinished = new AtomicBoolean(false);
+    private final AtomicBoolean resultFinished = new AtomicBoolean(false);
+    private final Object workerLock = new Object();
+    private volatile boolean abandoned;
+    private Thread workerThread;
     private final ExecutorService executor;
     private Long timeout;
     private DateTime created;
@@ -66,6 +79,41 @@ public abstract class BaseHATask implements Callable<Boolean> {
         return haConfig;
     }
 
+    public void initialize(HAResourceCounter resourceCounter, HAResourceCounter.TaskToken token) {
+        counter = resourceCounter;
+        taskToken = token;
+    }
+
+    protected HAManager getHaManager() {
+        return haManager;
+    }
+
+    protected HAResourceCounter getCounter() {
+        return counter;
+    }
+
+    protected boolean isCurrentTask() {
+        return !abandoned && isCurrentResult();
+    }
+
+    protected boolean isCurrentResult() {
+        if (counter == null || !counter.isCurrentTask(taskToken)) {
+            return false;
+        }
+        HAConfig current = haManager.getCurrentHAConfig(haConfig, counter, taskToken);
+        if (current == null) {
+            return false;
+        }
+        haConfig = current;
+        return true;
+    }
+
+    private void releaseCompletedTask() {
+        if (workerFinished.get() && resultFinished.get()) {
+            counter.finishTask(taskToken);
+        }
+    }
+
     public HAResource getResource() {
         return resource;
     }
@@ -82,43 +130,81 @@ public abstract class BaseHATask implements Callable<Boolean> {
 
     @Override
     public Boolean call() {
-        // HA tasks run outside ManagedContextRunnable. Own a DB context on each
-        // executor thread, including result processing and exceptional exits.
         try (TransactionLegacy txn = TransactionLegacy.open("HA-task-" + getTaskType())) {
             return callWithDatabaseContext();
         }
     }
 
     private Boolean callWithDatabaseContext() {
-        if (new DateTime().minusHours(1).isAfter(getCreated())) {
-            return false;
+        if (counter == null) {
+            throw new IllegalStateException("HA task must be reserved before submission");
         }
-        final Future<Boolean> future = innerExecutor.submit(new Callable<Boolean>() {
-            @Override
-            public Boolean call() throws HACheckerException, HAFenceException, HARecoveryException {
-                try (TransactionLegacy txn = TransactionLegacy.open("HA-action-" + getTaskType())) {
-                    return performAction();
-                }
+        try {
+            if (new DateTime().minusHours(1).isAfter(getCreated()) || !isCurrentTask()) {
+                counter.finishTask(taskToken);
+                return false;
             }
-        });
-
+        } catch (RuntimeException e) {
+            counter.finishTask(taskToken);
+            throw e;
+        }
         boolean result = false;
         Throwable throwable = null;
         try {
+            final Future<Boolean> future = innerExecutor.submit(() -> {
+                synchronized (workerLock) {
+                    workerThread = Thread.currentThread();
+                }
+                try (TransactionLegacy txn = TransactionLegacy.open("HA-action-" + getTaskType())) {
+                    if (abandoned || !isCurrentTask()) {
+                        throw new HACheckerException("HA task is no longer current", null);
+                    }
+                    return performAction();
+                } finally {
+                    synchronized (workerLock) {
+                        workerThread = null;
+                    }
+                    workerFinished.set(true);
+                    releaseCompletedTask();
+                }
+            });
             if (timeout == null) {
                 result = future.get();
             } else {
                 result = future.get(timeout, TimeUnit.SECONDS);
             }
-        } catch (InterruptedException | ExecutionException e) {
-            logger.warn("Exception occurred while running {} on a resource: {}", getTaskType(), e.getMessage(), e.getCause());
+        } catch (InterruptedException e) {
+            throwable = e;
+            abandoned = true;
+            Thread.currentThread().interrupt();
+        } catch (ExecutionException e) {
+            logger.warn("Exception occurred while running " + getTaskType() + " on a resource: " + e.getMessage(), e.getCause());
             throwable = e.getCause();
         } catch (TimeoutException e) {
             logger.trace("{} operation timed out for resource: {}", getTaskType(), resource);
-            future.cancel(true);
+            throwable = e;
+            abandoned = true;
+        } catch (RuntimeException e) {
+            // Submission failure means there is no worker that can release the reservation.
+            workerFinished.set(true);
+            throwable = e;
         }
-        processResult(result, throwable);
-        return result;
+        try {
+            synchronized (workerLock) {
+                if (abandoned && workerThread != null) {
+                    workerThread.interrupt();
+                }
+            }
+            synchronized (counter) {
+                if (isCurrentResult()) {
+                    processResult(result, throwable);
+                }
+            }
+            return result;
+        } finally {
+            resultFinished.set(true);
+            releaseCompletedTask();
+        }
     }
 
     public DateTime getCreated() {

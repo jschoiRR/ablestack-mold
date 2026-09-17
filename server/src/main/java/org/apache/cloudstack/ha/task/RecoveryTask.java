@@ -19,10 +19,8 @@ package org.apache.cloudstack.ha.task;
 
 import java.util.concurrent.ExecutorService;
 
-import javax.inject.Inject;
 
 import org.apache.cloudstack.ha.HAConfig;
-import org.apache.cloudstack.ha.HAManager;
 import org.apache.cloudstack.ha.HAResource;
 import org.apache.cloudstack.ha.HAResourceCounter;
 import org.apache.cloudstack.ha.provider.HACheckerException;
@@ -30,9 +28,6 @@ import org.apache.cloudstack.ha.provider.HAProvider;
 import org.apache.cloudstack.ha.provider.HARecoveryException;
 
 public class RecoveryTask extends BaseHATask {
-
-    @Inject
-    private HAManager haManager;
 
     public RecoveryTask(final HAResource resource, final HAProvider<HAResource> haProvider, final HAConfig haConfig,
                         final HAProvider.HAProviderConfig haProviderConfig, final ExecutorService executor) {
@@ -44,14 +39,16 @@ public class RecoveryTask extends BaseHATask {
     }
 
     public void processResult(boolean result, Throwable e) {
+        if (!isCurrentResult()) {
+            return;
+        }
         final HAConfig haConfig = getHaConfig();
-        final HAResourceCounter counter = haManager.getHACounter(haConfig.getResourceId(), haConfig.getResourceType());
+        final HAResourceCounter counter = getCounter();
         counter.incrRecoveryCounter();
         counter.resetActivityCounter();
 
-        if (result) {
-            haManager.transitionHAState(HAConfig.Event.Recovered, haConfig);
-            getHaProvider().fenceSubResources(getResource());
+        if (result && e == null) {
+            getHaManager().transitionHAState(HAConfig.Event.Recovered, haConfig);
         }
         getHaProvider().sendAlert(getResource(), HAConfig.HAState.Recovering);
     }

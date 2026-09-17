@@ -245,6 +245,7 @@ public class DirectAgentAttache extends AgentAttache {
                     }
                     try {
                         if (resource != null) {
+                            checkAvailability(new Command[] {currentCmd});
                             answer = resource.executeRequest(cmds[i]);
                             if (answer == null) {
                                 logger.warn("Resource returned null answer!");

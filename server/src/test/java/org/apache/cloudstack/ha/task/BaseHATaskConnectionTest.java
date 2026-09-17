@@ -24,6 +24,10 @@ package org.apache.cloudstack.ha.task;
 
 import com.cloud.utils.db.TransactionLegacy;
 import org.apache.cloudstack.ha.HAResource;
+import org.apache.cloudstack.ha.HAConfig;
+import org.apache.cloudstack.ha.HAManager;
+import org.apache.cloudstack.ha.HAResourceCounter;
+import java.lang.reflect.Field;
 import org.apache.cloudstack.ha.provider.HAProvider;
 import org.junit.Test;
 import java.lang.reflect.Method;
@@ -55,7 +59,12 @@ public class BaseHATaskConnectionTest {
         HAProvider provider = mock(HAProvider.class);
         HAResource resource = mock(HAResource.class);
         when(provider.getConfigValue(null, resource)).thenReturn(timeout);
-        return new BaseHATask(resource, provider, null, null, null) {
+        HAConfig config = mock(HAConfig.class);
+        HAManager manager = mock(HAManager.class);
+        HAResourceCounter counter = new HAResourceCounter();
+        HAResourceCounter.TaskToken token = counter.tryStartTask(HAResourceCounter.Operation.HEALTH);
+        when(manager.getCurrentHAConfig(config, counter, token)).thenReturn(config);
+        BaseHATask task = new BaseHATask(resource, provider, config, null, null) {
             @Override public boolean performAction() {
                 borrow(action);
                 if (actionClosed != null) {
@@ -70,6 +79,15 @@ public class BaseHATaskConnectionTest {
                 if (resultFailure) throw new IllegalStateException("result");
             }
         };
+        task.initialize(counter, token);
+        try {
+            Field field = BaseHATask.class.getDeclaredField("haManager");
+            field.setAccessible(true);
+            field.set(task, manager);
+        } catch (ReflectiveOperationException e) {
+            throw new AssertionError(e);
+        }
+        return task;
     }
     private boolean execute(BaseHATask task) throws Exception {
         // Other server suites leave a caller-owned transaction on the JUnit

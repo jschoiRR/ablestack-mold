@@ -31,7 +31,7 @@ public class RedfishWrapper {
         case ON:
             return RedfishClient.RedfishResetCmd.On;
         case OFF:
-            return RedfishClient.RedfishResetCmd.GracefulShutdown;
+            return RedfishClient.RedfishResetCmd.ForceOff;
         case CYCLE:
             return RedfishClient.RedfishResetCmd.PowerCycle;
         case RESET:
@@ -58,7 +58,8 @@ public class RedfishWrapper {
         case PoweringOn:
             return OutOfBandManagement.PowerState.On;
         case PoweringOff:
-            return OutOfBandManagement.PowerState.Off;
+            // A shutdown in progress is not proof that the host has stopped.
+            return OutOfBandManagement.PowerState.Unknown;
         default:
             return OutOfBandManagement.PowerState.Unknown;
         }

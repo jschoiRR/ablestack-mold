@@ -28,6 +28,8 @@ import java.util.concurrent.Future;
 import com.cloud.agent.api.Answer;
 import com.cloud.agent.api.CheckOnHostAnswer;
 import com.cloud.agent.api.CheckOnHostCommand;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import com.cloud.agent.api.to.HostTO;
 import com.cloud.hypervisor.kvm.resource.KVMHABase.HAStoragePool;
 import com.cloud.hypervisor.kvm.resource.KVMHAChecker;
@@ -48,28 +50,23 @@ public final class LibvirtCheckOnHostCommandWrapper extends CommandWrapper<Check
         final List<HAStoragePool> clvmpools = monitor.getClvmStoragePools();
         final HostTO host = command.getHost();
         final String volumeList = command.getVolumeList();
-        final KVMHAChecker ha = new KVMHAChecker(pools, gfspools, rbdpools, clvmpools, host, command.shouldReportIfHeartBeatFailedForOneStoragePool(), volumeList);
+        final long timeoutSeconds = command.getWait() > 0 ? command.getWait() : 20L;
+        final KVMHAChecker ha = new KVMHAChecker(pools, gfspools, rbdpools, clvmpools, host,
+                command.shouldReportIfHeartBeatFailedForOneStoragePool(), volumeList, timeoutSeconds);
 
         final ExecutorService executors = Executors.newSingleThreadExecutor();
         Future<Boolean> future = null;
         try {
             future = executors.submit(ha);
-            final Boolean hasHeartBeat = future.get();
-            if (hasHeartBeat == null) {
-                return new CheckOnHostAnswer(command, (Boolean) null, "No conclusive heartbeat observation");
-            }
-            if (hasHeartBeat) {
-                return new CheckOnHostAnswer(command, true, "Heart is beating");
-            } else {
-                return new CheckOnHostAnswer(command, false, "Heart is not beating");
-            }
+            final Boolean result = future.get(timeoutSeconds, TimeUnit.SECONDS);
+            return new CheckOnHostAnswer(command, result, "Storage heartbeat observation");
         } catch (final InterruptedException e) {
             Thread.currentThread().interrupt();
-            return new CheckOnHostAnswer(command, "CheckOnHostCommand: can't get status of host: InterruptedException");
-        } catch (final ExecutionException e) {
-            return new CheckOnHostAnswer(command, "CheckOnHostCommand: can't get status of host: ExecutionException");
+            return new CheckOnHostAnswer(command, null, "Heartbeat check interrupted");
+        } catch (final ExecutionException | TimeoutException e) {
+            return new CheckOnHostAnswer(command, null, "Heartbeat check failed or timed out");
         } finally {
-            if (future != null) {
+            if (future != null && !future.isDone()) {
                 future.cancel(true);
             }
             executors.shutdownNow();

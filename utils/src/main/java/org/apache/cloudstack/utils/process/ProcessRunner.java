@@ -91,7 +91,7 @@ public final class ProcessRunner {
      */
     public ProcessResult executeCommands(final List<String> commands, final Duration timeOut) {
         Preconditions.checkArgument(commands != null && timeOut != null
-                && timeOut.getStandardSeconds() > 0L
+                && timeOut.getMillis() > 0L
                 && (timeOut.compareTo(DEFAULT_MAX_TIMEOUT) <= 0)
                 && executor != null);
 
@@ -114,11 +114,15 @@ public final class ProcessRunner {
             try {
                 logger.debug("Waiting for a response from command [{}]. Defined timeout: [{}].", commandLog,
                         timeOut.getStandardSeconds());
-                retVal = processFuture.get(timeOut.getStandardSeconds(), TimeUnit.SECONDS);
+                retVal = processFuture.get(timeOut.getMillis(), TimeUnit.MILLISECONDS);
             } catch (ExecutionException e) {
                 logger.warn("Failed to complete the requested command [{}] due to execution error.", commandLog, e);
                 retVal = -2;
                 stdError = e.getMessage();
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                retVal = -2;
+                stdError = "Operation interrupted, aborted.";
             } catch (TimeoutException e) {
                 logger.warn("Failed to complete the requested command [{}] within timeout. Defined timeout: [{}].",
                         commandLog, timeOut.getStandardSeconds(), e);
@@ -129,12 +133,17 @@ public final class ProcessRunner {
                     stdOutput = CharStreams.toString(new InputStreamReader(process.getInputStream()));
                     stdError = CharStreams.toString(new InputStreamReader(process.getErrorStream()));
                 }
-                process.destroy();
+                processFuture.cancel(true);
+                if (retVal < 0) {
+                    process.destroyForcibly();
+                } else {
+                    process.destroy();
+                }
             }
 
             logger.debug("Process standard output for command [{}]: [{}].", commandLog, stdOutput);
             logger.debug("Process standard error output command [{}]: [{}].", commandLog, stdError);
-        } catch (IOException | InterruptedException e) {
+        } catch (IOException e) {
             logger.error("Exception caught error running command [{}].", commandLog, e);
             stdError = e.getMessage();
         }

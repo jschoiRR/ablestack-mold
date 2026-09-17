@@ -569,6 +569,8 @@ public class DatabaseUpgradeChecker implements SystemIntegrityChecker {
             } catch (SQLException e) {
                 throw new CloudRuntimeException("Unable to record Europa schema migration", e);
             }
+            KvmHaActivityThresholdMigration.migrate();
+
             lock.unlock();
             locked = false;
             doUpgrades(lock);

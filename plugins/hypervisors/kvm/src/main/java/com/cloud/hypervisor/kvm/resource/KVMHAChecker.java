@@ -17,6 +17,10 @@
 package com.cloud.hypervisor.kvm.resource;
 
 import java.util.List;
+import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
+import org.joda.time.Duration;
+import com.cloud.storage.Storage.StoragePoolType;
 import java.util.concurrent.Callable;
 
 import com.cloud.agent.api.to.HostTO;
@@ -29,8 +33,15 @@ public class KVMHAChecker extends KVMHABase implements Callable<Boolean> {
     private HostTO host;
     private boolean reportIfHeartBeatFailedForOneStoragePool;
     private String volumeList;
+    private long timeoutSeconds;
 
     public KVMHAChecker(List<HAStoragePool> pools, List<HAStoragePool> gfspools, List<HAStoragePool> rbdpools, List<HAStoragePool> clvmpools, HostTO host, boolean reportIfHeartBeatFailedForOneStoragePool, String volumeList) {
+        this(pools, gfspools, rbdpools, clvmpools, host, reportIfHeartBeatFailedForOneStoragePool, volumeList, 20L);
+    }
+
+    public KVMHAChecker(List<HAStoragePool> pools, List<HAStoragePool> gfspools, List<HAStoragePool> rbdpools,
+            List<HAStoragePool> clvmpools, HostTO host, boolean reportIfHeartBeatFailedForOneStoragePool, String volumeList, long timeoutSeconds) {
+        this.timeoutSeconds = timeoutSeconds;
         this.storagePools = pools;
         this.gfsStoragePools = gfspools;
         this.rbdStoragePools = rbdpools;
@@ -40,38 +51,42 @@ public class KVMHAChecker extends KVMHABase implements Callable<Boolean> {
         this.volumeList = volumeList;
     }
 
-    /*
-     * True means heart beating is on going, or we can't get it's status.
-     * False means heart beating is stopped definitely.
-     */
+    // True/false are determined heartbeat observations under the configured pool
+    // policy; null means the available witnesses cannot determine the result.
     @Override
     public Boolean hasHeartBeat() {
-        boolean checked = false;
-        boolean unknown = false;
-        List<List<HAStoragePool>> poolGroups = java.util.Arrays.asList(storagePools, gfsStoragePools, rbdStoragePools, clvmStoragePools);
-        for (List<HAStoragePool> pools : poolGroups) {
-            if (pools == null) {
-                continue;
+        long deadline = System.nanoTime() + TimeUnit.SECONDS.toNanos(timeoutSeconds);
+        List<HAStoragePool> allPools = new ArrayList<>();
+        if (storagePools != null) {
+            allPools.addAll(storagePools);
+        }
+        if (gfsStoragePools != null) {
+            allPools.addAll(gfsStoragePools);
+        }
+        if (rbdStoragePools != null) {
+            allPools.addAll(rbdStoragePools);
+        }
+        if (clvmStoragePools != null) {
+            allPools.addAll(clvmStoragePools);
+        }
+        boolean unknown = allPools.isEmpty();
+        for (HAStoragePool pool : allPools) {
+            long remainingMillis = TimeUnit.NANOSECONDS.toMillis(deadline - System.nanoTime());
+            if (remainingMillis <= 0 || Thread.currentThread().isInterrupted()) {
+                return null;
             }
-            for (HAStoragePool pool : pools) {
-                checked = true;
-                Boolean alive = pools == rbdStoragePools
-                        ? pool.getPool().checkingHeartBeatRBD(pool, host, volumeList)
-                        : pool.getPool().hasHeartBeat(pool, host);
-                if (alive == null) {
-                    unknown = true;
-                } else if (reportIfHeartBeatFailedForOneStoragePool && !alive) {
-                    return false;
-                } else if (!reportIfHeartBeatFailedForOneStoragePool && alive) {
-                    return true;
-                }
+            Boolean active = pool.getPool().getType() == StoragePoolType.RBD
+                    ? pool.getPool().checkingHeartBeatRBD(pool, host, volumeList, Duration.millis(remainingMillis))
+                    : pool.getPool().hasHeartBeat(pool, host, Duration.millis(remainingMillis));
+            if (active == null) {
+                unknown = true;
+            } else if (reportIfHeartBeatFailedForOneStoragePool && !active) {
+                return false;
+            } else if (!reportIfHeartBeatFailedForOneStoragePool && active) {
+                return true;
             }
         }
-        // No observation, including an unknown result, is not proof of host death.
-        if (!checked || unknown) {
-            return null;
-        }
-        return reportIfHeartBeatFailedForOneStoragePool;
+        return unknown ? null : reportIfHeartBeatFailedForOneStoragePool;
     }
 
     @Override

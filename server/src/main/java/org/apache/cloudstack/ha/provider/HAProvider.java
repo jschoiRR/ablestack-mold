@@ -25,13 +25,15 @@ import com.cloud.utils.component.Adapter;
 
 public interface HAProvider<R extends HAResource> extends Adapter {
 
+    enum PowerObservation { ON, OFF, UNKNOWN }
+
     enum HAProviderConfig {
         HealthCheckTimeout,
         ActivityCheckTimeout,
         RecoveryTimeout,
         FenceTimeout,
-        ActivityCheckFailureRatio,
-        MaxActivityChecks,
+        ActivityCheckFailureThreshold,
+        ActivityCheckSuccessThreshold,
         MaxRecoveryAttempts,
         MaxActivityCheckInterval,
         MaxDegradedWaitTimeout,
@@ -50,11 +52,31 @@ public interface HAProvider<R extends HAResource> extends Adapter {
 
     boolean isHealthy(R r) throws HACheckerException;
 
+    /**
+     * One fresh power observation. The caller accumulates OFF observations across
+     * separate health tasks; an unanswered probe or cached state is UNKNOWN.
+     */
+    default PowerObservation checkPowerState(R r) throws HACheckerException {
+        return PowerObservation.UNKNOWN;
+    }
+
+    default long getPowerOffConfirmations(R r) {
+        return 3L;
+    }
+
+    default long getPowerOffMaxInterval(R r) {
+        return 60L;
+    }
+
     boolean hasActivity(R r, DateTime afterThis) throws HACheckerException;
 
     boolean recover(R r) throws HARecoveryException;
 
     boolean fence(R r) throws HAFenceException;
+
+    /** Persist the recovery roster before reboot can erase the source host's VM associations. */
+    default void prepareFenceSubResources(R r) {
+    }
 
     void fenceSubResources(R r);
 

@@ -27,6 +27,7 @@ import com.cloud.vm.VMInstanceVO;
 import org.apache.cloudstack.framework.config.ConfigKey;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * HighAvailabilityManager checks to make sure the VMs are running fine.
@@ -95,6 +96,7 @@ public interface HighAvailabilityManager extends Manager {
         Unknown,
         HostMaintenance,
         HostDown,
+        HostFenced,
         HostDegraded;
     }
 
@@ -136,6 +138,8 @@ public interface HighAvailabilityManager extends Manager {
      * @param reasonType reason for HA work
      */
     void scheduleRestartForVmsOnHost(HostVO host, boolean investigate, ReasonType reasonType);
+
+    void scheduleRestartForFencedVms(HostVO host, Map<Long, String> recordedVms);
 
     /**
      * Schedule the vm for migration.

@@ -82,8 +82,9 @@ public final class IpmitoolOutOfBandManagementDriver extends AdapterBase impleme
     }
 
     public OutOfBandManagementDriverResponse execute(final OutOfBandManagementDriverCommand cmd) {
+        final long deadline = System.nanoTime() + java.util.concurrent.TimeUnit.MILLISECONDS.toNanos(cmd.getTimeout().getMillis());
         if (!isIpmiToolBinAvailable) {
-            initDriver();
+            initDriver(cmd.getTimeout());
             if (!isIpmiToolBinAvailable) {
                 String message = "Aborting operation due to ipmitool binary not available for execution.";
                 logger.debug(message);
@@ -99,12 +100,16 @@ public final class IpmitoolOutOfBandManagementDriver extends AdapterBase impleme
             return response;
         }
         if (cmd instanceof OutOfBandManagementDriverPowerCommand) {
-            response = execute((OutOfBandManagementDriverPowerCommand) cmd);
+            long remainingMillis = java.util.concurrent.TimeUnit.NANOSECONDS.toMillis(deadline - System.nanoTime());
+            if (remainingMillis <= 0 || Thread.currentThread().isInterrupted()) {
+                return new OutOfBandManagementDriverResponse(null, "IPMI operation budget exhausted", false);
+            }
+            response = execute((OutOfBandManagementDriverPowerCommand) cmd, Duration.millis(remainingMillis));
         } else if (cmd instanceof OutOfBandManagementDriverChangePasswordCommand) {
             response = execute((OutOfBandManagementDriverChangePasswordCommand) cmd);
         }
 
-        if (response != null && !response.isSuccess() && response.getError().contains("RAKP 2 HMAC is invalid")) {
+        if (response != null && !response.isSuccess() && StringUtils.contains(response.getError(), "RAKP 2 HMAC is invalid")) {
             String message = String.format("Setting authFailure as 'true' due to [%s].", response.getError());
             logger.debug(message);
             response.setAuthFailure(true);
@@ -112,16 +117,16 @@ public final class IpmitoolOutOfBandManagementDriver extends AdapterBase impleme
         return response;
     }
 
-    private OutOfBandManagementDriverResponse execute(final OutOfBandManagementDriverPowerCommand cmd) {
+    private OutOfBandManagementDriverResponse execute(final OutOfBandManagementDriverPowerCommand cmd, Duration timeout) {
         List<String> ipmiToolCommands = IPMITOOL.getIpmiToolCommandArgs(IpmiToolPath.value(),
                 IpmiToolInterface.value(),
                 IpmiToolRetries.value(),
                 cmd.getOptions(), "chassis", "power", IPMITOOL.parsePowerCommand(cmd.getPowerOperation()));
 
-        final OutOfBandManagementDriverResponse response = IPMITOOL.executeCommands(ipmiToolCommands, cmd.getTimeout());
+        final OutOfBandManagementDriverResponse response = IPMITOOL.executeCommands(ipmiToolCommands, timeout);
 
         String oneLineCommand = StringUtils.join(IPMITOOL.getSanatisedCommandStrings(ipmiToolCommands), " ");
-        String result = response.getResult().trim();
+        String result = StringUtils.trimToEmpty(response.getResult());
 
         if (response.isSuccess()) {
             logger.debug(String.format("The command [%s] was successful and got the result [%s].", oneLineCommand, result));
@@ -144,9 +149,13 @@ public final class IpmitoolOutOfBandManagementDriver extends AdapterBase impleme
     }
 
     private void initDriver() {
+        initDriver(org.apache.cloudstack.utils.process.ProcessRunner.DEFAULT_MAX_TIMEOUT);
+    }
+
+    private void initDriver(Duration timeout) {
         isDriverEnabled = true;
-        final OutOfBandManagementDriverResponse output = IPMITOOL.executeCommands(Arrays.asList(IpmiToolPath.value(), "-V"));
-        if (output.isSuccess() && output.getResult().startsWith("ipmitool version")) {
+        final OutOfBandManagementDriverResponse output = IPMITOOL.executeCommands(Arrays.asList(IpmiToolPath.value(), "-V"), timeout);
+        if (output.isSuccess() && StringUtils.startsWith(output.getResult(), "ipmitool version")) {
             isIpmiToolBinAvailable = true;
             logger.debug(String.format("OutOfBandManagementDriver ipmitool initialized [%s].", output.getResult()));
         } else {

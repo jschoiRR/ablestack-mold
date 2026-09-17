@@ -21,24 +21,24 @@ import org.apache.cloudstack.framework.config.ConfigKey;
 
 public interface KVMHAConfig {
 
-    ConfigKey<Long> KvmHAHealthCheckTimeout = new ConfigKey<>("Advanced", Long.class, "kvm.ha.health.check.timeout", "10",
+    public static final ConfigKey<Long> KvmHAHealthCheckTimeout = new ConfigKey<>("Advanced", Long.class, "kvm.ha.health.check.timeout", "20",
             "The maximum length of time, in seconds, expected for an health check to complete.", true, ConfigKey.Scope.Cluster);
 
     ConfigKey<Long> KvmHAActivityCheckTimeout = new ConfigKey<>("Advanced", Long.class, "kvm.ha.activity.check.timeout", "60",
             "The maximum length of time, in seconds, expected for an activity check to complete.", true, ConfigKey.Scope.Cluster);
 
     public static final ConfigKey<Long> KvmHAActivityCheckInterval = new ConfigKey<>("Advanced", Long.class, "kvm.ha.activity.check.interval", "5",
-            "The interval, in seconds, between activity checks.", true, ConfigKey.Scope.Cluster);
+            "Minimum seconds between activity checks. HA polling and alternating health checks can extend the actual interval.", true, ConfigKey.Scope.Cluster);
 
-    public static final ConfigKey<Long> KvmHAActivityCheckMaxAttempts = new ConfigKey<>("Advanced", Long.class, "kvm.ha.activity.check.max.attempts", "7",
-            "The maximum number of activity check attempts to perform before deciding to recover or degrade a resource.", true, ConfigKey.Scope.Cluster);
-
-    public static final ConfigKey<Double> KvmHAActivityCheckFailureThreshold = new ConfigKey<>("Advanced", Double.class, "kvm.ha.activity.check.failure.ratio", "0.5",
-            "The activity check failure threshold ratio. This is used with the activity check maximum attempts for deciding to recover or degrade a resource. For most environments, please keep this value above 0.5.",
+    public static final ConfigKey<Long> KvmHAActivityCheckFailureThreshold = new ConfigKey<>("Advanced", Long.class, "kvm.ha.activity.check.failure.threshold", "4",
+            "Consecutive DEAD activity observations required to enter recovery. Must be positive. ALIVE or UNKNOWN resets the failure sequence; observation has no total attempt limit.",
             true, ConfigKey.Scope.Cluster);
 
     public static final ConfigKey<Long> KvmHADegradedMaxPeriod = new ConfigKey<>("Advanced", Long.class, "kvm.ha.degraded.max.period", "60",
-            "The maximum length of time, in seconds, a resource can be in degraded state where only health checks are performed.", true, ConfigKey.Scope.Cluster);
+            "Legacy degraded wait setting retained for compatibility. Continuous HA observation now resumes activity checks at the regular activity interval without this pause.", true, ConfigKey.Scope.Cluster);
+
+    public static final ConfigKey<Long> KvmHAActivityCheckSuccessThreshold = new ConfigKey<>("Advanced", Long.class, "kvm.ha.activity.check.success.threshold", "3",
+            "Consecutive ALIVE activity observations required to enter Degraded while host health remains abnormal. Must be positive. Activity checks continue in Degraded; only a healthy host check restores Available.", true, ConfigKey.Scope.Cluster);
 
     ConfigKey<Long> KvmHARecoverTimeout = new ConfigKey<>("Advanced", Long.class, "kvm.ha.recover.timeout", "60",
             "The maximum length of time, in seconds, expected for a recovery operation to complete.", true, ConfigKey.Scope.Cluster);
@@ -52,4 +52,23 @@ public interface KVMHAConfig {
 
     ConfigKey<Long> KvmHAFenceTimeout = new ConfigKey<>("Advanced", Long.class, "kvm.ha.fence.timeout", "60",
             "The maximum length of time, in seconds, expected for a fence operation to complete.", true, ConfigKey.Scope.Cluster);
+
+    public static final ConfigKey<Boolean> KvmHAPowerOffCheckEnabled = new ConfigKey<>("Advanced", Boolean.class, "kvm.ha.power.off.check.enabled", "true",
+            "Query BMC power once per health task and count consecutive fresh OFF responses across HA polls. Failed or unknown responses reset the sequence.", true, ConfigKey.Scope.Cluster);
+
+    public static final ConfigKey<Long> KvmHAPowerOffConfirmations = new ConfigKey<>("Advanced", Long.class, "kvm.ha.power.off.confirmations", "3",
+            "Consecutive fresh OFF observations across separate health tasks required for early detection. Must be at least 3. Independent of fencing verification.", true, ConfigKey.Scope.Cluster);
+
+    public static final ConfigKey<Long> KvmHAPowerOffMaxInterval = new ConfigKey<>("Advanced", Long.class, "kvm.ha.power.off.max.interval", "60",
+            "Maximum seconds between consecutive OFF observations for early detection. A longer gap starts a new sequence; this is not a wait. Must be between 1 and 3600.", true, ConfigKey.Scope.Cluster);
+
+    public static final ConfigKey<Long> KvmHAFencePowerOffConfirmations = new ConfigKey<>("Advanced", Long.class, "kvm.ha.fence.power.off.confirmations", "5",
+            "Consecutive fresh OFF responses required after the fencing OFF command before ON. Must be at least 3 and fit within the fence timeout.", true, ConfigKey.Scope.Cluster);
+
+    public static final ConfigKey<Long> KvmHAPowerCheckInterval = new ConfigKey<>("Advanced", Long.class, "kvm.ha.power.check.interval", "3",
+            "Seconds to wait between BMC observations during fencing verification only. Early detection queries once per health task without this wait. Must be at least 1.", true, ConfigKey.Scope.Cluster);
+
+    public static final ConfigKey<Long> KvmHAPowerCheckTimeout = new ConfigKey<>("Advanced", Long.class, "kvm.ha.power.check.timeout", "1",
+            "Maximum seconds for each live BMC power-status query. One query must fit within the health timeout; repeated fencing queries must fit within the fence timeout.", true, ConfigKey.Scope.Cluster);
+
 }

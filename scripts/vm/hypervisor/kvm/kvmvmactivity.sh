@@ -90,8 +90,16 @@ fi
 
 # First check: heartbeat file
 now=$(date +%s)
-hb=$(cat $hbFile)
+hb=$(cat "$hbFile" 2>/dev/null)
+if [ $? -ne 0 ] || ! [[ $hb =~ ^[0-9]+$ ]]; then
+    echo "### [HOST STATE : UNKNOWN] Heartbeat could not be read ###"
+    exit 2
+fi
 diff=$(expr $now - $hb)
+if [ "$diff" -lt 0 ]; then
+    echo "### [HOST STATE : UNKNOWN] Heartbeat clock is ahead ###"
+    exit 2
+fi
 if [ $diff -lt 61 ]
 then
     echo "### [HOST STATE : ALIVE] in [PoolType : NFS] ###"
@@ -105,8 +113,18 @@ then
 fi
 
 # Second check: disk activity check
-cd $MountPoint
-latestUpdateTime=$(stat -c %Y $(echo $UUIDList | sed 's/,/ /g') 2> /dev/null | sort -nr | head -1)
+cd "$MountPoint" || exit 2
+IFS=',' read -r -a volumes <<< "$UUIDList"
+updateTimes=$(stat -c %Y -- "${volumes[@]}" 2>/dev/null)
+if [ $? -ne 0 ]; then
+    echo "### [HOST STATE : UNKNOWN] Volume activity could not be read ###"
+    exit 2
+fi
+latestUpdateTime=$(printf '%s\n' "$updateTimes" | sort -nr | head -1)
+if ! [[ $latestUpdateTime =~ ^[0-9]+$ ]]; then
+    echo "### [HOST STATE : UNKNOWN] Invalid volume activity timestamp ###"
+    exit 2
+fi
 
 if [ ! -f $acFile ]; then
     echo "$SuspectTime:$latestUpdateTime:$MSTime" > $acFile

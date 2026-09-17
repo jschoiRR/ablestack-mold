@@ -79,15 +79,22 @@ getHbTime=$(
       -K "${skeyPath}${PoolAuthSecret}" \
       image-meta get "MOLD-HB-${HostIP}" "${HostIP}"
 )
-if [ $? -eq 0 ]; then
+if [ $? -eq 0 ] && [[ $getHbTime =~ ^[0-9]+$ ]]; then
    diff=$(expr $Timestamp - $getHbTime)
    getHbTimeFmt=$(date -d @${getHbTime} '+%Y-%m-%d %H:%M:%S')
    logger -p user.info -t MOLD-HA-AC "[Checking] 호스트:$HostIP | HB 파일 체크(RBD, 스토리지:$PoolName) > [현 시간:$CurrentTime | HB 파일 시간:$getHbTimeFmt | 시간 차이:$diff초]"
+   if [ "$diff" -lt 0 ]; then
+      echo "### [HOST STATE : UNKNOWN] Heartbeat clock is ahead ###"
+      exit 2
+   fi
    if [ $diff -le $interval ]; then
       logger -p user.info -t MOLD-HA-AC "[Result]   호스트:$HostIP | HB 체크 결과(RBD, 스토리지:$PoolName) > [HOST STATE : ALIVE]"
       echo "### [HOST STATE : ALIVE] in [PoolType : RBD] ###"
       exit 0
    fi
+else
+   echo "### [HOST STATE : UNKNOWN] Heartbeat could not be read ###"
+   exit 2
 fi
 
 if [ -z "$UUIDList" ]; then
@@ -97,6 +104,7 @@ if [ -z "$UUIDList" ]; then
 fi
 
 # 2차 확인 : RBD 이미지 사용 여부 체크
+unknownActivity=false
 for img in $(echo "$UUIDList" | tr ',' ' '); do
    # rbd status 명령어 실행 (5초 타임아웃 적용)
    output=$(timeout 5 rbd status "${PoolName}/${img}" \
@@ -105,9 +113,10 @@ for img in $(echo "$UUIDList" | tr ',' ' '); do
       -K "${skeyPath}${PoolAuthSecret}" 2>&1)
    res=$?
 
-   # rbd status 명령어 자체가 실패했거나 (exit code != 0) Watchers: none 인 경우 패스
+   # 조회 오류는 UNKNOWN으로 남긴다. 성공한 Watchers: none만 비활동 증거다.
    if [ $res -ne 0 ]; then
       logger -p user.warn -t MOLD-HA-AC "[Checking] 호스트:${HostIP} | rbd status 명령어 실패 (${img}) : $output"
+      unknownActivity=true
       continue
    fi
 
@@ -115,20 +124,29 @@ for img in $(echo "$UUIDList" | tr ',' ' '); do
       continue
    fi
 
-   # Watcher가 존재할 때, 호스트의 Libvirt 통신 포트 상태를 검증 (유령 Watcher 방지)
-   # 소프트 셧다운 시 Ping(NIC)이 꺼지기까지 수십 초가 걸리지만, Libvirt 서비스는 즉시 종료됩니다.
-   # 즉각적인 DEAD 감지를 위해 CloudStack KVM 기본 포트인 TCP 16509 또는 TLS 16514 개방 여부를 확인합니다.
-   if ! (timeout 1 bash -c "</dev/tcp/$HostIP/16509" >/dev/null 2>&1 || timeout 1 bash -c "</dev/tcp/$HostIP/16514" >/dev/null 2>&1); then
-      logger -p user.warn -t MOLD-HA-AC "[Checking] 호스트:${HostIP} | ${img} 볼륨에 Watcher 존재하나 Libvirt 포트(16509/16514) 닫힘 -> 소프트 셧다운 또는 유령(Stale) Watcher로 간주"
+   if ! echo "$output" | grep -q '^[[:space:]]*watcher='; then
+      unknownActivity=true
       continue
    fi
 
-   # rbd status 성공 + Watcher 존재 + 호스트 Ping 정상 => ALIVE
+   # Watcher가 있어도 포트 응답만으로 호스트 정지를 증명할 수 없다.
+   # Libvirt 포트 조회 실패는 UNKNOWN이며 DEAD로 집계하지 않는다.
+   if ! (timeout 1 bash -c "</dev/tcp/$HostIP/16509" >/dev/null 2>&1 || timeout 1 bash -c "</dev/tcp/$HostIP/16514" >/dev/null 2>&1); then
+      logger -p user.warn -t MOLD-HA-AC "[Checking] 호스트:${HostIP} | ${img} Watcher 존재, Libvirt 포트(16509/16514) 응답 없음 -> 활동 상태 UNKNOWN"
+      unknownActivity=true
+      continue
+   fi
+
+   # rbd status 성공 + Watcher 존재 + Libvirt 포트 응답 => ALIVE
    logger -p user.info -t MOLD-HA-AC "[Result]   호스트:${HostIP} | AC 체크 결과(RBD, 스토리지:$PoolName) > [HOST STATE : ALIVE] ${img} 볼륨에 Watcher 모니터 존재 및 네트워크 응답 확인"
    echo "### [HOST STATE : ALIVE] in [PoolType : RBD] ###"
    exit 0
 done
-# 끝까지 빠져나왔으면 DEAD
+if [ "$unknownActivity" = true ]; then
+   echo "### [HOST STATE : UNKNOWN] Unable to verify all volume watchers or remote activity ###"
+   exit 2
+fi
+# Every volume was successfully observed without watchers.
 logger -p user.info -t MOLD-HA-AC "[Result]   호스트:${HostIP} | HB 체크 결과(RBD, 스토리지:$PoolName) > [HOST STATE : DEAD] 볼륨 이미지 목록의 정상 동작을 확인할 수 없음 => 호스트가 다운된 것으로 간주됨"
 echo "### [HOST STATE : DEAD] Unable to confirm normal activity of volume image list => Considered host down in [PoolType : RBD] ###"
 exit 0

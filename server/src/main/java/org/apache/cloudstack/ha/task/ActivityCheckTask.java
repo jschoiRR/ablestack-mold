@@ -19,12 +19,10 @@ package org.apache.cloudstack.ha.task;
 
 import java.util.concurrent.ExecutorService;
 
-import javax.inject.Inject;
 
 import org.apache.cloudstack.api.ApiCommandResourceType;
 import org.apache.cloudstack.context.CallContext;
 import org.apache.cloudstack.ha.HAConfig;
-import org.apache.cloudstack.ha.HAManager;
 import org.apache.cloudstack.ha.HAResource;
 import org.apache.cloudstack.ha.HAResourceCounter;
 import org.apache.cloudstack.ha.provider.HACheckerException;
@@ -39,19 +37,16 @@ import com.cloud.event.EventTypes;
 public class ActivityCheckTask extends BaseHATask {
 
 
-    @Inject
-    private HAManager haManager;
-
     private long disconnectTime;
-    private long maxActivityChecks;
-    private double activityCheckFailureRatio;
+    private long activityCheckFailureThreshold;
+    private long activityCheckSuccessThreshold;
 
     public ActivityCheckTask(final HAResource resource, final HAProvider<HAResource> haProvider, final HAConfig haConfig, final HAProvider.HAProviderConfig haProviderConfig,
             final ExecutorService executor, final long disconnectTime) {
         super(resource, haProvider, haConfig, haProviderConfig, executor);
         this.disconnectTime = disconnectTime;
-        this.maxActivityChecks = (Long)haProvider.getConfigValue(HAProviderConfig.MaxActivityChecks, resource);
-        this.activityCheckFailureRatio = (Double)haProvider.getConfigValue(HAProviderConfig.ActivityCheckFailureRatio, resource);
+        this.activityCheckFailureThreshold = (Long)haProvider.getConfigValue(HAProviderConfig.ActivityCheckFailureThreshold, resource);
+        this.activityCheckSuccessThreshold = (Long)haProvider.getConfigValue(HAProviderConfig.ActivityCheckSuccessThreshold, resource);
     }
 
     public boolean performAction() throws HACheckerException {
@@ -59,52 +54,69 @@ public class ActivityCheckTask extends BaseHATask {
     }
 
     public synchronized void processResult(boolean result, Throwable t) {
+        if (!isCurrentResult()) {
+            return;
+        }
         final HAConfig haConfig = getHaConfig();
-        final HAResourceCounter counter = haManager.getHACounter(haConfig.getResourceId(), haConfig.getResourceType());
+        final HAResourceCounter counter = getCounter();
+        // Only a validated Activity result consumes the fallback request. Merely
+        // reserving a task, or rejecting its submission, must not consume it.
+        counter.completeActivityRecheck();
 
-        if (t != null && t instanceof HACheckerException) {
-            haManager.transitionHAState(HAConfig.Event.Ineligible, getHaConfig());
-            counter.resetActivityCounter();
+        if (t != null) {
+            // An unavailable witness proves neither activity nor inactivity.
+            counter.breakActivitySequences();
+            logger.warn("Activity check is unknown for {}: {}", getResource(), t.toString());
+            continueObservation(haConfig);
             return;
         }
 
-        long activityCounter = counter.getActivityCheckCounter();
-        logger.debug("Activity check #{}, result: {} for the resource {}. Max activity checks configured is {}", activityCounter + 1, result, getResource(), maxActivityChecks);
+        final boolean validFailureThreshold = activityCheckFailureThreshold > 0;
+        if ((result && activityCheckSuccessThreshold < 1) || (!result && !validFailureThreshold)) {
+            counter.breakActivitySequences();
+            logger.warn("Invalid activity {} threshold for {}", result ? "success" : "failure", getResource());
+            continueObservation(haConfig);
+            return;
+        }
+
         counter.incrActivityCounter(!result);
 
-        long requiredFailures = (long) Math.floor(maxActivityChecks * activityCheckFailureRatio) + 1;
-        long remainingChecks = maxActivityChecks - counter.getActivityCheckCounter();
-        long maxPossibleConsecutiveFailures = counter.getConsecutiveActivityCheckFailureCounter() + remainingChecks;
+        final String message = String.format("[VM Activity Check] Observations: %d | Consecutive ALIVE: %d (Threshold: %d) | Consecutive DEAD: %d (Threshold: %s)",
+                counter.getActivityCheckCounter(), counter.getConsecutiveActivityCheckSuccessCounter(), activityCheckSuccessThreshold,
+                counter.getConsecutiveActivityCheckFailureCounter(), validFailureThreshold ? Long.toString(activityCheckFailureThreshold) : "invalid");
+        // Continuous degraded observation must not create one database event per probe forever.
+        logger.debug(message);
 
-        int ratioPercent = (int) (activityCheckFailureRatio * 100);
-        String message = String.format("[VM Activity Check] Executions: %d/%d | Consecutive Failures: %d (Threshold: %d, Failure Ratio: %d%%)",
-                            counter.getActivityCheckCounter(),
-                            maxActivityChecks,
-                            counter.getConsecutiveActivityCheckFailureCounter(),
-                            requiredFailures,
-                            ratioPercent);
-        ActionEventUtils.onActionEvent(CallContext.current().getCallingUserId(), CallContext.current().getCallingAccountId(),
-                                        Domain.ROOT_DOMAIN, EventTypes.EVENT_HA_STATE_TRANSITION, message, haConfig.getResourceId(), ApiCommandResourceType.Host.toString());
-
-        if (counter.getConsecutiveActivityCheckFailureCounter() >= requiredFailures) {
-            haManager.transitionHAState(HAConfig.Event.ActivityCheckFailureOverThresholdRatio, haConfig);
-            counter.resetActivityCounter();
-            return;
-        }
-
-        if (maxPossibleConsecutiveFailures < requiredFailures) {
-            if (haManager.transitionHAState(HAConfig.Event.ActivityCheckFailureUnderThresholdRatio, haConfig)) {
-                counter.markResourceDegraded();
+        if (!result && counter.getConsecutiveActivityCheckFailureCounter() >= activityCheckFailureThreshold) {
+            if (getHaManager().transitionHAState(HAConfig.Event.ActivityCheckFailureOverThresholdRatio, haConfig)) {
+                recordDecision(haConfig, message);
+                counter.resetActivityCounter();
             }
-            counter.resetActivityCounter();
             return;
         }
 
-        if (counter.getActivityCheckCounter() < maxActivityChecks) {
-            haManager.transitionHAState(HAConfig.Event.TooFewActivityCheckSamples, haConfig);
+        if (result && haConfig.getState() == HAConfig.HAState.Checking
+                && counter.getConsecutiveActivityCheckSuccessCounter() >= activityCheckSuccessThreshold) {
+            if (getHaManager().transitionHAState(HAConfig.Event.ActivityCheckSuccessThresholdReached, haConfig)) {
+                counter.markResourceDegraded();
+                recordDecision(haConfig, message);
+            }
             return;
         }
 
-        counter.resetActivityCounter();
+        continueObservation(haConfig);
+    }
+
+    private void continueObservation(HAConfig haConfig) {
+        if (haConfig.getState() == HAConfig.HAState.Checking) {
+            getHaManager().transitionHAState(HAConfig.Event.TooFewActivityCheckSamples, haConfig);
+        }
+        // Keep the last confirmed Degraded state while observing ALIVE, UNKNOWN,
+        // or fewer than the required consecutive DEAD results.
+    }
+
+    private void recordDecision(HAConfig haConfig, String message) {
+        ActionEventUtils.onActionEvent(CallContext.current().getCallingUserId(), CallContext.current().getCallingAccountId(),
+                Domain.ROOT_DOMAIN, EventTypes.EVENT_HA_STATE_TRANSITION, message, haConfig.getResourceId(), ApiCommandResourceType.Host.toString());
     }
 }

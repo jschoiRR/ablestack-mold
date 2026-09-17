@@ -18,6 +18,10 @@ package com.cloud.hypervisor.kvm.resource;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.joda.time.Duration;
+import com.cloud.storage.Storage.StoragePoolType;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -42,9 +46,10 @@ public class KVMHACheckerTest {
                     Mockito.when(pool.getPool()).thenReturn(storage);
                     boolean alive = (mask & (1 << family)) != 0;
                     if (family == 2) {
-                        Mockito.when(storage.checkingHeartBeatRBD(pool, host, "volume-a,volume-b")).thenReturn(alive);
+                        Mockito.when(storage.getType()).thenReturn(StoragePoolType.RBD);
+                        Mockito.when(storage.checkingHeartBeatRBD(eq(pool), eq(host), eq("volume-a,volume-b"), any(Duration.class))).thenReturn(alive);
                     } else {
-                        Mockito.when(storage.hasHeartBeat(pool, host)).thenReturn(alive);
+                        Mockito.when(storage.hasHeartBeat(eq(pool), eq(host), any(Duration.class))).thenReturn(alive);
                     }
                     groups.add(List.of(pool));
                 }
@@ -69,7 +74,7 @@ public class KVMHACheckerTest {
         HAStoragePool pool = Mockito.mock(HAStoragePool.class);
         KVMStoragePool storage = Mockito.mock(KVMStoragePool.class);
         Mockito.when(pool.getPool()).thenReturn(storage);
-        Mockito.when(storage.hasHeartBeat(pool, host)).thenReturn(null);
+        Mockito.when(storage.hasHeartBeat(eq(pool), eq(host), any(Duration.class))).thenReturn(null);
         for (boolean reportOneFailure : new boolean[]{false, true}) {
             assertNull(new KVMHAChecker(List.of(pool), List.of(), List.of(), List.of(), host, reportOneFailure, null).hasHeartBeat());
         }

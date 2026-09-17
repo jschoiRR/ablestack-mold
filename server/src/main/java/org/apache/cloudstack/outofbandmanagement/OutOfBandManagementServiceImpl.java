@@ -211,7 +211,7 @@ public class OutOfBandManagementServiceImpl extends ManagerBase implements OutOf
         }
     }
 
-    private boolean transitionPowerState(OutOfBandManagement.PowerState.Event event, OutOfBandManagement outOfBandManagementHost) {
+    protected boolean transitionPowerState(OutOfBandManagement.PowerState.Event event, OutOfBandManagement outOfBandManagementHost) {
         if (outOfBandManagementHost == null) {
             return false;
         }
@@ -441,21 +441,39 @@ public class OutOfBandManagementServiceImpl extends ManagerBase implements OutOf
 
         checkOutOfBandManagementEnabledByZoneClusterHost(host);
         final OutOfBandManagement outOfBandManagementConfig = getConfigForHost(host);
-        final ImmutableMap<OutOfBandManagement.Option, String> options = getOptions(outOfBandManagementConfig);
         final OutOfBandManagementDriver driver = getDriver(outOfBandManagementConfig);
+        return executePowerOperation(host, powerOperation, timeout, outOfBandManagementConfig, driver);
+    }
+
+    protected OutOfBandManagementResponse executePowerOperation(final Host host, final OutOfBandManagement.PowerOperation powerOperation,
+            final Long timeout, final OutOfBandManagement outOfBandManagementConfig, final OutOfBandManagementDriver driver) {
+        final ImmutableMap<OutOfBandManagement.Option, String> options = getOptions(outOfBandManagementConfig);
         Long actionTimeOut = timeout;
         if (actionTimeOut == null) {
             actionTimeOut = ActionTimeout.valueIn(host.getClusterId());
         }
 
+        if (actionTimeOut == null || actionTimeOut <= 0) {
+            throw new CloudRuntimeException("Out-of-band action timeout must be positive");
+        }
+        final long actionDeadline = System.nanoTime() + java.util.concurrent.TimeUnit.SECONDS.toNanos(actionTimeOut);
         final OutOfBandManagementDriverPowerCommand currnetStatusCmd = new OutOfBandManagementDriverPowerCommand(options, actionTimeOut, OutOfBandManagement.PowerOperation.STATUS);
         final OutOfBandManagementDriverResponse currentDriverResponse = driver.execute(currnetStatusCmd);
         if (currentDriverResponse == null) {
             throw new CloudRuntimeException(String.format("Out-of-band Management action [%s] on %s failed due to no response from the driver", OutOfBandManagement.PowerOperation.STATUS, host));
         }
-        final OutOfBandManagementResponse response = new OutOfBandManagementResponse(outOfBandManagementDao.findByHost(host.getId()));
+        final OutOfBandManagementResponse response = new OutOfBandManagementResponse(outOfBandManagementConfig);
+        // STATUS must report this observation, never the previously persisted state.
+        final OutOfBandManagement.PowerState observedState = currentDriverResponse.isSuccess() && !currentDriverResponse.hasAuthFailure()
+                && currentDriverResponse.getPowerState() != null ? currentDriverResponse.getPowerState() : OutOfBandManagement.PowerState.Unknown;
+        response.setPowerState(observedState);
         OutOfBandManagement.PowerState.Event curStatus = currentDriverResponse.toEvent();
-        if(powerOperation.toString().toLowerCase().equals(curStatus.name().toLowerCase())){
+        if (System.nanoTime() >= actionDeadline || Thread.currentThread().isInterrupted()) {
+            throw new CloudRuntimeException("Out-of-band status completed after its deadline");
+        }
+        if (currentDriverResponse.isSuccess() && !currentDriverResponse.hasAuthFailure()
+                && observedState != OutOfBandManagement.PowerState.Unknown
+                && powerOperation.toString().equalsIgnoreCase(curStatus.name())) {
             response.setSuccess(true);
             response.setResultDescription("The currently requested action and host status value are the same.");
             response.setId(host.getUuid());
@@ -463,18 +481,29 @@ public class OutOfBandManagementServiceImpl extends ManagerBase implements OutOf
             return response;
         }
 
-        final OutOfBandManagementDriverPowerCommand cmd = new OutOfBandManagementDriverPowerCommand(options, actionTimeOut, powerOperation);
-        final OutOfBandManagementDriverResponse driverResponse = driver.execute(cmd);
+        final OutOfBandManagementDriverResponse driverResponse;
+        if (powerOperation == OutOfBandManagement.PowerOperation.STATUS) {
+            driverResponse = currentDriverResponse;
+        } else {
+            long remainingSeconds = java.util.concurrent.TimeUnit.NANOSECONDS.toSeconds(actionDeadline - System.nanoTime());
+            if (remainingSeconds <= 0 || Thread.currentThread().isInterrupted()) {
+                throw new CloudRuntimeException("Out-of-band action budget exhausted before power command");
+            }
+            driverResponse = driver.execute(new OutOfBandManagementDriverPowerCommand(options, remainingSeconds, powerOperation));
+        }
+        if (System.nanoTime() >= actionDeadline || Thread.currentThread().isInterrupted()) {
+            throw new CloudRuntimeException("Out-of-band action completed after its deadline");
+        }
 
         if (driverResponse == null) {
             throw new CloudRuntimeException(String.format("Out-of-band Management action [%s] on %s failed due to no response from the driver", powerOperation, host));
         }
 
         if (powerOperation.equals(OutOfBandManagement.PowerOperation.STATUS)) {
-            transitionPowerState(driverResponse.toEvent(), outOfBandManagementConfig);
+            transitionPowerState(observedState.toEvent(), outOfBandManagementConfig);
         }
 
-        if (!driverResponse.isSuccess()) {
+        if (!driverResponse.isSuccess() || driverResponse.hasAuthFailure()) {
             String errorMessage = String.format("Out-of-band Management action [%s] on %s failed with error: %s", powerOperation, host, driverResponse.getError());
             if (driverResponse.hasAuthFailure()) {
                 errorMessage = String.format("Out-of-band Management action [%s] on %s failed due to authentication error: %s. Please check configured credentials.", powerOperation, host, driverResponse.getError());

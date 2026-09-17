@@ -126,8 +126,16 @@ check_hbLog() {
   Timestamp=$(date +%s)
   CurrentTime=$(date +"%Y-%m-%d %H:%M:%S")
 
-  getHbTime=$(cat $hbFile)
+  getHbTime=$(cat "$hbFile" 2>/dev/null)
+  if [ $? -ne 0 ] || ! [[ $getHbTime =~ ^[0-9]+$ ]]; then
+    echo "### [HOST STATE : UNKNOWN] Heartbeat could not be read ###"
+    return 2
+  fi
   diff=$(expr $Timestamp - $getHbTime)
+  if [ "$diff" -lt 0 ]; then
+    echo "### [HOST STATE : UNKNOWN] Heartbeat clock is ahead ###"
+    return 2
+  fi
 
   getHbTimeFmt=$(date -d @${getHbTime} '+%Y-%m-%d %H:%M:%S')
   logger -p user.info -t MOLD-HA-HB "[Checking] 호스트:$HostIP | HB 파일 체크(GFS, 스토리지:$MountPoint) > [현 시간:$CurrentTime | HB 파일 시간:$getHbTimeFmt | 시간 차이:$diff초]"
@@ -160,7 +168,7 @@ check_hbLog() {
 
 if [ "$rflag" == "1" ]; then
   check_hbLog
-  exit 0
+  exit $?
 elif [ "$cflag" == "1" ]; then
   /usr/bin/logger -t heartbeat "kvmheartbeat_gfs.sh will reboot system because it was unable to write the heartbeat to the storage."
   sync &

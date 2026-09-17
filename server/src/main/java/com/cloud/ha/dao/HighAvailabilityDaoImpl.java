@@ -96,20 +96,20 @@ public class HighAvailabilityDaoImpl extends GenericDaoBase<HaWorkVO, Long> impl
 
         FutureHaWorkSearch = createSearchBuilder();
         FutureHaWorkSearch.and("instance", FutureHaWorkSearch.entity().getInstanceId(), Op.EQ);
-        FutureHaWorkSearch.and("type", FutureHaWorkSearch.entity().getType(), Op.EQ);
+        FutureHaWorkSearch.and("type", FutureHaWorkSearch.entity().getWorkType(), Op.EQ);
         FutureHaWorkSearch.and("id", FutureHaWorkSearch.entity().getId(), Op.GT);
         FutureHaWorkSearch.done();
 
         RunningHaWorkSearch = createSearchBuilder();
         RunningHaWorkSearch.and("instance", RunningHaWorkSearch.entity().getInstanceId(), Op.EQ);
-        RunningHaWorkSearch.and("type", RunningHaWorkSearch.entity().getType(), Op.EQ);
+        RunningHaWorkSearch.and("type", RunningHaWorkSearch.entity().getWorkType(), Op.EQ);
         RunningHaWorkSearch.and("taken", RunningHaWorkSearch.entity().getDateTaken(), Op.NNULL);
         RunningHaWorkSearch.and("step", RunningHaWorkSearch.entity().getStep(), Op.NIN);
         RunningHaWorkSearch.done();
 
         PendingHaWorkSearch = createSearchBuilder();
         PendingHaWorkSearch.and("instance", PendingHaWorkSearch.entity().getInstanceId(), Op.EQ);
-        PendingHaWorkSearch.and("type", PendingHaWorkSearch.entity().getType(), Op.EQ);
+        PendingHaWorkSearch.and("type", PendingHaWorkSearch.entity().getWorkType(), Op.EQ);
         PendingHaWorkSearch.and("step", PendingHaWorkSearch.entity().getStep(), Op.NIN);
         PendingHaWorkSearch.done();
 

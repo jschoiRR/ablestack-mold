@@ -134,11 +134,20 @@ write_hbLog() {
 
 check_hbLog() {
   now=$(date +%s)
-  hb=$(cat $hbFile)
-  diff=`expr $now - $hb`
-  if [ $diff -gt $interval ]
-  then
-    return $diff
+  hb=$(cat "$hbFile" 2>/dev/null)
+  if [ $? -ne 0 ] || ! [[ $hb =~ ^[0-9]+$ ]]; then
+    echo "### [HOST STATE : UNKNOWN] Heartbeat could not be read ###"
+    return 2
+  fi
+  diff=$((now - hb))
+  if [ "$diff" -lt 0 ]; then
+    echo "### [HOST STATE : UNKNOWN] Heartbeat clock is ahead ###"
+    return 2
+  fi
+  if [ "$diff" -gt "$interval" ]; then
+    echo "### [HOST STATE : DEAD] Set maximum interval: ($interval seconds), Actual difference: ($diff seconds) => Considered host down in [PoolType : NFS] ###"
+  else
+    echo "### [HOST STATE : ALIVE] in [PoolType : NFS] ###"
   fi
   return 0
 }
@@ -146,14 +155,7 @@ check_hbLog() {
 if [ "$rflag" == "1" ]
 then
   check_hbLog
-  diff=$?
-  if [ $diff == 0 ]
-  then
-    echo "### [HOST STATE : ALIVE] in [PoolType : NFS] ###"
-  else
-    echo "### [HOST STATE : DEAD] Set maximum interval: ($interval seconds), Actual difference: ($diff seconds) => Considered host down in [PoolType : NFS] ###"
-  fi
-  exit 0
+  exit $?
 elif [ "$cflag" == "1" ]
 then
   /usr/bin/logger -t heartbeat "kvmheartbeat.sh will reboot system because it was unable to write the heartbeat to the storage."
