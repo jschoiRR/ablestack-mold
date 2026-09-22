@@ -949,6 +949,8 @@ import com.cloud.utils.crypt.DBEncryptionUtil;
 import com.cloud.utils.db.DB;
 import com.cloud.utils.db.Filter;
 import com.cloud.utils.db.GlobalLock;
+import com.cloud.vm.snapshot.dao.VMSnapshotDao;
+import com.cloud.host.Status;
 import com.cloud.utils.db.JoinBuilder;
 import com.cloud.utils.db.JoinBuilder.JoinType;
 import com.cloud.utils.db.SearchBuilder;
@@ -2539,6 +2541,7 @@ public class ManagementServerImpl extends MutualExclusiveIdsManagerBase implemen
 
     private ListHostLunDevicesResponse createResponse(ListHostLunDeviceAnswer lunAnswer, Long hostId) {
         ListHostLunDevicesResponse response = new ListHostLunDevicesResponse();
+        response.setDeviceUsageStatus(lunAnswer.getDeviceUsageStatus());
 
         List<String> deviceNames = lunAnswer.getHostDevicesNames();
         List<String> deviceDescriptions = lunAnswer.getHostDevicesTexts();
@@ -2650,6 +2653,7 @@ public class ManagementServerImpl extends MutualExclusiveIdsManagerBase implemen
 
     private ListHostScsiDevicesResponse createResponse(ListHostScsiDeviceAnswer scsiAnswer, Long hostId) {
         ListHostScsiDevicesResponse response = new ListHostScsiDevicesResponse();
+        response.setDeviceUsageStatus(scsiAnswer.getDeviceUsageStatus());
 
         List<String> deviceNames = scsiAnswer.getHostDevicesNames();
         List<String> deviceDescriptions = scsiAnswer.getHostDevicesTexts();
@@ -2986,8 +2990,83 @@ public class ManagementServerImpl extends MutualExclusiveIdsManagerBase implemen
         return listResponse;
     }
 
+    @Inject
+    private VMSnapshotDao deviceVmSnapshotDao;
+
+    /** Validate before either guest operations or persistent device settings are changed. */
+    String validateVmDeviceMutation(Long hostId, String deviceName, Long vmId, String currentVmId, boolean pci) {
+        List<DetailVO> allocations = findDeviceAllocationDetails(deviceName).stream()
+                .filter(d -> Objects.equals(d.getHostId(), hostId)
+                        && matchesStoredDeviceName(d.getName(), deviceName) && StringUtils.isNotBlank(d.getValue()))
+                .collect(Collectors.toList());
+        VMInstanceVO vm;
+        if (vmId != null) {
+            if (!allocations.isEmpty()) {
+                throw new CloudRuntimeException("Device is already allocated; release its existing allocation first");
+            }
+            vm = _vmInstanceDao.findById(vmId);
+        } else {
+            if (StringUtils.isBlank(currentVmId)) {
+                if (allocations.size() != 1) {
+                    throw new CloudRuntimeException("An unambiguous current VM is required to release a device");
+                }
+                currentVmId = allocations.get(0).getValue();
+            }
+            vm = _vmInstanceDao.findByUuid(currentVmId);
+            if (vm == null && currentVmId.matches("[0-9]+")) {
+                vm = _vmInstanceDao.findById(Long.valueOf(currentVmId));
+            }
+            if (vm == null) {
+                throw new CloudRuntimeException("Current VM cannot be verified; device settings were not removed");
+            }
+            final String id = String.valueOf(vm.getId());
+            final String uuid = vm.getUuid();
+            if (allocations.stream().noneMatch(d -> id.equals(d.getValue()) || uuid.equals(d.getValue()))) {
+                throw new CloudRuntimeException("Device allocation does not belong to the selected VM");
+            }
+        }
+        if (vm == null || vm.getRemoved() != null || vm.getHypervisorType() != HypervisorType.KVM) {
+            throw new CloudRuntimeException("A valid KVM VM is required for device operations");
+        }
+        _accountMgr.checkAccess(CallContext.current().getCallingAccount(), null, true, vm);
+        Long vmHostId = vm.getHostId() != null ? vm.getHostId() : vm.getLastHostId();
+        if (!Objects.equals(hostId, vmHostId)) {
+            throw new CloudRuntimeException("Device host does not match the VM host");
+        }
+        HostVO host = _hostDao.findById(hostId);
+        if (host == null || host.getStatus() != Status.Up) {
+            throw new CloudRuntimeException("Device host is unavailable");
+        }
+        if (pci ? vm.getState() != State.Stopped : vm.getState() != State.Running) {
+            throw new CloudRuntimeException(pci ? "Stop the VM before changing PCI allocation settings"
+                    : "VM must be Running for this device operation");
+        }
+        if (!deviceVmSnapshotDao.findByVm(vm.getId()).isEmpty()) {
+            throw new CloudRuntimeException("Remove VM snapshots before changing device topology");
+        }
+        return String.valueOf(vm.getId());
+    }
+
    @Override
     public ListResponse<UpdateHostDevicesResponse> updateHostDevices(UpdateHostDevicesCmd cmd) {
+        GlobalLock lock = GlobalLock.getInternLock("vm-host-devices-" + cmd.getHostId());
+        try {
+            if (!lock.lock(10)) {
+                throw new CloudRuntimeException("Another device operation is in progress on this host");
+            }
+            try {
+                cmd.setCurrentVmId(validateVmDeviceMutation(cmd.getHostId(), cmd.getHostDeviceName(),
+                        cmd.getVirtualMachineId(), cmd.getCurrentVmId(), true));
+                return updateHostDevicesInternal(cmd);
+            } finally {
+                lock.unlock();
+            }
+        } finally {
+            lock.releaseRef();
+        }
+    }
+
+    private ListResponse<UpdateHostDevicesResponse> updateHostDevicesInternal(UpdateHostDevicesCmd cmd) {
         Long hostId = cmd.getHostId();
         String hostDeviceName = cmd.getHostDeviceName();
         Long vmId = cmd.getVirtualMachineId();
@@ -3458,6 +3537,24 @@ public class ManagementServerImpl extends MutualExclusiveIdsManagerBase implemen
 
     @Override
         public ListResponse<UpdateHostUsbDevicesResponse> updateHostUsbDevices(UpdateHostUsbDevicesCmd cmd) {
+        GlobalLock lock = GlobalLock.getInternLock("vm-host-devices-" + cmd.getHostId());
+        try {
+            if (!lock.lock(10)) {
+                throw new CloudRuntimeException("Another device operation is in progress on this host");
+            }
+            try {
+                cmd.setCurrentVmId(validateVmDeviceMutation(cmd.getHostId(), cmd.getHostDeviceName(),
+                        cmd.getVirtualMachineId(), cmd.getCurrentVmId(), false));
+                return updateHostUsbDevicesInternal(cmd);
+            } finally {
+                lock.unlock();
+            }
+        } finally {
+            lock.releaseRef();
+        }
+    }
+
+    private ListResponse<UpdateHostUsbDevicesResponse> updateHostUsbDevicesInternal(UpdateHostUsbDevicesCmd cmd) {
             Long hostId = cmd.getHostId();
             String hostDeviceName = cmd.getHostDeviceName();
             Long vmId = cmd.getVirtualMachineId();
@@ -3632,6 +3729,24 @@ public class ManagementServerImpl extends MutualExclusiveIdsManagerBase implemen
 
     @Override
     public ListResponse<UpdateHostLunDevicesResponse> updateHostLunDevices(UpdateHostLunDevicesCmd cmd) {
+        GlobalLock lock = GlobalLock.getInternLock("vm-host-devices-" + cmd.getHostId());
+        try {
+            if (!lock.lock(10)) {
+                throw new CloudRuntimeException("Another device operation is in progress on this host");
+            }
+            try {
+                cmd.setCurrentVmId(validateVmDeviceMutation(cmd.getHostId(), cmd.getHostDeviceName(),
+                        cmd.getVirtualMachineId(), cmd.getCurrentVmId(), false));
+                return updateHostLunDevicesInternal(cmd);
+            } finally {
+                lock.unlock();
+            }
+        } finally {
+            lock.releaseRef();
+        }
+    }
+
+    private ListResponse<UpdateHostLunDevicesResponse> updateHostLunDevicesInternal(UpdateHostLunDevicesCmd cmd) {
         Long hostId = cmd.getHostId();
         String hostDeviceName = cmd.getHostDeviceName();
         Long vmId = cmd.getVirtualMachineId();
@@ -3842,6 +3957,24 @@ public class ManagementServerImpl extends MutualExclusiveIdsManagerBase implemen
 
     @Override
     public ListResponse<UpdateHostScsiDevicesResponse> updateHostScsiDevices(UpdateHostScsiDevicesCmd cmd) {
+        GlobalLock lock = GlobalLock.getInternLock("vm-host-devices-" + cmd.getHostId());
+        try {
+            if (!lock.lock(10)) {
+                throw new CloudRuntimeException("Another device operation is in progress on this host");
+            }
+            try {
+                cmd.setCurrentVmId(validateVmDeviceMutation(cmd.getHostId(), cmd.getHostDeviceName(),
+                        cmd.getVirtualMachineId(), cmd.getCurrentVmId(), false));
+                return updateHostScsiDevicesInternal(cmd);
+            } finally {
+                lock.unlock();
+            }
+        } finally {
+            lock.releaseRef();
+        }
+    }
+
+    private ListResponse<UpdateHostScsiDevicesResponse> updateHostScsiDevicesInternal(UpdateHostScsiDevicesCmd cmd) {
         Long hostId = cmd.getHostId();
         String hostDeviceName = cmd.getHostDeviceName();
         Long vmId = cmd.getVirtualMachineId();
@@ -4051,6 +4184,24 @@ public class ManagementServerImpl extends MutualExclusiveIdsManagerBase implemen
 
     @Override
     public ListResponse<UpdateHostHbaDevicesResponse> updateHostHbaDevices(UpdateHostHbaDevicesCmd cmd) {
+        GlobalLock lock = GlobalLock.getInternLock("vm-host-devices-" + cmd.getHostId());
+        try {
+            if (!lock.lock(10)) {
+                throw new CloudRuntimeException("Another device operation is in progress on this host");
+            }
+            try {
+                cmd.setCurrentVmId(validateVmDeviceMutation(cmd.getHostId(), cmd.getHostDeviceName(),
+                        cmd.getVirtualMachineId(), cmd.getCurrentVmId(), false));
+                return updateHostHbaDevicesInternal(cmd);
+            } finally {
+                lock.unlock();
+            }
+        } finally {
+            lock.releaseRef();
+        }
+    }
+
+    private ListResponse<UpdateHostHbaDevicesResponse> updateHostHbaDevicesInternal(UpdateHostHbaDevicesCmd cmd) {
         Long hostId = cmd.getHostId();
         String hostDeviceName = cmd.getHostDeviceName();
         Long vmId = cmd.getVirtualMachineId();
@@ -4339,6 +4490,24 @@ public class ManagementServerImpl extends MutualExclusiveIdsManagerBase implemen
 
         @Override
     public ListResponse<UpdateHostVhbaDevicesResponse> updateHostVhbaDevices(UpdateHostVhbaDevicesCmd cmd) {
+        GlobalLock lock = GlobalLock.getInternLock("vm-host-devices-" + cmd.getHostId());
+        try {
+            if (!lock.lock(10)) {
+                throw new CloudRuntimeException("Another device operation is in progress on this host");
+            }
+            try {
+                cmd.setCurrentVmId(validateVmDeviceMutation(cmd.getHostId(), cmd.getHostDeviceName(),
+                        cmd.getVirtualMachineId(), cmd.getCurrentVmId(), false));
+                return updateHostVhbaDevicesInternal(cmd);
+            } finally {
+                lock.unlock();
+            }
+        } finally {
+            lock.releaseRef();
+        }
+    }
+
+    private ListResponse<UpdateHostVhbaDevicesResponse> updateHostVhbaDevicesInternal(UpdateHostVhbaDevicesCmd cmd) {
         Long hostId = cmd.getHostId();
         String hostDeviceName = cmd.getHostDeviceName();
         Long vmId = cmd.getVirtualMachineId();
@@ -4595,6 +4764,7 @@ public class ManagementServerImpl extends MutualExclusiveIdsManagerBase implemen
                 HostVO host = _hostDao.findById(hostId);
                 if (host != null) {
                     responseItem.setHostName(host.getName());
+                    responseItem.setHostUuid(host.getUuid());
                 }
 
                 responses.add(responseItem);
@@ -4824,6 +4994,22 @@ public class ManagementServerImpl extends MutualExclusiveIdsManagerBase implemen
 
     @Override
     public ListResponse<DeleteVhbaDeviceResponse> deleteVhbaDevice(DeleteVhbaDeviceCmd cmd) {
+        GlobalLock lock = GlobalLock.getInternLock("vm-host-devices-" + cmd.getHostId());
+        try {
+            if (!lock.lock(10)) {
+                throw new CloudRuntimeException("Another device operation is in progress on this host");
+            }
+            try {
+                return deleteVhbaDeviceInternal(cmd);
+            } finally {
+                lock.unlock();
+            }
+        } finally {
+            lock.releaseRef();
+        }
+    }
+
+    private ListResponse<DeleteVhbaDeviceResponse> deleteVhbaDeviceInternal(DeleteVhbaDeviceCmd cmd) {
         Long hostId = cmd.getHostId();
         String hostDeviceName = cmd.getHostDeviceName();
         String wwnn = cmd.getWwnn();
