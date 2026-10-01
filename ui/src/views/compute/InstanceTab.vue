@@ -48,6 +48,9 @@
       <a-tab-pane :tab="$t('label.metrics')" key="stats">
         <StatsTab :resource="resource"/>
       </a-tab-pane>
+      <a-tab-pane :tab="$t('label.vmprocess.tab')" key="processes" v-if="resource.hypervisor === 'KVM' && 'getVirtualMachineProcessCapabilities' in $store.getters.apis && 'listVirtualMachineProcesses' in $store.getters.apis">
+        <VmProcessesTab :resource="vm" :active="visibleCurrentTab === 'processes'" @open-iso="handleChangeTab('cdrom')" />
+      </a-tab-pane>
       <a-tab-pane
         :tab="$t('label.schedules')"
         key="schedules"
@@ -166,6 +169,7 @@ import GPUTab from '@/components/view/GPUTab.vue'
 import FtctlTab from '@/views/compute/FtctlTab.vue'
 import VmBackupsTab from '@/views/compute/VmBackupsTab.vue'
 import VmSnapshotsTab from '@/views/compute/VmSnapshotsTab.vue'
+import VmProcessesTab from '@/views/compute/VmProcessesTab.vue'
 import vmProtectionTabs from '@/utils/vmProtectionTabs'
 
 export default {
@@ -183,6 +187,7 @@ export default {
     GPUTab,
     FtctlTab,
     VmSnapshotsTab,
+    VmProcessesTab,
     VmBackupsTab,
     VmSchedulesTab,
     ListResourceTable,
