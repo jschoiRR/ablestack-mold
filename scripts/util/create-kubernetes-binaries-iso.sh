@@ -182,6 +182,6 @@ if [ -n "${9}" ]; then
   wget -q --show-progress "https://github.com/etcd-io/etcd/releases/download/${ETCD_VERSION}/etcd-${ETCD_VERSION}-linux-amd64.tar.gz" -O ${etcd_dir}/etcd-linux-amd64.tar.gz
 fi
 
-mkisofs -o "${output_dir}/${build_name}" -J -R -l "${iso_dir}"
+mkisofs -o "${output_dir}/${build_name}" -V CDROM -J -R -l "${iso_dir}"
 
 rm -rf "${iso_dir}"

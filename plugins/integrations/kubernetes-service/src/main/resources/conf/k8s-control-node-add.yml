@@ -66,13 +66,18 @@ write_files:
       EJECT_ISO_FROM_OS={{ k8s.eject.iso }}
       crucial_cmd_attempts=1
       iso_drive_path=""
+      binaries_available() {
+        [ -f "${BINARIES_DIR}/k8s/kubeadm" ] &&
+        [ -f "${BINARIES_DIR}/k8s/kubelet" ] &&
+        [ -f "${BINARIES_DIR}/k8s/kubectl" ]
+      }
       while true; do
         if (( "$offline_attempts" > "$MAX_OFFLINE_INSTALL_ATTEMPTS" )); then
           echo "Warning: Offline install timed out!"
           break
         fi
         set +e
-        output=`blkid -o device -t LABEL=CDROM`
+        output=`blkid -o device -t TYPE=iso9660`
         set -e
         if [ "$output" != "" ]; then
           while read -r line; do
@@ -85,16 +90,16 @@ write_files:
             retval=$?
             set -e
             if [ $retval -eq 0 ]; then
-              if [ -d "$BINARIES_DIR" ]; then
+              if binaries_available; then
                 iso_drive_path="${line}"
                 break
               else
-                umount "${line}" && rmdir "${ISO_MOUNT_DIR}"
+                umount "${ISO_MOUNT_DIR}"
               fi
             fi
           done <<< "$output"
         fi
-        if [ -d "$BINARIES_DIR" ]; then
+        if binaries_available; then
           break
         fi
         echo "Waiting for Binaries directory $BINARIES_DIR to be available, sleeping for $OFFLINE_INSTALL_ATTEMPT_SLEEP seconds, attempt: $offline_attempts"
@@ -106,7 +111,7 @@ write_files:
         export PATH=$PATH:/opt/bin
       fi
 
-      if [ -d "$BINARIES_DIR" ]; then
+      if binaries_available; then
         ### Binaries available offline ###
         echo "Installing binaries from ${BINARIES_DIR}"
         mkdir -p /opt/cni/bin
