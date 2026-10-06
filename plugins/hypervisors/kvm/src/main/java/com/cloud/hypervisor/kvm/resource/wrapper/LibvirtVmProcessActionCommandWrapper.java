@@ -31,6 +31,8 @@ import com.cloud.resource.ResourceWrapper;
 @ResourceWrapper(handles = VmProcessActionCommand.class)
 public final class LibvirtVmProcessActionCommandWrapper
         extends CommandWrapper<VmProcessActionCommand, Answer, LibvirtComputingResource> {
+    private static final org.apache.logging.log4j.Logger LOG =
+            org.apache.logging.log4j.LogManager.getLogger(LibvirtVmProcessActionCommandWrapper.class);
     @Override
     public Answer execute(VmProcessActionCommand c, LibvirtComputingResource resource) {
         try {
@@ -41,6 +43,7 @@ public final class LibvirtVmProcessActionCommandWrapper
             return new VmProcessActionAnswer(c, result);
         } catch (Exception e) {
             if (e instanceof InterruptedException) Thread.currentThread().interrupt();
+            LOG.warn("Process action transport unavailable vmUuid={} query={}; result retained as UNKNOWN", c.getVmUuid(), c.isQuery(), e);
             return new Answer(c, false, "Process operation result unavailable; query only");
         }
     }

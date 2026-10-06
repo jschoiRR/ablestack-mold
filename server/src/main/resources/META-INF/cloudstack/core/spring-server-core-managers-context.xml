@@ -84,6 +84,10 @@
 
     <bean id="storageManagerImpl" class="com.cloud.storage.StorageManagerImpl" />
 
+    <bean id="vmStorageSelectionManager" class="com.cloud.storage.VmStorageSelectionManager">
+        <property name="storagePoolAllocators" value="#{storagePoolAllocatorsRegistry.registered}" />
+    </bean>
+
     <bean id="resourceManagerImpl" class="com.cloud.resource.ResourceManagerImpl">
         <property name="discoverers"
             value="#{resourceDiscoverersRegistry.registered}" />
@@ -284,6 +288,7 @@
 
     <bean id="statsCollector" class="com.cloud.server.StatsCollector" />
 
+    <bean id="vmProcessProfileServiceImpl" class="com.cloud.vm.process.VmProcessProfileServiceImpl" />
     <bean id="vmProcessActionServiceImpl" class="com.cloud.vm.process.VmProcessActionServiceImpl" />
     <bean id="vmProcessSnapshotServiceImpl" class="com.cloud.vm.process.VmProcessSnapshotServiceImpl" />
     <bean id="vmProcessCapabilityServiceImpl" class="com.cloud.vm.process.VmProcessCapabilityServiceImpl" />
