@@ -32,6 +32,7 @@ public interface HAConfig extends StateObject<HAConfig.HAState>, InternalIdentit
     HAState getState();
     String getHaProvider();
     Long getManagementServerId();
+    long getUpdateCount();
 
     enum Event {
         Eligible,

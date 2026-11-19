@@ -230,7 +230,8 @@ public final class HAManagerImpl extends ManagerBase implements HAManager, Clust
                 return current.getState() == HAConfig.HAState.Recovering && current.getManagementServerId() != null ? current : null;
             case FENCE:
                 return (current.getState() == HAConfig.HAState.Fencing || current.getState() == HAConfig.HAState.Fenced)
-                        && current.getManagementServerId() != null ? current : null;
+                        && current.getManagementServerId() != null && current.getId() == expected.getId()
+                        && current.getUpdateCount() == expected.getUpdateCount() ? current : null;
             default:
                 return null;
         }

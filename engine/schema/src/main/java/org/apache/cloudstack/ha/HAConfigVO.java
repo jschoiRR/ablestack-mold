@@ -90,6 +90,7 @@ public class HAConfigVO implements HAConfig {
         return enabled;
     }
 
+    @Override
     public long getUpdateCount() {
         return updateCount;
     }

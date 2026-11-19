@@ -53,6 +53,14 @@ public interface KVMHAConfig {
     ConfigKey<Long> KvmHAFenceTimeout = new ConfigKey<>("Advanced", Long.class, "kvm.ha.fence.timeout", "60",
             "The maximum length of time, in seconds, expected for a fence operation to complete.", true, ConfigKey.Scope.Cluster);
 
+    ConfigKey<String> KvmHAPcsFenceCluster = new ConfigKey<>("Advanced", String.class, "kvm.ha.pcs.fence.cluster", "",
+            "Corosync cluster name for opt-in Pacemaker power-off fencing. Requires tested fencing that remains available without the target BMC.",
+            true, ConfigKey.Scope.Cluster);
+
+    ConfigKey<String> KvmHAPcsFenceNodeMap = new ConfigKey<>("Advanced", String.class, "kvm.ha.pcs.fence.node.map", "",
+            "Comma-separated Mold host UUID=Pacemaker node name mappings. Both the target and the agent issuing the fence must be mapped.",
+            true, ConfigKey.Scope.Cluster);
+
     public static final ConfigKey<Boolean> KvmHAPowerOffCheckEnabled = new ConfigKey<>("Advanced", Boolean.class, "kvm.ha.power.off.check.enabled", "true",
             "Query BMC power once per health task and count consecutive fresh OFF responses across HA polls. Failed or unknown responses reset the sequence.", true, ConfigKey.Scope.Cluster);
 
@@ -63,7 +71,7 @@ public interface KVMHAConfig {
             "Maximum seconds between consecutive OFF observations for early detection. A longer gap starts a new sequence; this is not a wait. Must be between 1 and 3600.", true, ConfigKey.Scope.Cluster);
 
     public static final ConfigKey<Long> KvmHAFencePowerOffConfirmations = new ConfigKey<>("Advanced", Long.class, "kvm.ha.fence.power.off.confirmations", "5",
-            "Consecutive fresh OFF responses required after the fencing OFF command before ON. Must be at least 3 and fit within the fence timeout.", true, ConfigKey.Scope.Cluster);
+            "Consecutive fresh OFF responses required after the fencing OFF command before scheduling VM recovery. Must be at least 3 and fit within the fence timeout.", true, ConfigKey.Scope.Cluster);
 
     public static final ConfigKey<Long> KvmHAPowerCheckInterval = new ConfigKey<>("Advanced", Long.class, "kvm.ha.power.check.interval", "3",
             "Seconds to wait between BMC observations during fencing verification only. Early detection queries once per health task without this wait. Must be at least 1.", true, ConfigKey.Scope.Cluster);

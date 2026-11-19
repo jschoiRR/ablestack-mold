@@ -19,9 +19,12 @@
 
 package org.apache.cloudstack.kvm.ha;
 
+import com.cloud.agent.api.Answer;
+import com.cloud.agent.api.PcsFenceHostCommand;
 import com.cloud.exception.InvalidParameterValueException;
 import com.cloud.host.Host;
 import com.cloud.host.HostVO;
+import com.cloud.host.Status;
 import com.cloud.host.dao.HostDao;
 import com.cloud.hypervisor.Hypervisor;
 import com.cloud.resource.ResourceState;
@@ -45,6 +48,12 @@ import org.apache.cloudstack.outofbandmanagement.OutOfBandManagement.PowerState;
 import org.joda.time.DateTime;
 
 import javax.inject.Inject;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+import java.util.TreeSet;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 public final class KVMHAProvider extends HAAbstractHostProvider implements HAProvider<Host>, Configurable {
@@ -62,14 +71,12 @@ public final class KVMHAProvider extends HAAbstractHostProvider implements HAPro
 
     @Override
     public boolean isEligible(final Host host) {
-        if (outOfBandManagementService.isOutOfBandManagementEnabled(host)){
-            return !isInMaintenanceMode(host) && !isDisabled(host) &&
-                    hostActivityChecker.getNeighbors(host).length > 0 &&
-                    hostActivityChecker.hasStoragePoolHeartbeatEnabled(host) &&
-                    (Hypervisor.HypervisorType.KVM.equals(host.getHypervisorType()) ||
-                            Hypervisor.HypervisorType.LXC.equals(host.getHypervisorType()));
-        }
-        return false;
+        return outOfBandManagementService.isOutOfBandManagementEnabled(host)
+                && !isInMaintenanceMode(host) && !isDisabled(host)
+                && hostActivityChecker.getNeighbors(host).length > 0
+                && hostActivityChecker.hasStoragePoolHeartbeatEnabled(host)
+                && (Hypervisor.HypervisorType.KVM.equals(host.getHypervisorType())
+                        || Hypervisor.HypervisorType.LXC.equals(host.getHypervisorType()));
     }
 
     @Override
@@ -135,61 +142,133 @@ public final class KVMHAProvider extends HAAbstractHostProvider implements HAPro
     }
 
     @Override
-    public boolean fence(Host r) throws HAFenceException {
+    public boolean fence(Host host) throws HAFenceException {
         try {
-            if (!outOfBandManagementService.isOutOfBandManagementEnabled(r)) {
-                logger.warn("Cannot fence {} without enabled out-of-band management", r);
-                return false;
-            }
-            final long budget = getFenceTimeout(r);
-            final PowerCheckSettings settings = powerCheckSettings(r, budget);
-            if (budget <= settings.confirmations * settings.timeout + (settings.confirmations - 1) * settings.interval + 21) {
-                throw new IllegalArgumentException("Fencing timeout must allow OFF, repeated status verification and ON before power is changed");
+            final HAConfig attempt = requireCurrentFence(host, null);
+            final long budget = getFenceTimeout(host);
+            if (budget < 2 || budget > 3600) {
+                throw new IllegalArgumentException("Fencing timeout must be between 2 and 3600 seconds");
             }
             final long deadline = deadlineAfterSeconds(budget - 1);
-
-            // Preserve reboot semantics, but expose the OFF phase: accepting a
-            // CYCLE request alone is not evidence that the old VMs have stopped.
-            executeFencingPowerOperation(r, PowerOperation.OFF, deadline);
-            final long verificationDeadline = deadline - TimeUnit.SECONDS.toNanos(10);
-            if (!confirmPowerOff(r, settings, verificationDeadline)) {
-                logger.warn("Host {} remains quarantined: power off was not confirmed", r);
-                return false;
+            final boolean pcsConfigured = pcsFenceConfigured(host);
+            if (outOfBandManagementService.isOutOfBandManagementEnabled(host)) {
+                // Leave time for Pacemaker if both fencing methods are configured.
+                final long ipmiDeadline = pcsConfigured ? deadline - TimeUnit.SECONDS.toNanos(budget / 2) : deadline;
+                if (fenceWithIpmi(host, ipmiDeadline)) {
+                    requireCurrentFence(host, attempt);
+                    logger.info("Verified IPMI power-off for {}; Maintenance remains enabled", host);
+                    return true;
+                }
             }
-            executeFencingPowerOperation(r, PowerOperation.ON, deadline);
-            logger.info("Verified power-off phase and requested reboot for {}; Maintenance remains enabled", r);
-            return true;
+            if (pcsConfigured && fenceWithPcs(host, attempt, deadline)) {
+                return true;
+            }
+            logger.warn("Host {} remains quarantined: power off was not confirmed", host);
+            return false;
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
-            throw new HAFenceException("Interrupted while fencing host " + r.getId(), e);
+            throw new HAFenceException("Interrupted while fencing host " + host.getId(), e);
         } catch (Exception e) {
-            throw new HAFenceException("Unable to verify fencing and reboot of host " + r.getId(), e);
+            throw new HAFenceException("Unable to verify fencing of host " + host.getId(), e);
         }
     }
 
-    private void executeFencingPowerOperation(Host host, PowerOperation operation, long deadline) throws InterruptedException {
+    private boolean fenceWithIpmi(Host host, long deadline) throws InterruptedException {
+        try {
+            final long budget = remainingSeconds(deadline);
+            final PowerCheckSettings settings = powerCheckSettings(host, budget);
+            final long observationBudget = settings.confirmations * settings.timeout + (settings.confirmations - 1) * settings.interval;
+            final long timeout = Math.min(10L, budget - observationBudget - 1);
+            final OutOfBandManagementResponse response = outOfBandManagementService.executePowerOperation(host, PowerOperation.OFF, timeout);
+            checkInterrupted();
+            return response != null && Boolean.TRUE.equals(response.getSuccess()) && confirmPowerOff(host, settings, deadline);
+        } catch (InterruptedException e) {
+            throw e;
+        } catch (Exception e) {
+            checkInterrupted();
+            logger.warn("IPMI could not confirm fencing for {}: {}", host, e.getMessage());
+            return false;
+        }
+    }
+
+    private boolean pcsFenceConfigured(Host host) {
+        final String cluster = KVMHAConfig.KvmHAPcsFenceCluster.valueIn(host.getClusterId());
+        final String nodeMap = KVMHAConfig.KvmHAPcsFenceNodeMap.valueIn(host.getClusterId());
+        return PcsFenceHostCommand.isValidName(cluster) && nodeMap != null && !nodeMap.isBlank();
+    }
+
+    private boolean fenceWithPcs(Host host, HAConfig attempt, long deadline) throws InterruptedException {
+        final String cluster = KVMHAConfig.KvmHAPcsFenceCluster.valueIn(host.getClusterId());
+        final Map<UUID, String> nodes = parsePcsNodeMap(KVMHAConfig.KvmHAPcsFenceNodeMap.valueIn(host.getClusterId()));
+        final String targetNode = nodes.get(UUID.fromString(host.getUuid()));
+        if (targetNode == null) {
+            throw new IllegalArgumentException("No Pacemaker node mapping for host " + host.getUuid());
+        }
+        for (long peerId : hostActivityChecker.getNeighbors(host)) {
+            final HostVO peer = kvmHostDao.findById(peerId);
+            if (peer == null || peerId == host.getId() || peer.getState() != Status.Up
+                    || !Objects.equals(peer.getClusterId(), host.getClusterId())) {
+                continue;
+            }
+            final String executorNode = nodes.get(UUID.fromString(peer.getUuid()));
+            if (executorNode == null) {
+                continue;
+            }
+            requireCurrentFence(host, attempt);
+            final long remainingMillis = TimeUnit.NANOSECONDS.toMillis(deadline - nanoTime());
+            if (remainingMillis < 2000) {
+                return false;
+            }
+            final PcsFenceHostCommand command = new PcsFenceHostCommand(cluster, targetNode, executorNode,
+                    System.currentTimeMillis() + remainingMillis);
+            final Answer answer;
+            try {
+                answer = hostActivityChecker.sendProbe(peerId, command, deadline);
+            } catch (InterruptedException e) {
+                throw e;
+            } catch (Exception e) {
+                checkInterrupted();
+                logger.warn("Pacemaker fencing request for {} via {} failed: {}", host, peer, e.getMessage());
+                continue;
+            }
+            requireCurrentFence(host, attempt);
+            if (answer != null && answer.getResult() && nanoTime() < deadline) {
+                logger.info("Verified Pacemaker power-off for {} (node {}, via {}); Maintenance remains enabled", host, targetNode, peer);
+                return true;
+            }
+            logger.warn("Pacemaker did not confirm fencing for {} via {}: {}", host, peer, answer == null ? "no response" : answer.getDetails());
+        }
+        return false;
+    }
+
+    static Map<UUID, String> parsePcsNodeMap(String value) {
+        final Map<UUID, String> nodes = new HashMap<>();
+        final Set<String> nodeNames = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
+        for (String mapping : Objects.toString(value, "").split(",", -1)) {
+            final String[] pair = mapping.split("=", -1);
+            if (pair.length != 2 || !PcsFenceHostCommand.isValidName(pair[1].trim())) {
+                throw new IllegalArgumentException("Expected a comma-separated list of Mold host UUID=Pacemaker node mappings");
+            }
+            final String node = pair[1].trim();
+            if (!nodeNames.add(node) || nodes.putIfAbsent(UUID.fromString(pair[0].trim()), node) != null) {
+                throw new IllegalArgumentException("Duplicate host UUID or Pacemaker node in fencing mappings");
+            }
+        }
+        return nodes;
+    }
+
+    private HAConfig requireCurrentFence(Host host, HAConfig attempt) throws InterruptedException {
         checkInterrupted();
         final HostVO currentHost = kvmHostDao.findById(host.getId());
-        final HAConfig currentHA = kvmHAConfigDao.findHAResource(host.getId(), HAResource.ResourceType.Host);
-        if (currentHost == null || currentHost.getResourceState() != ResourceState.Maintenance || currentHA == null
-                || !kvmHAManager.isHAEligible(currentHost)
-                || !currentHA.isEnabled() || currentHA.getState() != HAConfig.HAState.Fencing
-                || currentHA.getManagementServerId() == null
-                || currentHA.getManagementServerId() != ManagementServerNode.getManagementServerId()) {
-            throw new IllegalStateException("Host must remain in Maintenance with an active fencing operation before " + operation);
+        final HAConfig current = kvmHAConfigDao.findHAResource(host.getId(), HAResource.ResourceType.Host);
+        if (currentHost == null || currentHost.getResourceState() != ResourceState.Maintenance
+                || !Objects.equals(host.getUuid(), currentHost.getUuid()) || current == null
+                || !kvmHAManager.isHAEligible(currentHost) || !current.isEnabled() || current.getState() != HAConfig.HAState.Fencing
+                || !Objects.equals(current.getManagementServerId(), ManagementServerNode.getManagementServerId())
+                || attempt != null && (current.getId() != attempt.getId() || current.getUpdateCount() != attempt.getUpdateCount())) {
+            throw new IllegalStateException("Host must remain in Maintenance with the same active fencing operation");
         }
-        final long timeout = Math.min(10L, remainingSeconds(deadline));
-        if (timeout < 1) {
-            throw new IllegalStateException("Fencing deadline expired before " + operation);
-        }
-        final OutOfBandManagementResponse response = outOfBandManagementService.executePowerOperation(currentHost, operation, timeout);
-        checkInterrupted();
-        if (remainingSeconds(deadline) < 0) {
-            throw new IllegalStateException("Fencing deadline expired during " + operation);
-        }
-        if (response == null || !Boolean.TRUE.equals(response.getSuccess())) {
-            throw new IllegalStateException("BMC did not acknowledge fencing operation " + operation);
-        }
+        return current;
     }
 
     private boolean confirmPowerOff(Host host, PowerCheckSettings settings, long deadline) throws InterruptedException {
@@ -354,6 +433,8 @@ public final class KVMHAProvider extends HAAbstractHostProvider implements HAPro
             KVMHAConfig.KvmHAActivityCheckTimeout,
             KVMHAConfig.KvmHARecoverTimeout,
             KVMHAConfig.KvmHAFenceTimeout,
+            KVMHAConfig.KvmHAPcsFenceCluster,
+            KVMHAConfig.KvmHAPcsFenceNodeMap,
             KVMHAConfig.KvmHAActivityCheckInterval,
             KVMHAConfig.KvmHAActivityCheckFailureThreshold,
             KVMHAConfig.KvmHAActivityCheckSuccessThreshold,
