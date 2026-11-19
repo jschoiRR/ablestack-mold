@@ -244,7 +244,7 @@ public class AutoScaleVmGroupStatisticsDaoImplTest {
 
         Mockito.verify(searchBuilderAutoScaleVmGroupStatisticsVOMock, Mockito.times(4)).and(Mockito.anyString(), Mockito.any(), Mockito.eq(SearchCriteria.Op.EQ));
         Mockito.verify(searchBuilderAutoScaleVmGroupStatisticsVOMock, Mockito.times(1)).and(Mockito.anyString(), Mockito.any(), Mockito.eq(SearchCriteria.Op.LT));
-        Mockito.verify(searchBuilderAutoScaleVmGroupStatisticsVOMock, Mockito.times(1)).and(Mockito.anyString(), Mockito.any(), Mockito.eq(SearchCriteria.Op.GT));
+        Mockito.verify(searchBuilderAutoScaleVmGroupStatisticsVOMock, Mockito.times(1)).and(Mockito.anyString(), Mockito.any(), Mockito.eq(SearchCriteria.Op.GTEQ));
 
     }
 }

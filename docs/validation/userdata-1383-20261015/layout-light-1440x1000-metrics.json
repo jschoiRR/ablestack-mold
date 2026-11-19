@@ -1,0 +1,332 @@
+{
+  "alerts": [
+    "이름을 입력하십시오.",
+    "앞뒤 공백을 제외한 1~255자의 이름을 입력하세요.",
+    "User Data를 입력해주세요.",
+    "사용자 데이터는 비어 있거나 공백으로만 구성될 수 없습니다."
+  ],
+  "body": {
+    "bottom": 757,
+    "height": 534,
+    "right": 1079,
+    "width": 718,
+    "x": 361,
+    "y": 223
+  },
+  "bodyClientHeight": 534,
+  "bodyScroll": 0,
+  "bodyScrollHeight": 534,
+  "dark": false,
+  "dialog": {
+    "bottom": 833,
+    "height": 666,
+    "right": 1080,
+    "width": 720,
+    "x": 360,
+    "y": 167
+  },
+  "dialogs": 0,
+  "focus": {
+    "id": "form_item_name",
+    "tag": "INPUT",
+    "text": ""
+  },
+  "footer": {
+    "bottom": 832,
+    "height": 75,
+    "right": 1079,
+    "width": 718,
+    "x": 361,
+    "y": 757
+  },
+  "header": {
+    "bottom": 223,
+    "height": 55,
+    "right": 1079,
+    "width": 718,
+    "x": 361,
+    "y": 168
+  },
+  "modalCount": 1,
+  "pageOverflow": false,
+  "pageScroll": 0,
+  "placeholder": {
+    "color": "rgb(102, 112, 133)"
+  },
+  "styles": {
+    ".ant-alert": null,
+    ".ant-alert-message": null,
+    ".ant-btn-primary": {
+      "background": "rgb(9, 105, 218)",
+      "border": "rgb(9, 105, 218)",
+      "color": "rgb(255, 255, 255)",
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "opacity": "1",
+      "overflow": "visible",
+      "padding": "0px 18px"
+    },
+    ".ant-checkbox-inner": {
+      "background": "rgb(255, 255, 255)",
+      "border": "rgb(102, 112, 133)",
+      "color": "rgba(0, 0, 0, 0.65)",
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "opacity": "1",
+      "overflow": "visible",
+      "padding": "0px"
+    },
+    ".ant-form-item-explain-error": {
+      "background": "rgba(0, 0, 0, 0)",
+      "border": "rgb(112, 27, 27)",
+      "color": "rgb(112, 27, 27)",
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "opacity": "1",
+      "overflow": "visible",
+      "padding": "0px"
+    },
+    ".ant-input": {
+      "background": "rgb(255, 255, 255)",
+      "border": "rgb(207, 19, 34)",
+      "color": "rgb(31, 41, 55)",
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "opacity": "1",
+      "overflow": "clip",
+      "padding": "4px 11px"
+    },
+    ".ant-modal-body": {
+      "background": "rgb(255, 255, 255)",
+      "border": "rgb(31, 41, 55)",
+      "color": "rgb(31, 41, 55)",
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "opacity": "1",
+      "overflow": "auto",
+      "padding": "24px 28px"
+    },
+    ".ant-modal-close": {
+      "background": "rgba(0, 0, 0, 0)",
+      "border": "rgb(75, 85, 99)",
+      "color": "rgb(75, 85, 99)",
+      "fontSize": "14px",
+      "fontWeight": "700",
+      "opacity": "1",
+      "overflow": "visible",
+      "padding": "0px"
+    },
+    ".ant-modal-footer": {
+      "background": "rgb(247, 249, 252)",
+      "border": "rgb(217, 223, 231)",
+      "color": "rgb(75, 85, 99)",
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "opacity": "1",
+      "overflow": "visible",
+      "padding": "16px 28px"
+    },
+    ".ant-modal-header": {
+      "background": "rgb(247, 249, 252)",
+      "border": "rgb(217, 223, 231)",
+      "color": "rgb(75, 85, 99)",
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "opacity": "1",
+      "overflow": "visible",
+      "padding": "16px 24px"
+    },
+    ".ant-modal-title": {
+      "background": "rgba(0, 0, 0, 0)",
+      "border": "rgb(75, 85, 99)",
+      "color": "rgb(75, 85, 99)",
+      "fontSize": "16px",
+      "fontWeight": "500",
+      "opacity": "1",
+      "overflow": "visible",
+      "padding": "0px"
+    },
+    ".ant-select-selection-item": {
+      "background": "rgba(0, 0, 0, 0)",
+      "border": "rgb(31, 41, 55)",
+      "color": "rgb(31, 41, 55)",
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "opacity": "1",
+      "overflow": "hidden",
+      "padding": "0px 18px 0px 0px"
+    },
+    ".ant-select-selection-placeholder": {
+      "background": "rgba(0, 0, 0, 0)",
+      "border": "rgb(102, 112, 133)",
+      "color": "rgb(102, 112, 133)",
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "opacity": "1",
+      "overflow": "hidden",
+      "padding": "0px"
+    },
+    ".ant-select-selector": {
+      "background": "rgb(255, 255, 255)",
+      "border": "rgb(102, 112, 133)",
+      "color": "rgb(31, 41, 55)",
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "opacity": "1",
+      "overflow": "visible",
+      "padding": "1px 4px"
+    },
+    ".ant-spin-dot": null,
+    "label": {
+      "background": "rgba(0, 0, 0, 0)",
+      "border": "rgb(75, 85, 99)",
+      "color": "rgb(75, 85, 99)",
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "opacity": "1",
+      "overflow": "visible",
+      "padding": "0px"
+    },
+    "textarea": {
+      "background": "rgb(255, 255, 255)",
+      "border": "rgb(207, 19, 34)",
+      "color": "rgb(31, 41, 55)",
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "opacity": "1",
+      "overflow": "auto",
+      "padding": "4px 11px"
+    }
+  },
+  "values": [
+    {
+      "checked": false,
+      "disabled": false,
+      "id": "form_item_name",
+      "value": ""
+    },
+    {
+      "checked": false,
+      "disabled": false,
+      "id": "form_item_userdata",
+      "value": ""
+    },
+    {
+      "checked": false,
+      "disabled": false,
+      "id": "form_item_isbase64",
+      "value": "on"
+    },
+    {
+      "checked": false,
+      "disabled": false,
+      "id": "form_item_params",
+      "value": ""
+    },
+    {
+      "checked": false,
+      "disabled": false,
+      "id": "domain-selection",
+      "value": ""
+    }
+  ],
+  "viewport": {
+    "height": 1000,
+    "width": 1440
+  },
+  "uiSource": "0542a6dee55",
+  "capturedAt": "2026-10-15T11:22:11.730Z",
+  "themeSamples": {
+    "alert": null,
+    "checkbox": {
+      "background": "rgb(255, 255, 255)",
+      "border": "rgb(102, 112, 133)",
+      "color": "rgba(0, 0, 0, 0.65)",
+      "opacity": "1",
+      "outline": "rgba(0, 0, 0, 0.65)",
+      "surface": "rgb(255, 255, 255)"
+    },
+    "description": {
+      "background": "rgba(0, 0, 0, 0)",
+      "border": "rgb(31, 41, 55)",
+      "color": "rgb(31, 41, 55)",
+      "opacity": "1",
+      "outline": "rgb(31, 41, 55)",
+      "surface": "rgb(255, 255, 255)"
+    },
+    "fieldError": {
+      "background": "rgba(0, 0, 0, 0)",
+      "border": "rgb(112, 27, 27)",
+      "color": "rgb(112, 27, 27)",
+      "opacity": "1",
+      "outline": "rgb(112, 27, 27)",
+      "surface": "rgb(255, 255, 255)"
+    },
+    "help": {
+      "background": "rgba(0, 0, 0, 0)",
+      "border": "rgb(24, 144, 255)",
+      "color": "rgb(24, 144, 255)",
+      "opacity": "1",
+      "outline": "rgb(24, 144, 255)",
+      "surface": "rgb(247, 249, 252)"
+    },
+    "input": {
+      "background": "rgb(255, 255, 255)",
+      "border": "rgb(207, 19, 34)",
+      "color": "rgb(31, 41, 55)",
+      "opacity": "1",
+      "outline": "rgb(31, 41, 55)",
+      "surface": "rgb(255, 255, 255)"
+    },
+    "label": {
+      "background": "rgba(0, 0, 0, 0)",
+      "border": "rgb(75, 85, 99)",
+      "color": "rgb(75, 85, 99)",
+      "opacity": "1",
+      "outline": "rgb(75, 85, 99)",
+      "surface": "rgb(255, 255, 255)"
+    },
+    "placeholder": {
+      "background": "rgba(0, 0, 0, 0)",
+      "border": "rgb(102, 112, 133)",
+      "color": "rgb(102, 112, 133)",
+      "opacity": "1",
+      "outline": "rgb(102, 112, 133)",
+      "surface": "rgb(255, 255, 255)"
+    },
+    "popup": null,
+    "primary": {
+      "background": "rgb(9, 105, 218)",
+      "border": "rgb(9, 105, 218)",
+      "color": "rgb(255, 255, 255)",
+      "opacity": "1",
+      "outline": "rgb(255, 255, 255)",
+      "surface": "rgb(9, 105, 218)"
+    },
+    "selectPlaceholder": {
+      "background": "rgba(0, 0, 0, 0)",
+      "border": "rgb(102, 112, 133)",
+      "color": "rgb(102, 112, 133)",
+      "opacity": "1",
+      "outline": "rgb(102, 112, 133)",
+      "surface": "rgb(255, 255, 255)"
+    },
+    "selectedTag": {
+      "background": "rgba(0, 0, 0, 0)",
+      "border": "rgb(31, 41, 55)",
+      "color": "rgb(31, 41, 55)",
+      "opacity": "1",
+      "outline": "rgb(31, 41, 55)",
+      "surface": "rgb(255, 255, 255)"
+    },
+    "title": {
+      "background": "rgba(0, 0, 0, 0)",
+      "border": "rgb(75, 85, 99)",
+      "color": "rgb(75, 85, 99)",
+      "opacity": "1",
+      "outline": "rgb(75, 85, 99)",
+      "surface": "rgb(247, 249, 252)"
+    },
+    "tooltip": null
+  }
+}

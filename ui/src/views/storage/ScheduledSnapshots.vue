@@ -17,228 +17,109 @@
 
 <template>
   <div class="list-schedule">
-    <a-table
-      size="small"
-      :columns="columns"
-      :dataSource="dataSchedules"
-      :rowKey="record => record.id"
-      :pagination="false"
-      :loading="loading">
+    <a-table size="small" :columns="columns" :dataSource="dataSource" :rowKey="record => record.id" :pagination="false" :loading="loading" :scroll="{ x: 880 }">
       <template #bodyCell="{ column, record }">
-        <template v-if="column.key === 'icon'">
-          <label class="interval-icon">
-            <span v-if="record.intervaltype===0">
-              <clock-circle-outlined />
-            </span>
-            <span class="custom-icon icon-daily" v-else-if="record.intervaltype===1">
-              <calendar-outlined />
-            </span>
-            <span class="custom-icon icon-weekly" v-else-if="record.intervaltype===2">
-              <calendar-outlined />
-            </span>
-            <span class="custom-icon icon-monthly" v-else-if="record.intervaltype===3">
-              <calendar-outlined />
-            </span>
-          </label>
-        </template>
-        <template v-if="column.key === 'time'">
-          <label class="interval-content">
-            <span v-if="record.intervaltype===0">{{ record.schedule + $t('label.min.past.hour') }}</span>
-            <span v-else>{{ record.schedule.split(':')[1] + ':' + record.schedule.split(':')[0] }}</span>
-          </label>
-        </template>
-        <template v-if="column.key === 'interval'">
-          <span v-if="record.intervaltype===2">
-            {{ `${$t('label.every')} ${$t(listDayOfWeek[record.schedule.split(':')[2] - 1])}` }}
-          </span>
-          <span v-else-if="record.intervaltype===3">
-            {{ `${$t('label.day')} ${record.schedule.split(':')[2]} ${$t('label.of.month')}` }}
-          </span>
-        </template>
-        <template v-if="column.key === 'timezone'">
-          <label>{{ getTimeZone(record.timezone) }}</label>
-        </template>
-        <template v-if="column.key === 'tags'">
-          <a-tag v-for="(tag, index) in record.tags" :key="index">{{ tag.key + '=' + tag.value }}</a-tag>
-        </template>
+        <template v-if="column.key === 'intervaltype'"><router-link :to="{ path: '/snapshotpolicy/' + record.id, ...(record.projectid ? { query: { projectid: record.projectid } } : {}) }">{{ intervalText(record.intervaltype) }}</router-link></template>
+        <template v-if="column.key === 'time'">{{ scheduleText(record) }}</template>
+        <template v-if="column.key === 'timezone'">{{ getTimeZone(record.timezone) }}</template>
+        <template v-if="column.key === 'tags'"><a-tag v-for="(tag, index) in record.tags" :key="index">{{ tag.key + '=' + tag.value }}</a-tag></template>
         <template v-if="column.key === 'zones'">
-          <div v-for="zone in record.zone" :key="zone.id">
-            <router-link :to="{ path: '/zones/' + zone.id }">{{ zone.name }}</router-link>
-          </div>
+          <div v-for="zone in record.zone" :key="zone.id"><router-link v-if="'listZones' in $store.getters.apis" :to="{ path: '/zone/' + zone.id }">{{ zone.name }}</router-link><span v-else>{{ zone.name }}</span></div>
         </template>
+        <template v-if="column.key === 'storage'">
+          <div v-for="pool in record.storage" :key="pool.id"><router-link v-if="'listStoragePools' in $store.getters.apis" :to="{ path: '/storagepool/' + pool.id }">{{ pool.name }}</router-link><span v-else>{{ pool.name }}</span></div>
+        </template>
+        <template v-if="column.key === 'scheduling'">{{ schedulingText(record) }}</template>
         <template v-if="column.key === 'actions'">
-          <div class="account-button-action">
-            <tooltip-button
-              tooltipPlacement="top"
-              :tooltip="$t('label.delete')"
-              type="primary"
-              :danger="true"
-              icon="close-outlined"
-              size="small"
-              :loading="actionLoading"
-              @onClick="handleClickDelete(record)" />
+          <div class="policy-row-actions">
+          <tooltip-button v-if="canEdit" :tooltip="$t('label.snapshot.policy.edit')" icon="edit-outlined" size="small" :disabled="disabled" @onClick="openPolicy(record, 'edit')" />
+          <tooltip-button v-if="canManage && typeof record.fordisplay === 'boolean'" :tooltip="$t(record.fordisplay ? 'label.snapshot.policy.pause' : 'label.snapshot.policy.resume')" :icon="record.fordisplay ? 'pause-circle-outlined' : 'play-circle-outlined'" size="small" :disabled="disabled" @onClick="openPolicy(record, record.fordisplay ? 'pause' : 'resume')" />
+          <tooltip-button
+            v-if="canDelete"
+            :tooltip="$t('label.delete')"
+            type="primary"
+            :danger="true"
+            icon="close-outlined"
+            size="small"
+
+            :disabled="disabled"
+            @onClick="handleClickDelete(record)" />
           </div>
         </template>
       </template>
     </a-table>
+    <SnapshotPolicyDeleteDialog v-if="policyTarget && policyMode === 'delete'" :key="policyTarget.id" :resource="policyTarget" @refresh-data="$emit('refresh')" @close-action="closePolicyDelete" />
+    <SnapshotPolicyActionDialog v-else-if="policyTarget" :key="policyTarget.id + policyMode" :resource="policyTarget" :current-action="{ policyMode }" @refresh-data="$emit('refresh')" @close-action="policyTarget = null" />
   </div>
 </template>
-
 <script>
-import { postAPI } from '@/api'
 import TooltipButton from '@/components/widgets/TooltipButton'
 import { timeZoneName } from '@/utils/timezone'
+import SnapshotPolicyActionDialog from './SnapshotPolicyActionDialog'
+import SnapshotPolicyDeleteDialog from './SnapshotPolicyDeleteDialog'
+import { policyInterval, policySchedule, policyScheduling } from '@/utils/snapshotPolicyPresentation'
+import { canDeletePolicy } from '@/utils/snapshotPolicyDeletion'
+import { canEditPolicy, canManagePolicy } from '@/utils/snapshotPolicyEditing'
 
 export default {
   name: 'ScheduledSnapshots',
-  components: {
-    TooltipButton
-  },
-  props: {
-    loading: {
-      type: Boolean,
-      default: false
-    },
-    dataSource: {
-      type: Array,
-      required: true
-    },
-    resource: {
-      type: Object,
-      required: true
+  components: { TooltipButton, SnapshotPolicyActionDialog, SnapshotPolicyDeleteDialog },
+  props: { loading: Boolean, disabled: Boolean, active: { type: Boolean, default: true }, dataSource: { type: Array, required: true }, resource: { type: Object, required: true } },
+  emits: ['refresh'],
+  data () { return { policyTarget: null, policyMode: '', deleteTrigger: null, deleteFocusScope: '', pendingDeleteFocus: false, disposed: false, listDayOfWeek: ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'] } },
+  computed: {
+    canDelete () { return canDeletePolicy(this.$store.getters.apis) },
+    canEdit () { return canEditPolicy(this.$store.getters.apis || {}) },
+    canManage () { return canManagePolicy(this.$store.getters) },
+    ownerScope () { return JSON.stringify([this.resource.id, this.$route?.path, this.$store.getters.userInfo?.id, this.$store.state?.user?.token, this.$store.getters.project?.id]) },
+    columns () {
+      return [
+        { key: 'intervaltype', title: this.$t('label.intervaltype'), dataIndex: 'intervaltype', width: 100 },
+        { key: 'time', title: this.$t('label.time'), dataIndex: 'schedule', width: 160 },
+        { key: 'timezone', title: this.$t('label.timezone'), dataIndex: 'timezone', width: 140 },
+        { key: 'keep', title: this.$t('label.keep'), dataIndex: 'maxsnaps', width: 80 },
+        { key: 'zones', title: this.$t('label.zones'), dataIndex: 'zone' },
+        { key: 'storage', title: this.$t('label.storage'), dataIndex: 'storage' },
+        { key: 'tags', title: this.$t('label.tags'), dataIndex: 'tags' },
+        { key: 'scheduling', title: this.$t('label.snapshot.policy.scheduling'), width: 120 },
+        ...(this.canDelete || this.canEdit || this.canManage ? [{ key: 'actions', title: this.$t('label.actions'), width: 136 }] : [])
+      ]
     }
-  },
-  data () {
-    return {
-      actionLoading: false,
-      columns: [],
-      dataSchedules: [],
-      listDayOfWeek: ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']
-    }
-  },
-  created () {
-    this.columns = [
-      {
-        key: 'icon',
-        title: '',
-        dataIndex: 'icon',
-        width: 30
-      },
-      {
-        key: 'time',
-        title: this.$t('label.time'),
-        dataIndex: 'schedule'
-      },
-      {
-        key: 'interval',
-        title: '',
-        dataIndex: 'interval'
-      },
-      {
-        key: 'timezone',
-        title: this.$t('label.timezone'),
-        dataIndex: 'timezone'
-      },
-      {
-        key: 'keep',
-        title: this.$t('label.keep'),
-        dataIndex: 'maxsnaps'
-      },
-      {
-        key: 'tags',
-        title: this.$t('label.tags'),
-        dataIndex: 'tags'
-      },
-      {
-        key: 'zones',
-        title: this.$t('label.zones'),
-        dataIndex: 'zone'
-      },
-      {
-        key: 'actions',
-        title: this.$t('label.actions'),
-        dataIndex: 'actions',
-        width: 50
-      }
-    ]
-  },
-  mounted () {
-    this.dataSchedules = this.dataSource
   },
   watch: {
-    dataSource: {
-      deep: true,
-      handler (newData) {
-        this.dataSchedules = newData
-      }
-    }
+    ownerScope () { this.policyTarget = null; this.pendingDeleteFocus = false; this.deleteTrigger = null },
+    active (value) { if (!value) { this.policyTarget = null; this.pendingDeleteFocus = false } },
+    disabled (value) { if (!value) this.$nextTick(this.restorePolicyFocus) }
   },
+  beforeUnmount () { this.disposed = true },
   methods: {
-    handleClickDelete (record) {
-      const params = {}
-      params.id = record.id
-      this.actionLoading = true
-      postAPI('deleteSnapshotPolicies', params).then(json => {
-        if (json.deletesnapshotpoliciesresponse.success) {
-          this.$notification.success({
-            message: this.$t('label.delete.snapshot.policy'),
-            description: this.$t('message.success.delete.snapshot.policy')
-          })
-
-          this.$emit('refresh')
-        }
-      }).catch(error => {
-        this.$notifyError(error)
-      }).finally(() => {
-        this.actionLoading = false
-      })
+    openPolicy (record, mode) {
+      if (this.disabled || this.disposed || this.policyTarget || !(mode === 'delete' ? this.canDelete : mode === 'edit' ? this.canEdit : this.canManage) || !this.dataSource.some(row => row.id === record.id && row.volumeid === this.resource.id)) return
+      if (mode === 'delete') { this.deleteTrigger = document.activeElement; this.deleteFocusScope = this.ownerScope; this.pendingDeleteFocus = false }
+      this.policyTarget = Object.freeze({ ...record }); this.policyMode = mode
     },
-    getTimeZone (timeZone) {
-      return timeZoneName(timeZone)
+    closePolicyDelete () { this.policyTarget = null; this.pendingDeleteFocus = true; this.$nextTick(this.restorePolicyFocus) },
+    restorePolicyFocus () {
+      if (!this.pendingDeleteFocus || this.disposed || this.disabled || this.policyTarget || this.deleteFocusScope !== this.ownerScope) return
+      if (document.activeElement !== document.body) { this.pendingDeleteFocus = false; return }
+      const trigger = this.deleteTrigger?.isConnected && !this.deleteTrigger.disabled ? this.deleteTrigger : this.$el?.closest('.volume-policy-tab')?.querySelector('.detail-tab-toolbar button:not([disabled])')
+      if (trigger) { trigger.focus({ preventScroll: true }); this.pendingDeleteFocus = false }
     },
-    getZones (record) {
-
-    }
+    intervalText (value) { return policyInterval(value, this.$t) },
+    scheduleText (record) { return policySchedule(record, this.$t) },
+    schedulingText (record) { return policyScheduling(record, this.$t) },
+    scheduleTime (record) {
+      if (!record.schedule) return '—'
+      const values = String(record.schedule).split(':')
+      if (Number(record.intervaltype) !== 0 && values.length < 2) return '—'
+      return Number(record.intervaltype) === 0 ? record.schedule + this.$t('label.min.past.hour') : values[1].padStart(2, '0') + ':' + values[0].padStart(2, '0')
+    },
+    handleClickDelete (record) { this.openPolicy(record, 'delete') },
+    getTimeZone (value) { return timeZoneName(value) }
   }
 }
 </script>
-
-<style lang="less" scoped>
-  .interval-icon {
-    span {
-      position: relative;
-      font-size: 18px;
-    }
-
-    .custom-icon:before {
-      font-size: 8px;
-      position: absolute;
-      top: 8px;
-      left: 3.5px;
-      color: #000;
-      font-weight: 700;
-      line-height: 1.7;
-    }
-
-    .icon-daily:before {
-      content: "01";
-      left: 5px;
-      top: 7px;
-      line-height: 1.9;
-    }
-
-    .icon-weekly:before {
-      content: "1-7";
-      left: 3px;
-      line-height: 1.7;
-    }
-
-    .icon-monthly:before {
-      content: "***";
-    }
-  }
-
-  :deep(.ant-btn) > .anticon {
-    line-height: 1.8;
-  }
+<style scoped>
+.list-schedule { min-width: 0; }
+.policy-row-actions { display: flex; align-items: center; gap: 6px; }
 </style>

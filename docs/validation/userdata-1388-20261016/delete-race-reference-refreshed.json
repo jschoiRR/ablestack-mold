@@ -1,0 +1,154 @@
+{
+  "bodyClass": "dark-mode ant-scrolling-effect",
+  "buttons": [
+    {
+      "background": "rgb(39, 46, 54)",
+      "color": "rgb(197, 204, 212)",
+      "disabled": false,
+      "height": 32,
+      "padding": "4px 15px",
+      "text": "업데이트"
+    },
+    {
+      "background": "rgb(39, 46, 54)",
+      "color": "rgba(255, 255, 255, 0.2)",
+      "disabled": false,
+      "height": 32,
+      "padding": "0px",
+      "text": ""
+    },
+    {
+      "background": "rgb(34, 40, 47)",
+      "color": "rgba(255, 255, 255, 0.25)",
+      "disabled": true,
+      "height": 32,
+      "padding": "0px",
+      "text": ""
+    },
+    {
+      "background": "rgb(34, 40, 47)",
+      "color": "rgba(255, 255, 255, 0.25)",
+      "disabled": true,
+      "height": 32,
+      "padding": "0px",
+      "text": ""
+    },
+    {
+      "background": "rgb(39, 46, 54)",
+      "color": "rgb(197, 204, 212)",
+      "disabled": false,
+      "height": 32,
+      "padding": "4px 15px",
+      "text": "닫기"
+    },
+    {
+      "background": "rgb(180, 35, 24)",
+      "color": "rgb(255, 255, 255)",
+      "disabled": false,
+      "height": 32,
+      "padding": "4px 15px",
+      "text": "실패 항목 재시도"
+    }
+  ],
+  "dialog": {
+    "body": {
+      "bottom": 622,
+      "clientHeight": 534,
+      "height": 534,
+      "left": 161,
+      "right": 1119,
+      "scrollHeight": 552,
+      "top": 88,
+      "width": 958
+    },
+    "footer": {
+      "bottom": 687,
+      "clientHeight": 64,
+      "height": 65,
+      "left": 161,
+      "right": 1119,
+      "scrollHeight": 64,
+      "top": 622,
+      "width": 958
+    },
+    "header": {
+      "bottom": 88,
+      "clientHeight": 54,
+      "height": 55,
+      "left": 161,
+      "right": 1119,
+      "scrollHeight": 54,
+      "top": 33,
+      "width": 958
+    },
+    "rect": {
+      "bottom": 688,
+      "clientHeight": 654,
+      "height": 656,
+      "left": 160,
+      "right": 1120,
+      "scrollHeight": 654,
+      "top": 32,
+      "width": 960
+    },
+    "states": [
+      "failed"
+    ],
+    "text": "사용자 데이터 제거\n선택한 사용자 데이터 라이브러리 항목을 삭제합니다. 사용 중인 항목은 서버가 삭제를 거절합니다. 항목별 결과를 확인하세요.\n\n삭제 대상 1개\n\n완료 0개 · 실패/차단 1개 · 결과 미확인 0개 · 진행/대기 0개\n\n이름\t계정\t작업 상태\t사유\n\n \n\t\n \n\t\n \n\t\n \n\nUD1388-31-20261016-B\ncd2fc77b-60c4-448a-8b51-dfc7ab717320\n\tadmin\nROOT\n\t실패\t\nUserdata UD1388-31-20261016-B cannot be removed as it is being used by some instances 현재 항목이 존재합니다. 원인 해결 후 재시도할 수 있습니다.\n사용 가상머신: 1\n연결 템플릿: 0\n연결 ISO: 0\n1\n\n삭제가 확인된 항목만 목록에서 제거됩니다. 실패한 항목은 남으며, 재시도는 실패한 대상만 처리합니다. 결과 미확인은 현재 상태 확인 후 재시도하세요.\n\n현재 보기에서 접근 가능한 참조 건수입니다. 링크에서 VM 사용자 데이터를 변경·해제하거나 템플릿·ISO 연결을 해제한 뒤 새로고침하세요. 다른 계정·프로젝트 참조는 관리자에게 확인하세요. 조회 후 새 참조가 생길 수 있으므로 서버가 삭제 가능 여부를 최종 확인합니다.\n\n참조 정보 새로고침\n닫기\n실패 항목 재시도"
+  },
+  "documentWidth": 1270,
+  "height": 720,
+  "notes": [
+    {
+      "color": "rgb(197, 204, 212)",
+      "text": "저장된 사용자 데이터 UUID의 연결 관계입니다. 본문 복사·템플릿 상속 본문·게스트 실행 여부는 포함하지 않습니다."
+    },
+    {
+      "color": "rgb(197, 204, 212)",
+      "text": "검색·페이지 이동은 서버에서 처리합니다. 열 정렬과 상태 집계는 현재 페이지에만 적용됩니다."
+    },
+    {
+      "color": "rgb(197, 204, 212)",
+      "text": "조회 프로젝트: - (없으면 기본 보기). 접근 가능한 참조만 표시합니다. 다른 프로젝트는 보기를 전환하여 확인하세요."
+    }
+  ],
+  "rows": [],
+  "scripts": [
+    "http://10.10.31.10:8080/client/js/chunk-6f1952aa.32ca33b4.js",
+    "http://10.10.31.10:8080/client/js/chunk-2ba46c8a.d503c8e2.js",
+    "http://10.10.31.10:8080/client/js/chunk-fb0c6ee4.b97c255e.js",
+    "http://10.10.31.10:8080/client/js/chunk-2e4d3950.ad2bdb41.js",
+    "http://10.10.31.10:8080/client/js/chunk-d4dc1dfc.61b797f7.js",
+    "http://10.10.31.10:8080/client/js/chunk-7f2d3fc9.9f7499a4.js",
+    "http://10.10.31.10:8080/client/js/chunk-edc5a4ca.8c2f60b1.js",
+    "http://10.10.31.10:8080/client/js/chunk-daaf0010.3bc24670.js",
+    "http://10.10.31.10:8080/client/js/less.min.js",
+    "http://10.10.31.10:8080/client/js/vendors.3ea5c3f6.js",
+    "http://10.10.31.10:8080/client/js/app.325357a9.js"
+  ],
+  "tabs": [
+    {
+      "selected": "false",
+      "text": "상세"
+    },
+    {
+      "selected": "true",
+      "text": "사용 가상머신"
+    },
+    {
+      "selected": "false",
+      "text": "연결 템플릿"
+    },
+    {
+      "selected": "false",
+      "text": "연결 ISO"
+    },
+    {
+      "selected": "false",
+      "text": "코멘트"
+    }
+  ],
+  "url": "http://10.10.31.10:8080/client/#/userdata/cd2fc77b-60c4-448a-8b51-dfc7ab717320?tab=userdata.usage.vms",
+  "usageText": "업데이트\n\n저장된 사용자 데이터 UUID의 연결 관계입니다. 본문 복사·템플릿 상속 본문·게스트 실행 여부는 포함하지 않습니다.\n\n검색·페이지 이동은 서버에서 처리합니다. 열 정렬과 상태 집계는 현재 페이지에만 적용됩니다.\n\n조회 프로젝트: - (없으면 기본 보기). 접근 가능한 참조만 표시합니다. 다른 프로젝트는 보기를 전환하여 확인하세요.\n\nVM 표시 명\n\t\n아이디\n\t\n상태\n\t\n계정\n\t\n프로젝트\n\t\n도메인\n\n이 범위에 연결된 개체가 없습니다.\n총 0개\n1\n20 / 쪽",
+  "width": 1280
+}

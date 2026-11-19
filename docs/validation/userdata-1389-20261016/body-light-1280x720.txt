@@ -1,0 +1,301 @@
+Browser tab: 4, Title: "사용자 데이터 라이브러리 - ABLESTACK-Mold", URL: "http://10.10.31.10:8080/client/#/userdata/1fc463a9-c04b-4a1d-b1d3-75a9ac8c0e3c?tab=userdata.content".
+1 AXWebArea 사용자 데이터 라이브러리 - ABLESTACK-Mold, URL: 10.10.31.10:8080/client/#/userdata/1fc463a9-c04b-4a1d-b1d3-75a9ac8c0e3c?tab=userdata.content
+	2 container
+		3 container
+			4 image
+			5 menu
+				6 dashboard 대시보드
+					7 link Description: dashboard 대시보드, Value: 10.10.31.10:8080/client/#/dashboard
+				8 container
+					9 image cloud
+					10 text 컴퓨트
+				11 content list sub_menu_1_$$_/compute-popup
+					12 cloud-server 가상머신
+						13 link Description: cloud-server 가상머신, Value: 10.10.31.10:8080/client/#/vm
+					14 camera VM 스냅샷
+						15 link Description: camera VM 스냅샷, Value: 10.10.31.10:8080/client/#/vmsnapshot
+					16 쿠버네티스
+						17 link Description: 쿠버네티스, Value: 10.10.31.10:8080/client/#/kubernetes
+					18 fullscreen 오토스케일 VM 그룹
+						19 link Description: fullscreen 오토스케일 VM 그룹, Value: 10.10.31.10:8080/client/#/autoscalevmgroup
+					20 gold 가상머신 그룹
+						21 link Description: gold 가상머신 그룹, Value: 10.10.31.10:8080/client/#/vmgroup
+					22 key SSH 키 쌍
+						23 link Description: key SSH 키 쌍, Value: 10.10.31.10:8080/client/#/ssh
+					24 solution 사용자 데이터 라이브러리
+						25 link Description: solution 사용자 데이터 라이브러리, Value: 10.10.31.10:8080/client/#/userdata
+					26 solution CNI 구성
+						27 link Description: solution CNI 구성, Value: 10.10.31.10:8080/client/#/cniconfiguration
+					28 swap Affinity 그룹
+						29 link Description: swap Affinity 그룹, Value: 10.10.31.10:8080/client/#/affinitygroup
+				30 container
+					31 image hdd
+					32 text 스토리지
+				33 container
+					34 image wifi
+					35 text 네트워크
+				36 container
+					37 image picture
+					38 text 이미지
+				39 container
+					40 image lock
+					41 text 키 관리
+				42 schedule 이벤트
+					43 link Description: schedule 이벤트, Value: 10.10.31.10:8080/client/#/event
+				44 project 프로젝트
+					45 link Description: project 프로젝트, Value: 10.10.31.10:8080/client/#/project
+				46 idcard 역할
+					47 link Description: idcard 역할, Value: 10.10.31.10:8080/client/#/role
+				48 team 계정
+					49 link Description: team 계정, Value: 10.10.31.10:8080/client/#/account
+				50 block 도메인
+					51 link Description: block 도메인, Value: 10.10.31.10:8080/client/#/domain
+				52 container
+					53 image bank
+					54 text 인프라스트럭쳐
+				55 container
+					56 image shopping
+					57 text 서비스 오퍼링
+				58 container
+					59 image setting
+					60 text 구성
+				61 appstore-add 확장
+					62 link Description: appstore-add 확장, Value: 10.10.31.10:8080/client/#/extension
+				63 container
+					64 image tool
+					65 text 도구
+				66 read API 문서
+					67 link Description: read API 문서, Value: 10.10.31.10:8080/client/#/apidocs/
+		68 container
+			69 text 페이지 스타일 설정
+			70 button 닫기
+				71 image close
+			200 container
+				201 heading 페이지 스타일 설정, Value: 3
+					202 text 페이지 스타일 설정
+				203 container
+					204 image
+					205 container
+						206 radio button (settable, integer) Description:  , Value: 1
+					207 image check
+				208 container
+					209 image
+					210 container
+						211 radio button (settable, integer) Description:  , Value: 0
+				212 heading 테마 색상, Value: 3
+					213 text 테마 색상
+				214 container
+					215 radio button (settable, integer) Description:  , Value: 0
+					216 image check
+				217 container
+					218 radio button (settable, integer) Description:  , Value: 0
+				219 container
+					220 radio button (settable, integer) Description:  , Value: 0
+				221 container
+					222 radio button (settable, integer) Description:  , Value: 0
+				223 container
+					224 radio button (settable, integer) Description:  , Value: 0
+				225 container
+					226 radio button (settable, integer) Description:  , Value: 0
+				227 container
+					228 radio button (settable, integer) Description:  , Value: 0
+				229 container
+					230 radio button (settable, integer) Description:  , Value: 0
+				231 heading 네비게이션 설정, Value: 3
+					232 text 네비게이션 설정
+				233 container
+					234 container
+						235 text 배경색
+						236 color well (settable) #ffffff
+					237 container
+						238 text 텍스트 색상
+						239 color well (settable) #000000
+				240 image exclamation-circle
+				241 text 설정은 현재 브라우저에서만 볼 수 있습니다. 설정을 적용하려면 JSON 파일을 다운로드하고 경로 `/public/config.json` 아래의 `config.json` 파일의 `theme` 섹션에서 해당 콘텐츠를 교체하세요.
+				242 button download 세팅값 다운로드(json)
+					243 image download
+					244 text 세팅값 다운로드(json)
+				245 button undo 기본값으로 재설정
+					246 image undo
+					247 text 기본값으로 재설정
+		122 container
+			123 image menu-fold
+			124 container
+				125 combo box (settable) rc_select_0
+				126 image project
+				127 text 기본 보기
+			128 button 생성 down
+				129 text 생성
+				130 image down
+			131 image translation
+			132 image bell
+			133 container
+				134 text AC admin cloud
+		135 container
+			248 container
+				249 link Description: home, Value: 10.10.31.10:8080/client/#/
+				250 text /
+				251 link Description: 사용자 데이터 라이브러리, Value: 10.10.31.10:8080/client/#/userdata
+				252 text / UD1389-31-20261016-main
+				253 link Description: question-circle, Value: docs.ablecloud.io/latest/adminguide/virtual_machines.html#user-data-and-meta-data
+				254 button reload 업데이트
+					276 image reload
+					256 text 업데이트
+			257 button down 작업
+				258 image down
+				259 text 작업
+			260 container
+				261 image solution
+				262 heading UD1389-31-20261016-main, Value: 4
+					277 text UD1389-31-20261016-main
+				278 text 아이디
+				279 button barcode
+					280 image barcode
+				281 link Description: 1fc463a9-c04b-4a1d-b1d3-75a9ac8c0e3c , Value: javascript:;
+				282 text 계정
+				283 image user
+				284 link Description: admin, Value: 10.10.31.10:8080/client/#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f
+				285 text 도메인
+				286 image block
+				287 link Description: ROOT, Value: 10.10.31.10:8080/client/#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details
+				274 link Description: cloud-server 가상머신 보기, Value: 10.10.31.10:8080/client/#/vm?userdataid=1fc463a9-c04b-4a1d-b1d3-75a9ac8c0e3c
+			275 container
+				288 tab group
+					289 container
+						290 tab (selectable, settable, boolean) 상세, Value: 0, ID: rc-tabs-6-tab-details
+						291 tab (selected, settable, boolean) 사용자 데이터 본문, Value: 1, ID: rc-tabs-6-tab-userdata.content
+						292 tab (selectable, settable, boolean) 사용 가상머신, Value: 0, ID: rc-tabs-6-tab-userdata.usage.vms
+						293 tab (selectable, settable, boolean) 연결 템플릿, Value: 0, ID: rc-tabs-6-tab-userdata.usage.templates
+						294 tab (selectable, settable, boolean) 연결 ISO, Value: 0, ID: rc-tabs-6-tab-userdata.usage.isos
+						295 tab (selectable, settable, boolean) 코멘트, Value: 0, ID: rc-tabs-6-tab-comments
+				296 container Description: 사용자 데이터 본문, ID: rc-tabs-6-panel-userdata.content
+					297 container 사용자 데이터 본문
+						298 button copy 클립보드에 복사
+							299 image copy
+							300 text 클립보드에 복사
+						301 button download 다운로드
+							302 image download
+							303 text 다운로드
+						304 container 본문 표시 형식
+							305 container
+								306 radio button (settable, integer) Description: 원문 (UTF-8), Value: 1
+								307 text 원문 (UTF-8)
+							308 container
+								309 radio button (settable, integer) Description: Base64, Value: 0
+								310 text Base64
+						311 button 업데이트
+							312 image reload
+						313 text 등록된 라이브러리의 본문입니다. 실행 결과를 의미하지 않습니다. 선택한 표시 형식으로 복사·다운로드합니다. 원문 다운로드는 BOM·줄바꿈을 포함한 저장 바이트를 보존합니다.
+						314 text 표시: 원문 (UTF-8) · 원문 크기: 12012 바이트
+						315 container 원문 (UTF-8)
+							316 text ﻿#cloud-config
+# UD1389-31-20261016 한글·UTF-8·😀
+# <script>본문은 실행되지 않습니다</script>
+# 긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라
+# 줄 0 한글 본문
+# 줄 1 한글 본문
+# 줄 2 한글 본문
+# 줄 3 한글 본문
+# 줄 4 한글 본문
+# 줄 5 한글 본문
+# 줄 6 한글 본문
+# 줄 7 한글 본문
+# 줄 8 한글 본문
+# 줄 9 한글 본문
+# 줄 10 한글 본문
+# 줄 11 한글 본문
+# 줄 12 한글 본문
+# 줄 13 한글 본문
+# 줄 14 한글 본문
+# 줄 15 한글 본문
+# 줄 16 한글 본문
+# 줄 17 한글 본문
+# 줄 18 한글 본문
+# 줄 19 한글 본문
+# 줄 20 한글 본문
+# 줄 21 한글 본문
+# 줄 22 한글 본문
+# 줄 23 한글 본문
+# 줄 24 한글 본문
+# 줄 25 한글 본문
+# 줄 26 한글 본문
+# 줄 27 한글 본문
+# 줄 28 한글 본문
+# 줄 29 한글 본문
+# 줄 30 한글 본문
+# 줄 31 한글 본문
+# 줄 32 한글 본문
+# 줄 33 한글 본문
+# 줄 34 한글 본문
+# 줄 35 한글 본문
+# 줄 36 한글 본문
+# 줄 37 한글 본문
+# 줄 38 한글 본문
+# 줄 39 한글 본문
+# 줄 40 한글 본문
+# 줄 41 한글 본문
+# 줄 42 한글 본문
+# 줄 43 한글 본문
+# 줄 44 한글 본문
+# 줄 45 한글 본문
+# 줄 46 한글 본문
+# 줄 47 한글 본문
+# 줄 48 한글 본문
+# 줄 49 한글 본문
+# 줄 50 한글 본문
+# 줄 51 한글 본문
+# 줄 52 한글 본문
+# 줄 53 한글 본문
+# 줄 54 한글 본문
+# 줄 55 한글 본문
+# 줄 56 한글 본문
+# 줄 57 한글 본문
+# 줄 58 한글 본문
+# 줄 59 한글 본문
+# 줄 60 한글 본문
+# 줄 61 한글 본문
+# 줄 62 한글 본문
+# 줄 63 한글 본문
+# 줄 64 한글 본문
+# 줄 65 한글 본문
+# 줄 66 한글 본문
+# 줄 67 한글 본문
+# 줄 68 한글 본문
+# 줄 69 한글 본문
+# 줄 70 한글 본문
+# 줄 71 한글 본문
+# 줄 72 한글 본문
+# 줄 73 한글 본문
+# 줄 74 한글 본문
+# 줄 75 한글 본문
+# 줄 76 한글 본문
+# 줄 77 한글 본문
+# 줄 78 한글 본문
+# 줄 79 한글 본문
+# 줄 80 한글 본문
+# 줄 81 한글 본문
+# 줄 82 한글 본문
+# 줄 83 한글 본문
+# 줄 84 한글 본문
+# 줄 85 한글 본문
+# 줄 86 한글 본문
+# 줄 87 한글 본문
+# 줄 88 한글 본문
+# 줄 89 한글 본문
+# 줄 90 한글 본문
+# 줄 91 한글 본문
+# 줄 92 한글 본문
+# 줄 93 한글 본문
+# 줄 94 한글 본문
+# 줄 95 한글 본문
+# 줄 96 한글 본문
+# 줄 97 한글 본문
+# 줄 98 한글 본문
+# 줄 99 한글 본문
+
+
+	197 container
+		198 image info-circle
+		199 text Wall 모니터링을 사용할 수 없습니다. 기존 알림은 최신 정보가 아닐 수 있으며 Mold는 계속 사용할 수 있습니다. 비활성
+
+The focused UI element is 301 button download 다운로드

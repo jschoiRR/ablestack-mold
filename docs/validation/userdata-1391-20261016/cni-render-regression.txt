@@ -1,0 +1,254 @@
+Browser tab: 6, Title: "CNI 구성 - ABLESTACK-Mold", URL: "http://10.10.31.10:8080/client/#/cniconfiguration".
+1 AXWebArea CNI 구성 - ABLESTACK-Mold, URL: 10.10.31.10:8080/client/#/cniconfiguration
+	2 container
+		785 container
+			786 image
+			787 menu
+				788 dashboard 대시보드
+					789 link Description: dashboard 대시보드, Value: 10.10.31.10:8080/client/#/dashboard
+				790 container
+					791 image cloud
+					792 text 컴퓨트
+				793 content list sub_menu_89_$$_/compute-popup
+					794 cloud-server 가상머신
+						795 link Description: cloud-server 가상머신, Value: 10.10.31.10:8080/client/#/vm
+					796 camera VM 스냅샷
+						797 link Description: camera VM 스냅샷, Value: 10.10.31.10:8080/client/#/vmsnapshot
+					798 쿠버네티스
+						799 link Description: 쿠버네티스, Value: 10.10.31.10:8080/client/#/kubernetes
+					800 fullscreen 오토스케일 VM 그룹
+						801 link Description: fullscreen 오토스케일 VM 그룹, Value: 10.10.31.10:8080/client/#/autoscalevmgroup
+					802 gold 가상머신 그룹
+						803 link Description: gold 가상머신 그룹, Value: 10.10.31.10:8080/client/#/vmgroup
+					804 key SSH 키 쌍
+						805 link Description: key SSH 키 쌍, Value: 10.10.31.10:8080/client/#/ssh
+					806 solution 사용자 데이터 라이브러리
+						807 link Description: solution 사용자 데이터 라이브러리, Value: 10.10.31.10:8080/client/#/userdata
+					808 solution CNI 구성
+						809 link Description: solution CNI 구성, Value: 10.10.31.10:8080/client/#/cniconfiguration
+					810 swap Affinity 그룹
+						811 link Description: swap Affinity 그룹, Value: 10.10.31.10:8080/client/#/affinitygroup
+				812 container
+					813 image hdd
+					814 text 스토리지
+				815 container
+					816 image wifi
+					817 text 네트워크
+				818 container
+					819 image picture
+					820 text 이미지
+				821 container
+					822 image lock
+					823 text 키 관리
+				824 schedule 이벤트
+					825 link Description: schedule 이벤트, Value: 10.10.31.10:8080/client/#/event
+				826 project 프로젝트
+					827 link Description: project 프로젝트, Value: 10.10.31.10:8080/client/#/project
+				828 idcard 역할
+					829 link Description: idcard 역할, Value: 10.10.31.10:8080/client/#/role
+				830 team 계정
+					831 link Description: team 계정, Value: 10.10.31.10:8080/client/#/account
+				832 block 도메인
+					833 link Description: block 도메인, Value: 10.10.31.10:8080/client/#/domain
+				834 container
+					835 image bank
+					836 text 인프라스트럭쳐
+				837 container
+					838 image shopping
+					839 text 서비스 오퍼링
+				840 container
+					841 image setting
+					842 text 구성
+				843 appstore-add 확장
+					844 link Description: appstore-add 확장, Value: 10.10.31.10:8080/client/#/extension
+				845 container
+					846 image tool
+					847 text 도구
+				848 read API 문서
+					849 link Description: read API 문서, Value: 10.10.31.10:8080/client/#/apidocs/
+		781 container
+			782 text 페이지 스타일 설정
+			783 button 닫기
+				784 image close
+			850 heading 페이지 스타일 설정, Value: 3
+				851 text 페이지 스타일 설정
+			852 container
+				853 container
+					854 image
+					855 container
+						856 radio button (settable, integer) Description:  , Value: 0
+				857 container
+					858 image
+					859 container
+						860 radio button (settable, integer) Description:  , Value: 1
+					861 image check
+			862 heading 테마 색상, Value: 3
+				863 text 테마 색상
+			864 container
+				865 container
+					866 radio button (settable, integer) Description:  , Value: 0
+					867 image check
+				868 container
+					869 radio button (settable, integer) Description:  , Value: 0
+				870 container
+					871 radio button (settable, integer) Description:  , Value: 0
+				872 container
+					873 radio button (settable, integer) Description:  , Value: 0
+				874 container
+					875 radio button (settable, integer) Description:  , Value: 0
+				876 container
+					877 radio button (settable, integer) Description:  , Value: 0
+				878 container
+					879 radio button (settable, integer) Description:  , Value: 0
+				880 container
+					881 radio button (settable, integer) Description:  , Value: 0
+			882 heading 네비게이션 설정, Value: 3
+				883 text 네비게이션 설정
+			884 container
+				885 container
+					886 text 배경색
+					887 color well (disabled, settable) #ffffff
+				888 container
+					889 text 텍스트 색상
+					890 color well (disabled, settable) #000000
+			891 container
+				892 image exclamation-circle
+				893 text 설정은 현재 브라우저에서만 볼 수 있습니다. 설정을 적용하려면 JSON 파일을 다운로드하고 경로 `/public/config.json` 아래의 `config.json` 파일의 `theme` 섹션에서 해당 콘텐츠를 교체하세요.
+			894 button download 세팅값 다운로드(json)
+				895 image download
+				896 text 세팅값 다운로드(json)
+			897 button undo 기본값으로 재설정
+				898 image undo
+				899 text 기본값으로 재설정
+		122 container
+			900 image menu-fold
+			124 container
+				125 combo box (settable) rc_select_1
+				126 image project
+				127 text 기본 보기
+			901 button 생성 down
+				902 text 생성
+				903 image down
+			131 image translation
+			132 image bell
+			133 container
+				134 text AC admin cloud
+		135 container
+			904 container
+				905 link Description: home, Value: 10.10.31.10:8080/client/#/
+				906 text /
+				907 link Description: CNI 구성, Value: 10.10.31.10:8080/client/#/cniconfiguration
+				908 link Description: question-circle, Value: docs.ablecloud.io/latest/adminguide/virtual_machines.html#user-data-and-meta-data
+				909 button reload 업데이트
+					910 image reload
+					911 text 업데이트
+			912 container
+				913 button CNI 구성 등록
+					914 image plus
+					915 text CNI 구성 등록
+				916 text field (settable)
+				917 button search
+					918 image search
+			919 table
+				920 row
+					921 cell
+						922 container
+							923 text 이름
+							924 image caret-up
+							925 image caret-down
+					926 cell
+						927 container
+							928 text 아이디
+							929 image caret-up
+							930 image caret-down
+					931 cell
+						932 container
+							933 text 계정
+							934 image caret-up
+							935 image caret-down
+					936 cell
+						937 container
+							938 text 도메인
+							939 image caret-up
+							940 image caret-down
+					941 cell
+						942 button filter
+							943 image filter
+				944 row
+					945 cell
+						946 link Description: rt1230-offline-custom-cni-r36, Value: 10.10.31.10:8080/client/#/cniconfiguration/7badd14a-c696-4dac-8e77-2d4f71c68a50
+					947 cell
+						948 text 7badd14a-c696-4dac-8e77-2d4f71c68a50
+					949 cell
+						950 link Description: k1230-20261006, Value: 10.10.31.10:8080/client/#/account?name=k1230-20261006&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&dataView=true
+					951 cell
+						952 link Description: ROOT, Value: 10.10.31.10:8080/client/#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details
+				953 row
+					954 cell
+						955 link Description: rt1230-offline-custom-cni-r34, Value: 10.10.31.10:8080/client/#/cniconfiguration/848a6387-0ddf-47d5-8469-d7b78c2def65
+					956 cell
+						957 text 848a6387-0ddf-47d5-8469-d7b78c2def65
+					958 cell
+						959 link Description: k1230-20261006, Value: 10.10.31.10:8080/client/#/account?name=k1230-20261006&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&dataView=true
+					960 cell
+						961 link Description: ROOT, Value: 10.10.31.10:8080/client/#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details
+				962 row
+					963 cell
+						964 link Description: rt1230-offline-custom-cni-r29, Value: 10.10.31.10:8080/client/#/cniconfiguration/24f2f989-10a7-422e-a00a-baf4ea94ba7f
+					965 cell
+						966 text 24f2f989-10a7-422e-a00a-baf4ea94ba7f
+					967 cell
+						968 link Description: k1230-20261006, Value: 10.10.31.10:8080/client/#/account?name=k1230-20261006&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&dataView=true
+					969 cell
+						970 link Description: ROOT, Value: 10.10.31.10:8080/client/#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details
+			971 content list
+				972 text 전체 3 개 항목 중 1-3 표시
+				973 container 이전 페이지
+					974 button (disabled) left
+						975 image left
+				976 text 1
+				977 container 다음 페이지
+					978 button (disabled) right
+						979 image right
+				980 container
+					981 combo box (settable) rc_select_10
+					982 text 20 / 쪽
+	187 container
+		188 image info-circle
+		189 text Wall 모니터링을 사용할 수 없습니다. 기존 알림은 최신 정보가 아닐 수 있으며 Mold는 계속 사용할 수 있습니다. 비활성
+	983 container
+		984 container CNI 구성 등록 도움말
+			985 container
+				986 button Close
+					987 image close
+				988 container vcDialogTitle7
+					989 text CNI 구성 등록
+					990 link Description: 도움말, Value: docs.ablecloud.io/latest/adminguide/virtual_machines.html#creating-the-ssh-keypair
+				991 container
+					992 text 다음 데이터를 입력하여 CNI 구성을 사용자 데이터로 등록하세요.
+					993 container userdata-registration-form
+						994 container
+							995 text * 이름
+							996 image info-circle
+						997 text field (settable) * 이름 info-circle, ID: form_item_name
+						998 container
+							999 text * CNI 구성
+							1000 image info-circle
+						1001 text entry area (settable) * CNI 구성 info-circle, ID: form_item_cniconfig
+						1002 text Base64 인코드
+						1003 container
+							1004 checkbox (settable, integer) Base64 인코드  , Value: 0, ID: form_item_isbase64
+						1005 container
+							1006 text CNI 구성 매개변수
+							1007 image info-circle
+						1008 container
+							1009 combo box (settable) CNI 구성 매개변수 info-circle, ID: form_item_params
+							1010 text comma separated list of variables declared in user data content
+						1011 container
+							1012 text 도메인 아이디
+							1013 image info-circle
+						1014 combo box (settable) domain-selection
+				1015 button 취소
+				1016 button 등록
+
+The focused UI element is 997 text field (settable) * 이름 info-circle, ID: form_item_name

@@ -17,6 +17,7 @@
 
 <template>
   <div>
+    <a-alert v-if="autoscale" type="info" show-icon :message="$t('message.autoscale.fixed.offering.required')" style="margin-bottom: 12px" />
     <div style="margin-bottom: 16px; display: flex; justify-content: right; align-items: center;">
       <div v-if="showGpuFilter" style="display: flex; align-items: center; margin-right: 16px;">
         <span>{{ $t('label.show.only.gpu.enabled.offerings') }}</span>
@@ -54,6 +55,7 @@
       </template>
       <template #displayText="{ record }">
         <span>{{ record.name }}</span>
+        <AllocationSummary :resource="record.allocationResource" compact inheritance />
         <span
             v-if="record.leaseduration !== undefined"
             :style="{
@@ -97,7 +99,9 @@
 </template>
 
 <script>
+import AllocationSummary from '@/components/view/AllocationSummary'
 export default {
+  components: { AllocationSummary },
   name: 'ComputeOfferingSelection',
   props: {
     computeItems: {
@@ -263,11 +267,11 @@ export default {
         if (this.selectedTemplate && this.selectedTemplate.hypervisor === 'VMware' && this.selectedTemplate.deployasis && item.rootdisksize) {
           disabled = true
         }
-        if (this.autoscale && item.iscustomized) {
-          disabled = true
-        }
         if (this.allowAllOfferings) {
           disabled = false
+        }
+        if (this.autoscale && item.iscustomized) {
+          disabled = true
         }
         var gpuEnabledOffering = false
         var gpuCount = 0
@@ -284,6 +288,7 @@ export default {
         }
 
         return {
+          allocationResource: item,
           key: item.id,
           name: item.name,
           cpu: cpuNumberValue.length > 0 ? `${cpuNumberValue} CPU x ${cpuSpeedValue} Ghz` : '',
@@ -330,6 +335,10 @@ export default {
     },
     loading () {
       if (!this.loading) {
+        if (this.autoscale) {
+          this.selectInitialRow()
+          return
+        }
         if (!this.preFillContent) {
           return
         }
@@ -353,13 +362,18 @@ export default {
     selectInitialRow () {
       const selectedId = this.value || this.preFillContent?.computeofferingid
       const selectedRow = this.tableSource.find(row => row.key === selectedId && !row.disabled)
-      if (selectedId && !selectedRow) {
+      const disabledAutoScaleRow = this.autoscale && this.tableSource.some(row => row.key === selectedId && row.disabled)
+      if (selectedId && !selectedRow && !disabledAutoScaleRow) {
         this.selectedRowKeys = [selectedId]
         return
       }
       const fallbackRow = this.tableSource.find(row => !row.disabled)
       const row = selectedRow || fallbackRow
       if (!row) {
+        if (this.autoscale) {
+          this.selectedRowKeys = []
+          this.$emit('select-compute-item', '')
+        }
         return
       }
 
@@ -368,7 +382,7 @@ export default {
     },
     onSelectRow (value) {
       for (let i = 0; i < this.tableSource.length; i++) {
-        if (value[0] === this.tableSource[i].key) {
+        if (value[0] === this.tableSource[i].key && !this.tableSource[i].disabled) {
           this.selectedRowKeys = value
           this.$emit('select-compute-item', value[0], this.tableSource[i].selectKvdoEnable)
         }

@@ -24,14 +24,14 @@
       v-for="filter in this.searchFilters"
       :key="filter.key + filter.value"
     >
-      <a-col v-if="!['page', 'pagesize', 'q', 'keyword', 'tags', 'projectid'].includes(filter.key)">
+      <a-col v-if="!['page', 'pagesize', 'q', 'keyword', 'tags', 'projectid', 'sortkey', 'sortorder'].includes(filter.key)">
         <a-tag
           v-if="!filter.isTag"
           closable
           @close="() => $emit('removeFilter', filter)"
         >
           <a-tooltip
-            :title="retrieveFieldLabel(filter.key) + ': ' + filter.value"
+            :title="retrieveFieldLabel(filter.key) + ': ' + filter.value + (['affinitygroupid', 'volumeid'].includes(filter.key) && filter.rawValue !== filter.value ? ' (' + filter.rawValue + ')' : '')"
             placement="bottom"
           >
             {{ retrieveFieldLabel(filter.key) }} : {{ getTrimmedText(filter.value, 20) }}
@@ -57,6 +57,8 @@
 <script>
 
 import { getAPI } from '@/api'
+import { affinityPolicy } from '@/utils/affinityGroupPresentation'
+import { snapshotSearchLabel, snapshotSearchValue, snapshotPickerScope } from '@/utils/storageSnapshotSearch'
 
 export default {
   name: 'SearchFilter',
@@ -86,6 +88,7 @@ export default {
   data () {
     return {
       searchFilters: [],
+      filterVersion: 0,
       apiMap: {
         type: (value) => this.getType(value),
         hypervisor: (value) => this.getHypervisor(value),
@@ -182,43 +185,29 @@ export default {
       }
     }
   },
+  computed: {
+    lookupScope () { return JSON.stringify([this.$store?.getters?.userInfo?.id, this.$store?.state?.user?.token, this.$store?.getters?.project?.id, this.$route.query?.projectid, this.$route.path, this.apiName]) }
+  },
+  beforeUnmount () { this.filterVersion++ },
   watch: {
-    filters: {
-      immediate: true,
-      handler (newFilters) {
-        const clonedFilters = newFilters.map(filter => ({ ...filter }))
-        this.searchFilters = clonedFilters.map(f => ({ ...f }))
-        const promises = []
-        for (let idx = 0; idx < clonedFilters.length; idx++) {
-          const filter = clonedFilters[idx]
-          promises.push(new Promise((resolve) => {
-            if (filter.key === 'tags') {
-              clonedFilters[idx] = {
-                key: filter.key,
-                value: filter.value,
-                isTag: true
-              }
-              resolve()
-            } else {
-              this.getSearchFilters(filter.key, filter.value).then((value) => {
-                const displayValue = (value !== undefined && value !== null && value !== '') ? value : filter.value
-                clonedFilters[idx] = {
-                  key: filter.key,
-                  value: displayValue,
-                  isTag: filter.isTag
-                }
-                resolve()
-              })
-            }
-          }))
-        }
-        Promise.all(promises).then(() => {
-          this.searchFilters = clonedFilters
-        })
-      }
-    }
+    filters: { immediate: true, handler (filters) { this.resolveFilters(filters) } },
+    lookupScope () { this.resolveFilters(this.filters) }
   },
   methods: {
+    async resolveFilters (filters) {
+      const version = ++this.filterVersion
+      const scope = this.lookupScope
+      const cloned = filters.map(filter => ({ ...filter, rawValue: filter.value }))
+      this.searchFilters = cloned.map(filter => ({ ...filter }))
+      const resolved = await Promise.all(cloned.map(async filter => {
+        if (filter.key === 'tags') return { ...filter, isTag: true }
+        try {
+          const value = await this.getSearchFilters(filter.key, filter.value)
+          return { ...filter, value: value !== undefined && value !== null && value !== '' ? value : filter.value }
+        } catch (_) { return filter }
+      }))
+      if (version === this.filterVersion && scope === this.lookupScope) this.searchFilters = resolved
+    },
     getTrimmedText (text, length) {
       if (!text) {
         return ''
@@ -226,6 +215,9 @@ export default {
       return (text.length <= length) ? text : (text.substring(0, length - 3) + '...')
     },
     retrieveFieldLabel (fieldName) {
+      if (this.apiName === 'listSnapshotPolicies' && fieldName === 'fordisplay') return this.$t('label.snapshot.policy.scheduling')
+      if (this.apiName === 'listSnapshots') return this.$t(snapshotSearchLabel(fieldName))
+      if (fieldName === 'affinitygroupid') return this.$t('label.affinitygroup')
       if (fieldName === 'groupid') {
         fieldName = 'group'
       }
@@ -253,6 +245,11 @@ export default {
       }
     },
     getStaticFieldValue (key, value) {
+      if (this.apiName === 'listSnapshotPolicies' && key === 'fordisplay') return this.$t(value === 'true' ? 'label.snapshot.policy.schedule.enabled' : 'label.snapshot.policy.schedule.paused')
+      if (this.apiName === 'listSnapshots') {
+        const label = snapshotSearchValue(key, value)
+        if (label) return this.$t(label)
+      }
       let formattedValue = ''
       if (key.includes('type')) {
         if (this.$route.path === '/guestnetwork' || this.$route.path.includes('/guestnetwork/')) {
@@ -300,6 +297,27 @@ export default {
     async getDynamicFieldValue (key, value) {
       let formattedValue = ''
 
+      if (this.apiName === 'listSnapshots' && key === 'account') return value
+      if (['listSnapshots', 'listSnapshotPolicies'].includes(this.apiName) && key === 'volumeid') {
+        if (!this.$store.getters.apis?.listVolumes) return value
+        const query = this.$route.query
+        const project = query.projectid || this.$store.getters.project?.id || (this.$store.getters.listAllProjects ? '-1' : '')
+        const response = await getAPI('listVolumes', { id: value, listall: true, ...snapshotPickerScope(query, project), ...(query.zoneid ? { zoneid: query.zoneid } : {}) }, { preserveOnFailure: true, timeout: 20000 })
+        return response?.listvolumesresponse?.volume?.find(row => row.id === value)?.name || value
+      }
+
+      if (key === 'objectstorageid') {
+        if (this.$store.getters.userInfo?.roletype !== 'Admin' || !this.$store.getters.apis?.listObjectStoragePools) return value
+        try {
+          const response = await getAPI('listObjectStoragePools', { id: value, ignoreproject: true }, { preserveOnFailure: true, timeout: 20000 })
+          return response?.listobjectstoragepoolsresponse?.objectstore?.find(row => row.id === value)?.name || value
+        } catch (error) { return value }
+      }
+      if (key === 'affinitygroupid') {
+        if (!this.$isValidUuid(value) || (this.$store?.getters?.apis && !('listAffinityGroups' in this.$store.getters.apis))) return value
+        const response = await getAPI('listAffinityGroups', { id: value, listall: true, projectid: this.$route.query?.projectid || this.$store?.getters?.project?.id || '-1' }, { preserveOnFailure: true })
+        return response?.listaffinitygroupsresponse?.affinitygroup?.find(group => group.id === value)?.name || value
+      }
       if (typeof this.apiMap[key] === 'function') {
         formattedValue = await this.apiMap[key](value)
       } else if (this.apiMap[key]) {
@@ -370,27 +388,8 @@ export default {
       })
     },
     getAffinityGroupType (type) {
-      return new Promise((resolve) => {
-        getAPI('listAffinityGroupTypes').then(json => {
-          const alertTypes = {}
-          for (const key in json.listaffinitygrouptypesresponse.affinityGroupType) {
-            const affinityGroupType = json.listaffinitygrouptypesresponse.affinityGroupType[key]
-            if (affinityGroupType.type === 'host anti-affinity') {
-              alertTypes[affinityGroupType.type] = 'host anti-affinity (Strict)'
-            } else if (affinityGroupType.type === 'host affinity') {
-              alertTypes[affinityGroupType.type] = 'host affinity (Strict)'
-            } else if (affinityGroupType.type === 'non-strict host anti-affinity') {
-              alertTypes[affinityGroupType.type] = 'host anti-affinity (Non-Strict)'
-            } else if (affinityGroupType.type === 'non-strict host affinity') {
-              alertTypes[affinityGroupType.type] = 'host affinity (Non-Strict)'
-            }
-          }
-          this.alertTypes = alertTypes
-          resolve(alertTypes[type])
-        }).catch(() => {
-          resolve(null)
-        })
-      })
+      const policy = affinityPolicy(type)
+      return Promise.resolve(policy ? this.$t('label.affinity.type.' + policy) : type)
     },
     getGuestNetworkType (value) {
       switch (value.toLowerCase()) {
@@ -477,7 +476,10 @@ export default {
       }
     },
     getState (state) {
-      if (this.apiName.includes('listVolumes')) {
+      if (this.apiName === 'listVMSnapshot') {
+        const value = String(state).toLowerCase()
+        return ['ready', 'creating', 'allocated', 'reverting', 'expunging', 'error'].includes(value) ? this.$t('state.' + value) : state
+      } else if (this.apiName.includes('listVolumes')) {
         switch (state.toLowerCase()) {
           case 'allocated':
             return this.$t('label.allocated')

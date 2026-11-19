@@ -1,0 +1,425 @@
+Browser tab: 4, Title: "가상머신 - ABLESTACK-Mold", URL: "http://10.10.31.10:8080/client/#/vm/d3e43a02-2204-433a-9c69-ecf774731389".
+1 AXWebArea 가상머신 - ABLESTACK-Mold, URL: 10.10.31.10:8080/client/#/vm/d3e43a02-2204-433a-9c69-ecf774731389
+	2 container
+		3 container
+			4 image
+			5 menu
+				6 dashboard 대시보드
+					7 link Description: dashboard 대시보드, Value: 10.10.31.10:8080/client/#/dashboard
+				8 container
+					9 image cloud
+					10 text 컴퓨트
+				11 content list sub_menu_1_$$_/compute-popup
+					12 cloud-server 가상머신
+						13 link Description: cloud-server 가상머신, Value: 10.10.31.10:8080/client/#/vm
+					14 camera VM 스냅샷
+						15 link Description: camera VM 스냅샷, Value: 10.10.31.10:8080/client/#/vmsnapshot
+					16 쿠버네티스
+						17 link Description: 쿠버네티스, Value: 10.10.31.10:8080/client/#/kubernetes
+					18 fullscreen 오토스케일 VM 그룹
+						19 link Description: fullscreen 오토스케일 VM 그룹, Value: 10.10.31.10:8080/client/#/autoscalevmgroup
+					20 gold 가상머신 그룹
+						21 link Description: gold 가상머신 그룹, Value: 10.10.31.10:8080/client/#/vmgroup
+					22 key SSH 키 쌍
+						23 link Description: key SSH 키 쌍, Value: 10.10.31.10:8080/client/#/ssh
+					24 solution 사용자 데이터 라이브러리
+						25 link Description: solution 사용자 데이터 라이브러리, Value: 10.10.31.10:8080/client/#/userdata
+					26 solution CNI 구성
+						27 link Description: solution CNI 구성, Value: 10.10.31.10:8080/client/#/cniconfiguration
+					28 swap Affinity 그룹
+						29 link Description: swap Affinity 그룹, Value: 10.10.31.10:8080/client/#/affinitygroup
+				30 container
+					31 image hdd
+					32 text 스토리지
+				33 container
+					34 image wifi
+					35 text 네트워크
+				36 container
+					37 image picture
+					38 text 이미지
+				39 container
+					40 image lock
+					41 text 키 관리
+				42 schedule 이벤트
+					43 link Description: schedule 이벤트, Value: 10.10.31.10:8080/client/#/event
+				44 project 프로젝트
+					45 link Description: project 프로젝트, Value: 10.10.31.10:8080/client/#/project
+				46 idcard 역할
+					47 link Description: idcard 역할, Value: 10.10.31.10:8080/client/#/role
+				48 team 계정
+					49 link Description: team 계정, Value: 10.10.31.10:8080/client/#/account
+				50 block 도메인
+					51 link Description: block 도메인, Value: 10.10.31.10:8080/client/#/domain
+				52 container
+					53 image bank
+					54 text 인프라스트럭쳐
+				55 container
+					56 image shopping
+					57 text 서비스 오퍼링
+				58 container
+					59 image setting
+					60 text 구성
+				61 appstore-add 확장
+					62 link Description: appstore-add 확장, Value: 10.10.31.10:8080/client/#/extension
+				63 container
+					64 image tool
+					65 text 도구
+				66 read API 문서
+					67 link Description: read API 문서, Value: 10.10.31.10:8080/client/#/apidocs/
+		68 container
+			69 text 페이지 스타일 설정
+			70 button 닫기
+				71 image close
+			72 container
+				73 heading 페이지 스타일 설정, Value: 3
+					74 text 페이지 스타일 설정
+				75 container
+					76 image
+					77 container
+						78 radio button (settable, integer) Description:  , Value: 0
+				79 container
+					80 image
+					81 container
+						82 radio button (settable, integer) Description:  , Value: 1
+					83 image check
+				84 heading 테마 색상, Value: 3
+					85 text 테마 색상
+				86 container
+					87 radio button (settable, integer) Description:  , Value: 0
+					88 image check
+				89 container
+					90 radio button (settable, integer) Description:  , Value: 0
+				91 container
+					92 radio button (settable, integer) Description:  , Value: 0
+				93 container
+					94 radio button (settable, integer) Description:  , Value: 0
+				95 container
+					96 radio button (settable, integer) Description:  , Value: 0
+				97 container
+					98 radio button (settable, integer) Description:  , Value: 0
+				99 container
+					100 radio button (settable, integer) Description:  , Value: 0
+				101 container
+					102 radio button (settable, integer) Description:  , Value: 0
+				103 heading 네비게이션 설정, Value: 3
+					104 text 네비게이션 설정
+				105 container
+					106 container
+						107 text 배경색
+						108 color well (disabled, settable) #ffffff
+					109 container
+						110 text 텍스트 색상
+						111 color well (disabled, settable) #000000
+				112 image exclamation-circle
+				113 text 설정은 현재 브라우저에서만 볼 수 있습니다. 설정을 적용하려면 JSON 파일을 다운로드하고 경로 `/public/config.json` 아래의 `config.json` 파일의 `theme` 섹션에서 해당 콘텐츠를 교체하세요.
+				114 button download 세팅값 다운로드(json)
+					115 image download
+					116 text 세팅값 다운로드(json)
+				117 button undo 기본값으로 재설정
+					118 image undo
+					119 text 기본값으로 재설정
+		120 container
+			121 image menu-fold
+			122 container
+				123 combo box (settable) rc_select_0
+				124 image project
+				125 text 기본 보기
+			126 button 생성 down
+				127 text 생성
+				128 image down
+			129 image translation
+			130 image bell
+			131 container
+				132 text AC admin cloud
+		133 container
+			134 container
+				135 container
+					136 link Description: home, Value: 10.10.31.10:8080/client/#/
+					137 text /
+					138 link Description: 가상머신, Value: 10.10.31.10:8080/client/#/vm
+					139 text / qa-ag02-20261019-vm
+					140 link Description: question-circle, Value: docs.ablecloud.io/latest/adminguide/virtual_machines.html
+					141 button reload 업데이트
+						142 image reload
+						143 text 업데이트
+				144 button down 작업
+					145 image down
+					146 text 작업
+			147 container
+				148 image edit
+				149 heading qa-ag02-20261019-vm, Value: 4
+					150 text qa-ag02-20261019-vm
+				151 text i-2-650-VM x86_64 KVM 동적으로 확장 가능
+				152 link code
+					153 button (disabled) code
+						154 image code
+				155 text 상태 정지된 상태 아이디
+				156 button barcode
+					157 image barcode
+				158 link Description: d3e43a02-2204-433a-9c69-ecf774731389 , Value: javascript:;
+				159 text CPU 2 CPU x 2.00 GHz
+				160 image question-circle
+				161 text x86_64 메모리 2048 MB 메모리 네트워크
+				162 image wifi
+				163 text 1 NIC(s)
+				164 text eth0
+				165 link Description:  , Value: javascript:;
+				166 text 기본
+				167 image apartment
+				168 link Description: E1335-VM-Origin-L2, Value: 10.10.31.10:8080/client/#/guestnetwork/ae274fff-3d8e-4285-ac73-26a767c1fea7
+				169 text Affinity 그룹
+				170 image swap
+				171 link Description: qa-ag02-20261019-14, Value: 10.10.31.10:8080/client/#/affinitygroup/38cea24d-b9d0-480b-87bd-4d00248419d8
+				172 text 템플릿
+				173 image save
+				174 link Description: rocky-9-4-minimal.qcow22, Value: 10.10.31.10:8080/client/#/template/e3d8677e-70f0-44bd-917e-6068636b97a8
+				175 text 컴퓨트 오퍼링
+				176 image cloud
+				177 link Description: AS-PROD-31-AS01-2C2G-Sparse, Value: 10.10.31.10:8080/client/#/computeoffering/39c3aa33-5632-4dea-bd84-ba794d292c87
+				178 text Zone
+				179 image global
+				180 link Description: Zone, Value: 10.10.31.10:8080/client/#/zone/7013f5a1-de59-4cea-a596-f4f58815f31c
+				181 text 계정
+				182 image user
+				183 link Description: admin, Value: 10.10.31.10:8080/client/#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f
+				184 text 도메인
+				185 image block
+				186 link Description: ROOT, Value: 10.10.31.10:8080/client/#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details
+				187 text 생성일
+				188 image calendar
+				189 text 2026. 10. 19. 오전 6:01:45
+				190 container
+					191 text 태그
+					192 container
+						193 image plus
+						194 text  새 태그
+			195 container
+				196 tab group
+					197 container
+						198 tab (selected, settable, boolean) 상세, Value: 1, ID: rc-tabs-0-tab-details
+						199 tab (selectable, settable, boolean) IP 구성, Value: 0, ID: rc-tabs-0-tab-guestnetwork
+						200 tab (selectable, settable, boolean) 메트릭, Value: 0, ID: rc-tabs-0-tab-stats
+						201 tab (selectable, settable, boolean) 프로세스, Value: 0, ID: rc-tabs-0-tab-processes
+						202 tab (selectable, settable, boolean) 스케줄, Value: 0, ID: rc-tabs-0-tab-schedules
+						203 tab (selectable, settable, boolean) ISO, Value: 0, ID: rc-tabs-0-tab-cdrom
+						204 tab (selectable, settable, boolean) 볼륨, Value: 0, ID: rc-tabs-0-tab-volumes
+						205 tab (selectable, settable, boolean) NIC, Value: 0, ID: rc-tabs-0-tab-nics
+						206 tab (selectable, settable, boolean) 설정, Value: 0, ID: rc-tabs-0-tab-settings
+						207 tab (selectable, settable, boolean) 호스트 장치, Value: 0, ID: rc-tabs-0-tab-hostdevices
+						208 tab (selectable, settable, boolean) VM 스냅샷, Value: 0, ID: rc-tabs-0-tab-vmsnapshots
+						209 tab (selectable, settable, boolean) 이벤트, Value: 0, ID: rc-tabs-0-tab-events
+						210 tab (selectable, settable, boolean) 코멘트, Value: 0, ID: rc-tabs-0-tab-comments
+				211 container Description: 상세, ID: rc-tabs-0-panel-details
+					212 content list
+						213 container
+							214 text VM 호스트 명
+							215 text qa-ag02-20261019-vm
+						216 container
+							217 text VM 표시 명
+							218 text qa-ag02-20261019-vm
+						219 container
+							220 text 아이디
+							221 text d3e43a02-2204-433a-9c69-ecf774731389
+						222 container
+							223 text 상태
+							224 text Stopped
+						225 container
+							226 text 템플릿
+							227 text rocky-9-4-minimal.qcow22
+						228 container
+							229 text 템플릿 형식
+							230 text USER
+						231 container
+							232 text 컴퓨트 오퍼링
+							233 text AS-PROD-31-AS01-2C2G-Sparse
+						234 container
+							235 text 동적으로 확장 가능
+							236 text true
+						237 container
+							238 text HA 활성화
+							239 text false
+						240 container
+							241 text 하이퍼바이저
+							242 text KVM
+						243 container
+							244 text CPU 아키텍처
+							245 text x86_64
+						246 container
+							247 text 계정
+							248 text admin
+						249 container
+							250 text 도메인
+							251 text ROOT
+						252 container
+							253 text Zone
+							254 text Zone
+						255 container
+							256 text VBMC 포트
+							257 text 미할당
+						258 container
+							259 text 삭제 보호
+							260 text false
+	264 container
+		265 image info-circle
+		266 text Wall 모니터링을 사용할 수 없습니다. 기존 알림은 최신 정보가 아닐 수 있으며 Mold는 계속 사용할 수 있습니다. 비활성
+	267 container
+		268 container Affinity 변경question-circle
+			269 container
+				270 button Close
+					271 image close
+				272 container vcDialogTitle0
+					273 text Affinity 변경
+					274 link Description: question-circle, Value: docs.ablecloud.io/latest/adminguide/virtual_machines.html#change-affinity-group-for-an-existing-vm
+				275 container
+					276 text 이 VM이 속할 Affinity 그룹을 선택하십시오.
+					277 image info-circle
+					278 text VM 소유 범위: admin / ROOT
+					279 container 전체 선택
+						426 text 전체 선택: 3
+						281 button 모든 페이지 선택 해제
+						282 text 표 머리글의 체크박스는 현재 페이지에만 적용됩니다. 검색·페이지를 바꿔도 전체 선택은 유지되며, 아래 항목에서 개별 해제할 수 있습니다.
+						283 content list
+							284 button Description: 삭제: qa-ag02-20261019-14, Help: 38cea24d-b9d0-480b-87bd-4d00248419d8
+							425 button Description: 삭제: qa-ag02-20261019-01, Help: d57c65c9-6d27-4bfe-817d-a08ea8d08ce1
+							427 button Description: 삭제: qa-ag02-20261019-11, Help: 7a68f766-421e-4b03-b854-c0fd366852df
+					285 container
+						286 text field (settable)
+						287 button search
+							288 image search
+					289 container
+						290 table
+							291 row
+								292 cell
+									293 container
+										294 checkbox (settable, integer) Description:  , Value: 0
+								295 cell
+									296 container
+										297 text 이름
+										298 image caret-up
+										299 image caret-down
+								300 cell
+									301 container
+										302 text 유형
+										303 image caret-up
+										304 image caret-down
+								305 cell
+									306 container
+										307 text 설명
+										308 image caret-up
+										309 image caret-down
+							428 row
+								429 cell
+									430 container
+										431 checkbox (settable, integer) Description:  , Value: 1
+								432 cell
+									433 text qa-ag02-20261019-01
+								434 cell
+									435 text host anti-affinity
+								436 cell
+									437 text AG02 disposable selection fixture
+							438 row
+								439 cell
+									440 container
+										441 checkbox (settable, integer) Description:  , Value: 0
+								442 cell
+									443 text qa-ag02-20261019-02
+								444 cell
+									445 text host anti-affinity
+								446 cell
+									447 text AG02 disposable selection fixture
+							448 row
+								449 cell
+									450 container
+										451 checkbox (settable, integer) Description:  , Value: 0
+								452 cell
+									453 text qa-ag02-20261019-03
+								454 cell
+									455 text host anti-affinity
+								456 cell
+									457 text AG02 disposable selection fixture
+							458 row
+								459 cell
+									460 container
+										461 checkbox (settable, integer) Description:  , Value: 0
+								462 cell
+									463 text qa-ag02-20261019-04
+								464 cell
+									465 text host anti-affinity
+								466 cell
+									467 text AG02 disposable selection fixture
+							468 row
+								469 cell
+									470 container
+										471 checkbox (settable, integer) Description:  , Value: 0
+								472 cell
+									473 text qa-ag02-20261019-05
+								474 cell
+									475 text host anti-affinity
+								476 cell
+									477 text AG02 disposable selection fixture
+							478 row
+								479 cell
+									480 container
+										481 checkbox (settable, integer) Description:  , Value: 0
+								482 cell
+									483 text qa-ag02-20261019-06
+								484 cell
+									485 text host anti-affinity
+								486 cell
+									487 text AG02 disposable selection fixture
+							488 row
+								489 cell
+									490 container
+										491 checkbox (settable, integer) Description:  , Value: 0
+								492 cell
+									493 text qa-ag02-20261019-07
+								494 cell
+									495 text host anti-affinity
+								496 cell
+									497 text AG02 disposable selection fixture
+							498 row
+								499 cell
+									500 container
+										501 checkbox (settable, integer) Description:  , Value: 0
+								502 cell
+									503 text qa-ag02-20261019-08
+								504 cell
+									505 text host anti-affinity
+								506 cell
+									507 text AG02 disposable selection fixture
+							508 row
+								509 cell
+									510 container
+										511 checkbox (settable, integer) Description:  , Value: 0
+								512 cell
+									513 text qa-ag02-20261019-09
+								514 cell
+									515 text host anti-affinity
+								516 cell
+									517 text AG02 disposable selection fixture
+							518 row
+								519 cell
+									520 container
+										521 checkbox (settable, integer) Description:  , Value: 0
+								522 cell
+									523 text qa-ag02-20261019-10
+								524 cell
+									525 text host anti-affinity
+								526 cell
+									527 text AG02 disposable selection fixture
+						410 content list
+							411 container 이전 페이지
+								412 button (disabled) left
+									413 image left
+							414 text 1
+							415 text 2
+							416 container 다음 페이지
+								417 button right
+									418 image right
+							419 container
+								420 combo box (settable) rc_select_1
+								421 text 10 / 쪽
+					422 button 취소
+					423 button 확인
+
+The focused UI element is 1 AXWebArea 가상머신 - ABLESTACK-Mold, URL: 10.10.31.10:8080/client/#/vm/d3e43a02-2204-433a-9c69-ecf774731389

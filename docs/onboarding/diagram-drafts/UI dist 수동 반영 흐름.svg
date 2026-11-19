@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1308" viewBox="0 0 1800 1308">
+<rect width="100%" height="100%" fill="white"/>
+<text x="72" y="48" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="52" font-weight="700" fill="#172B45">UI dist 파일을 CCVM에 반영하기</text>
+<text x="72" y="127" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="36" font-weight="400" fill="#506378">대상 폴더 /usr/share/cloudstack-management/webapp/</text>
+<rect x="72" y="208" width="1656" height="142" rx="20" fill="#F0F7FF" stroke="none" stroke-width="2"/>
+<rect x="96" y="238" width="48" height="48" rx="24" fill="#146CBA" stroke="none" stroke-width="2"/>
+<text x="110" y="248" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="29" font-weight="700" fill="white">1</text>
+<text x="170" y="238" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="42" font-weight="700" fill="#172B45">Mac · UI 빌드</text>
+<polyline points="610,232 610,326" fill="none" stroke="#D7E1EB" stroke-width="2"/>
+<text x="646" y="236" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="40" font-weight="400" fill="#506378">npm run build로 dist 생성</text>
+<polyline points="900,355 900,390" fill="none" stroke="#146CBA" stroke-width="4"/>
+<polygon points="900,390 908.0,374.0 892.0,374.0" fill="#146CBA"/>
+<rect x="72" y="396" width="1656" height="142" rx="20" fill="#F5F2FF" stroke="none" stroke-width="2"/>
+<rect x="96" y="426" width="48" height="48" rx="24" fill="#6554B7" stroke="none" stroke-width="2"/>
+<text x="110" y="436" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="29" font-weight="700" fill="white">2</text>
+<text x="170" y="426" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="42" font-weight="700" fill="#172B45">dist 확인</text>
+<polyline points="610,420 610,514" fill="none" stroke="#D7E1EB" stroke-width="2"/>
+<text x="646" y="424" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="40" font-weight="400" fill="#506378">빌드 성공과 이번에 생성된 파일 확인</text>
+<polyline points="900,543 900,578" fill="none" stroke="#6554B7" stroke-width="4"/>
+<polygon points="900,578 908.0,562.0 892.0,562.0" fill="#6554B7"/>
+<rect x="72" y="584" width="1656" height="164" rx="20" fill="#EFF9F6" stroke="none" stroke-width="2"/>
+<rect x="96" y="614" width="48" height="48" rx="24" fill="#008878" stroke="none" stroke-width="2"/>
+<text x="110" y="624" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="29" font-weight="700" fill="white">3</text>
+<text x="170" y="614" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="42" font-weight="700" fill="#172B45">CCVM</text>
+<text x="170" y="670" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="42" font-weight="700" fill="#172B45">기존 파일 정리</text>
+<polyline points="610,608 610,724" fill="none" stroke="#D7E1EB" stroke-width="2"/>
+<text x="646" y="612" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="40" font-weight="400" fill="#506378">기존 UI 백업 후 WEB-INF와 config.json 보존</text>
+<text x="646" y="674" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="40" font-weight="400" fill="#506378">그 외 파일과 폴더만 삭제</text>
+<polyline points="900,753 900,788" fill="none" stroke="#008878" stroke-width="4"/>
+<polygon points="900,788 908.0,772.0 892.0,772.0" fill="#008878"/>
+<rect x="72" y="794" width="1656" height="164" rx="20" fill="#F0F7FF" stroke="none" stroke-width="2"/>
+<rect x="96" y="824" width="48" height="48" rx="24" fill="#146CBA" stroke="none" stroke-width="2"/>
+<text x="110" y="834" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="29" font-weight="700" fill="white">4</text>
+<text x="170" y="824" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="42" font-weight="700" fill="#172B45">새 파일 업로드</text>
+<polyline points="610,818 610,934" fill="none" stroke="#D7E1EB" stroke-width="2"/>
+<text x="646" y="822" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="40" font-weight="400" fill="#506378">dist 내부 내용 중 config.json 제외</text>
+<text x="646" y="884" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="40" font-weight="400" fill="#506378">CCVM의 webapp/에 업로드</text>
+<polyline points="900,963 900,998" fill="none" stroke="#146CBA" stroke-width="4"/>
+<polygon points="900,998 908.0,982.0 892.0,982.0" fill="#146CBA"/>
+<rect x="72" y="1004" width="1656" height="142" rx="20" fill="#F5F2FF" stroke="none" stroke-width="2"/>
+<rect x="96" y="1034" width="48" height="48" rx="24" fill="#6554B7" stroke="none" stroke-width="2"/>
+<text x="110" y="1044" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="29" font-weight="700" fill="white">5</text>
+<text x="170" y="1034" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="42" font-weight="700" fill="#172B45">화면 확인</text>
+<polyline points="610,1028 610,1122" fill="none" stroke="#D7E1EB" stroke-width="2"/>
+<text x="646" y="1032" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="40" font-weight="400" fill="#506378">로그인과 수정 화면 확인 · 필요 시 캐시 갱신</text>
+<text x="72" y="1177" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="36" font-weight="700" fill="#172B45">WEB-INF와 기존 config.json을 삭제하거나 새 빌드 파일로 덮어쓰지 않습니다.</text>
+</svg>

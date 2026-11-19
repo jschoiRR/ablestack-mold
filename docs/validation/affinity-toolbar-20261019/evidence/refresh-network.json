@@ -1,0 +1,90 @@
+[
+  {
+    "requestId": "33772.1585",
+    "command": "listVirtualMachines",
+    "params": {
+      "listall": "true",
+      "page": "1",
+      "pagesize": "10",
+      "details": "min,affgrp",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "account": "admin",
+      "affinitygroupid": "3d655e19-029e-40dd-a156-24bb8eaac879",
+      "keyword": "qa-refresh-check",
+      "command": "listVirtualMachines",
+      "response": "json",
+      "sessionkey": "[REDACTED]"
+    },
+    "time": 400880.389875,
+    "http": 200,
+    "response": {
+      "count": 0,
+      "errorcode": 0,
+      "rows": 0
+    }
+  },
+  {
+    "requestId": "33772.1586",
+    "command": "listAffinityGroups",
+    "params": {
+      "id": "3d655e19-029e-40dd-a156-24bb8eaac879",
+      "listall": "true",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "account": "admin",
+      "command": "listAffinityGroups",
+      "response": "json",
+      "sessionkey": "[REDACTED]"
+    },
+    "time": 400880.390354,
+    "http": 200,
+    "response": {
+      "count": 1,
+      "errorcode": 0,
+      "rows": 1
+    }
+  },
+  {
+    "requestId": "33772.1587",
+    "command": "listVirtualMachines",
+    "params": {
+      "listall": "true",
+      "page": "1",
+      "pagesize": "10",
+      "details": "min,affgrp",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "account": "admin",
+      "affinitygroupid": "3d655e19-029e-40dd-a156-24bb8eaac879",
+      "keyword": "qa-refresh-check",
+      "command": "listVirtualMachines",
+      "response": "json",
+      "sessionkey": "[REDACTED]"
+    },
+    "time": 400881.066194,
+    "http": 200,
+    "response": {
+      "count": 0,
+      "errorcode": 0,
+      "rows": 0
+    }
+  },
+  {
+    "requestId": "33772.1588",
+    "command": "listAffinityGroups",
+    "params": {
+      "id": "3d655e19-029e-40dd-a156-24bb8eaac879",
+      "listall": "true",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "account": "admin",
+      "command": "listAffinityGroups",
+      "response": "json",
+      "sessionkey": "[REDACTED]"
+    },
+    "time": 400881.066554,
+    "http": 200,
+    "response": {
+      "count": 1,
+      "errorcode": 0,
+      "rows": 1
+    }
+  }
+]

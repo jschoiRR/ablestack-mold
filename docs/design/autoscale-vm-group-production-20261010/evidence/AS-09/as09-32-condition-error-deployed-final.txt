@@ -1,0 +1,277 @@
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+
+- complementary:
+  - menu:
+    - menuitem "dashboard 대시보드":
+      - link "dashboard 대시보드":
+        - /url: "#/dashboard"
+        - img "dashboard":
+        - text: 대시보드
+    - img "cloud":
+    - text: 컴퓨트
+    - list:
+      - menuitem "cloud-server 가상머신":
+        - link "cloud-server 가상머신":
+          - /url: "#/vm"
+          - img "cloud-server":
+          - text: 가상머신
+      - menuitem "camera VM 스냅샷":
+        - link "camera VM 스냅샷":
+          - /url: "#/vmsnapshot"
+          - img "camera":
+          - text: VM 스냅샷
+      - menuitem "쿠버네티스":
+        - link "쿠버네티스":
+          - /url: "#/kubernetes"
+          - text: 쿠버네티스
+      - menuitem "fullscreen 오토스케일 VM 그룹":
+        - link "fullscreen 오토스케일 VM 그룹":
+          - /url: "#/autoscalevmgroup"
+          - img "fullscreen":
+          - text: 오토스케일 VM 그룹
+      - menuitem "gold 가상머신 그룹":
+        - link "gold 가상머신 그룹":
+          - /url: "#/vmgroup"
+          - img "gold":
+          - text: 가상머신 그룹
+      - menuitem "key SSH 키 쌍":
+        - link "key SSH 키 쌍":
+          - /url: "#/ssh"
+          - img "key":
+          - text: SSH 키 쌍
+      - menuitem "solution 사용자 데이터 라이브러리":
+        - link "solution 사용자 데이터 라이브러리":
+          - /url: "#/userdata"
+          - img "solution":
+          - text: 사용자 데이터 라이브러리
+      - menuitem "solution CNI 구성":
+        - link "solution CNI 구성":
+          - /url: "#/cniconfiguration"
+          - img "solution":
+          - text: CNI 구성
+      - menuitem "swap Affinity 그룹":
+        - link "swap Affinity 그룹":
+          - /url: "#/affinitygroup"
+          - img "swap":
+          - text: Affinity 그룹
+    - img "hdd":
+    - text: 스토리지
+    - img "wifi":
+    - text: 네트워크
+    - img "picture":
+    - text: 이미지
+    - menuitem "schedule 이벤트":
+      - link "schedule 이벤트":
+        - /url: "#/event"
+        - img "schedule":
+        - text: 이벤트
+    - menuitem "project 프로젝트":
+      - link "project 프로젝트":
+        - /url: "#/project"
+        - img "project":
+        - text: 프로젝트
+    - menuitem "team 계정":
+      - link "team 계정":
+        - /url: "#/account"
+        - img "team":
+        - text: 계정
+    - menuitem "global Zone":
+      - link "global Zone":
+        - /url: "#/zones"
+        - img "global":
+        - text: Zone
+    - img "shopping":
+    - text: 서비스 오퍼링
+    - img "tool":
+    - text: 도구
+    - menuitem "read API 문서":
+      - link "read API 문서":
+        - /url: "#/apidocs/"
+        - img "read":
+        - text: API 문서
+- img "menu-fold":
+- combobox
+- img "project":
+- text: 기본 보기
+- button "생성 down":
+  - generic: 생성
+  - img "down":
+- img "translation":
+- img "bell":
+- superscript:
+  - paragraph: "3"
+- generic: A검
+- generic: AS01 검증
+- main:
+  - link "home":
+    - /url: "#/"
+    - img "home":
+  - text: /
+  - link "오토스케일 VM 그룹":
+    - /url: "#/autoscalevmgroup"
+  - text: /
+  - generic: AS-PROD-32-AS04-CONCURRENCY
+  - link "question-circle":
+    - /url: http://docs.ablecloud.io/latest/adminguide/autoscale_with_virtual_router.html
+    - img "question-circle":
+  - button "reload 업데이트":
+    - img "reload":
+    - generic: 업데이트
+  - button "down 작업":
+    - img "down":
+    - generic: 작업
+  - img "fullscreen":
+  - heading "AS-PROD-32-AS04-CONCURRENCY" [level=4]
+  - separator
+  - generic: 상태
+  - generic: 비활성화
+  - generic: 아이디
+  - button "barcode":
+    - img "barcode":
+  - link "18bef25a-4053-4454-bc85-f6d777b9391d":
+    - /url: javascript:;
+  - term: 조정 대상 VM · 범위
+  - definition: 1 · 최소 1 · 최대 3
+  - term: 공인 → 게스트 포트
+  - definition: 8084 → 8080
+  - term: 마지막 모니터 확인
+  - definition: 2026. 10. 12. 오전 12:01:42
+  - generic: 연결된 네트워크
+  - img "wifi":
+  - link "AS-PROD-32-AS01-userNetwork":
+    - /url: "#/guestnetwork/f889cc7d-02c5-490b-b256-a289b73ff824"
+  - generic: Public IP 주소
+  - img "gateway":
+  - link "10.10.32.169":
+    - /url: "#/publicip/d82e3f23-29e2-4b44-a85c-6c8821f2a4f6"
+  - link "copy":
+    - /url: javascript:;
+    - img "copy":
+  - generic: 계정
+  - img "user":
+  - generic: epic1346-as01-user32
+  - generic: 도메인
+  - img "block":
+  - generic: ROOT
+  - generic: 생성일
+  - img "calendar":
+  - text: 2026. 10. 11. 오전 10:19:26
+  - separator
+  - link "cloud-server 가상머신 보기":
+    - /url: "#/vm?autoscalevmgroupid=18bef25a-4053-4454-bc85-f6d777b9391d"
+    - button "cloud-server 가상머신 보기":
+      - img "cloud-server":
+      - generic: 가상머신 보기
+  - tablist:
+    - tab "상세"
+    - tab "운영 상태"
+    - tab "오토스케일 VM 프로필"
+    - tab "부하 분산 규칙"
+    - tab "스케일업 정책" [selected]
+    - tab "스케일다운 정책"
+    - tab "스케줄"
+    - tab "이벤트"
+    - tab "코멘트"
+  - tabpanel "스케일업 정책":
+    - separator
+    - strong: 스케일업 정책
+    - combobox
+    - generic: ScaleUpPolicy-0
+    - button "plus 정책 추가":
+      - img "plus":
+      - generic: 정책 추가
+    - button "delete 정책 삭제" [disabled]:
+      - img "delete":
+      - generic: 정책 삭제
+    - separator
+    - text: 이름
+    - img "info-circle":
+    - textbox [disabled]: ScaleUpPolicy-0
+    - text: "*"
+    - text: 기간(초)
+    - img "info-circle":
+    - spinbutton [disabled]: "60"
+    - text: "*"
+    - text: 재조정 대기 시간(초)
+    - img "info-circle":
+    - spinbutton [disabled]: "10"
+    - generic: 동작
+    - button "edit 편집":
+      - img "edit":
+      - generic: 편집
+    - separator
+    - text: 조건
+    - img "info-circle":
+    - table:
+      - rowgroup:
+        - row "카운터 관계 연산자 임계값 작업":
+          - columnheader "카운터"
+          - columnheader "관계 연산자"
+          - columnheader "임계값"
+          - columnheader "작업"
+      - rowgroup:
+        - row "VM CPU 평균 사용률 초과 5 edit delete":
+          - cell "VM CPU 평균 사용률"
+          - cell "초과"
+          - cell "5"
+          - cell "edit delete":
+            - button "edit":
+              - img "edit":
+            - button "delete" [disabled]:
+              - img "delete":
+    - separator
+    - text: "*"
+    - text: 카운터
+    - img "info-circle":
+    - combobox
+    - text: "*"
+    - text: 관계 연산자
+    - img "info-circle":
+    - combobox
+    - generic: 초과
+    - text: "*"
+    - text: 임계값
+    - img "info-circle":
+    - spinbutton
+    - generic: 동작
+    - button "plus 조건 추가":
+      - img "plus":
+      - generic: 조건 추가
+- dialog "조건 업데이트":
+  - document:
+    - button "Close":
+      - img "close":
+    - generic: 조건 업데이트
+    - paragraph: "*카운터"
+    - text: VM CPU 평균 사용률
+    - text: "*"
+    - text: 관계 연산자
+    - img "info-circle":
+    - combobox
+    - generic: 초과
+    - text: "*"
+    - text: 임계값
+    - img "info-circle":
+    - spinbutton: "-1"
+    - button "취소":
+      - generic: 취소
+    - button "확인" [active]:
+      - generic: 확인
+- img "close-circle":
+- text: 유효한 번호를 입력하십시오.
+{"background":"rgb(31, 31, 31)","color":"rgba(255, 255, 255, 0.65)","text":"유효한 번호를 입력하십시오."}

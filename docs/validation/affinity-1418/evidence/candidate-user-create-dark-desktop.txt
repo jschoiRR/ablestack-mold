@@ -1,0 +1,180 @@
+Browser tab: 6, Title: "Affinity 그룹 - ABLESTACK-Mold", URL: "http://10.10.31.10:8080/client/#/affinitygroup".
+1 AXWebArea Affinity 그룹 - ABLESTACK-Mold, URL: 10.10.31.10:8080/client/#/affinitygroup
+	28 container
+		29 container
+			30 image
+			31 menu
+				32 dashboard 대시보드
+					33 link Description: dashboard 대시보드, Value: 10.10.31.10:8080/client/#/dashboard
+				34 container
+					35 image cloud
+					36 text 컴퓨트
+				37 content list sub_menu_451_$$_/compute-popup
+					38 cloud-server 가상머신
+						39 link Description: cloud-server 가상머신, Value: 10.10.31.10:8080/client/#/vm
+					40 camera VM 스냅샷
+						41 link Description: camera VM 스냅샷, Value: 10.10.31.10:8080/client/#/vmsnapshot
+					42 쿠버네티스
+						43 link Description: 쿠버네티스, Value: 10.10.31.10:8080/client/#/kubernetes
+					44 fullscreen 오토스케일 VM 그룹
+						45 link Description: fullscreen 오토스케일 VM 그룹, Value: 10.10.31.10:8080/client/#/autoscalevmgroup
+					46 gold 가상머신 그룹
+						47 link Description: gold 가상머신 그룹, Value: 10.10.31.10:8080/client/#/vmgroup
+					48 key SSH 키 쌍
+						49 link Description: key SSH 키 쌍, Value: 10.10.31.10:8080/client/#/ssh
+					50 solution 사용자 데이터 라이브러리
+						51 link Description: solution 사용자 데이터 라이브러리, Value: 10.10.31.10:8080/client/#/userdata
+					52 solution CNI 구성
+						53 link Description: solution CNI 구성, Value: 10.10.31.10:8080/client/#/cniconfiguration
+					54 swap Affinity 그룹
+						55 link Description: swap Affinity 그룹, Value: 10.10.31.10:8080/client/#/affinitygroup
+				56 container
+					57 image hdd
+					58 text 스토리지
+				59 container
+					60 image wifi
+					61 text 네트워크
+				62 container
+					63 image picture
+					64 text 이미지
+				65 schedule 이벤트
+					66 link Description: schedule 이벤트, Value: 10.10.31.10:8080/client/#/event
+				67 project 프로젝트
+					68 link Description: project 프로젝트, Value: 10.10.31.10:8080/client/#/project
+				69 team 계정
+					70 link Description: team 계정, Value: 10.10.31.10:8080/client/#/account
+				71 global Zone
+					72 link Description: global Zone, Value: 10.10.31.10:8080/client/#/zones
+				73 container
+					74 image shopping
+					75 text 서비스 오퍼링
+				76 container
+					77 image tool
+					78 text 도구
+				79 read API 문서
+					80 link Description: read API 문서, Value: 10.10.31.10:8080/client/#/apidocs/
+		81 container
+			82 image menu-fold
+			83 container
+				84 combo box (settable) rc_select_20
+				85 image project
+				86 text 기본 보기
+			87 button 생성 down
+				88 text 생성
+				89 image down
+			90 image translation
+			91 image bell
+			92 container
+				93 text AQ AG05 QA
+		94 container
+			95 container
+				96 container
+					97 link Description: home, Value: 10.10.31.10:8080/client/#/
+					98 text /
+					99 link Description: Affinity 그룹, Value: 10.10.31.10:8080/client/#/affinitygroup
+					100 link Description: question-circle, Value: docs.ablecloud.io/latest/adminguide/virtual_machines.html#affinity-groups
+					101 button reload 업데이트
+						102 image reload
+						103 text 업데이트
+					104 switch 프로젝트, Value: 0
+						105 text 프로젝트
+				106 button 새 Affinity 그룹 추가
+					107 image plus
+					108 text 새 Affinity 그룹 추가
+				109 container
+					110 button 고급 검색
+						111 image filter
+					112 text field (settable)
+					113 button search
+						114 image search
+			115 table
+				116 row
+					117 cell
+						118 container
+							119 checkbox (settable, integer) Description:  , Value: 0
+					120 cell
+						121 container
+							122 text 이름
+							123 image caret-up
+							124 image caret-down
+					125 cell
+						126 container
+							127 text 유형
+							128 image caret-up
+							129 image caret-down
+					130 cell
+						131 container
+							132 text 연결 VM 수
+							133 image caret-up
+							134 image caret-down
+					135 cell
+						136 container
+							137 text 설명
+							138 image caret-up
+							139 image caret-down
+				140 row
+					141 cell
+						142 container
+							143 checkbox (settable, integer) Description:  , Value: 0
+					144 cell
+						145 link Description: qa-ag05-user-target, Value: 10.10.31.10:8080/client/#/affinitygroup/b156547b-7ff4-46f6-9a17-9d482d688f4e
+					146 cell
+						147 text 같은 호스트 배치 · 엄격
+						148 text host affinity
+					149 cell
+						150 text 1
+					151 cell
+						152 text —
+				153 row
+					154 cell
+						155 container
+							156 checkbox (settable, integer) Description:  , Value: 0
+					157 cell
+						158 link Description: qa-ag05-user-other, Value: 10.10.31.10:8080/client/#/affinitygroup/f83fd883-7520-4025-bdf3-a9f9b442901d
+					159 cell
+						160 text 같은 호스트 배치 · 엄격
+						161 text host affinity
+					162 cell
+						163 text 1
+					164 cell
+						165 text —
+			166 content list
+				167 text 전체 2 개 항목 중 1-2 표시
+				168 container 이전 페이지
+					169 button (disabled) left
+						170 image left
+				171 text 1
+				172 container 다음 페이지
+					173 button (disabled) right
+						174 image right
+				175 container
+					176 combo box (settable) rc_select_21
+					177 text 20 / 쪽
+	184 container
+		185 container 새 Affinity 그룹 추가 도움말
+			186 container
+				187 button Close
+					188 image close
+				189 container vcDialogTitle7
+					190 text 새 Affinity 그룹 추가
+					191 link Description: 도움말, Value: docs.ablecloud.io/latest/adminguide/virtual_machines.html#creating-a-new-affinity-group
+				192 text 앞뒤 공백은 제거됩니다. 이름은 1~191자, 설명은 255자까지 입력할 수 있습니다.
+				193 container
+					194 text * 이름
+				195 text field (settable) * 이름, Value: qa-ag05-user-ui, ID: form_item_name
+				196 text 설명
+				197 text entry area (settable) 설명, ID: form_item_description
+				198 container
+					199 text * 유형
+				204 container
+					205 text non-strict host anti-affinity
+					206 combo box (collapsed, settable) * 유형, ID: form_item_type, Secondary Actions: Expand
+					207 text 다른 호스트 분산 우선 · 선호
+				208 container
+					209 text 다른 호스트 분산 우선 · 선호
+					210 text 가능하면 서로 다른 호스트에 분산합니다. 조건을 만족하지 못하면 같은 호스트에도 배치할 수 있습니다.
+				201 text 소유 범위: qa-ag05-user / ROOT
+				202 button 취소
+				203 button 확인
+
+The focused UI element is 206 combo box (collapsed, settable) * 유형, ID: form_item_type, Secondary Actions: Expand

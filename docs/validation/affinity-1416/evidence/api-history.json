@@ -1,0 +1,3233 @@
+[
+  {
+    "time": "2026-10-19T06:57:30+0900",
+    "command": "listAffinityGroups",
+    "params": {
+      "listall": true,
+      "projectid": "-1",
+      "page": 1,
+      "pagesize": 500
+    },
+    "response": {
+      "listaffinitygroupsresponse": {
+        "count": 4,
+        "affinitygroup": [
+          {
+            "id": "ac508d0e-c80b-4c66-9bd0-8cbb896ca7e0",
+            "name": "rt1230-r17-ha-control-spread",
+            "description": "Cloud #1230 isolated r17 HA controls across three hosts",
+            "account": "k1230-20261006",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "966bf870-a046-4c76-bfce-7c78f62c0ecb",
+            "name": "rt1230-r18-control-spread",
+            "description": "Cloud #1230 isolated r18 control across hosts",
+            "account": "k1230-20261006",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "42f65110-108a-4831-8403-14500cc7f5fa",
+            "name": "rt1230-r18-etcd-spread",
+            "description": "Cloud #1230 isolated r18 etcd across hosts",
+            "account": "k1230-20261006",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "875da298-7315-4e05-b1fc-f78cbdafe262",
+            "name": "AS-PROD-AS06-AFFINITY",
+            "description": "Epic 1346 AS06 future VM profile validation",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "projectid": "fb318714-bc01-4be5-9e33-0f49a7013127",
+            "project": "AS-PROD-31-AS01-project",
+            "type": "host anti-affinity"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:57:30+0900",
+    "command": "listAffinityGroupTypes",
+    "params": {},
+    "response": {
+      "listaffinitygrouptypesresponse": {
+        "count": 4,
+        "affinityGroupType": [
+          {
+            "type": "host anti-affinity"
+          },
+          {
+            "type": "host affinity"
+          },
+          {
+            "type": "non-strict host anti-affinity"
+          },
+          {
+            "type": "non-strict host affinity"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:57:50+0900",
+    "command": "createAffinityGroup",
+    "params": {
+      "name": "qa-ag03-duplicate",
+      "description": "AG03 duplicate baseline",
+      "type": "host anti-affinity"
+    },
+    "response": {
+      "createaffinitygroupresponse": {
+        "id": "9f15d520-4f3f-44f6-be94-3389b2ed9cc6",
+        "jobid": "ec557d6f-cb06-4a1a-82d6-cd1757383f95"
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:57:50+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "ec557d6f-cb06-4a1a-82d6-cd1757383f95"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.CreateAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "affinitygroup": {
+            "id": "9f15d520-4f3f-44f6-be94-3389b2ed9cc6",
+            "name": "qa-ag03-duplicate",
+            "description": "AG03 duplicate baseline",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          }
+        },
+        "jobinstancetype": "AffinityGroup",
+        "created": "2026-10-19T06:57:55+0900",
+        "completed": "2026-10-19T06:57:55+0900",
+        "jobid": "ec557d6f-cb06-4a1a-82d6-cd1757383f95",
+        "jobstatus": 1
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:02:25+0900",
+    "command": "createAccount",
+    "params": {
+      "username": "qa-ag03-user",
+      "password": "[REDACTED]",
+      "firstname": "[REDACTED]",
+      "lastname": "[REDACTED]",
+      "email": "[REDACTED]",
+      "account": "qa-ag03-user",
+      "accounttype": 0,
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "roleid": "9270b33d-b253-11f1-a895-0024814c313f"
+    },
+    "response": {
+      "createaccountresponse": {
+        "account": {
+          "id": "491f0559-8d99-4883-8515-918703fdbcf3",
+          "name": "qa-ag03-user",
+          "accounttype": 0,
+          "roleid": "9270b33d-b253-11f1-a895-0024814c313f",
+          "roletype": "User",
+          "rolename": "User",
+          "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+          "domain": "ROOT",
+          "domainpath": "ROOT",
+          "vmlimit": "20",
+          "vmtotal": 0,
+          "vmavailable": "20",
+          "iplimit": "20",
+          "iptotal": 0,
+          "ipavailable": "20",
+          "volumelimit": "20",
+          "volumetotal": 0,
+          "volumeavailable": "20",
+          "snapshotlimit": "20",
+          "snapshottotal": 0,
+          "snapshotavailable": "20",
+          "backuplimit": "20",
+          "backuptotal": 0,
+          "backupavailable": "20",
+          "backupstoragelimit": "400",
+          "backupstoragetotal": 0,
+          "backupstorageavailable": "400",
+          "templatelimit": "20",
+          "templatetotal": 0,
+          "templateavailable": "20",
+          "vmstopped": 0,
+          "vmrunning": 0,
+          "projectlimit": "10",
+          "projecttotal": 0,
+          "projectavailable": "10",
+          "networklimit": "20",
+          "networktotal": 0,
+          "networkavailable": "20",
+          "vpclimit": "20",
+          "vpctotal": 0,
+          "vpcavailable": "20",
+          "cpulimit": "40",
+          "cputotal": 0,
+          "cpuavailable": "40",
+          "memorylimit": "40960",
+          "memorytotal": 0,
+          "memoryavailable": "40960",
+          "gpulimit": "20",
+          "gputotal": 0,
+          "gpuavailable": "20",
+          "primarystoragelimit": "200",
+          "primarystoragetotal": 0,
+          "primarystorageavailable": "200",
+          "secondarystoragelimit": "400",
+          "secondarystoragetotal": 0.0,
+          "secondarystorageavailable": "400.0",
+          "bucketlimit": "20",
+          "buckettotal": 0,
+          "bucketavailable": "20",
+          "objectstoragelimit": "400",
+          "objectstoragetotal": 0,
+          "objectstorageavailable": "400",
+          "state": "enabled",
+          "created": "2026-10-19T07:02:30+0900",
+          "user": [
+            {
+              "id": "ada22183-83d7-4df8-954e-7f4531057f5c",
+              "username": "qa-ag03-user",
+              "firstname": "[REDACTED]",
+              "lastname": "[REDACTED]",
+              "email": "[REDACTED]",
+              "created": "2026-10-19T07:02:30+0900",
+              "state": "enabled",
+              "account": "qa-ag03-user",
+              "accounttype": 0,
+              "usersource": "native",
+              "roleid": "9270b33d-b253-11f1-a895-0024814c313f",
+              "roletype": "User",
+              "rolename": "User",
+              "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+              "domain": "ROOT",
+              "accountid": "491f0559-8d99-4883-8515-918703fdbcf3",
+              "iscallerchilddomain": false,
+              "isdefault": false,
+              "is2faenabled": false,
+              "is2famandated": false
+            }
+          ],
+          "accountdetails": {
+            "mold.external-iam.provisioning": "local-only-v1"
+          },
+          "isdefault": false,
+          "groups": [],
+          "apikeyaccess": "INHERIT"
+        }
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:02:25+0900",
+    "command": "createProject",
+    "params": {
+      "name": "qa-ag03-project",
+      "displaytext": "AG03 disposable qualification project",
+      "account": "qa-ag03-user",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f"
+    },
+    "response": {
+      "createprojectresponse": {
+        "id": "d6e7e875-c6a3-4c10-ab0f-fa6f0d5be138",
+        "jobid": "256b8793-6522-479f-aa9d-ededac3d0d96"
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:02:25+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "256b8793-6522-479f-aa9d-ededac3d0d96"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.project.CreateProjectCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobinstancetype": "None",
+        "managementserverid": "716fb21e-86f3-4f8c-b34d-11c8d0220230",
+        "managementservername": "ccvm-mngt",
+        "created": "2026-10-19T07:02:30+0900",
+        "jobid": "256b8793-6522-479f-aa9d-ededac3d0d96",
+        "jobstatus": 0
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:02:26+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "256b8793-6522-479f-aa9d-ededac3d0d96"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.project.CreateProjectCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "project": {
+            "id": "d6e7e875-c6a3-4c10-ab0f-fa6f0d5be138",
+            "name": "qa-ag03-project",
+            "displaytext": "AG03 disposable qualification project",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "owner": [
+              {
+                "account": "qa-ag03-user"
+              }
+            ],
+            "projectaccountname": "PrjAcct-qa-ag03-project-1",
+            "state": "Active",
+            "tags": [],
+            "networklimit": "20",
+            "networktotal": 0,
+            "networkavailable": "20",
+            "vpclimit": "20",
+            "vpctotal": 0,
+            "vpcavailable": "20",
+            "cpulimit": "40",
+            "cputotal": 0,
+            "cpuavailable": "40",
+            "memorylimit": "40960",
+            "memorytotal": 0,
+            "memoryavailable": "40960",
+            "gpulimit": "20",
+            "gputotal": 0,
+            "gpuavailable": "20",
+            "primarystoragelimit": "200",
+            "primarystoragetotal": 0,
+            "primarystorageavailable": "200",
+            "secondarystoragelimit": "400",
+            "secondarystoragetotal": 0.0,
+            "secondarystorageavailable": "400.0",
+            "bucketlimit": "20",
+            "buckettotal": 0,
+            "bucketavailable": "20",
+            "objectstoragelimit": "400",
+            "objectstoragetotal": 0,
+            "objectstorageavailable": "400",
+            "vmlimit": "20",
+            "vmtotal": 0,
+            "vmavailable": "20",
+            "iplimit": "20",
+            "iptotal": 0,
+            "ipavailable": "20",
+            "volumelimit": "20",
+            "volumetotal": 0,
+            "volumeavailable": "20",
+            "snapshotlimit": "20",
+            "snapshottotal": 0,
+            "snapshotavailable": "20",
+            "backuplimit": "20",
+            "backuptotal": 0,
+            "backupavailable": "20",
+            "backupstoragelimit": "400",
+            "backupstoragetotal": 0,
+            "backupstorageavailable": "400",
+            "templatelimit": "20",
+            "templatetotal": 0,
+            "templateavailable": "20",
+            "vmstopped": 0,
+            "vmrunning": 0,
+            "created": "2026-10-19T07:02:30+0900"
+          }
+        },
+        "jobinstancetype": "None",
+        "created": "2026-10-19T07:02:30+0900",
+        "completed": "2026-10-19T07:02:30+0900",
+        "jobid": "256b8793-6522-479f-aa9d-ededac3d0d96",
+        "jobstatus": 1
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:02:26+0900",
+    "command": "createDomain",
+    "params": {
+      "name": "qa-ag03-empty-domain",
+      "parentdomainid": "7ef6b29a-b253-11f1-a895-0024814c313f"
+    },
+    "response": {
+      "createdomainresponse": {
+        "domain": {
+          "id": "3575fbeb-477d-4d59-a2a3-67a62c7593b7",
+          "name": "qa-ag03-empty-domain",
+          "level": 1,
+          "parentdomainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+          "parentdomainname": "ROOT",
+          "haschild": false,
+          "path": "ROOT/qa-ag03-empty-domain",
+          "secondarystoragetotal": 0.0
+        }
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:05:28+0900",
+    "command": "listAffinityGroups",
+    "params": {
+      "listall": true,
+      "projectid": "-1",
+      "page": 1,
+      "pagesize": 500
+    },
+    "response": {
+      "listaffinitygroupsresponse": {
+        "count": 5,
+        "affinitygroup": [
+          {
+            "id": "ac508d0e-c80b-4c66-9bd0-8cbb896ca7e0",
+            "name": "rt1230-r17-ha-control-spread",
+            "description": "Cloud #1230 isolated r17 HA controls across three hosts",
+            "account": "k1230-20261006",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "966bf870-a046-4c76-bfce-7c78f62c0ecb",
+            "name": "rt1230-r18-control-spread",
+            "description": "Cloud #1230 isolated r18 control across hosts",
+            "account": "k1230-20261006",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "42f65110-108a-4831-8403-14500cc7f5fa",
+            "name": "rt1230-r18-etcd-spread",
+            "description": "Cloud #1230 isolated r18 etcd across hosts",
+            "account": "k1230-20261006",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "875da298-7315-4e05-b1fc-f78cbdafe262",
+            "name": "AS-PROD-AS06-AFFINITY",
+            "description": "Epic 1346 AS06 future VM profile validation",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "projectid": "fb318714-bc01-4be5-9e33-0f49a7013127",
+            "project": "AS-PROD-31-AS01-project",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "9f15d520-4f3f-44f6-be94-3389b2ed9cc6",
+            "name": "qa-ag03-duplicate",
+            "description": "AG03 duplicate baseline",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:05:28+0900",
+    "command": "listAffinityGroups",
+    "params": {
+      "listall": true,
+      "projectid": "-1",
+      "page": 1,
+      "pagesize": 500,
+      "zoneid": "00000000-0000-0000-0000-000000000031"
+    },
+    "response": {
+      "listaffinitygroupsresponse": {
+        "count": 5,
+        "affinitygroup": [
+          {
+            "id": "ac508d0e-c80b-4c66-9bd0-8cbb896ca7e0",
+            "name": "rt1230-r17-ha-control-spread",
+            "description": "Cloud #1230 isolated r17 HA controls across three hosts",
+            "account": "k1230-20261006",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "966bf870-a046-4c76-bfce-7c78f62c0ecb",
+            "name": "rt1230-r18-control-spread",
+            "description": "Cloud #1230 isolated r18 control across hosts",
+            "account": "k1230-20261006",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "42f65110-108a-4831-8403-14500cc7f5fa",
+            "name": "rt1230-r18-etcd-spread",
+            "description": "Cloud #1230 isolated r18 etcd across hosts",
+            "account": "k1230-20261006",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "875da298-7315-4e05-b1fc-f78cbdafe262",
+            "name": "AS-PROD-AS06-AFFINITY",
+            "description": "Epic 1346 AS06 future VM profile validation",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "projectid": "fb318714-bc01-4be5-9e33-0f49a7013127",
+            "project": "AS-PROD-31-AS01-project",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "9f15d520-4f3f-44f6-be94-3389b2ed9cc6",
+            "name": "qa-ag03-duplicate",
+            "description": "AG03 duplicate baseline",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:06:58+0900",
+    "command": "createAffinityGroup",
+    "params": {
+      "name": "qa-ag03-api-boundary-가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가",
+      "description": "설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설",
+      "type": "host affinity"
+    },
+    "response": {
+      "createaffinitygroupresponse": {
+        "id": "d1c3860d-cc7a-4c52-b6d3-d2603f4cc38a",
+        "jobid": "65d43524-1ed1-4436-ab00-31830c31e42a"
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:06:58+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "65d43524-1ed1-4436-ab00-31830c31e42a"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.CreateAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "affinitygroup": {
+            "id": "d1c3860d-cc7a-4c52-b6d3-d2603f4cc38a",
+            "name": "qa-ag03-api-boundary-가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가",
+            "description": "설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host affinity"
+          }
+        },
+        "jobinstancetype": "AffinityGroup",
+        "created": "2026-10-19T07:07:04+0900",
+        "completed": "2026-10-19T07:07:04+0900",
+        "jobid": "65d43524-1ed1-4436-ab00-31830c31e42a",
+        "jobstatus": 1
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:06:59+0900",
+    "command": "createAffinityGroup",
+    "params": {
+      "name": "qa-ag03-api-emoji-😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀",
+      "description": "Unicode roundtrip",
+      "type": "host affinity"
+    },
+    "response": {
+      "createaffinitygroupresponse": {
+        "id": "25c16038-8051-49a4-a05a-033119646eaa",
+        "jobid": "f75b9afa-9a74-47a9-9091-83d38d4461f5"
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:06:59+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "f75b9afa-9a74-47a9-9091-83d38d4461f5"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.CreateAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "affinitygroup": {
+            "id": "25c16038-8051-49a4-a05a-033119646eaa",
+            "name": "qa-ag03-api-emoji-😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀",
+            "description": "Unicode roundtrip",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host affinity"
+          }
+        },
+        "jobinstancetype": "AffinityGroup",
+        "created": "2026-10-19T07:07:04+0900",
+        "completed": "2026-10-19T07:07:04+0900",
+        "jobid": "f75b9afa-9a74-47a9-9091-83d38d4461f5",
+        "jobstatus": 1
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:06:59+0900",
+    "command": "createAffinityGroup",
+    "params": {
+      "name": "qa-ag03-description-too-long",
+      "description": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "type": "host affinity"
+    },
+    "response": {
+      "createaffinitygroupresponse": {
+        "uuidList": [],
+        "errorcode": 431,
+        "cserrorcode": 9999,
+        "errortext": "Unable to execute API command createaffinitygroup due to invalid value. Value greater than max allowed length 255 for param: description"
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:26:12+0900",
+    "command": "listAffinityGroups",
+    "params": {
+      "name": "qa-ag03-unknown-post",
+      "projectid": "-1",
+      "listall": true,
+      "page": 1,
+      "pagesize": 500
+    },
+    "response": {
+      "listaffinitygroupsresponse": {}
+    }
+  },
+  {
+    "time": "2026-10-19T07:28:48+0900",
+    "command": "listAffinityGroups",
+    "params": {
+      "projectid": "-1",
+      "listall": true,
+      "page": 1,
+      "pagesize": 500
+    },
+    "response": {
+      "listaffinitygroupsresponse": {
+        "count": 22,
+        "affinitygroup": [
+          {
+            "id": "ac508d0e-c80b-4c66-9bd0-8cbb896ca7e0",
+            "name": "rt1230-r17-ha-control-spread",
+            "description": "Cloud #1230 isolated r17 HA controls across three hosts",
+            "account": "k1230-20261006",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "966bf870-a046-4c76-bfce-7c78f62c0ecb",
+            "name": "rt1230-r18-control-spread",
+            "description": "Cloud #1230 isolated r18 control across hosts",
+            "account": "k1230-20261006",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "42f65110-108a-4831-8403-14500cc7f5fa",
+            "name": "rt1230-r18-etcd-spread",
+            "description": "Cloud #1230 isolated r18 etcd across hosts",
+            "account": "k1230-20261006",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "875da298-7315-4e05-b1fc-f78cbdafe262",
+            "name": "AS-PROD-AS06-AFFINITY",
+            "description": "Epic 1346 AS06 future VM profile validation",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "projectid": "fb318714-bc01-4be5-9e33-0f49a7013127",
+            "project": "AS-PROD-31-AS01-project",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "9f15d520-4f3f-44f6-be94-3389b2ed9cc6",
+            "name": "qa-ag03-duplicate",
+            "description": "AG03 duplicate baseline",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "d1c3860d-cc7a-4c52-b6d3-d2603f4cc38a",
+            "name": "qa-ag03-api-boundary-가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가",
+            "description": "설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host affinity"
+          },
+          {
+            "id": "25c16038-8051-49a4-a05a-033119646eaa",
+            "name": "qa-ag03-api-emoji-😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀",
+            "description": "Unicode roundtrip",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host affinity"
+          },
+          {
+            "id": "fc338c5b-afbf-436e-aa3b-4dc76fa986cb",
+            "name": "qa-ag03-duplicate-fixed",
+            "description": "QA AG03\n  duplicate correction",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "da3722a6-59ef-43a5-b005-cdf63b4bd331",
+            "name": "qa-ag03-ui-boundary-한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한",
+            "description": "설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host affinity"
+          },
+          {
+            "id": "f3309eca-9e13-4d31-94f7-0bb3b16013ee",
+            "name": "qa-ag03-admin-nonstrict-anti",
+            "description": "AG03 admin non-strict anti-affinity",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "non-strict host anti-affinity"
+          },
+          {
+            "id": "eba52319-f5a1-46ed-91b6-248cee1a4217",
+            "name": "qa-ag03-admin-nonstrict-affinity",
+            "description": "AG03 pending receipt close/reopen",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "non-strict host affinity"
+          },
+          {
+            "id": "7525c9e1-79c4-49c7-b07f-c37dc6e777de",
+            "name": "qa-ag03-owner-same",
+            "description": "AG03 explicit owner selection",
+            "account": "qa-ag03-user",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host affinity"
+          },
+          {
+            "id": "79b6e539-2b4f-4827-adc1-d3db70b6560a",
+            "name": "qa-ag03-owner-same",
+            "description": "AG03 same name in project owner",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "projectid": "d6e7e875-c6a3-4c10-ab0f-fa6f0d5be138",
+            "project": "qa-ag03-project",
+            "type": "host affinity"
+          },
+          {
+            "id": "656dafa0-2fa3-4969-8fe5-b6bedd3a7176",
+            "name": "qa-ag03-job-recheck",
+            "description": "AG03 query interruption without resubmission",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "c80abc6d-5b52-4d1c-a58b-b05450dcbb2e",
+            "name": "qa-ag03-user-strict-affinity",
+            "description": "AG03 normal user scope",
+            "account": "qa-ag03-user",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host affinity"
+          },
+          {
+            "id": "39614a3e-79ff-436e-9d1a-c13957038a96",
+            "name": "qa-ag03-user-strict-anti",
+            "description": "AG03 C06-user-strict-anti",
+            "account": "qa-ag03-user",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "6a791177-b6f7-48e0-b070-e6b5bf31a801",
+            "name": "qa-ag03-user-nonstrict-affinity",
+            "description": "AG03 C07-user-nonstrict-affinity",
+            "account": "qa-ag03-user",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "non-strict host affinity"
+          },
+          {
+            "id": "01b989a3-7391-406d-9a9e-40666f829e89",
+            "name": "qa-ag03-user-nonstrict-anti",
+            "description": "AG03 C08-user-nonstrict-anti",
+            "account": "qa-ag03-user",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "non-strict host anti-affinity"
+          },
+          {
+            "id": "83660017-0212-4382-ac8f-28547232e477",
+            "name": "qa-ag03-project-strict-affinity",
+            "description": "AG03 C09-project-strict-affinity",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "projectid": "d6e7e875-c6a3-4c10-ab0f-fa6f0d5be138",
+            "project": "qa-ag03-project",
+            "type": "host affinity"
+          },
+          {
+            "id": "c027399a-61e6-40a6-9ca3-1649ac9698f2",
+            "name": "qa-ag03-project-strict-anti",
+            "description": "AG03 C10-project-strict-anti",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "projectid": "d6e7e875-c6a3-4c10-ab0f-fa6f0d5be138",
+            "project": "qa-ag03-project",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "bdc77714-6f42-4610-ac5e-7e0ebbcdd508",
+            "name": "qa-ag03-project-nonstrict-affinity",
+            "description": "AG03 C11-project-nonstrict-affinity",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "projectid": "d6e7e875-c6a3-4c10-ab0f-fa6f0d5be138",
+            "project": "qa-ag03-project",
+            "type": "non-strict host affinity"
+          },
+          {
+            "id": "03c69b04-dafd-4f94-8228-73fea732aa07",
+            "name": "qa-ag03-project-nonstrict-anti",
+            "description": "AG03 C12-project-nonstrict-anti",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "projectid": "d6e7e875-c6a3-4c10-ab0f-fa6f0d5be138",
+            "project": "qa-ag03-project",
+            "type": "non-strict host anti-affinity"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:37:22+0900",
+    "command": "listAffinityGroups",
+    "params": {
+      "projectid": "-1",
+      "listall": true,
+      "page": 1,
+      "pagesize": 500
+    },
+    "response": {
+      "listaffinitygroupsresponse": {
+        "count": 20,
+        "affinitygroup": [
+          {
+            "id": "ac508d0e-c80b-4c66-9bd0-8cbb896ca7e0",
+            "name": "rt1230-r17-ha-control-spread",
+            "description": "Cloud #1230 isolated r17 HA controls across three hosts",
+            "account": "k1230-20261006",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "966bf870-a046-4c76-bfce-7c78f62c0ecb",
+            "name": "rt1230-r18-control-spread",
+            "description": "Cloud #1230 isolated r18 control across hosts",
+            "account": "k1230-20261006",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "42f65110-108a-4831-8403-14500cc7f5fa",
+            "name": "rt1230-r18-etcd-spread",
+            "description": "Cloud #1230 isolated r18 etcd across hosts",
+            "account": "k1230-20261006",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "875da298-7315-4e05-b1fc-f78cbdafe262",
+            "name": "AS-PROD-AS06-AFFINITY",
+            "description": "Epic 1346 AS06 future VM profile validation",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "projectid": "fb318714-bc01-4be5-9e33-0f49a7013127",
+            "project": "AS-PROD-31-AS01-project",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "9f15d520-4f3f-44f6-be94-3389b2ed9cc6",
+            "name": "qa-ag03-duplicate",
+            "description": "AG03 duplicate baseline",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "d1c3860d-cc7a-4c52-b6d3-d2603f4cc38a",
+            "name": "qa-ag03-api-boundary-가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가",
+            "description": "설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host affinity"
+          },
+          {
+            "id": "25c16038-8051-49a4-a05a-033119646eaa",
+            "name": "qa-ag03-api-emoji-😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀",
+            "description": "Unicode roundtrip",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host affinity"
+          },
+          {
+            "id": "fc338c5b-afbf-436e-aa3b-4dc76fa986cb",
+            "name": "qa-ag03-duplicate-fixed",
+            "description": "QA AG03\n  duplicate correction",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "da3722a6-59ef-43a5-b005-cdf63b4bd331",
+            "name": "qa-ag03-ui-boundary-한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한",
+            "description": "설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host affinity"
+          },
+          {
+            "id": "f3309eca-9e13-4d31-94f7-0bb3b16013ee",
+            "name": "qa-ag03-admin-nonstrict-anti",
+            "description": "AG03 admin non-strict anti-affinity",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "non-strict host anti-affinity"
+          },
+          {
+            "id": "eba52319-f5a1-46ed-91b6-248cee1a4217",
+            "name": "qa-ag03-admin-nonstrict-affinity",
+            "description": "AG03 pending receipt close/reopen",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "non-strict host affinity"
+          },
+          {
+            "id": "7525c9e1-79c4-49c7-b07f-c37dc6e777de",
+            "name": "qa-ag03-owner-same",
+            "description": "AG03 explicit owner selection",
+            "account": "qa-ag03-user",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host affinity"
+          },
+          {
+            "id": "79b6e539-2b4f-4827-adc1-d3db70b6560a",
+            "name": "qa-ag03-owner-same",
+            "description": "AG03 same name in project owner",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "projectid": "d6e7e875-c6a3-4c10-ab0f-fa6f0d5be138",
+            "project": "qa-ag03-project",
+            "type": "host affinity"
+          },
+          {
+            "id": "656dafa0-2fa3-4969-8fe5-b6bedd3a7176",
+            "name": "qa-ag03-job-recheck",
+            "description": "AG03 query interruption without resubmission",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "39614a3e-79ff-436e-9d1a-c13957038a96",
+            "name": "qa-ag03-user-strict-anti",
+            "description": "AG03 C06-user-strict-anti",
+            "account": "qa-ag03-user",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "6a791177-b6f7-48e0-b070-e6b5bf31a801",
+            "name": "qa-ag03-user-nonstrict-affinity",
+            "description": "AG03 C07-user-nonstrict-affinity",
+            "account": "qa-ag03-user",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "non-strict host affinity"
+          },
+          {
+            "id": "01b989a3-7391-406d-9a9e-40666f829e89",
+            "name": "qa-ag03-user-nonstrict-anti",
+            "description": "AG03 C08-user-nonstrict-anti",
+            "account": "qa-ag03-user",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "non-strict host anti-affinity"
+          },
+          {
+            "id": "c027399a-61e6-40a6-9ca3-1649ac9698f2",
+            "name": "qa-ag03-project-strict-anti",
+            "description": "AG03 C10-project-strict-anti",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "projectid": "d6e7e875-c6a3-4c10-ab0f-fa6f0d5be138",
+            "project": "qa-ag03-project",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "bdc77714-6f42-4610-ac5e-7e0ebbcdd508",
+            "name": "qa-ag03-project-nonstrict-affinity",
+            "description": "AG03 C11-project-nonstrict-affinity",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "projectid": "d6e7e875-c6a3-4c10-ab0f-fa6f0d5be138",
+            "project": "qa-ag03-project",
+            "type": "non-strict host affinity"
+          },
+          {
+            "id": "03c69b04-dafd-4f94-8228-73fea732aa07",
+            "name": "qa-ag03-project-nonstrict-anti",
+            "description": "AG03 C12-project-nonstrict-anti",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "projectid": "d6e7e875-c6a3-4c10-ab0f-fa6f0d5be138",
+            "project": "qa-ag03-project",
+            "type": "non-strict host anti-affinity"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:37:22+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "1a4c4b73-7091-4433-942b-c40affb179ba"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "491f0559-8d99-4883-8515-918703fdbcf3",
+        "account": "qa-ag03-user",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "ada22183-83d7-4df8-954e-7f4531057f5c",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.CreateAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "affinitygroup": {
+            "id": "01b989a3-7391-406d-9a9e-40666f829e89",
+            "name": "qa-ag03-user-nonstrict-anti",
+            "description": "AG03 C08-user-nonstrict-anti",
+            "account": "qa-ag03-user",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "non-strict host anti-affinity"
+          }
+        },
+        "jobinstancetype": "AffinityGroup",
+        "created": "2026-10-19T07:27:42+0900",
+        "completed": "2026-10-19T07:27:42+0900",
+        "jobid": "1a4c4b73-7091-4433-942b-c40affb179ba",
+        "jobstatus": 1
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:37:22+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "21975992-a321-4de6-9f4d-635dbd056d0d"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.CreateAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "affinitygroup": {
+            "id": "656dafa0-2fa3-4969-8fe5-b6bedd3a7176",
+            "name": "qa-ag03-job-recheck",
+            "description": "AG03 query interruption without resubmission",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          }
+        },
+        "jobinstancetype": "AffinityGroup",
+        "created": "2026-10-19T07:24:51+0900",
+        "completed": "2026-10-19T07:24:51+0900",
+        "jobid": "21975992-a321-4de6-9f4d-635dbd056d0d",
+        "jobstatus": 1
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:37:22+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "30f622ce-ef56-4ecc-bb83-70fe13c8fc32"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "491f0559-8d99-4883-8515-918703fdbcf3",
+        "account": "qa-ag03-user",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "ada22183-83d7-4df8-954e-7f4531057f5c",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.CreateAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "affinitygroup": {
+            "id": "6a791177-b6f7-48e0-b070-e6b5bf31a801",
+            "name": "qa-ag03-user-nonstrict-affinity",
+            "description": "AG03 C07-user-nonstrict-affinity",
+            "account": "qa-ag03-user",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "non-strict host affinity"
+          }
+        },
+        "jobinstancetype": "AffinityGroup",
+        "created": "2026-10-19T07:27:40+0900",
+        "completed": "2026-10-19T07:27:40+0900",
+        "jobid": "30f622ce-ef56-4ecc-bb83-70fe13c8fc32",
+        "jobstatus": 1
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:37:22+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "4ba5196d-cb74-49ef-b231-7d5e263461e2"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.CreateAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "affinitygroup": {
+            "id": "f3309eca-9e13-4d31-94f7-0bb3b16013ee",
+            "name": "qa-ag03-admin-nonstrict-anti",
+            "description": "AG03 admin non-strict anti-affinity",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "non-strict host anti-affinity"
+          }
+        },
+        "jobinstancetype": "AffinityGroup",
+        "created": "2026-10-19T07:19:26+0900",
+        "completed": "2026-10-19T07:19:26+0900",
+        "jobid": "4ba5196d-cb74-49ef-b231-7d5e263461e2",
+        "jobstatus": 1
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:37:22+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "4f407b9c-db31-4b4b-9b77-c33a69d18655"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.CreateAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "affinitygroup": {
+            "id": "da3722a6-59ef-43a5-b005-cdf63b4bd331",
+            "name": "qa-ag03-ui-boundary-한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한",
+            "description": "설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host affinity"
+          }
+        },
+        "jobinstancetype": "AffinityGroup",
+        "created": "2026-10-19T07:19:12+0900",
+        "completed": "2026-10-19T07:19:12+0900",
+        "jobid": "4f407b9c-db31-4b4b-9b77-c33a69d18655",
+        "jobstatus": 1
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:37:22+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "5742f9ac-e49d-47c1-ab50-e5266546052d"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "491f0559-8d99-4883-8515-918703fdbcf3",
+        "account": "qa-ag03-user",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "ada22183-83d7-4df8-954e-7f4531057f5c",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.CreateAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "affinitygroup": {
+            "id": "39614a3e-79ff-436e-9d1a-c13957038a96",
+            "name": "qa-ag03-user-strict-anti",
+            "description": "AG03 C06-user-strict-anti",
+            "account": "qa-ag03-user",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          }
+        },
+        "jobinstancetype": "AffinityGroup",
+        "created": "2026-10-19T07:27:38+0900",
+        "completed": "2026-10-19T07:27:38+0900",
+        "jobid": "5742f9ac-e49d-47c1-ab50-e5266546052d",
+        "jobstatus": 1
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:37:22+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "58df5da5-d6a1-4033-9a5a-af5673a502d9"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.CreateAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "affinitygroup": {
+            "id": "f05f9755-7da5-4dea-8491-733651f258f2",
+            "name": "qa-ag03-final-smoke",
+            "description": "최종 배포 중복 오류 입력 보존",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          }
+        },
+        "jobinstancetype": "AffinityGroup",
+        "created": "2026-10-19T07:36:26+0900",
+        "completed": "2026-10-19T07:36:26+0900",
+        "jobid": "58df5da5-d6a1-4033-9a5a-af5673a502d9",
+        "jobstatus": 1
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:37:22+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "65d43524-1ed1-4436-ab00-31830c31e42a"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.CreateAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "affinitygroup": {
+            "id": "d1c3860d-cc7a-4c52-b6d3-d2603f4cc38a",
+            "name": "qa-ag03-api-boundary-가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가",
+            "description": "설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host affinity"
+          }
+        },
+        "jobinstancetype": "AffinityGroup",
+        "created": "2026-10-19T07:07:04+0900",
+        "completed": "2026-10-19T07:07:04+0900",
+        "jobid": "65d43524-1ed1-4436-ab00-31830c31e42a",
+        "jobstatus": 1
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:37:22+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "6814cc62-b905-4e32-b809-26ca69433a77"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.CreateAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "affinitygroup": {
+            "id": "7525c9e1-79c4-49c7-b07f-c37dc6e777de",
+            "name": "qa-ag03-owner-same",
+            "description": "AG03 explicit owner selection",
+            "account": "qa-ag03-user",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host affinity"
+          }
+        },
+        "jobinstancetype": "AffinityGroup",
+        "created": "2026-10-19T07:20:46+0900",
+        "completed": "2026-10-19T07:20:46+0900",
+        "jobid": "6814cc62-b905-4e32-b809-26ca69433a77",
+        "jobstatus": 1
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:37:22+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "68df8e01-b7d1-4abe-954e-017a2f150af4"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.DeleteAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "success": true
+        },
+        "jobinstancetype": "AffinityGroup",
+        "created": "2026-10-19T07:36:32+0900",
+        "completed": "2026-10-19T07:36:32+0900",
+        "jobid": "68df8e01-b7d1-4abe-954e-017a2f150af4",
+        "jobstatus": 1
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:37:22+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "870d25b2-e817-4a2b-a3b5-58fc9afc61af"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "491f0559-8d99-4883-8515-918703fdbcf3",
+        "account": "qa-ag03-user",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "ada22183-83d7-4df8-954e-7f4531057f5c",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.CreateAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "affinitygroup": {
+            "id": "c027399a-61e6-40a6-9ca3-1649ac9698f2",
+            "name": "qa-ag03-project-strict-anti",
+            "description": "AG03 C10-project-strict-anti",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "projectid": "d6e7e875-c6a3-4c10-ab0f-fa6f0d5be138",
+            "project": "qa-ag03-project",
+            "type": "host anti-affinity"
+          }
+        },
+        "jobinstancetype": "AffinityGroup",
+        "created": "2026-10-19T07:28:23+0900",
+        "completed": "2026-10-19T07:28:23+0900",
+        "jobid": "870d25b2-e817-4a2b-a3b5-58fc9afc61af",
+        "jobstatus": 1
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:37:22+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "93b8efe3-eadb-44f2-ac4d-f040d398a8a3"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.CreateAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "affinitygroup": {
+            "id": "fc338c5b-afbf-436e-aa3b-4dc76fa986cb",
+            "name": "qa-ag03-duplicate-fixed",
+            "description": "QA AG03\n  duplicate correction",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          }
+        },
+        "jobinstancetype": "AffinityGroup",
+        "created": "2026-10-19T07:18:40+0900",
+        "completed": "2026-10-19T07:18:40+0900",
+        "jobid": "93b8efe3-eadb-44f2-ac4d-f040d398a8a3",
+        "jobstatus": 1
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:37:22+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "ac5a50bb-637d-45b2-bc98-f20f96d3d285"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.CreateAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "affinitygroup": {
+            "id": "eba52319-f5a1-46ed-91b6-248cee1a4217",
+            "name": "qa-ag03-admin-nonstrict-affinity",
+            "description": "AG03 pending receipt close/reopen",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "non-strict host affinity"
+          }
+        },
+        "jobinstancetype": "AffinityGroup",
+        "created": "2026-10-19T07:19:36+0900",
+        "completed": "2026-10-19T07:19:36+0900",
+        "jobid": "ac5a50bb-637d-45b2-bc98-f20f96d3d285",
+        "jobstatus": 1
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:37:22+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "af67fcc9-2db2-4415-8cd6-a886442be73f"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "491f0559-8d99-4883-8515-918703fdbcf3",
+        "account": "qa-ag03-user",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "ada22183-83d7-4df8-954e-7f4531057f5c",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.CreateAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "affinitygroup": {
+            "id": "03c69b04-dafd-4f94-8228-73fea732aa07",
+            "name": "qa-ag03-project-nonstrict-anti",
+            "description": "AG03 C12-project-nonstrict-anti",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "projectid": "d6e7e875-c6a3-4c10-ab0f-fa6f0d5be138",
+            "project": "qa-ag03-project",
+            "type": "non-strict host anti-affinity"
+          }
+        },
+        "jobinstancetype": "AffinityGroup",
+        "created": "2026-10-19T07:28:27+0900",
+        "completed": "2026-10-19T07:28:27+0900",
+        "jobid": "af67fcc9-2db2-4415-8cd6-a886442be73f",
+        "jobstatus": 1
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:37:22+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "b9c1b280-80af-4039-af57-c438f8a8e19a"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "491f0559-8d99-4883-8515-918703fdbcf3",
+        "account": "qa-ag03-user",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "ada22183-83d7-4df8-954e-7f4531057f5c",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.CreateAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "affinitygroup": {
+            "id": "83660017-0212-4382-ac8f-28547232e477",
+            "name": "qa-ag03-project-strict-affinity",
+            "description": "AG03 C09-project-strict-affinity",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "projectid": "d6e7e875-c6a3-4c10-ab0f-fa6f0d5be138",
+            "project": "qa-ag03-project",
+            "type": "host affinity"
+          }
+        },
+        "jobinstancetype": "AffinityGroup",
+        "created": "2026-10-19T07:28:22+0900",
+        "completed": "2026-10-19T07:28:22+0900",
+        "jobid": "b9c1b280-80af-4039-af57-c438f8a8e19a",
+        "jobstatus": 1
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:37:22+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "cb5a039c-c770-4aa4-a0b2-db331009818f"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "491f0559-8d99-4883-8515-918703fdbcf3",
+        "account": "qa-ag03-user",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "ada22183-83d7-4df8-954e-7f4531057f5c",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.CreateAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "affinitygroup": {
+            "id": "bdc77714-6f42-4610-ac5e-7e0ebbcdd508",
+            "name": "qa-ag03-project-nonstrict-affinity",
+            "description": "AG03 C11-project-nonstrict-affinity",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "projectid": "d6e7e875-c6a3-4c10-ab0f-fa6f0d5be138",
+            "project": "qa-ag03-project",
+            "type": "non-strict host affinity"
+          }
+        },
+        "jobinstancetype": "AffinityGroup",
+        "created": "2026-10-19T07:28:25+0900",
+        "completed": "2026-10-19T07:28:25+0900",
+        "jobid": "cb5a039c-c770-4aa4-a0b2-db331009818f",
+        "jobstatus": 1
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:37:22+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "e7818bc3-6617-4708-b094-b14c7a9dfc27"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "491f0559-8d99-4883-8515-918703fdbcf3",
+        "account": "qa-ag03-user",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "ada22183-83d7-4df8-954e-7f4531057f5c",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.DeleteAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "success": true
+        },
+        "jobinstancetype": "AffinityGroup",
+        "created": "2026-10-19T07:30:05+0900",
+        "completed": "2026-10-19T07:30:05+0900",
+        "jobid": "e7818bc3-6617-4708-b094-b14c7a9dfc27",
+        "jobstatus": 1
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:37:22+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "e7c45e9c-6987-4b77-bed2-b7e9254cbe1a"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "491f0559-8d99-4883-8515-918703fdbcf3",
+        "account": "qa-ag03-user",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "ada22183-83d7-4df8-954e-7f4531057f5c",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.CreateAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "affinitygroup": {
+            "id": "c80abc6d-5b52-4d1c-a58b-b05450dcbb2e",
+            "name": "qa-ag03-user-strict-affinity",
+            "description": "AG03 normal user scope",
+            "account": "qa-ag03-user",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host affinity"
+          }
+        },
+        "jobinstancetype": "AffinityGroup",
+        "created": "2026-10-19T07:27:32+0900",
+        "completed": "2026-10-19T07:27:32+0900",
+        "jobid": "e7c45e9c-6987-4b77-bed2-b7e9254cbe1a",
+        "jobstatus": 1
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:37:22+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "ec557d6f-cb06-4a1a-82d6-cd1757383f95"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.CreateAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "affinitygroup": {
+            "id": "9f15d520-4f3f-44f6-be94-3389b2ed9cc6",
+            "name": "qa-ag03-duplicate",
+            "description": "AG03 duplicate baseline",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          }
+        },
+        "jobinstancetype": "AffinityGroup",
+        "created": "2026-10-19T06:57:55+0900",
+        "completed": "2026-10-19T06:57:55+0900",
+        "jobid": "ec557d6f-cb06-4a1a-82d6-cd1757383f95",
+        "jobstatus": 1
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:37:22+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "f3e687b4-bafe-4906-8547-4b6a2a50f4d0"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.CreateAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "affinitygroup": {
+            "id": "79b6e539-2b4f-4827-adc1-d3db70b6560a",
+            "name": "qa-ag03-owner-same",
+            "description": "AG03 same name in project owner",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "projectid": "d6e7e875-c6a3-4c10-ab0f-fa6f0d5be138",
+            "project": "qa-ag03-project",
+            "type": "host affinity"
+          }
+        },
+        "jobinstancetype": "AffinityGroup",
+        "created": "2026-10-19T07:21:01+0900",
+        "completed": "2026-10-19T07:21:01+0900",
+        "jobid": "f3e687b4-bafe-4906-8547-4b6a2a50f4d0",
+        "jobstatus": 1
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:37:22+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "f75b9afa-9a74-47a9-9091-83d38d4461f5"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.CreateAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "affinitygroup": {
+            "id": "25c16038-8051-49a4-a05a-033119646eaa",
+            "name": "qa-ag03-api-emoji-😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀",
+            "description": "Unicode roundtrip",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host affinity"
+          }
+        },
+        "jobinstancetype": "AffinityGroup",
+        "created": "2026-10-19T07:07:04+0900",
+        "completed": "2026-10-19T07:07:04+0900",
+        "jobid": "f75b9afa-9a74-47a9-9091-83d38d4461f5",
+        "jobstatus": 1
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:37:22+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "f87d9b38-9699-44d8-923d-473125fe1a63"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "491f0559-8d99-4883-8515-918703fdbcf3",
+        "account": "qa-ag03-user",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "ada22183-83d7-4df8-954e-7f4531057f5c",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.DeleteAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "success": true
+        },
+        "jobinstancetype": "AffinityGroup",
+        "created": "2026-10-19T07:29:24+0900",
+        "completed": "2026-10-19T07:29:24+0900",
+        "jobid": "f87d9b38-9699-44d8-923d-473125fe1a63",
+        "jobstatus": 1
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:37:22+0900",
+    "command": "deleteAffinityGroup",
+    "params": {
+      "id": "9f15d520-4f3f-44f6-be94-3389b2ed9cc6"
+    },
+    "response": {
+      "deleteaffinitygroupresponse": {
+        "jobid": "a92a26b3-dfc3-48ba-a3ae-fed9bf7f3bc1"
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:37:22+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "a92a26b3-dfc3-48ba-a3ae-fed9bf7f3bc1"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.DeleteAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobinstancetype": "AffinityGroup",
+        "managementserverid": "716fb21e-86f3-4f8c-b34d-11c8d0220230",
+        "managementservername": "ccvm-mngt",
+        "created": "2026-10-19T07:37:28+0900",
+        "jobid": "a92a26b3-dfc3-48ba-a3ae-fed9bf7f3bc1",
+        "jobstatus": 0
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:37:23+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "a92a26b3-dfc3-48ba-a3ae-fed9bf7f3bc1"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.DeleteAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "success": true
+        },
+        "jobinstancetype": "AffinityGroup",
+        "created": "2026-10-19T07:37:28+0900",
+        "completed": "2026-10-19T07:37:28+0900",
+        "jobid": "a92a26b3-dfc3-48ba-a3ae-fed9bf7f3bc1",
+        "jobstatus": 1
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:37:23+0900",
+    "command": "deleteAffinityGroup",
+    "params": {
+      "id": "d1c3860d-cc7a-4c52-b6d3-d2603f4cc38a"
+    },
+    "response": {
+      "deleteaffinitygroupresponse": {
+        "jobid": "c0d97aad-9cc5-476f-9574-18288c1577d7"
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:37:23+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "c0d97aad-9cc5-476f-9574-18288c1577d7"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.DeleteAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobinstancetype": "AffinityGroup",
+        "managementserverid": "716fb21e-86f3-4f8c-b34d-11c8d0220230",
+        "managementservername": "ccvm-mngt",
+        "created": "2026-10-19T07:37:29+0900",
+        "jobid": "c0d97aad-9cc5-476f-9574-18288c1577d7",
+        "jobstatus": 0
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:37:24+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "c0d97aad-9cc5-476f-9574-18288c1577d7"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.DeleteAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "success": true
+        },
+        "jobinstancetype": "AffinityGroup",
+        "created": "2026-10-19T07:37:29+0900",
+        "completed": "2026-10-19T07:37:29+0900",
+        "jobid": "c0d97aad-9cc5-476f-9574-18288c1577d7",
+        "jobstatus": 1
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:37:24+0900",
+    "command": "deleteAffinityGroup",
+    "params": {
+      "id": "25c16038-8051-49a4-a05a-033119646eaa"
+    },
+    "response": {
+      "deleteaffinitygroupresponse": {
+        "jobid": "260189f8-39b7-4905-8e7e-e3d9d26a8aaa"
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:37:24+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "260189f8-39b7-4905-8e7e-e3d9d26a8aaa"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.DeleteAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobinstancetype": "AffinityGroup",
+        "managementserverid": "716fb21e-86f3-4f8c-b34d-11c8d0220230",
+        "managementservername": "ccvm-mngt",
+        "created": "2026-10-19T07:37:30+0900",
+        "jobid": "260189f8-39b7-4905-8e7e-e3d9d26a8aaa",
+        "jobstatus": 0
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:37:25+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "260189f8-39b7-4905-8e7e-e3d9d26a8aaa"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.DeleteAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "success": true
+        },
+        "jobinstancetype": "AffinityGroup",
+        "created": "2026-10-19T07:37:30+0900",
+        "completed": "2026-10-19T07:37:30+0900",
+        "jobid": "260189f8-39b7-4905-8e7e-e3d9d26a8aaa",
+        "jobstatus": 1
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:37:25+0900",
+    "command": "deleteAffinityGroup",
+    "params": {
+      "id": "fc338c5b-afbf-436e-aa3b-4dc76fa986cb"
+    },
+    "response": {
+      "deleteaffinitygroupresponse": {
+        "jobid": "2cf7f7c9-a923-424d-953b-8398c4c7965d"
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:37:25+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "2cf7f7c9-a923-424d-953b-8398c4c7965d"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.DeleteAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobinstancetype": "AffinityGroup",
+        "managementserverid": "716fb21e-86f3-4f8c-b34d-11c8d0220230",
+        "managementservername": "ccvm-mngt",
+        "created": "2026-10-19T07:37:31+0900",
+        "jobid": "2cf7f7c9-a923-424d-953b-8398c4c7965d",
+        "jobstatus": 0
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:37:26+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "2cf7f7c9-a923-424d-953b-8398c4c7965d"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.DeleteAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "success": true
+        },
+        "jobinstancetype": "AffinityGroup",
+        "created": "2026-10-19T07:37:31+0900",
+        "completed": "2026-10-19T07:37:31+0900",
+        "jobid": "2cf7f7c9-a923-424d-953b-8398c4c7965d",
+        "jobstatus": 1
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:37:26+0900",
+    "command": "deleteAffinityGroup",
+    "params": {
+      "id": "da3722a6-59ef-43a5-b005-cdf63b4bd331"
+    },
+    "response": {
+      "deleteaffinitygroupresponse": {
+        "jobid": "68e07b71-3283-4e51-8157-f30bf78349b8"
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:37:26+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "68e07b71-3283-4e51-8157-f30bf78349b8"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.DeleteAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobinstancetype": "AffinityGroup",
+        "managementserverid": "716fb21e-86f3-4f8c-b34d-11c8d0220230",
+        "managementservername": "ccvm-mngt",
+        "created": "2026-10-19T07:37:32+0900",
+        "jobid": "68e07b71-3283-4e51-8157-f30bf78349b8",
+        "jobstatus": 0
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:37:28+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "68e07b71-3283-4e51-8157-f30bf78349b8"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.DeleteAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "success": true
+        },
+        "jobinstancetype": "AffinityGroup",
+        "created": "2026-10-19T07:37:32+0900",
+        "completed": "2026-10-19T07:37:32+0900",
+        "jobid": "68e07b71-3283-4e51-8157-f30bf78349b8",
+        "jobstatus": 1
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:37:28+0900",
+    "command": "deleteAffinityGroup",
+    "params": {
+      "id": "f3309eca-9e13-4d31-94f7-0bb3b16013ee"
+    },
+    "response": {
+      "deleteaffinitygroupresponse": {
+        "jobid": "831c8743-4b9b-426f-ba0c-7afc39aea054"
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:37:28+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "831c8743-4b9b-426f-ba0c-7afc39aea054"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.DeleteAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobinstancetype": "AffinityGroup",
+        "managementserverid": "716fb21e-86f3-4f8c-b34d-11c8d0220230",
+        "managementservername": "ccvm-mngt",
+        "created": "2026-10-19T07:37:33+0900",
+        "jobid": "831c8743-4b9b-426f-ba0c-7afc39aea054",
+        "jobstatus": 0
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:37:29+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "831c8743-4b9b-426f-ba0c-7afc39aea054"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.DeleteAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "success": true
+        },
+        "jobinstancetype": "AffinityGroup",
+        "created": "2026-10-19T07:37:33+0900",
+        "completed": "2026-10-19T07:37:33+0900",
+        "jobid": "831c8743-4b9b-426f-ba0c-7afc39aea054",
+        "jobstatus": 1
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:37:29+0900",
+    "command": "deleteAffinityGroup",
+    "params": {
+      "id": "eba52319-f5a1-46ed-91b6-248cee1a4217"
+    },
+    "response": {
+      "deleteaffinitygroupresponse": {
+        "jobid": "3bfe5b7b-4fe5-4e69-af53-e8e99e075581"
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:37:29+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "3bfe5b7b-4fe5-4e69-af53-e8e99e075581"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.DeleteAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobinstancetype": "AffinityGroup",
+        "managementserverid": "716fb21e-86f3-4f8c-b34d-11c8d0220230",
+        "managementservername": "ccvm-mngt",
+        "created": "2026-10-19T07:37:34+0900",
+        "jobid": "3bfe5b7b-4fe5-4e69-af53-e8e99e075581",
+        "jobstatus": 0
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:37:30+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "3bfe5b7b-4fe5-4e69-af53-e8e99e075581"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.DeleteAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "success": true
+        },
+        "jobinstancetype": "AffinityGroup",
+        "created": "2026-10-19T07:37:34+0900",
+        "completed": "2026-10-19T07:37:34+0900",
+        "jobid": "3bfe5b7b-4fe5-4e69-af53-e8e99e075581",
+        "jobstatus": 1
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:37:30+0900",
+    "command": "deleteAffinityGroup",
+    "params": {
+      "id": "7525c9e1-79c4-49c7-b07f-c37dc6e777de"
+    },
+    "response": {
+      "deleteaffinitygroupresponse": {
+        "jobid": "908c1448-a26a-4f6d-b351-d542757209eb"
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:37:30+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "908c1448-a26a-4f6d-b351-d542757209eb"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.DeleteAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobinstancetype": "AffinityGroup",
+        "managementserverid": "716fb21e-86f3-4f8c-b34d-11c8d0220230",
+        "managementservername": "ccvm-mngt",
+        "created": "2026-10-19T07:37:35+0900",
+        "jobid": "908c1448-a26a-4f6d-b351-d542757209eb",
+        "jobstatus": 0
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:37:31+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "908c1448-a26a-4f6d-b351-d542757209eb"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.DeleteAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "success": true
+        },
+        "jobinstancetype": "AffinityGroup",
+        "created": "2026-10-19T07:37:35+0900",
+        "completed": "2026-10-19T07:37:35+0900",
+        "jobid": "908c1448-a26a-4f6d-b351-d542757209eb",
+        "jobstatus": 1
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:37:31+0900",
+    "command": "deleteAffinityGroup",
+    "params": {
+      "id": "79b6e539-2b4f-4827-adc1-d3db70b6560a",
+      "projectid": "d6e7e875-c6a3-4c10-ab0f-fa6f0d5be138"
+    },
+    "response": {
+      "deleteaffinitygroupresponse": {
+        "jobid": "fac4e7e7-e956-4edb-a085-bb48c59c2b9e"
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:37:31+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "fac4e7e7-e956-4edb-a085-bb48c59c2b9e"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.DeleteAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobinstancetype": "AffinityGroup",
+        "managementserverid": "716fb21e-86f3-4f8c-b34d-11c8d0220230",
+        "managementservername": "ccvm-mngt",
+        "created": "2026-10-19T07:37:36+0900",
+        "jobid": "fac4e7e7-e956-4edb-a085-bb48c59c2b9e",
+        "jobstatus": 0
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:37:32+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "fac4e7e7-e956-4edb-a085-bb48c59c2b9e"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.DeleteAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "success": true
+        },
+        "jobinstancetype": "AffinityGroup",
+        "created": "2026-10-19T07:37:36+0900",
+        "completed": "2026-10-19T07:37:36+0900",
+        "jobid": "fac4e7e7-e956-4edb-a085-bb48c59c2b9e",
+        "jobstatus": 1
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:37:32+0900",
+    "command": "deleteAffinityGroup",
+    "params": {
+      "id": "656dafa0-2fa3-4969-8fe5-b6bedd3a7176"
+    },
+    "response": {
+      "deleteaffinitygroupresponse": {
+        "jobid": "6eb6f8e2-92a6-4fc0-ad23-b543a5bac1cb"
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:37:32+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "6eb6f8e2-92a6-4fc0-ad23-b543a5bac1cb"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.DeleteAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobinstancetype": "AffinityGroup",
+        "managementserverid": "716fb21e-86f3-4f8c-b34d-11c8d0220230",
+        "managementservername": "ccvm-mngt",
+        "created": "2026-10-19T07:37:37+0900",
+        "jobid": "6eb6f8e2-92a6-4fc0-ad23-b543a5bac1cb",
+        "jobstatus": 0
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:37:33+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "6eb6f8e2-92a6-4fc0-ad23-b543a5bac1cb"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.DeleteAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "success": true
+        },
+        "jobinstancetype": "AffinityGroup",
+        "created": "2026-10-19T07:37:37+0900",
+        "completed": "2026-10-19T07:37:37+0900",
+        "jobid": "6eb6f8e2-92a6-4fc0-ad23-b543a5bac1cb",
+        "jobstatus": 1
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:37:33+0900",
+    "command": "deleteAffinityGroup",
+    "params": {
+      "id": "39614a3e-79ff-436e-9d1a-c13957038a96"
+    },
+    "response": {
+      "deleteaffinitygroupresponse": {
+        "jobid": "a466c0d7-d55b-4850-9f0b-605dd102b8ad"
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:37:33+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "a466c0d7-d55b-4850-9f0b-605dd102b8ad"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.DeleteAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobinstancetype": "AffinityGroup",
+        "managementserverid": "716fb21e-86f3-4f8c-b34d-11c8d0220230",
+        "managementservername": "ccvm-mngt",
+        "created": "2026-10-19T07:37:38+0900",
+        "jobid": "a466c0d7-d55b-4850-9f0b-605dd102b8ad",
+        "jobstatus": 0
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:37:34+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "a466c0d7-d55b-4850-9f0b-605dd102b8ad"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.DeleteAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "success": true
+        },
+        "jobinstancetype": "AffinityGroup",
+        "created": "2026-10-19T07:37:38+0900",
+        "completed": "2026-10-19T07:37:38+0900",
+        "jobid": "a466c0d7-d55b-4850-9f0b-605dd102b8ad",
+        "jobstatus": 1
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:37:34+0900",
+    "command": "deleteAffinityGroup",
+    "params": {
+      "id": "6a791177-b6f7-48e0-b070-e6b5bf31a801"
+    },
+    "response": {
+      "deleteaffinitygroupresponse": {
+        "jobid": "5ffef722-3d58-412a-acc5-537fc7fb3c24"
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:37:34+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "5ffef722-3d58-412a-acc5-537fc7fb3c24"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.DeleteAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobinstancetype": "AffinityGroup",
+        "managementserverid": "716fb21e-86f3-4f8c-b34d-11c8d0220230",
+        "managementservername": "ccvm-mngt",
+        "created": "2026-10-19T07:37:39+0900",
+        "jobid": "5ffef722-3d58-412a-acc5-537fc7fb3c24",
+        "jobstatus": 0
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:37:35+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "5ffef722-3d58-412a-acc5-537fc7fb3c24"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.DeleteAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "success": true
+        },
+        "jobinstancetype": "AffinityGroup",
+        "created": "2026-10-19T07:37:39+0900",
+        "completed": "2026-10-19T07:37:39+0900",
+        "jobid": "5ffef722-3d58-412a-acc5-537fc7fb3c24",
+        "jobstatus": 1
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:37:35+0900",
+    "command": "deleteAffinityGroup",
+    "params": {
+      "id": "01b989a3-7391-406d-9a9e-40666f829e89"
+    },
+    "response": {
+      "deleteaffinitygroupresponse": {
+        "jobid": "d68f1df3-3fb6-4364-82e6-fec3432dfb5d"
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:37:35+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "d68f1df3-3fb6-4364-82e6-fec3432dfb5d"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.DeleteAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobinstancetype": "AffinityGroup",
+        "managementserverid": "716fb21e-86f3-4f8c-b34d-11c8d0220230",
+        "managementservername": "ccvm-mngt",
+        "created": "2026-10-19T07:37:40+0900",
+        "jobid": "d68f1df3-3fb6-4364-82e6-fec3432dfb5d",
+        "jobstatus": 0
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:37:36+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "d68f1df3-3fb6-4364-82e6-fec3432dfb5d"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.DeleteAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "success": true
+        },
+        "jobinstancetype": "AffinityGroup",
+        "created": "2026-10-19T07:37:40+0900",
+        "completed": "2026-10-19T07:37:40+0900",
+        "jobid": "d68f1df3-3fb6-4364-82e6-fec3432dfb5d",
+        "jobstatus": 1
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:37:36+0900",
+    "command": "deleteAffinityGroup",
+    "params": {
+      "id": "c027399a-61e6-40a6-9ca3-1649ac9698f2",
+      "projectid": "d6e7e875-c6a3-4c10-ab0f-fa6f0d5be138"
+    },
+    "response": {
+      "deleteaffinitygroupresponse": {
+        "jobid": "bb1f7396-07c9-4056-bcd1-b84d19e89b9f"
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:37:36+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "bb1f7396-07c9-4056-bcd1-b84d19e89b9f"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.DeleteAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobinstancetype": "AffinityGroup",
+        "managementserverid": "716fb21e-86f3-4f8c-b34d-11c8d0220230",
+        "managementservername": "ccvm-mngt",
+        "created": "2026-10-19T07:37:41+0900",
+        "jobid": "bb1f7396-07c9-4056-bcd1-b84d19e89b9f",
+        "jobstatus": 0
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:37:37+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "bb1f7396-07c9-4056-bcd1-b84d19e89b9f"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.DeleteAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "success": true
+        },
+        "jobinstancetype": "AffinityGroup",
+        "created": "2026-10-19T07:37:41+0900",
+        "completed": "2026-10-19T07:37:41+0900",
+        "jobid": "bb1f7396-07c9-4056-bcd1-b84d19e89b9f",
+        "jobstatus": 1
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:37:37+0900",
+    "command": "deleteAffinityGroup",
+    "params": {
+      "id": "bdc77714-6f42-4610-ac5e-7e0ebbcdd508",
+      "projectid": "d6e7e875-c6a3-4c10-ab0f-fa6f0d5be138"
+    },
+    "response": {
+      "deleteaffinitygroupresponse": {
+        "jobid": "aa0b9118-5031-4ef5-b432-bdfd3aaf66eb"
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:37:37+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "aa0b9118-5031-4ef5-b432-bdfd3aaf66eb"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.DeleteAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobinstancetype": "AffinityGroup",
+        "managementserverid": "716fb21e-86f3-4f8c-b34d-11c8d0220230",
+        "managementservername": "ccvm-mngt",
+        "created": "2026-10-19T07:37:42+0900",
+        "jobid": "aa0b9118-5031-4ef5-b432-bdfd3aaf66eb",
+        "jobstatus": 0
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:37:38+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "aa0b9118-5031-4ef5-b432-bdfd3aaf66eb"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.DeleteAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "success": true
+        },
+        "jobinstancetype": "AffinityGroup",
+        "created": "2026-10-19T07:37:42+0900",
+        "completed": "2026-10-19T07:37:42+0900",
+        "jobid": "aa0b9118-5031-4ef5-b432-bdfd3aaf66eb",
+        "jobstatus": 1
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:37:38+0900",
+    "command": "deleteAffinityGroup",
+    "params": {
+      "id": "03c69b04-dafd-4f94-8228-73fea732aa07",
+      "projectid": "d6e7e875-c6a3-4c10-ab0f-fa6f0d5be138"
+    },
+    "response": {
+      "deleteaffinitygroupresponse": {
+        "jobid": "ce4b222c-0b72-409b-8c5a-b9a3540fcc73"
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:37:38+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "ce4b222c-0b72-409b-8c5a-b9a3540fcc73"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.DeleteAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobinstancetype": "AffinityGroup",
+        "managementserverid": "716fb21e-86f3-4f8c-b34d-11c8d0220230",
+        "managementservername": "ccvm-mngt",
+        "created": "2026-10-19T07:37:43+0900",
+        "jobid": "ce4b222c-0b72-409b-8c5a-b9a3540fcc73",
+        "jobstatus": 0
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:37:39+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "ce4b222c-0b72-409b-8c5a-b9a3540fcc73"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.DeleteAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "success": true
+        },
+        "jobinstancetype": "AffinityGroup",
+        "created": "2026-10-19T07:37:43+0900",
+        "completed": "2026-10-19T07:37:43+0900",
+        "jobid": "ce4b222c-0b72-409b-8c5a-b9a3540fcc73",
+        "jobstatus": 1
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:37:39+0900",
+    "command": "deleteProject",
+    "params": {
+      "id": "d6e7e875-c6a3-4c10-ab0f-fa6f0d5be138"
+    },
+    "response": {
+      "deleteprojectresponse": {
+        "jobid": "b5c12d49-bceb-4590-98cc-69bf5d23dfc7"
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:37:39+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "b5c12d49-bceb-4590-98cc-69bf5d23dfc7"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.project.DeleteProjectCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "managementserverid": "716fb21e-86f3-4f8c-b34d-11c8d0220230",
+        "managementservername": "ccvm-mngt",
+        "created": "2026-10-19T07:37:44+0900",
+        "jobid": "b5c12d49-bceb-4590-98cc-69bf5d23dfc7",
+        "jobstatus": 0
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:37:40+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "b5c12d49-bceb-4590-98cc-69bf5d23dfc7"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.project.DeleteProjectCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "success": true
+        },
+        "created": "2026-10-19T07:37:44+0900",
+        "completed": "2026-10-19T07:37:44+0900",
+        "jobid": "b5c12d49-bceb-4590-98cc-69bf5d23dfc7",
+        "jobstatus": 1
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:37:40+0900",
+    "command": "deleteAccount",
+    "params": {
+      "id": "491f0559-8d99-4883-8515-918703fdbcf3"
+    },
+    "response": {
+      "deleteaccountresponse": {
+        "jobid": "6e173cc7-1c55-47ee-808e-68ada43178f0"
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:37:40+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "6e173cc7-1c55-47ee-808e-68ada43178f0"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.admin.account.DeleteAccountCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobinstancetype": "Account",
+        "jobinstanceid": "491f0559-8d99-4883-8515-918703fdbcf3",
+        "managementserverid": "716fb21e-86f3-4f8c-b34d-11c8d0220230",
+        "managementservername": "ccvm-mngt",
+        "created": "2026-10-19T07:37:45+0900",
+        "jobid": "6e173cc7-1c55-47ee-808e-68ada43178f0",
+        "jobstatus": 0
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:37:41+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "6e173cc7-1c55-47ee-808e-68ada43178f0"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.admin.account.DeleteAccountCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "success": true
+        },
+        "jobinstancetype": "Account",
+        "jobinstanceid": "491f0559-8d99-4883-8515-918703fdbcf3",
+        "created": "2026-10-19T07:37:45+0900",
+        "completed": "2026-10-19T07:37:45+0900",
+        "jobid": "6e173cc7-1c55-47ee-808e-68ada43178f0",
+        "jobstatus": 1
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:37:41+0900",
+    "command": "deleteDomain",
+    "params": {
+      "id": "3575fbeb-477d-4d59-a2a3-67a62c7593b7"
+    },
+    "response": {
+      "deletedomainresponse": {
+        "jobid": "cf1e036e-da02-47ba-82d2-a44839ef19af"
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:37:41+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "cf1e036e-da02-47ba-82d2-a44839ef19af"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.admin.domain.DeleteDomainCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobinstancetype": "Domain",
+        "managementserverid": "716fb21e-86f3-4f8c-b34d-11c8d0220230",
+        "managementservername": "ccvm-mngt",
+        "created": "2026-10-19T07:37:46+0900",
+        "jobid": "cf1e036e-da02-47ba-82d2-a44839ef19af",
+        "jobstatus": 0
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:37:42+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "cf1e036e-da02-47ba-82d2-a44839ef19af"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.admin.domain.DeleteDomainCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "success": true
+        },
+        "jobinstancetype": "Domain",
+        "created": "2026-10-19T07:37:46+0900",
+        "completed": "2026-10-19T07:37:46+0900",
+        "jobid": "cf1e036e-da02-47ba-82d2-a44839ef19af",
+        "jobstatus": 1
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T07:37:42+0900",
+    "command": "listAffinityGroups",
+    "params": {
+      "listall": true,
+      "projectid": "-1",
+      "page": 1,
+      "pagesize": 500
+    },
+    "response": {
+      "listaffinitygroupsresponse": {
+        "count": 4,
+        "affinitygroup": [
+          {
+            "id": "ac508d0e-c80b-4c66-9bd0-8cbb896ca7e0",
+            "name": "rt1230-r17-ha-control-spread",
+            "description": "Cloud #1230 isolated r17 HA controls across three hosts",
+            "account": "k1230-20261006",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "966bf870-a046-4c76-bfce-7c78f62c0ecb",
+            "name": "rt1230-r18-control-spread",
+            "description": "Cloud #1230 isolated r18 control across hosts",
+            "account": "k1230-20261006",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "42f65110-108a-4831-8403-14500cc7f5fa",
+            "name": "rt1230-r18-etcd-spread",
+            "description": "Cloud #1230 isolated r18 etcd across hosts",
+            "account": "k1230-20261006",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "875da298-7315-4e05-b1fc-f78cbdafe262",
+            "name": "AS-PROD-AS06-AFFINITY",
+            "description": "Epic 1346 AS06 future VM profile validation",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "projectid": "fb318714-bc01-4be5-9e33-0f49a7013127",
+            "project": "AS-PROD-31-AS01-project",
+            "type": "host anti-affinity"
+          }
+        ]
+      }
+    }
+  }
+]

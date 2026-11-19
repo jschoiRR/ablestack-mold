@@ -1,0 +1,55 @@
+{
+  "observedAt": "2026-10-19T17:51+0900",
+  "categories": {
+    "c.c.c.C.ListenerThread": {
+      "count": 1,
+      "sample": [
+        "2026-10-19 17:34:22,959 ERROR [c.c.c.C.ListenerThread] (Thread-26:[]) (logid:) Unexpected exception java.net.SocketException: Socket closed"
+      ]
+    },
+    "c.c.c.ClusterManagerImpl": {
+      "count": 1,
+      "sample": [
+        "2026-10-19 17:34:49,314 ERROR [c.c.c.ClusterManagerImpl] (main:[]) (logid:) Unable to ping management server at 10.10.31.10:9090 due to ConnectException"
+      ]
+    },
+    "c.c.u.PropertiesUtil": {
+      "count": 1,
+      "sample": [
+        "2026-10-19 17:34:49,882 ERROR [c.c.u.PropertiesUtil] (main:[]) (logid:) Unable to find properties file: commands.properties"
+      ]
+    },
+    "c.c.a.ApiServer": {
+      "count": 600,
+      "sample": [
+        "2026-10-19 17:50:59,284 ERROR [c.c.a.ApiServer] (qtp1869039062-433:[ctx-53bbc650, ctx-0b721aa6]) (logid:1f789f5d) Unable to verify request signature. com.cloud.exception.InvalidParameterValueException: API key pair is expired, expiration date: Sat Oct 10 12:30:00 KST 2026",
+        "2026-10-19 17:50:59,287 ERROR [c.c.a.ApiServer] (qtp1869039062-20:[ctx-f36802b9, ctx-a39cc299]) (logid:b7a5f12a) Unable to verify request signature. com.cloud.exception.InvalidParameterValueException: API key pair is expired, expiration date: Sat Oct 10 12:30:00 KST 2026"
+      ]
+    },
+    "o.a.c.u.m.SMTPMailSender": {
+      "count": 3,
+      "sample": [
+        "SMTP connection failure; operational recipients and router details omitted"
+      ]
+    },
+    "c.c.a.ApiAsyncJobDispatcher": {
+      "count": 1,
+      "sample": [
+        "2026-10-19 17:46:33,605 ERROR [c.c.a.ApiAsyncJobDispatcher] (API-Job-Executor-37:[ctx-f159794c, job-13949]) (logid:d2ba6cf1) Unexpected exception while executing org.apache.cloudstack.api.command.user.project.DeleteProjectCmd com.cloud.utils.exception.CloudRuntimeException: Can't delete the project yet because it has 1 Network to clean up"
+      ]
+    },
+    "c.c.u.d.T.Transaction": {
+      "count": 1,
+      "sample": [
+        "2026-10-19 17:46:53,575 ERROR [c.c.u.d.T.Transaction] (Finalizer:[]) (logid:) Something went wrong that a transaction is orphaned before db connection is closed"
+      ]
+    }
+  },
+  "transactionFinalizer": {
+    "count": 1,
+    "cause": "not attributed; no command context or stack in the message",
+    "priorScanBytes": 50000000,
+    "priorMatches": 0,
+    "scope": "observation only; not claimed fixed by AG07"
+  }
+}

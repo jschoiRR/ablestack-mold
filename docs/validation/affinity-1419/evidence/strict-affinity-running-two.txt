@@ -1,0 +1,271 @@
+- complementary:
+  - menu:
+    - menuitem "dashboard 대시보드":
+      - link "dashboard 대시보드":
+        - /url: "#/dashboard"
+        - img "dashboard":
+        - text: 대시보드
+    - img "cloud":
+    - text: 컴퓨트
+    - list:
+      - menuitem "cloud-server 가상머신":
+        - link "cloud-server 가상머신":
+          - /url: "#/vm"
+          - img "cloud-server":
+          - text: 가상머신
+      - menuitem "camera VM 스냅샷":
+        - link "camera VM 스냅샷":
+          - /url: "#/vmsnapshot"
+          - img "camera":
+          - text: VM 스냅샷
+      - menuitem "쿠버네티스":
+        - link "쿠버네티스":
+          - /url: "#/kubernetes"
+          - text: 쿠버네티스
+      - menuitem "fullscreen 오토스케일 VM 그룹":
+        - link "fullscreen 오토스케일 VM 그룹":
+          - /url: "#/autoscalevmgroup"
+          - img "fullscreen":
+          - text: 오토스케일 VM 그룹
+      - menuitem "gold 가상머신 그룹":
+        - link "gold 가상머신 그룹":
+          - /url: "#/vmgroup"
+          - img "gold":
+          - text: 가상머신 그룹
+      - menuitem "key SSH 키 쌍":
+        - link "key SSH 키 쌍":
+          - /url: "#/ssh"
+          - img "key":
+          - text: SSH 키 쌍
+      - menuitem "solution 사용자 데이터 라이브러리":
+        - link "solution 사용자 데이터 라이브러리":
+          - /url: "#/userdata"
+          - img "solution":
+          - text: 사용자 데이터 라이브러리
+      - menuitem "solution CNI 구성":
+        - link "solution CNI 구성":
+          - /url: "#/cniconfiguration"
+          - img "solution":
+          - text: CNI 구성
+      - menuitem "swap Affinity 그룹":
+        - link "swap Affinity 그룹":
+          - /url: "#/affinitygroup"
+          - img "swap":
+          - text: Affinity 그룹
+    - img "hdd":
+    - text: 스토리지
+    - img "wifi":
+    - text: 네트워크
+    - img "picture":
+    - text: 이미지
+    - img "lock":
+    - text: 키 관리
+    - menuitem "schedule 이벤트":
+      - link "schedule 이벤트":
+        - /url: "#/event"
+        - img "schedule":
+        - text: 이벤트
+    - menuitem "project 프로젝트":
+      - link "project 프로젝트":
+        - /url: "#/project"
+        - img "project":
+        - text: 프로젝트
+    - menuitem "idcard 역할":
+      - link "idcard 역할":
+        - /url: "#/role"
+        - img "idcard":
+        - text: 역할
+    - menuitem "team 계정":
+      - link "team 계정":
+        - /url: "#/account"
+        - img "team":
+        - text: 계정
+    - menuitem "block 도메인":
+      - link "block 도메인":
+        - /url: "#/domain"
+        - img "block":
+        - text: 도메인
+    - img "bank":
+    - text: 인프라스트럭쳐
+    - img "shopping":
+    - text: 서비스 오퍼링
+    - img "setting":
+    - text: 구성
+    - menuitem "appstore-add 확장":
+      - link "appstore-add 확장":
+        - /url: "#/extension"
+        - img "appstore-add":
+        - text: 확장
+    - img "tool":
+    - text: 도구
+    - menuitem "read API 문서":
+      - link "read API 문서":
+        - /url: "#/apidocs/"
+        - img "read":
+        - text: API 문서
+- generic: 페이지 스타일 설정
+- button "닫기":
+  - img "close":
+- heading "페이지 스타일 설정" [level=3]
+- radio [checked]
+- img "check":
+- radio
+- heading "테마 색상" [level=3]
+- radio
+- img "check"
+- radio
+- radio
+- radio
+- radio
+- radio
+- radio
+- radio
+- separator
+- heading "네비게이션 설정" [level=3]
+- generic: 배경색
+- textbox: "#ffffff"
+- generic: 텍스트 색상
+- textbox: "#000000"
+- separator
+- alert:
+  - img "exclamation-circle":
+  - generic: "설정은 현재 브라우저에서만 볼 수 있습니다. 설정을 적용하려면 JSON 파일을 다운로드하고 경로 `/public/config.json` 아래의 `config.json` 파일의 `theme` 섹션에서 해당 콘텐츠를 교체하세요."
+- button "download 세팅값 다운로드(json)":
+  - img "download":
+  - generic: 세팅값 다운로드(json)
+- button "undo 기본값으로 재설정":
+  - img "undo":
+  - generic: 기본값으로 재설정
+- img "menu-fold":
+- combobox
+- img "project":
+- text: 기본 보기
+- button "생성 down":
+  - generic: 생성
+  - img "down":
+- img "translation":
+- img "bell":
+- superscript:
+  - paragraph: "1"
+- generic: AC
+- generic: admin cloud
+- main:
+  - link "home":
+    - /url: "#/"
+    - img "home":
+  - text: /
+  - link "Affinity 그룹":
+    - /url: "#/affinitygroup"
+  - text: /
+  - generic: qa-ag06-strict-aff
+  - link "question-circle":
+    - /url: http://docs.ablecloud.io/latest/adminguide/virtual_machines.html#affinity-groups
+    - img "question-circle":
+  - button "reload 업데이트":
+    - img "reload":
+    - generic: 업데이트
+  - button "down 작업":
+    - img "down":
+    - generic: 작업
+  - img "swap":
+  - heading "qa-ag06-strict-aff" [level=4]
+  - generic "host affinity": 같은 호스트 배치 · 엄격
+  - separator
+  - generic: 아이디
+  - button "barcode":
+    - img "barcode":
+  - link "e8b8552f-dd8c-485d-82d2-eabb945719de":
+    - /url: javascript:;
+  - paragraph: 같은 그룹의 VM을 같은 호스트에 배치합니다. 조건을 만족하지 못하면 배치가 실패합니다.
+  - generic: 연결 VM 수
+  - generic: "2"
+  - generic: 계정
+  - img "user":
+  - link "admin":
+    - /url: "#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f"
+  - generic: 도메인
+  - img "block":
+  - link "ROOT":
+    - /url: "#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details"
+  - separator
+  - link "cloud-server 가상머신 보기":
+    - /url: "#/vm?affinitygroupid=e8b8552f-dd8c-485d-82d2-eabb945719de"
+    - button "cloud-server 가상머신 보기":
+      - img "cloud-server":
+      - generic: 가상머신 보기
+  - tablist:
+    - tab "상세"
+    - tab "가상머신" [selected]
+    - tab "이벤트"
+  - tabpanel "가상머신":
+    - heading "연결 가상머신" [level=3]
+    - paragraph: 중지된 일반 가상머신의 대상 그룹 연결만 변경합니다. 다른 Affinity 그룹 연결은 유지하며 VM을 자동 중지하지 않습니다.
+    - status: "연결 VM 수: 2 · 조회 결과: 2"
+    - button "가상머신 연결":
+      - generic: 가상머신 연결
+    - button "선택 연결 해제 (0)" [disabled]:
+      - generic: 선택 연결 해제 (0)
+    - button "VM별 작업 결과":
+      - generic: VM별 작업 결과
+    - textbox "가상머신 검색":
+      - /placeholder: 검색
+    - button "search":
+      - img "search":
+    - button "업데이트" [active]:
+      - img "reload":
+    - region "연결 가상머신":
+      - table:
+        - rowgroup:
+          - row "표시 이름 상태 호스트 계정 프로젝트 도메인 연결 관리 제한 사유":
+            - columnheader:
+              - checkbox [disabled]
+            - columnheader "표시 이름"
+            - columnheader "상태"
+            - columnheader "호스트"
+            - columnheader "계정"
+            - columnheader "프로젝트"
+            - columnheader "도메인"
+            - columnheader "연결 관리 제한 사유"
+        - rowgroup:
+          - row "qa-ag06-vm-02 qa-ag06-vm-02 i-2-672-VM 실행 중 ablecube31-2 admin — ROOT Affinity 그룹 변경은 정지된 일반 VM에서 사용할 수 있습니다. VM 상태와 지원 여부를 확인하세요.":
+            - cell "qa-ag06-vm-02":
+              - checkbox "qa-ag06-vm-02" [disabled]
+            - cell "qa-ag06-vm-02 i-2-672-VM":
+              - link "qa-ag06-vm-02":
+                - /url: "#/vm/49dc24b7-abc3-4779-8d11-508da9d52f46"
+              - generic: i-2-672-VM
+            - cell "실행 중":
+              - generic: 실행 중
+            - cell "ablecube31-2"
+            - cell "admin"
+            - cell "—"
+            - cell "ROOT"
+            - cell "Affinity 그룹 변경은 정지된 일반 VM에서 사용할 수 있습니다. VM 상태와 지원 여부를 확인하세요."
+          - row "qa-ag06-ui-vm-01 qa-ag06-ui-vm-01 i-2-675-VM 실행 중 ablecube31-2 admin — ROOT Affinity 그룹 변경은 정지된 일반 VM에서 사용할 수 있습니다. VM 상태와 지원 여부를 확인하세요.":
+            - cell "qa-ag06-ui-vm-01":
+              - checkbox "qa-ag06-ui-vm-01" [disabled]
+            - cell "qa-ag06-ui-vm-01 i-2-675-VM":
+              - link "qa-ag06-ui-vm-01":
+                - /url: "#/vm/cccf1866-e607-4053-bbc7-481deb376d86"
+              - generic: i-2-675-VM
+            - cell "실행 중":
+              - generic: 실행 중
+            - cell "ablecube31-2"
+            - cell "admin"
+            - cell "—"
+            - cell "ROOT"
+            - cell "Affinity 그룹 변경은 정지된 일반 VM에서 사용할 수 있습니다. VM 상태와 지원 여부를 확인하세요."
+    - list:
+      - listitem "이전 페이지":
+        - button "left" [disabled]:
+          - img "left":
+      - listitem "1":
+        - generic: "1"
+      - listitem "다음 페이지":
+        - button "right" [disabled]:
+          - img "right":
+      - combobox
+      - generic: 10 / 쪽
+- alert:
+  - img "info-circle":
+  - generic: Wall 모니터링을 사용할 수 없습니다. 기존 알림은 최신 정보가 아닐 수 있으며 Mold는 계속 사용할 수 있습니다. 비활성

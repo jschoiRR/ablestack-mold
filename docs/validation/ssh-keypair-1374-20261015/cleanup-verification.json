@@ -1,0 +1,66 @@
+{
+  "passed": true,
+  "actions": [
+    {
+      "command": "removeAnnotation",
+      "id": "5957c08b-d0c2-4f92-af82-d0506554e693"
+    },
+    {
+      "command": "removeAnnotation",
+      "id": "d49c1ea4-5584-45f2-8188-42997b4e7044"
+    },
+    {
+      "command": "deleteSSHKeyPair",
+      "id": "865b8e75-f187-4c66-8fb4-ed23e8e1aff6",
+      "scope": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f"
+      }
+    },
+    {
+      "command": "deleteSSHKeyPair",
+      "id": "7c2ea08d-944e-4d6e-8d90-409235acc68d",
+      "scope": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f"
+      }
+    },
+    {
+      "command": "deleteSSHKeyPair",
+      "id": "e4c990d7-4d48-41b0-8412-3c1c5cdb7aff",
+      "scope": {
+        "account": "ssh1374-20261015-user",
+        "domainid": "0b0edaa7-58c9-4ba5-ae4c-8ec7674ca58e"
+      }
+    },
+    {
+      "command": "deleteSSHKeyPair",
+      "id": "242b7dc4-8489-4358-b7f5-68f23e605adf",
+      "scope": {
+        "projectid": "99ae5a35-9ef1-4868-9a44-cb6a2900c114"
+      }
+    },
+    {
+      "command": "deleteProject",
+      "id": "99ae5a35-9ef1-4868-9a44-cb6a2900c114"
+    },
+    {
+      "command": "deleteAccount",
+      "id": "e6073e2f-6246-43e5-9415-5fba4f9046a5"
+    },
+    {
+      "command": "deleteDomain",
+      "id": "0b0edaa7-58c9-4ba5-ae4c-8ec7674ca58e"
+    }
+  ],
+  "checks": {
+    "keys": 0,
+    "active_domain": 0,
+    "active_account": 0,
+    "active_project": 0,
+    "active_annotations": 0,
+    "existing-keys_preserved": 5,
+    "existing-vm-ssh_preserved": 350
+  },
+  "baseline_api_keys_preserved": 3
+}

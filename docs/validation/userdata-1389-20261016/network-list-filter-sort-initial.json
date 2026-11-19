@@ -1,0 +1,143 @@
+{
+  "start": 4699,
+  "cursor": 4764,
+  "truncated": false,
+  "events": [
+    {
+      "sequence": 4700,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.2042",
+      "type": "XHR",
+      "params": {
+        "command": "readyForShutdown"
+      }
+    },
+    {
+      "sequence": 4703,
+      "method": "Network.responseReceived",
+      "requestId": "23116.2042",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "readyForShutdown"
+      }
+    },
+    {
+      "sequence": 4707,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.2043",
+      "type": "XHR",
+      "params": {
+        "command": "listUserData",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "sequence": 4710,
+      "method": "Network.responseReceived",
+      "requestId": "23116.2043",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listUserData",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "sequence": 4714,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.2044",
+      "type": "XHR",
+      "params": {
+        "command": "readyForShutdown"
+      }
+    },
+    {
+      "sequence": 4717,
+      "method": "Network.responseReceived",
+      "requestId": "23116.2044",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "readyForShutdown"
+      }
+    },
+    {
+      "sequence": 4721,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.2045",
+      "type": "XHR",
+      "params": {
+        "command": "readyForShutdown"
+      }
+    },
+    {
+      "sequence": 4724,
+      "method": "Network.responseReceived",
+      "requestId": "23116.2045",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "readyForShutdown"
+      }
+    },
+    {
+      "sequence": 4739,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.2046",
+      "type": "XHR",
+      "params": {
+        "command": "listUserData",
+        "keyword": "UD1389-no-match",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "sequence": 4742,
+      "method": "Network.responseReceived",
+      "requestId": "23116.2046",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listUserData",
+        "keyword": "UD1389-no-match",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "sequence": 4756,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.2047",
+      "type": "XHR",
+      "params": {
+        "command": "listUserData",
+        "keyword": "UD1389-31-20261016",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "sequence": 4760,
+      "method": "Network.responseReceived",
+      "requestId": "23116.2047",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listUserData",
+        "keyword": "UD1389-31-20261016",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20"
+      }
+    }
+  ]
+}

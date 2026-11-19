@@ -1,0 +1,44 @@
+{
+  "accounts": [
+    {
+      "id": "bff5a65e-4ed4-4870-ad40-d55c1a8ef852",
+      "username": "ud1385-31-20261016-user",
+      "suffix": "user"
+    },
+    {
+      "id": "323b599b-57c4-4874-b371-2f76a9f57d60",
+      "username": "ud1385-31-20261016-domainadmin",
+      "suffix": "domainadmin"
+    }
+  ],
+  "project_id": "b7b24fd1-578f-4927-9836-2c9bd47a752b",
+  "domain_id": "4843b50d-1cfa-4143-a4fe-04fdc687014a",
+  "vms": [
+    {
+      "id": "39eb32b9-7079-4725-93b2-8e127a7f1a86",
+      "name": "UD1385-31-20261016-user",
+      "suffix": "user",
+      "scope": {
+        "account": "ud1385-31-20261016-user",
+        "domainid": "4843b50d-1cfa-4143-a4fe-04fdc687014a"
+      }
+    },
+    {
+      "id": "b565108c-b3bb-4ab3-90d8-42111a9811e8",
+      "name": "UD1385-31-20261016-domainadmin",
+      "suffix": "domainadmin",
+      "scope": {
+        "account": "ud1385-31-20261016-domainadmin",
+        "domainid": "4843b50d-1cfa-4143-a4fe-04fdc687014a"
+      }
+    },
+    {
+      "id": "711ae814-f74b-43b6-b5fd-4d0d188daf04",
+      "name": "UD1385-31-20261016-project",
+      "suffix": "project",
+      "scope": {
+        "projectid": "b7b24fd1-578f-4927-9836-2c9bd47a752b"
+      }
+    }
+  ]
+}

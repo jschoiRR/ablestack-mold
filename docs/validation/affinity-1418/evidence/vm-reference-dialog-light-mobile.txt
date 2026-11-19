@@ -1,0 +1,616 @@
+Browser tab: 6, Title: "가상머신 - ABLESTACK-Mold", URL: "http://10.10.31.10:8080/client/#/vm/579b1439-136d-4280-b2bb-b10613496d20".
+1 AXWebArea 가상머신 - ABLESTACK-Mold, URL: 10.10.31.10:8080/client/#/vm/579b1439-136d-4280-b2bb-b10613496d20
+	2 container
+		868 container
+			869 text 페이지 스타일 설정
+			870 button 닫기
+				871 image close
+			1115 container
+				1116 heading 페이지 스타일 설정, Value: 3
+					1117 text 페이지 스타일 설정
+				1118 container
+					1119 image
+					1120 container
+						1121 radio button (settable, integer) Description:  , Value: 1
+					1122 image check
+				1123 container
+					1124 image
+					1125 container
+						1126 radio button (settable, integer) Description:  , Value: 0
+				1127 heading 테마 색상, Value: 3
+					1128 text 테마 색상
+				1129 container
+					1130 radio button (settable, integer) Description:  , Value: 0
+					1131 image check
+				1132 container
+					1133 radio button (settable, integer) Description:  , Value: 0
+				1134 container
+					1135 radio button (settable, integer) Description:  , Value: 0
+				1136 container
+					1137 radio button (settable, integer) Description:  , Value: 0
+				1138 container
+					1139 radio button (settable, integer) Description:  , Value: 0
+				1140 container
+					1141 radio button (settable, integer) Description:  , Value: 0
+				1142 container
+					1143 radio button (settable, integer) Description:  , Value: 0
+				1144 container
+					1145 radio button (settable, integer) Description:  , Value: 0
+				1146 heading 네비게이션 설정, Value: 3
+					1147 text 네비게이션 설정
+				1148 container
+					1149 container
+						1150 text 배경색
+						1151 color well (settable) #ffffff
+					1152 container
+						1153 text 텍스트 색상
+						1154 color well (settable) #000000
+				1155 image exclamation-circle
+				1156 text 설정은 현재 브라우저에서만 볼 수 있습니다. 설정을 적용하려면 JSON 파일을 다운로드하고 경로 `/public/config.json` 아래의 `config.json` 파일의 `theme` 섹션에서 해당 콘텐츠를 교체하세요.
+				1157 button download 세팅값 다운로드(json)
+					1158 image download
+					1159 text 세팅값 다운로드(json)
+				1160 button undo 기본값으로 재설정
+					1161 image undo
+					1162 text 기본값으로 재설정
+		122 container
+			1163 image menu-unfold
+			124 container
+				125 combo box (settable) rc_select_0
+				126 image project
+				127 text 기본 보기
+			131 image translation
+			132 image bell
+			133 container
+				134 text AC admin cloud
+		135 container
+			987 container
+				988 link Description: home, Value: 10.10.31.10:8080/client/#/
+				989 text /
+				990 link Description: 가상머신, Value: 10.10.31.10:8080/client/#/vm
+				991 text / qa-ag05-vm-01
+				992 link Description: question-circle, Value: docs.ablecloud.io/latest/adminguide/virtual_machines.html
+				993 button reload 업데이트
+					994 image reload
+					995 text 업데이트
+			996 button down 작업
+				997 image down
+				998 text 작업
+			999 container
+				1000 image edit
+				1001 heading qa-ag05-vm-01, Value: 4
+					1002 text qa-ag05-vm-01
+				1003 text i-2-664-VM x86_64 KVM 동적으로 확장 가능
+				1004 link code
+					1005 button (disabled) code
+						1006 image code
+				1007 text 상태 정지된 상태 아이디
+				1008 button barcode
+					1009 image barcode
+				1010 link Description: 579b1439-136d-4280-b2bb-b10613496d20 , Value: javascript:;
+				1011 text CPU 2 CPU x 2.00 GHz
+				1012 image question-circle
+				1013 text x86_64 메모리 2048 MB 메모리 네트워크
+				1014 image wifi
+				1015 text 1 NIC(s)
+				1016 text eth0
+				1017 link Description:  , Value: javascript:;
+				1018 text 기본
+				1019 image apartment
+				1020 link Description: E1335-VM-Origin-L2, Value: 10.10.31.10:8080/client/#/guestnetwork/ae274fff-3d8e-4285-ac73-26a767c1fea7
+				1021 text Affinity 그룹
+				1022 image swap
+				1023 link Description: qa-ag05-target, Value: 10.10.31.10:8080/client/#/affinitygroup/b2425532-f2bb-4511-86f5-917f6a4f1869
+				1024 text ,
+				1025 link Description: qa-ag05-other, Value: 10.10.31.10:8080/client/#/affinitygroup/92d3963c-f878-48a5-a830-cbfd902acaf2
+				1026 text 템플릿
+				1027 image save
+				1028 link Description: rocky-9-4-minimal.qcow22, Value: 10.10.31.10:8080/client/#/template/e3d8677e-70f0-44bd-917e-6068636b97a8
+				1029 text 컴퓨트 오퍼링
+				1030 image cloud
+				1031 link Description: AS-PROD-31-AS01-2C2G-Sparse, Value: 10.10.31.10:8080/client/#/computeoffering/39c3aa33-5632-4dea-bd84-ba794d292c87
+				1032 text Zone
+				1033 image global
+				1034 link Description: Zone, Value: 10.10.31.10:8080/client/#/zone/7013f5a1-de59-4cea-a596-f4f58815f31c
+				1035 text 계정
+				1036 image user
+				1037 link Description: admin, Value: 10.10.31.10:8080/client/#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f
+				1038 text 도메인
+				1039 image block
+				1040 link Description: ROOT, Value: 10.10.31.10:8080/client/#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details
+				1041 text 생성일
+				1042 image calendar
+				1043 text 2026. 10. 19. 오후 1:23:45
+				1044 container
+					1045 text 태그
+					1046 container
+						1047 image plus
+						1048 text  새 태그
+			1049 container
+				1050 tab group
+					1051 container
+						1052 tab (selected, settable, boolean) 상세, Value: 1, ID: rc-tabs-6-tab-details
+						1053 tab (selectable, settable, boolean) IP 구성, Value: 0, ID: rc-tabs-6-tab-guestnetwork
+						1054 tab (selectable, settable, boolean) 메트릭, Value: 0, ID: rc-tabs-6-tab-stats
+						1055 tab (selectable, settable, boolean) 프로세스, Value: 0, ID: rc-tabs-6-tab-processes
+						1056 tab (selectable, settable, boolean) 스케줄, Value: 0, ID: rc-tabs-6-tab-schedules
+						1057 tab (selectable, settable, boolean) ISO, Value: 0, ID: rc-tabs-6-tab-cdrom
+						1058 tab (selectable, settable, boolean) 볼륨, Value: 0, ID: rc-tabs-6-tab-volumes
+						1059 tab (selectable, settable, boolean) NIC, Value: 0, ID: rc-tabs-6-tab-nics
+						1060 tab (selectable, settable, boolean) 설정, Value: 0, ID: rc-tabs-6-tab-settings
+						1061 tab (selectable, settable, boolean) 호스트 장치, Value: 0, ID: rc-tabs-6-tab-hostdevices
+						1062 tab (selectable, settable, boolean) VM 스냅샷, Value: 0, ID: rc-tabs-6-tab-vmsnapshots
+						1063 tab (selectable, settable, boolean) 이벤트, Value: 0, ID: rc-tabs-6-tab-events
+						1064 tab (selectable, settable, boolean) 코멘트, Value: 0, ID: rc-tabs-6-tab-comments
+				1065 container Description: 상세, ID: rc-tabs-6-panel-details
+					1066 content list
+						1067 container
+							1068 text VM 호스트 명
+							1069 text qa-ag05-vm-01
+						1070 container
+							1071 text VM 표시 명
+							1072 text qa-ag05-vm-01
+						1073 container
+							1074 text 아이디
+							1075 text 579b1439-136d-4280-b2bb-b10613496d20
+						1076 container
+							1077 text 상태
+							1078 text Stopped
+						1079 container
+							1080 text 템플릿
+							1081 text rocky-9-4-minimal.qcow22
+						1082 container
+							1083 text 템플릿 형식
+							1084 text USER
+						1085 container
+							1086 text 컴퓨트 오퍼링
+							1087 text AS-PROD-31-AS01-2C2G-Sparse
+						1088 container
+							1089 text 동적으로 확장 가능
+							1090 text true
+						1091 container
+							1092 text HA 활성화
+							1093 text false
+						1094 container
+							1095 text 하이퍼바이저
+							1096 text KVM
+						1097 container
+							1098 text CPU 아키텍처
+							1099 text x86_64
+						1100 container
+							1101 text 계정
+							1102 text admin
+						1103 container
+							1104 text 도메인
+							1105 text ROOT
+						1106 container
+							1107 text Zone
+							1108 text Zone
+						1109 container
+							1110 text VBMC 포트
+							1111 text 미할당
+						1112 container
+							1113 text 삭제 보호
+							1114 text false
+	530 container
+		531 image info-circle
+		532 text Wall 모니터링을 사용할 수 없습니다. 기존 알림은 최신 정보가 아닐 수 있으며 Mold는 계속 사용할 수 있습니다. 비활성
+	1164 container
+		1165 container ISO 연결
+			1166 container
+				1167 button Close
+					1168 image close
+				1169 text ISO 연결
+				1170 container
+					1171 table
+						1172 row
+							1173 cell
+								1174 text VM
+							1175 cell
+								1176 text qa-ag05-vm-01
+						1177 row
+							1178 cell
+								1179 text Zone
+							1180 cell
+								1181 text Zone
+						1182 row
+							1183 cell
+								1184 text 계정
+							1185 cell
+								1186 text admin
+					1187 image info-circle
+					1188 text 추가로 연결할 수 있는 ISO: 2개
+					1189 container
+						1190 text field (settable) 검색
+						1191 button search
+							1192 image search
+					1193 container
+						1194 container
+							1195 checkbox (settable, integer)   VMware Tools Installer ISO vmware-tools.iso Zone · 데이터 미디어, Value: 0
+						1196 text VMware Tools Installer ISO
+						1197 text vmware-tools.iso Zone · 데이터 미디어
+						1198 container
+							1199 checkbox (settable, integer)   XenServer Tools Installer ISO (xen-pv-drv-iso) xs-tools.iso Zone · 데이터 미디어, Value: 0
+						1200 text XenServer Tools Installer ISO (xen-pv-drv-iso)
+						1201 text xs-tools.iso Zone · 데이터 미디어
+						1202 container
+							1203 checkbox (settable, integer)   Windows Server 2025 x86_64 DVD Windows Server 2025 x86_64 DVD Zone · 부팅 가능, Value: 0
+						1204 text Windows Server 2025 x86_64 DVD
+						1205 text Windows Server 2025 x86_64 DVD Zone · 부팅 가능
+						1206 container
+							1207 checkbox (settable, integer)   Windows 11 Korean x64 DVD Windows 11 Korean x64 DVD Zone · 부팅 가능, Value: 0
+						1208 text Windows 11 Korean x64 DVD
+						1209 text Windows 11 Korean x64 DVD Zone · 부팅 가능
+						1210 container
+							1211 checkbox (settable, integer)   Virtio Windows Driver 0.1.302 Virtio Windows Driver 0.1.302 Zone · 데이터 미디어, Value: 0
+						1212 text Virtio Windows Driver 0.1.302
+						1213 text Virtio Windows Driver 0.1.302 Zone · 데이터 미디어
+						1214 container
+							1215 checkbox (settable, integer)   Rocky Linux 10.2 x86_64 DVD Rocky Linux 10.2 x86_64 DVD Zone · 부팅 가능, Value: 0
+						1216 text Rocky Linux 10.2 x86_64 DVD
+						1217 text Rocky Linux 10.2 x86_64 DVD Zone · 부팅 가능
+						1218 container
+							1219 checkbox (settable, integer)   Rocky Linux 9.8 x86_64 DVD Rocky Linux 9.8 x86_64 DVD Zone · 부팅 가능, Value: 0
+						1220 text Rocky Linux 9.8 x86_64 DVD
+						1221 text Rocky Linux 9.8 x86_64 DVD Zone · 부팅 가능
+						1222 container
+							1223 checkbox (settable, integer)   Ubuntu 26.04 x86_64 DVD Ubuntu 26.04 x86_64 DVD Zone · 부팅 가능, Value: 0
+						1224 text Ubuntu 26.04 x86_64 DVD
+						1225 text Ubuntu 26.04 x86_64 DVD Zone · 부팅 가능
+						1226 container
+							1227 checkbox (settable, integer)   Windows Server 2022 x86_64 DVD Windows Server 2022 x86_64 DVD Zone · 부팅 가능, Value: 0
+						1228 text Windows Server 2022 x86_64 DVD
+						1229 text Windows Server 2022 x86_64 DVD Zone · 부팅 가능
+						1230 container
+							1231 checkbox (settable, integer)   Windows Server 2019 x86_64 DVD Windows Server 2019 x86_64 DVD Zone · 부팅 가능, Value: 0
+						1232 text Windows Server 2019 x86_64 DVD
+						1233 text Windows Server 2019 x86_64 DVD Zone · 부팅 가능
+						1234 container
+							1235 checkbox (settable, integer)   Rocky Linux 8.10 x86_64 DVD Rocky Linux 8.10 x86_64 DVD Zone · 부팅 가능, Value: 0
+						1236 text Rocky Linux 8.10 x86_64 DVD
+						1237 text Rocky Linux 8.10 x86_64 DVD Zone · 부팅 가능
+						1238 container
+							1239 checkbox (settable, integer)   Ubuntu 22.04.5 Server x86_64 DVD Ubuntu 22.04.5 Server x86_64 DVD Zone · 부팅 가능, Value: 0
+						1240 text Ubuntu 22.04.5 Server x86_64 DVD
+						1241 text Ubuntu 22.04.5 Server x86_64 DVD Zone · 부팅 가능
+						1242 container
+							1243 checkbox (settable, integer)   Ubuntu 24.04.4 Server x86_64 DVD Ubuntu 24.04.4 Server x86_64 DVD Zone · 부팅 가능, Value: 0
+						1244 text Ubuntu 24.04.4 Server x86_64 DVD
+						1245 text Ubuntu 24.04.4 Server x86_64 DVD Zone · 부팅 가능
+						1246 container
+							1247 checkbox (settable, integer)   Debian 11.11 x86_64 DVD Debian 11.11 x86_64 DVD Zone · 부팅 가능, Value: 0
+						1248 text Debian 11.11 x86_64 DVD
+						1249 text Debian 11.11 x86_64 DVD Zone · 부팅 가능
+						1250 container
+							1251 checkbox (settable, integer)   Debian 12.15 x86_64 DVD Debian 12.15 x86_64 DVD Zone · 부팅 가능, Value: 0
+						1252 text Debian 12.15 x86_64 DVD
+						1253 text Debian 12.15 x86_64 DVD Zone · 부팅 가능
+						1254 container
+							1255 checkbox (settable, integer)   Debian 13.7 x86_64 DVD Debian 13.7 x86_64 DVD Zone · 부팅 가능, Value: 0
+						1256 text Debian 13.7 x86_64 DVD
+						1257 text Debian 13.7 x86_64 DVD Zone · 부팅 가능
+						1258 container
+							1259 checkbox (settable, integer)   1.34.2-Kubernetes-Binaries-ISO 1.34.2-Kubernetes-Binaries-ISO Zone · 데이터 미디어, Value: 0
+						1260 text 1.34.2-Kubernetes-Binaries-ISO
+						1261 text 1.34.2-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1262 container
+							1263 checkbox (settable, integer)   ABLESTACK-Tools-Process-rocky-659489d ABLESTACK-Tools-Process-rocky-659489d Zone · 데이터 미디어, Value: 0
+						1264 text ABLESTACK-Tools-Process-rocky-659489d
+						1265 text ABLESTACK-Tools-Process-rocky-659489d Zone · 데이터 미디어
+						1266 container
+							1267 checkbox (settable, integer)   ABLESTACK-Tools-Process-ubuntu-659489d ABLESTACK-Tools-Process-ubuntu-659489d Zone · 데이터 미디어, Value: 0
+						1268 text ABLESTACK-Tools-Process-ubuntu-659489d
+						1269 text ABLESTACK-Tools-Process-ubuntu-659489d Zone · 데이터 미디어
+						1270 container
+							1271 checkbox (settable, integer)   ABLESTACK-Tools-Process-debian-659489d ABLESTACK-Tools-Process-debian-659489d Zone · 데이터 미디어, Value: 0
+						1272 text ABLESTACK-Tools-Process-debian-659489d
+						1273 text ABLESTACK-Tools-Process-debian-659489d Zone · 데이터 미디어
+						1274 container
+							1275 checkbox (settable, integer)   ABLESTACK-Tools-Process-windows-659489d ABLESTACK-Tools-Process-windows-659489d Zone · 데이터 미디어, Value: 0
+						1276 text ABLESTACK-Tools-Process-windows-659489d
+						1277 text ABLESTACK-Tools-Process-windows-659489d Zone · 데이터 미디어
+						1278 container
+							1279 checkbox (settable, integer)   ABLESTACK-Tools-Process-rocky-6dcb57e ABLESTACK-Tools-Process-rocky-6dcb57e Zone · 데이터 미디어, Value: 0
+						1280 text ABLESTACK-Tools-Process-rocky-6dcb57e
+						1281 text ABLESTACK-Tools-Process-rocky-6dcb57e Zone · 데이터 미디어
+						1282 container
+							1283 checkbox (settable, integer)   ABLESTACK-Tools-Process-ubuntu-6dcb57e ABLESTACK-Tools-Process-ubuntu-6dcb57e Zone · 데이터 미디어, Value: 0
+						1284 text ABLESTACK-Tools-Process-ubuntu-6dcb57e
+						1285 text ABLESTACK-Tools-Process-ubuntu-6dcb57e Zone · 데이터 미디어
+						1286 container
+							1287 checkbox (settable, integer)   ABLESTACK-Tools-Process-debian-6dcb57e ABLESTACK-Tools-Process-debian-6dcb57e Zone · 데이터 미디어, Value: 0
+						1288 text ABLESTACK-Tools-Process-debian-6dcb57e
+						1289 text ABLESTACK-Tools-Process-debian-6dcb57e Zone · 데이터 미디어
+						1290 container
+							1291 checkbox (settable, integer)   ABLESTACK-Tools-Process-windows-6dcb57e ABLESTACK-Tools-Process-windows-6dcb57e Zone · 데이터 미디어, Value: 0
+						1292 text ABLESTACK-Tools-Process-windows-6dcb57e
+						1293 text ABLESTACK-Tools-Process-windows-6dcb57e Zone · 데이터 미디어
+						1294 container
+							1295 checkbox (settable, integer)   ABLESTACK-Tools-Process-rocky-c439f93 ABLESTACK-Tools-Process-rocky-c439f93 Zone · 데이터 미디어, Value: 0
+						1296 text ABLESTACK-Tools-Process-rocky-c439f93
+						1297 text ABLESTACK-Tools-Process-rocky-c439f93 Zone · 데이터 미디어
+						1298 container
+							1299 checkbox (settable, integer)   ABLESTACK-Tools-Process-ubuntu-c439f93 ABLESTACK-Tools-Process-ubuntu-c439f93 Zone · 데이터 미디어, Value: 0
+						1300 text ABLESTACK-Tools-Process-ubuntu-c439f93
+						1301 text ABLESTACK-Tools-Process-ubuntu-c439f93 Zone · 데이터 미디어
+						1302 container
+							1303 checkbox (settable, integer)   ABLESTACK-Tools-Process-debian-c439f93 ABLESTACK-Tools-Process-debian-c439f93 Zone · 데이터 미디어, Value: 0
+						1304 text ABLESTACK-Tools-Process-debian-c439f93
+						1305 text ABLESTACK-Tools-Process-debian-c439f93 Zone · 데이터 미디어
+						1306 container
+							1307 checkbox (settable, integer)   ABLESTACK-Tools-Process-windows-c439f93 ABLESTACK-Tools-Process-windows-c439f93 Zone · 데이터 미디어, Value: 0
+						1308 text ABLESTACK-Tools-Process-windows-c439f93
+						1309 text ABLESTACK-Tools-Process-windows-c439f93 Zone · 데이터 미디어
+						1310 container
+							1311 checkbox (settable, integer)   1.35.10-Kubernetes-Binaries-ISO 1.35.10-Kubernetes-Binaries-ISO Zone · 데이터 미디어, Value: 0
+						1312 text 1.35.10-Kubernetes-Binaries-ISO
+						1313 text 1.35.10-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1314 container
+							1315 checkbox (settable, integer)   1.35.9-Kubernetes-Binaries-ISO 1.35.9-Kubernetes-Binaries-ISO Zone · 데이터 미디어, Value: 0
+						1316 text 1.35.9-Kubernetes-Binaries-ISO
+						1317 text 1.35.9-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1318 container
+							1319 checkbox (settable, integer)   ABLESTACK-Tools-Process-rocky-fb4078b ABLESTACK-Tools-Process-rocky-fb4078b Zone · 데이터 미디어, Value: 0
+						1320 text ABLESTACK-Tools-Process-rocky-fb4078b
+						1321 text ABLESTACK-Tools-Process-rocky-fb4078b Zone · 데이터 미디어
+						1322 container
+							1323 checkbox (settable, integer)   ABLESTACK-Tools-Process-ubuntu-fb4078b ABLESTACK-Tools-Process-ubuntu-fb4078b Zone · 데이터 미디어, Value: 0
+						1324 text ABLESTACK-Tools-Process-ubuntu-fb4078b
+						1325 text ABLESTACK-Tools-Process-ubuntu-fb4078b Zone · 데이터 미디어
+						1326 container
+							1327 checkbox (settable, integer)   ABLESTACK-Tools-Process-debian-fb4078b ABLESTACK-Tools-Process-debian-fb4078b Zone · 데이터 미디어, Value: 0
+						1328 text ABLESTACK-Tools-Process-debian-fb4078b
+						1329 text ABLESTACK-Tools-Process-debian-fb4078b Zone · 데이터 미디어
+						1330 container
+							1331 checkbox (settable, integer)   ABLESTACK-Tools-Process-windows-fb4078b ABLESTACK-Tools-Process-windows-fb4078b Zone · 데이터 미디어, Value: 0
+						1332 text ABLESTACK-Tools-Process-windows-fb4078b
+						1333 text ABLESTACK-Tools-Process-windows-fb4078b Zone · 데이터 미디어
+						1334 container
+							1335 checkbox (settable, integer) Value: 0,   1.34.2-Mold-1228-r1-f6b6cd62-Kubernetes-Binaries-ISO 1.34.2-Mold-1228-r1-f6b6cd62-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1336 text 1.34.2-Mold-1228-r1-f6b6cd62-Kubernetes-Binaries-ISO
+						1337 text 1.34.2-Mold-1228-r1-f6b6cd62-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1338 container
+							1339 checkbox (settable, integer) Value: 0,   1.34.9-Mold-1228-r1-f6b6cd62-Kubernetes-Binaries-ISO 1.34.9-Mold-1228-r1-f6b6cd62-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1340 text 1.34.9-Mold-1228-r1-f6b6cd62-Kubernetes-Binaries-ISO
+						1341 text 1.34.9-Mold-1228-r1-f6b6cd62-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1342 container
+							1343 checkbox (settable, integer) Value: 0,   1.34.12-Mold-1228-r1-f6b6cd62-Kubernetes-Binaries-ISO 1.34.12-Mold-1228-r1-f6b6cd62-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1344 text 1.34.12-Mold-1228-r1-f6b6cd62-Kubernetes-Binaries-ISO
+						1345 text 1.34.12-Mold-1228-r1-f6b6cd62-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1346 container
+							1347 checkbox (settable, integer) Value: 0,   1.35.9-Mold-1228-r1-f6b6cd62-Kubernetes-Binaries-ISO 1.35.9-Mold-1228-r1-f6b6cd62-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1348 text 1.35.9-Mold-1228-r1-f6b6cd62-Kubernetes-Binaries-ISO
+						1349 text 1.35.9-Mold-1228-r1-f6b6cd62-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1350 container
+							1351 checkbox (settable, integer) Value: 0,   1.36.5-Mold-1228-r1-f6b6cd62-Kubernetes-Binaries-ISO 1.36.5-Mold-1228-r1-f6b6cd62-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1352 text 1.36.5-Mold-1228-r1-f6b6cd62-Kubernetes-Binaries-ISO
+						1353 text 1.36.5-Mold-1228-r1-f6b6cd62-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1354 container
+							1355 checkbox (settable, integer) Value: 0,   1.37.1-Mold-1228-DEV-r1-f6b6cd62-Kubernetes-Binaries-ISO 1.37.1-Mold-1228-DEV-r1-f6b6cd62-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1356 text 1.37.1-Mold-1228-DEV-r1-f6b6cd62-Kubernetes-Binaries-ISO
+						1357 text 1.37.1-Mold-1228-DEV-r1-f6b6cd62-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1358 container
+							1359 checkbox (settable, integer) Value: 0,   1.34.12-Mold-1244-r1-3e41a1b3-Kubernetes-Binaries-ISO 1.34.12-Mold-1244-r1-3e41a1b3-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1360 text 1.34.12-Mold-1244-r1-3e41a1b3-Kubernetes-Binaries-ISO
+						1361 text 1.34.12-Mold-1244-r1-3e41a1b3-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1362 container
+							1363 checkbox (settable, integer) Value: 0,   1.34.2-Mold-1244-r1-3e41a1b3-Kubernetes-Binaries-ISO 1.34.2-Mold-1244-r1-3e41a1b3-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1364 text 1.34.2-Mold-1244-r1-3e41a1b3-Kubernetes-Binaries-ISO
+						1365 text 1.34.2-Mold-1244-r1-3e41a1b3-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1366 container
+							1367 checkbox (settable, integer) Value: 0,   1.34.9-Mold-1244-r1-3e41a1b3-Kubernetes-Binaries-ISO 1.34.9-Mold-1244-r1-3e41a1b3-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1368 text 1.34.9-Mold-1244-r1-3e41a1b3-Kubernetes-Binaries-ISO
+						1369 text 1.34.9-Mold-1244-r1-3e41a1b3-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1370 container
+							1371 checkbox (settable, integer) Value: 0,   1.35.9-Mold-1244-r1-3e41a1b3-Kubernetes-Binaries-ISO 1.35.9-Mold-1244-r1-3e41a1b3-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1372 text 1.35.9-Mold-1244-r1-3e41a1b3-Kubernetes-Binaries-ISO
+						1373 text 1.35.9-Mold-1244-r1-3e41a1b3-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1374 container
+							1375 checkbox (settable, integer) Value: 0,   1.36.5-Mold-1244-r1-3e41a1b3-Kubernetes-Binaries-ISO 1.36.5-Mold-1244-r1-3e41a1b3-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1376 text 1.36.5-Mold-1244-r1-3e41a1b3-Kubernetes-Binaries-ISO
+						1377 text 1.36.5-Mold-1244-r1-3e41a1b3-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1378 container
+							1379 checkbox (settable, integer) Value: 0,   1.37.1-Mold-1244-r1-3e41a1b3-DEV-Kubernetes-Binaries-ISO 1.37.1-Mold-1244-r1-3e41a1b3-DEV-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1380 text 1.37.1-Mold-1244-r1-3e41a1b3-DEV-Kubernetes-Binaries-ISO
+						1381 text 1.37.1-Mold-1244-r1-3e41a1b3-DEV-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1382 container
+							1383 checkbox (settable, integer) Value: 0,   1.34.2-Mold-1245-r1-48830e74-Kubernetes-Binaries-ISO 1.34.2-Mold-1245-r1-48830e74-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1384 text 1.34.2-Mold-1245-r1-48830e74-Kubernetes-Binaries-ISO
+						1385 text 1.34.2-Mold-1245-r1-48830e74-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1386 container
+							1387 checkbox (settable, integer) Value: 0,   1.34.9-Mold-1245-r1-48830e74-Kubernetes-Binaries-ISO 1.34.9-Mold-1245-r1-48830e74-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1388 text 1.34.9-Mold-1245-r1-48830e74-Kubernetes-Binaries-ISO
+						1389 text 1.34.9-Mold-1245-r1-48830e74-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1390 container
+							1391 checkbox (settable, integer) Value: 0,   1.34.12-Mold-1245-r1-48830e74-Kubernetes-Binaries-ISO 1.34.12-Mold-1245-r1-48830e74-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1392 text 1.34.12-Mold-1245-r1-48830e74-Kubernetes-Binaries-ISO
+						1393 text 1.34.12-Mold-1245-r1-48830e74-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1394 container
+							1395 checkbox (settable, integer) Value: 0,   1.35.9-Mold-1245-r1-48830e74-Kubernetes-Binaries-ISO 1.35.9-Mold-1245-r1-48830e74-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1396 text 1.35.9-Mold-1245-r1-48830e74-Kubernetes-Binaries-ISO
+						1397 text 1.35.9-Mold-1245-r1-48830e74-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1398 container
+							1399 checkbox (settable, integer) Value: 0,   1.36.5-Mold-1245-r1-48830e74-Kubernetes-Binaries-ISO 1.36.5-Mold-1245-r1-48830e74-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1400 text 1.36.5-Mold-1245-r1-48830e74-Kubernetes-Binaries-ISO
+						1401 text 1.36.5-Mold-1245-r1-48830e74-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1402 container
+							1403 checkbox (settable, integer) Value: 0,   1.37.1-Mold-1245-r1-48830e74-DEV-Kubernetes-Binaries-ISO 1.37.1-Mold-1245-r1-48830e74-DEV-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1404 text 1.37.1-Mold-1245-r1-48830e74-DEV-Kubernetes-Binaries-ISO
+						1405 text 1.37.1-Mold-1245-r1-48830e74-DEV-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1406 container
+							1407 checkbox (settable, integer) Value: 0,   1.35.9-Mold-1255-r1-6b757f96-Kubernetes-Binaries-ISO 1.35.9-Mold-1255-r1-6b757f96-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1408 text 1.35.9-Mold-1255-r1-6b757f96-Kubernetes-Binaries-ISO
+						1409 text 1.35.9-Mold-1255-r1-6b757f96-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1410 container
+							1411 checkbox (settable, integer) Value: 0,   1.34.12-Mold-1255-r1-6b757f96-Kubernetes-Binaries-ISO 1.34.12-Mold-1255-r1-6b757f96-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1412 text 1.34.12-Mold-1255-r1-6b757f96-Kubernetes-Binaries-ISO
+						1413 text 1.34.12-Mold-1255-r1-6b757f96-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1414 container
+							1415 checkbox (settable, integer) Value: 0,   1.36.5-Mold-1255-r1-6b757f96-Kubernetes-Binaries-ISO 1.36.5-Mold-1255-r1-6b757f96-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1416 text 1.36.5-Mold-1255-r1-6b757f96-Kubernetes-Binaries-ISO
+						1417 text 1.36.5-Mold-1255-r1-6b757f96-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1418 container
+							1419 checkbox (settable, integer) Value: 0,   1.37.1-Mold-1255-r1-6b757f96-DEV-Kubernetes-Binaries-ISO 1.37.1-Mold-1255-r1-6b757f96-DEV-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1420 text 1.37.1-Mold-1255-r1-6b757f96-DEV-Kubernetes-Binaries-ISO
+						1421 text 1.37.1-Mold-1255-r1-6b757f96-DEV-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1422 container
+							1423 checkbox (settable, integer) Value: 0,   1.34.2-Mold-1255-r1-6b757f96-Kubernetes-Binaries-ISO 1.34.2-Mold-1255-r1-6b757f96-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1424 text 1.34.2-Mold-1255-r1-6b757f96-Kubernetes-Binaries-ISO
+						1425 text 1.34.2-Mold-1255-r1-6b757f96-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1426 container
+							1427 checkbox (settable, integer) Value: 0,   1.34.9-Mold-1255-r1-6b757f96-Kubernetes-Binaries-ISO 1.34.9-Mold-1255-r1-6b757f96-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1428 text 1.34.9-Mold-1255-r1-6b757f96-Kubernetes-Binaries-ISO
+						1429 text 1.34.9-Mold-1255-r1-6b757f96-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1430 container
+							1431 checkbox (settable, integer) Value: 0,   1.35.9-Mold-1258-r1-4a2c2f10-Kubernetes-Binaries-ISO 1.35.9-Mold-1258-r1-4a2c2f10-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1432 text 1.35.9-Mold-1258-r1-4a2c2f10-Kubernetes-Binaries-ISO
+						1433 text 1.35.9-Mold-1258-r1-4a2c2f10-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1434 container
+							1435 checkbox (settable, integer) Value: 0,   1.34.12-Mold-1258-r1-4a2c2f10-Kubernetes-Binaries-ISO 1.34.12-Mold-1258-r1-4a2c2f10-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1436 text 1.34.12-Mold-1258-r1-4a2c2f10-Kubernetes-Binaries-ISO
+						1437 text 1.34.12-Mold-1258-r1-4a2c2f10-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1438 container
+							1439 checkbox (settable, integer) Value: 0,   1.36.5-Mold-1258-r1-4a2c2f10-Kubernetes-Binaries-ISO 1.36.5-Mold-1258-r1-4a2c2f10-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1440 text 1.36.5-Mold-1258-r1-4a2c2f10-Kubernetes-Binaries-ISO
+						1441 text 1.36.5-Mold-1258-r1-4a2c2f10-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1442 container
+							1443 checkbox (settable, integer) Value: 0,   1.37.1-Mold-1258-r1-4a2c2f10-DEV-Kubernetes-Binaries-ISO 1.37.1-Mold-1258-r1-4a2c2f10-DEV-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1444 text 1.37.1-Mold-1258-r1-4a2c2f10-DEV-Kubernetes-Binaries-ISO
+						1445 text 1.37.1-Mold-1258-r1-4a2c2f10-DEV-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1446 container
+							1447 checkbox (settable, integer) Value: 0,   1.34.2-Mold-1258-r1-4a2c2f10-Kubernetes-Binaries-ISO 1.34.2-Mold-1258-r1-4a2c2f10-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1448 text 1.34.2-Mold-1258-r1-4a2c2f10-Kubernetes-Binaries-ISO
+						1449 text 1.34.2-Mold-1258-r1-4a2c2f10-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1450 container
+							1451 checkbox (settable, integer) Value: 0,   1.34.9-Mold-1258-r1-4a2c2f10-Kubernetes-Binaries-ISO 1.34.9-Mold-1258-r1-4a2c2f10-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1452 text 1.34.9-Mold-1258-r1-4a2c2f10-Kubernetes-Binaries-ISO
+						1453 text 1.34.9-Mold-1258-r1-4a2c2f10-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1454 container
+							1455 checkbox (settable, integer) Value: 0,   1.34.12-Mold-1260-r1-b46a5885-Kubernetes-Binaries-ISO 1.34.12-Mold-1260-r1-b46a5885-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1456 text 1.34.12-Mold-1260-r1-b46a5885-Kubernetes-Binaries-ISO
+						1457 text 1.34.12-Mold-1260-r1-b46a5885-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1458 container
+							1459 checkbox (settable, integer) Value: 0,   1.34.2-Mold-1260-r1-b46a5885-Kubernetes-Binaries-ISO 1.34.2-Mold-1260-r1-b46a5885-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1460 text 1.34.2-Mold-1260-r1-b46a5885-Kubernetes-Binaries-ISO
+						1461 text 1.34.2-Mold-1260-r1-b46a5885-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1462 container
+							1463 checkbox (settable, integer) Value: 0,   1.34.9-Mold-1260-r1-b46a5885-Kubernetes-Binaries-ISO 1.34.9-Mold-1260-r1-b46a5885-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1464 text 1.34.9-Mold-1260-r1-b46a5885-Kubernetes-Binaries-ISO
+						1465 text 1.34.9-Mold-1260-r1-b46a5885-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1466 container
+							1467 checkbox (settable, integer) Value: 0,   1.35.9-Mold-1260-r1-b46a5885-Kubernetes-Binaries-ISO 1.35.9-Mold-1260-r1-b46a5885-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1468 text 1.35.9-Mold-1260-r1-b46a5885-Kubernetes-Binaries-ISO
+						1469 text 1.35.9-Mold-1260-r1-b46a5885-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1470 container
+							1471 checkbox (settable, integer) Value: 0,   1.36.5-Mold-1260-r1-b46a5885-Kubernetes-Binaries-ISO 1.36.5-Mold-1260-r1-b46a5885-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1472 text 1.36.5-Mold-1260-r1-b46a5885-Kubernetes-Binaries-ISO
+						1473 text 1.36.5-Mold-1260-r1-b46a5885-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1474 container
+							1475 checkbox (settable, integer) Value: 0,   1.37.1-Mold-1260-r1-b46a5885-DEV-Kubernetes-Binaries-ISO 1.37.1-Mold-1260-r1-b46a5885-DEV-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1476 text 1.37.1-Mold-1260-r1-b46a5885-DEV-Kubernetes-Binaries-ISO
+						1477 text 1.37.1-Mold-1260-r1-b46a5885-DEV-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1478 container
+							1479 checkbox (settable, integer) Value: 0,   1.34.2-Mold-1280-r1-3f24d481-Kubernetes-Binaries-ISO 1.34.2-Mold-1280-r1-3f24d481-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1480 text 1.34.2-Mold-1280-r1-3f24d481-Kubernetes-Binaries-ISO
+						1481 text 1.34.2-Mold-1280-r1-3f24d481-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1482 container
+							1483 checkbox (settable, integer) Value: 0,   1.34.2-Mold-1280-csi-r1-3f24d481-Kubernetes-Binaries-ISO 1.34.2-Mold-1280-csi-r1-3f24d481-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1484 text 1.34.2-Mold-1280-csi-r1-3f24d481-Kubernetes-Binaries-ISO
+						1485 text 1.34.2-Mold-1280-csi-r1-3f24d481-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1486 container
+							1487 checkbox (settable, integer) Value: 0,   1.34.9-Mold-1280-r1-3f24d481-Kubernetes-Binaries-ISO 1.34.9-Mold-1280-r1-3f24d481-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1488 text 1.34.9-Mold-1280-r1-3f24d481-Kubernetes-Binaries-ISO
+						1489 text 1.34.9-Mold-1280-r1-3f24d481-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1490 container
+							1491 checkbox (settable, integer) Value: 0,   1.34.9-Mold-1280-csi-r1-3f24d481-Kubernetes-Binaries-ISO 1.34.9-Mold-1280-csi-r1-3f24d481-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1492 text 1.34.9-Mold-1280-csi-r1-3f24d481-Kubernetes-Binaries-ISO
+						1493 text 1.34.9-Mold-1280-csi-r1-3f24d481-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1494 container
+							1495 checkbox (settable, integer) Value: 0,   1.34.12-Mold-1280-r1-3f24d481-Kubernetes-Binaries-ISO 1.34.12-Mold-1280-r1-3f24d481-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1496 text 1.34.12-Mold-1280-r1-3f24d481-Kubernetes-Binaries-ISO
+						1497 text 1.34.12-Mold-1280-r1-3f24d481-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1498 container
+							1499 checkbox (settable, integer) Value: 0,   1.34.12-Mold-1280-csi-r1-3f24d481-Kubernetes-Binaries-ISO 1.34.12-Mold-1280-csi-r1-3f24d481-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1500 text 1.34.12-Mold-1280-csi-r1-3f24d481-Kubernetes-Binaries-ISO
+						1501 text 1.34.12-Mold-1280-csi-r1-3f24d481-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1502 container
+							1503 checkbox (settable, integer) Value: 0,   1.35.9-Mold-1280-r1-3f24d481-Kubernetes-Binaries-ISO 1.35.9-Mold-1280-r1-3f24d481-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1504 text 1.35.9-Mold-1280-r1-3f24d481-Kubernetes-Binaries-ISO
+						1505 text 1.35.9-Mold-1280-r1-3f24d481-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1506 container
+							1507 checkbox (settable, integer) Value: 0,   1.35.9-Mold-1280-csi-r1-3f24d481-Kubernetes-Binaries-ISO 1.35.9-Mold-1280-csi-r1-3f24d481-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1508 text 1.35.9-Mold-1280-csi-r1-3f24d481-Kubernetes-Binaries-ISO
+						1509 text 1.35.9-Mold-1280-csi-r1-3f24d481-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1510 container
+							1511 checkbox (settable, integer) Value: 0,   1.36.5-Mold-1280-r1-3f24d481-Kubernetes-Binaries-ISO 1.36.5-Mold-1280-r1-3f24d481-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1512 text 1.36.5-Mold-1280-r1-3f24d481-Kubernetes-Binaries-ISO
+						1513 text 1.36.5-Mold-1280-r1-3f24d481-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1514 container
+							1515 checkbox (settable, integer) Value: 0,   1.36.5-Mold-1280-csi-r1-3f24d481-Kubernetes-Binaries-ISO 1.36.5-Mold-1280-csi-r1-3f24d481-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1516 text 1.36.5-Mold-1280-csi-r1-3f24d481-Kubernetes-Binaries-ISO
+						1517 text 1.36.5-Mold-1280-csi-r1-3f24d481-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1518 container
+							1519 checkbox (settable, integer) Value: 0,   1.37.1-Mold-1280-r1-3f24d481-DEV-Kubernetes-Binaries-ISO 1.37.1-Mold-1280-r1-3f24d481-DEV-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1520 text 1.37.1-Mold-1280-r1-3f24d481-DEV-Kubernetes-Binaries-ISO
+						1521 text 1.37.1-Mold-1280-r1-3f24d481-DEV-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1522 container
+							1523 checkbox (settable, integer) Value: 0,   1.37.1-Mold-1280-csi-r1-3f24d481-DEV-Kubernetes-Binaries-ISO 1.37.1-Mold-1280-csi-r1-3f24d481-DEV-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1524 text 1.37.1-Mold-1280-csi-r1-3f24d481-DEV-Kubernetes-Binaries-ISO
+						1525 text 1.37.1-Mold-1280-csi-r1-3f24d481-DEV-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1526 container
+							1527 checkbox (settable, integer) Value: 0,   1.35.9-Mold-RT1230-F10-modern-r26-disposable-Kubernetes-Binaries-ISO 1.35.9-Mold-RT1230-F10-modern-r26-disposable-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1528 text 1.35.9-Mold-RT1230-F10-modern-r26-disposable-Kubernetes-Binaries-ISO
+						1529 text 1.35.9-Mold-RT1230-F10-modern-r26-disposable-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1530 container
+							1531 checkbox (settable, integer) Value: 0,   1.35.9-Mold-RT1230-mold-cks-45c9aef0-disposable-Kubernetes-Binaries-ISO 1.35.9-Mold-RT1230-mold-cks-45c9aef0-disposable-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1532 text 1.35.9-Mold-RT1230-mold-cks-45c9aef0-disposable-Kubernetes-Binaries-ISO
+						1533 text 1.35.9-Mold-RT1230-mold-cks-45c9aef0-disposable-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1534 container
+							1535 checkbox (settable, integer) Value: 0,   1.36.5-Mold-RT1230-mold-cks-45c9aef0-disposable-Kubernetes-Binaries-ISO 1.36.5-Mold-RT1230-mold-cks-45c9aef0-disposable-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1536 text 1.36.5-Mold-RT1230-mold-cks-45c9aef0-disposable-Kubernetes-Binaries-ISO
+						1537 text 1.36.5-Mold-RT1230-mold-cks-45c9aef0-disposable-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1538 container
+							1539 checkbox (settable, integer) Value: 0,   1.37.1-Mold-RT1230-mold-cks-45c9aef0-disposable-Kubernetes-Binaries-ISO 1.37.1-Mold-RT1230-mold-cks-45c9aef0-disposable-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1540 text 1.37.1-Mold-RT1230-mold-cks-45c9aef0-disposable-Kubernetes-Binaries-ISO
+						1541 text 1.37.1-Mold-RT1230-mold-cks-45c9aef0-disposable-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1542 container
+							1543 checkbox (settable, integer) Value: 0,   1.35.9-Mold-RT1230-mold-cks-csi-45c9aef0-disposable-Kubernetes-Binaries-ISO 1.35.9-Mold-RT1230-mold-cks-csi-45c9aef0-disposable-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1544 text 1.35.9-Mold-RT1230-mold-cks-csi-45c9aef0-disposable-Kubernetes-Binaries-ISO
+						1545 text 1.35.9-Mold-RT1230-mold-cks-csi-45c9aef0-disposable-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1546 container
+							1547 checkbox (settable, integer) Value: 0,   1.36.5-Mold-RT1230-mold-cks-csi-45c9aef0-disposable-Kubernetes-Binaries-ISO 1.36.5-Mold-RT1230-mold-cks-csi-45c9aef0-disposable-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1548 text 1.36.5-Mold-RT1230-mold-cks-csi-45c9aef0-disposable-Kubernetes-Binaries-ISO
+						1549 text 1.36.5-Mold-RT1230-mold-cks-csi-45c9aef0-disposable-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1550 container
+							1551 checkbox (settable, integer) Value: 0,   1.37.1-Mold-RT1230-DEV-mold-cks-csi-45c9aef0-disposable-Kubernetes-Binaries-ISO 1.37.1-Mold-RT1230-DEV-mold-cks-csi-45c9aef0-disposable-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1552 text 1.37.1-Mold-RT1230-DEV-mold-cks-csi-45c9aef0-disposable-Kubernetes-Binaries-ISO
+						1553 text 1.37.1-Mold-RT1230-DEV-mold-cks-csi-45c9aef0-disposable-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1554 container
+							1555 checkbox (settable, integer) Value: 0,   1.36.5-Mold-RT1230-CSI-31ebce52-disposable-Kubernetes-Binaries-ISO 1.36.5-Mold-RT1230-CSI-31ebce52-disposable-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1556 text 1.36.5-Mold-RT1230-CSI-31ebce52-disposable-Kubernetes-Binaries-ISO
+						1557 text 1.36.5-Mold-RT1230-CSI-31ebce52-disposable-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1558 container
+							1559 checkbox (settable, integer) Value: 0,   1.37.1-Mold-RT1230-CSI-31ebce52-disposable-DEV-Kubernetes-Binaries-ISO 1.37.1-Mold-RT1230-CSI-31ebce52-disposable-DEV-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1560 text 1.37.1-Mold-RT1230-CSI-31ebce52-disposable-DEV-Kubernetes-Binaries-ISO
+						1561 text 1.37.1-Mold-RT1230-CSI-31ebce52-disposable-DEV-Kubernetes-Binaries-ISO Zone · 데이터 미디어
+						1562 container
+							1563 checkbox (settable, integer)   ABLESTACK-Tools-Process-rocky-89806b1 ABLESTACK-Tools-Process-rocky-89806b1 Zone · 데이터 미디어, Value: 0
+						1564 text ABLESTACK-Tools-Process-rocky-89806b1
+						1565 text ABLESTACK-Tools-Process-rocky-89806b1 Zone · 데이터 미디어
+						1566 container
+							1567 checkbox (settable, integer)   ABLESTACK-Tools-Process-ubuntu-89806b1 ABLESTACK-Tools-Process-ubuntu-89806b1 Zone · 데이터 미디어, Value: 0
+						1568 text ABLESTACK-Tools-Process-ubuntu-89806b1
+						1569 text ABLESTACK-Tools-Process-ubuntu-89806b1 Zone · 데이터 미디어
+						1570 container
+							1571 checkbox (settable, integer)   ABLESTACK-Tools-Process-debian-89806b1 ABLESTACK-Tools-Process-debian-89806b1 Zone · 데이터 미디어, Value: 0
+						1572 text ABLESTACK-Tools-Process-debian-89806b1
+						1573 text ABLESTACK-Tools-Process-debian-89806b1 Zone · 데이터 미디어
+						1574 container
+							1575 checkbox (settable, integer) Value: 0,   ABLESTACK Tools Windows 11 Server 2019 2022 2025 multi-OS ABLESTACK-Tools-Process-windows-56b6236 Zone · 데이터 미디어
+						1576 text ABLESTACK Tools Windows 11 Server 2019 2022 2025 multi-OS
+						1577 text ABLESTACK-Tools-Process-windows-56b6236 Zone · 데이터 미디어
+					1578 text ISO별 완료를 확인한 후 다음 ISO를 연결합니다. 부팅 가능 속성은 현재 VM의 부팅 순서를 의미하지 않습니다.
+				1579 button 취소
+				1580 button (disabled) 0개 ISO 연결
+
+The focused UI element is 1581 container

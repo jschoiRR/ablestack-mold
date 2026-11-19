@@ -1,0 +1,74 @@
+[
+  {
+    "cluster": 31,
+    "case": "unknown-timezone",
+    "rejected": true,
+    "message": "Unknown resource schedule timezone: AS06/Invalid"
+  },
+  {
+    "cluster": 31,
+    "case": "DST-gap",
+    "rejected": true,
+    "message": "Resource schedule date is nonexistent or ambiguous due to DST: 2027-03-14T02:30 America/New_York"
+  },
+  {
+    "cluster": 31,
+    "case": "DST-overlap",
+    "rejected": true,
+    "message": "Resource schedule date is nonexistent or ambiguous due to DST: 2027-11-07T01:30 America/New_York"
+  },
+  {
+    "cluster": 31,
+    "case": "end-before-start",
+    "rejected": true,
+    "message": "Invalid value for end date. End date [2027-03-14T01:00Z[UTC]] can't be before start date [2027-03-14T01:30Z[UTC]]."
+  },
+  {
+    "cluster": 31,
+    "case": "min-zero",
+    "rejected": true,
+    "message": "minmembers is an invalid value: 0"
+  },
+  {
+    "cluster": 31,
+    "case": "limited-profile-write",
+    "rejected": true,
+    "message": "The API [updateAutoScaleVmProfile] does not exist or is not available for this account/user in project [fb318714-bc01-4be5-9e33-0f49a7013127]."
+  },
+  {
+    "cluster": 32,
+    "case": "unknown-timezone",
+    "rejected": true,
+    "message": "Unknown resource schedule timezone: AS06/Invalid"
+  },
+  {
+    "cluster": 32,
+    "case": "DST-gap",
+    "rejected": true,
+    "message": "Resource schedule date is nonexistent or ambiguous due to DST: 2027-03-14T02:30 America/New_York"
+  },
+  {
+    "cluster": 32,
+    "case": "DST-overlap",
+    "rejected": true,
+    "message": "Resource schedule date is nonexistent or ambiguous due to DST: 2027-11-07T01:30 America/New_York"
+  },
+  {
+    "cluster": 32,
+    "case": "end-before-start",
+    "rejected": true,
+    "message": "Invalid value for end date. End date [2027-03-14T01:00Z[UTC]] can't be before start date [2027-03-14T01:30Z[UTC]]."
+  },
+  {
+    "cluster": 32,
+    "case": "min-zero",
+    "rejected": true,
+    "message": "minmembers is an invalid value: 0"
+  },
+  {
+    "cluster": 32,
+    "case": "limited-profile-write",
+    "rejected": true,
+    "message": "Caller does not have permission to operate with provided resource."
+  }
+]

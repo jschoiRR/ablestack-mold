@@ -95,7 +95,7 @@ public class AutoScaleScheduleWorker extends BaseScheduleWorker {
         if (MapUtils.isEmpty(details)) {
             throw new InvalidParameterValueException("Details are required for AutoScaleVmGroup schedule");
         }
-        if (!details.keySet().stream().allMatch(key -> MIN_MEMBERS.equalsIgnoreCase(key) || MAX_MEMBERS.equalsIgnoreCase(key))) {
+        if (!details.keySet().stream().allMatch(key -> MIN_MEMBERS.equals(key) || MAX_MEMBERS.equals(key))) {
             throw new InvalidParameterValueException("Only minmembers and maxmembers are supported for AutoScaleVmGroup schedule details");
         }
 
@@ -131,12 +131,11 @@ public class AutoScaleScheduleWorker extends BaseScheduleWorker {
 
         String minMembers = details.get(MIN_MEMBERS);
         String maxMembers = details.get(MAX_MEMBERS);
-        long eventId = ActionEventUtils.onCompletedActionEvent(
-                User.UID_SYSTEM, group.getAccountId(), null,
-                action.getEventType(), true,
+        long eventId = ActionEventUtils.onStartedActionEvent(
+                User.UID_SYSTEM, group.getAccountId(), action.getEventType(),
                 String.format("Executing action %s (min=%s max=%s) for AutoScaleVmGroup: %s (min=%s max=%s)",
                         action, minMembers, maxMembers, group.getUuid(), group.getMinMembers(), group.getMaxMembers()),
-                group.getId(), ApiCommandResourceType.AutoScaleVmGroup.toString(), 0);
+                group.getId(), ApiCommandResourceType.AutoScaleVmGroup.toString(), true, 0);
 
         Map<String, String> params = new HashMap<>();
         params.put(MIN_MEMBERS, minMembers);

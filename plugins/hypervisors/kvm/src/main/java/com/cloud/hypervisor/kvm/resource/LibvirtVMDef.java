@@ -76,6 +76,9 @@ public class LibvirtVMDef {
 
     public static class MetadataDef {
         private VirtualMachineMetadataTO metaTO;
+        private PciTopologyPlan pciTopologyPlan;
+
+        public void setPciTopologyPlan(PciTopologyPlan plan) { pciTopologyPlan = plan; }
 
         public MetadataDef(VirtualMachineMetadataTO data) {
             metaTO = data;
@@ -156,6 +159,14 @@ public class LibvirtVMDef {
             serviceOffering.appendChild(hostTags);
 
             instance.appendChild(serviceOffering); // </service_offering>
+
+            if (pciTopologyPlan != null) {
+                Element topology = doc.createElement("cloudstack:pci_topology");
+                topology.setAttribute("profile", pciTopologyPlan.profile().id());
+                topology.setAttribute("version", com.cloud.vm.PciTopologyProfile.VERSION);
+                topology.setAttribute("root_ports", Integer.toString(pciTopologyPlan.rootPorts()));
+                instance.appendChild(topology);
+            }
 
             Element creationTime = doc.createElement("cloudstack:created_at");
             creationTime.setTextContent(
@@ -358,6 +369,10 @@ public class LibvirtVMDef {
 
         public void setMachineType(String machine) {
             _machine = machine;
+        }
+
+        public String getMachineType() {
+            return _machine;
         }
 
         public void setLoader(String loader) {
@@ -746,7 +761,22 @@ public class LibvirtVMDef {
     }
 
     public static class DevicesDef {
+        private static final int PCIE_ROOT_PORT_COUNT = 32;
+        private String _machineType;
+        private PciTopologyPlan pciTopologyPlan;
+
+        public void setPciTopologyPlan(PciTopologyPlan plan) { pciTopologyPlan = plan; }
+
+        public String bootstrapDevicesXml() {
+            StringBuilder xml = new StringBuilder("<devices>\n");
+            appendDeviceDefinitions(xml);
+            return xml.append("</devices>\n").toString();
+        }
         private String _emulator;
+
+        public void setMachineType(String machineType) {
+            _machineType = machineType;
+        }
         private GuestDef.GuestType _guestType;
         private final Map<String, List<?>> devices = new HashMap<String, List<?>>();
 
@@ -771,14 +801,7 @@ public class LibvirtVMDef {
             _guestType = guestType;
         }
 
-        @Override
-        public String toString() {
-            StringBuilder devicesBuilder = new StringBuilder();
-            devicesBuilder.append("<devices>\n");
-            if (_emulator != null) {
-                devicesBuilder.append("<emulator>" + _emulator + "</emulator>\n");
-            }
-
+        private void appendDeviceDefinitions(StringBuilder devicesBuilder) {
             for (List<?> devs : devices.values()) {
                 for (Object dev : devs) {
                     if (_guestType == GuestDef.GuestType.LXC) {
@@ -796,9 +819,26 @@ public class LibvirtVMDef {
                 }
             }
 
-            if (_emulator != null && (_emulator.endsWith("aarch64") || _emulator.endsWith("s390x"))) {
+        }
+
+        @Override
+        public String toString() {
+            StringBuilder devicesBuilder = new StringBuilder();
+            devicesBuilder.append("<devices>\n");
+            if (_emulator != null) {
+                devicesBuilder.append("<emulator>" + _emulator + "</emulator>\n");
+            }
+
+            appendDeviceDefinitions(devicesBuilder);
+
+            boolean q35 = _guestType == GuestDef.GuestType.KVM && _machineType != null
+                    && ("q35".equals(_machineType) || _machineType.startsWith("pc-q35-"));
+            boolean existingPcieArchitecture = _emulator != null && (_emulator.endsWith("aarch64") || _emulator.endsWith("s390x"));
+            // libvirt otherwise creates only enough root ports for boot devices, leaving none for NIC hotplug.
+            int portCount = q35 && pciTopologyPlan != null ? pciTopologyPlan.rootPorts() : PCIE_ROOT_PORT_COUNT;
+            if ((q35 && portCount > 0) || existingPcieArchitecture) {
                 devicesBuilder.append("<controller type='pci' model='pcie-root'/>\n");
-                for (int i = 0; i < 32; i++) {
+                for (int i = 0; i < portCount; i++) {
                   devicesBuilder.append("<controller type='pci' model='pcie-root-port'/>\n");
                 }
                 devicesBuilder.append("<controller type='pci' model='pcie-to-pci-bridge'/>\n");
@@ -2795,6 +2835,17 @@ public class LibvirtVMDef {
         return _platformEmulator;
     }
 
+    private PciTopologyPlan pciTopologyPlan;
+
+    public GuestDef getGuestDefinition() { return (GuestDef) components.get(GuestDef.class.toString()); }
+    public PciTopologyPlan getPciTopologyPlan() { return pciTopologyPlan; }
+    public void setPciTopologyPlan(PciTopologyPlan plan) {
+        pciTopologyPlan = plan;
+        if (getDevices() != null) getDevices().setPciTopologyPlan(plan);
+        Object metadata = components.get(MetadataDef.class.toString());
+        if (metadata instanceof MetadataDef) ((MetadataDef) metadata).setPciTopologyPlan(plan);
+    }
+
     public DevicesDef getDevices() {
         Object o = components.get(DevicesDef.class.toString());
         if (o != null) {
@@ -2847,7 +2898,11 @@ public class LibvirtVMDef {
             vmBuilder.append("<description>" + _desc + "</description>\n");
         }
 
+        GuestDef guest = (GuestDef) components.get(GuestDef.class.toString());
         for (Object o : components.values()) {
+            if (o instanceof DevicesDef && guest != null) {
+                ((DevicesDef) o).setMachineType(guest.getMachineType());
+            }
             vmBuilder.append(o.toString());
         }
         for (String xmlFragment : extraXmlComponents) {

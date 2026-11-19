@@ -42,7 +42,7 @@ public class AutoScaleVmGroupStatisticsDaoImpl extends GenericDaoBase<AutoScaleV
         groupAndCounterSearch.and("policyId", groupAndCounterSearch.entity().getPolicyId(), Op.EQ);
         groupAndCounterSearch.and("counterId", groupAndCounterSearch.entity().getCounterId(), Op.EQ);
         groupAndCounterSearch.and("createdLT", groupAndCounterSearch.entity().getCreated(), Op.LT);
-        groupAndCounterSearch.and("createdGT", groupAndCounterSearch.entity().getCreated(), Op.GT);
+        groupAndCounterSearch.and("createdGT", groupAndCounterSearch.entity().getCreated(), Op.GTEQ);
         groupAndCounterSearch.and("state", groupAndCounterSearch.entity().getState(), Op.EQ);
         groupAndCounterSearch.and("stateNEQ", groupAndCounterSearch.entity().getState(), Op.NEQ);
         groupAndCounterSearch.done();

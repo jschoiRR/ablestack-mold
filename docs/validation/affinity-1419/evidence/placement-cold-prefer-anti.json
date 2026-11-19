@@ -1,0 +1,59 @@
+{
+  "phase": "cold-prefer-anti",
+  "time": "2026-10-19T15:56:59+0900",
+  "api": [
+    {
+      "id": "612124f9-66e0-4a3a-8a01-dadee3c0d45b",
+      "name": "qa-ag06-cold-vm-01",
+      "instancename": "i-2-679-VM",
+      "state": "Running",
+      "hostid": "384871b9-7c75-4717-a673-e96a76abeb71",
+      "hostname": "ablecube31-3",
+      "affinitygroup": [
+        {
+          "id": "d26506c1-bd02-4665-8542-58f9bcc35f6e",
+          "name": "qa-ag06-cold-prefer-anti",
+          "account": "admin"
+        }
+      ]
+    },
+    {
+      "id": "0ab52c7b-6099-4aff-ae76-6bfbe81908d0",
+      "name": "qa-ag06-cold-vm-02",
+      "instancename": "i-2-680-VM",
+      "state": "Running",
+      "hostid": "3fb147f3-aea4-4f65-b8c6-e7192ea26138",
+      "hostname": "ablecube31-2",
+      "affinitygroup": [
+        {
+          "id": "d26506c1-bd02-4665-8542-58f9bcc35f6e",
+          "name": "qa-ag06-cold-prefer-anti",
+          "account": "admin"
+        }
+      ]
+    }
+  ],
+  "db": "612124f9-66e0-4a3a-8a01-dadee3c0d45b\ti-2-679-VM\tRunning\t384871b9-7c75-4717-a673-e96a76abeb71\tablecube31-3\td26506c1-bd02-4665-8542-58f9bcc35f6e\n0ab52c7b-6099-4aff-ae76-6bfbe81908d0\ti-2-680-VM\tRunning\t3fb147f3-aea4-4f65-b8c6-e7192ea26138\tablecube31-2\td26506c1-bd02-4665-8542-58f9bcc35f6e\n",
+  "hypervisor": {
+    "159baf9a-89ad-4a94-91dc-e7395a670bf4": {
+      "name": "ablecube31-1",
+      "address": "10.10.31.1",
+      "running": []
+    },
+    "3fb147f3-aea4-4f65-b8c6-e7192ea26138": {
+      "name": "ablecube31-2",
+      "address": "10.10.31.2",
+      "running": [
+        "i-2-680-VM"
+      ]
+    },
+    "384871b9-7c75-4717-a673-e96a76abeb71": {
+      "name": "ablecube31-3",
+      "address": "10.10.31.3",
+      "running": [
+        "i-2-679-VM"
+      ]
+    }
+  },
+  "apiDbHostAgreement": true
+}

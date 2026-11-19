@@ -1,0 +1,1591 @@
+{
+  "start": 18724,
+  "cursor": 19280,
+  "truncated": false,
+  "events": [
+    {
+      "sequence": 18725,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4032",
+      "type": "XHR",
+      "params": {
+        "command": "listUserData",
+        "id": "9f5810e1-4356-49fd-a9fd-efd9636a580d",
+        "projectid": "4bac1248-9871-4e0b-ba78-8d3073b8bfe6",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "sequence": 18728,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4032",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listUserData",
+        "id": "9f5810e1-4356-49fd-a9fd-efd9636a580d",
+        "projectid": "4bac1248-9871-4e0b-ba78-8d3073b8bfe6",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "sequence": 18734,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4033",
+      "type": "XHR",
+      "params": {
+        "command": "listUserData",
+        "id": "9f5810e1-4356-49fd-a9fd-efd9636a580d",
+        "projectid": "4bac1248-9871-4e0b-ba78-8d3073b8bfe6",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "2"
+      }
+    },
+    {
+      "sequence": 18745,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4034",
+      "type": "XHR",
+      "params": {
+        "command": "listUserData",
+        "id": "9f5810e1-4356-49fd-a9fd-efd9636a580d",
+        "projectid": "4bac1248-9871-4e0b-ba78-8d3073b8bfe6",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "2"
+      }
+    },
+    {
+      "sequence": 18746,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4035",
+      "type": "XHR",
+      "params": {
+        "command": "listResourceIcon"
+      }
+    },
+    {
+      "sequence": 18747,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4036",
+      "type": "XHR",
+      "params": {
+        "command": "listResourceIcon"
+      }
+    },
+    {
+      "sequence": 18748,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4037",
+      "type": "XHR",
+      "params": {
+        "command": "listAccounts",
+        "id": "41e74df2-c66d-412e-baf2-3d96957f71c2"
+      }
+    },
+    {
+      "sequence": 18749,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4038",
+      "type": "XHR",
+      "params": {
+        "command": "listVirtualMachines",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "1"
+      }
+    },
+    {
+      "sequence": 18750,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4039",
+      "type": "XHR",
+      "params": {
+        "command": "listVirtualMachines",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "1"
+      }
+    },
+    {
+      "sequence": 18751,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4040",
+      "type": "XHR",
+      "params": {
+        "command": "listVirtualMachines",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "1"
+      }
+    },
+    {
+      "sequence": 18752,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4041",
+      "type": "XHR",
+      "params": {
+        "command": "listEvents",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "8"
+      }
+    },
+    {
+      "sequence": 18753,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4042",
+      "type": "XHR",
+      "params": {
+        "command": "listKubernetesClusters",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "1"
+      }
+    },
+    {
+      "sequence": 18754,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4043",
+      "type": "XHR",
+      "params": {
+        "command": "listVolumes",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "1"
+      }
+    },
+    {
+      "sequence": 18755,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4044",
+      "type": "XHR",
+      "params": {
+        "command": "listSnapshots",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "1"
+      }
+    },
+    {
+      "sequence": 18756,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4045",
+      "type": "XHR",
+      "params": {
+        "command": "listNetworks",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "1"
+      }
+    },
+    {
+      "sequence": 18757,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4046",
+      "type": "XHR",
+      "params": {
+        "command": "listVPCs",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "1"
+      }
+    },
+    {
+      "sequence": 18758,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4047",
+      "type": "XHR",
+      "params": {
+        "command": "listPublicIpAddresses",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "1"
+      }
+    },
+    {
+      "sequence": 18759,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4048",
+      "type": "XHR",
+      "params": {
+        "command": "listTemplates",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "1",
+        "templatefilter": "self"
+      }
+    },
+    {
+      "sequence": 18761,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4033",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listUserData",
+        "id": "9f5810e1-4356-49fd-a9fd-efd9636a580d",
+        "projectid": "4bac1248-9871-4e0b-ba78-8d3073b8bfe6",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "2"
+      }
+    },
+    {
+      "sequence": 18765,
+      "source": {
+        "tabId": 4
+      },
+      "method": "Runtime.exceptionThrown",
+      "params": {
+        "exceptionDetails": {
+          "columnNumber": 308779,
+          "exception": {
+            "className": "i",
+            "description": "i",
+            "objectId": "-6480967067822580589.15.15",
+            "preview": {
+              "description": "i",
+              "overflow": false,
+              "properties": [
+                {
+                  "name": "message",
+                  "type": "string",
+                  "value": "canceled"
+                },
+                {
+                  "name": "name",
+                  "type": "string",
+                  "value": "CanceledError"
+                },
+                {
+                  "name": "code",
+                  "type": "string",
+                  "value": "ERR_CANCELED"
+                },
+                {
+                  "name": "stack",
+                  "type": "string",
+                  "value": "CanceledError: canceled\n    at Object.cancel (http…31.10:8080/client/js/vendors.3ea5c3f6.js:82:22618"
+                }
+              ],
+              "type": "object"
+            },
+            "type": "object"
+          },
+          "exceptionId": 315,
+          "executionContextId": 15,
+          "lineNumber": 154,
+          "scriptId": "11",
+          "stackTrace": {
+            "callFrames": [
+              {
+                "columnNumber": 308779,
+                "functionName": "",
+                "lineNumber": 154,
+                "scriptId": "11",
+                "url": "http://10.10.31.10:8080/client/js/vendors.3ea5c3f6.js"
+              },
+              {
+                "columnNumber": 682844,
+                "functionName": "cancel",
+                "lineNumber": 0,
+                "scriptId": "1122",
+                "url": "http://10.10.31.10:8080/client/js/app.50a3be37.js"
+              },
+              {
+                "columnNumber": 550685,
+                "functionName": "beforeRouteLeave",
+                "lineNumber": 0,
+                "scriptId": "1122",
+                "url": "http://10.10.31.10:8080/client/js/app.50a3be37.js"
+              },
+              {
+                "columnNumber": 13574,
+                "functionName": "",
+                "lineNumber": 81,
+                "scriptId": "11",
+                "url": "http://10.10.31.10:8080/client/js/vendors.3ea5c3f6.js"
+              },
+              {
+                "columnNumber": 13388,
+                "functionName": "",
+                "lineNumber": 81,
+                "scriptId": "11",
+                "url": "http://10.10.31.10:8080/client/js/vendors.3ea5c3f6.js"
+              },
+              {
+                "columnNumber": 22617,
+                "functionName": "",
+                "lineNumber": 81,
+                "scriptId": "11",
+                "url": "http://10.10.31.10:8080/client/js/vendors.3ea5c3f6.js"
+              }
+            ]
+          },
+          "text": "Uncaught (in promise)",
+          "url": "http://10.10.31.10:8080/client/js/vendors.3ea5c3f6.js"
+        },
+        "timestamp": 1792130921230.481
+      }
+    },
+    {
+      "sequence": 18794,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4035",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listResourceIcon"
+      }
+    },
+    {
+      "sequence": 18799,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4034",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listUserData",
+        "id": "9f5810e1-4356-49fd-a9fd-efd9636a580d",
+        "projectid": "4bac1248-9871-4e0b-ba78-8d3073b8bfe6",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "2"
+      }
+    },
+    {
+      "sequence": 18803,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4036",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listResourceIcon"
+      }
+    },
+    {
+      "sequence": 18807,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4042",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listKubernetesClusters",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "1"
+      }
+    },
+    {
+      "sequence": 18811,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4038",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listVirtualMachines",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "1"
+      }
+    },
+    {
+      "sequence": 18815,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4040",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listVirtualMachines",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "1"
+      }
+    },
+    {
+      "sequence": 18820,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4041",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listEvents",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "8"
+      }
+    },
+    {
+      "sequence": 18824,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4043",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listVolumes",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "1"
+      }
+    },
+    {
+      "sequence": 18828,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4039",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listVirtualMachines",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "1"
+      }
+    },
+    {
+      "sequence": 18832,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4044",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listSnapshots",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "1"
+      }
+    },
+    {
+      "sequence": 18836,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4037",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listAccounts",
+        "id": "41e74df2-c66d-412e-baf2-3d96957f71c2"
+      }
+    },
+    {
+      "sequence": 18840,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4046",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listVPCs",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "1"
+      }
+    },
+    {
+      "sequence": 18844,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4045",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listNetworks",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "1"
+      }
+    },
+    {
+      "sequence": 18848,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4047",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listPublicIpAddresses",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "1"
+      }
+    },
+    {
+      "sequence": 18852,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4048",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listTemplates",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "1",
+        "templatefilter": "self"
+      }
+    },
+    {
+      "sequence": 18857,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4049",
+      "type": "XHR",
+      "params": {
+        "command": "logout"
+      }
+    },
+    {
+      "sequence": 18862,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4049",
+      "type": "XHR",
+      "status": 200,
+      "params": {}
+    },
+    {
+      "sequence": 18864,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4050",
+      "type": "Fetch",
+      "params": {}
+    },
+    {
+      "sequence": 18869,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4050",
+      "type": "Fetch",
+      "status": 200,
+      "params": {}
+    },
+    {
+      "sequence": 18872,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4051",
+      "type": "XHR",
+      "params": {
+        "command": "listGuiThemes"
+      }
+    },
+    {
+      "sequence": 18875,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4051",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listGuiThemes"
+      }
+    },
+    {
+      "sequence": 18877,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4052",
+      "type": "XHR",
+      "params": {
+        "command": "listGuiThemes"
+      }
+    },
+    {
+      "sequence": 18883,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4052",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listGuiThemes"
+      }
+    },
+    {
+      "sequence": 18890,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4056",
+      "type": "XHR",
+      "params": {
+        "command": "listOauthProvider"
+      }
+    },
+    {
+      "sequence": 18895,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4056",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listOauthProvider"
+      }
+    },
+    {
+      "sequence": 18901,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4057",
+      "type": "XHR",
+      "params": {
+        "command": "login"
+      }
+    },
+    {
+      "sequence": 18905,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4057",
+      "type": "XHR",
+      "status": 200,
+      "params": {}
+    },
+    {
+      "sequence": 18909,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4058",
+      "type": "XHR",
+      "params": {
+        "command": "listZones"
+      }
+    },
+    {
+      "sequence": 18910,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4059",
+      "type": "XHR",
+      "params": {
+        "command": "listApis"
+      }
+    },
+    {
+      "sequence": 18911,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4060",
+      "type": "XHR",
+      "params": {
+        "command": "listNetworks"
+      }
+    },
+    {
+      "sequence": 18912,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4061",
+      "type": "XHR",
+      "params": {
+        "command": "listVPCs"
+      }
+    },
+    {
+      "sequence": 18913,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4062",
+      "type": "XHR",
+      "params": {
+        "command": "listUsers",
+        "id": "5689f50e-3ab1-40db-b7bb-ec0f49262e1a"
+      }
+    },
+    {
+      "sequence": 18923,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4062",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listUsers",
+        "id": "5689f50e-3ab1-40db-b7bb-ec0f49262e1a"
+      }
+    },
+    {
+      "sequence": 18926,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4060",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listNetworks"
+      }
+    },
+    {
+      "sequence": 18931,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4063",
+      "type": "Fetch",
+      "params": {}
+    },
+    {
+      "sequence": 18936,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4061",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listVPCs"
+      }
+    },
+    {
+      "sequence": 18940,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4058",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listZones"
+      }
+    },
+    {
+      "sequence": 18944,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4063",
+      "type": "Fetch",
+      "status": 200,
+      "params": {}
+    },
+    {
+      "sequence": 18947,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4064",
+      "type": "XHR",
+      "params": {
+        "command": "listGuiThemes"
+      }
+    },
+    {
+      "sequence": 18950,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4064",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listGuiThemes"
+      }
+    },
+    {
+      "sequence": 18952,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4065",
+      "type": "XHR",
+      "params": {
+        "command": "listGuiThemes",
+        "domainid": "6cb61eee-eff1-4007-b6ea-bcb7f4d94be7"
+      }
+    },
+    {
+      "sequence": 18957,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4065",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listGuiThemes",
+        "domainid": "6cb61eee-eff1-4007-b6ea-bcb7f4d94be7"
+      }
+    },
+    {
+      "sequence": 18959,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4066",
+      "type": "XHR",
+      "params": {
+        "command": "listGuiThemes"
+      }
+    },
+    {
+      "sequence": 18964,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4066",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listGuiThemes"
+      }
+    },
+    {
+      "sequence": 18966,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4067",
+      "type": "XHR",
+      "params": {
+        "command": "listGuiThemes"
+      }
+    },
+    {
+      "sequence": 18971,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4067",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listGuiThemes"
+      }
+    },
+    {
+      "sequence": 18976,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4059",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listApis"
+      }
+    },
+    {
+      "sequence": 19011,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4068",
+      "type": "XHR",
+      "params": {
+        "command": "listCapabilities"
+      }
+    },
+    {
+      "sequence": 19022,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4068",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listCapabilities"
+      }
+    },
+    {
+      "sequence": 19024,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4069",
+      "type": "XHR",
+      "params": {
+        "command": "listHSMProfiles",
+        "listall": "true"
+      }
+    },
+    {
+      "sequence": 19025,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4070",
+      "type": "XHR",
+      "params": {
+        "command": "listLdapConfigurations"
+      }
+    },
+    {
+      "sequence": 19026,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4071",
+      "type": "XHR",
+      "params": {
+        "command": "cloudianIsEnabled"
+      }
+    },
+    {
+      "sequence": 19037,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4073",
+      "type": "Image",
+      "params": {}
+    },
+    {
+      "sequence": 19038,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4074",
+      "type": "XHR",
+      "params": {
+        "command": "listUsers",
+        "id": "5689f50e-3ab1-40db-b7bb-ec0f49262e1a"
+      }
+    },
+    {
+      "sequence": 19039,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4075",
+      "type": "XHR",
+      "params": {
+        "command": "listConfigurations",
+        "name": "favicon.state.interval"
+      }
+    },
+    {
+      "sequence": 19040,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4076",
+      "type": "XHR",
+      "params": {
+        "command": "listConfigurations",
+        "name": "favicon.state.yellow.capacity"
+      }
+    },
+    {
+      "sequence": 19041,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4077",
+      "type": "XHR",
+      "params": {
+        "command": "listConfigurations",
+        "name": "favicon.state.red.capacity"
+      }
+    },
+    {
+      "sequence": 19042,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4078",
+      "type": "XHR",
+      "params": {
+        "command": "listAccounts",
+        "id": "5ecc2d04-5cfb-4acf-aaa5-45a9819b442d"
+      }
+    },
+    {
+      "sequence": 19043,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4079",
+      "type": "XHR",
+      "params": {
+        "command": "listVirtualMachines",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "1"
+      }
+    },
+    {
+      "sequence": 19044,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4080",
+      "type": "XHR",
+      "params": {
+        "command": "listVirtualMachines",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "1"
+      }
+    },
+    {
+      "sequence": 19045,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4081",
+      "type": "XHR",
+      "params": {
+        "command": "listVirtualMachines",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "1"
+      }
+    },
+    {
+      "sequence": 19046,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4082",
+      "type": "XHR",
+      "params": {
+        "command": "listEvents",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "8"
+      }
+    },
+    {
+      "sequence": 19047,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4083",
+      "type": "XHR",
+      "params": {
+        "command": "listKubernetesClusters",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "1"
+      }
+    },
+    {
+      "sequence": 19048,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4084",
+      "type": "XHR",
+      "params": {
+        "command": "listVolumes",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "1"
+      }
+    },
+    {
+      "sequence": 19049,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4085",
+      "type": "XHR",
+      "params": {
+        "command": "listSnapshots",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "1"
+      }
+    },
+    {
+      "sequence": 19050,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4086",
+      "type": "XHR",
+      "params": {
+        "command": "listNetworks",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "1"
+      }
+    },
+    {
+      "sequence": 19051,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4087",
+      "type": "XHR",
+      "params": {
+        "command": "listVPCs",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "1"
+      }
+    },
+    {
+      "sequence": 19052,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4088",
+      "type": "XHR",
+      "params": {
+        "command": "listPublicIpAddresses",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "1"
+      }
+    },
+    {
+      "sequence": 19053,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4089",
+      "type": "XHR",
+      "params": {
+        "command": "listTemplates",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "1",
+        "templatefilter": "self"
+      }
+    },
+    {
+      "sequence": 19054,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4090",
+      "type": "XHR",
+      "params": {
+        "command": "listProjects",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "100"
+      }
+    },
+    {
+      "sequence": 19057,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4073",
+      "type": "Image",
+      "status": 200,
+      "params": {}
+    },
+    {
+      "sequence": 19061,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4070",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listLdapConfigurations"
+      }
+    },
+    {
+      "sequence": 19071,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4071",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "cloudianIsEnabled"
+      }
+    },
+    {
+      "sequence": 19075,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4069",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listHSMProfiles",
+        "listall": "true"
+      }
+    },
+    {
+      "sequence": 19106,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4079",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listVirtualMachines",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "1"
+      }
+    },
+    {
+      "sequence": 19110,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4077",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listConfigurations",
+        "name": "favicon.state.red.capacity"
+      }
+    },
+    {
+      "sequence": 19114,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4075",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listConfigurations",
+        "name": "favicon.state.interval"
+      }
+    },
+    {
+      "sequence": 19118,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4080",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listVirtualMachines",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "1"
+      }
+    },
+    {
+      "sequence": 19122,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4081",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listVirtualMachines",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "1"
+      }
+    },
+    {
+      "sequence": 19126,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4074",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listUsers",
+        "id": "5689f50e-3ab1-40db-b7bb-ec0f49262e1a"
+      }
+    },
+    {
+      "sequence": 19130,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4076",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listConfigurations",
+        "name": "favicon.state.yellow.capacity"
+      }
+    },
+    {
+      "sequence": 19134,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4083",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listKubernetesClusters",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "1"
+      }
+    },
+    {
+      "sequence": 19138,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4084",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listVolumes",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "1"
+      }
+    },
+    {
+      "sequence": 19142,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4086",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listNetworks",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "1"
+      }
+    },
+    {
+      "sequence": 19146,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4087",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listVPCs",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "1"
+      }
+    },
+    {
+      "sequence": 19151,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4078",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listAccounts",
+        "id": "5ecc2d04-5cfb-4acf-aaa5-45a9819b442d"
+      }
+    },
+    {
+      "sequence": 19155,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4085",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listSnapshots",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "1"
+      }
+    },
+    {
+      "sequence": 19159,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4088",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listPublicIpAddresses",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "1"
+      }
+    },
+    {
+      "sequence": 19163,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4090",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listProjects",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "100"
+      }
+    },
+    {
+      "sequence": 19167,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4082",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listEvents",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "8"
+      }
+    },
+    {
+      "sequence": 19171,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4089",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listTemplates",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "1",
+        "templatefilter": "self"
+      }
+    },
+    {
+      "sequence": 19185,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4091",
+      "type": "XHR",
+      "params": {
+        "command": "listUserData",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "sequence": 19189,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4091",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listUserData",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "sequence": 19203,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4092",
+      "type": "XHR",
+      "params": {
+        "command": "listUserData",
+        "id": "b234e5ec-6ccf-4a27-9ad8-05081d7a78a9",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "sequence": 19209,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4092",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listUserData",
+        "id": "b234e5ec-6ccf-4a27-9ad8-05081d7a78a9",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "sequence": 19211,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4093",
+      "type": "XHR",
+      "params": {
+        "command": "listResourceIcon"
+      }
+    },
+    {
+      "sequence": 19212,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4094",
+      "type": "XHR",
+      "params": {
+        "command": "listAccounts",
+        "name": "ud1389-31-20261016-user",
+        "domainid": "6cb61eee-eff1-4007-b6ea-bcb7f4d94be7"
+      }
+    },
+    {
+      "sequence": 19215,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4093",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listResourceIcon"
+      }
+    },
+    {
+      "sequence": 19219,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4094",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listAccounts",
+        "name": "ud1389-31-20261016-user",
+        "domainid": "6cb61eee-eff1-4007-b6ea-bcb7f4d94be7"
+      }
+    },
+    {
+      "sequence": 19224,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4095",
+      "type": "XHR",
+      "params": {
+        "command": "listUserData",
+        "id": "b234e5ec-6ccf-4a27-9ad8-05081d7a78a9",
+        "account": "ud1389-31-20261016-user",
+        "domainid": "6cb61eee-eff1-4007-b6ea-bcb7f4d94be7",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "2"
+      }
+    },
+    {
+      "sequence": 19238,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4096",
+      "type": "XHR",
+      "params": {
+        "command": "listUserData",
+        "id": "b234e5ec-6ccf-4a27-9ad8-05081d7a78a9",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "sequence": 19239,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4097",
+      "type": "XHR",
+      "params": {
+        "command": "listResourceIcon"
+      }
+    },
+    {
+      "sequence": 19240,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4098",
+      "type": "XHR",
+      "params": {
+        "command": "listAccounts",
+        "name": "ud1389-31-20261016-user",
+        "domainid": "6cb61eee-eff1-4007-b6ea-bcb7f4d94be7"
+      }
+    },
+    {
+      "sequence": 19243,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4095",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listUserData",
+        "id": "b234e5ec-6ccf-4a27-9ad8-05081d7a78a9",
+        "account": "ud1389-31-20261016-user",
+        "domainid": "6cb61eee-eff1-4007-b6ea-bcb7f4d94be7",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "2"
+      }
+    },
+    {
+      "sequence": 19247,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4097",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listResourceIcon"
+      }
+    },
+    {
+      "sequence": 19255,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4096",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listUserData",
+        "id": "b234e5ec-6ccf-4a27-9ad8-05081d7a78a9",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "sequence": 19257,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4099",
+      "type": "XHR",
+      "params": {
+        "command": "listUserData",
+        "id": "b234e5ec-6ccf-4a27-9ad8-05081d7a78a9",
+        "account": "ud1389-31-20261016-user",
+        "domainid": "6cb61eee-eff1-4007-b6ea-bcb7f4d94be7",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "2"
+      }
+    },
+    {
+      "sequence": 19258,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4100",
+      "type": "XHR",
+      "params": {
+        "command": "listResourceIcon"
+      }
+    },
+    {
+      "sequence": 19259,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4101",
+      "type": "XHR",
+      "params": {
+        "command": "listAccounts",
+        "name": "ud1389-31-20261016-user",
+        "domainid": "6cb61eee-eff1-4007-b6ea-bcb7f4d94be7"
+      }
+    },
+    {
+      "sequence": 19265,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4098",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listAccounts",
+        "name": "ud1389-31-20261016-user",
+        "domainid": "6cb61eee-eff1-4007-b6ea-bcb7f4d94be7"
+      }
+    },
+    {
+      "sequence": 19269,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4100",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listResourceIcon"
+      }
+    },
+    {
+      "sequence": 19273,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4099",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listUserData",
+        "id": "b234e5ec-6ccf-4a27-9ad8-05081d7a78a9",
+        "account": "ud1389-31-20261016-user",
+        "domainid": "6cb61eee-eff1-4007-b6ea-bcb7f4d94be7",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "2"
+      }
+    },
+    {
+      "sequence": 19277,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4101",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listAccounts",
+        "name": "ud1389-31-20261016-user",
+        "domainid": "6cb61eee-eff1-4007-b6ea-bcb7f4d94be7"
+      }
+    }
+  ]
+}

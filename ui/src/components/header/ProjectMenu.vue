@@ -20,6 +20,8 @@
     <infinite-scroll-select
       v-if="!isDisabled"
       v-model:value="selectedProjectId"
+      :disabled="loading"
+      :aria-busy="loading"
       class="project-select"
       api="listProjects"
       :apiParams="projectsApiParams"
@@ -34,6 +36,7 @@
 <script>
 import InfiniteScrollSelect from '@/components/widgets/InfiniteScrollSelect'
 import eventBus from '@/config/eventBus'
+import { sourceToken } from '@/utils/request'
 
 export default {
   name: 'ProjectMenu',
@@ -70,27 +73,37 @@ export default {
     this.unwatchProject = this.$store.watch(
       (state, getters) => getters.project?.id,
       (newId) => {
-        this.selectedProjectId = newId
+        this.selectedProjectId = newId || this.defaultOption.id
       }
     )
-    eventBus.on('projects-updated', (args) => {
-      this.timestamp = new Date().getTime()
-    })
+    eventBus.on('projects-updated', this.onProjectsUpdated)
   },
   beforeUnmount () {
+    eventBus.off('projects-updated', this.onProjectsUpdated)
     if (this.unwatchProject) {
       this.unwatchProject()
     }
   },
   methods: {
-    changeProject (project) {
-      this.$store.dispatch('ProjectView', project.id)
-      this.$store.dispatch('SetProject', project)
-      this.$store.dispatch('ToggleTheme', project.id ? 'dark' : 'light')
-      this.$message.success(`${this.$t('message.switch.to')} "${project.displaytext || project.name}"`)
-      if (this.$route.name !== 'dashboard') {
-        this.$router.push({ name: 'dashboard' })
-      }
+    onProjectsUpdated () { this.timestamp = new Date().getTime() },
+    async changeProject (project) {
+      if (this.loading || !project) return
+      const previous = this.$store.getters.project || this.defaultOption
+      const target = project.id && project.id !== '0' ? project : {}
+      this.loading = true
+      try {
+        // Finish capability lookup before AutogenView's route guard cancels
+        // outstanding reads. Keep project selection, API metadata and routing
+        // in one awaited sequence instead of an unhandled fire-and-forget job.
+        await this.$store.dispatch('ProjectView', target.id)
+        await this.$store.dispatch('SetProject', target)
+        await this.$store.dispatch('ToggleTheme', target.id ? 'dark' : 'light')
+        if (this.$route.name !== 'dashboard') await this.$router.push({ name: 'dashboard' })
+        this.$message.success(`${this.$t('message.switch.to')} "${project.displaytext || project.name}"`)
+      } catch (error) {
+        this.selectedProjectId = previous.id || this.defaultOption.id
+        if (!sourceToken.isCancel(error)) this.$notifyError(error)
+      } finally { this.loading = false }
     }
   }
 }

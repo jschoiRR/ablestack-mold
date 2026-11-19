@@ -1,0 +1,953 @@
+{
+  "start": 4053,
+  "cursor": 4384,
+  "truncated": false,
+  "events": [
+    {
+      "sequence": 4054,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.1958",
+      "type": "XHR",
+      "params": {
+        "command": "readyForShutdown"
+      }
+    },
+    {
+      "sequence": 4057,
+      "method": "Network.responseReceived",
+      "requestId": "23116.1958",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "readyForShutdown"
+      }
+    },
+    {
+      "sequence": 4061,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.1959",
+      "type": "XHR",
+      "params": {
+        "command": "getWallAlertAvailability"
+      }
+    },
+    {
+      "sequence": 4064,
+      "method": "Network.responseReceived",
+      "requestId": "23116.1959",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "getWallAlertAvailability"
+      }
+    },
+    {
+      "sequence": 4068,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.1960",
+      "type": "XHR",
+      "params": {
+        "command": "readyForShutdown"
+      }
+    },
+    {
+      "sequence": 4071,
+      "method": "Network.responseReceived",
+      "requestId": "23116.1960",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "readyForShutdown"
+      }
+    },
+    {
+      "sequence": 4075,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.1961",
+      "type": "XHR",
+      "params": {
+        "command": "readyForShutdown"
+      }
+    },
+    {
+      "sequence": 4078,
+      "method": "Network.responseReceived",
+      "requestId": "23116.1961",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "readyForShutdown"
+      }
+    },
+    {
+      "sequence": 4082,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.1962",
+      "type": "XHR",
+      "params": {
+        "command": "readyForShutdown"
+      }
+    },
+    {
+      "sequence": 4085,
+      "method": "Network.responseReceived",
+      "requestId": "23116.1962",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "readyForShutdown"
+      }
+    },
+    {
+      "sequence": 4089,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.1963",
+      "type": "XHR",
+      "params": {
+        "command": "readyForShutdown"
+      }
+    },
+    {
+      "sequence": 4092,
+      "method": "Network.responseReceived",
+      "requestId": "23116.1963",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "readyForShutdown"
+      }
+    },
+    {
+      "sequence": 4096,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.1964",
+      "type": "XHR",
+      "params": {
+        "command": "readyForShutdown"
+      }
+    },
+    {
+      "sequence": 4099,
+      "method": "Network.responseReceived",
+      "requestId": "23116.1964",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "readyForShutdown"
+      }
+    },
+    {
+      "sequence": 4103,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.1965",
+      "type": "XHR",
+      "params": {
+        "command": "listUserData",
+        "id": "cd2544db-5b1f-4af1-a9bc-6b541553a956",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "sequence": 4106,
+      "method": "Network.responseReceived",
+      "requestId": "23116.1965",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listUserData",
+        "id": "cd2544db-5b1f-4af1-a9bc-6b541553a956",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "sequence": 4110,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.1966",
+      "type": "XHR",
+      "params": {
+        "command": "readyForShutdown"
+      }
+    },
+    {
+      "sequence": 4113,
+      "method": "Network.responseReceived",
+      "requestId": "23116.1966",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "readyForShutdown"
+      }
+    },
+    {
+      "sequence": 4117,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.1967",
+      "type": "XHR",
+      "params": {
+        "command": "readyForShutdown"
+      }
+    },
+    {
+      "sequence": 4120,
+      "method": "Network.responseReceived",
+      "requestId": "23116.1967",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "readyForShutdown"
+      }
+    },
+    {
+      "sequence": 4139,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.1969",
+      "type": "XHR",
+      "params": {
+        "command": "listUserData",
+        "id": "cd2544db-5b1f-4af1-a9bc-6b541553a956",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "2"
+      }
+    },
+    {
+      "sequence": 4140,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.1970",
+      "type": "XHR",
+      "params": {
+        "command": "listUserData",
+        "id": "1fc463a9-c04b-4a1d-b1d3-75a9ac8c0e3c",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "sequence": 4141,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.1971",
+      "type": "XHR",
+      "params": {
+        "command": "listResourceIcon"
+      }
+    },
+    {
+      "sequence": 4142,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.1972",
+      "type": "XHR",
+      "params": {
+        "command": "listAccounts",
+        "name": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f"
+      }
+    },
+    {
+      "sequence": 4153,
+      "method": "Network.responseReceived",
+      "requestId": "23116.1969",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listUserData",
+        "id": "cd2544db-5b1f-4af1-a9bc-6b541553a956",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "2"
+      }
+    },
+    {
+      "sequence": 4164,
+      "method": "Network.responseReceived",
+      "requestId": "23116.1970",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listUserData",
+        "id": "1fc463a9-c04b-4a1d-b1d3-75a9ac8c0e3c",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "sequence": 4166,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.1973",
+      "type": "XHR",
+      "params": {
+        "command": "listUserData",
+        "id": "1fc463a9-c04b-4a1d-b1d3-75a9ac8c0e3c",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "2"
+      }
+    },
+    {
+      "sequence": 4167,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.1974",
+      "type": "XHR",
+      "params": {
+        "command": "listResourceIcon"
+      }
+    },
+    {
+      "sequence": 4168,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.1975",
+      "type": "XHR",
+      "params": {
+        "command": "listAccounts",
+        "name": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f"
+      }
+    },
+    {
+      "sequence": 4169,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.1976",
+      "type": "XHR",
+      "params": {
+        "command": "listUserData",
+        "id": "1fc463a9-c04b-4a1d-b1d3-75a9ac8c0e3c",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "2"
+      }
+    },
+    {
+      "sequence": 4172,
+      "method": "Network.responseReceived",
+      "requestId": "23116.1971",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listResourceIcon"
+      }
+    },
+    {
+      "sequence": 4176,
+      "method": "Network.responseReceived",
+      "requestId": "23116.1972",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listAccounts",
+        "name": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f"
+      }
+    },
+    {
+      "sequence": 4181,
+      "method": "Network.responseReceived",
+      "requestId": "23116.1974",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listResourceIcon"
+      }
+    },
+    {
+      "sequence": 4185,
+      "method": "Network.responseReceived",
+      "requestId": "23116.1973",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listUserData",
+        "id": "1fc463a9-c04b-4a1d-b1d3-75a9ac8c0e3c",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "2"
+      }
+    },
+    {
+      "sequence": 4189,
+      "method": "Network.responseReceived",
+      "requestId": "23116.1975",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listAccounts",
+        "name": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f"
+      }
+    },
+    {
+      "sequence": 4193,
+      "method": "Network.responseReceived",
+      "requestId": "23116.1976",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listUserData",
+        "id": "1fc463a9-c04b-4a1d-b1d3-75a9ac8c0e3c",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "2"
+      }
+    },
+    {
+      "sequence": 4197,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.1977",
+      "type": "XHR",
+      "params": {
+        "command": "listUserData",
+        "id": "1fc463a9-c04b-4a1d-b1d3-75a9ac8c0e3c",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "2"
+      }
+    },
+    {
+      "sequence": 4201,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.1978",
+      "type": "XHR",
+      "params": {
+        "command": "readyForShutdown"
+      }
+    },
+    {
+      "sequence": 4204,
+      "method": "Network.responseReceived",
+      "requestId": "23116.1978",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "readyForShutdown"
+      }
+    },
+    {
+      "sequence": 4209,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.1979",
+      "type": "XHR",
+      "params": {
+        "command": "listAnnotations",
+        "page": "1",
+        "pagesize": "10"
+      }
+    },
+    {
+      "sequence": 4220,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.1980",
+      "type": "XHR",
+      "params": {
+        "command": "listUserData",
+        "id": "1fc463a9-c04b-4a1d-b1d3-75a9ac8c0e3c",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "sequence": 4221,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.1981",
+      "type": "XHR",
+      "params": {
+        "command": "listResourceIcon"
+      }
+    },
+    {
+      "sequence": 4222,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.1982",
+      "type": "XHR",
+      "params": {
+        "command": "listAccounts",
+        "name": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f"
+      }
+    },
+    {
+      "sequence": 4223,
+      "method": "Network.responseReceived",
+      "requestId": "23116.1979",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listAnnotations",
+        "page": "1",
+        "pagesize": "10"
+      }
+    },
+    {
+      "sequence": 4233,
+      "method": "Network.responseReceived",
+      "requestId": "23116.1981",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listResourceIcon"
+      }
+    },
+    {
+      "sequence": 4238,
+      "method": "Network.responseReceived",
+      "requestId": "23116.1982",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listAccounts",
+        "name": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f"
+      }
+    },
+    {
+      "sequence": 4242,
+      "method": "Network.responseReceived",
+      "requestId": "23116.1977",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listUserData",
+        "id": "1fc463a9-c04b-4a1d-b1d3-75a9ac8c0e3c",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "2"
+      }
+    },
+    {
+      "sequence": 4246,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.1983",
+      "type": "XHR",
+      "params": {
+        "command": "readyForShutdown"
+      }
+    },
+    {
+      "sequence": 4249,
+      "method": "Network.responseReceived",
+      "requestId": "23116.1983",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "readyForShutdown"
+      }
+    },
+    {
+      "sequence": 4253,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.1984",
+      "type": "XHR",
+      "params": {
+        "command": "readyForShutdown"
+      }
+    },
+    {
+      "sequence": 4256,
+      "method": "Network.responseReceived",
+      "requestId": "23116.1984",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "readyForShutdown"
+      }
+    },
+    {
+      "sequence": 4260,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.1985",
+      "type": "XHR",
+      "params": {
+        "command": "readyForShutdown"
+      }
+    },
+    {
+      "sequence": 4263,
+      "method": "Network.responseReceived",
+      "requestId": "23116.1985",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "readyForShutdown"
+      }
+    },
+    {
+      "sequence": 4267,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.1986",
+      "type": "XHR",
+      "params": {
+        "command": "listHostsMetrics"
+      }
+    },
+    {
+      "sequence": 4270,
+      "method": "Network.responseReceived",
+      "requestId": "23116.1986",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listHostsMetrics"
+      }
+    },
+    {
+      "sequence": 4274,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.1987",
+      "type": "XHR",
+      "params": {
+        "command": "readyForShutdown"
+      }
+    },
+    {
+      "sequence": 4277,
+      "method": "Network.responseReceived",
+      "requestId": "23116.1987",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "readyForShutdown"
+      }
+    },
+    {
+      "sequence": 4281,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.1988",
+      "type": "XHR",
+      "params": {
+        "command": "getWallAlertAvailability"
+      }
+    },
+    {
+      "sequence": 4284,
+      "method": "Network.responseReceived",
+      "requestId": "23116.1988",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "getWallAlertAvailability"
+      }
+    },
+    {
+      "sequence": 4288,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.1989",
+      "type": "XHR",
+      "params": {
+        "command": "readyForShutdown"
+      }
+    },
+    {
+      "sequence": 4291,
+      "method": "Network.responseReceived",
+      "requestId": "23116.1989",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "readyForShutdown"
+      }
+    },
+    {
+      "sequence": 4301,
+      "method": "Network.responseReceived",
+      "requestId": "23116.1980",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listUserData",
+        "id": "1fc463a9-c04b-4a1d-b1d3-75a9ac8c0e3c",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "sequence": 4303,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.1990",
+      "type": "XHR",
+      "params": {
+        "command": "listAnnotations",
+        "page": "1",
+        "pagesize": "10"
+      }
+    },
+    {
+      "sequence": 4304,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.1991",
+      "type": "XHR",
+      "params": {
+        "command": "listResourceIcon"
+      }
+    },
+    {
+      "sequence": 4305,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.1992",
+      "type": "XHR",
+      "params": {
+        "command": "listAccounts",
+        "name": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f"
+      }
+    },
+    {
+      "sequence": 4308,
+      "method": "Network.responseReceived",
+      "requestId": "23116.1990",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listAnnotations",
+        "page": "1",
+        "pagesize": "10"
+      }
+    },
+    {
+      "sequence": 4312,
+      "method": "Network.responseReceived",
+      "requestId": "23116.1991",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listResourceIcon"
+      }
+    },
+    {
+      "sequence": 4316,
+      "method": "Network.responseReceived",
+      "requestId": "23116.1992",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listAccounts",
+        "name": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f"
+      }
+    },
+    {
+      "sequence": 4321,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.1993",
+      "type": "XHR",
+      "params": {
+        "command": "listUserData",
+        "id": "1fc463a9-c04b-4a1d-b1d3-75a9ac8c0e3c",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "2"
+      }
+    },
+    {
+      "sequence": 4332,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.1994",
+      "type": "XHR",
+      "params": {
+        "command": "listUserData",
+        "id": "1fc463a9-c04b-4a1d-b1d3-75a9ac8c0e3c",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "sequence": 4333,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.1995",
+      "type": "XHR",
+      "params": {
+        "command": "listResourceIcon"
+      }
+    },
+    {
+      "sequence": 4334,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.1996",
+      "type": "XHR",
+      "params": {
+        "command": "listAccounts",
+        "name": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f"
+      }
+    },
+    {
+      "sequence": 4335,
+      "method": "Network.responseReceived",
+      "requestId": "23116.1993",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listUserData",
+        "id": "1fc463a9-c04b-4a1d-b1d3-75a9ac8c0e3c",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "2"
+      }
+    },
+    {
+      "sequence": 4345,
+      "method": "Network.responseReceived",
+      "requestId": "23116.1995",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listResourceIcon"
+      }
+    },
+    {
+      "sequence": 4356,
+      "method": "Network.responseReceived",
+      "requestId": "23116.1994",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listUserData",
+        "id": "1fc463a9-c04b-4a1d-b1d3-75a9ac8c0e3c",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "sequence": 4358,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.1997",
+      "type": "XHR",
+      "params": {
+        "command": "listUserData",
+        "id": "1fc463a9-c04b-4a1d-b1d3-75a9ac8c0e3c",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "2"
+      }
+    },
+    {
+      "sequence": 4359,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.1998",
+      "type": "XHR",
+      "params": {
+        "command": "listResourceIcon"
+      }
+    },
+    {
+      "sequence": 4360,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.1999",
+      "type": "XHR",
+      "params": {
+        "command": "listAccounts",
+        "name": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f"
+      }
+    },
+    {
+      "sequence": 4361,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.2000",
+      "type": "XHR",
+      "params": {
+        "command": "listUserData",
+        "id": "1fc463a9-c04b-4a1d-b1d3-75a9ac8c0e3c",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "2"
+      }
+    },
+    {
+      "sequence": 4365,
+      "method": "Network.responseReceived",
+      "requestId": "23116.1996",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listAccounts",
+        "name": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f"
+      }
+    },
+    {
+      "sequence": 4369,
+      "method": "Network.responseReceived",
+      "requestId": "23116.1998",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listResourceIcon"
+      }
+    },
+    {
+      "sequence": 4373,
+      "method": "Network.responseReceived",
+      "requestId": "23116.1997",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listUserData",
+        "id": "1fc463a9-c04b-4a1d-b1d3-75a9ac8c0e3c",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "2"
+      }
+    },
+    {
+      "sequence": 4377,
+      "method": "Network.responseReceived",
+      "requestId": "23116.1999",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listAccounts",
+        "name": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f"
+      }
+    },
+    {
+      "sequence": 4381,
+      "method": "Network.responseReceived",
+      "requestId": "23116.2000",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listUserData",
+        "id": "1fc463a9-c04b-4a1d-b1d3-75a9ac8c0e3c",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "2"
+      }
+    }
+  ]
+}

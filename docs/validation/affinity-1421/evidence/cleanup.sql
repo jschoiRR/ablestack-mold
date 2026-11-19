@@ -1,0 +1,13 @@
+SELECT 'active_groups',COUNT(*) FROM affinity_group WHERE name LIKE 'qa-ag07-%';
+SELECT 'group_vm_maps',COUNT(*) FROM affinity_group_vm_map m JOIN affinity_group g ON g.id=m.affinity_group_id WHERE g.name LIKE 'qa-ag07-%';
+SELECT 'group_domain_maps',COUNT(*) FROM affinity_group_domain_map m JOIN affinity_group g ON g.id=m.affinity_group_id WHERE g.name LIKE 'qa-ag07-%';
+SELECT 'active_vms',COUNT(*) FROM vm_instance WHERE name LIKE 'qa-ag07-%' AND removed IS NULL;
+SELECT 'active_volumes',COUNT(*) FROM volumes v JOIN vm_instance vm ON vm.id=v.instance_id WHERE vm.name LIKE 'qa-ag07-%' AND v.removed IS NULL;
+SELECT 'active_nics',COUNT(*) FROM nics n JOIN vm_instance vm ON vm.id=n.instance_id WHERE vm.name LIKE 'qa-ag07-%' AND n.removed IS NULL;
+SELECT 'active_networks',COUNT(*) FROM networks WHERE name LIKE 'qa-ag07-%' AND removed IS NULL;
+SELECT 'active_accounts',COUNT(*) FROM account WHERE account_name LIKE 'qa-ag07-%' AND removed IS NULL;
+SELECT 'active_domains',COUNT(*) FROM domain WHERE name LIKE 'qa-ag07-%' AND removed IS NULL;
+SELECT 'active_projects',COUNT(*) FROM projects WHERE name LIKE 'qa-ag07-%' AND removed IS NULL;
+SELECT 'active_roles',COUNT(*) FROM roles WHERE name LIKE 'qa-ag07-%' AND removed IS NULL;
+SELECT 'active_users',COUNT(*) FROM user WHERE username LIKE 'qa-ag07-%' AND removed IS NULL;
+SELECT 'ui_job',uuid,job_status,job_cmd FROM async_job WHERE uuid IN ('7fc87a53-7215-49e0-81cc-941437873b86','60857595-1f7a-4821-86e5-8d5b8c5f063f');

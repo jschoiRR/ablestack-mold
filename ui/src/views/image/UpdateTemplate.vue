@@ -16,9 +16,12 @@
 // under the License.
 
 <template>
-  <div class="form-layout" v-ctrl-enter="handleSubmit">
+  <MoldDialog class="image-userdata-dialog" size="md" :title="$t('label.action.edit.template')" :closable="!loading" :keyboard="!loading" @cancel="closeAction">
+    <a-alert v-if="submitError" ref="error" tabindex="-1" type="error" show-icon role="alert" :message="submitError" />
+    <div ref="content" class="image-userdata-content" v-ctrl-enter="handleSubmit">
     <a-spin :spinning="loading">
       <a-form
+        id="image-userdata-form"
         :ref="formRef"
         :model="form"
         :rules="rules"
@@ -30,8 +33,7 @@
           </template>
           <a-input
             v-model:value="form.name"
-            :placeholder="apiParams.name.description"
-            v-focus="true" />
+            :placeholder="apiParams.name.description" />
         </a-form-item>
         <a-form-item name="displaytext" ref="displaytext">
           <template #label>
@@ -39,8 +41,7 @@
           </template>
           <a-input
             v-model:value="form.displaytext"
-            :placeholder="apiParams.displaytext.description"
-            v-focus="true" />
+            :placeholder="apiParams.displaytext.description" />
         </a-form-item>
         <a-form-item name="passwordenabled" ref="passwordenabled">
           <template #label>
@@ -118,19 +119,8 @@
               name="userdataid"
               ref="userdataid"
               :label="$t('label.user.data')">
-              <a-select
-                showSearch
-                optionFilterProp="label"
-                :filterOption="(input, option) => {
-                  return option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                }"
-                v-model:value="userdataid"
-                :placeholder="linkUserDataParams.userdataid.description"
-                :loading="userdata.loading">
-                <a-select-option v-for="opt in userdata.opts" :key="opt.id" :label="opt.name || opt.description">
-                  {{ opt.name || opt.description }}
-                </a-select-option>
-              </a-select>
+              <UserDataSelection v-if="canLinkUserData" :scope="resource" :value="userdataid || '0'" :disabled="loading" @select-user-data-item="id => { userdataid = id === '0' ? '' : id }" @ready="userDataSelectionReady = $event" />
+              <span v-else>{{ resource.userdataname || resource.userdataid || '-' }}</span>
             </a-form-item>
           </a-col>
           <a-col :md="24" :lg="12">
@@ -141,6 +131,7 @@
               <a-select
                 showSearch
                 v-model:value="userdatapolicy"
+                :disabled="loading || !canLinkUserData"
                 :placeholder="linkUserDataParams.userdatapolicy.description"
                 optionFilterProp="label"
                 :filterOption="(input, option) => {
@@ -220,24 +211,28 @@
           </a-select>
         </a-form-item>
 
-        <div :span="24" class="action-button">
-          <a-button @click="closeAction">{{ $t('label.cancel') }}</a-button>
-          <a-button :loading="loading" ref="submit" type="primary" @click="handleSubmit">{{ $t('label.ok') }}</a-button>
-        </div>
+        <button type="submit" hidden aria-hidden="true" tabindex="-1"></button>
       </a-form>
     </a-spin>
-  </div>
+    </div>
+    <template #footer>
+      <a-button :disabled="loading" @click="closeAction">{{ $t('label.cancel') }}</a-button>
+      <a-button :loading="loading" :disabled="canLinkUserData && !userDataSelectionReady" ref="submit" type="primary" @click="handleSubmit">{{ $t('label.ok') }}</a-button>
+    </template>
+  </MoldDialog>
 </template>
 
 <script>
 import { ref, reactive, toRaw } from 'vue'
 import { getAPI, postAPI } from '@/api'
 import TooltipLabel from '@/components/widgets/TooltipLabel'
+import MoldDialog from '@/components/view/MoldDialog'
+import UserDataSelection from '@/views/compute/wizard/UserDataSelection'
 
 export default {
   name: 'UpdateTemplate',
   components: {
-    TooltipLabel
+    TooltipLabel, MoldDialog, UserDataSelection
   },
   props: {
     resource: {
@@ -256,6 +251,8 @@ export default {
       loading: false,
       selectedTemplateType: '',
       userdata: {},
+      userDataSelectionReady: false,
+      submitError: '',
       userdataid: null,
       userdatapolicy: null,
       userdatapolicylist: {},
@@ -264,6 +261,11 @@ export default {
       detailsFields: [],
       details: {}
     }
+  },
+  mounted () { this.$nextTick(() => { const input = this.$refs.content?.querySelector('input:not([disabled])'); if (input) input.focus() }) },
+  computed: {
+    canLinkUserData () { return ['listUserData', 'linkUserDataToTemplate'].every(api => api in this.$store.getters.apis) },
+    blocksNavigation () { return this.loading }
   },
   beforeCreate () {
     this.apiParams = this.$getApiParams('updateTemplate')
@@ -329,7 +331,6 @@ export default {
       this.fetchRootDiskControllerTypes(this.resource.hypervisor)
       this.fetchNicAdapterTypes()
       this.fetchKeyboardTypes()
-      this.fetchUserdata()
       this.fetchUserdataPolicy()
       this.fetchDetails()
     },
@@ -347,7 +348,7 @@ export default {
       getAPI('listOsTypes', params).then(json => {
         const listOsTypes = json.listostypesresponse.ostype
         this.osTypes.opts = listOsTypes
-      }).finally(() => {
+      }).catch(error => { this.submitError = error.message || this.$t('message.request.failed') }).finally(() => {
         this.osTypes.loading = false
       })
     },
@@ -479,33 +480,6 @@ export default {
       })
       this.userdatapolicylist.opts = userdataPolicy
     },
-    fetchUserdata () {
-      const params = {}
-      params.listAll = true
-
-      this.userdata.opts = []
-      this.userdata.loading = true
-
-      getAPI('listUserData', params).then(json => {
-        const userdataIdAndName = []
-        const userdataOpts = json.listuserdataresponse.userdata
-        userdataIdAndName.push({
-          id: '',
-          name: ''
-        })
-
-        Object.values(userdataOpts).forEach(userdata => {
-          userdataIdAndName.push({
-            id: userdata.id,
-            name: userdata.name
-          })
-        })
-
-        this.userdata.opts = userdataIdAndName
-      }).finally(() => {
-        this.userdata.loading = false
-      })
-    },
     fetchDetails () {
       const params = {}
       params.id = this.resource.id
@@ -523,68 +497,50 @@ export default {
             }
           }
         }
-      })
+      }).catch(error => { this.submitError = error.message || this.$t('message.request.failed') })
     },
-    handleSubmit (e) {
-      e.preventDefault()
-      if (this.loading) return
-      this.formRef.value.validate().then(() => {
-        const values = toRaw(this.form)
-        this.loading = true
-        const params = {
-          id: this.resource.id
+    async handleSubmit (e) {
+      if (e && e.preventDefault) e.preventDefault()
+      if (this.loading || (this.canLinkUserData && !this.userDataSelectionReady)) return
+      this.submitError = ''; this.loading = true
+      try { await this.formRef.value.validate() } catch (error) {
+        if (error.errorFields?.length) {
+          this.formRef.value.scrollToField(error.errorFields[0].name)
+          this.$nextTick(() => { const input = this.$refs.content?.querySelector('.ant-form-item-has-error input'); if (input) input.focus() })
         }
-        if (this.details) {
-          Object.keys(this.details).forEach((detail, index) => {
-            params['details[0].' + detail] = this.details[detail]
-          })
-        }
-        for (const key in values) {
-          if (!this.isValidValueForKey(values, key)) continue
-          if (this.detailsFields.includes(key)) {
-            params['details[0].' + key] = values[key]
-            continue
-          }
-          params[key] = values[key]
-        }
-        params.forceupdateostype = this.form.forceupdateostype || false
-        postAPI('updateTemplate', params).then(json => {
-          if (this.userdataid !== null) {
-            this.linkUserdataToTemplate(this.userdataid, json.updatetemplateresponse.template.id, this.userdatapolicy)
-          }
-          this.$message.success(`${this.$t('message.success.update.template')}: ${this.resource.name}`)
-          this.$emit('refresh-data')
-          this.closeAction()
-        }).catch(error => {
-          this.$notifyError(error)
-        }).finally(() => {
-          this.loading = false
-        })
-      }).catch(error => {
-        this.formRef.value.scrollToField(error.errorFields[0].name)
-      })
-    },
-    closeAction () {
-      this.$emit('close-action')
-    },
-    linkUserdataToTemplate (userdataid, templateid, userdatapolicy) {
-      this.loading = true
-      const params = {}
-      if (userdataid && userdataid.length > 0) {
-        params.userdataid = userdataid
-      }
-      params.templateid = templateid
-      if (userdatapolicy) {
-        params.userdatapolicy = userdatapolicy
-      }
-      postAPI('linkUserDataToTemplate', params).then(json => {
-        this.closeAction()
-      }).catch(error => {
-        this.$notifyError(error)
-      }).finally(() => {
         this.loading = false
-      })
+        return
+      }
+      const values = toRaw(this.form)
+      const params = { id: this.resource.id }
+      if (this.details) Object.keys(this.details).forEach(detail => { params['details[0].' + detail] = this.details[detail] })
+      for (const key in values) {
+        if (!this.isValidValueForKey(values, key)) continue
+        if (this.detailsFields.includes(key)) { params['details[0].' + key] = values[key]; continue }
+        params[key] = values[key]
+      }
+      params.forceupdateostype = this.form.forceupdateostype || false
+      const changed = this.canLinkUserData && ((this.userdataid || '') !== (this.resource.userdataid || '') || String(this.userdatapolicy || '').toUpperCase() !== String(this.resource.userdatapolicy || '').toUpperCase())
+      const link = { templateid: this.resource.id, ignoreproject: true, ...(this.resource.projectid ? { projectid: this.resource.projectid } : {}), ...(this.userdataid ? { userdataid: this.userdataid, userdatapolicy: this.userdatapolicy || 'ALLOWOVERRIDE' } : {}) }
+      this.loading = true
+      let updated = false
+      try {
+        await postAPI('updateTemplate', params, { preserveOnFailure: true })
+        updated = true
+        if (changed) await postAPI('linkUserDataToTemplate', link, { preserveOnFailure: true })
+        this.$message.success(`${this.$t('message.success.update.template')}: ${this.resource.name}`)
+        this.$emit('refresh-data')
+        this.$emit('close-action')
+      } catch (error) {
+        this.submitError = (updated ? this.$t('message.userdata.image.partial') + ' ' : '') + (error.response?.headers?.['x-description'] || error.message || this.$t('message.request.failed'))
+        if (updated) this.$emit('refresh-data')
+        this.$nextTick(() => {
+          const alert = this.$refs.error?.$el
+          if (alert) { alert.scrollIntoView({ block: 'nearest' }); alert.focus({ preventScroll: true }) }
+        })
+      } finally { this.loading = false }
     },
+    closeAction () { if (!this.loading) this.$emit('close-action') },
     hasOstypeidChanged () {
       return this.form.ostypeid !== this.originalOstypeid
     }
@@ -593,11 +549,7 @@ export default {
 </script>
 
 <style scoped lang="less">
-  .form-layout {
-    width: 60vw;
-
-    @media (min-width: 500px) {
-      width: 450px;
-    }
-  }
+.image-userdata-content { min-width: 0; }
+.image-userdata-content :deep(.ant-form-item) { margin-bottom: 20px; }
+.image-userdata-dialog :deep(.ant-alert) { margin-bottom: 16px; }
 </style>

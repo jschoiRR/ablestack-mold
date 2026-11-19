@@ -1,0 +1,283 @@
+[
+  {
+    "name": "cni1406-account-clone",
+    "id": "b1d9995b-6d6a-410b-ae5b-bc067502d01c",
+    "sourceid": "4eb9386a-2626-436b-ba0a-3bdfdf0c1b80",
+    "kind": "CNI",
+    "owner": {
+      "domainid": "477398b2-a3f9-4ea9-8d98-90054f646115",
+      "account": "cni1406-a"
+    },
+    "bytes": 66,
+    "body_sha256": "cb913f2584228c82fa8151da0b0358d3679740e1335a66bcd019e7cf5b9aaae8",
+    "params": "NEW",
+    "relation": {
+      "version": 1,
+      "sourceid": "4eb9386a-2626-436b-ba0a-3bdfdf0c1b80",
+      "targetid": "b1d9995b-6d6a-410b-ae5b-bc067502d01c",
+      "owner": {
+        "domainid": "477398b2-a3f9-4ea9-8d98-90054f646115",
+        "account": "cni1406-a"
+      },
+      "before": 86,
+      "after": 66
+    },
+    "relation_chunks": 2,
+    "case": "account success"
+  },
+  {
+    "name": "cni1406-lost-response",
+    "id": "6de467f7-0b7f-4a55-8fea-88e7977045b7",
+    "sourceid": "4eb9386a-2626-436b-ba0a-3bdfdf0c1b80",
+    "kind": "CNI",
+    "owner": {
+      "domainid": "477398b2-a3f9-4ea9-8d98-90054f646115",
+      "account": "cni1406-a"
+    },
+    "bytes": 86,
+    "body_sha256": "c661fd396f81a9803c30805dee1e70f4a68ffd5c5018cd61c0f06cee9cad66e7",
+    "params": "VALUE,AS_NUMBER",
+    "relation": {
+      "version": 1,
+      "sourceid": "4eb9386a-2626-436b-ba0a-3bdfdf0c1b80",
+      "targetid": "6de467f7-0b7f-4a55-8fea-88e7977045b7",
+      "owner": {
+        "domainid": "477398b2-a3f9-4ea9-8d98-90054f646115",
+        "account": "cni1406-a"
+      },
+      "before": 86,
+      "after": 86
+    },
+    "relation_chunks": 2,
+    "case": "real registration committed response lost then reconcile"
+  },
+  {
+    "name": "cni1406-partial-relation",
+    "id": "bb9b8b7d-4b24-4b19-8884-8d75e23b0fa3",
+    "sourceid": "4eb9386a-2626-436b-ba0a-3bdfdf0c1b80",
+    "kind": "CNI",
+    "owner": {
+      "domainid": "477398b2-a3f9-4ea9-8d98-90054f646115",
+      "account": "cni1406-a"
+    },
+    "bytes": 86,
+    "body_sha256": "c661fd396f81a9803c30805dee1e70f4a68ffd5c5018cd61c0f06cee9cad66e7",
+    "params": "VALUE,AS_NUMBER",
+    "relation": {
+      "version": 1,
+      "sourceid": "4eb9386a-2626-436b-ba0a-3bdfdf0c1b80",
+      "targetid": "bb9b8b7d-4b24-4b19-8884-8d75e23b0fa3",
+      "owner": {
+        "domainid": "477398b2-a3f9-4ea9-8d98-90054f646115",
+        "account": "cni1406-a"
+      },
+      "before": 86,
+      "after": 86
+    },
+    "relation_chunks": 2,
+    "case": "real first chunk, second write 403, read-back paused until timeout, metadata-only retry"
+  },
+  {
+    "name": "cni1406-permission-retry",
+    "id": "82f04d5a-d51c-474c-a3f1-8ecf0bd2b119",
+    "sourceid": "4eb9386a-2626-436b-ba0a-3bdfdf0c1b80",
+    "kind": "CNI",
+    "owner": {
+      "domainid": "477398b2-a3f9-4ea9-8d98-90054f646115",
+      "account": "cni1406-a"
+    },
+    "bytes": 86,
+    "body_sha256": "c661fd396f81a9803c30805dee1e70f4a68ffd5c5018cd61c0f06cee9cad66e7",
+    "params": "VALUE,AS_NUMBER",
+    "relation": {
+      "version": 1,
+      "sourceid": "4eb9386a-2626-436b-ba0a-3bdfdf0c1b80",
+      "targetid": "82f04d5a-d51c-474c-a3f1-8ecf0bd2b119",
+      "owner": {
+        "domainid": "477398b2-a3f9-4ea9-8d98-90054f646115",
+        "account": "cni1406-a"
+      },
+      "before": 86,
+      "after": 86
+    },
+    "relation_chunks": 2,
+    "case": "normal control registration; no fault matched"
+  },
+  {
+    "name": "cni1406-relation-403",
+    "id": "e417889d-f44f-44bb-9417-fe11c54904ab",
+    "sourceid": "4eb9386a-2626-436b-ba0a-3bdfdf0c1b80",
+    "kind": "CNI",
+    "owner": {
+      "domainid": "477398b2-a3f9-4ea9-8d98-90054f646115",
+      "account": "cni1406-a"
+    },
+    "bytes": 86,
+    "body_sha256": "c661fd396f81a9803c30805dee1e70f4a68ffd5c5018cd61c0f06cee9cad66e7",
+    "params": "VALUE,AS_NUMBER",
+    "relation": {
+      "version": 1,
+      "sourceid": "4eb9386a-2626-436b-ba0a-3bdfdf0c1b80",
+      "targetid": "e417889d-f44f-44bb-9417-fe11c54904ab",
+      "owner": {
+        "domainid": "477398b2-a3f9-4ea9-8d98-90054f646115",
+        "account": "cni1406-a"
+      },
+      "before": 86,
+      "after": 86
+    },
+    "relation_chunks": 2,
+    "case": "isolated second relation write 403, real partial confirmed by API, metadata-only retry"
+  },
+  {
+    "name": "cni1406-owner-binary",
+    "id": "aede8967-f4d6-4602-b825-1524cd7bb0c1",
+    "sourceid": "d4d8eedc-d2f9-4bbf-a077-8ce425c623d5",
+    "kind": "CNI",
+    "owner": {
+      "domainid": "477398b2-a3f9-4ea9-8d98-90054f646115",
+      "account": "cni1406-a"
+    },
+    "bytes": 4,
+    "body_sha256": "fcac58980f5053b60bc41f02af0a17a9003f5377edfaed7735cd433452f09069",
+    "params": "",
+    "relation": {
+      "version": 1,
+      "sourceid": "d4d8eedc-d2f9-4bbf-a077-8ce425c623d5",
+      "targetid": "aede8967-f4d6-4602-b825-1524cd7bb0c1",
+      "owner": {
+        "domainid": "477398b2-a3f9-4ea9-8d98-90054f646115",
+        "account": "cni1406-a"
+      },
+      "before": 4,
+      "after": 4
+    },
+    "relation_chunks": 2,
+    "case": "ordinary owner binary byte-preserving clone"
+  },
+  {
+    "name": "cni1406-project-clone",
+    "id": "1b208ccb-4a3d-405a-a95f-0e33f12cff47",
+    "sourceid": "093a4352-a25e-42fd-bf9a-201796a434e5",
+    "kind": "CNI",
+    "owner": {
+      "domainid": "477398b2-a3f9-4ea9-8d98-90054f646115",
+      "projectid": "e6148726-eea7-4139-a72a-f47591e77f7d"
+    },
+    "bytes": 86,
+    "body_sha256": "c661fd396f81a9803c30805dee1e70f4a68ffd5c5018cd61c0f06cee9cad66e7",
+    "params": "VALUE,AS_NUMBER",
+    "relation": {
+      "version": 1,
+      "sourceid": "093a4352-a25e-42fd-bf9a-201796a434e5",
+      "targetid": "1b208ccb-4a3d-405a-a95f-0e33f12cff47",
+      "owner": {
+        "domainid": "477398b2-a3f9-4ea9-8d98-90054f646115",
+        "projectid": "e6148726-eea7-4139-a72a-f47591e77f7d"
+      },
+      "before": 86,
+      "after": 86
+    },
+    "relation_chunks": 3,
+    "case": "ordinary project owner BOM CRLF UTF8 clone"
+  },
+  {
+    "name": "cni1406-in-use-clone",
+    "id": "10a4fee0-26df-4eca-a08f-523f27e20e3d",
+    "sourceid": "12e8d455-f0b8-4940-8b53-43088c644f43",
+    "kind": "CNI",
+    "owner": {
+      "domainid": "477398b2-a3f9-4ea9-8d98-90054f646115",
+      "projectid": "e6148726-eea7-4139-a72a-f47591e77f7d"
+    },
+    "bytes": 1895,
+    "body_sha256": "4f453d33564319eb69ee46159576a3e23d2f764c2f290cfa792635e97f876a0f",
+    "params": "VALUE,EMPTY,AS_NUMBER,LINES",
+    "relation": {
+      "version": 1,
+      "sourceid": "12e8d455-f0b8-4940-8b53-43088c644f43",
+      "targetid": "10a4fee0-26df-4eca-a08f-523f27e20e3d",
+      "owner": {
+        "domainid": "477398b2-a3f9-4ea9-8d98-90054f646115",
+        "projectid": "e6148726-eea7-4139-a72a-f47591e77f7d"
+      },
+      "before": 1895,
+      "after": 1895
+    },
+    "relation_chunks": 3,
+    "case": "clone in-use original without changing its cluster reference"
+  },
+  {
+    "name": "cni1406-normal-clone",
+    "id": "3f678d7a-1647-4309-adf5-4e22cf8658e6",
+    "sourceid": "b05261e8-aba9-41cc-ae38-c2a7a4cd22c1",
+    "kind": "UserData",
+    "owner": {
+      "domainid": "477398b2-a3f9-4ea9-8d98-90054f646115",
+      "account": "cni1406-a"
+    },
+    "bytes": 47,
+    "body_sha256": "143615bd8bd3710084891cd1588c7bc6be04a3c838559ee4b3d983bd50cb7522",
+    "params": "",
+    "relation": {
+      "sourceid": "b05261e8-aba9-41cc-ae38-c2a7a4cd22c1",
+      "targetid": "3f678d7a-1647-4309-adf5-4e22cf8658e6",
+      "before": 20,
+      "after": 47
+    },
+    "relation_chunks": 1,
+    "case": "ordinary UserData API and provenance regression"
+  },
+  {
+    "name": "cni1406-final-confirmed",
+    "id": "11eca2f6-fc42-4498-a6f6-9dd2f4e4c948",
+    "sourceid": "41828e36-f189-4795-baaa-9afecccab79b",
+    "kind": "CNI",
+    "owner": {
+      "domainid": "477398b2-a3f9-4ea9-8d98-90054f646115",
+      "account": "cni1406-a"
+    },
+    "bytes": 9254,
+    "body_sha256": "fb089f6759d8a5138ecc295aeaf2d4b50a529da5ffc743016ecc714f54fcf6b7",
+    "params": "VALUE,AS_NUMBER",
+    "relation": {
+      "version": 1,
+      "sourceid": "41828e36-f189-4795-baaa-9afecccab79b",
+      "targetid": "11eca2f6-fc42-4498-a6f6-9dd2f4e4c948",
+      "owner": {
+        "domainid": "477398b2-a3f9-4ea9-8d98-90054f646115",
+        "account": "cni1406-a"
+      },
+      "before": 86,
+      "after": 9254
+    },
+    "relation_chunks": 2,
+    "case": "long-source 9254 UTF8 bytes; second annotation 403 then metadata-only retry"
+  },
+  {
+    "name": "cni1406-final-deployed",
+    "id": "52e8f1fd-b3bd-4d8e-b89b-468db5477cef",
+    "sourceid": "41828e36-f189-4795-baaa-9afecccab79b",
+    "kind": "CNI",
+    "owner": {
+      "domainid": "477398b2-a3f9-4ea9-8d98-90054f646115",
+      "account": "cni1406-a"
+    },
+    "bytes": 9254,
+    "body_sha256": "fb089f6759d8a5138ecc295aeaf2d4b50a529da5ffc743016ecc714f54fcf6b7",
+    "params": "VALUE,AS_NUMBER",
+    "relation": {
+      "version": 1,
+      "sourceid": "41828e36-f189-4795-baaa-9afecccab79b",
+      "targetid": "52e8f1fd-b3bd-4d8e-b89b-468db5477cef",
+      "owner": {
+        "domainid": "477398b2-a3f9-4ea9-8d98-90054f646115",
+        "account": "cni1406-a"
+      },
+      "before": 86,
+      "after": 9254
+    },
+    "relation_chunks": 2,
+    "case": "final deployed build; 9254 UTF8 bytes; second annotation POST403 and metadata-only retry"
+  }
+]

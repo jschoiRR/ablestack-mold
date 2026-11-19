@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="910" viewBox="0 0 1800 910">
+<rect width="100%" height="100%" fill="white"/>
+<text x="72" y="48" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="52" font-weight="700" fill="#172B45">RPM을 서버 역할별로 나누기</text>
+<text x="72" y="127" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="36" font-weight="400" fill="#506378">같은 빌드에서 생성한 management · agent · common · usage · ui RPM을 사용합니다</text>
+<rect x="540" y="210" width="720" height="118" rx="18" fill="#F0F7FF" stroke="none" stroke-width="2"/>
+<text x="585" y="246" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="42" font-weight="700" fill="#172B45">연구소 빌드서버의 RPM 결과</text>
+<polyline points="900,333 900,378 450,378 450,420" fill="none" stroke="#146CBA" stroke-width="4"/>
+<polyline points="450,402 450,426" fill="none" stroke="#146CBA" stroke-width="4"/>
+<polygon points="450,426 458.0,410.0 442.0,410.0" fill="#146CBA"/>
+<polyline points="900,378 1350,378 1350,420" fill="none" stroke="#008878" stroke-width="4"/>
+<polyline points="1350,402 1350,426" fill="none" stroke="#008878" stroke-width="4"/>
+<polygon points="1350,426 1358.0,410.0 1342.0,410.0" fill="#008878"/>
+<rect x="72" y="430" width="784" height="360" rx="20" fill="#F0F7FF" stroke="none" stroke-width="2"/>
+<text x="102" y="462" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="46" font-weight="700" fill="#172B45">CCVM  ·  4개</text>
+<text x="102" y="545" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="40" font-weight="700" fill="#146CBA">cloudstack-management-*.rpm</text>
+<text x="102" y="601" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="40" font-weight="700" fill="#146CBA">cloudstack-common-*.rpm</text>
+<text x="102" y="657" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="40" font-weight="700" fill="#146CBA">cloudstack-usage-*.rpm</text>
+<text x="102" y="713" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="40" font-weight="700" fill="#146CBA">cloudstack-ui-*.rpm</text>
+<rect x="944" y="430" width="784" height="360" rx="20" fill="#EFF9F6" stroke="none" stroke-width="2"/>
+<text x="974" y="462" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="46" font-weight="700" fill="#172B45">KVM 호스트  ·  2개</text>
+<text x="974" y="545" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="40" font-weight="700" fill="#008878">cloudstack-agent-*.rpm</text>
+<text x="974" y="601" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="40" font-weight="700" fill="#008878">cloudstack-common-*.rpm</text>
+<text x="72" y="831" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="36" font-weight="700" fill="#172B45">common은 CCVM과 KVM 호스트에 모두 필요합니다. 서로 다른 버전을 섞지 않습니다.</text>
+</svg>

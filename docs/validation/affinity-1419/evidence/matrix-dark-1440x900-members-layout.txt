@@ -1,0 +1,159 @@
+- generic: 페이지 스타일 설정
+- button "닫기":
+  - img "close":
+- heading "페이지 스타일 설정" [level=3]
+- radio
+- radio [checked]
+- img "check":
+- heading "테마 색상" [level=3]
+- radio
+- img "check"
+- radio
+- radio
+- radio
+- radio
+- radio
+- radio
+- radio
+- separator
+- heading "네비게이션 설정" [level=3]
+- generic: 배경색
+- textbox [disabled]: "#ffffff"
+- generic: 텍스트 색상
+- textbox [disabled]: "#000000"
+- separator
+- alert:
+  - img "exclamation-circle":
+  - generic: "설정은 현재 브라우저에서만 볼 수 있습니다. 설정을 적용하려면 JSON 파일을 다운로드하고 경로 `/public/config.json` 아래의 `config.json` 파일의 `theme` 섹션에서 해당 콘텐츠를 교체하세요."
+- button "download 세팅값 다운로드(json)":
+  - img "download":
+  - generic: 세팅값 다운로드(json)
+- button "undo 기본값으로 재설정":
+  - img "undo":
+  - generic: 기본값으로 재설정
+- img "menu-unfold":
+- combobox
+- img "project":
+- text: 기본 보기
+- img "translation"
+- img "bell":
+- generic: AC
+- generic: admin cloud
+- main:
+  - link "home":
+    - /url: "#/"
+    - img "home":
+  - text: /
+  - link "Affinity 그룹":
+    - /url: "#/affinitygroup"
+  - text: /
+  - generic: qa-ag06-cold-prefer-anti
+  - link "question-circle":
+    - /url: http://docs.ablecloud.io/latest/adminguide/virtual_machines.html#affinity-groups
+    - img "question-circle":
+  - button "reload 업데이트":
+    - img "reload":
+    - generic: 업데이트
+  - button "down 작업":
+    - img "down":
+    - generic: 작업
+  - img "swap":
+  - heading "qa-ag06-cold-prefer-anti" [level=4]
+  - generic "non-strict host anti-affinity": 다른 호스트 분산 우선 · 선호
+  - separator
+  - generic: 아이디
+  - button "barcode":
+    - img "barcode":
+  - link "d26506c1-bd02-4665-8542-58f9bcc35f6e":
+    - /url: javascript:;
+  - paragraph: 가능하면 서로 다른 호스트에 분산합니다. 조건을 만족하지 못하면 같은 호스트에도 배치할 수 있습니다.
+  - generic: 연결 VM 수
+  - generic: "2"
+  - generic: 계정
+  - img "user":
+  - link "admin":
+    - /url: "#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f"
+  - generic: 도메인
+  - img "block":
+  - link "ROOT":
+    - /url: "#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details"
+  - separator
+  - link "cloud-server 가상머신 보기":
+    - /url: "#/vm?affinitygroupid=d26506c1-bd02-4665-8542-58f9bcc35f6e"
+    - button "cloud-server 가상머신 보기":
+      - img "cloud-server":
+      - generic: 가상머신 보기
+  - tablist:
+    - tab "상세"
+    - tab "가상머신" [active] [selected]
+    - tab "이벤트"
+  - tabpanel "가상머신":
+    - heading "연결 가상머신" [level=3]
+    - paragraph: 중지된 일반 가상머신의 대상 그룹 연결만 변경합니다. 다른 Affinity 그룹 연결은 유지하며 VM을 자동 중지하지 않습니다.
+    - status: "연결 VM 수: 2 · 조회 결과: 2"
+    - button "가상머신 연결":
+      - generic: 가상머신 연결
+    - button "선택 연결 해제 (0)" [disabled]:
+      - generic: 선택 연결 해제 (0)
+    - textbox "가상머신 검색":
+      - /placeholder: 검색
+    - button "search":
+      - img "search":
+    - button "업데이트":
+      - img "reload":
+    - region "연결 가상머신":
+      - table:
+        - rowgroup:
+          - row "표시 이름 상태 호스트 계정 프로젝트 도메인 연결 관리 제한 사유":
+            - columnheader:
+              - checkbox [disabled]
+            - columnheader "표시 이름"
+            - columnheader "상태"
+            - columnheader "호스트"
+            - columnheader "계정"
+            - columnheader "프로젝트"
+            - columnheader "도메인"
+            - columnheader "연결 관리 제한 사유"
+        - rowgroup:
+          - row "qa-ag06-cold-vm-01 qa-ag06-cold-vm-01 i-2-679-VM 실행 중 ablecube31-3 admin — ROOT Affinity 그룹 변경은 정지된 일반 VM에서 사용할 수 있습니다. VM 상태와 지원 여부를 확인하세요.":
+            - cell "qa-ag06-cold-vm-01":
+              - checkbox "qa-ag06-cold-vm-01" [disabled]
+            - cell "qa-ag06-cold-vm-01 i-2-679-VM":
+              - link "qa-ag06-cold-vm-01":
+                - /url: "#/vm/612124f9-66e0-4a3a-8a01-dadee3c0d45b"
+              - generic: i-2-679-VM
+            - cell "실행 중":
+              - generic: 실행 중
+            - cell "ablecube31-3"
+            - cell "admin"
+            - cell "—"
+            - cell "ROOT"
+            - cell "Affinity 그룹 변경은 정지된 일반 VM에서 사용할 수 있습니다. VM 상태와 지원 여부를 확인하세요."
+          - row "qa-ag06-cold-vm-02 qa-ag06-cold-vm-02 i-2-680-VM 실행 중 ablecube31-2 admin — ROOT Affinity 그룹 변경은 정지된 일반 VM에서 사용할 수 있습니다. VM 상태와 지원 여부를 확인하세요.":
+            - cell "qa-ag06-cold-vm-02":
+              - checkbox "qa-ag06-cold-vm-02" [disabled]
+            - cell "qa-ag06-cold-vm-02 i-2-680-VM":
+              - link "qa-ag06-cold-vm-02":
+                - /url: "#/vm/0ab52c7b-6099-4aff-ae76-6bfbe81908d0"
+              - generic: i-2-680-VM
+            - cell "실행 중":
+              - generic: 실행 중
+            - cell "ablecube31-2"
+            - cell "admin"
+            - cell "—"
+            - cell "ROOT"
+            - cell "Affinity 그룹 변경은 정지된 일반 VM에서 사용할 수 있습니다. VM 상태와 지원 여부를 확인하세요."
+    - list:
+      - listitem "이전 페이지":
+        - button "left" [disabled]:
+          - img "left":
+      - listitem "1":
+        - generic: "1"
+      - listitem "다음 페이지":
+        - button "right" [disabled]:
+          - img "right":
+      - combobox
+      - generic: 10 / 쪽
+- alert:
+  - img "info-circle":
+  - generic: Wall 모니터링을 사용할 수 없습니다. 기존 알림은 최신 정보가 아닐 수 있으며 Mold는 계속 사용할 수 있습니다. 비활성

@@ -16,13 +16,17 @@
 // under the License.
 
 <template>
-  <div>
+  <div class="affinity-group-selection">
     {{ $t('message.select.affinity.groups') }}
+    <a-alert v-if="error" type="error" show-icon :message="error.startsWith('message.') ? $t(error) : error">
+      <template #description><a-button size="small" :loading="loading" @click="requestPage">{{ $t('label.retry') }}</a-button></template>
+    </a-alert>
     <a-input-search
-      style="width: 25vw;float: right;margin-bottom: 10px; z-index: 8"
+      style="width: 100%; margin: 10px 0"
       :placeholder="$t('label.search')"
       v-model:value="filter"
       @search="handleSearch" />
+    <affinity-selection-summary :key="selectionScope" :ids="selectedRowKeys" :groups="items" @change="onSelectChange" />
     <a-table
       :loading="loading"
       :columns="columns"
@@ -31,8 +35,12 @@
       :pagination="false"
       :rowSelection="rowSelection"
       size="middle"
-      :scroll="{ y: 225 }"
+      :scroll="{ x: 640, y: 225 }"
     >
+      <template #bodyCell="{ column, record }">
+        <AffinityGroupPolicy v-if="column.dataIndex === 'type'" :type="record.type" compact />
+        <template v-else>{{ record[column.dataIndex] }}</template>
+      </template>
     </a-table>
 
     <div style="display: block; text-align: right;">
@@ -44,7 +52,6 @@
         :showTotal="total => `${$t('label.total')} ${total} ${$t('label.items')}`"
         :pageSizeOptions="['10', '20', '40', '80', '100', '200']"
         @change="onChangePage"
-        @showSizeChange="onChangePageSize"
         showSizeChanger>
         <template #buildOptionText="props">
           <span>{{ props.value }} / {{ $t('label.page') }}</span>
@@ -55,11 +62,17 @@
 </template>
 
 <script>
-import _ from 'lodash'
+import { affinitySelectionIds, affinitySelectionScope } from '@/utils/affinityGroupSelection'
+import AffinitySelectionSummary from './AffinitySelectionSummary.vue'
+import AffinityGroupPolicy from '../AffinityGroupPolicy.vue'
 
 export default {
   name: 'AffinityGroupSelection',
+  components: { AffinitySelectionSummary, AffinityGroupPolicy },
+  emits: ['select-affinity-group-item', 'handle-search-filter'],
   props: {
+    owner: { type: Object, default: () => ({}) },
+    error: { type: String, default: '' },
     items: {
       type: Array,
       default: () => []
@@ -78,7 +91,7 @@ export default {
     },
     preFillContent: {
       type: Object,
-      default: () => {}
+      default: () => ({})
     },
     zoneId: {
       type: String,
@@ -106,7 +119,8 @@ export default {
         }
       ],
       selectedRowKeys: [],
-      oldZoneId: null,
+      prefillApplied: false,
+      selectionEdited: false,
       options: {
         page: 1,
         pageSize: 10,
@@ -115,61 +129,74 @@ export default {
     }
   },
   computed: {
+    selectionScope () { return affinitySelectionScope(this.$store, this.owner, this.zoneId) },
     rowSelection () {
       return {
         type: 'checkbox',
         selectedRowKeys: this.selectedRowKeys,
-        onChange: (rows) => {
-          this.$emit('select-affinity-group-item', rows)
-        }
+        preserveSelectedRowKeys: true,
+        onChange: this.onSelectChange
       }
     }
   },
   watch: {
-    value (newValue, oldValue) {
-      if (newValue && !_.isEqual(newValue, oldValue)) {
-        this.selectedRowKeys = newValue
-      }
+    value: {
+      immediate: true,
+      handler (value) { this.selectedRowKeys = affinitySelectionIds(value) }
     },
-    loading () {
-      if (!this.loading) {
-        if (this.preFillContent.affinitygroupids) {
-          this.selectedRowKeys = this.preFillContent.affinitygroupids
-          this.$emit('select-affinity-group-item', this.preFillContent.affinitygroupids)
-        } else {
-          if (this.oldZoneId === this.zoneId) {
-            return
-          }
-          this.oldZoneId = this.zoneId
-          this.selectedRowKeys = []
-          this.$emit('select-affinity-group-item', null)
+    preFillContent: {
+      immediate: true,
+      deep: true,
+      handler (content) {
+        if (this.prefillApplied || this.selectionEdited || !content?.affinitygroupids?.length) return
+        this.prefillApplied = true
+        if (!this.selectedRowKeys.length) {
+          this.selectedRowKeys = affinitySelectionIds(content.affinitygroupids)
+          this.$emit('select-affinity-group-item', [...this.selectedRowKeys])
         }
       }
+    },
+    selectionScope (scope, previousScope) {
+      const previous = JSON.parse(previousScope)
+      const next = JSON.parse(scope)
+      const initialZone = !previous[4] && next[4] && JSON.stringify(previous.slice(0, 4)) === JSON.stringify(next.slice(0, 4))
+      if (!initialZone || this.selectionEdited) {
+        this.prefillApplied = true
+        this.onSelectChange([])
+      }
+      this.filter = ''
+      this.options = { page: 1, pageSize: this.options.pageSize, keyword: null }
+      this.requestPage()
     }
   },
   methods: {
+    onSelectChange (ids) {
+      this.selectionEdited = true
+      this.selectedRowKeys = affinitySelectionIds(ids)
+      this.$emit('select-affinity-group-item', [...this.selectedRowKeys])
+    },
+    requestPage () { this.$emit('handle-search-filter', { ...this.options }) },
     handleSearch (value) {
       this.filter = value
       this.options.page = 1
-      this.options.pageSize = 10
       this.options.keyword = this.filter
-      this.$emit('handle-search-filter', this.options)
+      this.requestPage()
     },
     onChangePage (page, pageSize) {
-      this.options.page = page
+      this.options.page = pageSize !== this.options.pageSize ? 1 : page
       this.options.pageSize = pageSize
-      this.$emit('handle-search-filter', this.options)
-    },
-    onChangePageSize (page, pageSize) {
-      this.options.page = page
-      this.options.pageSize = pageSize
-      this.$emit('handle-search-filter', this.options)
+      this.requestPage()
     }
   }
 }
 </script>
 
 <style lang="less" scoped>
+  .affinity-group-selection { min-width: 0; }
+  .affinity-group-selection :deep(.ant-table-cell) { overflow-wrap: anywhere; }
+  // Override the common mobile/tablet table minimum only inside this selector.
+  .affinity-group-selection :deep(.ant-table-body) { min-width: 0 !important; max-width: 100%; }
+  .affinity-group-selection :deep(.ant-pagination) { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 4px; max-width: 100%; }
   .ant-table-wrapper {
     margin: 2rem 0;
   }

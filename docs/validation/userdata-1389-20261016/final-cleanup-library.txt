@@ -1,0 +1,213 @@
+Browser tab: 4, Title: "사용자 데이터 라이브러리 - ABLESTACK-Mold", URL: "http://10.10.31.10:8080/client/#/userdata".
+1 AXWebArea 사용자 데이터 라이브러리 - ABLESTACK-Mold, URL: 10.10.31.10:8080/client/#/userdata
+	2 container
+		192 container
+			193 image
+			194 menu
+				195 dashboard 대시보드
+					196 link Description: dashboard 대시보드, Value: 10.10.31.10:8080/client/#/dashboard
+				197 container
+					198 image cloud
+					199 text 컴퓨트
+				200 content list sub_menu_77_$$_/compute-popup
+					201 cloud-server 가상머신
+						202 link Description: cloud-server 가상머신, Value: 10.10.31.10:8080/client/#/vm
+					203 camera VM 스냅샷
+						204 link Description: camera VM 스냅샷, Value: 10.10.31.10:8080/client/#/vmsnapshot
+					205 쿠버네티스
+						206 link Description: 쿠버네티스, Value: 10.10.31.10:8080/client/#/kubernetes
+					207 fullscreen 오토스케일 VM 그룹
+						208 link Description: fullscreen 오토스케일 VM 그룹, Value: 10.10.31.10:8080/client/#/autoscalevmgroup
+					209 gold 가상머신 그룹
+						210 link Description: gold 가상머신 그룹, Value: 10.10.31.10:8080/client/#/vmgroup
+					211 key SSH 키 쌍
+						212 link Description: key SSH 키 쌍, Value: 10.10.31.10:8080/client/#/ssh
+					213 solution 사용자 데이터 라이브러리
+						214 link Description: solution 사용자 데이터 라이브러리, Value: 10.10.31.10:8080/client/#/userdata
+					215 solution CNI 구성
+						216 link Description: solution CNI 구성, Value: 10.10.31.10:8080/client/#/cniconfiguration
+					217 swap Affinity 그룹
+						218 link Description: swap Affinity 그룹, Value: 10.10.31.10:8080/client/#/affinitygroup
+				219 container
+					220 image hdd
+					221 text 스토리지
+				222 container
+					223 image wifi
+					224 text 네트워크
+				225 container
+					226 image picture
+					227 text 이미지
+				228 container
+					229 image lock
+					230 text 키 관리
+				231 schedule 이벤트
+					232 link Description: schedule 이벤트, Value: 10.10.31.10:8080/client/#/event
+				233 project 프로젝트
+					234 link Description: project 프로젝트, Value: 10.10.31.10:8080/client/#/project
+				235 idcard 역할
+					236 link Description: idcard 역할, Value: 10.10.31.10:8080/client/#/role
+				237 team 계정
+					238 link Description: team 계정, Value: 10.10.31.10:8080/client/#/account
+				239 block 도메인
+					240 link Description: block 도메인, Value: 10.10.31.10:8080/client/#/domain
+				241 container
+					242 image bank
+					243 text 인프라스트럭쳐
+				244 container
+					245 image shopping
+					246 text 서비스 오퍼링
+				247 container
+					248 image setting
+					249 text 구성
+				250 appstore-add 확장
+					251 link Description: appstore-add 확장, Value: 10.10.31.10:8080/client/#/extension
+				252 container
+					253 image tool
+					254 text 도구
+				255 read API 문서
+					256 link Description: read API 문서, Value: 10.10.31.10:8080/client/#/apidocs/
+		49 container
+			50 text 페이지 스타일 설정
+			51 button 닫기
+				52 image close
+			53 heading 페이지 스타일 설정, Value: 3
+				54 text 페이지 스타일 설정
+			55 container
+				56 container
+					57 image
+					58 container
+						59 radio button (settable, integer) Description:  , Value: 0
+				60 container
+					61 image
+					62 container
+						63 radio button (settable, integer) Description:  , Value: 1
+					64 image check
+			65 heading 테마 색상, Value: 3
+				66 text 테마 색상
+			67 container
+				68 container
+					69 radio button (settable, integer) Description:  , Value: 0
+					70 image check
+				71 container
+					72 radio button (settable, integer) Description:  , Value: 0
+				73 container
+					74 radio button (settable, integer) Description:  , Value: 0
+				75 container
+					76 radio button (settable, integer) Description:  , Value: 0
+				77 container
+					78 radio button (settable, integer) Description:  , Value: 0
+				79 container
+					80 radio button (settable, integer) Description:  , Value: 0
+				81 container
+					82 radio button (settable, integer) Description:  , Value: 0
+				83 container
+					84 radio button (settable, integer) Description:  , Value: 0
+			85 heading 네비게이션 설정, Value: 3
+				86 text 네비게이션 설정
+			87 container
+				88 container
+					89 text 배경색
+					90 color well (disabled, settable) #ffffff
+				91 container
+					92 text 텍스트 색상
+					93 color well (disabled, settable) #000000
+			94 container
+				95 image exclamation-circle
+				96 text 설정은 현재 브라우저에서만 볼 수 있습니다. 설정을 적용하려면 JSON 파일을 다운로드하고 경로 `/public/config.json` 아래의 `config.json` 파일의 `theme` 섹션에서 해당 콘텐츠를 교체하세요.
+			97 button download 세팅값 다운로드(json)
+				98 image download
+				99 text 세팅값 다운로드(json)
+			100 button undo 기본값으로 재설정
+				101 image undo
+				102 text 기본값으로 재설정
+		103 container
+			104 image menu-fold
+			105 container
+				106 combo box (settable) rc_select_12
+				107 image project
+				108 text 기본 보기
+			109 button 생성 down
+				110 text 생성
+				111 image down
+			112 image translation
+			113 image bell
+			114 container
+				115 text AC admin cloud
+		116 container
+			257 container
+				258 link Description: home, Value: 10.10.31.10:8080/client/#/
+				259 text /
+				260 link Description: 사용자 데이터 라이브러리, Value: 10.10.31.10:8080/client/#/userdata
+				261 link Description: question-circle, Value: docs.ablecloud.io/latest/adminguide/virtual_machines.html#user-data-and-meta-data
+				262 button reload 업데이트
+					263 image reload
+					264 text 업데이트
+				265 switch 프로젝트, Value: 0
+					266 text 프로젝트
+			267 container
+				268 button 사용자 데이터 등록
+					269 image plus
+					270 text 사용자 데이터 등록
+				271 button filter
+					272 image filter
+				273 text field (settable)
+				274 button search
+					275 image search
+			276 text 검색창: 이름 포함 검색 또는 정확한 UUID. 필터: UUID·정확한 이름·도메인·소유 계정. 프로젝트는 상단 공통 보기를 선택하세요. 열 정렬은 현재 페이지에만 적용됩니다.
+			277 table
+				278 row
+					279 cell
+						280 container
+							281 checkbox (settable, integer) Description:  , Value: 0
+					282 cell
+						283 container
+							284 text 이름
+							285 image caret-up
+							286 image caret-down
+					287 cell
+						288 container
+							289 text 아이디
+							290 image caret-up
+							291 image caret-down
+					292 cell
+						293 container
+							294 text 계정
+							295 image caret-up
+							296 image caret-down
+					297 cell
+						298 container
+							299 text 도메인
+							300 image caret-up
+							301 image caret-down
+					302 cell
+						303 button filter
+							304 image filter
+				533 row
+					534 cell
+						535 container
+							536 checkbox (settable, integer) Description:  , Value: 0
+					537 cell
+						538 link Description: AS-PROD-31-AS01-HTTP, Value: 10.10.31.10:8080/client/#/userdata/a28893ee-4662-45cd-8f30-79527368c809
+					539 cell
+						540 text a28893ee-4662-45cd-8f30-79527368c809
+					541 cell
+						542 link Description: admin, Value: 10.10.31.10:8080/client/#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&dataView=true
+					543 cell
+						544 link Description: ROOT, Value: 10.10.31.10:8080/client/#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details
+			545 content list
+				546 text 전체 1 개 항목 중 1-1 표시
+				547 container 이전 페이지
+					548 button (disabled) left
+						549 image left
+				550 text 1
+				551 container 다음 페이지
+					552 button (disabled) right
+						553 image right
+				554 container
+					555 combo box (settable) rc_select_15
+					556 text 20 / 쪽
+	189 container
+		190 image info-circle
+		191 text Wall 모니터링을 사용할 수 없습니다. 기존 알림은 최신 정보가 아닐 수 있으며 Mold는 계속 사용할 수 있습니다. 비활성
+
+The focused UI element is 262 button reload 업데이트

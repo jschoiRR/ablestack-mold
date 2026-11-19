@@ -68,8 +68,8 @@ public class LibvirtGetAutoScaleMetricsCommandWrapperTest {
     public void validateVpcStats() {
 
         Mockito.when(getAutoScaleMetricsCommandMock.isForVpc()).thenReturn(true);
-        Mockito.when(libvirtComputingResourceMock.getVPCNetworkStats(Mockito.any(), Mockito.any(), Mockito.any())).thenReturn(vpcStats);
-        Mockito.when(libvirtComputingResourceMock.getNetworkLbStats(Mockito.any(), Mockito.any(), Mockito.any())).thenReturn(lbStats);
+        Mockito.when(libvirtComputingResourceMock.configureVPCNetworkUsage(Mockito.any(), Mockito.any(), Mockito.any(), Mockito.isNull())).thenReturn("1000:2000");
+        Mockito.when(libvirtComputingResourceMock.getHaproxyStats(Mockito.any(), Mockito.any(), Mockito.any())).thenReturn("5");
 
         Answer answer = libvirtGetAutoScaleMetricsCommandWrapperSpy.execute(getAutoScaleMetricsCommandMock, libvirtComputingResourceMock);
         assertTrue(answer instanceof GetAutoScaleMetricsAnswer);
@@ -95,8 +95,8 @@ public class LibvirtGetAutoScaleMetricsCommandWrapperTest {
     public void validateNetworkStats() {
 
         Mockito.when(getAutoScaleMetricsCommandMock.isForVpc()).thenReturn(false);
-        Mockito.when(libvirtComputingResourceMock.getNetworkStats(Mockito.any(), Mockito.any())).thenReturn(networkStats);
-        Mockito.when(libvirtComputingResourceMock.getNetworkLbStats(Mockito.any(), Mockito.any(), Mockito.any())).thenReturn(lbStats);
+        Mockito.when(libvirtComputingResourceMock.networkUsage(Mockito.any(), Mockito.any(), Mockito.isNull(), Mockito.any())).thenReturn("3000:4000");
+        Mockito.when(libvirtComputingResourceMock.getHaproxyStats(Mockito.any(), Mockito.any(), Mockito.any())).thenReturn("5");
 
         Answer answer = libvirtGetAutoScaleMetricsCommandWrapperSpy.execute(getAutoScaleMetricsCommandMock, libvirtComputingResourceMock);
         assertTrue(answer instanceof GetAutoScaleMetricsAnswer);
@@ -116,5 +116,33 @@ public class LibvirtGetAutoScaleMetricsCommandWrapperTest {
         }
 
         Mockito.verify(libvirtComputingResourceMock, Mockito.never()).getVPCNetworkStats(Mockito.any(), Mockito.any(), Mockito.any());
+    }
+
+    @Test
+    public void unavailableMalformedNegativeAndOverflowCountersAreOmitted() {
+        for (String raw : new String[]{null, "", "garbage", "1", "-1:2", "9223372036854775807:1:1:1"}) {
+            Mockito.when(libvirtComputingResourceMock.networkUsage(Mockito.any(), Mockito.any(), Mockito.isNull(), Mockito.any())).thenReturn(raw);
+            Mockito.when(libvirtComputingResourceMock.getHaproxyStats(Mockito.any(), Mockito.any(), Mockito.any())).thenReturn(null);
+            GetAutoScaleMetricsAnswer answer = (GetAutoScaleMetricsAnswer) libvirtGetAutoScaleMetricsCommandWrapperSpy.execute(getAutoScaleMetricsCommandMock, libvirtComputingResourceMock);
+            assertTrue(answer.getValues().isEmpty());
+        }
+    }
+
+    @Test
+    public void zeroIsValidAndNetworkFailureDoesNotEraseAvailableLbData() {
+        Mockito.when(libvirtComputingResourceMock.networkUsage(Mockito.any(), Mockito.any(), Mockito.isNull(), Mockito.any())).thenReturn("0:0");
+        Mockito.when(libvirtComputingResourceMock.getHaproxyStats(Mockito.any(), Mockito.any(), Mockito.any())).thenReturn("0");
+        GetAutoScaleMetricsAnswer answer = (GetAutoScaleMetricsAnswer) libvirtGetAutoScaleMetricsCommandWrapperSpy.execute(getAutoScaleMetricsCommandMock, libvirtComputingResourceMock);
+        assertEquals(3, answer.getValues().size());
+        assertEquals(com.cloud.network.router.VirtualRouterAutoScale.AutoScaleValueType.INSTANT_VM_GROUP, answer.getValues().get(0).getType());
+        Mockito.when(libvirtComputingResourceMock.networkUsage(Mockito.any(), Mockito.any(), Mockito.isNull(), Mockito.any())).thenReturn(null);
+        answer = (GetAutoScaleMetricsAnswer) libvirtGetAutoScaleMetricsCommandWrapperSpy.execute(getAutoScaleMetricsCommandMock, libvirtComputingResourceMock);
+        assertEquals(1, answer.getValues().size());
+        assertEquals(Double.valueOf(0), answer.getValues().get(0).getValue());
+    }
+
+    @Test
+    public void decimalMbpsConversionHasAKnownPhysicalReference() {
+        assertEquals(125000, VirtualRouterAutoScale.MBITS_TO_BYTES);
     }
 }

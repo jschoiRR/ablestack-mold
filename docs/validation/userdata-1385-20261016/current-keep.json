@@ -1,0 +1,117 @@
+{
+  "body": {
+    "bottom": 506.5,
+    "height": 303,
+    "left": 281,
+    "right": 999,
+    "top": 203.5,
+    "width": 718,
+    "x": 281,
+    "y": 203.5
+  },
+  "bodyOverflow": "auto",
+  "buttons": [
+    {
+      "disabled": false,
+      "padding": "4px 15px",
+      "rect": {
+        "bottom": 555.5,
+        "height": 32,
+        "left": 839.46875,
+        "right": 897.234375,
+        "top": 523.5,
+        "width": 57.765625,
+        "x": 839.46875,
+        "y": 523.5
+      },
+      "text": "취소"
+    },
+    {
+      "disabled": false,
+      "padding": "4px 15px",
+      "rect": {
+        "bottom": 555.5,
+        "height": 32,
+        "left": 913.234375,
+        "right": 971,
+        "top": 523.5,
+        "width": 57.765625,
+        "x": 913.234375,
+        "y": 523.5
+      },
+      "text": "확인"
+    }
+  ],
+  "footer": {
+    "bottom": 571.5,
+    "height": 65,
+    "left": 281,
+    "right": 999,
+    "top": 506.5,
+    "width": 718,
+    "x": 281,
+    "y": 506.5
+  },
+  "inputs": [],
+  "modal": {
+    "bottom": 572.5,
+    "height": 425,
+    "left": 280,
+    "right": 1000,
+    "top": 147.5,
+    "width": 720,
+    "x": 280,
+    "y": 147.5
+  },
+  "switches": [
+    {
+      "checked": "false",
+      "label": "사용자 데이터 변경"
+    }
+  ],
+  "text": "사용자 데이터 변경을 끄면 현재 설정을 유지하며 재설정 요청을 보내지 않습니다. 변경을 켜면 아래 설정을 적용합니다.\n\n현재 사용자 데이터: UD1385-31-20261016-A\n\nVAR1\n현재 한글, 값=1\n현재 저장된 본문(템플릿 포함)\n사용자 데이터 변경",
+  "theme": "dark-mode ant-scrolling-effect",
+  "url": "http://10.10.31.10:8080/client/#/vm/db065200-f6f0-48ed-9b4e-19415bbe6cef",
+  "viewport": {
+    "height": 720,
+    "width": 1280
+  },
+  "styles": [
+    {
+      "background": "rgba(24, 144, 255, 0.14)",
+      "border": "rgba(64, 169, 255, 0.38)",
+      "color": "rgba(255, 255, 255, 0.85)",
+      "fontSize": "14px",
+      "readonly": false,
+      "tag": "DIV",
+      "text": "사용자 데이터 변경을 끄면 현재 설정을 유지하며 재설정 요청을 보내지 않습니다. 변경을 켜면 아래 설정을 적용합니다."
+    },
+    {
+      "background": "rgba(0, 0, 0, 0)",
+      "border": "rgb(240, 243, 246)",
+      "color": "rgb(240, 243, 246)",
+      "fontSize": "14px",
+      "readonly": false,
+      "tag": "P",
+      "text": "현재 사용자 데이터: UD1385-31-20261016-A"
+    },
+    {
+      "background": "rgb(39, 46, 54)",
+      "border": "rgb(62, 70, 80)",
+      "color": "rgb(197, 204, 212)",
+      "fontSize": "14px",
+      "readonly": false,
+      "tag": "BUTTON",
+      "text": "취소"
+    },
+    {
+      "background": "rgb(9, 105, 218)",
+      "border": "rgb(9, 105, 218)",
+      "color": "rgb(255, 255, 255)",
+      "fontSize": "14px",
+      "readonly": false,
+      "tag": "BUTTON",
+      "text": "확인"
+    }
+  ]
+}

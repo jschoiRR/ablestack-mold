@@ -27,7 +27,6 @@ import org.apache.cloudstack.api.APICommand;
 import org.apache.cloudstack.api.ApiCommandResourceType;
 import org.apache.cloudstack.api.ApiConstants;
 import org.apache.cloudstack.api.ApiErrorCode;
-import org.apache.cloudstack.api.BaseAsyncCreateCmd;
 import org.apache.cloudstack.api.Parameter;
 import org.apache.cloudstack.api.ServerApiException;
 import org.apache.cloudstack.api.response.AutoScaleVmProfileResponse;
@@ -50,7 +49,7 @@ import com.cloud.network.as.AutoScaleVmProfile;
             requestHasSensitiveInfo = false,
             responseHasSensitiveInfo = false)
 @SuppressWarnings("rawtypes")
-public class CreateAutoScaleVmProfileCmd extends BaseAsyncCreateCmd {
+public class CreateAutoScaleVmProfileCmd extends BaseAutoScaleCreateCmd {
 
     private static final String s_name = "autoscalevmprofileresponse";
 
@@ -192,6 +191,13 @@ public class CreateAutoScaleVmProfileCmd extends BaseAsyncCreateCmd {
         deployParams.put("zoneId", zoneId.toString());
         deployParams.put("serviceOfferingId", serviceOfferingId.toString());
         deployParams.put("templateId", templateId.toString());
+        // Validate template access in the same project as the profile owner.
+        // Deployment parameters supplied by a client cannot override that scope.
+        if (projectId != null) {
+            deployParams.put(ApiConstants.PROJECT_ID, projectId.toString());
+            deployParams.remove(ApiConstants.ACCOUNT);
+            deployParams.remove(ApiConstants.DOMAIN_ID);
+        }
         return deployParams;
     }
 
@@ -249,7 +255,7 @@ public class CreateAutoScaleVmProfileCmd extends BaseAsyncCreateCmd {
 
     @Override
     public String getEventDescription() {
-        return "Creating AutoScale Instance Profile";
+        return "Creating AutoScale Instance Profile" + (getInjectedJobId() == null ? "" : " requestid=" + getInjectedJobId());
     }
 
     @Override

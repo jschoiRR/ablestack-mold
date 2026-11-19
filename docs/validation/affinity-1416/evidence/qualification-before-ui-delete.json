@@ -1,0 +1,245 @@
+{
+  "totalGroups": 22,
+  "fixtureGroups": 18,
+  "uiCreated": 15,
+  "matrix": {
+    "admin": {
+      "count": 8,
+      "types": [
+        "host affinity",
+        "host anti-affinity",
+        "non-strict host affinity",
+        "non-strict host anti-affinity"
+      ],
+      "ids": [
+        "9f15d520-4f3f-44f6-be94-3389b2ed9cc6",
+        "d1c3860d-cc7a-4c52-b6d3-d2603f4cc38a",
+        "25c16038-8051-49a4-a05a-033119646eaa",
+        "fc338c5b-afbf-436e-aa3b-4dc76fa986cb",
+        "da3722a6-59ef-43a5-b005-cdf63b4bd331",
+        "f3309eca-9e13-4d31-94f7-0bb3b16013ee",
+        "eba52319-f5a1-46ed-91b6-248cee1a4217",
+        "656dafa0-2fa3-4969-8fe5-b6bedd3a7176"
+      ]
+    },
+    "user": {
+      "count": 5,
+      "types": [
+        "host affinity",
+        "host anti-affinity",
+        "non-strict host affinity",
+        "non-strict host anti-affinity"
+      ],
+      "ids": [
+        "7525c9e1-79c4-49c7-b07f-c37dc6e777de",
+        "c80abc6d-5b52-4d1c-a58b-b05450dcbb2e",
+        "39614a3e-79ff-436e-9d1a-c13957038a96",
+        "6a791177-b6f7-48e0-b070-e6b5bf31a801",
+        "01b989a3-7391-406d-9a9e-40666f829e89"
+      ]
+    },
+    "project": {
+      "count": 5,
+      "types": [
+        "host affinity",
+        "host anti-affinity",
+        "non-strict host affinity",
+        "non-strict host anti-affinity"
+      ],
+      "ids": [
+        "79b6e539-2b4f-4827-adc1-d3db70b6560a",
+        "83660017-0212-4382-ac8f-28547232e477",
+        "c027399a-61e6-40a6-9ca3-1649ac9698f2",
+        "bdc77714-6f42-4610-ac5e-7e0ebbcdd508",
+        "03c69b04-dafd-4f94-8228-73fea732aa07"
+      ]
+    }
+  },
+  "groups": [
+    {
+      "id": "9f15d520-4f3f-44f6-be94-3389b2ed9cc6",
+      "name": "qa-ag03-duplicate",
+      "description": "AG03 duplicate baseline",
+      "account": "admin",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "domain": "ROOT",
+      "domainpath": "ROOT",
+      "type": "host anti-affinity"
+    },
+    {
+      "id": "d1c3860d-cc7a-4c52-b6d3-d2603f4cc38a",
+      "name": "qa-ag03-api-boundary-가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가",
+      "description": "설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설",
+      "account": "admin",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "domain": "ROOT",
+      "domainpath": "ROOT",
+      "type": "host affinity"
+    },
+    {
+      "id": "25c16038-8051-49a4-a05a-033119646eaa",
+      "name": "qa-ag03-api-emoji-😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀",
+      "description": "Unicode roundtrip",
+      "account": "admin",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "domain": "ROOT",
+      "domainpath": "ROOT",
+      "type": "host affinity"
+    },
+    {
+      "id": "fc338c5b-afbf-436e-aa3b-4dc76fa986cb",
+      "name": "qa-ag03-duplicate-fixed",
+      "description": "QA AG03\n  duplicate correction",
+      "account": "admin",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "domain": "ROOT",
+      "domainpath": "ROOT",
+      "type": "host anti-affinity"
+    },
+    {
+      "id": "da3722a6-59ef-43a5-b005-cdf63b4bd331",
+      "name": "qa-ag03-ui-boundary-한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한",
+      "description": "설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설설",
+      "account": "admin",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "domain": "ROOT",
+      "domainpath": "ROOT",
+      "type": "host affinity"
+    },
+    {
+      "id": "f3309eca-9e13-4d31-94f7-0bb3b16013ee",
+      "name": "qa-ag03-admin-nonstrict-anti",
+      "description": "AG03 admin non-strict anti-affinity",
+      "account": "admin",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "domain": "ROOT",
+      "domainpath": "ROOT",
+      "type": "non-strict host anti-affinity"
+    },
+    {
+      "id": "eba52319-f5a1-46ed-91b6-248cee1a4217",
+      "name": "qa-ag03-admin-nonstrict-affinity",
+      "description": "AG03 pending receipt close/reopen",
+      "account": "admin",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "domain": "ROOT",
+      "domainpath": "ROOT",
+      "type": "non-strict host affinity"
+    },
+    {
+      "id": "7525c9e1-79c4-49c7-b07f-c37dc6e777de",
+      "name": "qa-ag03-owner-same",
+      "description": "AG03 explicit owner selection",
+      "account": "qa-ag03-user",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "domain": "ROOT",
+      "domainpath": "ROOT",
+      "type": "host affinity"
+    },
+    {
+      "id": "79b6e539-2b4f-4827-adc1-d3db70b6560a",
+      "name": "qa-ag03-owner-same",
+      "description": "AG03 same name in project owner",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "domain": "ROOT",
+      "domainpath": "ROOT",
+      "projectid": "d6e7e875-c6a3-4c10-ab0f-fa6f0d5be138",
+      "project": "qa-ag03-project",
+      "type": "host affinity"
+    },
+    {
+      "id": "656dafa0-2fa3-4969-8fe5-b6bedd3a7176",
+      "name": "qa-ag03-job-recheck",
+      "description": "AG03 query interruption without resubmission",
+      "account": "admin",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "domain": "ROOT",
+      "domainpath": "ROOT",
+      "type": "host anti-affinity"
+    },
+    {
+      "id": "c80abc6d-5b52-4d1c-a58b-b05450dcbb2e",
+      "name": "qa-ag03-user-strict-affinity",
+      "description": "AG03 normal user scope",
+      "account": "qa-ag03-user",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "domain": "ROOT",
+      "domainpath": "ROOT",
+      "type": "host affinity"
+    },
+    {
+      "id": "39614a3e-79ff-436e-9d1a-c13957038a96",
+      "name": "qa-ag03-user-strict-anti",
+      "description": "AG03 C06-user-strict-anti",
+      "account": "qa-ag03-user",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "domain": "ROOT",
+      "domainpath": "ROOT",
+      "type": "host anti-affinity"
+    },
+    {
+      "id": "6a791177-b6f7-48e0-b070-e6b5bf31a801",
+      "name": "qa-ag03-user-nonstrict-affinity",
+      "description": "AG03 C07-user-nonstrict-affinity",
+      "account": "qa-ag03-user",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "domain": "ROOT",
+      "domainpath": "ROOT",
+      "type": "non-strict host affinity"
+    },
+    {
+      "id": "01b989a3-7391-406d-9a9e-40666f829e89",
+      "name": "qa-ag03-user-nonstrict-anti",
+      "description": "AG03 C08-user-nonstrict-anti",
+      "account": "qa-ag03-user",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "domain": "ROOT",
+      "domainpath": "ROOT",
+      "type": "non-strict host anti-affinity"
+    },
+    {
+      "id": "83660017-0212-4382-ac8f-28547232e477",
+      "name": "qa-ag03-project-strict-affinity",
+      "description": "AG03 C09-project-strict-affinity",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "domain": "ROOT",
+      "domainpath": "ROOT",
+      "projectid": "d6e7e875-c6a3-4c10-ab0f-fa6f0d5be138",
+      "project": "qa-ag03-project",
+      "type": "host affinity"
+    },
+    {
+      "id": "c027399a-61e6-40a6-9ca3-1649ac9698f2",
+      "name": "qa-ag03-project-strict-anti",
+      "description": "AG03 C10-project-strict-anti",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "domain": "ROOT",
+      "domainpath": "ROOT",
+      "projectid": "d6e7e875-c6a3-4c10-ab0f-fa6f0d5be138",
+      "project": "qa-ag03-project",
+      "type": "host anti-affinity"
+    },
+    {
+      "id": "bdc77714-6f42-4610-ac5e-7e0ebbcdd508",
+      "name": "qa-ag03-project-nonstrict-affinity",
+      "description": "AG03 C11-project-nonstrict-affinity",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "domain": "ROOT",
+      "domainpath": "ROOT",
+      "projectid": "d6e7e875-c6a3-4c10-ab0f-fa6f0d5be138",
+      "project": "qa-ag03-project",
+      "type": "non-strict host affinity"
+    },
+    {
+      "id": "03c69b04-dafd-4f94-8228-73fea732aa07",
+      "name": "qa-ag03-project-nonstrict-anti",
+      "description": "AG03 C12-project-nonstrict-anti",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "domain": "ROOT",
+      "domainpath": "ROOT",
+      "projectid": "d6e7e875-c6a3-4c10-ab0f-fa6f0d5be138",
+      "project": "qa-ag03-project",
+      "type": "non-strict host anti-affinity"
+    }
+  ]
+}

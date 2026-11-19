@@ -1,0 +1,54 @@
+{
+  "label": "bulk-retry-success",
+  "requests": [
+    {
+      "id": "34440.1494",
+      "command": "listUserData",
+      "params": {
+        "id": "3797b8a3-63bf-4646-864e-41fb04e42caf",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "page": "1",
+        "pagesize": "2"
+      }
+    },
+    {
+      "id": "34440.1496",
+      "command": "listUserData",
+      "params": {
+        "id": "3797b8a3-63bf-4646-864e-41fb04e42caf",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "page": "1",
+        "pagesize": "2"
+      }
+    },
+    {
+      "id": "34440.1497",
+      "command": "deleteUserData",
+      "params": {
+        "id": "3797b8a3-63bf-4646-864e-41fb04e42caf",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f"
+      }
+    }
+  ],
+  "responses": [
+    {
+      "id": "34440.1494",
+      "status": 200
+    },
+    {
+      "id": "34440.1496",
+      "status": 200
+    },
+    {
+      "id": "34440.1497",
+      "status": 200
+    }
+  ],
+  "exceptions": [],
+  "truncated": false,
+  "hasMore": false,
+  "cursor": 5568
+}

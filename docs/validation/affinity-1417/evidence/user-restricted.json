@@ -1,0 +1,38 @@
+[
+  {
+    "request": {
+      "command": "listAffinityGroups",
+      "name": "qa-ag04-target",
+      "listall": true
+    },
+    "response": {
+      "listaffinitygroupsresponse": {}
+    }
+  },
+  {
+    "request": {
+      "command": "listVirtualMachines",
+      "id": "8d221bcb-4614-40b7-b9aa-dc40e159d57a",
+      "listall": true,
+      "details": "min,affgrp"
+    },
+    "response": {
+      "listvirtualmachinesresponse": {}
+    }
+  },
+  {
+    "request": {
+      "command": "updateVMAffinityGroup",
+      "id": "8d221bcb-4614-40b7-b9aa-dc40e159d57a",
+      "affinitygroupids": "22ee18c3-4a24-4617-84ed-dde3fe7b592a"
+    },
+    "response": {
+      "updatevirtualmachineresponse": {
+        "uuidList": [],
+        "errorcode": 531,
+        "cserrorcode": 4365,
+        "errortext": "Caller does not have permission to operate with provided resource."
+      }
+    }
+  }
+]

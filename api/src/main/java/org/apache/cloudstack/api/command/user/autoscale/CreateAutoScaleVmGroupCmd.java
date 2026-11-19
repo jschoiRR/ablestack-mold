@@ -24,7 +24,6 @@ import org.apache.cloudstack.api.APICommand;
 import org.apache.cloudstack.api.ApiCommandResourceType;
 import org.apache.cloudstack.api.ApiConstants;
 import org.apache.cloudstack.api.ApiErrorCode;
-import org.apache.cloudstack.api.BaseAsyncCreateCmd;
 import org.apache.cloudstack.api.Parameter;
 import org.apache.cloudstack.api.ServerApiException;
 import org.apache.cloudstack.api.response.AutoScalePolicyResponse;
@@ -43,7 +42,7 @@ import com.cloud.network.rules.LoadBalancer;
         responseObject = AutoScaleVmGroupResponse.class, entityType = {AutoScaleVmGroup.class},
             requestHasSensitiveInfo = false,
             responseHasSensitiveInfo = false)
-public class CreateAutoScaleVmGroupCmd extends BaseAsyncCreateCmd {
+public class CreateAutoScaleVmGroupCmd extends BaseAutoScaleCreateCmd {
 
     private static final String s_name = "autoscalevmgroupresponse";
 
@@ -180,12 +179,12 @@ public class CreateAutoScaleVmGroupCmd extends BaseAsyncCreateCmd {
 
     @Override
     public String getCreateEventDescription() {
-        return "Creating AutoScale Instance Group";
+        return "Creating AutoScale Instance Group" + (getInjectedJobId() == null ? "" : " requestid=" + getInjectedJobId());
     }
 
     @Override
     public String getEventDescription() {
-        return "Configuring AutoScale Instance Group with ID: " + getEntityId();
+        return "Configuring AutoScale Instance Group with ID: " + getEntityId() + (getInjectedJobId() == null ? "" : " requestid=" + getInjectedJobId());
     }
 
     @Override
@@ -219,6 +218,22 @@ public class CreateAutoScaleVmGroupCmd extends BaseAsyncCreateCmd {
 
     @Override
     public void execute() {
+        if (getInjectedJobId() != null) {
+            AutoScaleVmGroup existing = _entityMgr.findById(AutoScaleVmGroup.class, getEntityId());
+            if (existing == null) {
+                throw new ServerApiException(ApiErrorCode.INTERNAL_ERROR, "The AutoScale creation resource was removed");
+            }
+            if (existing.getState() != AutoScaleVmGroup.State.NEW) {
+                if (existing.getState() != AutoScaleVmGroup.State.ENABLED && existing.getState() != AutoScaleVmGroup.State.SCALING
+                        && existing.getState() != AutoScaleVmGroup.State.DISABLED) {
+                    throw new ServerApiException(ApiErrorCode.INTERNAL_ERROR, "Query the existing AutoScale creation before retrying");
+                }
+                AutoScaleVmGroupResponse response = _responseGenerator.createAutoScaleVmGroupResponse(existing);
+                response.setResponseName(getCommandName());
+                setResponseObject(response);
+                return;
+            }
+        }
         boolean success = false;
         AutoScaleVmGroup vmGroup = null;
         try {

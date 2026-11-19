@@ -1,0 +1,259 @@
+{
+  "passed": 25,
+  "total": 25,
+  "tests": [
+    {
+      "tag": "root",
+      "filter": "id",
+      "id": "f5f94a94-18c5-4bdc-9838-5bd127b6b946",
+      "name": "ssh1375-20261015-RootMiXeD",
+      "scope": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f"
+      },
+      "passed": true
+    },
+    {
+      "tag": "root",
+      "filter": "name",
+      "id": "f5f94a94-18c5-4bdc-9838-5bd127b6b946",
+      "name": "ssh1375-20261015-RootMiXeD",
+      "scope": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f"
+      },
+      "passed": true
+    },
+    {
+      "tag": "double",
+      "filter": "id",
+      "id": "6ef87ac1-d813-433f-aa86-dff5bfaada9a",
+      "name": "ssh1375-20261015-double",
+      "scope": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f"
+      },
+      "passed": true
+    },
+    {
+      "tag": "double",
+      "filter": "name",
+      "id": "6ef87ac1-d813-433f-aa86-dff5bfaada9a",
+      "name": "ssh1375-20261015-double",
+      "scope": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f"
+      },
+      "passed": true
+    },
+    {
+      "tag": "generated",
+      "filter": "id",
+      "id": "e23dba78-16d5-4b01-bd1d-f5f90dcc2008",
+      "name": "ssh1375-20261015-generated",
+      "scope": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f"
+      },
+      "passed": true
+    },
+    {
+      "tag": "generated",
+      "filter": "name",
+      "id": "e23dba78-16d5-4b01-bd1d-f5f90dcc2008",
+      "name": "ssh1375-20261015-generated",
+      "scope": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f"
+      },
+      "passed": true
+    },
+    {
+      "tag": "discard",
+      "filter": "id",
+      "id": "55f6a837-fa79-455f-b8fd-9c740aa2dc8c",
+      "name": "ssh1375-20261015-discard",
+      "scope": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f"
+      },
+      "passed": true
+    },
+    {
+      "tag": "discard",
+      "filter": "name",
+      "id": "55f6a837-fa79-455f-b8fd-9c740aa2dc8c",
+      "name": "ssh1375-20261015-discard",
+      "scope": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f"
+      },
+      "passed": true
+    },
+    {
+      "tag": "owner",
+      "filter": "id",
+      "id": "cc830318-7d50-43e0-96b0-c1b09af229d2",
+      "name": "ssh1375-20261015-owner",
+      "scope": {
+        "account": "ssh1375-20261015-user",
+        "domainid": "199c3343-3b1c-4175-85d5-06ea9cd2d74a"
+      },
+      "passed": true
+    },
+    {
+      "tag": "owner",
+      "filter": "name",
+      "id": "cc830318-7d50-43e0-96b0-c1b09af229d2",
+      "name": "ssh1375-20261015-owner",
+      "scope": {
+        "account": "ssh1375-20261015-user",
+        "domainid": "199c3343-3b1c-4175-85d5-06ea9cd2d74a"
+      },
+      "passed": true
+    },
+    {
+      "tag": "project",
+      "filter": "id",
+      "id": "6a1f00af-81ac-4ece-aa4d-5c578644438d",
+      "name": "ssh1375-20261015-RootMiXeD",
+      "scope": {
+        "projectid": "ca8ca714-cf93-4d72-aece-532357d04389"
+      },
+      "passed": true
+    },
+    {
+      "tag": "project",
+      "filter": "name",
+      "id": "6a1f00af-81ac-4ece-aa4d-5c578644438d",
+      "name": "ssh1375-20261015-RootMiXeD",
+      "scope": {
+        "projectid": "ca8ca714-cf93-4d72-aece-532357d04389"
+      },
+      "passed": true
+    },
+    {
+      "tag": "project-generated",
+      "filter": "id",
+      "id": "0a000bd8-7736-4650-b898-c91341bb5213",
+      "name": "ssh1375-20261015-project-generated",
+      "scope": {
+        "projectid": "ca8ca714-cf93-4d72-aece-532357d04389"
+      },
+      "passed": true
+    },
+    {
+      "tag": "project-generated",
+      "filter": "name",
+      "id": "0a000bd8-7736-4650-b898-c91341bb5213",
+      "name": "ssh1375-20261015-project-generated",
+      "scope": {
+        "projectid": "ca8ca714-cf93-4d72-aece-532357d04389"
+      },
+      "passed": true
+    },
+    {
+      "tag": "domainAdmin",
+      "filter": "id",
+      "id": "43209b40-b8fc-4e29-a2ee-6dc68103e318",
+      "name": "ssh1375-20261015-domainAdmin",
+      "scope": {
+        "account": "ssh1375-20261015-domainAdmin",
+        "domainid": "199c3343-3b1c-4175-85d5-06ea9cd2d74a"
+      },
+      "passed": true
+    },
+    {
+      "tag": "domainAdmin",
+      "filter": "name",
+      "id": "43209b40-b8fc-4e29-a2ee-6dc68103e318",
+      "name": "ssh1375-20261015-domainAdmin",
+      "scope": {
+        "account": "ssh1375-20261015-domainAdmin",
+        "domainid": "199c3343-3b1c-4175-85d5-06ea9cd2d74a"
+      },
+      "passed": true
+    },
+    {
+      "tag": "user",
+      "filter": "id",
+      "id": "22726e5e-a045-443b-89d2-19d78cf54106",
+      "name": "ssh1375-20261015-RootMiXeD",
+      "scope": {
+        "account": "ssh1375-20261015-user",
+        "domainid": "199c3343-3b1c-4175-85d5-06ea9cd2d74a"
+      },
+      "passed": true
+    },
+    {
+      "tag": "user",
+      "filter": "name",
+      "id": "22726e5e-a045-443b-89d2-19d78cf54106",
+      "name": "ssh1375-20261015-RootMiXeD",
+      "scope": {
+        "account": "ssh1375-20261015-user",
+        "domainid": "199c3343-3b1c-4175-85d5-06ea9cd2d74a"
+      },
+      "passed": true
+    },
+    {
+      "tag": "createOnly",
+      "filter": "id",
+      "id": "c32e358b-81a6-4999-b20e-e08161e292b0",
+      "name": "ssh1375-20261015-createOnly",
+      "scope": {
+        "account": "ssh1375-20261015-createOnly",
+        "domainid": "199c3343-3b1c-4175-85d5-06ea9cd2d74a"
+      },
+      "passed": true
+    },
+    {
+      "tag": "createOnly",
+      "filter": "name",
+      "id": "c32e358b-81a6-4999-b20e-e08161e292b0",
+      "name": "ssh1375-20261015-createOnly",
+      "scope": {
+        "account": "ssh1375-20261015-createOnly",
+        "domainid": "199c3343-3b1c-4175-85d5-06ea9cd2d74a"
+      },
+      "passed": true
+    },
+    {
+      "tag": "registerOnly",
+      "filter": "id",
+      "id": "012875cf-68d9-4e96-9f2c-7d75d91341b4",
+      "name": "ssh1375-20261015-registerOnly",
+      "scope": {
+        "account": "ssh1375-20261015-registerOnly",
+        "domainid": "199c3343-3b1c-4175-85d5-06ea9cd2d74a"
+      },
+      "passed": true
+    },
+    {
+      "tag": "registerOnly",
+      "filter": "name",
+      "id": "012875cf-68d9-4e96-9f2c-7d75d91341b4",
+      "name": "ssh1375-20261015-registerOnly",
+      "scope": {
+        "account": "ssh1375-20261015-registerOnly",
+        "domainid": "199c3343-3b1c-4175-85d5-06ea9cd2d74a"
+      },
+      "passed": true
+    },
+    {
+      "label": "baseline-uuid-preserved",
+      "id": "6d6cf53f-881e-41bf-b7e1-92031ba9d891",
+      "passed": true
+    },
+    {
+      "label": "baseline-uuid-preserved",
+      "id": "54dace93-f746-463d-8592-c796712c3004",
+      "passed": true
+    },
+    {
+      "label": "baseline-uuid-preserved",
+      "id": "879f7484-e0da-41f2-8ac1-5c23d354c3a2",
+      "passed": true
+    }
+  ]
+}

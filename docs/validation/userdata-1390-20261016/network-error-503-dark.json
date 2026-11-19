@@ -1,0 +1,72 @@
+{
+  "start": 14364,
+  "cursor": 14398,
+  "truncated": false,
+  "events": [
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 14371,
+      "requestId": "27600.2717",
+      "api": "listVirtualMachines",
+      "id": "cf208e56-a2c4-4aef-9299-bd59dd902ff0",
+      "virtualmachineid": null,
+      "projectid": null
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 14373,
+      "requestId": "27600.2717",
+      "api": "listVirtualMachines",
+      "status": 200
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 14375,
+      "requestId": "27600.2718",
+      "api": "getVirtualMachineUserData",
+      "id": null,
+      "virtualmachineid": "cf208e56-a2c4-4aef-9299-bd59dd902ff0",
+      "projectid": null
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 14381,
+      "requestId": "27600.2719",
+      "api": "readyForShutdown",
+      "id": null,
+      "virtualmachineid": null,
+      "projectid": null
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 14384,
+      "requestId": "27600.2719",
+      "api": "readyForShutdown",
+      "status": 200
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 14388,
+      "requestId": "27600.2718",
+      "api": "getVirtualMachineUserData",
+      "status": 503
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 14392,
+      "requestId": "27600.2720",
+      "api": "listHostsMetrics",
+      "id": null,
+      "virtualmachineid": null,
+      "projectid": null
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 14395,
+      "requestId": "27600.2720",
+      "api": "listHostsMetrics",
+      "status": 200
+    }
+  ],
+  "exceptions": 0
+}

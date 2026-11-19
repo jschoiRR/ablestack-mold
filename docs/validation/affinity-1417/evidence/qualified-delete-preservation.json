@@ -1,0 +1,90 @@
+{
+  "unsubmittedGroup": {
+    "count": 1,
+    "affinitygroup": [
+      {
+        "id": "2cd86c39-c617-41e1-abd0-ac7afb6f5770",
+        "name": "qa-ag04-empty",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domain": "ROOT",
+        "domainpath": "ROOT",
+        "type": "host affinity"
+      }
+    ]
+  },
+  "runningVM": {
+    "id": "23476cc1-92f7-4deb-8a44-ce8037ef3806",
+    "name": "qa-ag04-vm-11",
+    "displayname": "qa-ag04-vm-11",
+    "account": "admin",
+    "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+    "username": "admin",
+    "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+    "domain": "ROOT",
+    "domainpath": "ROOT",
+    "created": "2026-10-19T07:56:19+0900",
+    "lastupdated": "2026-10-19T08:29:20+0900",
+    "state": "Running",
+    "haenable": false,
+    "zoneid": "7013f5a1-de59-4cea-a596-f4f58815f31c",
+    "zonename": "Zone",
+    "hostid": "3fb147f3-aea4-4f65-b8c6-e7192ea26138",
+    "hostname": "ablecube31-2",
+    "hostcontrolstate": "Enabled",
+    "volumemutationblockedreason": "",
+    "guestosid": "9708b6ac-b253-11f1-a895-0024814c313f",
+    "securitygroup": [],
+    "nic": [],
+    "hypervisor": "KVM",
+    "instancename": "i-2-661-VM",
+    "details": {
+      "tpmversion": "NONE",
+      "rootDiskController": "osdefault"
+    },
+    "clonefastsourcepowerallowed": false,
+    "clonefastpowerallowed": false,
+    "affinitygroup": [
+      {
+        "id": "1c095737-9254-414b-a045-e87ba2fdb87f",
+        "name": "qa-ag04-other",
+        "account": "admin"
+      }
+    ],
+    "displayvm": true,
+    "isdynamicallyscalable": true,
+    "deleteprotection": false,
+    "ostypeid": "9708b6ac-b253-11f1-a895-0024814c313f",
+    "osdisplayname": "Rocky Linux 9",
+    "pooltype": "SharedMountPoint",
+    "receivedbytes": 0,
+    "sentbytes": 0,
+    "vbmcport": "None",
+    "qemuagentversion": "8.2.0",
+    "kvdoenable": false,
+    "kvdoinuse": false,
+    "arch": "x86_64",
+    "vbmcstatus": "Unallocated",
+    "tags": [],
+    "hasannotations": false
+  },
+  "deleteJob": {
+    "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+    "account": "admin",
+    "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+    "domainpath": "ROOT",
+    "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+    "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.DeleteAffinityGroupCmd",
+    "jobprocstatus": 0,
+    "jobresultcode": 0,
+    "jobresulttype": "object",
+    "jobresult": {
+      "success": true
+    },
+    "jobinstancetype": "AffinityGroup",
+    "created": "2026-10-19T09:22:38+0900",
+    "completed": "2026-10-19T09:22:38+0900",
+    "jobid": "ba9c593a-e480-4254-a762-23c7d0f6733b",
+    "jobstatus": 1
+  }
+}

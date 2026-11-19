@@ -1,0 +1,58 @@
+{
+  "at": 1791738490.9555085,
+  "clusters": {
+    "31": {
+      "firewallPort8089Absent": true,
+      "groups": [
+        {
+          "id": "bf0f5385-ae2c-4da4-aec4-eb985dbdeba4",
+          "name": "AS-PROD-31-AS04-CONCURRENCY",
+          "state": "DISABLED"
+        },
+        {
+          "id": "3b532b36-1a5f-431f-976a-50caf26fb8ac",
+          "name": "AS-PROD-31-AS02-RECOVERY",
+          "state": "DISABLED"
+        },
+        {
+          "id": "0ddcc917-8a80-409a-9d41-9cc81d1df7b4",
+          "name": "AS-PROD-31-AS01-PROJECT",
+          "state": "DISABLED"
+        }
+      ],
+      "vmCount": 3,
+      "volumeCount": 3,
+      "volumeBytes": 322122547200,
+      "groupCount": 3
+    },
+    "32": {
+      "firewallPort8089Absent": true,
+      "groups": [
+        {
+          "id": "18bef25a-4053-4454-bc85-f6d777b9391d",
+          "name": "AS-PROD-32-AS04-CONCURRENCY",
+          "state": "DISABLED"
+        },
+        {
+          "id": "7cfc210d-169a-43ac-b10f-7a0ed385272f",
+          "name": "AS-PROD-32-AS02-RECOVERY",
+          "state": "DISABLED"
+        },
+        {
+          "id": "85fabab7-7992-4292-bad3-a43c4bd85cdc",
+          "name": "AS-PROD-32-AS01-VPC",
+          "state": "DISABLED"
+        },
+        {
+          "id": "a34d28f5-d903-45d6-b546-aabc670d3abc",
+          "name": "AS-PROD-32-AS01-USER",
+          "state": "DISABLED"
+        }
+      ],
+      "vmCount": 4,
+      "volumeCount": 4,
+      "volumeBytes": 429496729600,
+      "groupCount": 4
+    }
+  }
+}

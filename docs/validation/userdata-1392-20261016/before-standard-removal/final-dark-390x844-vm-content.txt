@@ -1,0 +1,226 @@
+- generic: 페이지 스타일 설정
+- button "닫기":
+  - img "close":
+- heading "페이지 스타일 설정" [level=3]
+- radio
+- radio [checked]
+- img "check":
+- heading "테마 색상" [level=3]
+- radio
+- img "check"
+- radio
+- radio
+- radio
+- radio
+- radio
+- radio
+- radio
+- separator
+- heading "네비게이션 설정" [level=3]
+- generic: 배경색
+- textbox [disabled]: "#ffffff"
+- generic: 텍스트 색상
+- textbox [disabled]: "#000000"
+- separator
+- alert:
+  - img "exclamation-circle":
+  - generic: "설정은 현재 브라우저에서만 볼 수 있습니다. 설정을 적용하려면 JSON 파일을 다운로드하고 경로 `/public/config.json` 아래의 `config.json` 파일의 `theme` 섹션에서 해당 콘텐츠를 교체하세요."
+- button "download 세팅값 다운로드(json)":
+  - img "download":
+  - generic: 세팅값 다운로드(json)
+- button "undo 기본값으로 재설정":
+  - img "undo":
+  - generic: 기본값으로 재설정
+- img "menu-unfold":
+- combobox
+- img "project":
+- text: 기본 보기
+- img "translation":
+- img "bell":
+- generic: AC
+- generic: admin cloud
+- main:
+  - link "home":
+    - /url: "#/"
+    - img "home":
+  - text: /
+  - link "가상머신":
+    - /url: "#/vm"
+  - text: /
+  - generic: UD1392-31-20261016-A-vm-01
+  - link "question-circle":
+    - /url: http://docs.ablecloud.io/latest/adminguide/virtual_machines.html
+    - img "question-circle":
+  - button "reload 업데이트":
+    - img "reload":
+    - generic: 업데이트
+  - button "down 작업":
+    - img "down":
+    - generic: 작업
+  - img "edit":
+  - heading "UD1392-31-20261016-A-vm-01" [level=4]
+  - generic: i-2-591-VM
+  - generic: x86_64
+  - generic: KVM
+  - generic: HA 활성화
+  - generic: 동적으로 확장 가능
+  - button "code" [disabled]:
+    - img "code":
+  - separator
+  - generic: 상태
+  - generic: 정지된 상태
+  - generic: 아이디
+  - button "barcode":
+    - img "barcode":
+  - link "f5003747-806c-439f-8b71-35ef75e28f5a":
+    - /url: javascript:;
+  - generic: CPU
+  - text: 2 CPU x 2.00 GHz
+  - img "question-circle":
+  - generic: x86_64
+  - generic: 메모리
+  - text: 2048 MB 메모리
+  - generic: 네트워크
+  - img "wifi":
+  - generic: 1 NIC(s)
+  - strong: eth0
+  - link:
+    - /url: javascript:;
+  - generic: 기본
+  - img "apartment":
+  - link "UD1392-31-20261016-A-cd":
+    - /url: "#/guestnetwork/d31ef903-e713-4a40-be9a-8c763f949af9"
+  - generic: 템플릿
+  - img "save":
+  - link "Rocky-Linux-9-5-x86-64-Server-Cloud-Image.qcow2":
+    - /url: "#/template/8d692729-7565-4e92-965b-ebaadc1efcb0"
+  - generic: 컴퓨트 오퍼링
+  - img "cloud":
+  - link "2Core 2GB":
+    - /url: "#/computeoffering/cd928fb0-6e2b-4ec8-b02b-023aed55b2b1"
+  - generic: Zone
+  - img "global":
+  - link "Zone":
+    - /url: "#/zone/7013f5a1-de59-4cea-a596-f4f58815f31c"
+  - generic: 사용자 데이터
+  - img "solution":
+  - link "UD1392-31-20261016-A":
+    - /url: "#/userdata/522593c9-e180-4771-b7ed-48949dd16815"
+  - generic: 계정
+  - img "user":
+  - link "admin":
+    - /url: "#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f"
+  - generic: 도메인
+  - img "block":
+  - link "ROOT":
+    - /url: "#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details"
+  - generic: 생성일
+  - img "calendar":
+  - text: 2026. 10. 16. 오후 10:15:18
+  - separator
+  - generic: 태그
+  - img "plus":
+  - text: 새 태그
+  - tablist:
+    - tab "상세" [selected]
+    - tab "IP 구성"
+    - tab "메트릭"
+    - tab "프로세스"
+    - tab "스케줄"
+    - tab "ISO"
+    - tab "볼륨"
+    - tab "NIC"
+    - tab "설정"
+    - tab "호스트 장치"
+    - tab "VM 스냅샷"
+    - tab "이벤트"
+    - tab "코멘트"
+    - button:
+  - tabpanel "상세":
+    - list:
+      - strong: VM 호스트 명
+      - generic: UD1392-31-20261016-A-vm-01
+      - strong: VM 표시 명
+      - generic: UD1392-31-20261016-A-vm-01
+      - strong: 아이디
+      - generic: f5003747-806c-439f-8b71-35ef75e28f5a
+      - strong: 상태
+      - generic: Stopped
+      - strong: 템플릿
+      - generic: Rocky-Linux-9-5-x86-64-Server-Cloud-Image.qcow2
+      - strong: 템플릿 형식
+      - generic: USER
+      - strong: 컴퓨트 오퍼링
+      - generic: 2Core 2GB
+      - strong: 동적으로 확장 가능
+      - generic: "true"
+      - strong: HA 활성화
+      - generic: "true"
+      - strong: 하이퍼바이저
+      - generic: KVM
+      - strong: CPU 아키텍처
+      - generic: x86_64
+      - strong: 계정
+      - generic: admin
+      - strong: 도메인
+      - generic: ROOT
+      - strong: Zone
+      - generic: Zone
+      - strong: 사용자 데이터 ID
+      - generic: 522593c9-e180-4771-b7ed-48949dd16815
+      - strong: 사용자 데이터 이름
+      - generic: UD1392-31-20261016-A
+      - strong: VBMC 포트
+      - generic: 미할당
+      - strong: 삭제 보호
+      - generic: "false"
+- alert:
+  - img "info-circle":
+  - generic: Wall 모니터링을 사용할 수 없습니다. 기존 알림은 최신 정보가 아닐 수 있으며 Mold는 계속 사용할 수 있습니다. 비활성
+- dialog "VM 저장 사용자 데이터 조회":
+  - document:
+    - button "Close":
+      - img "close":
+    - generic: VM 저장 사용자 데이터 조회
+    - region "사용자 데이터 본문":
+      - table:
+        - rowgroup:
+          - row "VM 표시 명 UD1392-31-20261016-A-vm-01 (f5003747-806c-439f-8b71-35ef75e28f5a)":
+            - rowheader "VM 표시 명"
+            - cell "UD1392-31-20261016-A-vm-01 (f5003747-806c-439f-8b71-35ef75e28f5a)":
+              - generic: UD1392-31-20261016-A-vm-01 (f5003747-806c-439f-8b71-35ef75e28f5a)
+          - row "사용자 데이터 라이브러리 UD1392-31-20261016-A":
+            - rowheader "사용자 데이터 라이브러리"
+            - cell "UD1392-31-20261016-A":
+              - generic: UD1392-31-20261016-A
+          - row "사용자 데이터 정책 -":
+            - rowheader "사용자 데이터 정책"
+            - cell "-":
+              - generic: "-"
+          - row "변수 값 (VM 메타데이터) -":
+            - rowheader "변수 값 (VM 메타데이터)"
+            - cell "-":
+              - generic: "-"
+      - status:
+        - img "info-circle":
+        - generic: 현재 연결된 라이브러리 원본과 VM 저장 본문이 바이트 단위로 같습니다.
+      - button "copy 클립보드에 복사":
+        - img "copy":
+        - generic: 클립보드에 복사
+      - button "download 다운로드":
+        - img "download":
+        - generic: 다운로드
+      - generic "본문 표시 형식":
+        - radio "원문 (UTF-8)" [checked]
+        - generic: 원문 (UTF-8)
+        - radio "Base64"
+        - generic: Base64
+      - button "업데이트":
+        - img "reload":
+        - generic: 업데이트
+      - paragraph: Mold에 저장된 VM 본문입니다. 라이브러리 원본 및 템플릿 정책·변수 정보와 구분됩니다. 공급자 전달 상태와 게스트 실행 결과는 이 조회로 확인할 수 없습니다.
+      - paragraph: "표시: 원문 (UTF-8) · 원문 크기: 37 바이트"
+      - generic "원문 (UTF-8)":
+        - code: "#cloud-config # UD1392-31-20261016 A"
+    - button "닫기" [active]:
+      - generic: 닫기

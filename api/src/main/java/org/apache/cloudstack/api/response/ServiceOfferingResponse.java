@@ -29,7 +29,15 @@ import com.google.gson.annotations.SerializedName;
 
 @EntityReference(value = ServiceOffering.class)
 public class ServiceOfferingResponse extends BaseResponseWithAnnotations {
-    @SerializedName("id")
+    @SerializedName("allocation")
+    @Param(description = "Versioned allocation intent and evidence; unknown effective policy is not inferred from legacy provisioning type", since = "4.23.0")
+    private java.util.Map<String, String> allocation;
+
+    public void setAllocation(java.util.Map<String, String> value) {
+        allocation = value;
+    }
+
+    @SerializedName(ApiConstants.ID)
     @Param(description = "The ID of the service offering")
     private String id;
 
@@ -229,6 +237,10 @@ public class ServiceOfferingResponse extends BaseResponseWithAnnotations {
     @SerializedName("diskofferingdisplaytext")
     @Param(description = "The display text of the disk offering", since = "4.17")
     private String diskOfferingDisplayText;
+
+    @SerializedName("diskofferingcomputeonly")
+    @Param(description = "True if the linked disk offering is an internal compute-only disk offering", since = "4.22")
+    private Boolean diskOfferingComputeOnly;
 
     @SerializedName(ApiConstants.ENCRYPT_ROOT)
     @Param(description = "True if Instance root disk will be encrypted on storage", since = "4.18")
@@ -636,6 +648,14 @@ public class ServiceOfferingResponse extends BaseResponseWithAnnotations {
 
     public String getDiskOfferingDisplayText() {
         return diskOfferingDisplayText;
+    }
+
+    public Boolean getDiskOfferingComputeOnly() {
+        return diskOfferingComputeOnly;
+    }
+
+    public void setDiskOfferingComputeOnly(Boolean diskOfferingComputeOnly) {
+        this.diskOfferingComputeOnly = diskOfferingComputeOnly;
     }
 
     public void setEncryptRoot(Boolean encrypt) { this.encryptRoot = encrypt; }

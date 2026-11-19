@@ -1,0 +1,59 @@
+{
+  "start": 22994,
+  "cursor": 23015,
+  "truncated": false,
+  "hasMore": false,
+  "events": [
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 22995,
+      "requestId": "25396.4055",
+      "api": "readyForShutdown",
+      "id": null,
+      "entityid": null,
+      "projectid": null,
+      "path": "/client/api/"
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 22998,
+      "requestId": "25396.4055",
+      "api": "readyForShutdown",
+      "status": 200
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 23002,
+      "requestId": "25396.4056",
+      "api": "readyForShutdown",
+      "id": null,
+      "entityid": null,
+      "projectid": null,
+      "path": "/client/api/"
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 23005,
+      "requestId": "25396.4056",
+      "api": "readyForShutdown",
+      "status": 200
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 23010,
+      "requestId": "25396.4057",
+      "api": "listUserData",
+      "id": "90f2b7d5-b278-4626-9813-dfd704ba972b",
+      "entityid": null,
+      "projectid": null,
+      "path": "/client/api/"
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 23012,
+      "requestId": "25396.4057",
+      "api": "listUserData",
+      "status": 200
+    }
+  ]
+}

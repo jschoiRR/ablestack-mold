@@ -1,0 +1,255 @@
+Browser tab: 5, Title: "Affinity 그룹 - ABLESTACK-Mold", URL: "http://10.10.31.10:8080/client/#/affinitygroup?name=qa-ag03-owner-same&type=host+affinity&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&account=qa-ag03-user&page=1&pagesize=20".
+1 AXWebArea Affinity 그룹 - ABLESTACK-Mold, URL: 10.10.31.10:8080/client/#/affinitygroup?name=qa-ag03-owner-same&type=host+affinity&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&account=qa-ag03-user&page=1&pagesize=20
+	2 container
+		3 container
+			4 image
+			5 menu
+				6 dashboard 대시보드
+					7 link Description: dashboard 대시보드, Value: 10.10.31.10:8080/client/#/dashboard
+				8 container
+					9 image cloud
+					10 text 컴퓨트
+				183 content list sub_menu_1_$$_/compute-popup
+					184 cloud-server 가상머신
+						185 link Description: cloud-server 가상머신, Value: 10.10.31.10:8080/client/#/vm
+					186 camera VM 스냅샷
+						187 link Description: camera VM 스냅샷, Value: 10.10.31.10:8080/client/#/vmsnapshot
+					188 쿠버네티스
+						189 link Description: 쿠버네티스, Value: 10.10.31.10:8080/client/#/kubernetes
+					190 fullscreen 오토스케일 VM 그룹
+						191 link Description: fullscreen 오토스케일 VM 그룹, Value: 10.10.31.10:8080/client/#/autoscalevmgroup
+					192 gold 가상머신 그룹
+						193 link Description: gold 가상머신 그룹, Value: 10.10.31.10:8080/client/#/vmgroup
+					194 key SSH 키 쌍
+						195 link Description: key SSH 키 쌍, Value: 10.10.31.10:8080/client/#/ssh
+					196 solution 사용자 데이터 라이브러리
+						197 link Description: solution 사용자 데이터 라이브러리, Value: 10.10.31.10:8080/client/#/userdata
+					198 solution CNI 구성
+						199 link Description: solution CNI 구성, Value: 10.10.31.10:8080/client/#/cniconfiguration
+					200 swap Affinity 그룹
+						201 link Description: swap Affinity 그룹, Value: 10.10.31.10:8080/client/#/affinitygroup
+				11 container
+					12 image hdd
+					13 text 스토리지
+				14 container
+					15 image wifi
+					16 text 네트워크
+				17 container
+					18 image picture
+					19 text 이미지
+				20 container
+					21 image lock
+					22 text 키 관리
+				23 schedule 이벤트
+					24 link Description: schedule 이벤트, Value: 10.10.31.10:8080/client/#/event
+				25 project 프로젝트
+					26 link Description: project 프로젝트, Value: 10.10.31.10:8080/client/#/project
+				27 idcard 역할
+					28 link Description: idcard 역할, Value: 10.10.31.10:8080/client/#/role
+				29 team 계정
+					30 link Description: team 계정, Value: 10.10.31.10:8080/client/#/account
+				31 block 도메인
+					32 link Description: block 도메인, Value: 10.10.31.10:8080/client/#/domain
+				33 container
+					34 image bank
+					35 text 인프라스트럭쳐
+				36 container
+					37 image shopping
+					38 text 서비스 오퍼링
+				39 container
+					40 image setting
+					41 text 구성
+				42 appstore-add 확장
+					43 link Description: appstore-add 확장, Value: 10.10.31.10:8080/client/#/extension
+				44 container
+					45 image tool
+					46 text 도구
+				47 read API 문서
+					48 link Description: read API 문서, Value: 10.10.31.10:8080/client/#/apidocs/
+		49 container
+			50 text 페이지 스타일 설정
+			51 button 닫기
+				52 image close
+			53 container
+				54 heading 페이지 스타일 설정, Value: 3
+					55 text 페이지 스타일 설정
+				56 container
+					57 image
+					58 container
+						59 radio button (settable, integer) Description:  , Value: 0
+				60 container
+					61 image
+					62 container
+						63 radio button (settable, integer) Description:  , Value: 1
+					64 image check
+				65 heading 테마 색상, Value: 3
+					66 text 테마 색상
+				67 container
+					68 radio button (settable, integer) Description:  , Value: 0
+					69 image check
+				70 container
+					71 radio button (settable, integer) Description:  , Value: 0
+				72 container
+					73 radio button (settable, integer) Description:  , Value: 0
+				74 container
+					75 radio button (settable, integer) Description:  , Value: 0
+				76 container
+					77 radio button (settable, integer) Description:  , Value: 0
+				78 container
+					79 radio button (settable, integer) Description:  , Value: 0
+				80 container
+					81 radio button (settable, integer) Description:  , Value: 0
+				82 container
+					83 radio button (settable, integer) Description:  , Value: 0
+				84 heading 네비게이션 설정, Value: 3
+					85 text 네비게이션 설정
+				86 container
+					87 container
+						88 text 배경색
+						89 color well (disabled, settable) #ffffff
+					90 container
+						91 text 텍스트 색상
+						92 color well (disabled, settable) #000000
+				93 image exclamation-circle
+				94 text 설정은 현재 브라우저에서만 볼 수 있습니다. 설정을 적용하려면 JSON 파일을 다운로드하고 경로 `/public/config.json` 아래의 `config.json` 파일의 `theme` 섹션에서 해당 콘텐츠를 교체하세요.
+				95 button download 세팅값 다운로드(json)
+					96 image download
+					97 text 세팅값 다운로드(json)
+				98 button undo 기본값으로 재설정
+					99 image undo
+					100 text 기본값으로 재설정
+		101 container
+			102 image menu-fold
+			103 container
+				104 combo box (settable) rc_select_0
+				105 image project
+				106 text 기본 보기
+			107 button 생성 down
+				108 text 생성
+				109 image down
+			110 image translation
+			111 image bell
+			112 container
+				113 text AC admin cloud
+		114 container
+			476 container
+				477 link Description: home, Value: 10.10.31.10:8080/client/#/
+				478 text /
+				479 link Description: Affinity 그룹, Value: 10.10.31.10:8080/client/#/affinitygroup
+				480 link Description: question-circle, Value: docs.ablecloud.io/latest/adminguide/virtual_machines.html#affinity-groups
+				481 button reload 업데이트
+					534 image reload
+					483 text 업데이트
+				484 switch 프로젝트, Value: 0
+					485 text 프로젝트
+			486 container
+				487 button 새 Affinity 그룹 추가
+					488 image plus
+					489 text 새 Affinity 그룹 추가
+				490 button 고급 검색
+					491 image filter
+				492 text field (settable)
+				493 button search
+					494 image search
+			495 container
+				496 text 이름 : qa-ag03-owner-same
+				497 image close
+			535 container
+				557 text 유형 : host affinity (St...
+				536 image close
+			537 container
+				558 text 도메인 아이디 : ROOT
+				538 image close
+			539 container
+				540 text 계정 : qa-ag03-user
+				541 image close
+			221 table
+				222 row
+					223 cell
+						224 container
+							225 checkbox (settable, integer) Description:  , Value: 0
+					226 cell
+						227 container
+							228 text 이름
+							229 image caret-up
+							230 image caret-down
+					231 cell
+						232 container
+							233 text 유형
+							234 image caret-up
+							235 image caret-down
+					236 cell
+						237 container
+							238 text 설명
+							239 image caret-up
+							240 image caret-down
+					241 cell
+						242 container
+							243 text 계정
+							244 image caret-up
+							245 image caret-down
+					246 cell
+						247 container
+							248 text 도메인
+							249 image caret-up
+							250 image caret-down
+					251 cell
+						252 button filter
+							253 image filter
+				542 row
+					543 cell
+						544 container
+							545 checkbox (settable, integer) Description:  , Value: 0
+					546 cell
+						547 link Description: qa-ag03-owner-same, Value: 10.10.31.10:8080/client/#/affinitygroup/7525c9e1-79c4-49c7-b07f-c37dc6e777de
+					559 cell
+						560 text host affinity
+					561 cell
+						562 text AG03 explicit owner selection
+					548 cell
+						549 link Description: qa-ag03-user, Value: 10.10.31.10:8080/client/#/account?name=qa-ag03-user&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&dataView=true
+					550 cell
+						551 link Description: ROOT, Value: 10.10.31.10:8080/client/#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details
+			464 content list
+				465 text 전체 1 개 항목 중 1-1 표시
+				466 container 이전 페이지
+					467 button (disabled) left
+						468 image left
+				563 text 1
+				470 container 다음 페이지
+					471 button (disabled) right
+						472 image right
+				473 container
+					474 combo box (settable) rc_select_2
+					475 text 20 / 쪽
+	180 container
+		181 image info-circle
+		182 text Wall 모니터링을 사용할 수 없습니다. 기존 알림은 최신 정보가 아닐 수 있으며 Mold는 계속 사용할 수 있습니다. 비활성
+	508 container
+		509 container
+			510 text 이름
+			511 text field (settable) 이름, Value: qa-ag03-owner-same, ID: form_item_name
+			512 text 유형
+			513 container
+				514 combo box (settable) 유형, ID: form_item_type
+				564 text 호스트 Affinity (Strict)
+			516 text 도메인 아이디
+			517 container
+				518 combo box (settable) 도메인 아이디, ID: form_item_domainid
+				552 image block
+				565 text ROOT
+			521 text 계정
+			553 container
+				554 combo box (settable) 계정, ID: form_item_account
+				555 image block
+				566 text qa-ag03-user
+			526 text 프로젝트
+			556 combo box (collapsed, settable) 프로젝트, ID: form_item_projectid, Secondary Actions: Expand
+			528 button stop 재설정
+				529 image stop
+				530 text 재설정
+			531 button search 검색
+				532 image search
+				533 text 검색
+
+The focused UI element is 531 button search 검색

@@ -1,0 +1,435 @@
+Browser tab: 6, Title: "Affinity 그룹 - ABLESTACK-Mold", URL: "http://10.10.31.10:8080/client/#/affinitygroup/b2425532-f2bb-4511-86f5-917f6a4f1869?tab=instances".
+1 AXWebArea Affinity 그룹 - ABLESTACK-Mold, URL: 10.10.31.10:8080/client/#/affinitygroup/b2425532-f2bb-4511-86f5-917f6a4f1869?tab=instances
+	2 container
+		68 container
+			69 text 페이지 스타일 설정
+			70 button 닫기
+				71 image close
+			654 container
+				655 heading 페이지 스타일 설정, Value: 3
+					656 text 페이지 스타일 설정
+				657 container
+					658 image
+					659 container
+						660 radio button (settable, integer) Description:  , Value: 0
+				661 container
+					662 image
+					663 container
+						664 radio button (settable, integer) Description:  , Value: 1
+					665 image check
+				666 heading 테마 색상, Value: 3
+					667 text 테마 색상
+				668 container
+					669 radio button (settable, integer) Description:  , Value: 0
+					670 image check
+				671 container
+					672 radio button (settable, integer) Description:  , Value: 0
+				673 container
+					674 radio button (settable, integer) Description:  , Value: 0
+				675 container
+					676 radio button (settable, integer) Description:  , Value: 0
+				677 container
+					678 radio button (settable, integer) Description:  , Value: 0
+				679 container
+					680 radio button (settable, integer) Description:  , Value: 0
+				681 container
+					682 radio button (settable, integer) Description:  , Value: 0
+				683 container
+					684 radio button (settable, integer) Description:  , Value: 0
+				685 heading 네비게이션 설정, Value: 3
+					686 text 네비게이션 설정
+				687 container
+					688 container
+						689 text 배경색
+						690 color well (disabled, settable) #ffffff
+					691 container
+						692 text 텍스트 색상
+						693 color well (disabled, settable) #000000
+				694 image exclamation-circle
+				695 text 설정은 현재 브라우저에서만 볼 수 있습니다. 설정을 적용하려면 JSON 파일을 다운로드하고 경로 `/public/config.json` 아래의 `config.json` 파일의 `theme` 섹션에서 해당 콘텐츠를 교체하세요.
+				696 button download 세팅값 다운로드(json)
+					697 image download
+					698 text 세팅값 다운로드(json)
+				699 button undo 기본값으로 재설정
+					700 image undo
+					701 text 기본값으로 재설정
+		122 container
+			702 image menu-unfold
+			124 container
+				125 combo box (settable) rc_select_0
+				126 image project
+				127 text 기본 보기
+			131 image translation
+			132 image bell
+			133 container
+				134 text AC admin cloud
+		135 container
+			533 container
+				534 link Description: home, Value: 10.10.31.10:8080/client/#/
+				535 text /
+				536 link Description: Affinity 그룹, Value: 10.10.31.10:8080/client/#/affinitygroup
+				537 text / qa-ag05-target
+				538 link Description: question-circle, Value: docs.ablecloud.io/latest/adminguide/virtual_machines.html#affinity-groups
+				539 button reload 업데이트
+					540 image reload
+					541 text 업데이트
+			542 button down 작업
+				543 image down
+				544 text 작업
+			545 container
+				546 image swap
+				547 heading qa-ag05-target, Value: 4
+					548 text qa-ag05-target
+				549 text host affinity
+				550 text 아이디
+				551 button barcode
+					552 image barcode
+				553 link Description: b2425532-f2bb-4511-86f5-917f6a4f1869 , Value: javascript:;
+				554 text 계정
+				555 image user
+				556 link Description: admin, Value: 10.10.31.10:8080/client/#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f
+				557 text 도메인
+				558 image block
+				559 link Description: ROOT, Value: 10.10.31.10:8080/client/#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details
+				560 link Description: cloud-server 가상머신 보기, Value: 10.10.31.10:8080/client/#/vm?affinitygroupid=b2425532-f2bb-4511-86f5-917f6a4f1869
+			561 container
+				562 tab group
+					563 container
+						564 tab (selectable, settable, boolean) 상세, Value: 0, ID: rc-tabs-2-tab-details
+						565 tab (selected, settable, boolean) 가상머신, Value: 1, ID: rc-tabs-2-tab-instances
+						566 tab (selectable, settable, boolean) 이벤트, Value: 0, ID: rc-tabs-2-tab-events
+				567 container Description: 가상머신, ID: rc-tabs-2-panel-instances
+					568 container
+						569 heading 연결 가상머신, Value: 3
+							570 text 연결 가상머신
+						571 text 중지된 일반 가상머신의 대상 그룹 연결만 변경합니다. 다른 Affinity 그룹 연결은 유지하며 VM을 자동 중지하지 않습니다. 연결 VM 수: 3 · 조회 결과: 3
+						572 button 가상머신 연결
+						573 button (disabled) 선택 연결 해제 (0)
+						574 button 업데이트
+							703 image reload
+						576 text field (settable)
+						577 button search
+							578 image search
+						579 table
+							580 row
+								581 cell
+									582 container
+										583 checkbox (settable, integer) Description:  , Value: 0
+								584 cell
+									585 text 표시 이름
+								586 cell
+									587 text 상태
+								588 cell
+									589 text 호스트
+								590 cell
+									591 text 계정
+								592 cell
+									593 text 프로젝트
+								594 cell
+									595 text 도메인
+								596 cell
+									597 text 연결 관리 제한 사유
+							598 row
+								599 cell
+									600 container
+										601 checkbox (settable, integer) Description:  , Value: 0
+								602 cell
+									603 link Description: qa-ag05-vm-01, Value: 10.10.31.10:8080/client/#/vm/579b1439-136d-4280-b2bb-b10613496d20
+									604 text i-2-664-VM
+								605 cell
+									606 text 정보 없음 / 접근 제한
+								607 cell
+									608 text admin
+								609 cell
+									610 text 정보 없음 / 접근 제한
+								611 cell
+									612 text ROOT
+							613 row
+								614 cell
+									615 container
+										616 checkbox (settable, integer) Description:  , Value: 0
+								617 cell
+									618 link Description: qa-ag05-vm-02, Value: 10.10.31.10:8080/client/#/vm/ebf7db49-ea07-4dba-be8a-78fc915b19ec
+									619 text i-2-665-VM
+								620 cell
+									621 text 정보 없음 / 접근 제한
+								622 cell
+									623 text admin
+								624 cell
+									625 text 정보 없음 / 접근 제한
+								626 cell
+									627 text ROOT
+							628 row
+								629 cell
+									630 container
+										631 checkbox (settable, integer) Description:  , Value: 0
+								632 cell
+									633 link Description: qa-ag05-vm-03-긴표시이름검증-긴표시이름검증-긴표시이름검증-긴표시이름검증-긴표시이름검증-긴표시이름검증-긴표시이름검증-긴표시이름검증, Value: 10.10.31.10:8080/client/#/vm/204ec92d-c477-4be2-9a94-de42398bc680
+									634 text i-2-666-VM
+								635 cell
+									636 text 정보 없음 / 접근 제한
+								637 cell
+									638 text admin
+								639 cell
+									640 text 정보 없음 / 접근 제한
+								641 cell
+									642 text ROOT
+						643 content list
+							644 container 이전 페이지
+								645 button (disabled) left
+									646 image left
+							647 text 1
+							648 container 다음 페이지
+								649 button (disabled) right
+									650 image right
+							651 container
+								652 combo box (settable) rc_select_5
+								653 text 10 / 쪽
+	530 container
+		531 image info-circle
+		532 text Wall 모니터링을 사용할 수 없습니다. 기존 알림은 최신 정보가 아닐 수 있으며 Mold는 계속 사용할 수 있습니다. 비활성
+	704 container
+		705 container 가상머신 연결
+			706 container
+				707 button Close
+					708 image close
+				709 text 가상머신 연결
+				710 container
+					711 text qa-ag05-target · admin / ROOT 중지된 일반 가상머신의 대상 그룹 연결만 변경합니다. 다른 Affinity 그룹 연결은 유지하며 VM을 자동 중지하지 않습니다.
+					712 container
+						713 text field (settable)
+						714 button search
+							715 image search
+					716 text 선택: 0 · 페이지·검색 밖 선택도 유지됩니다. 표 머리글은 현재 페이지에만 적용됩니다.
+					717 table
+						718 row
+							719 cell
+								720 container
+									721 checkbox (disabled, settable, integer) Description:  , Value: 0
+							722 cell
+								723 text 표시 이름
+							724 cell
+								725 text 상태
+							726 cell
+								727 text 호스트
+							728 cell
+								729 text 계정
+							730 cell
+								731 text 프로젝트
+							732 cell
+								733 text 도메인
+							734 cell
+								735 text 연결 관리 제한 사유
+						736 row
+							737 cell
+								738 container
+									739 checkbox (disabled, settable, integer) Description:  , Value: 0
+							740 cell
+								741 link Description: GFS-TEST-VM, Value: 10.10.31.10:8080/client/#/vm/05f940bb-5ca7-4f58-8e41-ed8440758f0b
+								742 text i-2-7-VM
+							743 cell
+								744 text Running
+							745 cell
+								746 text ablecube31-1
+							747 cell
+								748 text admin
+							749 cell
+								750 text 정보 없음 / 접근 제한
+							751 cell
+								752 text ROOT
+							753 cell
+								754 text Affinity 그룹 변경은 정지된 일반 VM에서 사용할 수 있습니다. VM 상태와 지원 여부를 확인하세요.
+						755 row
+							756 cell
+								757 container
+									758 checkbox (disabled, settable, integer) Description:  , Value: 0
+							759 cell
+								760 link Description: W2025-GFS2-Sparse, Value: 10.10.31.10:8080/client/#/vm/36d5333d-670a-4644-8c68-1f1dc154ba3a
+								761 text i-2-13-VM
+							762 cell
+								763 text Running
+							764 cell
+								765 text ablecube31-3
+							766 cell
+								767 text admin
+							768 cell
+								769 text 정보 없음 / 접근 제한
+							770 cell
+								771 text ROOT
+							772 cell
+								773 text Affinity 그룹 변경은 정지된 일반 VM에서 사용할 수 있습니다. VM 상태와 지원 여부를 확인하세요.
+						774 row
+							775 cell
+								776 container
+									777 checkbox (disabled, settable, integer) Description:  , Value: 0
+							778 cell
+								779 link Description: R10-Sparse, Value: 10.10.31.10:8080/client/#/vm/2f35ea9a-7ff2-494f-a857-6527e0fb1976
+								780 text i-2-14-VM
+							781 cell
+								782 text Running
+							783 cell
+								784 text ablecube31-1
+							785 cell
+								786 text admin
+							787 cell
+								788 text 정보 없음 / 접근 제한
+							789 cell
+								790 text ROOT
+							791 cell
+								792 text Affinity 그룹 변경은 정지된 일반 VM에서 사용할 수 있습니다. VM 상태와 지원 여부를 확인하세요.
+						793 row
+							794 cell
+								795 container
+									796 checkbox (disabled, settable, integer) Description:  , Value: 0
+							797 cell
+								798 link Description: R10-Sparse-Clone1, Value: 10.10.31.10:8080/client/#/vm/708d87cd-1d8a-4911-b22a-4211cdf1634f
+								799 text i-2-15-VM
+							800 cell
+								801 text Running
+							802 cell
+								803 text ablecube31-1
+							804 cell
+								805 text admin
+							806 cell
+								807 text 정보 없음 / 접근 제한
+							808 cell
+								809 text ROOT
+							810 cell
+								811 text Affinity 그룹 변경은 정지된 일반 VM에서 사용할 수 있습니다. VM 상태와 지원 여부를 확인하세요.
+						812 row
+							813 cell
+								814 container
+									815 checkbox (disabled, settable, integer) Description:  , Value: 0
+							816 cell
+								817 link Description: R10-Sparse-Clone2, Value: 10.10.31.10:8080/client/#/vm/dbdefe41-64a0-4ab1-a596-5d5f5131517c
+								818 text i-2-16-VM
+							819 cell
+								820 text Running
+							821 cell
+								822 text ablecube31-2
+							823 cell
+								824 text admin
+							825 cell
+								826 text 정보 없음 / 접근 제한
+							827 cell
+								828 text ROOT
+							829 cell
+								830 text Affinity 그룹 변경은 정지된 일반 VM에서 사용할 수 있습니다. VM 상태와 지원 여부를 확인하세요.
+						831 row
+							832 cell
+								833 container
+									834 checkbox (disabled, settable, integer) Description:  , Value: 0
+							835 cell
+								836 link Description: R10-Sparse-Clone3, Value: 10.10.31.10:8080/client/#/vm/1fdd690d-b0ca-45bf-9088-8534e409b866
+								837 text i-2-17-VM
+							838 cell
+								839 text Running
+							840 cell
+								841 text ablecube31-3
+							842 cell
+								843 text admin
+							844 cell
+								845 text 정보 없음 / 접근 제한
+							846 cell
+								847 text ROOT
+							848 cell
+								849 text Affinity 그룹 변경은 정지된 일반 VM에서 사용할 수 있습니다. VM 상태와 지원 여부를 확인하세요.
+						850 row
+							851 cell
+								852 container
+									853 checkbox (disabled, settable, integer) Description:  , Value: 0
+							854 cell
+								855 link Description: R10-Sparse-Clone4, Value: 10.10.31.10:8080/client/#/vm/3f135c5e-a3cf-4eec-9e90-51f3148c406d
+								856 text i-2-18-VM
+							857 cell
+								858 text Running
+							859 cell
+								860 text ablecube31-1
+							861 cell
+								862 text admin
+							863 cell
+								864 text 정보 없음 / 접근 제한
+							865 cell
+								866 text ROOT
+							867 cell
+								868 text Affinity 그룹 변경은 정지된 일반 VM에서 사용할 수 있습니다. VM 상태와 지원 여부를 확인하세요.
+						869 row
+							870 cell
+								871 container
+									872 checkbox (disabled, settable, integer) Description:  , Value: 0
+							873 cell
+								874 link Description: R10-Sparse-Clone5, Value: 10.10.31.10:8080/client/#/vm/c475abf7-2346-4015-9cef-001a78472c25
+								875 text i-2-19-VM
+							876 cell
+								877 text Running
+							878 cell
+								879 text ablecube31-1
+							880 cell
+								881 text admin
+							882 cell
+								883 text 정보 없음 / 접근 제한
+							884 cell
+								885 text ROOT
+							886 cell
+								887 text Affinity 그룹 변경은 정지된 일반 VM에서 사용할 수 있습니다. VM 상태와 지원 여부를 확인하세요.
+						888 row
+							889 cell
+								890 container
+									891 checkbox (disabled, settable, integer) Description:  , Value: 0
+							892 cell
+								893 link Description: VM-630888e1-bcef-4b40-9952-b3409a664bae, Value: 10.10.31.10:8080/client/#/vm/630888e1-bcef-4b40-9952-b3409a664bae
+								894 text i-2-22-VM
+							895 cell
+								896 text Running
+							897 cell
+								898 text ablecube31-2
+							899 cell
+								900 text admin
+							901 cell
+								902 text 정보 없음 / 접근 제한
+							903 cell
+								904 text ROOT
+							905 cell
+								906 text Affinity 그룹 변경은 정지된 일반 VM에서 사용할 수 있습니다. VM 상태와 지원 여부를 확인하세요.
+						907 row
+							908 cell
+								909 container
+									910 checkbox (disabled, settable, integer) Description:  , Value: 0
+							911 cell
+								912 link Description: W2025-Sparse-Clone1, Value: 10.10.31.10:8080/client/#/vm/f4be8cb2-f649-47ef-bcd2-7b59b71d5471
+								913 text i-2-25-VM
+							914 cell
+								915 text Running
+							916 cell
+								917 text ablecube31-2
+							918 cell
+								919 text admin
+							920 cell
+								921 text 정보 없음 / 접근 제한
+							922 cell
+								923 text ROOT
+							924 cell
+								925 text Affinity 그룹 변경은 정지된 일반 VM에서 사용할 수 있습니다. VM 상태와 지원 여부를 확인하세요.
+					926 content list
+						927 container 이전 페이지
+							928 button (disabled) left
+								929 image left
+						930 text 1
+						931 text 2
+						932 text 3
+						933 text 4
+						934 container 다음 5 페이지
+							935 container
+								936 image double-right
+								937 text •••
+						938 text 9
+						939 container 다음 페이지
+							940 button right
+								941 image right
+						942 container
+							943 combo box (settable) rc_select_6
+							944 text 10 / 쪽
+				945 button 닫기
+				946 button (disabled) 다음
+
+The focused UI element is 947 container

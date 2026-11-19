@@ -98,7 +98,6 @@ public class UserDataManagerImpl extends ManagerBase implements UserDataManager 
 
     @Override
     public String validateUserData(String userData, BaseCmd.HTTPMethod httpmethod) {
-        logger.trace(String.format("Validating base64 encoded user data: [%s].", userData));
         if (StringUtils.isBlank(userData)) {
             logger.debug("Null/empty base64 encoded user data set");
             return null;
@@ -106,13 +105,17 @@ public class UserDataManagerImpl extends ManagerBase implements UserDataManager 
 
         if (userData.contains("%")) {
             try {
-                userData = URLDecoder.decode(userData, "UTF-8");
-            } catch (UnsupportedEncodingException e) {
+                // URI-encoded and form-encoded Base64 are both accepted; preserve literal '+'.
+                userData = URLDecoder.decode(userData.replace("+", "%2B"), "UTF-8");
+            } catch (UnsupportedEncodingException | IllegalArgumentException e) {
                 throw new InvalidParameterValueException("Url decoding of user data failed.");
             }
         }
 
-        if (!Base64.isBase64(userData)) {
+        userData = userData.replaceAll("[\\t\\n\\r ]", "");
+        if (!userData.matches("[A-Za-z0-9+/_-]+={0,2}") || !Base64.isBase64(userData)
+                || userData.replaceAll("=+$", "").length() % 4 == 1
+                || (userData.contains("=") && userData.length() % 4 != 0)) {
             throw new InvalidParameterValueException("User data is not base64 encoded.");
         }
 
@@ -149,13 +152,13 @@ public class UserDataManagerImpl extends ManagerBase implements UserDataManager 
     }
 
     private byte[] validateAndDecodeByHTTPMethod(String userData, int maxHTTPLength, BaseCmd.HTTPMethod httpMethod) {
-        byte[] decodedUserData = Base64.decodeBase64(userData.getBytes());
+        byte[] decodedUserData = Base64.decodeBase64(userData);
         if (decodedUserData == null || decodedUserData.length < 1) {
             throw new InvalidParameterValueException("User data is too short.");
         }
 
-        logger.trace(String.format("Decoded user data: [%s].", decodedUserData));
-        int userDataLength = userData.length();
+        // The limit applies to the canonical encoded bytes, including required padding.
+        int userDataLength = Base64.encodeBase64String(decodedUserData).length();
         int decodedUserDataLength = decodedUserData.length;
         logger.info(String.format("Configured base64 encoded user data size: %d bytes, actual user data size: %d bytes", userDataLength, decodedUserDataLength));
 

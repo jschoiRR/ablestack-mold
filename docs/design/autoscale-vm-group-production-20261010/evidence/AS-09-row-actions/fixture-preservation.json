@@ -1,0 +1,347 @@
+{
+  "31": {
+    "group": {
+      "id": "bf0f5385-ae2c-4da4-aec4-eb985dbdeba4",
+      "name": "AS-PROD-31-AS04-CONCURRENCY",
+      "lbruleid": "806cf32a-f632-4dc0-be52-0f85c19c7070",
+      "associatednetworkname": "AS-PROD-31-AS01-projectNetwork",
+      "associatednetworkid": "797d8d5e-efff-4364-a53c-c2ac90596fe8",
+      "lbprovider": "VirtualRouter",
+      "publicipid": "67ede107-b283-4b65-b16a-d675f7709aa4",
+      "publicip": "10.10.31.104",
+      "publicport": "8084",
+      "privateport": "8080",
+      "vmprofileid": "13090328-2f59-4121-9316-bbb30da24c9b",
+      "minmembers": 1,
+      "maxmembers": 3,
+      "availablevirtualmachinecount": 1,
+      "interval": 10,
+      "state": "DISABLED",
+      "scaleuppolicies": [
+        {
+          "id": "36d98f38-55e0-473d-8a6b-e009f50ae757",
+          "name": "ScaleUpPolicy-0",
+          "action": "SCALEUP",
+          "duration": 60,
+          "quiettime": 10,
+          "conditions": [
+            {
+              "id": "a20fc96c-640b-4858-a9e1-d13ff10575cc",
+              "threshold": 20,
+              "relationaloperator": "GT",
+              "counterid": "978ac6cb-b253-11f1-a895-0024814c313f",
+              "countername": "VM CPU - average percentage",
+              "counter": {
+                "id": "978ac6cb-b253-11f1-a895-0024814c313f",
+                "name": "VM CPU - average percentage",
+                "source": "CPU",
+                "value": "vm.cpu.average.percentage",
+                "provider": "VirtualRouter"
+              },
+              "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+              "domain": "ROOT",
+              "domainpath": "ROOT",
+              "projectid": "fb318714-bc01-4be5-9e33-0f49a7013127",
+              "project": "AS-PROD-31-AS01-project"
+            }
+          ],
+          "projectid": "fb318714-bc01-4be5-9e33-0f49a7013127",
+          "project": "AS-PROD-31-AS01-project",
+          "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+          "domain": "ROOT",
+          "domainpath": "ROOT"
+        }
+      ],
+      "scaledownpolicies": [
+        {
+          "id": "64cfc4bd-7665-4670-bf99-1c93b742f66a",
+          "name": "ScaleDownPolicy-0",
+          "action": "SCALEDOWN",
+          "duration": 60,
+          "quiettime": 10,
+          "conditions": [
+            {
+              "id": "f638d3ce-f6be-41b5-9b08-e36ccacf7817",
+              "threshold": 10,
+              "relationaloperator": "LT",
+              "counterid": "978ac6cb-b253-11f1-a895-0024814c313f",
+              "countername": "VM CPU - average percentage",
+              "counter": {
+                "id": "978ac6cb-b253-11f1-a895-0024814c313f",
+                "name": "VM CPU - average percentage",
+                "source": "CPU",
+                "value": "vm.cpu.average.percentage",
+                "provider": "VirtualRouter"
+              },
+              "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+              "domain": "ROOT",
+              "domainpath": "ROOT",
+              "projectid": "fb318714-bc01-4be5-9e33-0f49a7013127",
+              "project": "AS-PROD-31-AS01-project"
+            }
+          ],
+          "projectid": "fb318714-bc01-4be5-9e33-0f49a7013127",
+          "project": "AS-PROD-31-AS01-project",
+          "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+          "domain": "ROOT",
+          "domainpath": "ROOT"
+        }
+      ],
+      "projectid": "fb318714-bc01-4be5-9e33-0f49a7013127",
+      "project": "AS-PROD-31-AS01-project",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "domain": "ROOT",
+      "domainpath": "ROOT",
+      "fordisplay": true,
+      "created": "2026-10-11T10:19:39+0900",
+      "operationinprogress": false,
+      "evaluation": {
+        "evaluatedat": 1791730816820,
+        "cooldownuntil": 1791730372269,
+        "policies": [
+          {
+            "id": "36d98f38-55e0-473d-8a6b-e009f50ae757",
+            "action": "SCALEUP",
+            "duration": 60,
+            "conditions": [
+              {
+                "id": "a20fc96c-640b-4858-a9e1-d13ff10575cc",
+                "countername": "VM CPU - average percentage",
+                "source": "CPU",
+                "unit": "%",
+                "operator": "GT",
+                "threshold": 20,
+                "samples": 0,
+                "resources": 2,
+                "reason": "NO_SAMPLES",
+                "matched": false
+              }
+            ],
+            "status": "BLOCKED",
+            "reason": "MEMBERS_CHANGED"
+          },
+          {
+            "id": "64cfc4bd-7665-4670-bf99-1c93b742f66a",
+            "action": "SCALEDOWN",
+            "duration": 60,
+            "conditions": [
+              {
+                "id": "f638d3ce-f6be-41b5-9b08-e36ccacf7817",
+                "countername": "VM CPU - average percentage",
+                "source": "CPU",
+                "unit": "%",
+                "operator": "LT",
+                "threshold": 10,
+                "samples": 0,
+                "resources": 2,
+                "reason": "NO_SAMPLES",
+                "matched": false
+              }
+            ],
+            "status": "BLOCKED",
+            "reason": "MEMBERS_CHANGED"
+          }
+        ],
+        "status": "WAITING"
+      },
+      "memberstatecounts": {
+        "Running": 1
+      },
+      "statuscollectedat": 1791803217537,
+      "lastscaledat": 1791730886400,
+      "lastcheckedat": 1791730896000,
+      "evaluationerror": false,
+      "hasannotations": false
+    },
+    "profileOriginalEquality": {
+      "templateid": true,
+      "serviceofferingid": true,
+      "destroyvmgraceperiod": true,
+      "otherdeployparams": true,
+      "userdataid": true,
+      "userdata": true,
+      "userdatadetails": true,
+      "counterparams": true
+    },
+    "http": {
+      "200": 20,
+      "failure": 0
+    },
+    "httpErrors": [],
+    "memberCount": 1,
+    "lbMemberCount": 1,
+    "scheduleCount": 3,
+    "schedulesAllDisabled": true
+  },
+  "32": {
+    "group": {
+      "id": "18bef25a-4053-4454-bc85-f6d777b9391d",
+      "name": "AS-PROD-32-AS04-CONCURRENCY",
+      "lbruleid": "d75900b6-4d7c-4082-97c5-f2b7d32e2826",
+      "associatednetworkname": "AS-PROD-32-AS01-userNetwork",
+      "associatednetworkid": "f889cc7d-02c5-490b-b256-a289b73ff824",
+      "lbprovider": "VirtualRouter",
+      "publicipid": "d82e3f23-29e2-4b44-a85c-6c8821f2a4f6",
+      "publicip": "10.10.32.169",
+      "publicport": "8084",
+      "privateport": "8080",
+      "vmprofileid": "9cf4661f-7eea-4445-b9dd-90ddd6f07f7b",
+      "minmembers": 1,
+      "maxmembers": 3,
+      "availablevirtualmachinecount": 1,
+      "interval": 10,
+      "state": "DISABLED",
+      "scaleuppolicies": [
+        {
+          "id": "37417d80-35d9-41d4-b751-5d46fc6af23a",
+          "name": "ScaleUpPolicy-0",
+          "action": "SCALEUP",
+          "duration": 60,
+          "quiettime": 10,
+          "conditions": [
+            {
+              "id": "4a8fdf72-6fee-4a24-80a0-c0544651c5ea",
+              "threshold": 5,
+              "relationaloperator": "GT",
+              "counterid": "58eefbed-b23b-11f1-990e-0024811f8935",
+              "countername": "VM CPU - average percentage",
+              "counter": {
+                "id": "58eefbed-b23b-11f1-990e-0024811f8935",
+                "name": "VM CPU - average percentage",
+                "source": "CPU",
+                "value": "vm.cpu.average.percentage",
+                "provider": "VirtualRouter"
+              },
+              "domainid": "2246448b-b23b-11f1-990e-0024811f8935",
+              "domain": "ROOT",
+              "domainpath": "ROOT",
+              "account": "epic1346-as01-user32"
+            }
+          ],
+          "account": "epic1346-as01-user32",
+          "domainid": "2246448b-b23b-11f1-990e-0024811f8935",
+          "domain": "ROOT",
+          "domainpath": "ROOT"
+        }
+      ],
+      "scaledownpolicies": [
+        {
+          "id": "7639559c-63ad-4235-bbb4-462dfaba5261",
+          "name": "ScaleDownPolicy-0",
+          "action": "SCALEDOWN",
+          "duration": 60,
+          "quiettime": 10,
+          "conditions": [
+            {
+              "id": "2ec799ba-1c5f-4a5b-9ac5-709d10ddde48",
+              "threshold": 1,
+              "relationaloperator": "LT",
+              "counterid": "58eefbed-b23b-11f1-990e-0024811f8935",
+              "countername": "VM CPU - average percentage",
+              "counter": {
+                "id": "58eefbed-b23b-11f1-990e-0024811f8935",
+                "name": "VM CPU - average percentage",
+                "source": "CPU",
+                "value": "vm.cpu.average.percentage",
+                "provider": "VirtualRouter"
+              },
+              "domainid": "2246448b-b23b-11f1-990e-0024811f8935",
+              "domain": "ROOT",
+              "domainpath": "ROOT",
+              "account": "epic1346-as01-user32"
+            }
+          ],
+          "account": "epic1346-as01-user32",
+          "domainid": "2246448b-b23b-11f1-990e-0024811f8935",
+          "domain": "ROOT",
+          "domainpath": "ROOT"
+        }
+      ],
+      "account": "epic1346-as01-user32",
+      "domainid": "2246448b-b23b-11f1-990e-0024811f8935",
+      "domain": "ROOT",
+      "domainpath": "ROOT",
+      "fordisplay": true,
+      "created": "2026-10-11T10:19:26+0900",
+      "operationinprogress": false,
+      "evaluation": {
+        "evaluatedat": 1791728464384,
+        "cooldownuntil": 1791728345710,
+        "policies": [
+          {
+            "id": "37417d80-35d9-41d4-b751-5d46fc6af23a",
+            "action": "SCALEUP",
+            "duration": 60,
+            "conditions": [
+              {
+                "id": "4a8fdf72-6fee-4a24-80a0-c0544651c5ea",
+                "countername": "VM CPU - average percentage",
+                "source": "CPU",
+                "unit": "%",
+                "operator": "GT",
+                "threshold": 5,
+                "value": 0.16078221446657856,
+                "samples": 21,
+                "resources": 3,
+                "collectedat": 1791728463000,
+                "matched": false
+              }
+            ],
+            "status": "NOT_MATCHED"
+          },
+          {
+            "id": "7639559c-63ad-4235-bbb4-462dfaba5261",
+            "action": "SCALEDOWN",
+            "duration": 60,
+            "conditions": [
+              {
+                "id": "2ec799ba-1c5f-4a5b-9ac5-709d10ddde48",
+                "countername": "VM CPU - average percentage",
+                "source": "CPU",
+                "unit": "%",
+                "operator": "LT",
+                "threshold": 1,
+                "value": 0.16078221446657856,
+                "samples": 21,
+                "resources": 3,
+                "collectedat": 1791728463000,
+                "matched": true
+              }
+            ],
+            "status": "MATCHED"
+          }
+        ],
+        "collectedat": 1791728463000,
+        "status": "MIN_MEMBERS",
+        "reason": "MIN_MEMBERS"
+      },
+      "memberstatecounts": {
+        "Running": 1
+      },
+      "statuscollectedat": 1791803217684,
+      "lastscaledat": 1791730892541,
+      "lastcheckedat": 1791730902000,
+      "evaluationerror": false,
+      "hasannotations": false
+    },
+    "profileOriginalEquality": {
+      "templateid": true,
+      "serviceofferingid": true,
+      "destroyvmgraceperiod": true,
+      "otherdeployparams": true,
+      "userdataid": true,
+      "userdata": true,
+      "userdatadetails": true,
+      "counterparams": true
+    },
+    "http": {
+      "200": 20,
+      "failure": 0
+    },
+    "httpErrors": [],
+    "memberCount": 1,
+    "lbMemberCount": 1,
+    "scheduleCount": 3,
+    "schedulesAllDisabled": true
+  }
+}

@@ -1,0 +1,592 @@
+- complementary:
+  - menu:
+    - menuitem "dashboard 대시보드":
+      - link "dashboard 대시보드":
+        - /url: "#/dashboard"
+        - img "dashboard":
+        - text: 대시보드
+    - img "cloud":
+    - text: 컴퓨트
+    - list:
+      - menuitem "cloud-server 가상머신":
+        - link "cloud-server 가상머신":
+          - /url: "#/vm"
+          - img "cloud-server":
+          - text: 가상머신
+      - menuitem "camera VM 스냅샷":
+        - link "camera VM 스냅샷":
+          - /url: "#/vmsnapshot"
+          - img "camera":
+          - text: VM 스냅샷
+      - menuitem "쿠버네티스":
+        - link "쿠버네티스":
+          - /url: "#/kubernetes"
+          - text: 쿠버네티스
+      - menuitem "fullscreen 오토스케일 VM 그룹":
+        - link "fullscreen 오토스케일 VM 그룹":
+          - /url: "#/autoscalevmgroup"
+          - img "fullscreen":
+          - text: 오토스케일 VM 그룹
+      - menuitem "gold 가상머신 그룹":
+        - link "gold 가상머신 그룹":
+          - /url: "#/vmgroup"
+          - img "gold":
+          - text: 가상머신 그룹
+      - menuitem "key SSH 키 쌍":
+        - link "key SSH 키 쌍":
+          - /url: "#/ssh"
+          - img "key":
+          - text: SSH 키 쌍
+      - menuitem "solution 사용자 데이터 라이브러리":
+        - link "solution 사용자 데이터 라이브러리":
+          - /url: "#/userdata"
+          - img "solution":
+          - text: 사용자 데이터 라이브러리
+      - menuitem "solution CNI 구성":
+        - link "solution CNI 구성":
+          - /url: "#/cniconfiguration"
+          - img "solution":
+          - text: CNI 구성
+      - menuitem "swap Affinity 그룹":
+        - link "swap Affinity 그룹":
+          - /url: "#/affinitygroup"
+          - img "swap":
+          - text: Affinity 그룹
+    - img "hdd":
+    - text: 스토리지
+    - img "wifi":
+    - text: 네트워크
+    - img "picture":
+    - text: 이미지
+    - img "lock":
+    - text: 키 관리
+    - menuitem "schedule 이벤트":
+      - link "schedule 이벤트":
+        - /url: "#/event"
+        - img "schedule":
+        - text: 이벤트
+    - menuitem "project 프로젝트":
+      - link "project 프로젝트":
+        - /url: "#/project"
+        - img "project":
+        - text: 프로젝트
+    - menuitem "idcard 역할":
+      - link "idcard 역할":
+        - /url: "#/role"
+        - img "idcard":
+        - text: 역할
+    - menuitem "team 계정":
+      - link "team 계정":
+        - /url: "#/account"
+        - img "team":
+        - text: 계정
+    - menuitem "block 도메인":
+      - link "block 도메인":
+        - /url: "#/domain"
+        - img "block":
+        - text: 도메인
+    - img "bank":
+    - text: 인프라스트럭쳐
+    - img "shopping":
+    - text: 서비스 오퍼링
+    - img "setting":
+    - text: 구성
+    - menuitem "appstore-add 확장":
+      - link "appstore-add 확장":
+        - /url: "#/extension"
+        - img "appstore-add":
+        - text: 확장
+    - img "tool":
+    - text: 도구
+    - menuitem "read API 문서":
+      - link "read API 문서":
+        - /url: "#/apidocs/"
+        - img "read":
+        - text: API 문서
+- generic: 페이지 스타일 설정
+- button "닫기":
+  - img "close":
+- heading "페이지 스타일 설정" [level=3]
+- radio [checked]
+- img "check":
+- radio
+- heading "테마 색상" [level=3]
+- radio
+- img "check"
+- radio
+- radio
+- radio
+- radio
+- radio
+- radio
+- radio
+- separator
+- heading "네비게이션 설정" [level=3]
+- generic: 배경색
+- textbox: "#ffffff"
+- generic: 텍스트 색상
+- textbox: "#000000"
+- separator
+- alert:
+  - img "exclamation-circle":
+  - generic: "설정은 현재 브라우저에서만 볼 수 있습니다. 설정을 적용하려면 JSON 파일을 다운로드하고 경로 `/public/config.json` 아래의 `config.json` 파일의 `theme` 섹션에서 해당 콘텐츠를 교체하세요."
+- button "download 세팅값 다운로드(json)":
+  - img "download":
+  - generic: 세팅값 다운로드(json)
+- button "undo 기본값으로 재설정":
+  - img "undo":
+  - generic: 기본값으로 재설정
+- img "menu-fold":
+- combobox
+- img "project":
+- text: 기본 보기
+- button "생성 down":
+  - generic: 생성
+  - img "down":
+- img "translation":
+- img "bell":
+- generic: AC
+- generic: admin cloud
+- main:
+  - link "home":
+    - /url: "#/"
+    - img "home":
+  - text: /
+  - link "Affinity 그룹":
+    - /url: "#/affinitygroup"
+  - link "question-circle":
+    - /url: http://docs.ablecloud.io/latest/adminguide/virtual_machines.html#affinity-groups
+    - img "question-circle":
+  - button "reload 업데이트":
+    - img "reload":
+    - generic: 업데이트
+  - switch "프로젝트":
+    - generic: 프로젝트
+  - button "새 Affinity 그룹 추가":
+    - img "plus":
+    - generic: 새 Affinity 그룹 추가
+  - button "고급 검색":
+    - img "filter":
+  - textbox "검색"
+  - button "search":
+    - img "search":
+  - table:
+    - rowgroup:
+      - row "이름 caret-up caret-down 유형 caret-up caret-down 연결 VM 수 caret-up caret-down 설명 caret-up caret-down 계정 caret-up caret-down 도메인 caret-up caret-down filter":
+        - columnheader:
+          - checkbox
+        - columnheader "이름 caret-up caret-down":
+          - generic: 이름
+          - img "caret-up":
+          - img "caret-down":
+        - columnheader "유형 caret-up caret-down":
+          - generic: 유형
+          - img "caret-up":
+          - img "caret-down":
+        - columnheader "연결 VM 수 caret-up caret-down":
+          - generic: 연결 VM 수
+          - img "caret-up":
+          - img "caret-down":
+        - columnheader "설명 caret-up caret-down":
+          - generic: 설명
+          - img "caret-up":
+          - img "caret-down":
+        - columnheader "계정 caret-up caret-down":
+          - generic: 계정
+          - img "caret-up":
+          - img "caret-down":
+        - columnheader "도메인 caret-up caret-down":
+          - generic: 도메인
+          - img "caret-up":
+          - img "caret-down":
+        - columnheader "filter":
+          - button "filter":
+            - img "filter":
+    - rowgroup:
+      - 'row "rt1230-r17-ha-control-spread 다른 호스트 분산 · 엄격 0 Cloud #1230 isolated r17 HA controls across three hosts k1230-20261006 ROOT"':
+        - cell:
+          - checkbox
+        - cell "rt1230-r17-ha-control-spread":
+          - link "rt1230-r17-ha-control-spread":
+            - /url: "#/affinitygroup/ac508d0e-c80b-4c66-9bd0-8cbb896ca7e0"
+        - cell "다른 호스트 분산 · 엄격":
+          - generic "host anti-affinity": 다른 호스트 분산 · 엄격
+        - cell "0"
+        - 'cell "Cloud #1230 isolated r17 HA controls across three hosts"'
+        - cell "k1230-20261006":
+          - link "k1230-20261006":
+            - /url: "#/account?name=k1230-20261006&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&dataView=true"
+        - cell "ROOT":
+          - link "ROOT":
+            - /url: "#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details"
+        - cell
+      - 'row "rt1230-r18-control-spread 다른 호스트 분산 · 엄격 0 Cloud #1230 isolated r18 control across hosts k1230-20261006 ROOT"':
+        - cell:
+          - checkbox
+        - cell "rt1230-r18-control-spread":
+          - link "rt1230-r18-control-spread":
+            - /url: "#/affinitygroup/966bf870-a046-4c76-bfce-7c78f62c0ecb"
+        - cell "다른 호스트 분산 · 엄격":
+          - generic "host anti-affinity": 다른 호스트 분산 · 엄격
+        - cell "0"
+        - 'cell "Cloud #1230 isolated r18 control across hosts"'
+        - cell "k1230-20261006":
+          - link "k1230-20261006":
+            - /url: "#/account?name=k1230-20261006&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&dataView=true"
+        - cell "ROOT":
+          - link "ROOT":
+            - /url: "#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details"
+        - cell
+      - 'row "rt1230-r18-etcd-spread 다른 호스트 분산 · 엄격 0 Cloud #1230 isolated r18 etcd across hosts k1230-20261006 ROOT"':
+        - cell:
+          - checkbox
+        - cell "rt1230-r18-etcd-spread":
+          - link "rt1230-r18-etcd-spread":
+            - /url: "#/affinitygroup/42f65110-108a-4831-8403-14500cc7f5fa"
+        - cell "다른 호스트 분산 · 엄격":
+          - generic "host anti-affinity": 다른 호스트 분산 · 엄격
+        - cell "0"
+        - 'cell "Cloud #1230 isolated r18 etcd across hosts"'
+        - cell "k1230-20261006":
+          - link "k1230-20261006":
+            - /url: "#/account?name=k1230-20261006&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&dataView=true"
+        - cell "ROOT":
+          - link "ROOT":
+            - /url: "#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details"
+        - cell
+      - row "qa-ag06-strict-aff 같은 호스트 배치 · 엄격 0 AG06 disposable integrated qualification admin ROOT":
+        - cell:
+          - checkbox
+        - cell "qa-ag06-strict-aff":
+          - link "qa-ag06-strict-aff":
+            - /url: "#/affinitygroup/e8b8552f-dd8c-485d-82d2-eabb945719de"
+        - cell "같은 호스트 배치 · 엄격":
+          - generic "host affinity": 같은 호스트 배치 · 엄격
+        - cell "0"
+        - cell "AG06 disposable integrated qualification"
+        - cell "admin":
+          - link "admin":
+            - /url: "#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&dataView=true"
+        - cell "ROOT":
+          - link "ROOT":
+            - /url: "#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details"
+        - cell
+      - row "qa-ag06-strict-anti 다른 호스트 분산 · 엄격 0 AG06 disposable integrated qualification admin ROOT":
+        - cell:
+          - checkbox
+        - cell "qa-ag06-strict-anti":
+          - link "qa-ag06-strict-anti":
+            - /url: "#/affinitygroup/f8768ee0-79b6-4b12-8a3f-58787e58a30e"
+        - cell "다른 호스트 분산 · 엄격":
+          - generic "host anti-affinity": 다른 호스트 분산 · 엄격
+        - cell "0"
+        - cell "AG06 disposable integrated qualification"
+        - cell "admin":
+          - link "admin":
+            - /url: "#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&dataView=true"
+        - cell "ROOT":
+          - link "ROOT":
+            - /url: "#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details"
+        - cell
+      - row "qa-ag06-prefer-aff 같은 호스트 우선 · 선호 0 AG06 disposable integrated qualification admin ROOT":
+        - cell:
+          - checkbox
+        - cell "qa-ag06-prefer-aff":
+          - link "qa-ag06-prefer-aff":
+            - /url: "#/affinitygroup/56416dbe-2ed3-449f-bc8a-53fc0659bb8e"
+        - cell "같은 호스트 우선 · 선호":
+          - generic "non-strict host affinity": 같은 호스트 우선 · 선호
+        - cell "0"
+        - cell "AG06 disposable integrated qualification"
+        - cell "admin":
+          - link "admin":
+            - /url: "#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&dataView=true"
+        - cell "ROOT":
+          - link "ROOT":
+            - /url: "#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details"
+        - cell
+      - row "qa-ag06-prefer-anti 다른 호스트 분산 우선 · 선호 0 AG06 disposable integrated qualification admin ROOT":
+        - cell:
+          - checkbox
+        - cell "qa-ag06-prefer-anti":
+          - link "qa-ag06-prefer-anti":
+            - /url: "#/affinitygroup/15610aff-43d1-425b-838b-535c7b5f3f04"
+        - cell "다른 호스트 분산 우선 · 선호":
+          - generic "non-strict host anti-affinity": 다른 호스트 분산 우선 · 선호
+        - cell "0"
+        - cell "AG06 disposable integrated qualification"
+        - cell "admin":
+          - link "admin":
+            - /url: "#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&dataView=true"
+        - cell "ROOT":
+          - link "ROOT":
+            - /url: "#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details"
+        - cell
+      - row "qa-ag06-page-01 같은 호스트 배치 · 엄격 0 AG06 disposable integrated qualification admin ROOT":
+        - cell:
+          - checkbox
+        - cell "qa-ag06-page-01":
+          - link "qa-ag06-page-01":
+            - /url: "#/affinitygroup/e4ccd65c-08fa-453a-8302-84079631dff1"
+        - cell "같은 호스트 배치 · 엄격":
+          - generic "host affinity": 같은 호스트 배치 · 엄격
+        - cell "0"
+        - cell "AG06 disposable integrated qualification"
+        - cell "admin":
+          - link "admin":
+            - /url: "#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&dataView=true"
+        - cell "ROOT":
+          - link "ROOT":
+            - /url: "#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details"
+        - cell
+      - row "qa-ag06-page-02 같은 호스트 배치 · 엄격 0 AG06 disposable integrated qualification admin ROOT":
+        - cell:
+          - checkbox
+        - cell "qa-ag06-page-02":
+          - link "qa-ag06-page-02":
+            - /url: "#/affinitygroup/ccf2a5a2-81f3-479b-8108-254335c5d55f"
+        - cell "같은 호스트 배치 · 엄격":
+          - generic "host affinity": 같은 호스트 배치 · 엄격
+        - cell "0"
+        - cell "AG06 disposable integrated qualification"
+        - cell "admin":
+          - link "admin":
+            - /url: "#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&dataView=true"
+        - cell "ROOT":
+          - link "ROOT":
+            - /url: "#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details"
+        - cell
+      - row "qa-ag06-page-03 같은 호스트 배치 · 엄격 0 AG06 disposable integrated qualification admin ROOT":
+        - cell:
+          - checkbox
+        - cell "qa-ag06-page-03":
+          - link "qa-ag06-page-03":
+            - /url: "#/affinitygroup/68051d71-53e0-4410-ac92-4536bd2dcad8"
+        - cell "같은 호스트 배치 · 엄격":
+          - generic "host affinity": 같은 호스트 배치 · 엄격
+        - cell "0"
+        - cell "AG06 disposable integrated qualification"
+        - cell "admin":
+          - link "admin":
+            - /url: "#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&dataView=true"
+        - cell "ROOT":
+          - link "ROOT":
+            - /url: "#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details"
+        - cell
+      - row "qa-ag06-page-04 같은 호스트 배치 · 엄격 0 AG06 disposable integrated qualification admin ROOT":
+        - cell:
+          - checkbox
+        - cell "qa-ag06-page-04":
+          - link "qa-ag06-page-04":
+            - /url: "#/affinitygroup/40ccd2c1-1981-400f-b95e-7016df6d7312"
+        - cell "같은 호스트 배치 · 엄격":
+          - generic "host affinity": 같은 호스트 배치 · 엄격
+        - cell "0"
+        - cell "AG06 disposable integrated qualification"
+        - cell "admin":
+          - link "admin":
+            - /url: "#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&dataView=true"
+        - cell "ROOT":
+          - link "ROOT":
+            - /url: "#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details"
+        - cell
+      - row "qa-ag06-page-05 같은 호스트 배치 · 엄격 0 AG06 disposable integrated qualification admin ROOT":
+        - cell:
+          - checkbox
+        - cell "qa-ag06-page-05":
+          - link "qa-ag06-page-05":
+            - /url: "#/affinitygroup/a2e89f79-b8d7-4a10-a202-035aeb9b10b8"
+        - cell "같은 호스트 배치 · 엄격":
+          - generic "host affinity": 같은 호스트 배치 · 엄격
+        - cell "0"
+        - cell "AG06 disposable integrated qualification"
+        - cell "admin":
+          - link "admin":
+            - /url: "#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&dataView=true"
+        - cell "ROOT":
+          - link "ROOT":
+            - /url: "#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details"
+        - cell
+      - row "qa-ag06-page-06 같은 호스트 배치 · 엄격 0 AG06 disposable integrated qualification admin ROOT":
+        - cell:
+          - checkbox
+        - cell "qa-ag06-page-06":
+          - link "qa-ag06-page-06":
+            - /url: "#/affinitygroup/5ed559f6-b3af-40f1-8f61-04566cf71a66"
+        - cell "같은 호스트 배치 · 엄격":
+          - generic "host affinity": 같은 호스트 배치 · 엄격
+        - cell "0"
+        - cell "AG06 disposable integrated qualification"
+        - cell "admin":
+          - link "admin":
+            - /url: "#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&dataView=true"
+        - cell "ROOT":
+          - link "ROOT":
+            - /url: "#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details"
+        - cell
+      - row "qa-ag06-page-07 같은 호스트 배치 · 엄격 0 AG06 disposable integrated qualification admin ROOT":
+        - cell:
+          - checkbox
+        - cell "qa-ag06-page-07":
+          - link "qa-ag06-page-07":
+            - /url: "#/affinitygroup/dddaedd3-cf36-45cd-b389-bc4364890ec4"
+        - cell "같은 호스트 배치 · 엄격":
+          - generic "host affinity": 같은 호스트 배치 · 엄격
+        - cell "0"
+        - cell "AG06 disposable integrated qualification"
+        - cell "admin":
+          - link "admin":
+            - /url: "#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&dataView=true"
+        - cell "ROOT":
+          - link "ROOT":
+            - /url: "#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details"
+        - cell
+      - row "qa-ag06-page-08 같은 호스트 배치 · 엄격 0 AG06 disposable integrated qualification admin ROOT":
+        - cell:
+          - checkbox
+        - cell "qa-ag06-page-08":
+          - link "qa-ag06-page-08":
+            - /url: "#/affinitygroup/862042ff-376d-47c3-b859-91b2b151821d"
+        - cell "같은 호스트 배치 · 엄격":
+          - generic "host affinity": 같은 호스트 배치 · 엄격
+        - cell "0"
+        - cell "AG06 disposable integrated qualification"
+        - cell "admin":
+          - link "admin":
+            - /url: "#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&dataView=true"
+        - cell "ROOT":
+          - link "ROOT":
+            - /url: "#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details"
+        - cell
+      - row "qa-ag06-page-09 같은 호스트 배치 · 엄격 0 AG06 disposable integrated qualification admin ROOT":
+        - cell:
+          - checkbox
+        - cell "qa-ag06-page-09":
+          - link "qa-ag06-page-09":
+            - /url: "#/affinitygroup/0f5970d0-a069-41e8-b227-1d1a14053ded"
+        - cell "같은 호스트 배치 · 엄격":
+          - generic "host affinity": 같은 호스트 배치 · 엄격
+        - cell "0"
+        - cell "AG06 disposable integrated qualification"
+        - cell "admin":
+          - link "admin":
+            - /url: "#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&dataView=true"
+        - cell "ROOT":
+          - link "ROOT":
+            - /url: "#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details"
+        - cell
+      - row "qa-ag06-page-10 같은 호스트 배치 · 엄격 0 AG06 disposable integrated qualification admin ROOT":
+        - cell:
+          - checkbox
+        - cell "qa-ag06-page-10":
+          - link "qa-ag06-page-10":
+            - /url: "#/affinitygroup/d00f42b4-65b0-4e9d-b30c-9cb3ee85201c"
+        - cell "같은 호스트 배치 · 엄격":
+          - generic "host affinity": 같은 호스트 배치 · 엄격
+        - cell "0"
+        - cell "AG06 disposable integrated qualification"
+        - cell "admin":
+          - link "admin":
+            - /url: "#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&dataView=true"
+        - cell "ROOT":
+          - link "ROOT":
+            - /url: "#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details"
+        - cell
+      - row "qa-ag06-page-11 같은 호스트 배치 · 엄격 0 AG06 disposable integrated qualification admin ROOT":
+        - cell:
+          - checkbox
+        - cell "qa-ag06-page-11":
+          - link "qa-ag06-page-11":
+            - /url: "#/affinitygroup/1d38eea9-657a-4cf2-b54f-c6455d7bb1d6"
+        - cell "같은 호스트 배치 · 엄격":
+          - generic "host affinity": 같은 호스트 배치 · 엄격
+        - cell "0"
+        - cell "AG06 disposable integrated qualification"
+        - cell "admin":
+          - link "admin":
+            - /url: "#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&dataView=true"
+        - cell "ROOT":
+          - link "ROOT":
+            - /url: "#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details"
+        - cell
+      - row "qa-ag06-page-12 같은 호스트 배치 · 엄격 0 AG06 disposable integrated qualification admin ROOT":
+        - cell:
+          - checkbox
+        - cell "qa-ag06-page-12":
+          - link "qa-ag06-page-12":
+            - /url: "#/affinitygroup/bdffa157-6213-497e-bf6a-8cd03dc9d117"
+        - cell "같은 호스트 배치 · 엄격":
+          - generic "host affinity": 같은 호스트 배치 · 엄격
+        - cell "0"
+        - cell "AG06 disposable integrated qualification"
+        - cell "admin":
+          - link "admin":
+            - /url: "#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&dataView=true"
+        - cell "ROOT":
+          - link "ROOT":
+            - /url: "#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details"
+        - cell
+      - row "qa-ag06-user-target 같은 호스트 배치 · 엄격 0 — qa-ag06-user qa-ag06-domain":
+        - cell:
+          - checkbox
+        - cell "qa-ag06-user-target":
+          - link "qa-ag06-user-target":
+            - /url: "#/affinitygroup/f020c858-f8c5-4ccc-aa67-161272106965"
+        - cell "같은 호스트 배치 · 엄격":
+          - generic "host affinity": 같은 호스트 배치 · 엄격
+        - cell "0"
+        - cell "—"
+        - cell "qa-ag06-user":
+          - link "qa-ag06-user":
+            - /url: "#/account?name=qa-ag06-user&domainid=681fd899-ca4d-4bc6-87f1-8cbd2254e962&dataView=true"
+        - cell "qa-ag06-domain":
+          - link "qa-ag06-domain":
+            - /url: "#/domain/681fd899-ca4d-4bc6-87f1-8cbd2254e962?tab=details"
+        - cell
+  - list:
+    - listitem: 전체 20 개 항목 중 1-20 표시
+    - listitem "이전 페이지":
+      - button "left" [disabled]:
+        - img "left":
+    - listitem "1":
+      - generic: "1"
+    - listitem "다음 페이지":
+      - button "right" [disabled]:
+        - img "right":
+    - combobox
+    - generic: 20 / 쪽
+- alert:
+  - img "info-circle":
+  - generic: Wall 모니터링을 사용할 수 없습니다. 기존 알림은 최신 정보가 아닐 수 있으며 Mold는 계속 사용할 수 있습니다. 비활성
+- dialog "새 Affinity 그룹 추가 도움말":
+  - document:
+    - button "Close":
+      - img "close":
+    - text: 새 Affinity 그룹 추가
+    - link "도움말":
+      - /url: http://docs.ablecloud.io/latest/adminguide/virtual_machines.html#creating-a-new-affinity-group
+      - img "question-circle":
+    - paragraph: 앞뒤 공백은 제거됩니다. 이름은 1~191자, 설명은 255자까지 입력할 수 있습니다.
+    - generic "이름": "* 이름"
+    - textbox "* 이름" [active]
+    - generic "설명"
+    - textbox "설명"
+    - generic "유형": "* 유형"
+    - combobox "* 유형"
+    - generic "소유자 유형"
+    - generic "소유자 유형":
+      - combobox
+      - generic: 계정
+    - generic "도메인": "* 도메인"
+    - generic "도메인":
+      - combobox
+      - generic: ROOT
+    - generic "계정": "* 계정"
+    - generic "계정":
+      - combobox
+      - generic: admin
+    - button "취소":
+      - generic: 취소
+    - button "loading 확인":
+      - img "loading":
+      - generic: 확인

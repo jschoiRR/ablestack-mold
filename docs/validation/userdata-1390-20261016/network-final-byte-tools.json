@@ -1,0 +1,120 @@
+{
+  "start": 14054,
+  "cursor": 14158,
+  "truncated": false,
+  "events": [
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 14077,
+      "requestId": "27600.2681",
+      "api": "listVirtualMachines",
+      "id": "cf208e56-a2c4-4aef-9299-bd59dd902ff0",
+      "virtualmachineid": null,
+      "projectid": null
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 14080,
+      "requestId": "27600.2681",
+      "api": "listVirtualMachines",
+      "status": 200
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 14082,
+      "requestId": "27600.2682",
+      "api": "getVirtualMachineUserData",
+      "id": null,
+      "virtualmachineid": "cf208e56-a2c4-4aef-9299-bd59dd902ff0",
+      "projectid": null
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 14087,
+      "requestId": "27600.2682",
+      "api": "getVirtualMachineUserData",
+      "status": 200
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 14089,
+      "requestId": "27600.2683",
+      "api": "listVirtualMachines",
+      "id": "cf208e56-a2c4-4aef-9299-bd59dd902ff0",
+      "virtualmachineid": null,
+      "projectid": null
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 14094,
+      "requestId": "27600.2683",
+      "api": "listVirtualMachines",
+      "status": 200
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 14096,
+      "requestId": "27600.2684",
+      "api": "listUserData",
+      "id": "1d292937-39d0-4846-afee-ff2e893fcbd6",
+      "virtualmachineid": null,
+      "projectid": null
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 14101,
+      "requestId": "27600.2684",
+      "api": "listUserData",
+      "status": 200
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 14103,
+      "requestId": "27600.2685",
+      "api": "listVirtualMachines",
+      "id": "cf208e56-a2c4-4aef-9299-bd59dd902ff0",
+      "virtualmachineid": null,
+      "projectid": null
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 14108,
+      "requestId": "27600.2685",
+      "api": "listVirtualMachines",
+      "status": 200
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 14118,
+      "requestId": "27600.2686",
+      "api": "readyForShutdown",
+      "id": null,
+      "virtualmachineid": null,
+      "projectid": null
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 14121,
+      "requestId": "27600.2686",
+      "api": "readyForShutdown",
+      "status": 200
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 14125,
+      "requestId": "27600.2687",
+      "api": "readyForShutdown",
+      "id": null,
+      "virtualmachineid": null,
+      "projectid": null
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 14128,
+      "requestId": "27600.2687",
+      "api": "readyForShutdown",
+      "status": 200
+    }
+  ],
+  "exceptions": 0
+}

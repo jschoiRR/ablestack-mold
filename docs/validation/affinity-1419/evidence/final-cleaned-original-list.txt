@@ -1,0 +1,271 @@
+- complementary:
+  - menu:
+    - menuitem "dashboard 대시보드":
+      - link "dashboard 대시보드":
+        - /url: "#/dashboard"
+        - img "dashboard":
+        - text: 대시보드
+    - img "cloud":
+    - text: 컴퓨트
+    - list:
+      - menuitem "cloud-server 가상머신":
+        - link "cloud-server 가상머신":
+          - /url: "#/vm"
+          - img "cloud-server":
+          - text: 가상머신
+      - menuitem "camera VM 스냅샷":
+        - link "camera VM 스냅샷":
+          - /url: "#/vmsnapshot"
+          - img "camera":
+          - text: VM 스냅샷
+      - menuitem "쿠버네티스":
+        - link "쿠버네티스":
+          - /url: "#/kubernetes"
+          - text: 쿠버네티스
+      - menuitem "fullscreen 오토스케일 VM 그룹":
+        - link "fullscreen 오토스케일 VM 그룹":
+          - /url: "#/autoscalevmgroup"
+          - img "fullscreen":
+          - text: 오토스케일 VM 그룹
+      - menuitem "gold 가상머신 그룹":
+        - link "gold 가상머신 그룹":
+          - /url: "#/vmgroup"
+          - img "gold":
+          - text: 가상머신 그룹
+      - menuitem "key SSH 키 쌍":
+        - link "key SSH 키 쌍":
+          - /url: "#/ssh"
+          - img "key":
+          - text: SSH 키 쌍
+      - menuitem "solution 사용자 데이터 라이브러리":
+        - link "solution 사용자 데이터 라이브러리":
+          - /url: "#/userdata"
+          - img "solution":
+          - text: 사용자 데이터 라이브러리
+      - menuitem "solution CNI 구성":
+        - link "solution CNI 구성":
+          - /url: "#/cniconfiguration"
+          - img "solution":
+          - text: CNI 구성
+      - menuitem "swap Affinity 그룹":
+        - link "swap Affinity 그룹":
+          - /url: "#/affinitygroup"
+          - img "swap":
+          - text: Affinity 그룹
+    - img "hdd":
+    - text: 스토리지
+    - img "wifi":
+    - text: 네트워크
+    - img "picture":
+    - text: 이미지
+    - img "lock":
+    - text: 키 관리
+    - menuitem "schedule 이벤트":
+      - link "schedule 이벤트":
+        - /url: "#/event"
+        - img "schedule":
+        - text: 이벤트
+    - menuitem "project 프로젝트":
+      - link "project 프로젝트":
+        - /url: "#/project"
+        - img "project":
+        - text: 프로젝트
+    - menuitem "idcard 역할":
+      - link "idcard 역할":
+        - /url: "#/role"
+        - img "idcard":
+        - text: 역할
+    - menuitem "team 계정":
+      - link "team 계정":
+        - /url: "#/account"
+        - img "team":
+        - text: 계정
+    - menuitem "block 도메인":
+      - link "block 도메인":
+        - /url: "#/domain"
+        - img "block":
+        - text: 도메인
+    - img "bank":
+    - text: 인프라스트럭쳐
+    - img "shopping":
+    - text: 서비스 오퍼링
+    - img "setting":
+    - text: 구성
+    - menuitem "appstore-add 확장":
+      - link "appstore-add 확장":
+        - /url: "#/extension"
+        - img "appstore-add":
+        - text: 확장
+    - img "tool":
+    - text: 도구
+    - menuitem "read API 문서":
+      - link "read API 문서":
+        - /url: "#/apidocs/"
+        - img "read":
+        - text: API 문서
+- generic: 페이지 스타일 설정
+- button "닫기":
+  - img "close":
+- heading "페이지 스타일 설정" [level=3]
+- radio [checked]
+- img "check":
+- radio
+- heading "테마 색상" [level=3]
+- radio
+- img "check"
+- radio
+- radio
+- radio
+- radio
+- radio
+- radio
+- radio
+- separator
+- heading "네비게이션 설정" [level=3]
+- generic: 배경색
+- textbox: "#ffffff"
+- generic: 텍스트 색상
+- textbox: "#000000"
+- separator
+- alert:
+  - img "exclamation-circle":
+  - generic: "설정은 현재 브라우저에서만 볼 수 있습니다. 설정을 적용하려면 JSON 파일을 다운로드하고 경로 `/public/config.json` 아래의 `config.json` 파일의 `theme` 섹션에서 해당 콘텐츠를 교체하세요."
+- button "download 세팅값 다운로드(json)":
+  - img "download":
+  - generic: 세팅값 다운로드(json)
+- button "undo 기본값으로 재설정":
+  - img "undo":
+  - generic: 기본값으로 재설정
+- img "menu-fold":
+- combobox
+- img "project":
+- text: 기본 보기
+- button "생성 down":
+  - generic: 생성
+  - img "down":
+- img "translation":
+- img "bell":
+- generic: AC
+- generic: admin cloud
+- main:
+  - link "home":
+    - /url: "#/"
+    - img "home":
+  - text: /
+  - link "Affinity 그룹" [active]:
+    - /url: "#/affinitygroup"
+  - link "question-circle":
+    - /url: http://docs.ablecloud.io/latest/adminguide/virtual_machines.html#affinity-groups
+    - img "question-circle":
+  - button "reload 업데이트":
+    - img "reload":
+    - generic: 업데이트
+  - switch "프로젝트":
+    - generic: 프로젝트
+  - button "새 Affinity 그룹 추가":
+    - img "plus":
+    - generic: 새 Affinity 그룹 추가
+  - button "고급 검색":
+    - img "filter":
+  - textbox "검색"
+  - button "search":
+    - img "search":
+  - table:
+    - rowgroup:
+      - row "이름 caret-up caret-down 유형 caret-up caret-down 연결 VM 수 caret-up caret-down 설명 caret-up caret-down 계정 caret-up caret-down 도메인 caret-up caret-down filter":
+        - columnheader:
+          - checkbox
+        - columnheader "이름 caret-up caret-down":
+          - generic: 이름
+          - img "caret-up":
+          - img "caret-down":
+        - columnheader "유형 caret-up caret-down":
+          - generic: 유형
+          - img "caret-up":
+          - img "caret-down":
+        - columnheader "연결 VM 수 caret-up caret-down":
+          - generic: 연결 VM 수
+          - img "caret-up":
+          - img "caret-down":
+        - columnheader "설명 caret-up caret-down":
+          - generic: 설명
+          - img "caret-up":
+          - img "caret-down":
+        - columnheader "계정 caret-up caret-down":
+          - generic: 계정
+          - img "caret-up":
+          - img "caret-down":
+        - columnheader "도메인 caret-up caret-down":
+          - generic: 도메인
+          - img "caret-up":
+          - img "caret-down":
+        - columnheader "filter":
+          - button "filter":
+            - img "filter":
+    - rowgroup:
+      - 'row "rt1230-r17-ha-control-spread 다른 호스트 분산 · 엄격 0 Cloud #1230 isolated r17 HA controls across three hosts k1230-20261006 ROOT"':
+        - cell:
+          - checkbox
+        - cell "rt1230-r17-ha-control-spread":
+          - link "rt1230-r17-ha-control-spread":
+            - /url: "#/affinitygroup/ac508d0e-c80b-4c66-9bd0-8cbb896ca7e0"
+        - cell "다른 호스트 분산 · 엄격":
+          - generic "host anti-affinity": 다른 호스트 분산 · 엄격
+        - cell "0"
+        - 'cell "Cloud #1230 isolated r17 HA controls across three hosts"'
+        - cell "k1230-20261006":
+          - link "k1230-20261006":
+            - /url: "#/account?name=k1230-20261006&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&dataView=true"
+        - cell "ROOT":
+          - link "ROOT":
+            - /url: "#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details"
+        - cell
+      - 'row "rt1230-r18-control-spread 다른 호스트 분산 · 엄격 0 Cloud #1230 isolated r18 control across hosts k1230-20261006 ROOT"':
+        - cell:
+          - checkbox
+        - cell "rt1230-r18-control-spread":
+          - link "rt1230-r18-control-spread":
+            - /url: "#/affinitygroup/966bf870-a046-4c76-bfce-7c78f62c0ecb"
+        - cell "다른 호스트 분산 · 엄격":
+          - generic "host anti-affinity": 다른 호스트 분산 · 엄격
+        - cell "0"
+        - 'cell "Cloud #1230 isolated r18 control across hosts"'
+        - cell "k1230-20261006":
+          - link "k1230-20261006":
+            - /url: "#/account?name=k1230-20261006&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&dataView=true"
+        - cell "ROOT":
+          - link "ROOT":
+            - /url: "#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details"
+        - cell
+      - 'row "rt1230-r18-etcd-spread 다른 호스트 분산 · 엄격 0 Cloud #1230 isolated r18 etcd across hosts k1230-20261006 ROOT"':
+        - cell:
+          - checkbox
+        - cell "rt1230-r18-etcd-spread":
+          - link "rt1230-r18-etcd-spread":
+            - /url: "#/affinitygroup/42f65110-108a-4831-8403-14500cc7f5fa"
+        - cell "다른 호스트 분산 · 엄격":
+          - generic "host anti-affinity": 다른 호스트 분산 · 엄격
+        - cell "0"
+        - 'cell "Cloud #1230 isolated r18 etcd across hosts"'
+        - cell "k1230-20261006":
+          - link "k1230-20261006":
+            - /url: "#/account?name=k1230-20261006&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&dataView=true"
+        - cell "ROOT":
+          - link "ROOT":
+            - /url: "#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details"
+        - cell
+  - list:
+    - listitem: 전체 3 개 항목 중 1-3 표시
+    - listitem "이전 페이지":
+      - button "left" [disabled]:
+        - img "left":
+    - listitem "1":
+      - generic: "1"
+    - listitem "다음 페이지":
+      - button "right" [disabled]:
+        - img "right":
+    - combobox
+    - generic: 20 / 쪽
+- alert:
+  - img "info-circle":
+  - generic: Wall 모니터링을 사용할 수 없습니다. 기존 알림은 최신 정보가 아닐 수 있으며 Mold는 계속 사용할 수 있습니다. 비활성

@@ -1,0 +1,381 @@
+Browser tab: 6, Title: "Affinity 그룹 - ABLESTACK-Mold", URL: "http://10.10.31.10:8080/client/#/affinitygroup/22ee18c3-4a24-4617-84ed-dde3fe7b592a?tab=instances".
+1 AXWebArea Affinity 그룹 - ABLESTACK-Mold, URL: 10.10.31.10:8080/client/#/affinitygroup/22ee18c3-4a24-4617-84ed-dde3fe7b592a?tab=instances
+	2 container
+		3 container
+			4 image
+			5 menu
+				6 dashboard 대시보드
+					7 link Description: dashboard 대시보드, Value: 10.10.31.10:8080/client/#/dashboard
+				8 container
+					9 image cloud
+					10 text 컴퓨트
+				11 content list sub_menu_1_$$_/compute-popup
+					12 cloud-server 가상머신
+						13 link Description: cloud-server 가상머신, Value: 10.10.31.10:8080/client/#/vm
+					14 camera VM 스냅샷
+						15 link Description: camera VM 스냅샷, Value: 10.10.31.10:8080/client/#/vmsnapshot
+					16 쿠버네티스
+						17 link Description: 쿠버네티스, Value: 10.10.31.10:8080/client/#/kubernetes
+					18 fullscreen 오토스케일 VM 그룹
+						19 link Description: fullscreen 오토스케일 VM 그룹, Value: 10.10.31.10:8080/client/#/autoscalevmgroup
+					20 gold 가상머신 그룹
+						21 link Description: gold 가상머신 그룹, Value: 10.10.31.10:8080/client/#/vmgroup
+					22 key SSH 키 쌍
+						23 link Description: key SSH 키 쌍, Value: 10.10.31.10:8080/client/#/ssh
+					24 solution 사용자 데이터 라이브러리
+						25 link Description: solution 사용자 데이터 라이브러리, Value: 10.10.31.10:8080/client/#/userdata
+					26 solution CNI 구성
+						27 link Description: solution CNI 구성, Value: 10.10.31.10:8080/client/#/cniconfiguration
+					28 swap Affinity 그룹
+						29 link Description: swap Affinity 그룹, Value: 10.10.31.10:8080/client/#/affinitygroup
+				30 container
+					31 image hdd
+					32 text 스토리지
+				33 container
+					34 image wifi
+					35 text 네트워크
+				36 container
+					37 image picture
+					38 text 이미지
+				39 container
+					40 image lock
+					41 text 키 관리
+				42 schedule 이벤트
+					43 link Description: schedule 이벤트, Value: 10.10.31.10:8080/client/#/event
+				44 project 프로젝트
+					45 link Description: project 프로젝트, Value: 10.10.31.10:8080/client/#/project
+				46 idcard 역할
+					47 link Description: idcard 역할, Value: 10.10.31.10:8080/client/#/role
+				48 team 계정
+					49 link Description: team 계정, Value: 10.10.31.10:8080/client/#/account
+				50 block 도메인
+					51 link Description: block 도메인, Value: 10.10.31.10:8080/client/#/domain
+				52 container
+					53 image bank
+					54 text 인프라스트럭쳐
+				55 container
+					56 image shopping
+					57 text 서비스 오퍼링
+				58 container
+					59 image setting
+					60 text 구성
+				61 appstore-add 확장
+					62 link Description: appstore-add 확장, Value: 10.10.31.10:8080/client/#/extension
+				63 container
+					64 image tool
+					65 text 도구
+				66 read API 문서
+					67 link Description: read API 문서, Value: 10.10.31.10:8080/client/#/apidocs/
+		68 container
+			69 text 페이지 스타일 설정
+			70 button 닫기
+				71 image close
+			72 container
+				73 heading 페이지 스타일 설정, Value: 3
+					74 text 페이지 스타일 설정
+				75 container
+					76 image
+					77 container
+						78 radio button (settable, integer) Description:  , Value: 0
+				79 container
+					80 image
+					81 container
+						82 radio button (settable, integer) Description:  , Value: 1
+					83 image check
+				84 heading 테마 색상, Value: 3
+					85 text 테마 색상
+				86 container
+					87 radio button (settable, integer) Description:  , Value: 0
+					88 image check
+				89 container
+					90 radio button (settable, integer) Description:  , Value: 0
+				91 container
+					92 radio button (settable, integer) Description:  , Value: 0
+				93 container
+					94 radio button (settable, integer) Description:  , Value: 0
+				95 container
+					96 radio button (settable, integer) Description:  , Value: 0
+				97 container
+					98 radio button (settable, integer) Description:  , Value: 0
+				99 container
+					100 radio button (settable, integer) Description:  , Value: 0
+				101 container
+					102 radio button (settable, integer) Description:  , Value: 0
+				103 heading 네비게이션 설정, Value: 3
+					104 text 네비게이션 설정
+				105 container
+					106 container
+						107 text 배경색
+						108 color well (disabled, settable) #ffffff
+					109 container
+						110 text 텍스트 색상
+						111 color well (disabled, settable) #000000
+				112 image exclamation-circle
+				113 text 설정은 현재 브라우저에서만 볼 수 있습니다. 설정을 적용하려면 JSON 파일을 다운로드하고 경로 `/public/config.json` 아래의 `config.json` 파일의 `theme` 섹션에서 해당 콘텐츠를 교체하세요.
+				114 button download 세팅값 다운로드(json)
+					115 image download
+					116 text 세팅값 다운로드(json)
+				117 button undo 기본값으로 재설정
+					118 image undo
+					119 text 기본값으로 재설정
+		120 container
+			121 image menu-fold
+			122 container
+				123 combo box (settable) rc_select_0
+				124 image project
+				125 text 기본 보기
+			126 button 생성 down
+				127 text 생성
+				128 image down
+			129 image translation
+			130 image bell
+			131 container
+				132 text AC admin cloud
+		133 container
+			134 container
+				135 container
+					136 link Description: home, Value: 10.10.31.10:8080/client/#/
+					137 text /
+					138 link Description: Affinity 그룹, Value: 10.10.31.10:8080/client/#/affinitygroup
+					139 text / qa-ag04-target
+					140 link Description: question-circle, Value: docs.ablecloud.io/latest/adminguide/virtual_machines.html#affinity-groups
+					141 button reload 업데이트
+						365 image reload
+						143 text 업데이트
+				144 button down 작업
+					145 image down
+					146 text 작업
+			366 container
+				367 image swap
+				368 heading qa-ag04-target, Value: 4
+					369 text qa-ag04-target
+				370 text host affinity
+				371 text 아이디
+				372 button barcode
+					373 image barcode
+				374 link Description: 22ee18c3-4a24-4617-84ed-dde3fe7b592a , Value: javascript:;
+				375 text 계정
+				376 image user
+				377 link Description: admin, Value: 10.10.31.10:8080/client/#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f
+				378 text 도메인
+				379 image block
+				380 link Description: ROOT, Value: 10.10.31.10:8080/client/#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details
+				381 link Description: cloud-server 가상머신 보기, Value: 10.10.31.10:8080/client/#/vm?affinitygroupid=22ee18c3-4a24-4617-84ed-dde3fe7b592a
+			382 container
+				383 tab group
+					384 container
+						385 tab (selectable, settable, boolean) 상세, Value: 0, ID: rc-tabs-2-tab-details
+						386 tab (selected, settable, boolean) 가상머신, Value: 1, ID: rc-tabs-2-tab-instances
+						387 tab (selectable, settable, boolean) 이벤트, Value: 0, ID: rc-tabs-2-tab-events
+				388 container Description: 가상머신, ID: rc-tabs-2-panel-instances
+					389 container
+						390 heading 연결 가상머신, Value: 3
+							391 text 연결 가상머신
+						392 text 중지된 일반 가상머신의 대상 그룹 연결만 변경합니다. 다른 Affinity 그룹 연결은 유지하며 VM을 자동 중지하지 않습니다. 연결 VM 수: 11 · 조회 결과: 11
+						393 button 가상머신 연결
+						394 button (disabled) 선택 연결 해제 (0)
+						395 button VM별 작업 결과
+						396 button 업데이트
+							645 image reload
+						398 text field (settable)
+						399 button search
+							400 image search
+						401 table
+							402 row
+								403 cell
+									404 container
+										405 checkbox (settable, integer) Description:  , Value: 0
+								406 cell
+									407 text 표시 이름
+								408 cell
+									409 text 상태
+								410 cell
+									411 text 호스트
+								412 cell
+									413 text 계정
+								414 cell
+									415 text 프로젝트
+								416 cell
+									417 text 도메인
+								418 cell
+									419 text 연결 관리 제한 사유
+							420 row
+								421 cell
+									422 container
+										423 checkbox (settable, integer) Description:  , Value: 0
+								424 cell
+									425 link Description: qa-ag04-vm-01, Value: 10.10.31.10:8080/client/#/vm/8d221bcb-4614-40b7-b9aa-dc40e159d57a
+									426 text i-2-651-VM
+								427 cell
+									428 text 정보 없음 / 접근 제한
+								429 cell
+									430 text admin
+								431 cell
+									432 text 정보 없음 / 접근 제한
+								433 cell
+									434 text ROOT
+							435 row
+								436 cell
+									437 container
+										438 checkbox (settable, integer) Description:  , Value: 0
+								439 cell
+									440 link Description: qa-ag04-vm-02, Value: 10.10.31.10:8080/client/#/vm/5160b1ec-088d-4d28-9967-8550d6595ad4
+									441 text i-2-652-VM
+								442 cell
+									443 text 정보 없음 / 접근 제한
+								444 cell
+									445 text admin
+								446 cell
+									447 text 정보 없음 / 접근 제한
+								448 cell
+									449 text ROOT
+							450 row
+								451 cell
+									452 container
+										453 checkbox (settable, integer) Description:  , Value: 0
+								454 cell
+									455 link Description: qa-ag04-vm-03, Value: 10.10.31.10:8080/client/#/vm/2b73a051-2656-450e-a6ca-f0b932cacf7a
+									456 text i-2-653-VM
+								457 cell
+									458 text 정보 없음 / 접근 제한
+								459 cell
+									460 text admin
+								461 cell
+									462 text 정보 없음 / 접근 제한
+								463 cell
+									464 text ROOT
+							465 row
+								466 cell
+									467 container
+										468 checkbox (settable, integer) Description:  , Value: 0
+								469 cell
+									470 link Description: qa-ag04-vm-04, Value: 10.10.31.10:8080/client/#/vm/8db0e995-86fd-49c0-aae5-3f9cc9ae8b41
+									471 text i-2-654-VM
+								472 cell
+									473 text 정보 없음 / 접근 제한
+								474 cell
+									475 text admin
+								476 cell
+									477 text 정보 없음 / 접근 제한
+								478 cell
+									479 text ROOT
+							480 row
+								481 cell
+									482 container
+										483 checkbox (settable, integer) Description:  , Value: 0
+								484 cell
+									485 link Description: qa-ag04-vm-05, Value: 10.10.31.10:8080/client/#/vm/0ab4f908-14fd-4581-bf49-b0807bc762a4
+									486 text i-2-655-VM
+								487 cell
+									488 text 정보 없음 / 접근 제한
+								489 cell
+									490 text admin
+								491 cell
+									492 text 정보 없음 / 접근 제한
+								493 cell
+									494 text ROOT
+							495 row
+								496 cell
+									497 container
+										498 checkbox (settable, integer) Description:  , Value: 0
+								499 cell
+									500 link Description: qa-ag04-vm-06, Value: 10.10.31.10:8080/client/#/vm/5a9d3470-c4c5-4868-aaf3-6be9648ffbbd
+									501 text i-2-656-VM
+								502 cell
+									503 text 정보 없음 / 접근 제한
+								504 cell
+									505 text admin
+								506 cell
+									507 text 정보 없음 / 접근 제한
+								508 cell
+									509 text ROOT
+							510 row
+								511 cell
+									512 container
+										513 checkbox (settable, integer) Description:  , Value: 0
+								514 cell
+									515 link Description: qa-ag04-vm-07, Value: 10.10.31.10:8080/client/#/vm/d2a05ed9-d484-4f17-a9c3-26624e3b5e45
+									516 text i-2-657-VM
+								517 cell
+									518 text 정보 없음 / 접근 제한
+								519 cell
+									520 text admin
+								521 cell
+									522 text 정보 없음 / 접근 제한
+								523 cell
+									524 text ROOT
+							525 row
+								526 cell
+									527 container
+										528 checkbox (settable, integer) Description:  , Value: 0
+								529 cell
+									530 link Description: qa-ag04-vm-08, Value: 10.10.31.10:8080/client/#/vm/491b9d12-9ac6-4cfd-8311-147df8062bd9
+									531 text i-2-658-VM
+								532 cell
+									533 text 정보 없음 / 접근 제한
+								534 cell
+									535 text admin
+								536 cell
+									537 text 정보 없음 / 접근 제한
+								538 cell
+									539 text ROOT
+							646 row
+								647 cell
+									648 container
+										649 checkbox (settable, integer) Description:  , Value: 0
+								650 cell
+									651 link Description: qa-ag04-vm-09, Value: 10.10.31.10:8080/client/#/vm/9c01c6d3-4c94-4ce6-9b42-c01256a70207
+									652 text i-2-659-VM
+								653 cell
+									654 text 정보 없음 / 접근 제한
+								655 cell
+									656 text admin
+								657 cell
+									658 text 정보 없음 / 접근 제한
+								659 cell
+									660 text ROOT
+							540 row
+								541 cell
+									542 container
+										543 checkbox (settable, integer) Description:  , Value: 0
+								544 cell
+									545 link Description: qa-ag04-vm-10, Value: 10.10.31.10:8080/client/#/vm/36323d35-d089-4b5b-bb9f-70b8d62d0469
+									546 text i-2-660-VM
+								547 cell
+									548 text 정보 없음 / 접근 제한
+								549 cell
+									550 text admin
+								551 cell
+									552 text 정보 없음 / 접근 제한
+								553 cell
+									554 text ROOT
+						572 content list
+							573 container 이전 페이지
+								574 button (disabled) left
+									575 image left
+							576 text 1
+							661 text 2
+							577 container 다음 페이지
+								578 button right
+									579 image right
+							580 container
+								581 combo box (settable) rc_select_5
+								582 text 10 / 쪽
+	362 container
+		363 image info-circle
+		364 text Wall 모니터링을 사용할 수 없습니다. 기존 알림은 최신 정보가 아닐 수 있으며 Mold는 계속 사용할 수 있습니다. 비활성
+	583 container
+		584 container VM별 작업 결과
+			585 container
+				586 button Close
+					587 image close
+				588 text VM별 작업 결과
+				589 text qa-ag04-target · admin / ROOT 중지된 일반 가상머신의 대상 그룹 연결만 변경합니다. 다른 Affinity 그룹 연결은 유지하며 VM을 자동 중지하지 않습니다.
+				641 content list
+					642 container
+						643 AXListMarker •
+						644 link Description: qa-ag04-vm-09, Value: 10.10.31.10:8080/client/#/vm/9c01c6d3-4c94-4ce6-9b42-c01256a70207
+						662 text  · Affinity 그룹 변경이 완료되었습니다. 작업 ID: 94dc0a63-3f75-4468-ba25-39190d327266
+				640 button 닫기
+
+The focused UI element is 1 AXWebArea Affinity 그룹 - ABLESTACK-Mold, URL: 10.10.31.10:8080/client/#/affinitygroup/22ee18c3-4a24-4617-84ed-dde3fe7b592a?tab=instances

@@ -1,0 +1,233 @@
+- complementary:
+  - menu:
+    - menuitem "dashboard 대시보드":
+      - link "dashboard 대시보드":
+        - /url: "#/dashboard"
+        - img "dashboard":
+        - text: 대시보드
+    - img "cloud":
+    - text: 컴퓨트
+    - list:
+      - menuitem "cloud-server 가상머신":
+        - link "cloud-server 가상머신":
+          - /url: "#/vm"
+          - img "cloud-server":
+          - text: 가상머신
+      - menuitem "camera VM 스냅샷":
+        - link "camera VM 스냅샷":
+          - /url: "#/vmsnapshot"
+          - img "camera":
+          - text: VM 스냅샷
+      - menuitem "쿠버네티스":
+        - link "쿠버네티스":
+          - /url: "#/kubernetes"
+          - text: 쿠버네티스
+      - menuitem "fullscreen 오토스케일 VM 그룹":
+        - link "fullscreen 오토스케일 VM 그룹":
+          - /url: "#/autoscalevmgroup"
+          - img "fullscreen":
+          - text: 오토스케일 VM 그룹
+      - menuitem "gold 가상머신 그룹":
+        - link "gold 가상머신 그룹":
+          - /url: "#/vmgroup"
+          - img "gold":
+          - text: 가상머신 그룹
+      - menuitem "key SSH 키 쌍":
+        - link "key SSH 키 쌍":
+          - /url: "#/ssh"
+          - img "key":
+          - text: SSH 키 쌍
+      - menuitem "solution 사용자 데이터 라이브러리":
+        - link "solution 사용자 데이터 라이브러리":
+          - /url: "#/userdata"
+          - img "solution":
+          - text: 사용자 데이터 라이브러리
+      - menuitem "solution CNI 구성":
+        - link "solution CNI 구성":
+          - /url: "#/cniconfiguration"
+          - img "solution":
+          - text: CNI 구성
+      - menuitem "swap Affinity 그룹":
+        - link "swap Affinity 그룹":
+          - /url: "#/affinitygroup"
+          - img "swap":
+          - text: Affinity 그룹
+    - img "hdd":
+    - text: 스토리지
+    - img "wifi":
+    - text: 네트워크
+    - img "picture":
+    - text: 이미지
+    - menuitem "schedule 이벤트":
+      - link "schedule 이벤트":
+        - /url: "#/event"
+        - img "schedule":
+        - text: 이벤트
+    - menuitem "project 프로젝트":
+      - link "project 프로젝트":
+        - /url: "#/project"
+        - img "project":
+        - text: 프로젝트
+    - menuitem "team 계정":
+      - link "team 계정":
+        - /url: "#/account"
+        - img "team":
+        - text: 계정
+    - menuitem "global Zone":
+      - link "global Zone":
+        - /url: "#/zones"
+        - img "global":
+        - text: Zone
+    - img "shopping":
+    - text: 서비스 오퍼링
+    - img "tool":
+    - text: 도구
+    - menuitem "read API 문서":
+      - link "read API 문서":
+        - /url: "#/apidocs/"
+        - img "read":
+        - text: API 문서
+- img "menu-fold":
+- combobox
+- img "project":
+- text: 기본 보기
+- button "생성 down":
+  - generic: 생성
+  - img "down":
+- img "translation":
+- img "bell":
+- generic: AU
+- generic: AG07 user-a
+- main:
+  - link "home":
+    - /url: "#/"
+    - img "home":
+  - text: /
+  - link "Affinity 그룹":
+    - /url: "#/affinitygroup"
+  - text: /
+  - generic: qa-ag07-user-a
+  - link "question-circle":
+    - /url: http://docs.ablecloud.io/latest/adminguide/virtual_machines.html#affinity-groups
+    - img "question-circle":
+  - button "reload 업데이트":
+    - img "reload":
+    - generic: 업데이트
+  - button "down 작업":
+    - img "down":
+    - generic: 작업
+  - img "swap":
+  - heading "qa-ag07-user-a" [level=4]
+  - generic "host affinity": 같은 호스트 배치 · 엄격
+  - separator
+  - generic: 아이디
+  - button "barcode":
+    - img "barcode":
+  - link "880b5855-d129-4f8d-8a6a-7b32e366f6d5":
+    - /url: javascript:;
+  - paragraph: 같은 그룹의 VM을 같은 호스트에 배치합니다. 조건을 만족하지 못하면 배치가 실패합니다.
+  - generic: 연결 VM 수
+  - generic: "2"
+  - generic: 계정
+  - img "user":
+  - generic: qa-ag07-user-a
+  - generic: 도메인
+  - img "block":
+  - generic: qa-ag07-parent
+  - separator
+  - link "cloud-server 가상머신 보기":
+    - /url: "#/vm?affinitygroupid=880b5855-d129-4f8d-8a6a-7b32e366f6d5"
+    - button "cloud-server 가상머신 보기":
+      - img "cloud-server":
+      - generic: 가상머신 보기
+  - tablist:
+    - tab "상세"
+    - tab "가상머신" [selected]
+    - tab "이벤트"
+  - tabpanel "가상머신":
+    - button "가상머신 연결":
+      - generic: 가상머신 연결
+    - button "선택 연결 해제 (1)":
+      - generic: 선택 연결 해제 (1)
+    - button "VM별 작업 결과":
+      - generic: VM별 작업 결과
+    - textbox "가상머신 검색":
+      - /placeholder: 검색
+    - button "search":
+      - img "search":
+    - button "업데이트":
+      - img "reload":
+    - generic: "선택: 1"
+    - button "지우기":
+      - generic: 지우기
+    - region "연결 가상머신":
+      - table:
+        - rowgroup:
+          - row "표시 이름 상태 호스트 계정 프로젝트 도메인 연결 관리 제한 사유":
+            - columnheader:
+              - checkbox
+            - columnheader "표시 이름"
+            - columnheader "상태"
+            - columnheader "호스트"
+            - columnheader "계정"
+            - columnheader "프로젝트"
+            - columnheader "도메인"
+            - columnheader "연결 관리 제한 사유"
+        - rowgroup:
+          - row "qa-ag07-user-vm-01 qa-ag07-user-vm-01 — 정지된 상태 — qa-ag07-user-a — qa-ag07-parent —":
+            - cell "qa-ag07-user-vm-01":
+              - checkbox "qa-ag07-user-vm-01" [checked]
+            - cell "qa-ag07-user-vm-01 —":
+              - link "qa-ag07-user-vm-01":
+                - /url: "#/vm/5e5b0e53-fb34-4775-b456-ab859dd74932"
+              - generic "현재 권한이나 자원 상태에서 제공되지 않은 정보입니다.": —
+            - cell "정지된 상태":
+              - generic: 정지된 상태
+            - cell "—"
+            - cell "qa-ag07-user-a"
+            - cell "—"
+            - cell "qa-ag07-parent"
+            - cell "—"
+          - row "qa-ag07-user-vm-02 qa-ag07-user-vm-02 — 정지된 상태 — qa-ag07-user-a — qa-ag07-parent —":
+            - cell "qa-ag07-user-vm-02":
+              - checkbox "qa-ag07-user-vm-02"
+            - cell "qa-ag07-user-vm-02 —":
+              - link "qa-ag07-user-vm-02":
+                - /url: "#/vm/5967795b-10e1-40ac-8535-8d20f83bf56f"
+              - generic "현재 권한이나 자원 상태에서 제공되지 않은 정보입니다.": —
+            - cell "정지된 상태":
+              - generic: 정지된 상태
+            - cell "—"
+            - cell "qa-ag07-user-a"
+            - cell "—"
+            - cell "qa-ag07-parent"
+            - cell "—"
+    - status: "연결 VM 수: 2 · 조회 결과: 2"
+    - list:
+      - listitem "이전 페이지":
+        - button "left" [disabled]:
+          - img "left":
+      - listitem "1":
+        - generic: "1"
+      - listitem "다음 페이지":
+        - button "right" [disabled]:
+          - img "right":
+      - combobox
+      - generic: 10 / 쪽
+- dialog "선택 연결 해제":
+  - document:
+    - button "Close":
+      - img "close":
+    - generic: 선택 연결 해제
+    - strong: qa-ag07-user-a
+    - text: qa-ag07-user-a / qa-ag07-parent
+    - paragraph: 중지된 일반 가상머신의 대상 그룹 연결만 변경합니다. 다른 Affinity 그룹 연결은 유지하며 VM을 자동 중지하지 않습니다.
+    - paragraph: 아래 VM의 대상 그룹 연결을 변경합니다. 제출 전에 소유자·중지 상태·기존 전체 연결을 다시 확인합니다.
+    - list:
+      - link "qa-ag07-user-vm-01":
+        - /url: "#/vm/5e5b0e53-fb34-4775-b456-ab859dd74932"
+      - generic: 아직 제출하지 않았습니다.
+    - button "취소":
+      - generic: 취소
+    - button "확인":
+      - generic: 확인

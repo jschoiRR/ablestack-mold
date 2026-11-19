@@ -1,0 +1,106 @@
+{
+  "label": "mixed-failure",
+  "requests": [
+    {
+      "id": "34440.1502",
+      "command": "listUserData",
+      "params": {
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "id": "34440.1503",
+      "command": "listUserData",
+      "params": {
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "id": "34440.1505",
+      "command": "listUserData",
+      "params": {
+        "id": "c394d8c6-9d91-437c-891f-b8ae99fb789f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "page": "1",
+        "pagesize": "2"
+      }
+    },
+    {
+      "id": "34440.1506",
+      "command": "deleteUserData",
+      "params": {
+        "id": "c394d8c6-9d91-437c-891f-b8ae99fb789f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f"
+      }
+    },
+    {
+      "id": "34440.1507",
+      "command": "listUserData",
+      "params": {
+        "id": "c394d8c6-9d91-437c-891f-b8ae99fb789f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "page": "1",
+        "pagesize": "2"
+      }
+    },
+    {
+      "id": "34440.1508",
+      "command": "listUserData",
+      "params": {
+        "id": "466ab07e-0c64-4619-b528-a229ef3d140f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "page": "1",
+        "pagesize": "2"
+      }
+    },
+    {
+      "id": "34440.1509",
+      "command": "deleteUserData",
+      "params": {
+        "id": "466ab07e-0c64-4619-b528-a229ef3d140f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f"
+      }
+    }
+  ],
+  "responses": [
+    {
+      "id": "34440.1502",
+      "status": 200
+    },
+    {
+      "id": "34440.1503",
+      "status": 200
+    },
+    {
+      "id": "34440.1505",
+      "status": 200
+    },
+    {
+      "id": "34440.1506",
+      "status": 530
+    },
+    {
+      "id": "34440.1507",
+      "status": 200
+    },
+    {
+      "id": "34440.1508",
+      "status": 200
+    },
+    {
+      "id": "34440.1509",
+      "status": 200
+    }
+  ],
+  "exceptions": [],
+  "truncated": false,
+  "hasMore": false,
+  "cursor": 5662
+}

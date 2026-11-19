@@ -1,0 +1,17 @@
+{
+  "alerts": [
+    "UD1392 controlled failure",
+    "사용자 데이터 변경을 끄면 현재 설정을 유지하며 재설정 요청을 보내지 않습니다. 변경을 켜면 아래 설정을 적용합니다."
+  ],
+  "confirm": [
+    {
+      "disabled": false,
+      "text": "취소"
+    },
+    {
+      "disabled": false,
+      "text": "확인"
+    }
+  ],
+  "value": "#cloud-config\n# UD1392-31-20261016 manual 한글\nruncmd:\n  - echo validation\n"
+}

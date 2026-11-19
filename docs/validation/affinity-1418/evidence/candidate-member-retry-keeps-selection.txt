@@ -1,0 +1,277 @@
+Browser tab: 6, Title: "Affinity 그룹 - ABLESTACK-Mold", URL: "http://10.10.31.10:8080/client/#/affinitygroup/b2425532-f2bb-4511-86f5-917f6a4f1869?tab=instances".
+1 AXWebArea Affinity 그룹 - ABLESTACK-Mold, URL: 10.10.31.10:8080/client/#/affinitygroup/b2425532-f2bb-4511-86f5-917f6a4f1869?tab=instances
+	2 container
+		2608 container
+			2609 image
+			2610 menu
+				2611 dashboard 대시보드
+					2612 link Description: dashboard 대시보드, Value: 10.10.31.10:8080/client/#/dashboard
+				2613 container
+					2614 image cloud
+					2615 text 컴퓨트
+				2616 content list sub_menu_307_$$_/compute-popup
+					2617 cloud-server 가상머신
+						2618 link Description: cloud-server 가상머신, Value: 10.10.31.10:8080/client/#/vm
+					2619 camera VM 스냅샷
+						2620 link Description: camera VM 스냅샷, Value: 10.10.31.10:8080/client/#/vmsnapshot
+					2621 쿠버네티스
+						2622 link Description: 쿠버네티스, Value: 10.10.31.10:8080/client/#/kubernetes
+					2623 fullscreen 오토스케일 VM 그룹
+						2624 link Description: fullscreen 오토스케일 VM 그룹, Value: 10.10.31.10:8080/client/#/autoscalevmgroup
+					2625 gold 가상머신 그룹
+						2626 link Description: gold 가상머신 그룹, Value: 10.10.31.10:8080/client/#/vmgroup
+					2627 key SSH 키 쌍
+						2628 link Description: key SSH 키 쌍, Value: 10.10.31.10:8080/client/#/ssh
+					2629 solution 사용자 데이터 라이브러리
+						2630 link Description: solution 사용자 데이터 라이브러리, Value: 10.10.31.10:8080/client/#/userdata
+					2631 solution CNI 구성
+						2632 link Description: solution CNI 구성, Value: 10.10.31.10:8080/client/#/cniconfiguration
+					2633 swap Affinity 그룹
+						2634 link Description: swap Affinity 그룹, Value: 10.10.31.10:8080/client/#/affinitygroup
+				2635 container
+					2636 image hdd
+					2637 text 스토리지
+				2638 container
+					2639 image wifi
+					2640 text 네트워크
+				2641 container
+					2642 image picture
+					2643 text 이미지
+				2644 container
+					2645 image lock
+					2646 text 키 관리
+				2647 schedule 이벤트
+					2648 link Description: schedule 이벤트, Value: 10.10.31.10:8080/client/#/event
+				2649 project 프로젝트
+					2650 link Description: project 프로젝트, Value: 10.10.31.10:8080/client/#/project
+				2651 idcard 역할
+					2652 link Description: idcard 역할, Value: 10.10.31.10:8080/client/#/role
+				2653 team 계정
+					2654 link Description: team 계정, Value: 10.10.31.10:8080/client/#/account
+				2655 block 도메인
+					2656 link Description: block 도메인, Value: 10.10.31.10:8080/client/#/domain
+				2657 container
+					2658 image bank
+					2659 text 인프라스트럭쳐
+				2660 container
+					2661 image shopping
+					2662 text 서비스 오퍼링
+				2663 container
+					2664 image setting
+					2665 text 구성
+				2666 appstore-add 확장
+					2667 link Description: appstore-add 확장, Value: 10.10.31.10:8080/client/#/extension
+				2668 container
+					2669 image tool
+					2670 text 도구
+				2671 read API 문서
+					2672 link Description: read API 문서, Value: 10.10.31.10:8080/client/#/apidocs/
+		68 container
+			69 text 페이지 스타일 설정
+			70 button 닫기
+				71 image close
+			2673 heading 페이지 스타일 설정, Value: 3
+				2674 text 페이지 스타일 설정
+			2675 container
+				2676 container
+					2677 image
+					2678 container
+						2679 radio button (settable, integer) Description:  , Value: 1
+					2680 image check
+				2681 container
+					2682 image
+					2683 container
+						2684 radio button (settable, integer) Description:  , Value: 0
+			2685 heading 테마 색상, Value: 3
+				2686 text 테마 색상
+			2687 container
+				2688 container
+					2689 radio button (settable, integer) Description:  , Value: 0
+					2690 image check
+				2691 container
+					2692 radio button (settable, integer) Description:  , Value: 0
+				2693 container
+					2694 radio button (settable, integer) Description:  , Value: 0
+				2695 container
+					2696 radio button (settable, integer) Description:  , Value: 0
+				2697 container
+					2698 radio button (settable, integer) Description:  , Value: 0
+				2699 container
+					2700 radio button (settable, integer) Description:  , Value: 0
+				2701 container
+					2702 radio button (settable, integer) Description:  , Value: 0
+				2703 container
+					2704 radio button (settable, integer) Description:  , Value: 0
+			2705 heading 네비게이션 설정, Value: 3
+				2706 text 네비게이션 설정
+			2707 container
+				2708 container
+					2709 text 배경색
+					2710 color well (settable) #ffffff
+				2711 container
+					2712 text 텍스트 색상
+					2713 color well (settable) #000000
+			2714 container
+				2715 image exclamation-circle
+				2716 text 설정은 현재 브라우저에서만 볼 수 있습니다. 설정을 적용하려면 JSON 파일을 다운로드하고 경로 `/public/config.json` 아래의 `config.json` 파일의 `theme` 섹션에서 해당 콘텐츠를 교체하세요.
+			2717 button download 세팅값 다운로드(json)
+				2718 image download
+				2719 text 세팅값 다운로드(json)
+			2720 button undo 기본값으로 재설정
+				2721 image undo
+				2722 text 기본값으로 재설정
+		122 container
+			2723 image menu-fold
+			124 container
+				125 combo box (settable) rc_select_0
+				126 image project
+				127 text 기본 보기
+			2724 button 생성 down
+				2725 text 생성
+				2726 image down
+			131 image translation
+			132 image bell
+			133 container
+				134 text AC admin cloud
+		135 container
+			2195 container
+				2196 link Description: home, Value: 10.10.31.10:8080/client/#/
+				2197 text /
+				2198 link Description: Affinity 그룹, Value: 10.10.31.10:8080/client/#/affinitygroup
+				2727 text / qa-ag05-target
+				2728 link Description: question-circle, Value: docs.ablecloud.io/latest/adminguide/virtual_machines.html#affinity-groups
+				2729 button reload 업데이트
+					2730 image reload
+					2731 text 업데이트
+			2732 button down 작업
+				2733 image down
+				2734 text 작업
+			2735 container
+				2736 image swap
+				2737 heading qa-ag05-target, Value: 4
+					2738 text qa-ag05-target
+				2739 text 같은 호스트 배치 · 엄격
+				2740 text 아이디
+				2741 button barcode
+					2742 image barcode
+				2743 link Description: b2425532-f2bb-4511-86f5-917f6a4f1869 , Value: javascript:;
+				2744 text 같은 그룹의 VM을 같은 호스트에 배치합니다. 조건을 만족하지 못하면 배치가 실패합니다. 연결 VM 수 3 계정
+				2745 image user
+				2746 link Description: admin, Value: 10.10.31.10:8080/client/#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f
+				2747 text 도메인
+				2748 image block
+				2749 link Description: ROOT, Value: 10.10.31.10:8080/client/#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details
+				2750 link Description: cloud-server 가상머신 보기, Value: 10.10.31.10:8080/client/#/vm?affinitygroupid=b2425532-f2bb-4511-86f5-917f6a4f1869
+			2751 container
+				2752 tab group
+					2753 container
+						2754 tab (selectable, settable, boolean) 상세, Value: 0, ID: rc-tabs-5-tab-details
+						2755 tab (selected, settable, boolean) 가상머신, Value: 1, ID: rc-tabs-5-tab-instances
+						2756 tab (selectable, settable, boolean) 이벤트, Value: 0, ID: rc-tabs-5-tab-events
+				2757 container Description: 가상머신, ID: rc-tabs-5-panel-instances
+					2758 container
+						2759 heading 연결 가상머신, Value: 3
+							2760 text 연결 가상머신
+						2761 text 중지된 일반 가상머신의 대상 그룹 연결만 변경합니다. 다른 Affinity 그룹 연결은 유지하며 VM을 자동 중지하지 않습니다. 연결 VM 수: 3 · 조회 결과: 3
+						2762 button 가상머신 연결
+						2763 button 선택 연결 해제 (1)
+						2764 text field (settable) 가상머신 검색
+						2765 button search
+							2766 image search
+						2767 button 업데이트
+							2862 image reload
+						2772 text 선택: 1
+						2773 button 지우기
+						2774 container 연결 가상머신
+							2775 table
+								2776 row
+									2777 cell
+										2778 container
+											2779 checkbox (settable, integer) Description:  , Value: 0
+									2780 cell
+										2781 text 표시 이름
+									2782 cell
+										2783 text 상태
+									2784 cell
+										2785 text 호스트
+									2786 cell
+										2787 text 계정
+									2788 cell
+										2789 text 프로젝트
+									2790 cell
+										2791 text 도메인
+									2792 cell
+										2793 text 연결 관리 제한 사유
+								2794 row
+									2795 cell
+										2796 container
+											2797 checkbox (settable, integer) Description: qa-ag05-vm-01, Value: 1
+									2798 cell
+										2799 link Description: qa-ag05-vm-01, Value: 10.10.31.10:8080/client/#/vm/579b1439-136d-4280-b2bb-b10613496d20
+										2800 text i-2-664-VM
+									2801 cell
+										2802 text 정지된 상태
+									2803 cell
+										2804 text —
+									2805 cell
+										2806 text admin
+									2807 cell
+										2808 text —
+									2809 cell
+										2810 text ROOT
+									2811 cell
+										2812 text —
+								2813 row
+									2814 cell
+										2815 container
+											2816 checkbox (settable, integer) Description: qa-ag05-vm-02, Value: 0
+									2817 cell
+										2818 link Description: qa-ag05-vm-02, Value: 10.10.31.10:8080/client/#/vm/ebf7db49-ea07-4dba-be8a-78fc915b19ec
+										2819 text i-2-665-VM
+									2820 cell
+										2821 text 정지된 상태
+									2822 cell
+										2823 text —
+									2824 cell
+										2825 text admin
+									2826 cell
+										2827 text —
+									2828 cell
+										2829 text ROOT
+									2830 cell
+										2831 text —
+								2832 row
+									2833 cell
+										2834 container
+											2835 checkbox (settable, integer) Description: qa-ag05-vm-03-긴표시이름검증-긴표시이름검증-긴표시이름검증-긴표시이름검증-긴표시이름검증-긴표시이름검증-긴표시이름검증-긴표시이름검증, Value: 0
+									2836 cell
+										2837 link Description: qa-ag05-vm-03-긴표시이름검증-긴표시이름검증-긴표시이름검증-긴표시이름검증-긴표시이름검증-긴표시이름검증-긴표시이름검증-긴표시이름검증, Value: 10.10.31.10:8080/client/#/vm/204ec92d-c477-4be2-9a94-de42398bc680
+										2838 text i-2-666-VM
+									2839 cell
+										2840 text 정지된 상태
+									2841 cell
+										2842 text —
+									2843 cell
+										2844 text admin
+									2845 cell
+										2846 text —
+									2847 cell
+										2848 text ROOT
+									2849 cell
+										2850 text —
+						2851 content list
+							2852 container 이전 페이지
+								2853 button (disabled) left
+									2854 image left
+							2855 text 1
+							2856 container 다음 페이지
+								2857 button (disabled) right
+									2858 image right
+							2859 container
+								2860 combo box (settable) rc_select_17
+								2861 text 10 / 쪽
+	265 container
+		266 image info-circle
+		267 text Wall 모니터링을 사용할 수 없습니다. 기존 알림은 최신 정보가 아닐 수 있으며 Mold는 계속 사용할 수 있습니다. 비활성
+
+The focused UI element is 1 AXWebArea Affinity 그룹 - ABLESTACK-Mold, URL: 10.10.31.10:8080/client/#/affinitygroup/b2425532-f2bb-4511-86f5-917f6a4f1869?tab=instances

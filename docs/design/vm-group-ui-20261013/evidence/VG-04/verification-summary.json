@@ -1,0 +1,298 @@
+{
+  "deployed_source": "361b123637517e1bc83a6d79430d5bdd03806a4b",
+  "archive_sha256": "5453b9453c44cf88af9baaae6d08c4bc1dbcedc60255a17da2588872c268d810",
+  "ui_test_suites": 13,
+  "ui_tests": 195,
+  "api_contract": {
+    "31": [
+      {
+        "case": "owner scope all 26",
+        "passed": true,
+        "result": {}
+      },
+      {
+        "case": "exact name match",
+        "passed": true,
+        "result": {
+          "count": 1
+        }
+      },
+      {
+        "case": "name is exact, not keyword",
+        "passed": true,
+        "result": {}
+      },
+      {
+        "case": "keyword name partial",
+        "passed": true,
+        "result": {
+          "count": 1
+        }
+      },
+      {
+        "case": "keyword UUID partial",
+        "passed": true,
+        "result": {
+          "count": 1
+        }
+      },
+      {
+        "case": "normal empty",
+        "passed": true,
+        "result": {}
+      },
+      {
+        "case": "pagination 20 then6, no repeated ID",
+        "passed": true,
+        "result": {
+          "p1": 20,
+          "p2": 6
+        }
+      },
+      {
+        "case": "account filter other owner",
+        "passed": true,
+        "result": {}
+      },
+      {
+        "case": "project scoped",
+        "passed": true,
+        "result": {}
+      },
+      {
+        "case": "domain scope owner names separated",
+        "passed": true,
+        "result": {}
+      },
+      {
+        "case": "ID filter",
+        "passed": true,
+        "result": {}
+      },
+      {
+        "case": "schema excludes Zone and server sort",
+        "passed": true,
+        "result": [
+          "account",
+          "domainid",
+          "id",
+          "isrecursive",
+          "keyword",
+          "listall",
+          "name",
+          "page",
+          "pagesize",
+          "projectid"
+        ]
+      },
+      {
+        "case": "regular user ACL own scope",
+        "passed": true,
+        "result": {}
+      },
+      {
+        "case": "regular user foreign owner forbidden",
+        "passed": true,
+        "result": {
+          "errorcode": 531
+        }
+      }
+    ],
+    "32": [
+      {
+        "case": "owner scope all 26",
+        "passed": true,
+        "result": {}
+      },
+      {
+        "case": "exact name match",
+        "passed": true,
+        "result": {
+          "count": 1
+        }
+      },
+      {
+        "case": "name is exact, not keyword",
+        "passed": true,
+        "result": {}
+      },
+      {
+        "case": "keyword name partial",
+        "passed": true,
+        "result": {
+          "count": 1
+        }
+      },
+      {
+        "case": "keyword UUID partial",
+        "passed": true,
+        "result": {
+          "count": 1
+        }
+      },
+      {
+        "case": "normal empty",
+        "passed": true,
+        "result": {}
+      },
+      {
+        "case": "pagination 20 then6, no repeated ID",
+        "passed": true,
+        "result": {
+          "p1": 20,
+          "p2": 6
+        }
+      },
+      {
+        "case": "account filter other owner",
+        "passed": true,
+        "result": {}
+      },
+      {
+        "case": "project scoped",
+        "passed": true,
+        "result": {}
+      },
+      {
+        "case": "domain scope owner names separated",
+        "passed": true,
+        "result": {}
+      },
+      {
+        "case": "ID filter",
+        "passed": true,
+        "result": {}
+      },
+      {
+        "case": "schema excludes Zone and server sort",
+        "passed": true,
+        "result": [
+          "account",
+          "domainid",
+          "id",
+          "isrecursive",
+          "keyword",
+          "listall",
+          "name",
+          "page",
+          "pagesize",
+          "projectid"
+        ]
+      },
+      {
+        "case": "regular user ACL own scope",
+        "passed": true,
+        "result": {}
+      },
+      {
+        "case": "regular user foreign owner forbidden",
+        "passed": true,
+        "result": {
+          "errorcode": 531
+        }
+      }
+    ]
+  },
+  "runtime": {
+    "31": {
+      "source": "361b123637517e1bc83a6d79430d5bdd03806a4b",
+      "static_files_verified": 846,
+      "index_sha256": "64a373bb64bd46c458cb552c6b96f7bf19a75670f900c9974698de2989c95184",
+      "config_sha256": "b7de5f6a1f7a3a17310ee7d34ca801bb316fc6f841039f865fbabf154cd59a13",
+      "jar_sha256": {
+        "/usr/share/cloudstack-management/lib/cloudstack-4.23.0.0-ABLESTACK.Mold.jar": "a4a136db94729a8f14b8d4a781235d54b8260415c139222c3f34588b1c574393"
+      },
+      "pid": "706254",
+      "webinf": true,
+      "metainf": false,
+      "http": 200,
+      "service": "active",
+      "backup": "/root/epic1357-vg04-deploy-20261014-001751",
+      "disk": "Filesystem           Size  Used Avail Use% Mounted on\n/dev/mapper/rl-root  383G   56G  328G  15% /\n"
+    },
+    "32": {
+      "source": "361b123637517e1bc83a6d79430d5bdd03806a4b",
+      "static_files_verified": 846,
+      "index_sha256": "64a373bb64bd46c458cb552c6b96f7bf19a75670f900c9974698de2989c95184",
+      "config_sha256": "e3839c761e59e77f960b9f9f717055ea91882682a3a036b07e4c69277aac8687",
+      "jar_sha256": {
+        "/usr/share/cloudstack-management/lib/cloudstack-4.23.0.0.jar": "fc9430a0c26fb6b7245d68a38dec9cee1bbe4b21a4283d7afaebc7722d6d2fd5"
+      },
+      "pid": "1202380",
+      "webinf": true,
+      "metainf": false,
+      "http": 200,
+      "service": "active",
+      "backup": "/root/epic1357-vg04-deploy-20261014-001943",
+      "disk": "Filesystem           Size  Used Avail Use% Mounted on\n/dev/mapper/rl-root   83G   51G   32G  62% /\n"
+    }
+  },
+  "cleanup": {
+    "31": {
+      "site": "31",
+      "before": {
+        "groups": "29",
+        "maps": "0",
+        "vms": "0",
+        "volumes": "0",
+        "networks": "0"
+      },
+      "groups_deleted": 29,
+      "project_deleted": "52bcb3c8-ea0b-4f71-bdcd-037337ee18ef",
+      "account_deleted": "781a10dd-7616-4301-86ef-cdd09b5cc6e1",
+      "after": {
+        "groups": "0",
+        "maps": "0",
+        "project": "0",
+        "account": "0",
+        "vms": "0",
+        "volumes": "0",
+        "networks": "0"
+      }
+    },
+    "32": {
+      "site": "32",
+      "before": {
+        "groups": "29",
+        "maps": "0",
+        "vms": "0",
+        "volumes": "0",
+        "networks": "0"
+      },
+      "groups_deleted": 29,
+      "project_deleted": "8e6a0dfe-bb79-4936-8424-b8dbaf3314c1",
+      "account_deleted": "9ceb79a3-782b-42a2-a012-13c21c3beadd",
+      "after": {
+        "groups": "0",
+        "maps": "0",
+        "project": "0",
+        "account": "0",
+        "vms": "0",
+        "volumes": "0",
+        "networks": "0"
+      }
+    }
+  },
+  "detail_cleanup": {
+    "31": {
+      "site": "31",
+      "id": "5f18960b-dbc8-4860-aed9-88171ac9d1af",
+      "name": "VG04-31-final-detail-20261014",
+      "mapped_vms_before": 0,
+      "active_target_groups_after": 0,
+      "target_maps_after": 0
+    },
+    "32": {
+      "site": "32",
+      "id": "1d382847-0916-461b-bb5b-f0f7d8758a86",
+      "name": "VG04-32-final-detail-20261014",
+      "mapped_vms_before": 0,
+      "active_target_groups_after": 0,
+      "target_maps_after": 0
+    }
+  },
+  "limitations": [
+    "Focused tests only; no full Cloud build or full CI",
+    "One unclassified intermediate 32 console promise exception; not console-clean certification"
+  ]
+}

@@ -16,22 +16,52 @@
 // under the License.
 
 <template>
-  <a-spin :spinning="loadingData">
+  <MoldDialog
+    class="userdata-reset-dialog"
+    size="md"
+    :title="$t(isAutoScaleProfile ? 'label.reset.user.data.on.autoscale.vm.group' : 'label.reset.user.data.on.vm')"
+    :closable="!loadingData"
+    :keyboard="!loadingData"
+    @cancel="closeAction">
+  <a-alert v-if="templateError" type="error" show-icon role="alert" :message="$t('message.request.failed')">
+    <template #description><a-button size="small" @click="fetchTemplateData">{{ $t('label.refresh') }}</a-button></template>
+  </a-alert>
+  <a-alert v-if="submitError" type="error" show-icon role="alert" :message="submitError" />
+  <a-spin :spinning="loadingData || templateLoading">
+    <template v-if="currentLoaded">
+      <a-alert v-if="supportMessage" :type="resetUnsupported ? 'warning' : 'info'" show-icon role="status" :message="$t(supportMessage)" />
+      <p class="userdata-current-summary">{{ $t('label.userdata.current') }}: {{ current.userdataname || $t(currentKind) }}</p>
+      <a-descriptions v-if="Object.keys(currentValues).length" size="small" :column="1">
+        <a-descriptions-item v-for="(value, key) in currentValues" :key="key" :label="key">{{ value }}</a-descriptions-item>
+      </a-descriptions>
+      <a-collapse v-if="current.userdata" class="userdata-current-content">
+        <a-collapse-panel key="current" :header="$t('label.userdata.current.content')">
+          <a-textarea :value="currentText" readonly :auto-size="{ minRows: 3, maxRows: 8 }" :aria-label="$t('label.userdata.current.content')" />
+        </a-collapse-panel>
+      </a-collapse>
+      <a-form-item :label="$t('label.userdata.reset.change')">
+        <a-switch ref="changeSwitch" v-model:checked="editCurrent" :disabled="loadingData || resetUnsupported" :aria-label="$t('label.userdata.reset.change')" />
+      </a-form-item>
+    </template>
     <a-form
+v-if="currentLoaded && editCurrent"
             :ref="formRef"
             :model="form"
             :rules="rules"
             layout="vertical"
             class="form"
+            :class="{ 'autoscale-userdata-form': isAutoScaleProfile }"
             v-ctrl-enter="handleSubmit"
             @finish="handleSubmit">
       <div v-if="template && template.userdataid">
         <a-typography-text>
-            The template "{{ $t(this.template.name) }}" is linked to Userdata "{{ $t(this.template.userdataname) }}" with override policy "{{ $t(this.template.userdatapolicy) }}"
+            <template v-if="isAutoScaleProfile">{{ $t('message.autoscale.userdata.template', { template: template.name, userdata: template.userdataname, policy: template.userdatapolicy }) }}</template>
+            <template v-else>{{ $t('message.autoscale.userdata.template', { template: template.name, userdata: template.userdataname, policy: template.userdatapolicy }) }}</template>
         </a-typography-text><br/><br/>
-        <div v-if="templateUserDataParams.length > 0 && !doUserdataOverride">
+        <div v-if="templateUserDataParams.length > 0 && templateDataActive">
           <a-typography-text v-if="this.template && this.template.userdataid && templateUserDataParams.length > 0">
-              Enter the values for the variables in userdata
+              <template v-if="isAutoScaleProfile">{{ $t('message.autoscale.userdata.variables') }}</template>
+              <template v-else>{{ $t('message.autoscale.userdata.variables') }}</template>
           </a-typography-text>
           <a-input-group>
             <a-table
@@ -67,18 +97,17 @@
                 :activeTabKey="userdataTabKey"
                 @tabChange="key => onUserdataTabChange(key, 'userdataTabKey')">
                 <div v-if="userdataTabKey === 'userdataregistered'">
-                  <a-step
-                    v-if="isUserAllowedToListUserDatas">
+                  <a-step>
                     <template #description>
                       <div>
+                        <a-alert type="info" show-icon :message="$t(template.userdataid ? 'message.userdata.reset.none.template' : 'message.userdata.reset.none.clear')" />
                         <user-data-selection
-                          :items="items"
-                          :row-count="rowCount.userDatas"
+                          :scope="userDataOwner"
+                          :value="form.userdataid"
                           :disabled="template.userdatapolicy === 'DENYOVERRIDE'"
-                          :loading="loading.userDatas"
                           :preFillContent="dataPreFill"
-                          @select-user-data-item="($event) => updateUserData($event)"
-                          @handle-search-filter="($event) => handleSearchFilter('userData', $event)"
+                          @select-user-data-item="updateUserData"
+                          @ready="userDataSelectionReady = $event"
                         />
                         <div v-if="userDataParams.length > 0">
                           <a-input-group>
@@ -102,9 +131,11 @@
                   </a-step>
                 </div>
                 <div v-else>
+                  <a-alert v-if="appendManualCurrent" type="info" show-icon :message="$t('message.userdata.reset.append.current')" />
                   <a-form-item name="userdata" ref="userdata" >
                     <a-textarea
-                      placeholder="Userdata"
+                      :placeholder="$t('label.user.data')"
+                      :aria-label="$t('label.user.data.text')"
                       v-model:value="form.userdata">
                     </a-textarea>
                   </a-form-item>
@@ -114,23 +145,30 @@
           </template>
         </a-step>
       </div>
-      <div :span="24" class="action-button">
-        <a-button @click="closeAction">{{ $t('label.cancel') }}</a-button>
-        <a-button :loading="loadingData" ref="submit" type="primary" @click="handleSubmit">{{ $t('label.ok') }}</a-button>
-      </div>
     </a-form>
   </a-spin>
+    <template #footer>
+      <a-button ref="cancel" :disabled="loadingData" @click="closeAction">{{ $t('label.cancel') }}</a-button>
+      <a-button :loading="loadingData" :disabled="templateLoading || templateError || !currentLoaded || (editCurrent && (resetUnsupported || userDataSelectionBlocked))" ref="submit" type="primary" @click="handleSubmit">{{ $t('label.ok') }}</a-button>
+    </template>
+  </MoldDialog>
 </template>
 
 <script>
-import { ref, reactive, toRaw } from 'vue'
+import { ref, reactive } from 'vue'
 import { getAPI, postAPI } from '@/api'
-import { genericCompare } from '@/utils/sort.js'
+import { runAutoScaleMutation, autoScaleMutationDescription, autoScaleOwnerParams } from '@/utils/autoScaleEditing'
+import { autoScaleTemplateById } from '@/utils/autoScaleUi'
 import UserDataSelection from '@views/compute/wizard/UserDataSelection'
+import MoldDialog from '@/components/view/MoldDialog'
+import { applyUserDataSelection, userDataSelectionConsumer } from '@/utils/userDataSelection'
+import { decodeResetUserData, resetTemplateActive, resetUserDataPayload, resetUserDataValues, userDataKeys, userDataResetSupport } from '@/utils/userDataReset'
 
 export default {
   name: 'ResetUserData',
+  mixins: [userDataSelectionConsumer],
   components: {
+    MoldDialog,
     UserDataSelection
   },
   props: {
@@ -140,44 +178,27 @@ export default {
     },
     preFillContent: {
       type: Object,
-      default: () => {}
+      default: () => ({})
     }
   },
   data () {
     return {
-      items: [],
-      total: 0,
-      columns: [
-        {
-          dataIndex: 'name',
-          title: this.$t('label.name'),
-          sorter: (a, b) => genericCompare(a?.name || '', b?.name || ''),
-          width: '40%'
-        },
-        {
-          dataIndex: 'account',
-          title: this.$t('account'),
-          width: '30%'
-        },
-        {
-          dataIndex: 'domain',
-          title: this.$t('domain'),
-          width: '30%'
-        }
-      ],
-      selectedRowKeys: [],
-      options: {
-        page: 1,
-        pageSize: 10,
-        listall: false,
-        response: 'json'
-      },
-      filter: '',
-      rowCount: {},
-      loading: {
-        userDatas: false
-      },
       loadingData: false,
+      templateLoading: false,
+      templateError: false,
+      currentLoaded: false,
+      current: {},
+      currentText: '',
+      currentKind: 'label.noselect',
+      currentValues: {},
+      editCurrent: false,
+      appendManualCurrent: false,
+      restoringSelectionId: null,
+      submitError: '',
+      supportMessage: '',
+      resetUnsupported: false,
+      readGeneration: 0,
+      readActive: true,
       doUserdataOverride: false,
       doUserdataAppend: false,
       userdataTabList: [],
@@ -214,12 +235,29 @@ export default {
       userdata: {}
     }
   },
+  computed: {
+    templateDataActive () { return resetTemplateActive(this) },
+    blocksNavigation () { return this.loadingData },
+    isUserAllowedToListUserDatas () { return Boolean(this.$store.getters.apis.listUserData) },
+    isAutoScaleProfile () { return this.resource.resetUserDataApiName === 'updateAutoScaleVmProfile' }
+  },
   created () {
     this.initForm()
-    this.fetchData()
     this.loadUserdataTabList()
     this.fetchTemplateData()
-    this.dataPreFill = this.preFillContent && Object.keys(this.preFillContent).length > 0 ? this.preFillContent : {}
+  },
+  beforeUnmount () { this.readActive = false; this.readGeneration++ },
+  watch: {
+    templateLoading (loading) {
+      if (loading) return
+      this.$nextTick(() => {
+        const change = this.$refs.changeSwitch?.$el
+        const target = change && !change.disabled ? change : this.$refs.cancel?.$el
+        if (target?.focus) target.focus()
+      })
+    },
+    'resource.id' () { this.fetchTemplateData() },
+    'resource.resetUserDataResourceId' () { this.fetchTemplateData() }
   },
   methods: {
     initForm () {
@@ -227,157 +265,139 @@ export default {
       this.form = reactive({})
       this.rules = reactive({})
     },
-    fetchData () {
-      this.loadingData = true
-      this.items = []
-      this.total = 0
-      getAPI('listUserData', this.options).then(response => {
-        this.total = response.listuserdataresponse.count
-        if (this.total !== 0) {
-          this.items = response.listuserdataresponse.userdata
+    async fetchTemplateData () {
+      const generation = ++this.readGeneration
+      const current = () => this.readActive && generation === this.readGeneration
+      this.templateLoading = true
+      this.templateError = false
+      this.currentLoaded = false
+      this.editCurrent = false
+      this.supportMessage = ''
+      this.resetUnsupported = false
+      try {
+        const request = (command, args) => getAPI(command, args, { preserveOnFailure: true, timeout: 15000 })
+        const owner = { ...autoScaleOwnerParams(this.resource), ignoreproject: true }
+        const id = this.resource.resetUserDataResourceId || this.resource.id
+        const command = this.isAutoScaleProfile ? 'listAutoScaleVmProfiles' : 'listVirtualMachines'
+        const result = await request(command, { ...owner, id, listall: true, ...(this.isAutoScaleProfile ? {} : { userdata: true }) })
+        if (!current()) return
+        const row = this.isAutoScaleProfile ? result.listautoscalevmprofilesresponse?.autoscalevmprofile?.find(r => r.id === id) : result.listvirtualmachinesresponse?.virtualmachine?.find(r => r.id === id)
+        if (!row) throw new Error('Current user data unavailable')
+        if (!this.isAutoScaleProfile) {
+          const networks = await Promise.all([...new Set((row.nic || []).map(n => n.networkid))].map(async id => {
+            const response = await request('listNetworks', { ...owner, id, listall: true })
+            const network = response.listnetworksresponse?.network?.find(n => n.id === id)
+            if (!network) throw new Error('Network unavailable')
+            return network
+          }))
+          if (!current()) return
+          this.supportMessage = userDataResetSupport(row, networks)
+          this.resetUnsupported = this.supportMessage.startsWith('message.userdata.reset.unsupported.')
         }
-      }).finally(() => {
-        this.loadingData = false
-      })
-    },
-    fetchTemplateData () {
-      const params = {}
-      params.id = this.resource.templateid
-      params.isrecursive = true
-      params.templatefilter = 'all'
-      params.isready = true
-      var apiName = 'listTemplates'
-      getAPI(apiName, params).then(json => {
-        const templateResponses = json.listtemplatesresponse.template
-        this.template = templateResponses[0]
-        this.updateTemplateLinkedUserData(this.template.userdataid)
-        this.userdataDefaultOverridePolicy = this.template.userdatapolicy
-      })
-    },
-    updateTemplateLinkedUserData (id) {
-      if (id === '0') {
-        return
+        const templateId = row.templateid || this.resource.templateid
+        const json = await autoScaleTemplateById(request, { ...owner, id: templateId, zoneid: row.zoneid || this.resource.zoneid, isready: true })
+        if (!current()) return
+        const template = json.listtemplatesresponse?.template?.find(item => item.id === templateId)
+        if (!template) throw new Error('Template unavailable')
+        const find = async id => {
+          if (!id || id === '0') return null
+          const response = await request('listUserData', { ...owner, id })
+          const data = response.listuserdataresponse?.userdata?.find(r => r.id === id)
+          if (!data) throw new Error('Linked user data unavailable')
+          return data
+        }
+        // Template metadata carries the declared variables even when its
+        // library belongs to another account. Do not require cross-owner reads.
+        let templateData = template.userdataid ? { id: template.userdataid, params: template.userdataparams || '' } : null
+        if (template.userdataid && template.account === this.resource.account && template.domainid === this.resource.domainid) templateData = await find(template.userdataid)
+        const selected = row.userdataid === template.userdataid ? templateData : await find(row.userdataid)
+        if (!current()) return
+        const keys = [...new Set([...userDataKeys(templateData), ...userDataKeys(selected)])]
+        const values = resetUserDataValues(row.userdatadetails, keys)
+        this.currentText = decodeResetUserData(row.userdata)
+        this.current = row
+        this.currentValues = values
+        this.template = template
+        this.userdataDefaultOverridePolicy = template.userdatapolicy
+        this.templateUserDataParams = userDataKeys(templateData).map(key => ({ key }))
+        this.templateUserDataValues = Object.fromEntries(userDataKeys(templateData).map(key => [key, values[key] ?? '']))
+        this.userDataParams = userDataKeys(selected).map(key => ({ key }))
+        this.userDataValues = Object.fromEntries(userDataKeys(selected).map(key => [key, values[key] ?? '']))
+        this.form.userdataid = row.userdataid || undefined
+        this.restoringSelectionId = row.userdataid || null
+        const hasCustom = Boolean(row.userdataid || (row.userdata && row.userdata !== templateData?.userdata))
+        this.currentKind = template.userdataid && (!hasCustom || template.userdatapolicy === 'DENYOVERRIDE')
+          ? 'label.userdata.template.default'
+          : (template.userdataid && !templateData?.userdata && !row.userdataid ? 'label.userdata.current.content' : (row.userdata ? 'label.user.data.text' : 'label.noselect'))
+        this.doUserdataOverride = template.userdatapolicy === 'ALLOWOVERRIDE' && hasCustom
+        this.doUserdataAppend = template.userdatapolicy === 'APPEND' && hasCustom
+        this.appendManualCurrent = Boolean(template.userdatapolicy === 'APPEND' && hasCustom && !row.userdataid)
+        // APPEND stores the merged effective body; it is not an append input.
+        // Keep it visible above, and require new append content explicitly.
+        this.form.userdata = this.appendManualCurrent ? '' : (!row.userdataid ? this.currentText : '')
+        this.userdataTabKey = row.userdataid || !hasCustom ? 'userdataregistered' : 'userdatatext'
+        this.userDataSelectionReady = false
+        this.submitError = ''
+        this.currentLoaded = true
+      } catch (error) {
+        if (current()) this.templateError = true
+      } finally {
+        if (current()) this.templateLoading = false
       }
-      this.templateUserDataParams = []
-
-      getAPI('listUserData', { id: id }).then(json => {
-        const resp = json?.listuserdataresponse?.userdata || []
-        if (resp) {
-          var params = resp[0].params
-          if (params) {
-            var dataParams = params.split(',')
-          }
-          var that = this
-          that.templateUserDataParams = []
-          if (dataParams) {
-            dataParams.forEach(function (val, index) {
-              that.templateUserDataParams.push({
-                id: index,
-                key: val
-              })
-            })
-          }
-        }
-      })
     },
     loadUserdataTabList () {
       this.userdataTabList = [{
         key: 'userdataregistered',
-        tab: this.$t('label.user.data.registered')
+        tab: this.$t(this.isAutoScaleProfile ? 'label.autoscale.userdata.registered' : 'label.user.data.registered')
       },
       {
         key: 'userdatatext',
-        tab: this.$t('label.user.data.text')
+        tab: this.$t(this.isAutoScaleProfile ? 'label.autoscale.userdata.manual' : 'label.user.data.text')
       }]
     },
     onUserdataTabChange (key, type) {
       this[type] = key
-      this.userDataParams = []
     },
-    isUserAllowedToListUserDatas () {
-      return Boolean('listUserData' in this.$store.getters.apis)
-    },
-    updateUserData (id) {
-      if (id === '0') {
-        this.form.userdataid = undefined
-        return
-      }
-      this.form.userdataid = id
-      this.userDataParams = []
-      getAPI('listUserData', { id: id }).then(json => {
-        const resp = json?.listuserdataresponse?.userdata || []
-        if (resp.length > 0) {
-          var params = resp[0].params
-          if (params) {
-            var dataParams = params.split(',')
-          }
-          var that = this
-          dataParams.forEach(function (val, index) {
-            that.userDataParams.push({
-              id: index,
-              key: val
-            })
-          })
-        }
-      })
-    },
-    onSelectChange (selectedRowKeys) {
-      this.selectedRowKeys = selectedRowKeys
-    },
-    handleSearch (keyword) {
-      this.filter = keyword
-      this.options.keyword = keyword
-      this.fetchData()
-    },
-    handleTableChange (pagination) {
-      this.options.page = pagination.current
-      this.options.pageSize = pagination.pageSize
-      this.fetchData()
+    updateUserData (id, item) {
+      const restored = id && id === this.form.userdataid ? { ...this.userDataValues } : null
+      applyUserDataSelection(this, id, item)
+      if (restored) this.userDataValues = Object.fromEntries(this.userDataParams.map(p => [p.key, restored[p.key] ?? '']))
+      this.restoringSelectionId = null
     },
     handleSubmit () {
-      if (this.loadingData) return
-      const values = toRaw(this.form)
+      if (this.loadingData || this.templateLoading || this.templateError || !this.currentLoaded || (this.editCurrent && (this.resetUnsupported || this.userDataSelectionBlocked))) return
+      const params = resetUserDataPayload(this, this.$toBase64AndURIEncoded)
+      if (!params) { this.closeAction(); return }
       this.loadingData = true
-      console.log(values)
-      const params = {
-      }
-      if (values.userdata && values.userdata.length > 0) {
-        params.userdata = this.$toBase64AndURIEncoded(values.userdata)
-      }
-      if (values.userdataid) {
-        params.userdataid = values.userdataid
-      }
-      var idx = 0
-      if (this.templateUserDataValues) {
-        for (const [key, value] of Object.entries(this.templateUserDataValues)) {
-          params['userdatadetails[' + idx + '].' + `${key}`] = value
-          idx++
-        }
-      }
-      if (this.userDataValues) {
-        for (const [key, value] of Object.entries(this.userDataValues)) {
-          params['userdatadetails[' + idx + '].' + `${key}`] = value
-          idx++
-        }
-      }
-      params.id = this.resource.resetUserDataResourceId ? this.resource.resetUserDataResourceId : this.resource.id
-
+      this.submitError = ''
       const resetUserDataApiName = this.resource.resetUserDataApiName ? this.resource.resetUserDataApiName : 'resetUserDataForVirtualMachine'
 
-      postAPI(resetUserDataApiName, params).then(json => {
+      if (resetUserDataApiName === 'updateAutoScaleVmProfile' && !params.userdataid && !params.userdata) params.userdata = ''
+      const update = resetUserDataApiName === 'updateAutoScaleVmProfile'
+        ? runAutoScaleMutation(postAPI, getAPI, resetUserDataApiName, params)
+        : postAPI(resetUserDataApiName, params, { preserveOnFailure: true })
+      return update.then(json => {
         this.$message.success({
-          content: `${this.$t('label.action.user.data.reset')} - ${this.$t('label.success')}`,
+          content: `${this.$t(this.isAutoScaleProfile ? 'label.reset.user.data.on.autoscale.vm.group' : 'label.reset.user.data.on.vm')} - ${this.$t('label.success')}`,
           duration: 2
         })
         this.$emit('refresh-data')
+        this.loadingData = false
         this.closeAction()
       }).catch(error => {
-        this.$notifyError(error)
+        const commandError = error?.response?.data?.[resetUserDataApiName.toLowerCase() + 'response']?.errortext
+        this.submitError = resetUserDataApiName === 'updateAutoScaleVmProfile'
+          ? autoScaleMutationDescription(error, this.$t)
+          : (commandError || error?.response?.data?.errorresponse?.errortext || error?.message || this.$t('message.request.failed'))
+        if (resetUserDataApiName === 'resetUserDataForVirtualMachine' && !error?.response && /Network Error|timeout|ECONNABORTED|ERR_NETWORK/.test(`${error?.message} ${error?.code}`)) {
+          this.submitError = this.$t('message.userdata.reset.outcome.unknown')
+        }
       }).finally(() => {
         this.loadingData = false
       })
     },
     closeAction () {
+      if (this.loadingData) return
       this.$emit('close-action')
     }
   }
@@ -385,10 +405,15 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.userdata-current-summary, .userdata-current-content, .ant-alert { margin-bottom: 12px; }
 .form {
-  width: 90vw;
-  @media (min-width: 800px) {
-    width: 45vw;
-  }
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  :deep(.ant-steps-item-description), :deep(.ant-steps-item-content) { width: 100%; min-width: 0; max-width: 100%; }
+  :deep(.ant-card), :deep(.ant-card-body), :deep(.ant-table-wrapper) { min-width: 0; max-width: 100%; }
+  :deep(.ant-input-search) { width: min(320px, 100%) !important; }
+  :deep(.ant-table-cell) { overflow-wrap: anywhere; }
+  :deep(.ant-table) { table-layout: fixed; }
 }
 </style>

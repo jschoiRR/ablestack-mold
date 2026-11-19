@@ -1,0 +1,79 @@
+{
+  "issue": 1388,
+  "cluster": 31,
+  "passed": true,
+  "checks": [
+    "VM API count and page union",
+    "search 1 and 0",
+    "VM detail and browser back",
+    "dedicated tabs and template ISO policies",
+    "template and ISO UI unlink updates",
+    "pending and failed refresh retain rows",
+    "permission is not empty success",
+    "empty refresh retention and late response discard",
+    "user domainadmin project scope",
+    "actual role API denial and unavailable state",
+    "preflight reference counts",
+    "reference lookup blocks deletion while pending",
+    "incomplete lookup is not zero",
+    "actual deletion race rejected and refreshed",
+    "race resolution through UI VM unlink",
+    "busy controls and final template guard",
+    "light 1440x1000 common layout",
+    "light 1280x720 common layout",
+    "light 390x844 common layout",
+    "light 390x480 common layout",
+    "light fixed header/footer body scroll",
+    "dark 1440x1000 common layout",
+    "dark 1280x720 common layout",
+    "dark 390x844 common layout",
+    "dark 390x480 common layout",
+    "dark fixed header/footer body scroll",
+    "theme styles inherit different common tokens",
+    "actual-delete-race-requests complete trace",
+    "actual-delete-race-requests no JS exceptions",
+    "incomplete-and-busy-delete-requests complete trace",
+    "incomplete-and-busy-delete-requests no JS exceptions",
+    "permission-zero-stale-requests complete trace",
+    "permission-zero-stale-requests no JS exceptions",
+    "refresh-error-retention-requests complete trace",
+    "refresh-error-retention-requests no JS exceptions",
+    "theme-responsive-cancel-only-requests complete trace",
+    "theme-responsive-cancel-only-requests no JS exceptions",
+    "user-project-acl-requests complete trace",
+    "user-project-acl-requests common cancellation isolated and tracked",
+    "server pagination actually requested",
+    "API matrix",
+    "template-inheritance has content but no UUID",
+    "iso-inheritance has content but no UUID",
+    "cleanup API and exact original library",
+    "cleanup ten DB resource kinds",
+    "runtime source assets classes webapp"
+  ],
+  "count": 46,
+  "ui_tests": 44,
+  "server_tests": 3,
+  "api_matrix": 11,
+  "complete_browser_intervals": [
+    "actual-delete-race-requests.json",
+    "incomplete-and-busy-delete-requests.json",
+    "permission-zero-stale-requests.json",
+    "refresh-error-retention-requests.json",
+    "theme-responsive-cancel-only-requests.json",
+    "user-project-acl-requests.json"
+  ],
+  "limited_browser_intervals": [
+    "roles-actual-denial-requests.json"
+  ],
+  "observed_common_exception_intervals": [
+    "user-project-acl-requests.json"
+  ],
+  "known_open_findings": [
+    {
+      "issue": 1392,
+      "summary": "Common AutogenView route cancellation can reject without a handler; reproduced with zero usage components"
+    }
+  ],
+  "full_ui_standard_complete": false,
+  "scope": "UD-07 reference tabs and deletion visibility; full Cloud CI and final whole-menu UI review are separate"
+}

@@ -1,0 +1,3047 @@
+{
+  "source": "c9e5d19fe1df51aaab933740622ef7d232c75361",
+  "cases": [
+    {
+      "site": "31",
+      "case": "VM-standard-tab-region",
+      "pass": true,
+      "baseline": {
+        ".page-header-wrapper-grid-content-main": {
+          "height": 1382,
+          "width": 1380,
+          "x": 268,
+          "y": 167
+        },
+        ".resource-content-card": {
+          "height": 1382,
+          "width": 974,
+          "x": 674,
+          "y": 167
+        },
+        ".resource-content-card .ant-card-body": {
+          "height": 1380,
+          "width": 972,
+          "x": 675,
+          "y": 168
+        },
+        ".resource-content-card .ant-tabs": {
+          "height": 1310,
+          "width": 924,
+          "x": 699,
+          "y": 214
+        },
+        ".resource-content-card .ant-tabs-content-holder": {
+          "height": 1310,
+          "width": 824.75,
+          "x": 798.25,
+          "y": 214
+        },
+        ".resource-content-card .ant-tabs-nav": {
+          "height": 1310,
+          "width": 100.25,
+          "x": 699,
+          "y": 214
+        }
+      },
+      "actual": {
+        "card": {
+          "height": 322,
+          "width": 981.078125,
+          "x": 676.90625,
+          "y": 167
+        },
+        "holder": {
+          "height": 250,
+          "width": 848.546875,
+          "x": 784.4375,
+          "y": 214
+        },
+        "nav": {
+          "height": 250,
+          "width": 83.53125,
+          "x": 701.90625,
+          "y": 214
+        },
+        "tabs": {
+          "height": 250,
+          "width": 931.078125,
+          "x": 701.90625,
+          "y": 214
+        },
+        "width": 1680
+      },
+      "vmCurrent": {
+        "dx": 25,
+        "dy": 47
+      }
+    },
+    {
+      "site": "31",
+      "case": "bulk-link-confirm-cancel",
+      "pass": true,
+      "targets": 2
+    },
+    {
+      "site": "31",
+      "case": "admin-bulk-link",
+      "pass": true,
+      "targets": 2
+    },
+    {
+      "site": "32",
+      "case": "admin-bulk-link",
+      "pass": true,
+      "targets": 2
+    },
+    {
+      "site": "32",
+      "case": "controlled-500-retains-rows-blocks-action",
+      "pass": true,
+      "rows": 1,
+      "text": "- link \"ROOT\":\n    - /url: \"#/domain/2246448b-b23b-11f1-990e-0024811f8935?tab=details\"\n  - generic: 생성일\n  - img \"calendar\":\n  - text: 2026. 10. 14. 오전 1:54:27\n  - separator\n  - link \"cloud-server 가상머신 보기\":\n    - /url: \"#/vm?groupid=04477df7-af0a-475a-bd9a-9868ebd9f0e3\"\n    - button \"cloud-server 가상머신 보기\":\n      - img \"cloud-server\":\n      - generic: 가상머신 보기\n  - tablist:\n    - tab \"상세\"\n    - tab \"가상머신\" [selected]\n    - tab \"코멘트\"\n  - tabpanel \"가상머신\":\n    - paragraph:\n      - text: \"전체 멤버: 1\"\n      - generic: 정지된 VM 1\n    - button \"plus 가상머신 연결\" [disabled]:\n      - img \"plus\":\n      - generic: 가상머신 연결\n    - button \"reload 업데이트\" [active]:\n      - img \"reload\":\n      - generic: 업데이트\n    - textbox \"검색\"\n    - button \"search\":\n      - img \"search\":\n    - status:\n      - text: 멤버 조회에 실패했습니다. 이전 결과가 있으면 유지하며 작업은 차단합니다. 다시 조회해 주세요.\n      - button \"재시도\":\n        - generic: 재시도\n    - table:\n      - rowgroup:\n        - row \"VM 표시 명 caret-up caret-down 상태 caret-up caret-down 계정 caret-up caret-down 도메인 caret-up caret-down 그룹 caret-up caret-down\":\n          - columnheader \"VM 표시 명 caret-up caret-down\":\n            - generic: VM 표시 명\n            - img \"caret-up\":\n            - img \"caret-down\":\n          - columnheader \"상태 caret-up caret-down\":\n            - generic: 상태\n            - img \"caret-up\":\n            - img \"caret-down\":\n          - columnheader \"계정 caret-up caret-down\":\n            - generic: 계정\n            - img \"caret-up\":\n            - img \"caret-down\":\n          - columnheader \"도메인 caret-up caret-down\":\n            - generic: 도메인\n            - img \"caret-up\":\n            - img \"caret-down\":\n          - columnheader \"그룹 caret-up caret-down\":\n            - generic: 그룹\n            - img \"caret-up\":\n            - img \"caret-down\":\n      - rowgroup:\n        - row \"VG05-32-20261014-admin-VM1 정지된 상태 admin ROOT VG05-32-20261014-B\":\n          - cell \"VG05-32-20261014-admin-VM1\":\n            - link \"VG05-32-20261014-admin-VM1\":\n              - /url: \"#/vm/c04c035c-9677-4512-b2db-cdd8974eb490\"\n          - cell \"정지된 상태\":\n            - generic: 정지된 상태\n          - cell \"admin\":\n            - link \"admin\":\n              - /url: \"#/account?name=admin&domainid=2246448b-b23b-11f1-990e-0024811f8935&dataView=true\"\n          - cell \"ROOT\":\n            - link \"ROOT\":\n              - /url: \"#/domain/2246448b-b23b-11f1-990e-0024811f8935?tab=details\"\n          - cell \"VG05-32-20261014-B\"\n    - list:\n      - listitem: 검색 결과 1개\n      - listitem \"이전 페이지\":\n        - button \"left\" [disabled]:\n          - img \"left\":\n      - listitem \"1\":\n        - generic: \"1\"\n      - listitem \"다음 페이지\":\n        - button \"right\" [disabled]:\n          - img \"right\":\n      - combobox\n      - generic: 20 / 쪽\n- alert:\n  - img \"exclamation-circle\":\n  - generic: 조치가 필요한 경보\n  - generic: (1건)\n  - generic: \"-\"\n  - generic: 주요 시스템에서 리소스 임계치 초과 또는 상태 변경이 감지되어 확인이 필요합니다.\n  - button \"세부 경보 내용 확인\":\n    - generic: 세부 경보 내용 확인\n  - button \"경보 규칙으로 이동\":\n    - generic: 경보 규칙으로 이동\n  - button \"닫기\":\n    - img \"close\":",
+      "controlled": true,
+      "source": "c9e5d19fe1df51aaab933740622ef7d232c75361"
+    },
+    {
+      "site": "31",
+      "case": "VM-detail-and-group-reverse-link",
+      "pass": true,
+      "vm": "e17b70bb-0949-41b8-9599-3c736efdf210",
+      "group": "fd801f8b-7689-4828-8308-8f07cf728810"
+    },
+    {
+      "site": "31",
+      "case": "readonly-UI",
+      "pass": true,
+      "text": "전체 멤버: 0\n\n가상머신 연결\n업데이트\n\n가상머신 변경 권한이 없어 멤버 조회만 할 수 있습니다.\n\nVM 표시 명\n\t\n상태\n\t\n계정\n\t\n도메인\n\t\n그룹\n\n검색 조건에 맞는 멤버가 없습니다.\n검색 결과 0개\n1\n20 / 쪽"
+    },
+    {
+      "site": "32",
+      "case": "no-vm-read-UI",
+      "pass": true,
+      "text": "가상머신 연결\n업데이트\n\n멤버 조회 권한이 없습니다. 이전 데이터와 선택을 제거했습니다. 재시도\n\nVM 표시 명\n\t\n상태\n\t\n계정\n\t\n도메인\n\t\n그룹\n\n멤버 조회 권한이 없습니다. 이전 데이터와 선택을 제거했습니다."
+    },
+    {
+      "site": "31",
+      "case": "user-link-and-single-move",
+      "pass": true,
+      "result": "그룹 이동\n가상머신 그룹\tVG05-31-20261014-A (b714a46e-b01f-48b1-964e-594e9c08cd68)\t계정\tvg05-31-user-20261014 / ROOT\n\n확인한 VM을 대상 그룹에 연결합니다. 기존 그룹 소속은 대체되며 VM·볼륨·전원·호스트는 유지됩니다.\n\n대상 그룹: VG05-31-20261014-B (c232e534-f50e-4c56-be15-15e1324de8f7)\n\nVG05-31-20261014-user-VM1 (d7c30c33-0c3c-48d0-a2e0-86e1cdeee010) — VG05-31-20261014-A → VG05-31-20261014-B\nVG05-31-20261014-user-VM1\n완료\n닫기"
+    },
+    {
+      "site": "32",
+      "case": "user-link-and-single-move",
+      "pass": true,
+      "result": "그룹 이동\n가상머신 그룹\tVG05-32-20261014-A (2b1ff920-9d35-4963-a11a-b8d5950a9b99)\t계정\tvg05-32-user-20261014 / ROOT\n\n확인한 VM을 대상 그룹에 연결합니다. 기존 그룹 소속은 대체되며 VM·볼륨·전원·호스트는 유지됩니다.\n\n대상 그룹: VG05-32-20261014-B (42b8191e-79f9-4b58-a908-9b1a29cc6c99)\n\nVG05-32-20261014-user-VM1 (8c268887-1f08-4508-9184-13fd249b4952) — VG05-32-20261014-A → VG05-32-20261014-B\nVG05-32-20261014-user-VM1\n완료\n닫기"
+    },
+    {
+      "site": "31",
+      "case": "keyboard-clear-cancel-restores-row-focus",
+      "pass": true,
+      "focus": {
+        "id": "d7c30c33-0c3c-48d0-a2e0-86e1cdeee010",
+        "tag": "TR"
+      }
+    },
+    {
+      "site": "32",
+      "case": "keyboard-clear-cancel-restores-row-focus",
+      "pass": true,
+      "focus": {
+        "id": "8c268887-1f08-4508-9184-13fd249b4952",
+        "tag": "TR"
+      }
+    },
+    {
+      "site": "31",
+      "case": "user-clear",
+      "pass": true
+    },
+    {
+      "site": "32",
+      "case": "user-clear",
+      "pass": true
+    },
+    {
+      "site": "31",
+      "case": "project-user-link",
+      "pass": true
+    },
+    {
+      "site": "32",
+      "case": "project-user-link",
+      "pass": true
+    },
+    {
+      "site": "31",
+      "case": "project-single-move",
+      "pass": true
+    },
+    {
+      "site": "32",
+      "case": "project-single-move",
+      "pass": true
+    },
+    {
+      "site": "31",
+      "case": "mobile-tabs-top-and-content-below",
+      "pass": true,
+      "layout": {
+        "bodyWidth": 380,
+        "class": "ant-tabs ant-tabs-top",
+        "content": {
+          "height": 465,
+          "width": 296,
+          "x": 37,
+          "y": 875.5
+        },
+        "nav": {
+          "height": 46,
+          "width": 296,
+          "x": 37,
+          "y": 813.5
+        },
+        "width": 390
+      }
+    },
+    {
+      "site": "32",
+      "case": "mobile-tabs-top-and-content-below",
+      "pass": true,
+      "layout": {
+        "bodyWidth": 380,
+        "class": "ant-tabs ant-tabs-top",
+        "content": {
+          "height": 465,
+          "width": 296,
+          "x": 37,
+          "y": 875.5
+        },
+        "nav": {
+          "height": 46,
+          "width": 296,
+          "x": 37,
+          "y": 813.5
+        },
+        "width": 390
+      }
+    },
+    {
+      "site": "31",
+      "case": "member-search-zero-preserves-total",
+      "pass": true
+    },
+    {
+      "site": "32",
+      "case": "member-search-zero-preserves-total",
+      "pass": true
+    },
+    {
+      "site": "31",
+      "case": "common-comments-draft-preserved",
+      "pass": true
+    },
+    {
+      "site": "31",
+      "case": "member-search-url-reload",
+      "pass": true,
+      "url": "http://10.10.31.10:8080/client/#/vmgroup/30c1f3a1-5e37-4932-8532-535d831d4e78?tab=members&memberkeyword=project-VM1&memberpage=1&memberpagesize=10&membersort=state&memberorder=asc"
+    },
+    {
+      "site": "32",
+      "case": "member-search-url-reload",
+      "pass": true,
+      "url": "http://10.10.32.10:8080/client/#/vmgroup/f0b293b5-32be-4fe3-ad69-ac949e841400?tab=members&memberkeyword=project-VM1&memberpage=1"
+    },
+    {
+      "site": "31",
+      "case": "project-clear",
+      "pass": true
+    },
+    {
+      "site": "32",
+      "case": "project-clear",
+      "pass": true
+    },
+    {
+      "site": "31",
+      "case": "already-linked-candidates-disabled",
+      "pass": true
+    },
+    {
+      "site": "32",
+      "case": "controlled-bulk-partial-failure",
+      "pass": true,
+      "text": "그룹 이동\n가상머신 그룹\tVG05-32-20261014-A (e53dac6b-9687-473d-9b7e-c689e831d63c)\t계정\tadmin / ROOT\n\n확인한 VM을 대상 그룹에 연결합니다. 기존 그룹 소속은 대체되며 VM·볼륨·전원·호스트는 유지됩니다.\n\n대상 그룹: VG05-32-20261014-B (04477df7-af0a-475a-bd9a-9868ebd9f0e3)\n\nVG05-32-20261014-admin-VM1 (c04c035c-9677-4512-b2db-cdd8974eb490) — VG05-32-20261014-A → VG05-32-20261014-B\nVG05-32-20261014-admin-VM2 (ce9995c0-b2ad-465d-af2e-11b019fac482) — VG05-32-20261014-A → VG05-32-20261014-B\nVG05-32-20261014-admin-VM1\n완료\nVG05-32-20261014-admin-VM2\n실패\n그룹 작업에 실패했습니다. 입력은 유지되며, 재시도 전에 목록을 갱신해 처리 결과를 확인해 주세요.\n닫기재시도",
+      "controlled": true
+    },
+    {
+      "site": "32",
+      "case": "retry-skips-prior-success",
+      "pass": true,
+      "writes": [
+        {
+          "site": "32",
+          "command": "updateVirtualMachine",
+          "method": "POST",
+          "params": {
+            "id": "ce9995c0-b2ad-465d-af2e-11b019fac482",
+            "groupid": "04477df7-af0a-475a-bd9a-9868ebd9f0e3"
+          }
+        }
+      ]
+    },
+    {
+      "site": "31",
+      "case": "admin-bulk-move",
+      "pass": true
+    },
+    {
+      "site": "32",
+      "case": "admin-bulk-move",
+      "pass": true
+    },
+    {
+      "site": "31",
+      "case": "admin-bulk-clear",
+      "pass": true
+    },
+    {
+      "site": "32",
+      "case": "admin-bulk-clear",
+      "pass": true
+    },
+    {
+      "site": "32",
+      "case": "controlled-read-error-retry-recovers",
+      "pass": true,
+      "group": "e53dac6b-9687-473d-9b7e-c689e831d63c",
+      "text": "전체 멤버: 0\n\n가상머신 연결\n업데이트\n\t\nVM 표시 명\n\t\n상태\n\t\n계정\n\t\n도메인\n\t\n그룹\n\n검색 조건에 맞는 멤버가 없습니다.\n검색 결과 0개\n1\n20 / 쪽"
+    },
+    {
+      "site": "31",
+      "case": "group-delete-confirm-impact",
+      "pass": true
+    },
+    {
+      "site": "32",
+      "case": "group-delete-confirm-impact",
+      "pass": true
+    },
+    {
+      "site": "31",
+      "case": "deleted-group-removes-stale-member-actions",
+      "pass": true,
+      "state": "radio [checked]\n- img \"check\":\n- radio\n- heading \"테마 색상\" [level=3]\n- radio\n- img \"check\"\n- radio\n- radio\n- radio\n- radio\n- radio\n- radio\n- radio\n- separator\n- heading \"네비게이션 설정\" [level=3]\n- generic: 배경색\n- textbox: \"#ffffff\"\n- generic: 텍스트 색상\n- textbox: \"#000000\"\n- separator\n- alert:\n  - img \"exclamation-circle\":\n  - generic: \"설정은 현재 브라우저에서만 볼 수 있습니다. 설정을 적용하려면 JSON 파일을 다운로드하고 경로 `/public/config.json` 아래의 `config.json` 파일의 `theme` 섹션에서 해당 콘텐츠를 교체하세요.\"\n- button \"download 세팅값 다운로드(json)\":\n  - img \"download\":\n  - generic: 세팅값 다운로드(json)\n- button \"undo 기본값으로 재설정\":\n  - img \"undo\":\n  - generic: 기본값으로 재설정\n- img \"menu-fold\":\n- combobox\n- img \"project\":\n- text: 기본 보기\n- button \"생성 down\":\n  - generic: 생성\n  - img \"down\":\n- img \"translation\":\n- img \"bell\":\n- generic: AC\n- generic: admin cloud\n- main:\n  - link \"home\":\n    - /url: \"#/\"\n    - img \"home\":\n  - text: /\n  - link \"가상머신 그룹\":\n    - /url: \"#/vmgroup\"\n  - text: /\n  - generic: 306a6703-589c-42e4-ad7a-b04c31015c88\n  - link \"question-circle\":\n    - /url: http://docs.ablecloud.io/latest/adminguide/virtual_machines.html#changing-the-vm-name-os-or-group\n    - img \"question-circle\":\n  - button \"reload 업데이트\" [active]:\n    - img \"reload\":\n    - generic: 업데이트\n  - status:\n    - text: \"그룹을 더 이상 조회할 수 없습니다. 목록을 갱신해 확인해 주세요. 마지막 성공 확인: 2026. 10. 14. 오전 3:38:54\"\n    - button \"재시도\":\n      - generic: 재시도"
+    },
+    {
+      "site": "32",
+      "case": "deleted-group-removes-stale-member-actions",
+      "pass": true,
+      "state": "amation-circle\":\n  - generic: \"설정은 현재 브라우저에서만 볼 수 있습니다. 설정을 적용하려면 JSON 파일을 다운로드하고 경로 `/public/config.json` 아래의 `config.json` 파일의 `theme` 섹션에서 해당 콘텐츠를 교체하세요.\"\n- button \"download 세팅값 다운로드(json)\":\n  - img \"download\":\n  - generic: 세팅값 다운로드(json)\n- button \"undo 기본값으로 재설정\":\n  - img \"undo\":\n  - generic: 기본값으로 재설정\n- img \"menu-fold\":\n- combobox\n- img \"project\":\n- text: 기본 보기\n- button \"생성 down\":\n  - generic: 생성\n  - img \"down\":\n- img \"translation\":\n- img \"bell\":\n- generic: AC\n- generic: admin cloud\n- main:\n  - link \"home\":\n    - /url: \"#/\"\n    - img \"home\":\n  - text: /\n  - link \"가상머신 그룹\":\n    - /url: \"#/vmgroup\"\n  - text: /\n  - generic: 04477df7-af0a-475a-bd9a-9868ebd9f0e3\n  - link \"question-circle\":\n    - /url: http://docs.ablecloud.io/latest/adminguide/virtual_machines.html#changing-the-vm-name-os-or-group\n    - img \"question-circle\":\n  - button \"reload 업데이트\" [active]:\n    - img \"reload\":\n    - generic: 업데이트\n  - status:\n    - text: \"그룹을 더 이상 조회할 수 없습니다. 목록을 갱신해 확인해 주세요. 마지막 성공 확인: 2026. 10. 14. 오전 3:38:55\"\n    - button \"재시도\":\n      - generic: 재시도\n- alert:\n  - img \"exclamation-circle\":\n  - generic: 조치가 필요한 경보\n  - generic: (1건)\n  - generic: \"-\"\n  - generic: 주요 시스템에서 리소스 임계치 초과 또는 상태 변경이 감지되어 확인이 필요합니다.\n  - button \"세부 경보 내용 확인\":\n    - generic: 세부 경보 내용 확인\n  - button \"경보 규칙으로 이동\":\n    - generic: 경보 규칙으로 이동\n  - button \"닫기\":\n    - img \"close\":"
+    }
+  ],
+  "requests": [
+    {
+      "site": "31",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "listall": "true",
+        "page": "1",
+        "pagesize": "200"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listInstanceGroups",
+      "method": "GET",
+      "params": {
+        "id": "fd801f8b-7689-4828-8308-8f07cf728810",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "state": "present",
+        "groupid": "fd801f8b-7689-4828-8308-8f07cf728810",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "state": "present",
+        "groupid": "fd801f8b-7689-4828-8308-8f07cf728810",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "state": "present",
+        "groupid": "fd801f8b-7689-4828-8308-8f07cf728810",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listInstanceGroups",
+      "method": "GET",
+      "params": {
+        "id": "fd801f8b-7689-4828-8308-8f07cf728810",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "state": "present",
+        "groupid": "fd801f8b-7689-4828-8308-8f07cf728810",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "state": "present",
+        "groupid": "fd801f8b-7689-4828-8308-8f07cf728810",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "state": "present",
+        "groupid": "fd801f8b-7689-4828-8308-8f07cf728810",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listInstanceGroups",
+      "method": "GET",
+      "params": {
+        "id": "fd801f8b-7689-4828-8308-8f07cf728810",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "state": "present",
+        "groupid": "fd801f8b-7689-4828-8308-8f07cf728810",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "state": "present",
+        "groupid": "fd801f8b-7689-4828-8308-8f07cf728810",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "state": "present",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "state": "present",
+        "keyword": "VG05-31-20261014-admin",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "state": "present",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "state": "present",
+        "keyword": "VG05-31-20261014-admin",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "state": "present",
+        "page": "1",
+        "pagesize": "1",
+        "id": "e17b70bb-0949-41b8-9599-3c736efdf210"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listInstanceGroups",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "id": "fd801f8b-7689-4828-8308-8f07cf728810",
+        "listall": "true"
+      }
+    },
+    {
+      "site": "31",
+      "command": "updateVirtualMachine",
+      "method": "POST",
+      "params": {
+        "id": "e17b70bb-0949-41b8-9599-3c736efdf210",
+        "groupid": "fd801f8b-7689-4828-8308-8f07cf728810"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "state": "present",
+        "page": "1",
+        "pagesize": "1",
+        "id": "e17b70bb-0949-41b8-9599-3c736efdf210"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "state": "present",
+        "page": "1",
+        "pagesize": "1",
+        "id": "35bbac51-1958-417f-9843-b3e6c440b280"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listInstanceGroups",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "id": "fd801f8b-7689-4828-8308-8f07cf728810",
+        "listall": "true"
+      }
+    },
+    {
+      "site": "31",
+      "command": "updateVirtualMachine",
+      "method": "POST",
+      "params": {
+        "id": "35bbac51-1958-417f-9843-b3e6c440b280",
+        "groupid": "fd801f8b-7689-4828-8308-8f07cf728810"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "state": "present",
+        "page": "1",
+        "pagesize": "1",
+        "id": "35bbac51-1958-417f-9843-b3e6c440b280"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "state": "present",
+        "groupid": "fd801f8b-7689-4828-8308-8f07cf728810",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listInstanceGroups",
+      "method": "GET",
+      "params": {
+        "id": "fd801f8b-7689-4828-8308-8f07cf728810",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "state": "present",
+        "groupid": "fd801f8b-7689-4828-8308-8f07cf728810",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listInstanceGroups",
+      "method": "GET",
+      "params": {
+        "id": "fd801f8b-7689-4828-8308-8f07cf728810",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "state": "present",
+        "groupid": "fd801f8b-7689-4828-8308-8f07cf728810",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "state": "present",
+        "groupid": "fd801f8b-7689-4828-8308-8f07cf728810",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "state": "present",
+        "groupid": "fd801f8b-7689-4828-8308-8f07cf728810",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listInstanceGroups",
+      "method": "GET",
+      "params": {
+        "id": "fd801f8b-7689-4828-8308-8f07cf728810",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "state": "present",
+        "groupid": "fd801f8b-7689-4828-8308-8f07cf728810",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "state": "present",
+        "groupid": "fd801f8b-7689-4828-8308-8f07cf728810",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "state": "present",
+        "groupid": "fd801f8b-7689-4828-8308-8f07cf728810",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listInstanceGroups",
+      "method": "GET",
+      "params": {
+        "id": "fd801f8b-7689-4828-8308-8f07cf728810",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "state": "present",
+        "groupid": "fd801f8b-7689-4828-8308-8f07cf728810",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "state": "present",
+        "groupid": "fd801f8b-7689-4828-8308-8f07cf728810",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "state": "present",
+        "groupid": "fd801f8b-7689-4828-8308-8f07cf728810",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listInstanceGroups",
+      "method": "GET",
+      "params": {
+        "id": "fd801f8b-7689-4828-8308-8f07cf728810",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "state": "present",
+        "groupid": "fd801f8b-7689-4828-8308-8f07cf728810",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "state": "present",
+        "groupid": "fd801f8b-7689-4828-8308-8f07cf728810",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "state": "present",
+        "groupid": "fd801f8b-7689-4828-8308-8f07cf728810",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listInstanceGroups",
+      "method": "GET",
+      "params": {
+        "id": "fd801f8b-7689-4828-8308-8f07cf728810",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "state": "present",
+        "groupid": "fd801f8b-7689-4828-8308-8f07cf728810",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "state": "present",
+        "groupid": "fd801f8b-7689-4828-8308-8f07cf728810",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "state": "present",
+        "groupid": "fd801f8b-7689-4828-8308-8f07cf728810",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listInstanceGroups",
+      "method": "GET",
+      "params": {
+        "id": "fd801f8b-7689-4828-8308-8f07cf728810",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "state": "present",
+        "groupid": "fd801f8b-7689-4828-8308-8f07cf728810",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "state": "present",
+        "groupid": "fd801f8b-7689-4828-8308-8f07cf728810",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "state": "present",
+        "groupid": "fd801f8b-7689-4828-8308-8f07cf728810",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listInstanceGroups",
+      "method": "GET",
+      "params": {
+        "id": "fd801f8b-7689-4828-8308-8f07cf728810",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "state": "present",
+        "groupid": "fd801f8b-7689-4828-8308-8f07cf728810",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "state": "present",
+        "groupid": "fd801f8b-7689-4828-8308-8f07cf728810",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "listall": "true",
+        "page": "1",
+        "pagesize": "200"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "state": "present",
+        "groupid": "fd801f8b-7689-4828-8308-8f07cf728810",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listInstanceGroups",
+      "method": "GET",
+      "params": {
+        "id": "fd801f8b-7689-4828-8308-8f07cf728810",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "state": "present",
+        "groupid": "fd801f8b-7689-4828-8308-8f07cf728810",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "32",
+      "command": "listInstanceGroups",
+      "method": "GET",
+      "params": {
+        "id": "f0b293b5-32be-4fe3-ad69-ac949e841400",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20",
+        "projectid": "b94673c0-6dcb-446b-9dd0-64e81db92759"
+      }
+    },
+    {
+      "site": "32",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "projectid": "b94673c0-6dcb-446b-9dd0-64e81db92759",
+        "listall": "true",
+        "state": "present",
+        "groupid": "f0b293b5-32be-4fe3-ad69-ac949e841400",
+        "keyword": "project-VM1",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "32",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "projectid": "b94673c0-6dcb-446b-9dd0-64e81db92759",
+        "listall": "true",
+        "state": "present",
+        "page": "1",
+        "pagesize": "1",
+        "id": "15cf1972-bbea-40a7-a222-8b27ec99ceaa"
+      }
+    },
+    {
+      "site": "32",
+      "command": "listInstanceGroups",
+      "method": "GET",
+      "params": {
+        "projectid": "b94673c0-6dcb-446b-9dd0-64e81db92759",
+        "id": "f0b293b5-32be-4fe3-ad69-ac949e841400",
+        "listall": "true"
+      }
+    },
+    {
+      "site": "32",
+      "command": "updateVirtualMachine",
+      "method": "POST",
+      "params": {
+        "id": "15cf1972-bbea-40a7-a222-8b27ec99ceaa",
+        "cleargroup": "true",
+        "projectid": "b94673c0-6dcb-446b-9dd0-64e81db92759"
+      }
+    },
+    {
+      "site": "32",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "projectid": "b94673c0-6dcb-446b-9dd0-64e81db92759",
+        "listall": "true",
+        "state": "present",
+        "page": "1",
+        "pagesize": "1",
+        "id": "15cf1972-bbea-40a7-a222-8b27ec99ceaa"
+      }
+    },
+    {
+      "site": "32",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "projectid": "b94673c0-6dcb-446b-9dd0-64e81db92759",
+        "listall": "true",
+        "state": "present",
+        "groupid": "f0b293b5-32be-4fe3-ad69-ac949e841400",
+        "keyword": "project-VM1",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "32",
+      "command": "listInstanceGroups",
+      "method": "GET",
+      "params": {
+        "id": "f0b293b5-32be-4fe3-ad69-ac949e841400",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20",
+        "projectid": "b94673c0-6dcb-446b-9dd0-64e81db92759"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listInstanceGroups",
+      "method": "GET",
+      "params": {
+        "id": "30c1f3a1-5e37-4932-8532-535d831d4e78",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20",
+        "projectid": "d15800f4-056e-4913-aafd-f69d5460d717"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "projectid": "d15800f4-056e-4913-aafd-f69d5460d717",
+        "listall": "true",
+        "state": "present",
+        "groupid": "30c1f3a1-5e37-4932-8532-535d831d4e78",
+        "keyword": "project-VM1",
+        "page": "1",
+        "pagesize": "10"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listInstanceGroups",
+      "method": "GET",
+      "params": {
+        "id": "30c1f3a1-5e37-4932-8532-535d831d4e78",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "listall": "true",
+        "projectid": "-1",
+        "page": "1",
+        "pagesize": "1"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "listall": "true",
+        "page": "1",
+        "pagesize": "200"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listInstanceGroups",
+      "method": "GET",
+      "params": {
+        "id": "fd801f8b-7689-4828-8308-8f07cf728810",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "state": "present",
+        "groupid": "fd801f8b-7689-4828-8308-8f07cf728810",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "state": "present",
+        "groupid": "fd801f8b-7689-4828-8308-8f07cf728810",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "state": "present",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "state": "present",
+        "keyword": "VG05-31-20261014-admin",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "state": "present",
+        "groupid": "fd801f8b-7689-4828-8308-8f07cf728810",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "state": "present",
+        "groupid": "fd801f8b-7689-4828-8308-8f07cf728810",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listInstanceGroups",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "500"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "state": "present",
+        "page": "1",
+        "pagesize": "1",
+        "id": "e17b70bb-0949-41b8-9599-3c736efdf210"
+      }
+    },
+    {
+      "site": "32",
+      "command": "listInstanceGroups",
+      "method": "GET",
+      "params": {
+        "id": "f0b293b5-32be-4fe3-ad69-ac949e841400",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20",
+        "projectid": "b94673c0-6dcb-446b-9dd0-64e81db92759"
+      }
+    },
+    {
+      "site": "32",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "projectid": "b94673c0-6dcb-446b-9dd0-64e81db92759",
+        "listall": "true",
+        "state": "present",
+        "groupid": "f0b293b5-32be-4fe3-ad69-ac949e841400",
+        "keyword": "project-VM1",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "32",
+      "command": "listInstanceGroups",
+      "method": "GET",
+      "params": {
+        "id": "f0b293b5-32be-4fe3-ad69-ac949e841400",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "32",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "listall": "true",
+        "projectid": "-1",
+        "page": "1",
+        "pagesize": "1"
+      }
+    },
+    {
+      "site": "32",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "listall": "true",
+        "page": "1",
+        "pagesize": "200"
+      }
+    },
+    {
+      "site": "32",
+      "command": "listInstanceGroups",
+      "method": "GET",
+      "params": {
+        "id": "e53dac6b-9687-473d-9b7e-c689e831d63c",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "32",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "2246448b-b23b-11f1-990e-0024811f8935",
+        "listall": "true",
+        "state": "present",
+        "groupid": "e53dac6b-9687-473d-9b7e-c689e831d63c",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "32",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "2246448b-b23b-11f1-990e-0024811f8935",
+        "listall": "true",
+        "state": "present",
+        "groupid": "e53dac6b-9687-473d-9b7e-c689e831d63c",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "32",
+      "command": "listInstanceGroups",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "2246448b-b23b-11f1-990e-0024811f8935",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "500"
+      }
+    },
+    {
+      "site": "32",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "2246448b-b23b-11f1-990e-0024811f8935",
+        "listall": "true",
+        "state": "present",
+        "page": "1",
+        "pagesize": "1",
+        "id": "c04c035c-9677-4512-b2db-cdd8974eb490"
+      }
+    },
+    {
+      "site": "32",
+      "command": "listInstanceGroups",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "2246448b-b23b-11f1-990e-0024811f8935",
+        "id": "04477df7-af0a-475a-bd9a-9868ebd9f0e3",
+        "listall": "true"
+      }
+    },
+    {
+      "site": "32",
+      "command": "updateVirtualMachine",
+      "method": "POST",
+      "params": {
+        "id": "c04c035c-9677-4512-b2db-cdd8974eb490",
+        "groupid": "04477df7-af0a-475a-bd9a-9868ebd9f0e3"
+      }
+    },
+    {
+      "site": "32",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "2246448b-b23b-11f1-990e-0024811f8935",
+        "listall": "true",
+        "state": "present",
+        "page": "1",
+        "pagesize": "1",
+        "id": "c04c035c-9677-4512-b2db-cdd8974eb490"
+      }
+    },
+    {
+      "site": "32",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "2246448b-b23b-11f1-990e-0024811f8935",
+        "listall": "true",
+        "state": "present",
+        "page": "1",
+        "pagesize": "1",
+        "id": "ce9995c0-b2ad-465d-af2e-11b019fac482"
+      }
+    },
+    {
+      "site": "32",
+      "command": "listInstanceGroups",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "2246448b-b23b-11f1-990e-0024811f8935",
+        "id": "04477df7-af0a-475a-bd9a-9868ebd9f0e3",
+        "listall": "true"
+      }
+    },
+    {
+      "site": "32",
+      "command": "updateVirtualMachine",
+      "method": "POST",
+      "params": {
+        "id": "ce9995c0-b2ad-465d-af2e-11b019fac482",
+        "groupid": "04477df7-af0a-475a-bd9a-9868ebd9f0e3"
+      }
+    },
+    {
+      "site": "32",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "2246448b-b23b-11f1-990e-0024811f8935",
+        "listall": "true",
+        "state": "present",
+        "groupid": "e53dac6b-9687-473d-9b7e-c689e831d63c",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "32",
+      "command": "listInstanceGroups",
+      "method": "GET",
+      "params": {
+        "id": "e53dac6b-9687-473d-9b7e-c689e831d63c",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "32",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "2246448b-b23b-11f1-990e-0024811f8935",
+        "listall": "true",
+        "state": "present",
+        "page": "1",
+        "pagesize": "1",
+        "id": "ce9995c0-b2ad-465d-af2e-11b019fac482"
+      }
+    },
+    {
+      "site": "32",
+      "command": "listInstanceGroups",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "2246448b-b23b-11f1-990e-0024811f8935",
+        "id": "04477df7-af0a-475a-bd9a-9868ebd9f0e3",
+        "listall": "true"
+      }
+    },
+    {
+      "site": "32",
+      "command": "updateVirtualMachine",
+      "method": "POST",
+      "params": {
+        "id": "ce9995c0-b2ad-465d-af2e-11b019fac482",
+        "groupid": "04477df7-af0a-475a-bd9a-9868ebd9f0e3"
+      }
+    },
+    {
+      "site": "32",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "2246448b-b23b-11f1-990e-0024811f8935",
+        "listall": "true",
+        "state": "present",
+        "page": "1",
+        "pagesize": "1",
+        "id": "ce9995c0-b2ad-465d-af2e-11b019fac482"
+      }
+    },
+    {
+      "site": "32",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "2246448b-b23b-11f1-990e-0024811f8935",
+        "listall": "true",
+        "state": "present",
+        "groupid": "e53dac6b-9687-473d-9b7e-c689e831d63c",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "32",
+      "command": "listInstanceGroups",
+      "method": "GET",
+      "params": {
+        "id": "e53dac6b-9687-473d-9b7e-c689e831d63c",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listInstanceGroups",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "id": "306a6703-589c-42e4-ad7a-b04c31015c88",
+        "listall": "true"
+      }
+    },
+    {
+      "site": "31",
+      "command": "updateVirtualMachine",
+      "method": "POST",
+      "params": {
+        "id": "e17b70bb-0949-41b8-9599-3c736efdf210",
+        "groupid": "306a6703-589c-42e4-ad7a-b04c31015c88"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "state": "present",
+        "page": "1",
+        "pagesize": "1",
+        "id": "e17b70bb-0949-41b8-9599-3c736efdf210"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "state": "present",
+        "page": "1",
+        "pagesize": "1",
+        "id": "35bbac51-1958-417f-9843-b3e6c440b280"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listInstanceGroups",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "id": "306a6703-589c-42e4-ad7a-b04c31015c88",
+        "listall": "true"
+      }
+    },
+    {
+      "site": "31",
+      "command": "updateVirtualMachine",
+      "method": "POST",
+      "params": {
+        "id": "35bbac51-1958-417f-9843-b3e6c440b280",
+        "groupid": "306a6703-589c-42e4-ad7a-b04c31015c88"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "state": "present",
+        "page": "1",
+        "pagesize": "1",
+        "id": "35bbac51-1958-417f-9843-b3e6c440b280"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "state": "present",
+        "groupid": "fd801f8b-7689-4828-8308-8f07cf728810",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listInstanceGroups",
+      "method": "GET",
+      "params": {
+        "id": "fd801f8b-7689-4828-8308-8f07cf728810",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "state": "present",
+        "groupid": "fd801f8b-7689-4828-8308-8f07cf728810",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listInstanceGroups",
+      "method": "GET",
+      "params": {
+        "id": "306a6703-589c-42e4-ad7a-b04c31015c88",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "state": "present",
+        "groupid": "306a6703-589c-42e4-ad7a-b04c31015c88",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "state": "present",
+        "groupid": "306a6703-589c-42e4-ad7a-b04c31015c88",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "state": "present",
+        "page": "1",
+        "pagesize": "1",
+        "id": "e17b70bb-0949-41b8-9599-3c736efdf210"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listInstanceGroups",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "id": "306a6703-589c-42e4-ad7a-b04c31015c88",
+        "listall": "true"
+      }
+    },
+    {
+      "site": "31",
+      "command": "updateVirtualMachine",
+      "method": "POST",
+      "params": {
+        "id": "e17b70bb-0949-41b8-9599-3c736efdf210",
+        "cleargroup": "true"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "state": "present",
+        "page": "1",
+        "pagesize": "1",
+        "id": "e17b70bb-0949-41b8-9599-3c736efdf210"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "state": "present",
+        "page": "1",
+        "pagesize": "1",
+        "id": "35bbac51-1958-417f-9843-b3e6c440b280"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listInstanceGroups",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "id": "306a6703-589c-42e4-ad7a-b04c31015c88",
+        "listall": "true"
+      }
+    },
+    {
+      "site": "31",
+      "command": "updateVirtualMachine",
+      "method": "POST",
+      "params": {
+        "id": "35bbac51-1958-417f-9843-b3e6c440b280",
+        "cleargroup": "true"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "state": "present",
+        "page": "1",
+        "pagesize": "1",
+        "id": "35bbac51-1958-417f-9843-b3e6c440b280"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "state": "present",
+        "groupid": "306a6703-589c-42e4-ad7a-b04c31015c88",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listInstanceGroups",
+      "method": "GET",
+      "params": {
+        "id": "306a6703-589c-42e4-ad7a-b04c31015c88",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "32",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "2246448b-b23b-11f1-990e-0024811f8935",
+        "listall": "true",
+        "state": "present",
+        "groupid": "e53dac6b-9687-473d-9b7e-c689e831d63c",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "32",
+      "command": "listInstanceGroups",
+      "method": "GET",
+      "params": {
+        "id": "04477df7-af0a-475a-bd9a-9868ebd9f0e3",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "32",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "2246448b-b23b-11f1-990e-0024811f8935",
+        "listall": "true",
+        "state": "present",
+        "groupid": "04477df7-af0a-475a-bd9a-9868ebd9f0e3",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "32",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "2246448b-b23b-11f1-990e-0024811f8935",
+        "listall": "true",
+        "state": "present",
+        "groupid": "04477df7-af0a-475a-bd9a-9868ebd9f0e3",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "32",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "2246448b-b23b-11f1-990e-0024811f8935",
+        "listall": "true",
+        "state": "present",
+        "page": "1",
+        "pagesize": "1",
+        "id": "c04c035c-9677-4512-b2db-cdd8974eb490"
+      }
+    },
+    {
+      "site": "32",
+      "command": "listInstanceGroups",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "2246448b-b23b-11f1-990e-0024811f8935",
+        "id": "04477df7-af0a-475a-bd9a-9868ebd9f0e3",
+        "listall": "true"
+      }
+    },
+    {
+      "site": "32",
+      "command": "updateVirtualMachine",
+      "method": "POST",
+      "params": {
+        "id": "c04c035c-9677-4512-b2db-cdd8974eb490",
+        "cleargroup": "true"
+      }
+    },
+    {
+      "site": "32",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "2246448b-b23b-11f1-990e-0024811f8935",
+        "listall": "true",
+        "state": "present",
+        "page": "1",
+        "pagesize": "1",
+        "id": "c04c035c-9677-4512-b2db-cdd8974eb490"
+      }
+    },
+    {
+      "site": "32",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "2246448b-b23b-11f1-990e-0024811f8935",
+        "listall": "true",
+        "state": "present",
+        "page": "1",
+        "pagesize": "1",
+        "id": "ce9995c0-b2ad-465d-af2e-11b019fac482"
+      }
+    },
+    {
+      "site": "32",
+      "command": "listInstanceGroups",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "2246448b-b23b-11f1-990e-0024811f8935",
+        "id": "04477df7-af0a-475a-bd9a-9868ebd9f0e3",
+        "listall": "true"
+      }
+    },
+    {
+      "site": "32",
+      "command": "updateVirtualMachine",
+      "method": "POST",
+      "params": {
+        "id": "ce9995c0-b2ad-465d-af2e-11b019fac482",
+        "cleargroup": "true"
+      }
+    },
+    {
+      "site": "32",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "2246448b-b23b-11f1-990e-0024811f8935",
+        "listall": "true",
+        "state": "present",
+        "page": "1",
+        "pagesize": "1",
+        "id": "ce9995c0-b2ad-465d-af2e-11b019fac482"
+      }
+    },
+    {
+      "site": "32",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "2246448b-b23b-11f1-990e-0024811f8935",
+        "listall": "true",
+        "state": "present",
+        "groupid": "04477df7-af0a-475a-bd9a-9868ebd9f0e3",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "32",
+      "command": "listInstanceGroups",
+      "method": "GET",
+      "params": {
+        "id": "04477df7-af0a-475a-bd9a-9868ebd9f0e3",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listInstanceGroups",
+      "method": "GET",
+      "params": {
+        "id": "306a6703-589c-42e4-ad7a-b04c31015c88",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "state": "present",
+        "groupid": "306a6703-589c-42e4-ad7a-b04c31015c88",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listInstanceGroups",
+      "method": "GET",
+      "params": {
+        "id": "306a6703-589c-42e4-ad7a-b04c31015c88",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "state": "present",
+        "groupid": "306a6703-589c-42e4-ad7a-b04c31015c88",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "state": "present",
+        "groupid": "306a6703-589c-42e4-ad7a-b04c31015c88",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listInstanceGroups",
+      "method": "GET",
+      "params": {
+        "id": "306a6703-589c-42e4-ad7a-b04c31015c88",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "state": "present",
+        "groupid": "306a6703-589c-42e4-ad7a-b04c31015c88",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "state": "present",
+        "groupid": "306a6703-589c-42e4-ad7a-b04c31015c88",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "state": "present",
+        "groupid": "306a6703-589c-42e4-ad7a-b04c31015c88",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "listall": "true",
+        "page": "1",
+        "pagesize": "200"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listInstanceGroups",
+      "method": "GET",
+      "params": {
+        "id": "306a6703-589c-42e4-ad7a-b04c31015c88",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "state": "present",
+        "groupid": "306a6703-589c-42e4-ad7a-b04c31015c88",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "state": "present",
+        "groupid": "306a6703-589c-42e4-ad7a-b04c31015c88",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "state": "present",
+        "groupid": "306a6703-589c-42e4-ad7a-b04c31015c88",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "state": "present",
+        "groupid": "306a6703-589c-42e4-ad7a-b04c31015c88",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "state": "present",
+        "groupid": "306a6703-589c-42e4-ad7a-b04c31015c88",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "state": "present",
+        "groupid": "306a6703-589c-42e4-ad7a-b04c31015c88",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listInstanceGroups",
+      "method": "GET",
+      "params": {
+        "id": "306a6703-589c-42e4-ad7a-b04c31015c88",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listInstanceGroups",
+      "method": "GET",
+      "params": {
+        "id": "306a6703-589c-42e4-ad7a-b04c31015c88",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "32",
+      "command": "listInstanceGroups",
+      "method": "GET",
+      "params": {
+        "id": "04477df7-af0a-475a-bd9a-9868ebd9f0e3",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "32",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "2246448b-b23b-11f1-990e-0024811f8935",
+        "listall": "true",
+        "state": "present",
+        "groupid": "04477df7-af0a-475a-bd9a-9868ebd9f0e3",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "32",
+      "command": "listInstanceGroups",
+      "method": "GET",
+      "params": {
+        "id": "04477df7-af0a-475a-bd9a-9868ebd9f0e3",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "32",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "2246448b-b23b-11f1-990e-0024811f8935",
+        "listall": "true",
+        "state": "present",
+        "groupid": "04477df7-af0a-475a-bd9a-9868ebd9f0e3",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "32",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "2246448b-b23b-11f1-990e-0024811f8935",
+        "listall": "true",
+        "state": "present",
+        "groupid": "04477df7-af0a-475a-bd9a-9868ebd9f0e3",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "32",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "2246448b-b23b-11f1-990e-0024811f8935",
+        "listall": "true",
+        "state": "present",
+        "groupid": "04477df7-af0a-475a-bd9a-9868ebd9f0e3",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "32",
+      "command": "listInstanceGroups",
+      "method": "GET",
+      "params": {
+        "id": "04477df7-af0a-475a-bd9a-9868ebd9f0e3",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "32",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "2246448b-b23b-11f1-990e-0024811f8935",
+        "listall": "true",
+        "state": "present",
+        "groupid": "04477df7-af0a-475a-bd9a-9868ebd9f0e3",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "32",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "2246448b-b23b-11f1-990e-0024811f8935",
+        "listall": "true",
+        "state": "present",
+        "groupid": "04477df7-af0a-475a-bd9a-9868ebd9f0e3",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "32",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "2246448b-b23b-11f1-990e-0024811f8935",
+        "listall": "true",
+        "state": "present",
+        "groupid": "04477df7-af0a-475a-bd9a-9868ebd9f0e3",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "32",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "listall": "true",
+        "page": "1",
+        "pagesize": "200"
+      }
+    },
+    {
+      "site": "32",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "2246448b-b23b-11f1-990e-0024811f8935",
+        "listall": "true",
+        "state": "present",
+        "groupid": "04477df7-af0a-475a-bd9a-9868ebd9f0e3",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "32",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "2246448b-b23b-11f1-990e-0024811f8935",
+        "listall": "true",
+        "state": "present",
+        "groupid": "04477df7-af0a-475a-bd9a-9868ebd9f0e3",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "32",
+      "command": "listInstanceGroups",
+      "method": "GET",
+      "params": {
+        "id": "04477df7-af0a-475a-bd9a-9868ebd9f0e3",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "32",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "2246448b-b23b-11f1-990e-0024811f8935",
+        "listall": "true",
+        "state": "present",
+        "groupid": "04477df7-af0a-475a-bd9a-9868ebd9f0e3",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "32",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "2246448b-b23b-11f1-990e-0024811f8935",
+        "listall": "true",
+        "state": "present",
+        "groupid": "04477df7-af0a-475a-bd9a-9868ebd9f0e3",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "32",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "2246448b-b23b-11f1-990e-0024811f8935",
+        "listall": "true",
+        "state": "present",
+        "groupid": "04477df7-af0a-475a-bd9a-9868ebd9f0e3",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "32",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "2246448b-b23b-11f1-990e-0024811f8935",
+        "listall": "true",
+        "state": "present",
+        "groupid": "04477df7-af0a-475a-bd9a-9868ebd9f0e3",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "32",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "2246448b-b23b-11f1-990e-0024811f8935",
+        "listall": "true",
+        "state": "present",
+        "groupid": "04477df7-af0a-475a-bd9a-9868ebd9f0e3",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "32",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "2246448b-b23b-11f1-990e-0024811f8935",
+        "listall": "true",
+        "state": "present",
+        "groupid": "04477df7-af0a-475a-bd9a-9868ebd9f0e3",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "32",
+      "command": "listInstanceGroups",
+      "method": "GET",
+      "params": {
+        "id": "04477df7-af0a-475a-bd9a-9868ebd9f0e3",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "32",
+      "command": "listInstanceGroups",
+      "method": "GET",
+      "params": {
+        "id": "04477df7-af0a-475a-bd9a-9868ebd9f0e3",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listInstanceGroups",
+      "method": "GET",
+      "params": {
+        "id": "306a6703-589c-42e4-ad7a-b04c31015c88",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listInstanceGroups",
+      "method": "GET",
+      "params": {
+        "id": "306a6703-589c-42e4-ad7a-b04c31015c88",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listInstanceGroups",
+      "method": "GET",
+      "params": {
+        "id": "306a6703-589c-42e4-ad7a-b04c31015c88",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listInstanceGroups",
+      "method": "GET",
+      "params": {
+        "id": "306a6703-589c-42e4-ad7a-b04c31015c88",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listInstanceGroups",
+      "method": "GET",
+      "params": {
+        "id": "306a6703-589c-42e4-ad7a-b04c31015c88",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listInstanceGroups",
+      "method": "GET",
+      "params": {
+        "id": "fd801f8b-7689-4828-8308-8f07cf728810",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "state": "present",
+        "groupid": "fd801f8b-7689-4828-8308-8f07cf728810",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "state": "present",
+        "groupid": "fd801f8b-7689-4828-8308-8f07cf728810",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "state": "present",
+        "groupid": "fd801f8b-7689-4828-8308-8f07cf728810",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listInstanceGroups",
+      "method": "GET",
+      "params": {
+        "id": "fd801f8b-7689-4828-8308-8f07cf728810",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "state": "present",
+        "groupid": "fd801f8b-7689-4828-8308-8f07cf728810",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "listall": "true",
+        "page": "1",
+        "pagesize": "200"
+      }
+    },
+    {
+      "site": "31",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "state": "present",
+        "groupid": "fd801f8b-7689-4828-8308-8f07cf728810",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "32",
+      "command": "listInstanceGroups",
+      "method": "GET",
+      "params": {
+        "id": "04477df7-af0a-475a-bd9a-9868ebd9f0e3",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "32",
+      "command": "listInstanceGroups",
+      "method": "GET",
+      "params": {
+        "id": "04477df7-af0a-475a-bd9a-9868ebd9f0e3",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "32",
+      "command": "listInstanceGroups",
+      "method": "GET",
+      "params": {
+        "id": "e53dac6b-9687-473d-9b7e-c689e831d63c",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "32",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "2246448b-b23b-11f1-990e-0024811f8935",
+        "listall": "true",
+        "state": "present",
+        "groupid": "e53dac6b-9687-473d-9b7e-c689e831d63c",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "32",
+      "command": "listInstanceGroups",
+      "method": "GET",
+      "params": {
+        "id": "e53dac6b-9687-473d-9b7e-c689e831d63c",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "32",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "2246448b-b23b-11f1-990e-0024811f8935",
+        "listall": "true",
+        "state": "present",
+        "groupid": "e53dac6b-9687-473d-9b7e-c689e831d63c",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "32",
+      "command": "listInstanceGroups",
+      "method": "GET",
+      "params": {
+        "id": "e53dac6b-9687-473d-9b7e-c689e831d63c",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "32",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "2246448b-b23b-11f1-990e-0024811f8935",
+        "listall": "true",
+        "state": "present",
+        "groupid": "e53dac6b-9687-473d-9b7e-c689e831d63c",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "32",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "2246448b-b23b-11f1-990e-0024811f8935",
+        "listall": "true",
+        "state": "present",
+        "groupid": "e53dac6b-9687-473d-9b7e-c689e831d63c",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "32",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "2246448b-b23b-11f1-990e-0024811f8935",
+        "listall": "true",
+        "state": "present",
+        "groupid": "e53dac6b-9687-473d-9b7e-c689e831d63c",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "32",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "2246448b-b23b-11f1-990e-0024811f8935",
+        "listall": "true",
+        "state": "present",
+        "groupid": "e53dac6b-9687-473d-9b7e-c689e831d63c",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "32",
+      "command": "listInstanceGroups",
+      "method": "GET",
+      "params": {
+        "id": "e53dac6b-9687-473d-9b7e-c689e831d63c",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "32",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "2246448b-b23b-11f1-990e-0024811f8935",
+        "listall": "true",
+        "state": "present",
+        "groupid": "e53dac6b-9687-473d-9b7e-c689e831d63c",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "32",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "2246448b-b23b-11f1-990e-0024811f8935",
+        "listall": "true",
+        "state": "present",
+        "groupid": "e53dac6b-9687-473d-9b7e-c689e831d63c",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "32",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "2246448b-b23b-11f1-990e-0024811f8935",
+        "listall": "true",
+        "state": "present",
+        "groupid": "e53dac6b-9687-473d-9b7e-c689e831d63c",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "32",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "2246448b-b23b-11f1-990e-0024811f8935",
+        "listall": "true",
+        "state": "present",
+        "groupid": "e53dac6b-9687-473d-9b7e-c689e831d63c",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "32",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "2246448b-b23b-11f1-990e-0024811f8935",
+        "listall": "true",
+        "state": "present",
+        "groupid": "e53dac6b-9687-473d-9b7e-c689e831d63c",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "32",
+      "command": "listInstanceGroups",
+      "method": "GET",
+      "params": {
+        "id": "e53dac6b-9687-473d-9b7e-c689e831d63c",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "site": "32",
+      "command": "listVirtualMachines",
+      "method": "GET",
+      "params": {
+        "account": "admin",
+        "domainid": "2246448b-b23b-11f1-990e-0024811f8935",
+        "listall": "true",
+        "state": "present",
+        "groupid": "e53dac6b-9687-473d-9b7e-c689e831d63c",
+        "page": "1",
+        "pagesize": "20"
+      }
+    }
+  ]
+}

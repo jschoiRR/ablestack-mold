@@ -1,0 +1,111 @@
+{
+  "visual_source": "32230b57c64725eb632900483931c1efce736b72",
+  "cases": [
+    {
+      "site": "31",
+      "case": "mobile-member-table-minimum-width",
+      "pass": true,
+      "geometry": {
+        "documentWidth": 380,
+        "overflow": "auto",
+        "tableWidth": 760,
+        "tabs": "ant-tabs ant-tabs-top",
+        "width": 390,
+        "wrapperWidth": 296
+      }
+    },
+    {
+      "site": "32",
+      "case": "mobile-member-table-minimum-width",
+      "pass": true,
+      "geometry": {
+        "documentWidth": 380,
+        "overflow": "auto",
+        "tableWidth": 760,
+        "tabs": "ant-tabs ant-tabs-top",
+        "width": 390,
+        "wrapperWidth": 296
+      }
+    },
+    {
+      "site": "31",
+      "case": "mobile-candidate-table-minimum-width",
+      "pass": true,
+      "geometry": {
+        "overflow": "auto",
+        "rows": 20,
+        "tableWidth": 760,
+        "width": 390,
+        "wrapperWidth": 326
+      }
+    },
+    {
+      "site": "32",
+      "case": "mobile-candidate-table-minimum-width",
+      "pass": true,
+      "geometry": {
+        "overflow": "auto",
+        "rows": 20,
+        "tableWidth": 760,
+        "width": 390,
+        "wrapperWidth": 326
+      }
+    },
+    {
+      "site": "31",
+      "case": "candidate-real-page-two",
+      "pass": true,
+      "page": 2,
+      "rows": 20
+    },
+    {
+      "site": "32",
+      "case": "candidate-real-page-two",
+      "pass": true,
+      "page": 2,
+      "rows": 20
+    },
+    {
+      "site": "31",
+      "source": "32230b57c64725eb632900483931c1efce736b72",
+      "case": "final-mobile-candidate-and-supported-controls",
+      "pass": true,
+      "geometry": {
+        "overflow": "auto",
+        "rows": 20,
+        "tableWidth": 760,
+        "width": 390,
+        "wrapperWidth": 326
+      }
+    },
+    {
+      "site": "32",
+      "source": "32230b57c64725eb632900483931c1efce736b72",
+      "case": "final-mobile-candidate-and-supported-controls",
+      "pass": true,
+      "geometry": {
+        "overflow": "auto",
+        "rows": 20,
+        "tableWidth": 760,
+        "width": 390,
+        "wrapperWidth": 326
+      }
+    },
+    {
+      "site": "31",
+      "source": "32230b57c64725eb632900483931c1efce736b72",
+      "case": "final-candidate-real-page-two-cancel-without-selection",
+      "pass": true,
+      "page": 2,
+      "rows": 20
+    },
+    {
+      "site": "32",
+      "source": "32230b57c64725eb632900483931c1efce736b72",
+      "case": "final-candidate-real-page-two-cancel-without-selection",
+      "pass": true,
+      "page": 2,
+      "rows": 20
+    }
+  ]
+}

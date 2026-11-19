@@ -1,0 +1,78 @@
+{
+  "label": "light-used-block",
+  "requests": [
+    {
+      "id": "34440.1515",
+      "command": "listUserData",
+      "params": {
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "id": "34440.1518",
+      "command": "listUserData",
+      "params": {
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "id": "34440.1522",
+      "command": "listUserData",
+      "params": {
+        "id": "c394d8c6-9d91-437c-891f-b8ae99fb789f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "page": "1",
+        "pagesize": "2"
+      }
+    },
+    {
+      "id": "34440.1523",
+      "command": "deleteUserData",
+      "params": {
+        "id": "c394d8c6-9d91-437c-891f-b8ae99fb789f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f"
+      }
+    },
+    {
+      "id": "34440.1524",
+      "command": "listUserData",
+      "params": {
+        "id": "c394d8c6-9d91-437c-891f-b8ae99fb789f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "page": "1",
+        "pagesize": "2"
+      }
+    }
+  ],
+  "responses": [
+    {
+      "id": "34440.1515",
+      "status": 200
+    },
+    {
+      "id": "34440.1518",
+      "status": 200
+    },
+    {
+      "id": "34440.1522",
+      "status": 200
+    },
+    {
+      "id": "34440.1523",
+      "status": 530
+    },
+    {
+      "id": "34440.1524",
+      "status": 200
+    }
+  ],
+  "exceptions": [],
+  "truncated": false,
+  "hasMore": false,
+  "cursor": 5802
+}

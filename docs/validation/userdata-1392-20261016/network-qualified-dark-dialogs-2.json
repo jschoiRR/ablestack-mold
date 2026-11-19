@@ -1,0 +1,855 @@
+{
+  "name": "qualified-dark-dialogs-2",
+  "truncated": false,
+  "events": [
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.16934",
+      "url": "http://10.10.31.10:8080/client/api/?managementserverid=716fb21e-86f3-4f8c-b34d-11c8d0220230&command=readyForShutdown&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.16934",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?managementserverid=716fb21e-86f3-4f8c-b34d-11c8d0220230&command=readyForShutdown&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.16935",
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&details=group%2Cnics%2Csecgrp%2Ctmpl%2Cservoff%2Cdiskoff%2Ciso%2Cvolume%2Caffgrp%2Cbackoff%2Cguestnetwork&id=5c8a8acb-40e2-4b4f-8de3-b43d6fabb9b1&page=1&pagesize=20&showIcon=true&command=listVirtualMachinesMetrics&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.16936",
+      "url": "http://10.10.31.10:8080/client/api/?resourceids=7ef6b29a-b253-11f1-a895-0024814c313f&resourcetype=domain&command=listResourceIcon&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.16937",
+      "url": "http://10.10.31.10:8080/client/api/?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&showicon=true&command=listAccounts&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.16936",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?resourceids=7ef6b29a-b253-11f1-a895-0024814c313f&resourcetype=domain&command=listResourceIcon&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.16937",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&showicon=true&command=listAccounts&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.16935",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&details=group%2Cnics%2Csecgrp%2Ctmpl%2Cservoff%2Cdiskoff%2Ciso%2Cvolume%2Caffgrp%2Cbackoff%2Cguestnetwork&id=5c8a8acb-40e2-4b4f-8de3-b43d6fabb9b1&page=1&pagesize=20&showIcon=true&command=listVirtualMachinesMetrics&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.16938",
+      "url": "http://10.10.31.10:8080/client/css/chunk-2ba46c8a.45eee0b9.css",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.16939",
+      "url": "http://10.10.31.10:8080/client/js/chunk-2ba46c8a.d503c8e2.js",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.16940",
+      "url": "http://10.10.31.10:8080/client/css/chunk-fb0c6ee4.65ce41d6.css",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.16941",
+      "url": "http://10.10.31.10:8080/client/js/chunk-fb0c6ee4.b97c255e.js",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.16942",
+      "url": "http://10.10.31.10:8080/client/css/chunk-2e4d3950.d234a2f8.css",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.16943",
+      "url": "http://10.10.31.10:8080/client/js/chunk-2e4d3950.ad2bdb41.js",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.16944",
+      "url": "http://10.10.31.10:8080/client/css/chunk-a106f6f0.37b6aed6.css",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.16945",
+      "url": "http://10.10.31.10:8080/client/js/chunk-a106f6f0.c8ce7bc8.js",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.16946",
+      "url": "http://10.10.31.10:8080/client/api/?templatefilter=executable&listAll=true&id=8d692729-7565-4e92-965b-ebaadc1efcb0&command=listTemplates&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.16938",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/css/chunk-2ba46c8a.45eee0b9.css"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.16940",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/css/chunk-fb0c6ee4.65ce41d6.css"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.16942",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/css/chunk-2e4d3950.d234a2f8.css"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.16944",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/css/chunk-a106f6f0.37b6aed6.css"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.16941",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/js/chunk-fb0c6ee4.b97c255e.js"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.16939",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/js/chunk-2ba46c8a.d503c8e2.js"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.16943",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/js/chunk-2e4d3950.ad2bdb41.js"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.16946",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?templatefilter=executable&listAll=true&id=8d692729-7565-4e92-965b-ebaadc1efcb0&command=listTemplates&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.16947",
+      "url": "http://10.10.31.10:8080/client/api/?id=9708b6ac-b253-11f1-a895-0024814c313f&command=listOsTypes&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.16948",
+      "url": "http://10.10.31.10:8080/client/api/?resourceids=8d692729-7565-4e92-965b-ebaadc1efcb0&resourcetype=template&command=listResourceIcon&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.16949",
+      "url": "http://10.10.31.10:8080/client/api/?resourceids=7013f5a1-de59-4cea-a596-f4f58815f31c&resourcetype=zone&command=listResourceIcon&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.16950",
+      "url": "http://10.10.31.10:8080/client/api/?resourceids=7ef6b29a-b253-11f1-a895-0024814c313f&resourcetype=domain&command=listResourceIcon&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.16951",
+      "url": "http://10.10.31.10:8080/client/api/?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&showicon=true&command=listAccounts&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.16945",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/js/chunk-a106f6f0.c8ce7bc8.js"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.16952",
+      "url": "http://10.10.31.10:8080/client/api/?entityid=5c8a8acb-40e2-4b4f-8de3-b43d6fabb9b1&entitytype=VM&annotationfilter=all&command=listAnnotations&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.16953",
+      "url": "http://10.10.31.10:8080/client/api/?supportedservices=SecurityGroup&command=listNetworks&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.16954",
+      "url": "http://10.10.31.10:8080/client/api/?account=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&listAll=true&page=1&pagesize=100&command=listKubernetesClusters&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.16948",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?resourceids=8d692729-7565-4e92-965b-ebaadc1efcb0&resourcetype=template&command=listResourceIcon&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.16947",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?id=9708b6ac-b253-11f1-a895-0024814c313f&command=listOsTypes&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.16955",
+      "url": "http://10.10.31.10:8080/client/api/?resourceids=9c69f773-b253-11f1-a895-0024814c313f&resourcetype=guestoscategory&command=listResourceIcon&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.16949",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?resourceids=7013f5a1-de59-4cea-a596-f4f58815f31c&resourcetype=zone&command=listResourceIcon&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.16950",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?resourceids=7ef6b29a-b253-11f1-a895-0024814c313f&resourcetype=domain&command=listResourceIcon&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.16951",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&showicon=true&command=listAccounts&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.16952",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?entityid=5c8a8acb-40e2-4b4f-8de3-b43d6fabb9b1&entitytype=VM&annotationfilter=all&command=listAnnotations&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.16953",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?supportedservices=SecurityGroup&command=listNetworks&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.16954",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?account=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&listAll=true&page=1&pagesize=100&command=listKubernetesClusters&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.16955",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?resourceids=9c69f773-b253-11f1-a895-0024814c313f&resourcetype=guestoscategory&command=listResourceIcon&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.16956",
+      "url": "http://10.10.31.10:8080/client/api/",
+      "httpMethod": "POST",
+      "parameters": {
+        "command": "listConfigurations",
+        "response": "json",
+        "keyword": "monitoring.wall.portal"
+      }
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.16956",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.16957",
+      "url": "http://10.10.31.10:8080/client/css/chunk-33b385b7.0f1c1c04.css",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.16958",
+      "url": "http://10.10.31.10:8080/client/js/chunk-33b385b7.36bb2467.js",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.16957",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/css/chunk-33b385b7.0f1c1c04.css"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.16958",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/js/chunk-33b385b7.36bb2467.js"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.16959",
+      "url": "http://10.10.31.10:8080/client/api/?id=5c8a8acb-40e2-4b4f-8de3-b43d6fabb9b1&listall=true&details=all&userdata=true&command=listVirtualMachines&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.16959",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?id=5c8a8acb-40e2-4b4f-8de3-b43d6fabb9b1&listall=true&details=all&userdata=true&command=listVirtualMachines&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.16960",
+      "url": "http://10.10.31.10:8080/client/api/?virtualmachineid=5c8a8acb-40e2-4b4f-8de3-b43d6fabb9b1&command=getVirtualMachineUserData&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.16960",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?virtualmachineid=5c8a8acb-40e2-4b4f-8de3-b43d6fabb9b1&command=getVirtualMachineUserData&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.16961",
+      "url": "http://10.10.31.10:8080/client/api/?id=5c8a8acb-40e2-4b4f-8de3-b43d6fabb9b1&listall=true&details=all&userdata=true&command=listVirtualMachines&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.16961",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?id=5c8a8acb-40e2-4b4f-8de3-b43d6fabb9b1&listall=true&details=all&userdata=true&command=listVirtualMachines&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.16962",
+      "url": "http://10.10.31.10:8080/client/api/?id=18be0a2b-f539-4fdf-a709-b184c90101b1&account=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&listall=true&page=1&pagesize=2&command=listUserData&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.16962",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?id=18be0a2b-f539-4fdf-a709-b184c90101b1&account=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&listall=true&page=1&pagesize=2&command=listUserData&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.16963",
+      "url": "http://10.10.31.10:8080/client/api/?id=5c8a8acb-40e2-4b4f-8de3-b43d6fabb9b1&listall=true&details=all&userdata=true&command=listVirtualMachines&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.16963",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?id=5c8a8acb-40e2-4b4f-8de3-b43d6fabb9b1&listall=true&details=all&userdata=true&command=listVirtualMachines&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.16965",
+      "url": "http://10.10.31.10:8080/client/api/?managementserverid=716fb21e-86f3-4f8c-b34d-11c8d0220230&command=readyForShutdown&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.16965",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?managementserverid=716fb21e-86f3-4f8c-b34d-11c8d0220230&command=readyForShutdown&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.16970",
+      "url": "http://10.10.31.10:8080/client/api/?managementserverid=716fb21e-86f3-4f8c-b34d-11c8d0220230&command=readyForShutdown&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.16970",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?managementserverid=716fb21e-86f3-4f8c-b34d-11c8d0220230&command=readyForShutdown&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.16972",
+      "url": "http://10.10.31.10:8080/client/api/?command=getWallAlertAvailability&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.16972",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?command=getWallAlertAvailability&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.16973",
+      "url": "http://10.10.31.10:8080/client/api/?managementserverid=716fb21e-86f3-4f8c-b34d-11c8d0220230&command=readyForShutdown&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.16973",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?managementserverid=716fb21e-86f3-4f8c-b34d-11c8d0220230&command=readyForShutdown&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.16974",
+      "url": "http://10.10.31.10:8080/client/css/chunk-371f99b0.ea78ccb5.css",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.16975",
+      "url": "http://10.10.31.10:8080/client/js/chunk-371f99b0.e2081491.js",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.16974",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/css/chunk-371f99b0.ea78ccb5.css"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.16975",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/js/chunk-371f99b0.e2081491.js"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.16976",
+      "url": "http://10.10.31.10:8080/client/api/?domainid=7ef6b29a-b253-11f1-a895-0024814c313f&account=admin&id=5c8a8acb-40e2-4b4f-8de3-b43d6fabb9b1&listall=true&userdata=true&command=listVirtualMachines&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.16976",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?domainid=7ef6b29a-b253-11f1-a895-0024814c313f&account=admin&id=5c8a8acb-40e2-4b4f-8de3-b43d6fabb9b1&listall=true&userdata=true&command=listVirtualMachines&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.16977",
+      "url": "http://10.10.31.10:8080/client/api/?domainid=7ef6b29a-b253-11f1-a895-0024814c313f&account=admin&id=7c2634c0-db42-420a-9cf4-684a4b46b5a0&listall=true&command=listNetworks&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.16977",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?domainid=7ef6b29a-b253-11f1-a895-0024814c313f&account=admin&id=7c2634c0-db42-420a-9cf4-684a4b46b5a0&listall=true&command=listNetworks&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.16978",
+      "url": "http://10.10.31.10:8080/client/api/?domainid=7ef6b29a-b253-11f1-a895-0024814c313f&account=admin&id=8d692729-7565-4e92-965b-ebaadc1efcb0&zoneid=7013f5a1-de59-4cea-a596-f4f58815f31c&isready=true&templatefilter=executable&command=listTemplates&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.16978",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?domainid=7ef6b29a-b253-11f1-a895-0024814c313f&account=admin&id=8d692729-7565-4e92-965b-ebaadc1efcb0&zoneid=7013f5a1-de59-4cea-a596-f4f58815f31c&isready=true&templatefilter=executable&command=listTemplates&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.16979",
+      "url": "http://10.10.31.10:8080/client/api/?domainid=7ef6b29a-b253-11f1-a895-0024814c313f&account=admin&id=18be0a2b-f539-4fdf-a709-b184c90101b1&command=listUserData&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.16979",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?domainid=7ef6b29a-b253-11f1-a895-0024814c313f&account=admin&id=18be0a2b-f539-4fdf-a709-b184c90101b1&command=listUserData&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.16980",
+      "url": "http://10.10.31.10:8080/client/api/?account=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&listall=false&page=1&pagesize=10&command=listUserData&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.16980",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?account=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&listall=false&page=1&pagesize=10&command=listUserData&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.16983",
+      "url": "http://10.10.31.10:8080/client/api/?managementserverid=716fb21e-86f3-4f8c-b34d-11c8d0220230&command=readyForShutdown&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.16983",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?managementserverid=716fb21e-86f3-4f8c-b34d-11c8d0220230&command=readyForShutdown&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.16988",
+      "url": "http://10.10.31.10:8080/client/api/?managementserverid=716fb21e-86f3-4f8c-b34d-11c8d0220230&command=readyForShutdown&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.16988",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?managementserverid=716fb21e-86f3-4f8c-b34d-11c8d0220230&command=readyForShutdown&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.16990",
+      "url": "http://10.10.31.10:8080/client/api/?managementserverid=716fb21e-86f3-4f8c-b34d-11c8d0220230&command=readyForShutdown&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.16990",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?managementserverid=716fb21e-86f3-4f8c-b34d-11c8d0220230&command=readyForShutdown&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.16991",
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&templatefilter=all&id=e183877f-58a1-46f2-bd40-4d9f36e9bab4&page=1&pagesize=20&showIcon=true&command=listTemplates&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.16992",
+      "url": "http://10.10.31.10:8080/client/api/?resourceids=8d692729-7565-4e92-965b-ebaadc1efcb0&resourcetype=template&command=listResourceIcon&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.16993",
+      "url": "http://10.10.31.10:8080/client/api/?resourceids=7013f5a1-de59-4cea-a596-f4f58815f31c&resourcetype=zone&command=listResourceIcon&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.16994",
+      "url": "http://10.10.31.10:8080/client/api/?resourceids=7ef6b29a-b253-11f1-a895-0024814c313f&resourcetype=domain&command=listResourceIcon&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.16995",
+      "url": "http://10.10.31.10:8080/client/api/?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&showicon=true&command=listAccounts&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.16992",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?resourceids=8d692729-7565-4e92-965b-ebaadc1efcb0&resourcetype=template&command=listResourceIcon&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.16993",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?resourceids=7013f5a1-de59-4cea-a596-f4f58815f31c&resourcetype=zone&command=listResourceIcon&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.16994",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?resourceids=7ef6b29a-b253-11f1-a895-0024814c313f&resourcetype=domain&command=listResourceIcon&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.16991",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&templatefilter=all&id=e183877f-58a1-46f2-bd40-4d9f36e9bab4&page=1&pagesize=20&showIcon=true&command=listTemplates&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.16996",
+      "url": "http://10.10.31.10:8080/client/api/?id=e183877f-58a1-46f2-bd40-4d9f36e9bab4&templatefilter=executable&listall=true&command=listTemplates&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.16997",
+      "url": "http://10.10.31.10:8080/client/api/?id=9708b6ac-b253-11f1-a895-0024814c313f&command=listOsTypes&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.16998",
+      "url": "http://10.10.31.10:8080/client/api/?resourceids=7013f5a1-de59-4cea-a596-f4f58815f31c&resourcetype=zone&command=listResourceIcon&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.16999",
+      "url": "http://10.10.31.10:8080/client/api/?resourceids=7ef6b29a-b253-11f1-a895-0024814c313f&resourcetype=domain&command=listResourceIcon&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.17000",
+      "url": "http://10.10.31.10:8080/client/api/?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&showicon=true&command=listAccounts&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.16995",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&showicon=true&command=listAccounts&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.16998",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?resourceids=7013f5a1-de59-4cea-a596-f4f58815f31c&resourcetype=zone&command=listResourceIcon&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.16997",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?id=9708b6ac-b253-11f1-a895-0024814c313f&command=listOsTypes&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.17001",
+      "url": "http://10.10.31.10:8080/client/api/?resourceids=9c69f773-b253-11f1-a895-0024814c313f&resourcetype=guestoscategory&command=listResourceIcon&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.16999",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?resourceids=7ef6b29a-b253-11f1-a895-0024814c313f&resourcetype=domain&command=listResourceIcon&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.16996",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?id=e183877f-58a1-46f2-bd40-4d9f36e9bab4&templatefilter=executable&listall=true&command=listTemplates&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.17002",
+      "url": "http://10.10.31.10:8080/client/api/?showicon=true&ids=7013f5a1-de59-4cea-a596-f4f58815f31c&command=listZones&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.17000",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&showicon=true&command=listAccounts&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.17001",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?resourceids=9c69f773-b253-11f1-a895-0024814c313f&resourcetype=guestoscategory&command=listResourceIcon&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.17002",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?showicon=true&ids=7013f5a1-de59-4cea-a596-f4f58815f31c&command=listZones&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.17003",
+      "url": "http://10.10.31.10:8080/client/css/chunk-f665d1a2.3d3f93f2.css",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.17004",
+      "url": "http://10.10.31.10:8080/client/js/chunk-f665d1a2.b41e5430.js",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.17003",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/css/chunk-f665d1a2.3d3f93f2.css"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.17004",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/js/chunk-f665d1a2.b41e5430.js"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.17005",
+      "url": "http://10.10.31.10:8080/client/api/?listAll=true&command=listOsTypes&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.17006",
+      "url": "http://10.10.31.10:8080/client/api/?id=e183877f-58a1-46f2-bd40-4d9f36e9bab4&templatefilter=all&command=listTemplates&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.17007",
+      "url": "http://10.10.31.10:8080/client/api/?account=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&listall=false&page=1&pagesize=10&command=listUserData&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.17007",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?account=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&listall=false&page=1&pagesize=10&command=listUserData&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.17006",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?id=e183877f-58a1-46f2-bd40-4d9f36e9bab4&templatefilter=all&command=listTemplates&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.17005",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?listAll=true&command=listOsTypes&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.17009",
+      "url": "http://10.10.31.10:8080/client/api/?managementserverid=716fb21e-86f3-4f8c-b34d-11c8d0220230&command=readyForShutdown&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.17009",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?managementserverid=716fb21e-86f3-4f8c-b34d-11c8d0220230&command=readyForShutdown&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.17010",
+      "url": "http://10.10.31.10:8080/client/api/?command=listHostsMetrics&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.17010",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?command=listHostsMetrics&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.17014",
+      "url": "http://10.10.31.10:8080/client/api/?managementserverid=716fb21e-86f3-4f8c-b34d-11c8d0220230&command=readyForShutdown&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.17014",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?managementserverid=716fb21e-86f3-4f8c-b34d-11c8d0220230&command=readyForShutdown&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.17015",
+      "url": "http://10.10.31.10:8080/client/api/?managementserverid=716fb21e-86f3-4f8c-b34d-11c8d0220230&command=readyForShutdown&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.17015",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?managementserverid=716fb21e-86f3-4f8c-b34d-11c8d0220230&command=readyForShutdown&response=json&sessionkey=%5Bredacted%5D"
+    }
+  ]
+}

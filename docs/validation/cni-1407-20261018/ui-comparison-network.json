@@ -1,0 +1,71 @@
+{
+  "scope": "final deployed cross-page root to second clone comparison",
+  "requests": [
+    {
+      "command": "listResourceIcon",
+      "method": "GET",
+      "params": {}
+    },
+    {
+      "command": "listAccounts",
+      "method": "GET",
+      "params": {
+        "name": "cni1407-a",
+        "domainid": "8eb393ec-522d-41d5-a864-93bfcb73a799"
+      }
+    },
+    {
+      "command": "readyForShutdown",
+      "method": "GET",
+      "params": {}
+    },
+    {
+      "command": "listCniConfiguration",
+      "method": "GET",
+      "params": {
+        "account": "cni1407-a",
+        "domainid": "8eb393ec-522d-41d5-a864-93bfcb73a799",
+        "id": "dcb3f490-7795-4152-9b7c-414fb8e0adf2",
+        "page": "1",
+        "pagesize": "2"
+      }
+    },
+    {
+      "command": "listCniConfiguration",
+      "method": "GET",
+      "params": {
+        "account": "cni1407-a",
+        "domainid": "8eb393ec-522d-41d5-a864-93bfcb73a799",
+        "id": "12475398-087d-4ba7-9eb3-e8bd49bb9537",
+        "page": "1",
+        "pagesize": "2"
+      }
+    },
+    {
+      "command": "listCniConfiguration",
+      "method": "GET",
+      "params": {
+        "account": "cni1407-a",
+        "domainid": "8eb393ec-522d-41d5-a864-93bfcb73a799",
+        "id": "3e3c15fa-1d32-46d6-ad72-54810454ee93",
+        "page": "1",
+        "pagesize": "2"
+      }
+    },
+    {
+      "command": "listCniConfiguration",
+      "method": "GET",
+      "params": {
+        "account": "cni1407-a",
+        "domainid": "8eb393ec-522d-41d5-a864-93bfcb73a799",
+        "id": "dcb3f490-7795-4152-9b7c-414fb8e0adf2",
+        "page": "1",
+        "pagesize": "2"
+      }
+    }
+  ],
+  "comparison_commands": [
+    "listCniConfiguration"
+  ],
+  "no_mutation_commands": true
+}

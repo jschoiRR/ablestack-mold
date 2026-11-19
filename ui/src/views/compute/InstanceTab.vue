@@ -17,32 +17,84 @@
 
 <template>
   <a-spin :spinning="loading">
-    <p v-if="listRefreshFailed" role="status">{{ $t('message.list.refresh.stale') }}</p>
+    <KubernetesNodeNotice :resource="resource" />
     <a-alert v-if="vm.qemuagentversion === 'Not Installed'" :message="$t('message.alert.qemuagentversion')" type="error" show-icon />
     <br/>
+    <a-alert v-if="protectionLookupFailed" type="warning" show-icon class="protection-tab-notice">
+      <template #message>{{ $t('message.vm.protection.lookup.failed') }}</template>
+      <template #action>
+        <a-button size="small" :loading="protectionLookupPending" @click="refreshProtectionTabs"><template #icon><reload-outlined /></template>{{ $t('label.refresh') }}</a-button>
+      </template>
+    </a-alert>
+    <a-alert
+      v-else-if="protectionLookupPending && ['ftctl', 'drplans'].includes(currentTab)"
+      type="info"
+      show-icon
+      class="protection-tab-notice"
+      :message="$t('message.vm.protection.lookup.pending')" />
     <a-tabs
-      :activeKey="currentTab"
-      :tabPosition="device === 'mobile' ? 'top' : 'left'"
+      :tabPosition="resourceTabPosition"
+      :activeKey="visibleCurrentTab"
       :animated="false"
       @change="handleChangeTab">
       <a-tab-pane :tab="$t('label.details')" key="details">
         <DetailsTab :resource="dataResource" :loading="loading" />
       </a-tab-pane>
+      <a-tab-pane
+        :tab="$t('label.vm.ip.configuration')"
+        key="guestnetwork"
+        v-if="resource.hypervisor === 'KVM' && 'getVirtualMachineGuestNetworkState' in $store.getters.apis">
+        <GuestNetworkTab :resource="vm"/>
+      </a-tab-pane>
       <a-tab-pane :tab="$t('label.metrics')" key="stats">
         <StatsTab :resource="resource"/>
       </a-tab-pane>
-      <a-tab-pane :tab="$t('label.iso')" key="cdrom" v-if="attachedIsos.length > 0">
-        <div v-for="iso in attachedIsos" :key="iso.id" style="margin-bottom: 12px;">
-          <usb-outlined />
-          <router-link :to="{ path: '/iso/' + iso.id }">{{ iso.displaytext || iso.name }}</router-link>
-          <a-tag style="margin-left: 8px;">{{ slotLabel(iso.deviceseq) }}</a-tag>
-          <a-tag v-if="iso.bootable" color="blue" style="margin-left: 4px;">{{ $t('label.bootable') }}</a-tag>
-          <br/>
-          <barcode-outlined /> {{ iso.id }}
-        </div>
+      <a-tab-pane :tab="$t('label.vmprocess.tab')" key="processes" v-if="resource.hypervisor === 'KVM' && 'getVirtualMachineProcessCapabilities' in $store.getters.apis && 'listVirtualMachineProcesses' in $store.getters.apis">
+        <VmProcessesTab :resource="vm" :active="visibleCurrentTab === 'processes'" @open-iso="handleChangeTab('cdrom')" />
+      </a-tab-pane>
+      <a-tab-pane
+        :tab="$t('label.schedules')"
+        key="schedules"
+        v-if="'listResourceSchedule' in $store.getters.apis && !dataResource.autoscalevmgroupid"
+      >
+        <VmSchedulesTab
+          :resource="vm"
+          :loading="loading"/>
+      </a-tab-pane>
+      <a-tab-pane :tab="$t('label.iso')" key="cdrom" v-if="'listIsos' in $store.getters.apis && vm.hypervisor !== 'External'">
+        <VmIsoTab :resource="vm" />
       </a-tab-pane>
       <a-tab-pane :tab="$t('label.volumes')" key="volumes" v-if="'listVolumes' in $store.getters.apis">
         <VmVolumesTab :resource="vm" />
+      </a-tab-pane>
+      <a-tab-pane :tab="$t('label.nics')" key="nics" v-if="'listNics' in $store.getters.apis">
+        <NicsTab :resource="vm"/>
+      </a-tab-pane>
+      <a-tab-pane :tab="$t('label.securitygroups')" key="securitygroups" v-if="(dataResource.securitygroup && dataResource.securitygroup.length > 0) || ($store.getters.showSecurityGroups && securityGroupNetworkProviderUseThisVM)">
+        <div class="security-group-toolbar">
+          <a-button
+            type="primary"
+            @click="showUpdateSGModal"
+            :loading="loading">
+            <template #icon><edit-outlined /></template> {{ $t('label.action.update.security.groups') }}
+          </a-button>
+        </div>
+        <ListResourceTable
+          apiName="listSecurityGroups"
+          :params="{virtualmachineid: dataResource.id}"
+          :items="dataResource.securitygroup"
+          :columns="['name', 'description']"
+          :routerlinks="(record) => { return { name: '/securitygroups/' + record.id } }"
+          :showSearch="false"/>
+      </a-tab-pane>
+      <a-tab-pane :tab="$t('label.settings')" key="settings">
+        <VmSettingsTab :resource="dataResource" :active="currentTab === 'settings'" />
+      </a-tab-pane>
+      <a-tab-pane
+        :tab="$t('label.listhostdevices')"
+        key="hostdevices"
+      >
+        <VmDevicesTab :resource="vm" :active="currentTab === 'hostdevices'" />
       </a-tab-pane>
       <a-tab-pane :tab="$t('label.gpu')" key="gpu" v-if="dataResource.gpucardname">
         <GPUTab
@@ -53,141 +105,18 @@
           :columns="['gpucardname', 'vgpuprofilename', 'state'].concat($store.getters.userInfo.roletype === 'Admin' ? ['id', 'hostname'] : [])"
           :routerlinks="(record) => { return { displayname: '/gpudevice/' + record.id } }"/>
       </a-tab-pane>
-      <a-tab-pane :tab="$t('label.nics')" key="nics" v-if="'listNics' in $store.getters.apis">
-        <NicsTab :resource="vm"/>
-      </a-tab-pane>
-      <a-tab-pane
-        :tab="$t('label.vm.ip.configuration')"
-        key="guestnetwork"
-        v-if="resource.hypervisor === 'KVM' && 'getVirtualMachineGuestNetworkState' in $store.getters.apis">
-        <GuestNetworkTab :resource="vm"/>
-      </a-tab-pane>
       <a-tab-pane :tab="$t('label.vm.snapshots')" key="vmsnapshots" v-if="'listVMSnapshot' in $store.getters.apis">
         <VmSnapshotsTab :resource="vm" />
       </a-tab-pane>
-      <a-tab-pane :tab="$t('label.dr.plans')" key="drplans" v-if="'getDrVmProtectionView' in $store.getters.apis">
-        <DrPlanVmTab :resource="vm" :loading="loading" />
-      </a-tab-pane>
       <a-tab-pane :tab="$t('label.backup')" key="backups" v-if="'listBackups' in $store.getters.apis">
-        <ListResourceTable
-          apiName="listBackups"
-          :resource="resource"
-          :params="{virtualmachineid: dataResource.id}"
-          :columns="dataResource.backupprovider === 'kboss'
-            ? ['name', 'status', 'compressionstatus', 'validationstatus', 'size', 'virtualsize', 'type', 'intervaltype', 'created']
-            : ['name', 'status', 'size', 'virtualsize', 'type', 'intervaltype', 'created']"
-          :routerlinks="(record) => { return { name: '/backup/' + record.id } }"
-          :showSearch="false"/>
+        <a-alert v-if="vm.backupblockedreason" type="warning" show-icon :message="$t('message.backup.snapshot.backup.blocked')" style="margin-bottom: 16px" />
+        <VmBackupsTab :resource="vm" />
       </a-tab-pane>
-      <a-tab-pane :tab="$t('label.ftctl.fault.protection')" key="ftctl" v-if="'getFtctlProtection' in $store.getters.apis">
-        <FtctlTab :resource="vm" :loading="loading" @keep-current-tab="keepCurrentTab" />
+      <a-tab-pane :tab="$t('label.ftctl.fault.protection')" key="ftctl" v-if="showFtTab">
+        <FtctlTab v-if="visibleCurrentTab === 'ftctl'" :resource="vm" :loading="loading" @keep-current-tab="keepCurrentTab" />
       </a-tab-pane>
-      <a-tab-pane :tab="$t('label.securitygroups')" key="securitygroups" v-if="(dataResource.securitygroup && dataResource.securitygroup.length > 0) || ($store.getters.showSecurityGroups && securityGroupNetworkProviderUseThisVM)">
-        <a-button
-          type="primary"
-          style="width: 100%; margin-bottom: 10px"
-          @click="showUpdateSGModal"
-          :loading="loading">
-          <template #icon><edit-outlined /></template> {{ $t('label.action.update.security.groups') }}
-        </a-button>
-        <ListResourceTable
-          apiName="listSecurityGroups"
-          :params="{virtualmachineid: dataResource.id}"
-          :items="dataResource.securitygroup"
-          :columns="['name', 'description']"
-          :routerlinks="(record) => { return { name: '/securitygroups/' + record.id } }"
-          :showSearch="false"/>
-      </a-tab-pane>
-      <a-tab-pane
-        :tab="$t('label.schedules')"
-        key="schedules"
-        v-if="'listResourceSchedule' in $store.getters.apis && !dataResource.autoscalevmgroupid"
-      >
-        <ResourceSchedules
-          :resource="vm"
-          resourceType="VirtualMachine"
-          :loading="loading"/>
-      </a-tab-pane>
-      <a-tab-pane
-        :tab="$t('label.listhostdevices')"
-        key="hostdevices"
-      >
-        <div class="host-devices-container">
-          <!-- 기타 장치 (PCI) -->
-          <div class="device-section">
-            <h3 class="section-title">{{ $t('label.other.devices') }}</h3>
-            <a-table
-              :columns="deviceColumns"
-              :dataSource="pciDevices"
-              :pagination="false"
-              :scroll="{ x: 'max-content' }"
-              size="small"
-              :loading="loading" />
-          </div>
-
-          <!-- HBA 디바이스 -->
-          <div class="device-section">
-            <h3 class="section-title">{{ $t('label.hba.devices') }}</h3>
-            <a-table
-              :columns="deviceColumns"
-              :dataSource="hbaDevices"
-              :pagination="false"
-              :scroll="{ x: 'max-content' }"
-              size="small"
-              :loading="loading" />
-          </div>
-
-          <!-- VHBA 디바이스 -->
-          <div class="device-section">
-            <h3 class="section-title">{{ $t('label.vhba.devices') }}</h3>
-            <a-table
-              :columns="deviceColumns"
-              :dataSource="vhbaDevices"
-              :pagination="false"
-              :scroll="{ x: 'max-content' }"
-              size="small"
-              :loading="loading" />
-          </div>
-
-          <!-- USB 디바이스 -->
-          <div class="device-section">
-            <h3 class="section-title">{{ $t('label.usb.devices') }}</h3>
-            <a-table
-              :columns="deviceColumns"
-              :dataSource="usbDevices"
-              :pagination="false"
-              :scroll="{ x: 'max-content' }"
-              size="small"
-              :loading="loading" />
-          </div>
-
-          <!-- LUN 디바이스 -->
-          <div class="device-section">
-            <h3 class="section-title">{{ $t('label.lun.devices') }}</h3>
-            <a-table
-              :columns="deviceColumns"
-              :dataSource="lunDevices"
-              :pagination="false"
-              :scroll="{ x: 'max-content' }"
-              size="small"
-              :loading="loading" />
-          </div>
-
-          <!-- SCSI 디바이스 -->
-          <div class="device-section">
-            <h3 class="section-title">{{ $t('label.scsi.devices') }}</h3>
-            <a-table
-              :columns="scsiDeviceColumns"
-              :dataSource="scsiDevices"
-              :pagination="false"
-              :scroll="{ x: 'max-content' }"
-              size="small"
-              :loading="loading" />
-          </div>
-        </div>
-      </a-tab-pane>
-      <a-tab-pane :tab="$t('label.settings')" key="settings">
-        <DetailSettings :resource="dataResource" :loading="loading" />
+      <a-tab-pane :tab="$t('label.dr.vm.protection.status')" key="drplans" v-if="showDrTab">
+        <DrPlanVmTab :view="drView" :loading="drEligibility === 'pending'" :loadError="drEligibility === 'error'" @refresh="refreshProtectionTabs" />
       </a-tab-pane>
       <a-tab-pane :tab="$t('label.events')" key="events" v-if="'listEvents' in $store.getters.apis">
         <events-tab :resource="dataResource" resourceType="VirtualMachine" :loading="loading" />
@@ -219,51 +148,60 @@
 </template>
 
 <script>
+import KubernetesNodeNotice from '@/views/compute/KubernetesNodeNotice'
 
-import { listRefreshMixin } from '@/utils/listRefreshMixin'
 import { getAPI, postAPI } from '@/api'
-import { h } from 'vue'
 import { mixinDevice } from '@/utils/mixin.js'
 import ResourceLayout from '@/layouts/ResourceLayout'
 import DetailsTab from '@/components/view/DetailsTab'
 import StatsTab from '@/components/view/StatsTab'
 import EventsTab from '@/components/view/EventsTab'
-import DetailSettings from '@/components/view/DetailSettings'
+import VmSettingsTab from '@/views/compute/VmSettingsTab.vue'
 import NicsTab from '@/views/compute/VmNicsTab.vue'
 import GuestNetworkTab from '@/views/compute/GuestNetworkTab'
-import ResourceSchedules from '@/views/compute/ResourceSchedules.vue'
+import VmSchedulesTab from '@/views/compute/VmSchedulesTab.vue'
 import ListResourceTable from '@/components/view/ListResourceTable'
 import ResourceIcon from '@/components/view/ResourceIcon'
 import AnnotationsTab from '@/components/view/AnnotationsTab'
+import VmDevicesTab from '@/views/compute/VmDevicesTab.vue'
+import VmIsoTab from '@/views/compute/VmIsoTab.vue'
 import VmVolumesTab from '@/views/compute/VmVolumesTab.vue'
 import SecurityGroupSelection from '@views/compute/wizard/SecurityGroupSelection'
 import DrPlanVmTab from '@/views/compute/dr/DrPlanVmTab.vue'
 import GPUTab from '@/components/view/GPUTab.vue'
 import FtctlTab from '@/views/compute/FtctlTab.vue'
+import VmBackupsTab from '@/views/compute/VmBackupsTab.vue'
 import VmSnapshotsTab from '@/views/compute/VmSnapshotsTab.vue'
+import VmProcessesTab from '@/views/compute/VmProcessesTab.vue'
+import vmProtectionTabs from '@/utils/vmProtectionTabs'
 
 export default {
   name: 'InstanceTab',
   components: {
+    KubernetesNodeNotice,
+    VmDevicesTab,
     ResourceLayout,
     DetailsTab,
     StatsTab,
     EventsTab,
-    DetailSettings,
+    VmSettingsTab,
     NicsTab,
     GuestNetworkTab,
     DrPlanVmTab,
     GPUTab,
     FtctlTab,
     VmSnapshotsTab,
-    ResourceSchedules,
+    VmProcessesTab,
+    VmBackupsTab,
+    VmSchedulesTab,
     ListResourceTable,
     SecurityGroupSelection,
     ResourceIcon,
     AnnotationsTab,
-    VmVolumesTab
+    VmVolumesTab,
+    VmIsoTab
   },
-  mixins: [listRefreshMixin(['loadDevicesFromDb'], { active: vm => !!vm.vm?.id && vm.currentTab === 'hostdevices' }), mixinDevice],
+  mixins: [mixinDevice, vmProtectionTabs],
   props: {
     resource: {
       type: Object,
@@ -279,6 +217,7 @@ export default {
     return {
       vm: {},
       totalStorage: 0,
+      listRefreshDisposed: false,
       currentTab: this.resolveCurrentTabFromRoute(),
       showUpdateSecurityGroupsModal: false,
       diskOfferings: [],
@@ -288,87 +227,15 @@ export default {
       editNicLinkStat: '',
       dataPreFill: {},
       securitygroupids: [],
-      securityGroupNetworkProviderUseThisVM: false,
-      usbDevices: [],
-      lunDevices: [],
-      pciDevices: [],
-      hbaDevices: [],
-      vhbaDevices: [],
-      scsiDevices: [],
-      // 디바이스 데이터 캐싱을 위한 플래그들
-      devicesLoaded: false,
-      deviceLoadingStates: {
-        pci: false,
-        usb: false,
-        lun: false,
-        hba: false,
-        vhba: false,
-        scsi: false,
-        fetching: false
-      },
-      deviceAssignmentsPromise: null,
-      deviceColumns: [
-        {
-          title: this.$t('label.name'),
-          dataIndex: 'hostDevicesName',
-          key: 'hostDevicesName',
-          fixed: 'left',
-          width: 250,
-          customRender: ({ text }) => {
-            return h('div', { style: 'white-space: pre-line; line-height: 1.4; min-height: 50px; padding-top: 8px;' }, this.formatDeviceName(text))
-          }
-        },
-        {
-          title: this.$t('label.details'),
-          dataIndex: 'hostDevicesText',
-          key: 'hostDevicesText',
-          width: 500,
-          customRender: ({ text }) => {
-            return h('div', {
-              style: 'white-space: pre-wrap; word-break: break-word; min-height: 40px;',
-              innerHTML: this.formatHostDevicesText(text)
-            })
-          }
-        }
-      ],
-      scsiDeviceColumns: [
-        {
-          title: this.$t('label.name'),
-          dataIndex: 'hostDevicesName',
-          key: 'hostDevicesName',
-          fixed: 'left',
-          width: 250,
-          customRender: ({ record }) => {
-            return h(
-              'div',
-              { style: 'white-space: pre-line; line-height: 1.4; min-height: 50px; padding-top: 8px;' },
-              this.formatDeviceName(record.scsiDisplayName || record.hostDevicesName)
-            )
-          }
-        },
-        {
-          title: this.$t('label.details'),
-          dataIndex: 'hostDevicesText',
-          key: 'hostDevicesText',
-          width: 500,
-          customRender: ({ text }) => {
-            return h('div', {
-              style: 'white-space: pre-wrap; word-break: break-word; min-height: 40px;',
-              innerHTML: this.formatScsiHostDevicesText(text)
-            })
-          }
-        }
-      ]
+      securityGroupNetworkProviderUseThisVM: false
+
     }
   },
   created () {
-    const self = this
     this.dataResource = this.resource
     this.vm = this.dataResource
     this.fetchData()
-    window.addEventListener('popstate', function () {
-      self.setCurrentTab()
-    })
+    window.addEventListener('popstate', this.setCurrentTab)
   },
   watch: {
     resource: {
@@ -385,7 +252,6 @@ export default {
 
           // 호스트가 변경되었거나, VM 상태가 변경되면 디바이스 캐시 초기화
           if (oldHostId !== newHostId || oldState !== newState) {
-            this.resetDeviceCache()
             // 디바이스 탭이 열려있으면 즉시 새로고침
             if (this.currentTab === 'hostdevices') {
               this.fetchData()
@@ -397,6 +263,10 @@ export default {
     '$route.fullPath': function () {
       this.setCurrentTab()
     }
+  },
+  beforeUnmount () {
+    this.listRefreshDisposed = true
+    window.removeEventListener('popstate', this.setCurrentTab)
   },
   mounted () {
     this.setCurrentTab()
@@ -487,22 +357,24 @@ export default {
       return 'hd' + String.fromCharCode('a'.charCodeAt(0) + deviceseq - 1)
     },
     setCurrentTab () {
+      if (this.$route?.path !== '/vm/' + this.resource?.id) return
       const routeTab = this.resolveCurrentTabFromRoute()
       if (this.currentTab !== routeTab) {
         this.currentTab = routeTab
       }
+      this.normalizeProtectionTab()
     },
     resolveCurrentTabFromRoute () {
       let tab = null
       if (this.$route?.query?.tab) {
         tab = this.$route.query.tab
       }
-      if (!tab && typeof window !== 'undefined' && window.location?.hash) {
+      if (typeof window !== 'undefined' && window.location?.hash?.split('?')[0] === '#' + this.$route?.path) {
         const queryString = window.location.hash.split('?')[1] || ''
         tab = new URLSearchParams(queryString).get('tab')
       }
       if (tab === 'disasterrecoverycluster') {
-        return 'getDrVmProtectionView' in this.$store.getters.apis ? 'drplans' : 'details'
+        return 'drplans'
       }
       return tab || 'details'
     },
@@ -534,11 +406,6 @@ export default {
           }
         }
       })
-
-      if (!this.devicesLoaded) {
-        await this.loadDevicesFromDb()
-        this.devicesLoaded = true
-      }
     },
     listDiskOfferings () {
       getAPI('listDiskOfferings', {
@@ -579,9 +446,9 @@ export default {
       })
     },
     async handleChangeTab (activeKey) {
+      if ((activeKey === 'ftctl' && !this.showFtTab) || (activeKey === 'drplans' && !this.showDrTab)) return
       // Load host device data only when the device tab is selected.
       if (activeKey === 'hostdevices') {
-        this.resetDeviceCache()
         await this.fetchData()
       }
 
@@ -599,6 +466,7 @@ export default {
       }
     },
     keepCurrentTab (activeKey = 'ftctl') {
+      if (activeKey === 'ftctl' && !this.showFtTab) return
       const query = Object.assign({}, this.$route.query)
       if (query.tab !== activeKey) {
         query.tab = activeKey
@@ -608,206 +476,23 @@ export default {
         history.pushState({}, null, '#' + this.$route.path + '?' + queryString)
       }
       this.currentTab = activeKey
-    },
-    resetDeviceCache () {
-      this.devicesLoaded = false
-      this.deviceLoadingStates = {
-        pci: false,
-        usb: false,
-        lun: false,
-        hba: false,
-        vhba: false,
-        scsi: false,
-        fetching: false
-      }
-      this.deviceAssignmentsPromise = null
-      // 장치 데이터 초기화
-      this.pciDevices = []
-      this.usbDevices = []
-      this.lunDevices = []
-      this.hbaDevices = []
-      this.vhbaDevices = []
-      this.scsiDevices = []
-    },
-    async loadDevicesFromDb () {
-      const request = this.listRequestToken('loadDevicesFromDb')
-
-      const deviceTypes = ['pci', 'usb', 'lun', 'hba', 'vhba', 'scsi']
-      this.deviceAssignmentsPromise = (async () => {
-        this.deviceLoadingStates.fetching = !request.loaded
-        deviceTypes.forEach(type => { this.deviceLoadingStates[type] = !request.loaded })
-
-        try {
-          const response = await getAPI('listVmDeviceAssignments', { virtualmachineid: this.vm.id })
-          if (!this.isListRequestCurrent('loadDevicesFromDb', request)) return
-          const assignments = response?.listvmdeviceassignmentsresponse?.vmdeviceassignment
-          const assignmentList = Array.isArray(assignments)
-            ? assignments
-            : assignments
-              ? [assignments]
-              : []
-
-          const categorized = {
-            pci: [],
-            usb: [],
-            lun: [],
-            hba: [],
-            vhba: [],
-            scsi: []
-          }
-
-          const addUnique = (list, device) => {
-            if (!list.some(existing =>
-              existing.hostDevicesName === device.hostDevicesName &&
-              existing.hostId === device.hostId)) {
-              list.push(device)
-            }
-          }
-
-          assignmentList.forEach(item => {
-            const type = (item.devicetype || '').toLowerCase()
-            if (!['pci', 'usb', 'lun', 'hba', 'vhba', 'scsi'].includes(type)) {
-              return
-            }
-            const device = {
-              key: `${item.hostid || 'na'}-${item.hostdevicesname}`,
-              hostDevicesName: item.hostdevicesname,
-              hostDevicesText: item.hostdevicestext || '',
-              hostId: item.hostid
-            }
-            if (type === 'scsi') {
-              const devMatch = String(device.hostDevicesText).match(/Device:\s*(\S+)/i)
-              device.scsiDisplayName = devMatch ? devMatch[1] : device.hostDevicesName
-            }
-
-            switch (type) {
-              case 'pci':
-                addUnique(categorized.pci, device)
-                break
-              case 'usb':
-                addUnique(categorized.usb, device)
-                break
-              case 'lun':
-                addUnique(categorized.lun, device)
-                break
-              case 'hba':
-                addUnique(categorized.hba, device)
-                break
-              case 'vhba':
-                addUnique(categorized.vhba, device)
-                break
-              case 'scsi':
-                addUnique(categorized.scsi, device)
-                break
-            }
-          })
-
-          const hostId = this.vm?.hostid || categorized.lun?.[0]?.hostId
-          if (hostId && categorized.lun.length > 0) {
-            const lunDetailMap = (request.loaded ? Object.fromEntries(this.lunDevices.map(device => [device.hostDevicesName, device.hostDevicesText])) : await this.fetchLunDetailMap(hostId))
-            categorized.lun = categorized.lun.map(device => {
-              if (device.hostDevicesText && String(device.hostDevicesText).trim().length > 0) {
-                return device
-              }
-              const detail = lunDetailMap[device.hostDevicesName]
-              if (detail) {
-                return { ...device, hostDevicesText: detail }
-              }
-              return device
-            })
-          }
-
-          if (!this.isListRequestCurrent('loadDevicesFromDb', request)) return
-          this.pciDevices = categorized.pci
-          this.usbDevices = categorized.usb
-          this.lunDevices = categorized.lun
-          this.hbaDevices = categorized.hba
-          this.vhbaDevices = categorized.vhba
-          this.scsiDevices = categorized.scsi
-        } catch (error) {
-          if (!this.isListRequestCurrent('loadDevicesFromDb', request)) return
-          request.failed = true
-          this.listRefreshFailed = true
-          if (request.loaded) return
-          console.error('Failed to load VM device assignments', error)
-          this.pciDevices = []
-          this.usbDevices = []
-          this.lunDevices = []
-          this.hbaDevices = []
-          this.vhbaDevices = []
-          this.scsiDevices = []
-        } finally {
-          if (this.isListRequestCurrent('loadDevicesFromDb', request)) {
-            deviceTypes.forEach(type => { this.deviceLoadingStates[type] = false })
-            this.deviceLoadingStates.fetching = false
-            this.deviceAssignmentsPromise = null
-          }
-        }
-      })()
-
-      return this.deviceAssignmentsPromise
-    },
-    async fetchLunDetailMap (hostId) {
-      const detailMap = {}
-      try {
-        const [singleSettled, multiSettled] = await Promise.allSettled([
-          getAPI('listHostLunDevices', { id: hostId, lunpathmode: 'single', lunPathMode: 'single' }),
-          getAPI('listHostLunDevices', { id: hostId, lunpathmode: 'multipath', lunPathMode: 'multipath' })
-        ])
-
-        const sources = []
-        if (singleSettled.status === 'fulfilled') {
-          sources.push(singleSettled.value?.listhostlundevicesresponse?.listhostlundevices?.[0])
-        }
-        if (multiSettled.status === 'fulfilled') {
-          sources.push(multiSettled.value?.listhostlundevicesresponse?.listhostlundevices?.[0])
-        }
-
-        sources.forEach(src => {
-          if (!src) return
-          if (src.devicedetails && typeof src.devicedetails === 'object') {
-            Object.entries(src.devicedetails).forEach(([name, text]) => {
-              if (name && text && !detailMap[name]) {
-                detailMap[name] = text
-              }
-            })
-          }
-          const names = Array.isArray(src.hostdevicesname) ? src.hostdevicesname : []
-          const texts = Array.isArray(src.hostdevicestext) ? src.hostdevicestext : []
-          names.forEach((name, idx) => {
-            const text = texts[idx]
-            if (name && text && !detailMap[name]) {
-              detailMap[name] = text
-            }
-          })
-        })
-      } catch (e) {
-      }
-      return detailMap
-    },
-    async fetchPciDevices () {
-      await this.loadDevicesFromDb()
-    },
-    async fetchUsbDevices () {
-      await this.loadDevicesFromDb()
-    },
-    async fetchLunDevices () {
-      await this.loadDevicesFromDb()
-    },
-    async fetchHbaDevices () {
-      await this.loadDevicesFromDb()
-    },
-    async fetchVhbaDevices () {
-      await this.loadDevicesFromDb()
-    },
-    async fetchScsiDevices () {
-      await this.loadDevicesFromDb()
     }
+
   }
 }
 </script>
 
 <style lang="scss" scoped>
+.security-group-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+  .protection-tab-notice {
+    margin-bottom: 12px;
+  }
   .page-header-wrapper-grid-content-main {
     width: 100%;
     height: 100%;

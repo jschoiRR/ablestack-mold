@@ -1,0 +1,87 @@
+[
+  {
+    "request": {
+      "command": "queryAsyncJobResult",
+      "jobid": "162d76ef-c210-4d05-b9a4-c55b05a03501"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.admin.affinitygroup.UpdateVMAffinityGroupCmdByAdmin",
+        "jobprocstatus": 0,
+        "jobresultcode": 530,
+        "jobresulttype": "object",
+        "jobresult": {
+          "errorcode": 530,
+          "errortext": "Entity AffinityGroup {\"id\":30,\"name\":\"qa-ag01-20261019-user\",\"uuid\":\"4c73af99-934b-472d-97eb-e80d10556c70\"} and entity Account [{\"accountName\":\"admin\",\"id\":2,\"uuid\":\"a75c97c6-b253-11f1-a895-0024814c313f\"}] belong to different accounts"
+        },
+        "created": "2026-10-19T01:39:11+0900",
+        "completed": "2026-10-19T01:39:11+0900",
+        "jobid": "162d76ef-c210-4d05-b9a4-c55b05a03501",
+        "jobstatus": 2
+      }
+    }
+  },
+  {
+    "request": {
+      "command": "listVirtualMachines",
+      "id": "3a173569-034b-40ba-b402-63c189f48ac2",
+      "details": "min,affgrp"
+    },
+    "response": {
+      "listvirtualmachinesresponse": {
+        "count": 1,
+        "virtualmachine": [
+          {
+            "id": "3a173569-034b-40ba-b402-63c189f48ac2",
+            "name": "qa-ag01-20261019-admin",
+            "displayname": "qa-ag01-20261019-admin",
+            "account": "admin",
+            "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+            "username": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "created": "2026-10-19T01:23:49+0900",
+            "state": "Stopped",
+            "haenable": false,
+            "zoneid": "7013f5a1-de59-4cea-a596-f4f58815f31c",
+            "zonename": "Zone",
+            "volumemutationblockedreason": "",
+            "guestosid": "9708b6ac-b253-11f1-a895-0024814c313f",
+            "securitygroup": [],
+            "nic": [],
+            "hypervisor": "KVM",
+            "instancename": "i-2-647-VM",
+            "details": {
+              "deployvm": "true",
+              "tpmversion": "NONE",
+              "rootDiskController": "osdefault"
+            },
+            "clonefastsourcepowerallowed": false,
+            "clonefastpowerallowed": false,
+            "affinitygroup": [],
+            "displayvm": true,
+            "isdynamicallyscalable": true,
+            "deleteprotection": false,
+            "ostypeid": "9708b6ac-b253-11f1-a895-0024814c313f",
+            "osdisplayname": "Rocky Linux 9",
+            "receivedbytes": 0,
+            "sentbytes": 0,
+            "vbmcport": "None",
+            "kvdoenable": false,
+            "kvdoinuse": false,
+            "arch": "x86_64",
+            "vbmcstatus": "Unallocated",
+            "tags": [],
+            "hasannotations": false
+          }
+        ]
+      }
+    }
+  }
+]

@@ -1,0 +1,259 @@
+Browser tab: 5, Title: "가상머신 - ABLESTACK-Mold", URL: "http://10.10.31.10:8080/client/#/vm/6f57136c-8abb-4122-bbf6-baebad16c917".
+1 AXWebArea 가상머신 - ABLESTACK-Mold, URL: 10.10.31.10:8080/client/#/vm/6f57136c-8abb-4122-bbf6-baebad16c917
+	2 container
+		3 container
+			4 image
+			5 menu
+				6 dashboard 대시보드
+					7 link Description: dashboard 대시보드, Value: 10.10.31.10:8080/client/#/dashboard
+				8 container
+					9 image cloud
+					10 text 컴퓨트
+				11 content list sub_menu_67_$$_/compute-popup
+					12 cloud-server 가상머신
+						13 link Description: cloud-server 가상머신, Value: 10.10.31.10:8080/client/#/vm
+					14 camera VM 스냅샷
+						15 link Description: camera VM 스냅샷, Value: 10.10.31.10:8080/client/#/vmsnapshot
+					16 쿠버네티스
+						17 link Description: 쿠버네티스, Value: 10.10.31.10:8080/client/#/kubernetes
+					18 fullscreen 오토스케일 VM 그룹
+						19 link Description: fullscreen 오토스케일 VM 그룹, Value: 10.10.31.10:8080/client/#/autoscalevmgroup
+					20 gold 가상머신 그룹
+						21 link Description: gold 가상머신 그룹, Value: 10.10.31.10:8080/client/#/vmgroup
+					22 key SSH 키 쌍
+						23 link Description: key SSH 키 쌍, Value: 10.10.31.10:8080/client/#/ssh
+					24 solution 사용자 데이터 라이브러리
+						25 link Description: solution 사용자 데이터 라이브러리, Value: 10.10.31.10:8080/client/#/userdata
+					26 solution CNI 구성
+						27 link Description: solution CNI 구성, Value: 10.10.31.10:8080/client/#/cniconfiguration
+					28 swap Affinity 그룹
+						29 link Description: swap Affinity 그룹, Value: 10.10.31.10:8080/client/#/affinitygroup
+				30 container
+					31 image hdd
+					32 text 스토리지
+				33 container
+					34 image wifi
+					35 text 네트워크
+				36 container
+					37 image picture
+					38 text 이미지
+				39 schedule 이벤트
+					40 link Description: schedule 이벤트, Value: 10.10.31.10:8080/client/#/event
+				41 project 프로젝트
+					42 link Description: project 프로젝트, Value: 10.10.31.10:8080/client/#/project
+				43 team 계정
+					44 link Description: team 계정, Value: 10.10.31.10:8080/client/#/account
+				45 block 도메인
+					46 link Description: block 도메인, Value: 10.10.31.10:8080/client/#/domain
+				47 global Zone
+					48 link Description: global Zone, Value: 10.10.31.10:8080/client/#/zones
+				49 container
+					50 image shopping
+					51 text 서비스 오퍼링
+				52 container
+					53 image tool
+					54 text 도구
+				55 read API 문서
+					56 link Description: read API 문서, Value: 10.10.31.10:8080/client/#/apidocs/
+		57 container
+			58 image menu-fold
+			59 container
+				60 combo box (settable) rc_select_3
+				61 image project
+				62 text 기본 보기
+			63 button 생성 down
+				64 text 생성
+				65 image down
+			66 image translation
+			67 image bell
+			68 container
+				69 text UD UD1390 domainadmin
+		70 container
+			71 container
+				72 container
+					73 link Description: home, Value: 10.10.31.10:8080/client/#/
+					74 text /
+					75 link Description: 가상머신, Value: 10.10.31.10:8080/client/#/vm
+					76 text / UD1390-31-20261016-domainadmin
+					77 link Description: question-circle, Value: docs.ablecloud.io/latest/adminguide/virtual_machines.html
+					78 button reload 업데이트
+						79 image reload
+						80 text 업데이트
+				81 button down 작업
+					82 image down
+					83 text 작업
+			84 container
+				85 image edit
+				86 heading UD1390-31-20261016-domainadmin, Value: 4
+					87 text UD1390-31-20261016-domainadmin
+				88 text KVM HA 활성화 동적으로 확장 가능
+				89 link code
+					90 button (disabled) code
+						91 image code
+				92 text 상태 정지된 상태 아이디
+				93 button barcode
+					94 image barcode
+				95 link Description: 6f57136c-8abb-4122-bbf6-baebad16c917 , Value: javascript:;
+				96 text CPU 2 CPU x 2.00 GHz
+				97 image question-circle
+				98 text 메모리 2048 MB 메모리 네트워크
+				99 image wifi
+				100 text 1 NIC(s)
+				101 text eth0
+				102 link Description:  , Value: javascript:;
+				103 text 기본
+				104 image apartment
+				105 link Description: UD1390-31-20261016-domainadmin, Value: 10.10.31.10:8080/client/#/guestnetwork/5abe1130-d854-4f51-a2ed-bde236e2598b
+				106 text 템플릿
+				107 image save
+				108 link Description: Rocky-Linux-9-5-x86-64-Server-Cloud-Image.qcow2, Value: 10.10.31.10:8080/client/#/template/8d692729-7565-4e92-965b-ebaadc1efcb0
+				109 text 컴퓨트 오퍼링
+				110 image cloud
+				111 link Description: 2Core 2GB, Value: 10.10.31.10:8080/client/#/computeoffering/cd928fb0-6e2b-4ec8-b02b-023aed55b2b1
+				112 text Zone
+				113 image global
+				114 link Description: Zone, Value: 10.10.31.10:8080/client/#/zone/7013f5a1-de59-4cea-a596-f4f58815f31c
+				115 text 사용자 데이터
+				116 image solution
+				117 link Description: UD1390-31-20261016-domainadmin, Value: 10.10.31.10:8080/client/#/userdata/19586e8e-ee59-460b-babb-ae9579d19728
+				118 text 계정
+				119 image user
+				120 link Description: ud1390-31-20261016-domainadmin, Value: 10.10.31.10:8080/client/#/account?name=ud1390-31-20261016-domainadmin&domainid=e41f015d-8bf4-44b1-8221-29afe659c947
+				121 text 도메인
+				122 image block
+				123 link Description: ud1390-31-20261016, Value: 10.10.31.10:8080/client/#/domain/e41f015d-8bf4-44b1-8221-29afe659c947?tab=details
+				124 text 생성일
+				125 image calendar
+				126 text 2026. 10. 16. 오후 3:32:02
+				127 container
+					128 text 태그
+					129 container
+						130 image plus
+						131 text  새 태그
+			132 container
+				133 tab group
+					134 container
+						135 tab (selected, settable, boolean) 상세, Value: 1, ID: rc-tabs-16-tab-details
+						136 tab (selectable, settable, boolean) IP 구성, Value: 0, ID: rc-tabs-16-tab-guestnetwork
+						137 tab (selectable, settable, boolean) 메트릭, Value: 0, ID: rc-tabs-16-tab-stats
+						138 tab (selectable, settable, boolean) 프로세스, Value: 0, ID: rc-tabs-16-tab-processes
+						139 tab (selectable, settable, boolean) 스케줄, Value: 0, ID: rc-tabs-16-tab-schedules
+						140 tab (selectable, settable, boolean) ISO, Value: 0, ID: rc-tabs-16-tab-cdrom
+						141 tab (selectable, settable, boolean) 볼륨, Value: 0, ID: rc-tabs-16-tab-volumes
+						142 tab (selectable, settable, boolean) NIC, Value: 0, ID: rc-tabs-16-tab-nics
+						143 tab (selectable, settable, boolean) 설정, Value: 0, ID: rc-tabs-16-tab-settings
+						144 tab (selectable, settable, boolean) 호스트 장치, Value: 0, ID: rc-tabs-16-tab-hostdevices
+						145 tab (selectable, settable, boolean) VM 스냅샷, Value: 0, ID: rc-tabs-16-tab-vmsnapshots
+						146 tab (selectable, settable, boolean) 이벤트, Value: 0, ID: rc-tabs-16-tab-events
+						147 tab (selectable, settable, boolean) 코멘트, Value: 0, ID: rc-tabs-16-tab-comments
+				148 container Description: 상세, ID: rc-tabs-16-panel-details
+					149 content list
+						150 container
+							151 text VM 호스트 명
+							152 text UD1390-31-20261016-domainadmin
+						153 container
+							154 text VM 표시 명
+							155 text UD1390-31-20261016-domainadmin
+						156 container
+							157 text 아이디
+							158 text 6f57136c-8abb-4122-bbf6-baebad16c917
+						159 container
+							160 text 상태
+							161 text Stopped
+						162 container
+							163 text 템플릿
+							164 text Rocky-Linux-9-5-x86-64-Server-Cloud-Image.qcow2
+						165 container
+							166 text 템플릿 형식
+							167 text USER
+						168 container
+							169 text 컴퓨트 오퍼링
+							170 text 2Core 2GB
+						171 container
+							172 text 동적으로 확장 가능
+							173 text true
+						174 container
+							175 text HA 활성화
+							176 text true
+						177 container
+							178 text 하이퍼바이저
+							179 text KVM
+						180 container
+							181 text 계정
+							182 text ud1390-31-20261016-domainadmin
+						183 container
+							184 text 도메인
+							185 text ud1390-31-20261016
+						186 container
+							187 text Zone
+							188 text Zone
+						189 container
+							190 text 사용자 데이터 ID
+							191 text 19586e8e-ee59-460b-babb-ae9579d19728
+						192 container
+							193 text 사용자 데이터 이름
+							194 text UD1390-31-20261016-domainadmin
+						195 container
+							196 text VBMC 포트
+							197 text 미할당
+						198 container
+							199 text 삭제 보호
+							200 text false
+	201 container
+		202 image check-circle
+		203 text 사용 가능한 모든 기능을 발견했습니다!
+	204 container
+		205 container VM 저장 사용자 데이터 조회
+			206 container
+				207 button Close
+					208 image close
+				209 text VM 저장 사용자 데이터 조회
+				210 container 사용자 데이터 본문
+					211 table
+						212 row
+							213 cell
+								214 text VM 표시 명
+							215 cell
+								216 text UD1390-31-20261016-domainadmin (6f57136c-8abb-4122-bbf6-baebad16c917)
+						217 row
+							218 cell
+								219 text 사용자 데이터 라이브러리
+							220 cell
+								221 text UD1390-31-20261016-domainadmin
+						222 row
+							223 cell
+								224 text 사용자 데이터 정책
+							225 cell
+								226 text -
+						227 row
+							228 cell
+								229 text 변수 값 (VM 메타데이터)
+							230 cell
+								231 text -
+					232 container
+						233 image info-circle
+						234 text 현재 연결된 라이브러리 원본과 VM 저장 본문이 바이트 단위로 같습니다.
+					235 button copy 클립보드에 복사
+						236 image copy
+						237 text 클립보드에 복사
+					238 button download 다운로드
+						239 image download
+						240 text 다운로드
+					241 container 본문 표시 형식
+						242 container
+							243 radio button (settable, integer) Description: 원문 (UTF-8), Value: 1
+							244 text 원문 (UTF-8)
+						245 container
+							246 radio button (settable, integer) Description: Base64, Value: 0
+							247 text Base64
+					248 button 업데이트
+						249 image reload
+					250 text Mold에 저장된 VM 본문입니다. 라이브러리 원본 및 템플릿 정책·변수 정보와 구분됩니다. 공급자 전달 상태와 게스트 실행 결과는 이 조회로 확인할 수 없습니다.
+					251 text 표시: 원문 (UTF-8) · 원문 크기: 35 바이트
+					252 container 원문 (UTF-8)
+						253 text #cloud-config
+# domainadmin 한글
+
+				254 button 닫기
+
+The focused UI element is 254 button 닫기

@@ -1,0 +1,185 @@
+Browser tab: 6, Title: "사용자 데이터 라이브러리 - ABLESTACK-Mold", URL: "http://10.10.31.10:8080/client/#/userdata/4789a5c4-de6c-48a5-9201-0f40bc4e17b8?tab=userdata.versions".
+1 AXWebArea 사용자 데이터 라이브러리 - ABLESTACK-Mold, URL: 10.10.31.10:8080/client/#/userdata/4789a5c4-de6c-48a5-9201-0f40bc4e17b8?tab=userdata.versions
+	2 container
+		418 container
+			419 text 페이지 스타일 설정
+			420 button 닫기
+				421 image close
+			893 container
+				894 heading 페이지 스타일 설정, Value: 3
+					895 text 페이지 스타일 설정
+				896 container
+					897 image
+					898 container
+						899 radio button (settable, integer) Description:  , Value: 0
+				900 container
+					901 image
+					902 container
+						903 radio button (settable, integer) Description:  , Value: 1
+					904 image check
+				905 heading 테마 색상, Value: 3
+					906 text 테마 색상
+				907 container
+					908 radio button (settable, integer) Description:  , Value: 0
+					909 image check
+				910 container
+					911 radio button (settable, integer) Description:  , Value: 0
+				912 container
+					913 radio button (settable, integer) Description:  , Value: 0
+				914 container
+					915 radio button (settable, integer) Description:  , Value: 0
+				916 container
+					917 radio button (settable, integer) Description:  , Value: 0
+				918 container
+					919 radio button (settable, integer) Description:  , Value: 0
+				920 container
+					921 radio button (settable, integer) Description:  , Value: 0
+				922 container
+					923 radio button (settable, integer) Description:  , Value: 0
+				924 heading 네비게이션 설정, Value: 3
+					925 text 네비게이션 설정
+				926 container
+					927 container
+						928 text 배경색
+						929 color well (disabled, settable) #ffffff
+					930 container
+						931 text 텍스트 색상
+						932 color well (disabled, settable) #000000
+				933 image exclamation-circle
+				934 text 설정은 현재 브라우저에서만 볼 수 있습니다. 설정을 적용하려면 JSON 파일을 다운로드하고 경로 `/public/config.json` 아래의 `config.json` 파일의 `theme` 섹션에서 해당 콘텐츠를 교체하세요.
+				935 button download 세팅값 다운로드(json)
+					936 image download
+					937 text 세팅값 다운로드(json)
+				938 button undo 기본값으로 재설정
+					939 image undo
+					940 text 기본값으로 재설정
+		122 container
+			892 image menu-unfold
+			124 container
+				125 combo box (settable) rc_select_0
+				126 image project
+				127 text 기본 보기
+			131 image translation
+			132 image bell
+			133 container
+				134 text AC admin cloud
+		135 container
+			287 container
+				288 link Description: home, Value: 10.10.31.10:8080/client/#/
+				289 text /
+				290 link Description: 사용자 데이터 라이브러리, Value: 10.10.31.10:8080/client/#/userdata
+				291 text / UD1391-31-20261016-admin-v2
+				292 link Description: question-circle, Value: docs.ablecloud.io/latest/adminguide/virtual_machines.html#user-data-and-meta-data
+				293 button reload 업데이트
+					744 image reload
+					295 text 업데이트
+			296 button down 작업
+				297 image down
+				298 text 작업
+			745 container
+				746 image solution
+				747 heading UD1391-31-20261016-admin-v2, Value: 4
+					748 text UD1391-31-20261016-admin-v2
+				749 text 아이디
+				750 button barcode
+					751 image barcode
+				752 link Description: 4789a5c4-de6c-48a5-9201-0f40bc4e17b8 , Value: javascript:;
+				753 text 계정
+				754 image user
+				755 link Description: admin, Value: 10.10.31.10:8080/client/#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f
+				756 text 도메인
+				757 image block
+				758 link Description: ROOT, Value: 10.10.31.10:8080/client/#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details
+				759 link Description: cloud-server 가상머신 보기, Value: 10.10.31.10:8080/client/#/vm?userdataid=4789a5c4-de6c-48a5-9201-0f40bc4e17b8
+			760 container
+				761 tab group
+					762 container
+						763 tab (selectable, settable, boolean) 상세, Value: 0, ID: rc-tabs-1-tab-details
+						764 tab (selectable, settable, boolean) 사용자 데이터 본문, Value: 0, ID: rc-tabs-1-tab-userdata.content
+						765 tab (selected, settable, boolean) 버전·변경 정책, Value: 1, ID: rc-tabs-1-tab-userdata.versions
+						766 tab (selectable, settable, boolean) 사용 가상머신, Value: 0, ID: rc-tabs-1-tab-userdata.usage.vms
+						767 tab (selectable, settable, boolean) 연결 템플릿, Value: 0, ID: rc-tabs-1-tab-userdata.usage.templates
+						768 tab (selectable, settable, boolean) 연결 ISO, Value: 0, ID: rc-tabs-1-tab-userdata.usage.isos
+						769 tab (selectable, settable, boolean) 코멘트, Value: 0, ID: rc-tabs-1-tab-comments
+				770 container Description: 버전·변경 정책, ID: rc-tabs-1-panel-userdata.versions
+					771 container
+						772 button reload 업데이트
+							773 image reload
+							774 text 업데이트
+						775 text 출처는 새 데이터의 댓글에 기록하며 이 탭에서 표시합니다. 댓글은 권한에 따라 삭제·공개 범위를 변경할 수 있으므로 변경 불가능한 감사 기록이나 자동 적용 이력이 아닙니다. 외부 API 등록 또는 출처 메모가 없는 항목의 부모·버전 순서는 추정하지 않습니다. 출처 메모는 댓글 API의 255자 제한에 맞춰 UUID·바이트 수만 기록합니다. 이름·변수는 각 버전의 상세와 복제 미리보기에서 확인하세요.
+						776 table
+							777 row
+								778 cell
+									779 text 복제 원본
+								780 cell
+									781 link Description: 4cb11aab-bf01-4c0f-a6a1-e3c66c015dfa, Value: 10.10.31.10:8080/client/#/userdata/4cb11aab-bf01-4c0f-a6a1-e3c66c015dfa
+							782 row
+								783 cell
+									784 text 새 버전
+								785 cell
+									786 text UD1391-31-20261016-admin-v2 (4789a5c4-de6c-48a5-9201-0f40bc4e17b8)
+							787 row
+								788 cell
+									789 text 본문 차이
+								790 cell
+									791 text 기록 당시 원본 12012바이트 → 새 버전 40바이트
+							792 row
+								793 cell
+									794 text 사용자 데이터 매개변수
+								795 cell
+									796 text -
+						797 button (collapsed) 적용 범위·참조 전환·되돌리기 안내, Secondary Actions: Expand
+							798 text 적용 범위·참조 전환·되돌리기 안내
+	188 container
+		189 image info-circle
+		190 text Wall 모니터링을 사용할 수 없습니다. 기존 알림은 최신 정보가 아닐 수 있으며 Mold는 계속 사용할 수 있습니다. 비활성
+	472 container
+		473 container 복제하여 새 버전 등록
+			474 container
+				799 button Close
+					800 image close
+				477 text 복제하여 새 버전 등록
+				801 container
+					802 image info-circle
+					803 text 원본의 이름·본문·변수를 재사용해 같은 소유 범위에 새 데이터를 만듭니다. 기존 VM·템플릿·ISO에는 자동 적용되지 않습니다.
+					804 text 복제 원본: UD1391-31-20261016-admin-v2 (4789a5c4-de6c-48a5-9201-0f40bc4e17b8)
+					805 text admin / ROOT
+					806 link Description: 사용 가상머신, Value: 10.10.31.10:8080/client/#/userdata/4789a5c4-de6c-48a5-9201-0f40bc4e17b8?tab=userdata.usage.vms
+					807 link Description: 연결 템플릿, Value: 10.10.31.10:8080/client/#/userdata/4789a5c4-de6c-48a5-9201-0f40bc4e17b8?tab=userdata.usage.templates
+					808 link Description: 연결 ISO, Value: 10.10.31.10:8080/client/#/userdata/4789a5c4-de6c-48a5-9201-0f40bc4e17b8?tab=userdata.usage.isos
+					809 button (collapsed) 적용 범위·참조 전환·되돌리기 안내, Secondary Actions: Expand
+						810 text 적용 범위·참조 전환·되돌리기 안내
+					811 container userdata-registration-form
+						812 container
+							941 text * 이름
+							814 image info-circle
+						815 text field (settable) * 이름 info-circle, Value: UD1391-31-20261016-admin-v2-v2, ID: form_item_name
+						816 container
+							942 text * 사용자 데이터
+							818 image info-circle
+						819 text entry area (settable) * 사용자 데이터 info-circle, Value: I2Nsb3VkLWNvbmZpZwojIFVEMTM5MSB2ZXJzaW9uIEEg7ZWc6riACg==, ID: form_item_userdata
+						820 text Base64 인코드
+						821 container
+							822 checkbox (settable, integer) Base64 인코드  , Value: 1, ID: form_item_isbase64
+							823 text 처음에는 원본 바이트를 보존하는 Base64로 채웁니다. UTF-8 본문은 원문 편집을 선택할 수 있습니다. 아래 미리보기에서 변경 내용을 확인하세요.
+							824 button 원문으로 편집
+						825 container
+							826 text 사용자 데이터 매개변수
+							827 image info-circle
+						828 container
+							829 combo box (settable) 사용자 데이터 매개변수 info-circle, ID: form_item_params
+							830 text comma separated list of variables declared in user data content
+						831 container
+							832 image exclamation-circle
+							833 text 본문이 원본과 같습니다. 이름·변수만 바꾸는 버전은 같은 소유자의 동일 본문 중복 금지 정책에 따라 등록할 수 없습니다.
+						834 container
+							835 text 원본 40바이트 → 새 버전 40바이트 · 최초 차이 바이트 위치: -
+							836 text 사용자 데이터 매개변수: - → -
+						837 button (collapsed) 원본 본문 확인, Secondary Actions: Expand
+							838 text 원본 본문 확인
+						839 button (collapsed) 새 버전 본문 미리보기, Secondary Actions: Expand
+							840 text 새 버전 본문 미리보기
+				518 button 취소
+				841 button 새 버전 등록
+
+The focused UI element is 815 text field (settable) * 이름 info-circle, Value: UD1391-31-20261016-admin-v2-v2, ID: form_item_name

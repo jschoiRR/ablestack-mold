@@ -1,0 +1,2327 @@
+{
+  "checks": [
+    {
+      "name": "clone starts from exact source bytes",
+      "pass": true
+    },
+    {
+      "name": "account clone registers only CNI and records metadata",
+      "pass": true
+    },
+    {
+      "name": "duplicate name keeps draft and sends no second registration",
+      "pass": true
+    },
+    {
+      "name": "lost response injected only after real CNI registration HTTP 200",
+      "pass": true
+    },
+    {
+      "name": "registration response loss reconciles without another registration",
+      "pass": true
+    },
+    {
+      "name": "second relation chunk denied after first real chunk committed",
+      "pass": true
+    },
+    {
+      "name": "partial relation retry never registers another CNI",
+      "pass": true
+    },
+    {
+      "name": "isolated second relation POST 403 preserves its first committed chunk",
+      "pass": true
+    },
+    {
+      "name": "isolated 403 retry registers once and completes only missing metadata",
+      "pass": true
+    },
+    {
+      "name": "ordinary owner can open CNI clone under its configured API permissions",
+      "pass": true
+    },
+    {
+      "name": "binary source stays exact Base64 and cannot switch to guessed text",
+      "pass": true
+    },
+    {
+      "name": "project clone request uses its project with no account fallback",
+      "pass": true
+    },
+    {
+      "name": "CNI comments show friendly relation labels without Base64 protocol text",
+      "pass": true
+    },
+    {
+      "name": "ordinary UserData clone keeps the original API and source memo",
+      "pass": true
+    },
+    {
+      "name": "final required labels",
+      "pass": true
+    },
+    {
+      "name": "oversize inline rejection",
+      "pass": true
+    },
+    {
+      "name": "large clone exactly one registration despite annotation 403",
+      "pass": true
+    },
+    {
+      "name": "clone source clipboard exact BOM CRLF bytes",
+      "pass": true
+    },
+    {
+      "name": "clone source download exact BOM CRLF bytes",
+      "pass": true
+    },
+    {
+      "name": "nested variable tool CtrlEnter does not register parent",
+      "pass": true
+    },
+    {
+      "name": "tag Enter commits tag without registering CNI",
+      "pass": true
+    },
+    {
+      "name": "VM common list remains readable",
+      "pass": true
+    },
+    {
+      "name": "VM shared comments tab remains readable",
+      "pass": true
+    },
+    {
+      "name": "general UserData provenance presentation remains unchanged",
+      "pass": true
+    },
+    {
+      "name": "UI duplicate name is blocked before another registration",
+      "pass": true
+    },
+    {
+      "name": "final deployed invalid name receives focus after unlock",
+      "pass": true
+    },
+    {
+      "name": "final deployed invalid body receives focus after unlock",
+      "pass": true
+    },
+    {
+      "name": "final deployed clone registers once and retries missing metadata only",
+      "pass": true
+    },
+    {
+      "name": "final light invalid name receives focus",
+      "pass": true
+    },
+    {
+      "name": "clean list no CNI1406 fixtures and original dark theme",
+      "pass": true
+    }
+  ],
+  "views": [
+    {
+      "name": "before-list-dark-1440",
+      "code": [],
+      "fileInputs": [],
+      "focus": "BODY",
+      "height": 1000,
+      "modals": [],
+      "pageWidth": 1430,
+      "theme": "dark",
+      "url": "#/cniconfiguration",
+      "width": 1440
+    },
+    {
+      "name": "account-draft-initial-dark-1440",
+      "code": [
+        {
+          "height": 0,
+          "maxHeight": "300px",
+          "scrollHeight": 93,
+          "scrollWidth": 890,
+          "width": 890
+        },
+        {
+          "height": 93,
+          "maxHeight": "300px",
+          "scrollHeight": 93,
+          "scrollWidth": 890,
+          "width": 890
+        }
+      ],
+      "fileInputs": [
+        {
+          "display": "none",
+          "width": 0
+        }
+      ],
+      "focus": "SUMMARY",
+      "height": 1000,
+      "modals": [
+        {
+          "bodyHeight": 710,
+          "bodyScroll": 818,
+          "class": "ant-modal cni-clone-dialog mold-dialog mold-dialog-standard",
+          "footer": 915,
+          "left": 240,
+          "right": 1200
+        }
+      ],
+      "pageWidth": 1430,
+      "theme": "dark",
+      "url": "#/cniconfiguration/4eb9386a-2626-436b-ba0a-3bdfdf0c1b80",
+      "width": 1440
+    },
+    {
+      "name": "account-created-initial-dark-1440",
+      "code": [],
+      "fileInputs": [],
+      "focus": "BODY",
+      "height": 1000,
+      "modals": [
+        {
+          "bodyHeight": 260,
+          "bodyScroll": 260,
+          "class": "ant-modal cni-clone-dialog mold-dialog mold-dialog-standard",
+          "footer": 690,
+          "left": 240,
+          "right": 1200
+        }
+      ],
+      "pageWidth": 1430,
+      "theme": "dark",
+      "url": "#/cniconfiguration/4eb9386a-2626-436b-ba0a-3bdfdf0c1b80",
+      "width": 1440
+    },
+    {
+      "name": "duplicate-initial-dark-1440",
+      "code": [
+        {
+          "height": 0,
+          "maxHeight": "300px",
+          "scrollHeight": 93,
+          "scrollWidth": 890,
+          "width": 890
+        },
+        {
+          "height": 0,
+          "maxHeight": "300px",
+          "scrollHeight": 93,
+          "scrollWidth": 890,
+          "width": 890
+        }
+      ],
+      "fileInputs": [
+        {
+          "display": "none",
+          "width": 0
+        }
+      ],
+      "focus": "BUTTON",
+      "height": 1000,
+      "modals": [
+        {
+          "bodyHeight": 710,
+          "bodyScroll": 715,
+          "class": "ant-modal cni-clone-dialog mold-dialog mold-dialog-standard",
+          "footer": 915,
+          "left": 240,
+          "right": 1200
+        }
+      ],
+      "pageWidth": 1430,
+      "theme": "dark",
+      "url": "#/cniconfiguration/4eb9386a-2626-436b-ba0a-3bdfdf0c1b80",
+      "width": 1440
+    },
+    {
+      "name": "lost-response-initial-dark-1440",
+      "code": [
+        {
+          "height": 0,
+          "maxHeight": "300px",
+          "scrollHeight": 93,
+          "scrollWidth": 890,
+          "width": 890
+        },
+        {
+          "height": 0,
+          "maxHeight": "300px",
+          "scrollHeight": 93,
+          "scrollWidth": 890,
+          "width": 890
+        }
+      ],
+      "fileInputs": [
+        {
+          "display": "none",
+          "width": 0
+        }
+      ],
+      "focus": "BUTTON",
+      "height": 1000,
+      "modals": [
+        {
+          "bodyHeight": 710,
+          "bodyScroll": 715,
+          "class": "ant-modal cni-clone-dialog mold-dialog mold-dialog-standard",
+          "footer": 915,
+          "left": 240,
+          "right": 1200
+        }
+      ],
+      "pageWidth": 1430,
+      "theme": "dark",
+      "url": "#/cniconfiguration/4eb9386a-2626-436b-ba0a-3bdfdf0c1b80",
+      "width": 1440
+    },
+    {
+      "name": "lost-recovered-initial-dark-1440",
+      "code": [],
+      "fileInputs": [],
+      "focus": "BODY",
+      "height": 1000,
+      "modals": [
+        {
+          "bodyHeight": 260,
+          "bodyScroll": 260,
+          "class": "ant-modal cni-clone-dialog mold-dialog mold-dialog-standard",
+          "footer": 690,
+          "left": 240,
+          "right": 1200
+        }
+      ],
+      "pageWidth": 1430,
+      "theme": "dark",
+      "url": "#/cniconfiguration/4eb9386a-2626-436b-ba0a-3bdfdf0c1b80",
+      "width": 1440
+    },
+    {
+      "name": "partial-relation-initial-dark-1440",
+      "code": [],
+      "fileInputs": [],
+      "focus": "BUTTON",
+      "height": 1000,
+      "modals": [
+        {
+          "bodyHeight": 260,
+          "bodyScroll": 260,
+          "class": "ant-modal cni-clone-dialog mold-dialog mold-dialog-standard",
+          "footer": 690,
+          "left": 240,
+          "right": 1200
+        }
+      ],
+      "pageWidth": 1430,
+      "theme": "dark",
+      "url": "#/cniconfiguration/4eb9386a-2626-436b-ba0a-3bdfdf0c1b80",
+      "width": 1440
+    },
+    {
+      "name": "partial-timeout-initial-dark-1440",
+      "code": [],
+      "fileInputs": [],
+      "focus": "BUTTON",
+      "height": 1000,
+      "modals": [
+        {
+          "bodyHeight": 316,
+          "bodyScroll": 316,
+          "class": "ant-modal cni-clone-dialog mold-dialog mold-dialog-standard",
+          "footer": 718,
+          "left": 240,
+          "right": 1200
+        }
+      ],
+      "pageWidth": 1430,
+      "theme": "dark",
+      "url": "#/cniconfiguration/4eb9386a-2626-436b-ba0a-3bdfdf0c1b80",
+      "width": 1440
+    },
+    {
+      "name": "partial-recovered-initial-dark-1440",
+      "code": [],
+      "fileInputs": [],
+      "focus": "BODY",
+      "height": 1000,
+      "modals": [
+        {
+          "bodyHeight": 260,
+          "bodyScroll": 260,
+          "class": "ant-modal cni-clone-dialog mold-dialog mold-dialog-standard",
+          "footer": 690,
+          "left": 240,
+          "right": 1200
+        }
+      ],
+      "pageWidth": 1430,
+      "theme": "dark",
+      "url": "#/cniconfiguration/4eb9386a-2626-436b-ba0a-3bdfdf0c1b80",
+      "width": 1440
+    },
+    {
+      "name": "relation-403-initial-dark-1440",
+      "code": [],
+      "fileInputs": [],
+      "focus": "BUTTON",
+      "height": 1000,
+      "modals": [
+        {
+          "bodyHeight": 316,
+          "bodyScroll": 316,
+          "class": "ant-modal cni-clone-dialog mold-dialog mold-dialog-standard",
+          "footer": 718,
+          "left": 240,
+          "right": 1200
+        }
+      ],
+      "pageWidth": 1430,
+      "theme": "dark",
+      "url": "#/cniconfiguration/4eb9386a-2626-436b-ba0a-3bdfdf0c1b80",
+      "width": 1440
+    },
+    {
+      "name": "relation-recovered-initial-dark-1440",
+      "code": [],
+      "fileInputs": [],
+      "focus": "BODY",
+      "height": 1000,
+      "modals": [
+        {
+          "bodyHeight": 260,
+          "bodyScroll": 260,
+          "class": "ant-modal cni-clone-dialog mold-dialog mold-dialog-standard",
+          "footer": 690,
+          "left": 240,
+          "right": 1200
+        }
+      ],
+      "pageWidth": 1430,
+      "theme": "dark",
+      "url": "#/cniconfiguration/4eb9386a-2626-436b-ba0a-3bdfdf0c1b80",
+      "width": 1440
+    },
+    {
+      "name": "owner-binary-created-dark-1440",
+      "code": [],
+      "fileInputs": [],
+      "focus": "BODY",
+      "height": 1000,
+      "modals": [
+        {
+          "bodyHeight": 260,
+          "bodyScroll": 260,
+          "class": "ant-modal cni-clone-dialog mold-dialog mold-dialog-standard",
+          "footer": 690,
+          "left": 240,
+          "right": 1200
+        }
+      ],
+      "pageWidth": 1430,
+      "theme": "dark",
+      "url": "#/cniconfiguration/d4d8eedc-d2f9-4bbf-a077-8ce425c623d5",
+      "width": 1440
+    },
+    {
+      "name": "project-created-dark-1440",
+      "code": [],
+      "fileInputs": [],
+      "focus": "BODY",
+      "height": 1000,
+      "modals": [
+        {
+          "bodyHeight": 260,
+          "bodyScroll": 260,
+          "class": "ant-modal cni-clone-dialog mold-dialog mold-dialog-standard",
+          "footer": 690,
+          "left": 240,
+          "right": 1200
+        }
+      ],
+      "pageWidth": 1430,
+      "theme": "dark",
+      "url": "#/cniconfiguration/093a4352-a25e-42fd-bf9a-201796a434e5",
+      "width": 1440
+    },
+    {
+      "name": "in-use-created-dark-1440",
+      "code": [],
+      "fileInputs": [],
+      "focus": "BODY",
+      "height": 1000,
+      "modals": [
+        {
+          "bodyHeight": 260,
+          "bodyScroll": 260,
+          "class": "ant-modal cni-clone-dialog mold-dialog mold-dialog-standard",
+          "footer": 690,
+          "left": 240,
+          "right": 1200
+        }
+      ],
+      "pageWidth": 1430,
+      "theme": "dark",
+      "url": "#/cniconfiguration/12e8d455-f0b8-4940-8b53-43088c644f43",
+      "width": 1440
+    },
+    {
+      "name": "project-relation-comments-dark-1440",
+      "code": [],
+      "fileInputs": [],
+      "focus": "BUTTON",
+      "height": 1000,
+      "modals": [],
+      "pageWidth": 1430,
+      "theme": "dark",
+      "url": "#/cniconfiguration/10a4fee0-26df-4eca-a08f-523f27e20e3d?tab=comments",
+      "width": 1440
+    },
+    {
+      "name": "ordinary-userdata-clone-dark-1440",
+      "code": [],
+      "fileInputs": [],
+      "focus": "BUTTON",
+      "height": 1000,
+      "modals": [
+        {
+          "bodyHeight": 352,
+          "bodyScroll": 352,
+          "class": "ant-modal userdata-registration-dialog mold-dialog mold-dialog-standard",
+          "footer": 736,
+          "left": 360,
+          "right": 1080
+        }
+      ],
+      "pageWidth": 1430,
+      "theme": "dark",
+      "url": "#/userdata/b05261e8-aba9-41cc-ae38-c2a7a4cd22c1",
+      "width": 1440
+    },
+    {
+      "name": "validation-dark-1440",
+      "code": [
+        {
+          "height": 0,
+          "maxHeight": "300px",
+          "scrollHeight": 93,
+          "scrollWidth": 890,
+          "width": 890
+        },
+        {
+          "height": 0,
+          "maxHeight": "300px",
+          "scrollHeight": 93,
+          "scrollWidth": 890,
+          "width": 890
+        }
+      ],
+      "fileInputs": [
+        {
+          "display": "none",
+          "width": 0
+        }
+      ],
+      "focus": "BUTTON",
+      "height": 1000,
+      "modals": [
+        {
+          "bodyHeight": 710,
+          "bodyScroll": 761,
+          "class": "ant-modal cni-clone-dialog mold-dialog mold-dialog-standard",
+          "footer": 915,
+          "left": 240,
+          "right": 1200
+        }
+      ],
+      "pageWidth": 1430,
+      "theme": "dark",
+      "url": "#/cniconfiguration/41828e36-f189-4795-baaa-9afecccab79b",
+      "width": 1440
+    },
+    {
+      "name": "validation-dark-1024",
+      "code": [
+        {
+          "height": 93,
+          "maxHeight": "300px",
+          "scrollHeight": 93,
+          "scrollWidth": 890,
+          "width": 890
+        },
+        {
+          "height": 93,
+          "maxHeight": "300px",
+          "scrollHeight": 93,
+          "scrollWidth": 890,
+          "width": 890
+        }
+      ],
+      "fileInputs": [
+        {
+          "display": "none",
+          "width": 0
+        }
+      ],
+      "focus": "BUTTON",
+      "height": 1000,
+      "modals": [
+        {
+          "bodyHeight": 710,
+          "bodyScroll": 761,
+          "class": "ant-modal cni-clone-dialog mold-dialog mold-dialog-standard",
+          "footer": 915,
+          "left": 32,
+          "right": 992
+        }
+      ],
+      "pageWidth": 1014,
+      "theme": "dark",
+      "url": "#/cniconfiguration/41828e36-f189-4795-baaa-9afecccab79b",
+      "width": 1024
+    },
+    {
+      "name": "validation-dark-768",
+      "code": [
+        {
+          "height": 93,
+          "maxHeight": "300px",
+          "scrollHeight": 93,
+          "scrollWidth": 650,
+          "width": 650
+        },
+        {
+          "height": 93,
+          "maxHeight": "300px",
+          "scrollHeight": 93,
+          "scrollWidth": 650,
+          "width": 650
+        }
+      ],
+      "fileInputs": [
+        {
+          "display": "none",
+          "width": 0
+        }
+      ],
+      "focus": "BUTTON",
+      "height": 1000,
+      "modals": [
+        {
+          "bodyHeight": 710,
+          "bodyScroll": 805,
+          "class": "ant-modal cni-clone-dialog mold-dialog mold-dialog-standard",
+          "footer": 915,
+          "left": 24,
+          "right": 744
+        }
+      ],
+      "pageWidth": 758,
+      "theme": "dark",
+      "url": "#/cniconfiguration/41828e36-f189-4795-baaa-9afecccab79b",
+      "width": 768
+    },
+    {
+      "name": "validation-dark-390",
+      "code": [
+        {
+          "height": 93,
+          "maxHeight": "300px",
+          "scrollHeight": 93,
+          "scrollWidth": 320,
+          "width": 320
+        },
+        {
+          "height": 93,
+          "maxHeight": "300px",
+          "scrollHeight": 93,
+          "scrollWidth": 320,
+          "width": 320
+        }
+      ],
+      "fileInputs": [
+        {
+          "display": "none",
+          "width": 0
+        }
+      ],
+      "focus": "BUTTON",
+      "height": 1000,
+      "modals": [
+        {
+          "bodyHeight": 854,
+          "bodyScroll": 1137,
+          "class": "ant-modal cni-clone-dialog mold-dialog mold-dialog-standard",
+          "footer": 987,
+          "left": 12,
+          "right": 378
+        }
+      ],
+      "pageWidth": 380,
+      "theme": "dark",
+      "url": "#/cniconfiguration/41828e36-f189-4795-baaa-9afecccab79b",
+      "width": 390
+    },
+    {
+      "name": "oversize-rejected-dark-1440",
+      "code": [
+        {
+          "height": 93,
+          "maxHeight": "300px",
+          "scrollHeight": 93,
+          "scrollWidth": 890,
+          "width": 890
+        }
+      ],
+      "fileInputs": [
+        {
+          "display": "none",
+          "width": 0
+        }
+      ],
+      "focus": "SUMMARY",
+      "height": 1000,
+      "modals": [
+        {
+          "bodyHeight": 710,
+          "bodyScroll": 969,
+          "class": "ant-modal cni-clone-dialog mold-dialog mold-dialog-standard",
+          "footer": 915,
+          "left": 240,
+          "right": 1200
+        }
+      ],
+      "pageWidth": 1430,
+      "theme": "dark",
+      "url": "#/cniconfiguration/41828e36-f189-4795-baaa-9afecccab79b",
+      "width": 1440
+    },
+    {
+      "name": "draft-dark-1440",
+      "code": [
+        {
+          "height": 93,
+          "maxHeight": "300px",
+          "scrollHeight": 93,
+          "scrollWidth": 890,
+          "width": 890
+        },
+        {
+          "height": 288,
+          "maxHeight": "300px",
+          "scrollHeight": 1197,
+          "scrollWidth": 947,
+          "width": 880
+        }
+      ],
+      "fileInputs": [
+        {
+          "display": "none",
+          "width": 0
+        }
+      ],
+      "focus": "SUMMARY",
+      "height": 1000,
+      "modals": [
+        {
+          "bodyHeight": 710,
+          "bodyScroll": 1368,
+          "class": "ant-modal cni-clone-dialog mold-dialog mold-dialog-standard",
+          "footer": 915,
+          "left": 240,
+          "right": 1200
+        }
+      ],
+      "pageWidth": 1430,
+      "theme": "dark",
+      "url": "#/cniconfiguration/41828e36-f189-4795-baaa-9afecccab79b",
+      "width": 1440
+    },
+    {
+      "name": "draft-dark-1024",
+      "code": [
+        {
+          "height": 93,
+          "maxHeight": "300px",
+          "scrollHeight": 93,
+          "scrollWidth": 890,
+          "width": 890
+        },
+        {
+          "height": 288,
+          "maxHeight": "300px",
+          "scrollHeight": 1197,
+          "scrollWidth": 947,
+          "width": 880
+        }
+      ],
+      "fileInputs": [
+        {
+          "display": "none",
+          "width": 0
+        }
+      ],
+      "focus": "SUMMARY",
+      "height": 1000,
+      "modals": [
+        {
+          "bodyHeight": 710,
+          "bodyScroll": 1368,
+          "class": "ant-modal cni-clone-dialog mold-dialog mold-dialog-standard",
+          "footer": 915,
+          "left": 32,
+          "right": 992
+        }
+      ],
+      "pageWidth": 1014,
+      "theme": "dark",
+      "url": "#/cniconfiguration/41828e36-f189-4795-baaa-9afecccab79b",
+      "width": 1024
+    },
+    {
+      "name": "draft-dark-768",
+      "code": [
+        {
+          "height": 93,
+          "maxHeight": "300px",
+          "scrollHeight": 93,
+          "scrollWidth": 650,
+          "width": 650
+        },
+        {
+          "height": 288,
+          "maxHeight": "300px",
+          "scrollHeight": 1197,
+          "scrollWidth": 947,
+          "width": 640
+        }
+      ],
+      "fileInputs": [
+        {
+          "display": "none",
+          "width": 0
+        }
+      ],
+      "focus": "SUMMARY",
+      "height": 1000,
+      "modals": [
+        {
+          "bodyHeight": 710,
+          "bodyScroll": 1412,
+          "class": "ant-modal cni-clone-dialog mold-dialog mold-dialog-standard",
+          "footer": 915,
+          "left": 24,
+          "right": 744
+        }
+      ],
+      "pageWidth": 758,
+      "theme": "dark",
+      "url": "#/cniconfiguration/41828e36-f189-4795-baaa-9afecccab79b",
+      "width": 768
+    },
+    {
+      "name": "draft-dark-390",
+      "code": [
+        {
+          "height": 93,
+          "maxHeight": "300px",
+          "scrollHeight": 93,
+          "scrollWidth": 320,
+          "width": 320
+        },
+        {
+          "height": 288,
+          "maxHeight": "300px",
+          "scrollHeight": 1197,
+          "scrollWidth": 947,
+          "width": 310
+        }
+      ],
+      "fileInputs": [
+        {
+          "display": "none",
+          "width": 0
+        }
+      ],
+      "focus": "SUMMARY",
+      "height": 1000,
+      "modals": [
+        {
+          "bodyHeight": 854,
+          "bodyScroll": 1824,
+          "class": "ant-modal cni-clone-dialog mold-dialog mold-dialog-standard",
+          "footer": 987,
+          "left": 12,
+          "right": 378
+        }
+      ],
+      "pageWidth": 380,
+      "theme": "dark",
+      "url": "#/cniconfiguration/41828e36-f189-4795-baaa-9afecccab79b",
+      "width": 390
+    },
+    {
+      "name": "validation-light-1440",
+      "code": [
+        {
+          "height": 0,
+          "maxHeight": "300px",
+          "scrollHeight": 93,
+          "scrollWidth": 890,
+          "width": 890
+        },
+        {
+          "height": 0,
+          "maxHeight": "300px",
+          "scrollHeight": 93,
+          "scrollWidth": 890,
+          "width": 890
+        }
+      ],
+      "fileInputs": [
+        {
+          "display": "none",
+          "width": 0
+        }
+      ],
+      "focus": "BUTTON",
+      "height": 1000,
+      "modals": [
+        {
+          "bodyHeight": 710,
+          "bodyScroll": 761,
+          "class": "ant-modal cni-clone-dialog mold-dialog mold-dialog-standard",
+          "footer": 915,
+          "left": 240,
+          "right": 1200
+        }
+      ],
+      "pageWidth": 1430,
+      "theme": "light",
+      "url": "#/cniconfiguration/41828e36-f189-4795-baaa-9afecccab79b",
+      "width": 1440
+    },
+    {
+      "name": "validation-light-1024",
+      "code": [
+        {
+          "height": 93,
+          "maxHeight": "300px",
+          "scrollHeight": 93,
+          "scrollWidth": 890,
+          "width": 890
+        },
+        {
+          "height": 93,
+          "maxHeight": "300px",
+          "scrollHeight": 93,
+          "scrollWidth": 890,
+          "width": 890
+        }
+      ],
+      "fileInputs": [
+        {
+          "display": "none",
+          "width": 0
+        }
+      ],
+      "focus": "BUTTON",
+      "height": 1000,
+      "modals": [
+        {
+          "bodyHeight": 710,
+          "bodyScroll": 761,
+          "class": "ant-modal cni-clone-dialog mold-dialog mold-dialog-standard",
+          "footer": 915,
+          "left": 32,
+          "right": 992
+        }
+      ],
+      "pageWidth": 1014,
+      "theme": "light",
+      "url": "#/cniconfiguration/41828e36-f189-4795-baaa-9afecccab79b",
+      "width": 1024
+    },
+    {
+      "name": "validation-light-768",
+      "code": [
+        {
+          "height": 93,
+          "maxHeight": "300px",
+          "scrollHeight": 93,
+          "scrollWidth": 650,
+          "width": 650
+        },
+        {
+          "height": 93,
+          "maxHeight": "300px",
+          "scrollHeight": 93,
+          "scrollWidth": 650,
+          "width": 650
+        }
+      ],
+      "fileInputs": [
+        {
+          "display": "none",
+          "width": 0
+        }
+      ],
+      "focus": "BUTTON",
+      "height": 1000,
+      "modals": [
+        {
+          "bodyHeight": 710,
+          "bodyScroll": 805,
+          "class": "ant-modal cni-clone-dialog mold-dialog mold-dialog-standard",
+          "footer": 915,
+          "left": 24,
+          "right": 744
+        }
+      ],
+      "pageWidth": 758,
+      "theme": "light",
+      "url": "#/cniconfiguration/41828e36-f189-4795-baaa-9afecccab79b",
+      "width": 768
+    },
+    {
+      "name": "validation-light-390",
+      "code": [
+        {
+          "height": 93,
+          "maxHeight": "300px",
+          "scrollHeight": 93,
+          "scrollWidth": 320,
+          "width": 320
+        },
+        {
+          "height": 93,
+          "maxHeight": "300px",
+          "scrollHeight": 93,
+          "scrollWidth": 320,
+          "width": 320
+        }
+      ],
+      "fileInputs": [
+        {
+          "display": "none",
+          "width": 0
+        }
+      ],
+      "focus": "BUTTON",
+      "height": 1000,
+      "modals": [
+        {
+          "bodyHeight": 854,
+          "bodyScroll": 1137,
+          "class": "ant-modal cni-clone-dialog mold-dialog mold-dialog-standard",
+          "footer": 987,
+          "left": 12,
+          "right": 378
+        }
+      ],
+      "pageWidth": 380,
+      "theme": "light",
+      "url": "#/cniconfiguration/41828e36-f189-4795-baaa-9afecccab79b",
+      "width": 390
+    },
+    {
+      "name": "draft-light-1440",
+      "code": [
+        {
+          "height": 93,
+          "maxHeight": "300px",
+          "scrollHeight": 93,
+          "scrollWidth": 890,
+          "width": 890
+        },
+        {
+          "height": 288,
+          "maxHeight": "300px",
+          "scrollHeight": 1197,
+          "scrollWidth": 947,
+          "width": 880
+        }
+      ],
+      "fileInputs": [
+        {
+          "display": "none",
+          "width": 0
+        }
+      ],
+      "focus": "SUMMARY",
+      "height": 1000,
+      "modals": [
+        {
+          "bodyHeight": 710,
+          "bodyScroll": 1368,
+          "class": "ant-modal cni-clone-dialog mold-dialog mold-dialog-standard",
+          "footer": 915,
+          "left": 240,
+          "right": 1200
+        }
+      ],
+      "pageWidth": 1430,
+      "theme": "light",
+      "url": "#/cniconfiguration/41828e36-f189-4795-baaa-9afecccab79b",
+      "width": 1440
+    },
+    {
+      "name": "draft-light-1024",
+      "code": [
+        {
+          "height": 93,
+          "maxHeight": "300px",
+          "scrollHeight": 93,
+          "scrollWidth": 890,
+          "width": 890
+        },
+        {
+          "height": 288,
+          "maxHeight": "300px",
+          "scrollHeight": 1197,
+          "scrollWidth": 947,
+          "width": 880
+        }
+      ],
+      "fileInputs": [
+        {
+          "display": "none",
+          "width": 0
+        }
+      ],
+      "focus": "SUMMARY",
+      "height": 1000,
+      "modals": [
+        {
+          "bodyHeight": 710,
+          "bodyScroll": 1368,
+          "class": "ant-modal cni-clone-dialog mold-dialog mold-dialog-standard",
+          "footer": 915,
+          "left": 32,
+          "right": 992
+        }
+      ],
+      "pageWidth": 1014,
+      "theme": "light",
+      "url": "#/cniconfiguration/41828e36-f189-4795-baaa-9afecccab79b",
+      "width": 1024
+    },
+    {
+      "name": "draft-light-768",
+      "code": [
+        {
+          "height": 93,
+          "maxHeight": "300px",
+          "scrollHeight": 93,
+          "scrollWidth": 650,
+          "width": 650
+        },
+        {
+          "height": 288,
+          "maxHeight": "300px",
+          "scrollHeight": 1197,
+          "scrollWidth": 947,
+          "width": 640
+        }
+      ],
+      "fileInputs": [
+        {
+          "display": "none",
+          "width": 0
+        }
+      ],
+      "focus": "SUMMARY",
+      "height": 1000,
+      "modals": [
+        {
+          "bodyHeight": 710,
+          "bodyScroll": 1412,
+          "class": "ant-modal cni-clone-dialog mold-dialog mold-dialog-standard",
+          "footer": 915,
+          "left": 24,
+          "right": 744
+        }
+      ],
+      "pageWidth": 758,
+      "theme": "light",
+      "url": "#/cniconfiguration/41828e36-f189-4795-baaa-9afecccab79b",
+      "width": 768
+    },
+    {
+      "name": "draft-light-390",
+      "code": [
+        {
+          "height": 93,
+          "maxHeight": "300px",
+          "scrollHeight": 93,
+          "scrollWidth": 320,
+          "width": 320
+        },
+        {
+          "height": 288,
+          "maxHeight": "300px",
+          "scrollHeight": 1197,
+          "scrollWidth": 947,
+          "width": 310
+        }
+      ],
+      "fileInputs": [
+        {
+          "display": "none",
+          "width": 0
+        }
+      ],
+      "focus": "SUMMARY",
+      "height": 1000,
+      "modals": [
+        {
+          "bodyHeight": 854,
+          "bodyScroll": 1824,
+          "class": "ant-modal cni-clone-dialog mold-dialog mold-dialog-standard",
+          "footer": 987,
+          "left": 12,
+          "right": 378
+        }
+      ],
+      "pageWidth": 380,
+      "theme": "light",
+      "url": "#/cniconfiguration/41828e36-f189-4795-baaa-9afecccab79b",
+      "width": 390
+    },
+    {
+      "name": "pending-light-1440",
+      "code": [],
+      "fileInputs": [],
+      "focus": "BUTTON",
+      "height": 1000,
+      "modals": [
+        {
+          "bodyHeight": 360,
+          "bodyScroll": 360,
+          "class": "ant-modal cni-clone-dialog mold-dialog mold-dialog-standard",
+          "footer": 740,
+          "left": 240,
+          "right": 1200
+        }
+      ],
+      "pageWidth": 1430,
+      "theme": "light",
+      "url": "#/cniconfiguration/41828e36-f189-4795-baaa-9afecccab79b",
+      "width": 1440
+    },
+    {
+      "name": "pending-light-1024",
+      "code": [],
+      "fileInputs": [],
+      "focus": "BUTTON",
+      "height": 1000,
+      "modals": [
+        {
+          "bodyHeight": 360,
+          "bodyScroll": 360,
+          "class": "ant-modal cni-clone-dialog mold-dialog mold-dialog-standard",
+          "footer": 740,
+          "left": 32,
+          "right": 992
+        }
+      ],
+      "pageWidth": 1014,
+      "theme": "light",
+      "url": "#/cniconfiguration/41828e36-f189-4795-baaa-9afecccab79b",
+      "width": 1024
+    },
+    {
+      "name": "pending-light-768",
+      "code": [],
+      "fileInputs": [],
+      "focus": "BUTTON",
+      "height": 1000,
+      "modals": [
+        {
+          "bodyHeight": 404,
+          "bodyScroll": 404,
+          "class": "ant-modal cni-clone-dialog mold-dialog mold-dialog-standard",
+          "footer": 762,
+          "left": 24,
+          "right": 744
+        }
+      ],
+      "pageWidth": 758,
+      "theme": "light",
+      "url": "#/cniconfiguration/41828e36-f189-4795-baaa-9afecccab79b",
+      "width": 768
+    },
+    {
+      "name": "pending-light-390",
+      "code": [],
+      "fileInputs": [],
+      "focus": "BUTTON",
+      "height": 1000,
+      "modals": [
+        {
+          "bodyHeight": 586,
+          "bodyScroll": 586,
+          "class": "ant-modal cni-clone-dialog mold-dialog mold-dialog-standard",
+          "footer": 853,
+          "left": 12,
+          "right": 378
+        }
+      ],
+      "pageWidth": 380,
+      "theme": "light",
+      "url": "#/cniconfiguration/41828e36-f189-4795-baaa-9afecccab79b",
+      "width": 390
+    },
+    {
+      "name": "success-light-1440",
+      "code": [],
+      "fileInputs": [],
+      "focus": "BODY",
+      "height": 1000,
+      "modals": [
+        {
+          "bodyHeight": 304,
+          "bodyScroll": 304,
+          "class": "ant-modal cni-clone-dialog mold-dialog mold-dialog-standard",
+          "footer": 712,
+          "left": 240,
+          "right": 1200
+        }
+      ],
+      "pageWidth": 1430,
+      "theme": "light",
+      "url": "#/cniconfiguration/41828e36-f189-4795-baaa-9afecccab79b",
+      "width": 1440
+    },
+    {
+      "name": "success-light-1024",
+      "code": [],
+      "fileInputs": [],
+      "focus": "BODY",
+      "height": 1000,
+      "modals": [
+        {
+          "bodyHeight": 304,
+          "bodyScroll": 304,
+          "class": "ant-modal cni-clone-dialog mold-dialog mold-dialog-standard",
+          "footer": 712,
+          "left": 32,
+          "right": 992
+        }
+      ],
+      "pageWidth": 1014,
+      "theme": "light",
+      "url": "#/cniconfiguration/41828e36-f189-4795-baaa-9afecccab79b",
+      "width": 1024
+    },
+    {
+      "name": "success-light-768",
+      "code": [],
+      "fileInputs": [],
+      "focus": "BODY",
+      "height": 1000,
+      "modals": [
+        {
+          "bodyHeight": 348,
+          "bodyScroll": 348,
+          "class": "ant-modal cni-clone-dialog mold-dialog mold-dialog-standard",
+          "footer": 734,
+          "left": 24,
+          "right": 744
+        }
+      ],
+      "pageWidth": 758,
+      "theme": "light",
+      "url": "#/cniconfiguration/41828e36-f189-4795-baaa-9afecccab79b",
+      "width": 768
+    },
+    {
+      "name": "success-light-390",
+      "code": [],
+      "fileInputs": [],
+      "focus": "BODY",
+      "height": 1000,
+      "modals": [
+        {
+          "bodyHeight": 508,
+          "bodyScroll": 508,
+          "class": "ant-modal cni-clone-dialog mold-dialog mold-dialog-standard",
+          "footer": 814,
+          "left": 12,
+          "right": 378
+        }
+      ],
+      "pageWidth": 380,
+      "theme": "light",
+      "url": "#/cniconfiguration/41828e36-f189-4795-baaa-9afecccab79b",
+      "width": 390
+    },
+    {
+      "name": "duplicate-name-dark-1440",
+      "code": [
+        {
+          "height": 0,
+          "maxHeight": "300px",
+          "scrollHeight": 93,
+          "scrollWidth": 890,
+          "width": 890
+        },
+        {
+          "height": 0,
+          "maxHeight": "300px",
+          "scrollHeight": 93,
+          "scrollWidth": 890,
+          "width": 890
+        }
+      ],
+      "fileInputs": [
+        {
+          "display": "none",
+          "width": 0
+        }
+      ],
+      "focus": "BUTTON",
+      "height": 1000,
+      "modals": [
+        {
+          "bodyHeight": 710,
+          "bodyScroll": 715,
+          "class": "ant-modal cni-clone-dialog mold-dialog mold-dialog-standard",
+          "footer": 915,
+          "left": 240,
+          "right": 1200
+        }
+      ],
+      "pageWidth": 1430,
+      "theme": "dark",
+      "url": "#/cniconfiguration/4eb9386a-2626-436b-ba0a-3bdfdf0c1b80",
+      "width": 1440
+    },
+    {
+      "name": "final-validation-dark-1440",
+      "code": [
+        {
+          "height": 0,
+          "maxHeight": "300px",
+          "scrollHeight": 93,
+          "scrollWidth": 890,
+          "width": 890
+        },
+        {
+          "height": 0,
+          "maxHeight": "300px",
+          "scrollHeight": 93,
+          "scrollWidth": 890,
+          "width": 890
+        }
+      ],
+      "fileInputs": [
+        {
+          "display": "none",
+          "width": 0
+        }
+      ],
+      "focus": "form_item_name",
+      "height": 1000,
+      "modals": [
+        {
+          "bodyHeight": 710,
+          "bodyScroll": 761,
+          "class": "ant-modal cni-clone-dialog mold-dialog mold-dialog-standard",
+          "footer": 915,
+          "left": 240,
+          "right": 1200
+        }
+      ],
+      "pageWidth": 1430,
+      "theme": "dark",
+      "url": "#/cniconfiguration/41828e36-f189-4795-baaa-9afecccab79b",
+      "width": 1440
+    },
+    {
+      "name": "final-validation-dark-1024",
+      "code": [
+        {
+          "height": 93,
+          "maxHeight": "300px",
+          "scrollHeight": 93,
+          "scrollWidth": 890,
+          "width": 890
+        },
+        {
+          "height": 93,
+          "maxHeight": "300px",
+          "scrollHeight": 93,
+          "scrollWidth": 890,
+          "width": 890
+        }
+      ],
+      "fileInputs": [
+        {
+          "display": "none",
+          "width": 0
+        }
+      ],
+      "focus": "form_item_name",
+      "height": 1000,
+      "modals": [
+        {
+          "bodyHeight": 710,
+          "bodyScroll": 761,
+          "class": "ant-modal cni-clone-dialog mold-dialog mold-dialog-standard",
+          "footer": 915,
+          "left": 32,
+          "right": 992
+        }
+      ],
+      "pageWidth": 1014,
+      "theme": "dark",
+      "url": "#/cniconfiguration/41828e36-f189-4795-baaa-9afecccab79b",
+      "width": 1024
+    },
+    {
+      "name": "final-validation-dark-768",
+      "code": [
+        {
+          "height": 93,
+          "maxHeight": "300px",
+          "scrollHeight": 93,
+          "scrollWidth": 650,
+          "width": 650
+        },
+        {
+          "height": 93,
+          "maxHeight": "300px",
+          "scrollHeight": 93,
+          "scrollWidth": 650,
+          "width": 650
+        }
+      ],
+      "fileInputs": [
+        {
+          "display": "none",
+          "width": 0
+        }
+      ],
+      "focus": "form_item_name",
+      "height": 1000,
+      "modals": [
+        {
+          "bodyHeight": 710,
+          "bodyScroll": 805,
+          "class": "ant-modal cni-clone-dialog mold-dialog mold-dialog-standard",
+          "footer": 915,
+          "left": 24,
+          "right": 744
+        }
+      ],
+      "pageWidth": 758,
+      "theme": "dark",
+      "url": "#/cniconfiguration/41828e36-f189-4795-baaa-9afecccab79b",
+      "width": 768
+    },
+    {
+      "name": "final-validation-dark-390",
+      "code": [
+        {
+          "height": 93,
+          "maxHeight": "300px",
+          "scrollHeight": 93,
+          "scrollWidth": 320,
+          "width": 320
+        },
+        {
+          "height": 93,
+          "maxHeight": "300px",
+          "scrollHeight": 93,
+          "scrollWidth": 320,
+          "width": 320
+        }
+      ],
+      "fileInputs": [
+        {
+          "display": "none",
+          "width": 0
+        }
+      ],
+      "focus": "form_item_name",
+      "height": 1000,
+      "modals": [
+        {
+          "bodyHeight": 854,
+          "bodyScroll": 1014,
+          "class": "ant-modal cni-clone-dialog mold-dialog mold-dialog-standard",
+          "footer": 987,
+          "left": 12,
+          "right": 378
+        }
+      ],
+      "pageWidth": 380,
+      "theme": "dark",
+      "url": "#/cniconfiguration/41828e36-f189-4795-baaa-9afecccab79b",
+      "width": 390
+    },
+    {
+      "name": "final-draft-dark-1440",
+      "code": [
+        {
+          "height": 93,
+          "maxHeight": "300px",
+          "scrollHeight": 93,
+          "scrollWidth": 890,
+          "width": 890
+        },
+        {
+          "height": 288,
+          "maxHeight": "300px",
+          "scrollHeight": 1197,
+          "scrollWidth": 947,
+          "width": 880
+        }
+      ],
+      "fileInputs": [
+        {
+          "display": "none",
+          "width": 0
+        }
+      ],
+      "focus": "SUMMARY",
+      "height": 1000,
+      "modals": [
+        {
+          "bodyHeight": 710,
+          "bodyScroll": 1368,
+          "class": "ant-modal cni-clone-dialog mold-dialog mold-dialog-standard",
+          "footer": 915,
+          "left": 240,
+          "right": 1200
+        }
+      ],
+      "pageWidth": 1430,
+      "theme": "dark",
+      "url": "#/cniconfiguration/41828e36-f189-4795-baaa-9afecccab79b",
+      "width": 1440
+    },
+    {
+      "name": "final-draft-dark-1024",
+      "code": [
+        {
+          "height": 93,
+          "maxHeight": "300px",
+          "scrollHeight": 93,
+          "scrollWidth": 890,
+          "width": 890
+        },
+        {
+          "height": 288,
+          "maxHeight": "300px",
+          "scrollHeight": 1197,
+          "scrollWidth": 947,
+          "width": 880
+        }
+      ],
+      "fileInputs": [
+        {
+          "display": "none",
+          "width": 0
+        }
+      ],
+      "focus": "SUMMARY",
+      "height": 1000,
+      "modals": [
+        {
+          "bodyHeight": 710,
+          "bodyScroll": 1368,
+          "class": "ant-modal cni-clone-dialog mold-dialog mold-dialog-standard",
+          "footer": 915,
+          "left": 32,
+          "right": 992
+        }
+      ],
+      "pageWidth": 1014,
+      "theme": "dark",
+      "url": "#/cniconfiguration/41828e36-f189-4795-baaa-9afecccab79b",
+      "width": 1024
+    },
+    {
+      "name": "final-draft-dark-768",
+      "code": [
+        {
+          "height": 93,
+          "maxHeight": "300px",
+          "scrollHeight": 93,
+          "scrollWidth": 650,
+          "width": 650
+        },
+        {
+          "height": 288,
+          "maxHeight": "300px",
+          "scrollHeight": 1197,
+          "scrollWidth": 947,
+          "width": 640
+        }
+      ],
+      "fileInputs": [
+        {
+          "display": "none",
+          "width": 0
+        }
+      ],
+      "focus": "SUMMARY",
+      "height": 1000,
+      "modals": [
+        {
+          "bodyHeight": 710,
+          "bodyScroll": 1412,
+          "class": "ant-modal cni-clone-dialog mold-dialog mold-dialog-standard",
+          "footer": 915,
+          "left": 24,
+          "right": 744
+        }
+      ],
+      "pageWidth": 758,
+      "theme": "dark",
+      "url": "#/cniconfiguration/41828e36-f189-4795-baaa-9afecccab79b",
+      "width": 768
+    },
+    {
+      "name": "final-draft-dark-390",
+      "code": [
+        {
+          "height": 93,
+          "maxHeight": "300px",
+          "scrollHeight": 93,
+          "scrollWidth": 320,
+          "width": 320
+        },
+        {
+          "height": 288,
+          "maxHeight": "300px",
+          "scrollHeight": 1197,
+          "scrollWidth": 947,
+          "width": 310
+        }
+      ],
+      "fileInputs": [
+        {
+          "display": "none",
+          "width": 0
+        }
+      ],
+      "focus": "SUMMARY",
+      "height": 1000,
+      "modals": [
+        {
+          "bodyHeight": 854,
+          "bodyScroll": 1701,
+          "class": "ant-modal cni-clone-dialog mold-dialog mold-dialog-standard",
+          "footer": 987,
+          "left": 12,
+          "right": 378
+        }
+      ],
+      "pageWidth": 380,
+      "theme": "dark",
+      "url": "#/cniconfiguration/41828e36-f189-4795-baaa-9afecccab79b",
+      "width": 390
+    },
+    {
+      "name": "final-pending-dark-1440",
+      "code": [],
+      "fileInputs": [],
+      "focus": "BUTTON",
+      "height": 1000,
+      "modals": [
+        {
+          "bodyHeight": 360,
+          "bodyScroll": 360,
+          "class": "ant-modal cni-clone-dialog mold-dialog mold-dialog-standard",
+          "footer": 740,
+          "left": 240,
+          "right": 1200
+        }
+      ],
+      "pageWidth": 1430,
+      "theme": "dark",
+      "url": "#/cniconfiguration/41828e36-f189-4795-baaa-9afecccab79b",
+      "width": 1440
+    },
+    {
+      "name": "final-pending-dark-1024",
+      "code": [],
+      "fileInputs": [],
+      "focus": "BUTTON",
+      "height": 1000,
+      "modals": [
+        {
+          "bodyHeight": 360,
+          "bodyScroll": 360,
+          "class": "ant-modal cni-clone-dialog mold-dialog mold-dialog-standard",
+          "footer": 740,
+          "left": 32,
+          "right": 992
+        }
+      ],
+      "pageWidth": 1014,
+      "theme": "dark",
+      "url": "#/cniconfiguration/41828e36-f189-4795-baaa-9afecccab79b",
+      "width": 1024
+    },
+    {
+      "name": "final-pending-dark-768",
+      "code": [],
+      "fileInputs": [],
+      "focus": "BUTTON",
+      "height": 1000,
+      "modals": [
+        {
+          "bodyHeight": 404,
+          "bodyScroll": 404,
+          "class": "ant-modal cni-clone-dialog mold-dialog mold-dialog-standard",
+          "footer": 762,
+          "left": 24,
+          "right": 744
+        }
+      ],
+      "pageWidth": 758,
+      "theme": "dark",
+      "url": "#/cniconfiguration/41828e36-f189-4795-baaa-9afecccab79b",
+      "width": 768
+    },
+    {
+      "name": "final-pending-dark-390",
+      "code": [],
+      "fileInputs": [],
+      "focus": "BUTTON",
+      "height": 1000,
+      "modals": [
+        {
+          "bodyHeight": 586,
+          "bodyScroll": 586,
+          "class": "ant-modal cni-clone-dialog mold-dialog mold-dialog-standard",
+          "footer": 853,
+          "left": 12,
+          "right": 378
+        }
+      ],
+      "pageWidth": 380,
+      "theme": "dark",
+      "url": "#/cniconfiguration/41828e36-f189-4795-baaa-9afecccab79b",
+      "width": 390
+    },
+    {
+      "name": "final-success-dark-1440",
+      "code": [],
+      "fileInputs": [],
+      "focus": "BODY",
+      "height": 1000,
+      "modals": [
+        {
+          "bodyHeight": 304,
+          "bodyScroll": 304,
+          "class": "ant-modal cni-clone-dialog mold-dialog mold-dialog-standard",
+          "footer": 712,
+          "left": 240,
+          "right": 1200
+        }
+      ],
+      "pageWidth": 1430,
+      "theme": "dark",
+      "url": "#/cniconfiguration/41828e36-f189-4795-baaa-9afecccab79b",
+      "width": 1440
+    },
+    {
+      "name": "final-success-dark-1024",
+      "code": [],
+      "fileInputs": [],
+      "focus": "BODY",
+      "height": 1000,
+      "modals": [
+        {
+          "bodyHeight": 304,
+          "bodyScroll": 304,
+          "class": "ant-modal cni-clone-dialog mold-dialog mold-dialog-standard",
+          "footer": 712,
+          "left": 32,
+          "right": 992
+        }
+      ],
+      "pageWidth": 1014,
+      "theme": "dark",
+      "url": "#/cniconfiguration/41828e36-f189-4795-baaa-9afecccab79b",
+      "width": 1024
+    },
+    {
+      "name": "final-success-dark-768",
+      "code": [],
+      "fileInputs": [],
+      "focus": "BODY",
+      "height": 1000,
+      "modals": [
+        {
+          "bodyHeight": 348,
+          "bodyScroll": 348,
+          "class": "ant-modal cni-clone-dialog mold-dialog mold-dialog-standard",
+          "footer": 734,
+          "left": 24,
+          "right": 744
+        }
+      ],
+      "pageWidth": 758,
+      "theme": "dark",
+      "url": "#/cniconfiguration/41828e36-f189-4795-baaa-9afecccab79b",
+      "width": 768
+    },
+    {
+      "name": "final-success-dark-390",
+      "code": [],
+      "fileInputs": [],
+      "focus": "BODY",
+      "height": 1000,
+      "modals": [
+        {
+          "bodyHeight": 508,
+          "bodyScroll": 508,
+          "class": "ant-modal cni-clone-dialog mold-dialog mold-dialog-standard",
+          "footer": 814,
+          "left": 12,
+          "right": 378
+        }
+      ],
+      "pageWidth": 380,
+      "theme": "dark",
+      "url": "#/cniconfiguration/41828e36-f189-4795-baaa-9afecccab79b",
+      "width": 390
+    },
+    {
+      "name": "final-validation-light-1440",
+      "code": [
+        {
+          "height": 0,
+          "maxHeight": "300px",
+          "scrollHeight": 93,
+          "scrollWidth": 890,
+          "width": 890
+        },
+        {
+          "height": 0,
+          "maxHeight": "300px",
+          "scrollHeight": 93,
+          "scrollWidth": 890,
+          "width": 890
+        }
+      ],
+      "fileInputs": [
+        {
+          "display": "none",
+          "width": 0
+        }
+      ],
+      "focus": "form_item_name",
+      "height": 1000,
+      "modals": [
+        {
+          "bodyHeight": 710,
+          "bodyScroll": 761,
+          "class": "ant-modal cni-clone-dialog mold-dialog mold-dialog-standard",
+          "footer": 915,
+          "left": 240,
+          "right": 1200
+        }
+      ],
+      "pageWidth": 1430,
+      "theme": "light",
+      "url": "#/cniconfiguration/41828e36-f189-4795-baaa-9afecccab79b",
+      "width": 1440
+    },
+    {
+      "name": "final-validation-light-1024",
+      "code": [
+        {
+          "height": 93,
+          "maxHeight": "300px",
+          "scrollHeight": 93,
+          "scrollWidth": 890,
+          "width": 890
+        },
+        {
+          "height": 93,
+          "maxHeight": "300px",
+          "scrollHeight": 93,
+          "scrollWidth": 890,
+          "width": 890
+        }
+      ],
+      "fileInputs": [
+        {
+          "display": "none",
+          "width": 0
+        }
+      ],
+      "focus": "form_item_name",
+      "height": 1000,
+      "modals": [
+        {
+          "bodyHeight": 710,
+          "bodyScroll": 761,
+          "class": "ant-modal cni-clone-dialog mold-dialog mold-dialog-standard",
+          "footer": 915,
+          "left": 32,
+          "right": 992
+        }
+      ],
+      "pageWidth": 1014,
+      "theme": "light",
+      "url": "#/cniconfiguration/41828e36-f189-4795-baaa-9afecccab79b",
+      "width": 1024
+    },
+    {
+      "name": "final-validation-light-768",
+      "code": [
+        {
+          "height": 93,
+          "maxHeight": "300px",
+          "scrollHeight": 93,
+          "scrollWidth": 650,
+          "width": 650
+        },
+        {
+          "height": 93,
+          "maxHeight": "300px",
+          "scrollHeight": 93,
+          "scrollWidth": 650,
+          "width": 650
+        }
+      ],
+      "fileInputs": [
+        {
+          "display": "none",
+          "width": 0
+        }
+      ],
+      "focus": "form_item_name",
+      "height": 1000,
+      "modals": [
+        {
+          "bodyHeight": 710,
+          "bodyScroll": 805,
+          "class": "ant-modal cni-clone-dialog mold-dialog mold-dialog-standard",
+          "footer": 915,
+          "left": 24,
+          "right": 744
+        }
+      ],
+      "pageWidth": 758,
+      "theme": "light",
+      "url": "#/cniconfiguration/41828e36-f189-4795-baaa-9afecccab79b",
+      "width": 768
+    },
+    {
+      "name": "final-validation-light-390",
+      "code": [
+        {
+          "height": 93,
+          "maxHeight": "300px",
+          "scrollHeight": 93,
+          "scrollWidth": 320,
+          "width": 320
+        },
+        {
+          "height": 93,
+          "maxHeight": "300px",
+          "scrollHeight": 93,
+          "scrollWidth": 320,
+          "width": 320
+        }
+      ],
+      "fileInputs": [
+        {
+          "display": "none",
+          "width": 0
+        }
+      ],
+      "focus": "form_item_name",
+      "height": 1000,
+      "modals": [
+        {
+          "bodyHeight": 854,
+          "bodyScroll": 1014,
+          "class": "ant-modal cni-clone-dialog mold-dialog mold-dialog-standard",
+          "footer": 987,
+          "left": 12,
+          "right": 378
+        }
+      ],
+      "pageWidth": 380,
+      "theme": "light",
+      "url": "#/cniconfiguration/41828e36-f189-4795-baaa-9afecccab79b",
+      "width": 390
+    },
+    {
+      "name": "final-draft-light-1440",
+      "code": [
+        {
+          "height": 93,
+          "maxHeight": "300px",
+          "scrollHeight": 93,
+          "scrollWidth": 890,
+          "width": 890
+        },
+        {
+          "height": 288,
+          "maxHeight": "300px",
+          "scrollHeight": 1197,
+          "scrollWidth": 947,
+          "width": 880
+        }
+      ],
+      "fileInputs": [
+        {
+          "display": "none",
+          "width": 0
+        }
+      ],
+      "focus": "SUMMARY",
+      "height": 1000,
+      "modals": [
+        {
+          "bodyHeight": 710,
+          "bodyScroll": 1368,
+          "class": "ant-modal cni-clone-dialog mold-dialog mold-dialog-standard",
+          "footer": 915,
+          "left": 240,
+          "right": 1200
+        }
+      ],
+      "pageWidth": 1430,
+      "theme": "light",
+      "url": "#/cniconfiguration/41828e36-f189-4795-baaa-9afecccab79b",
+      "width": 1440
+    },
+    {
+      "name": "final-draft-light-1024",
+      "code": [
+        {
+          "height": 93,
+          "maxHeight": "300px",
+          "scrollHeight": 93,
+          "scrollWidth": 890,
+          "width": 890
+        },
+        {
+          "height": 288,
+          "maxHeight": "300px",
+          "scrollHeight": 1197,
+          "scrollWidth": 947,
+          "width": 880
+        }
+      ],
+      "fileInputs": [
+        {
+          "display": "none",
+          "width": 0
+        }
+      ],
+      "focus": "SUMMARY",
+      "height": 1000,
+      "modals": [
+        {
+          "bodyHeight": 710,
+          "bodyScroll": 1368,
+          "class": "ant-modal cni-clone-dialog mold-dialog mold-dialog-standard",
+          "footer": 915,
+          "left": 32,
+          "right": 992
+        }
+      ],
+      "pageWidth": 1014,
+      "theme": "light",
+      "url": "#/cniconfiguration/41828e36-f189-4795-baaa-9afecccab79b",
+      "width": 1024
+    },
+    {
+      "name": "final-draft-light-768",
+      "code": [
+        {
+          "height": 93,
+          "maxHeight": "300px",
+          "scrollHeight": 93,
+          "scrollWidth": 650,
+          "width": 650
+        },
+        {
+          "height": 288,
+          "maxHeight": "300px",
+          "scrollHeight": 1197,
+          "scrollWidth": 947,
+          "width": 640
+        }
+      ],
+      "fileInputs": [
+        {
+          "display": "none",
+          "width": 0
+        }
+      ],
+      "focus": "SUMMARY",
+      "height": 1000,
+      "modals": [
+        {
+          "bodyHeight": 710,
+          "bodyScroll": 1412,
+          "class": "ant-modal cni-clone-dialog mold-dialog mold-dialog-standard",
+          "footer": 915,
+          "left": 24,
+          "right": 744
+        }
+      ],
+      "pageWidth": 758,
+      "theme": "light",
+      "url": "#/cniconfiguration/41828e36-f189-4795-baaa-9afecccab79b",
+      "width": 768
+    },
+    {
+      "name": "final-draft-light-390",
+      "code": [
+        {
+          "height": 93,
+          "maxHeight": "300px",
+          "scrollHeight": 93,
+          "scrollWidth": 320,
+          "width": 320
+        },
+        {
+          "height": 288,
+          "maxHeight": "300px",
+          "scrollHeight": 1197,
+          "scrollWidth": 947,
+          "width": 310
+        }
+      ],
+      "fileInputs": [
+        {
+          "display": "none",
+          "width": 0
+        }
+      ],
+      "focus": "SUMMARY",
+      "height": 1000,
+      "modals": [
+        {
+          "bodyHeight": 854,
+          "bodyScroll": 1701,
+          "class": "ant-modal cni-clone-dialog mold-dialog mold-dialog-standard",
+          "footer": 987,
+          "left": 12,
+          "right": 378
+        }
+      ],
+      "pageWidth": 380,
+      "theme": "light",
+      "url": "#/cniconfiguration/41828e36-f189-4795-baaa-9afecccab79b",
+      "width": 390
+    },
+    {
+      "name": "clean-list-dark",
+      "code": [],
+      "fileInputs": [],
+      "focus": "BUTTON",
+      "height": 808,
+      "modals": [],
+      "pageWidth": 892,
+      "theme": "dark",
+      "url": "#/cniconfiguration",
+      "width": 902
+    }
+  ],
+  "clones": [
+    {
+      "name": "cni1406-account-clone",
+      "id": "b1d9995b-6d6a-410b-ae5b-bc067502d01c",
+      "source": "4eb9386a-2626-436b-ba0a-3bdfdf0c1b80",
+      "params": "NEW",
+      "case": "account success"
+    },
+    {
+      "name": "cni1406-lost-response",
+      "id": "6de467f7-0b7f-4a55-8fea-88e7977045b7",
+      "source": "4eb9386a-2626-436b-ba0a-3bdfdf0c1b80",
+      "params": "VALUE,AS_NUMBER",
+      "case": "real registration committed response lost then reconcile"
+    },
+    {
+      "name": "cni1406-partial-relation",
+      "id": "bb9b8b7d-4b24-4b19-8884-8d75e23b0fa3",
+      "source": "4eb9386a-2626-436b-ba0a-3bdfdf0c1b80",
+      "params": "VALUE,AS_NUMBER",
+      "case": "real first chunk, second write 403, read-back paused until timeout, metadata-only retry"
+    },
+    {
+      "name": "cni1406-permission-retry",
+      "id": "82f04d5a-d51c-474c-a3f1-8ecf0bd2b119",
+      "source": "4eb9386a-2626-436b-ba0a-3bdfdf0c1b80",
+      "params": "VALUE,AS_NUMBER",
+      "case": "normal control registration; no fault matched"
+    },
+    {
+      "name": "cni1406-relation-403",
+      "id": "e417889d-f44f-44bb-9417-fe11c54904ab",
+      "source": "4eb9386a-2626-436b-ba0a-3bdfdf0c1b80",
+      "params": "VALUE,AS_NUMBER",
+      "case": "isolated second relation write 403, real partial confirmed by API, metadata-only retry"
+    },
+    {
+      "name": "cni1406-owner-binary",
+      "id": "aede8967-f4d6-4602-b825-1524cd7bb0c1",
+      "source": "d4d8eedc-d2f9-4bbf-a077-8ce425c623d5",
+      "params": "",
+      "case": "ordinary owner binary byte-preserving clone"
+    },
+    {
+      "name": "cni1406-project-clone",
+      "id": "1b208ccb-4a3d-405a-a95f-0e33f12cff47",
+      "source": "093a4352-a25e-42fd-bf9a-201796a434e5",
+      "params": "VALUE,AS_NUMBER",
+      "case": "ordinary project owner BOM CRLF UTF8 clone"
+    },
+    {
+      "name": "cni1406-in-use-clone",
+      "id": "10a4fee0-26df-4eca-a08f-523f27e20e3d",
+      "source": "12e8d455-f0b8-4940-8b53-43088c644f43",
+      "params": "VALUE,EMPTY,AS_NUMBER,LINES",
+      "case": "clone in-use original without changing its cluster reference"
+    },
+    {
+      "kind": "userdata",
+      "name": "cni1406-normal-clone",
+      "id": "3f678d7a-1647-4309-adf5-4e22cf8658e6",
+      "source": "b05261e8-aba9-41cc-ae38-c2a7a4cd22c1",
+      "params": "",
+      "case": "ordinary UserData API and provenance regression"
+    },
+    {
+      "name": "cni1406-final-confirmed",
+      "id": "11eca2f6-fc42-4498-a6f6-9dd2f4e4c948",
+      "source": "41828e36-f189-4795-baaa-9afecccab79b",
+      "params": "VALUE,AS_NUMBER",
+      "case": "long-source 9254 UTF8 bytes; second annotation 403 then metadata-only retry"
+    },
+    {
+      "name": "cni1406-final-deployed",
+      "id": "52e8f1fd-b3bd-4d8e-b89b-468db5477cef",
+      "source": "41828e36-f189-4795-baaa-9afecccab79b",
+      "params": "VALUE,AS_NUMBER",
+      "case": "final deployed build; 9254 UTF8 bytes; second annotation POST403 and metadata-only retry"
+    }
+  ],
+  "verification_builds": {
+    "final_build": "988682de67ad5440c48b7d7f2ca96809654014950096ad0df14a6f01d61d460e",
+    "final_dialog_matrix_screenshots": 24,
+    "previous_build_unchanged_readonly_result_screenshots": 8,
+    "selected_screenshots": 43,
+    "all_observed_views": 67,
+    "ui_checks": 30
+  }
+}

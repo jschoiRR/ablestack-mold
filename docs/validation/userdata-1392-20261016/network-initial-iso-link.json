@@ -1,0 +1,224 @@
+{
+  "truncated": false,
+  "events": [
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 12148,
+      "id": "36984.2431",
+      "url": "http://10.10.31.10:8080/client/api/",
+      "httpMethod": "POST",
+      "parameters": {
+        "command": "updateIso",
+        "response": "json",
+        "id": "a32115e7-6e4e-4ec5-bc1d-9172451e3b7e",
+        "name": "UD1392-31-20261016-isos-0",
+        "displaytext": "UD1392-31-20261016-isos-0",
+        "ostypeid": "9d9ed195-b253-11f1-a895-0024814c313f",
+        "forceupdateostype": "false"
+      }
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 12150,
+      "id": "36984.2431",
+      "url": "http://10.10.31.10:8080/client/api/",
+      "status": 200,
+      "mimeType": "application/json"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 12152,
+      "id": "36984.2432",
+      "url": "http://10.10.31.10:8080/client/api/",
+      "httpMethod": "POST",
+      "parameters": {
+        "command": "linkUserDataToTemplate",
+        "response": "json",
+        "templateid": "a32115e7-6e4e-4ec5-bc1d-9172451e3b7e",
+        "userdataid": "6ab285d3-d90d-4da1-98dc-652ac5c17f14",
+        "userdatapolicy": "ALLOWOVERRIDE"
+      }
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 12157,
+      "id": "36984.2432",
+      "url": "http://10.10.31.10:8080/client/api/",
+      "status": 200,
+      "mimeType": "application/json"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 12159,
+      "id": "36984.2433",
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&isofilter=all&id=a32115e7-6e4e-4ec5-bc1d-9172451e3b7e&page=1&pagesize=20&showIcon=true&command=listIsos&response=json&sessionkey=<redacted>",
+      "httpMethod": "GET",
+      "parameters": {
+        "listall": "true",
+        "isofilter": "all",
+        "id": "a32115e7-6e4e-4ec5-bc1d-9172451e3b7e",
+        "page": "1",
+        "pagesize": "20",
+        "showIcon": "true",
+        "command": "listIsos",
+        "response": "json"
+      }
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 12164,
+      "id": "36984.2433",
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&isofilter=all&id=a32115e7-6e4e-4ec5-bc1d-9172451e3b7e&page=1&pagesize=20&showIcon=true&command=listIsos&response=json&sessionkey=<redacted>",
+      "status": 200,
+      "mimeType": "application/json"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 12166,
+      "id": "36984.2434",
+      "url": "http://10.10.31.10:8080/client/api/?id=a32115e7-6e4e-4ec5-bc1d-9172451e3b7e&templatefilter=executable&listall=true&command=listIsos&response=json&sessionkey=<redacted>",
+      "httpMethod": "GET",
+      "parameters": {
+        "id": "a32115e7-6e4e-4ec5-bc1d-9172451e3b7e",
+        "templatefilter": "executable",
+        "listall": "true",
+        "command": "listIsos",
+        "response": "json"
+      }
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 12167,
+      "id": "36984.2435",
+      "url": "http://10.10.31.10:8080/client/api/?id=9d9ed195-b253-11f1-a895-0024814c313f&command=listOsTypes&response=json&sessionkey=<redacted>",
+      "httpMethod": "GET",
+      "parameters": {
+        "id": "9d9ed195-b253-11f1-a895-0024814c313f",
+        "command": "listOsTypes",
+        "response": "json"
+      }
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 12168,
+      "id": "36984.2436",
+      "url": "http://10.10.31.10:8080/client/api/?resourceids=7013f5a1-de59-4cea-a596-f4f58815f31c&resourcetype=zone&command=listResourceIcon&response=json&sessionkey=<redacted>",
+      "httpMethod": "GET",
+      "parameters": {
+        "resourceids": "7013f5a1-de59-4cea-a596-f4f58815f31c",
+        "resourcetype": "zone",
+        "command": "listResourceIcon",
+        "response": "json"
+      }
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 12169,
+      "id": "36984.2437",
+      "url": "http://10.10.31.10:8080/client/api/?resourceids=7ef6b29a-b253-11f1-a895-0024814c313f&resourcetype=domain&command=listResourceIcon&response=json&sessionkey=<redacted>",
+      "httpMethod": "GET",
+      "parameters": {
+        "resourceids": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "resourcetype": "domain",
+        "command": "listResourceIcon",
+        "response": "json"
+      }
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 12170,
+      "id": "36984.2438",
+      "url": "http://10.10.31.10:8080/client/api/?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&showicon=true&command=listAccounts&response=json&sessionkey=<redacted>",
+      "httpMethod": "GET",
+      "parameters": {
+        "name": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "showicon": "true",
+        "command": "listAccounts",
+        "response": "json"
+      }
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 12180,
+      "id": "36984.2436",
+      "url": "http://10.10.31.10:8080/client/api/?resourceids=7013f5a1-de59-4cea-a596-f4f58815f31c&resourcetype=zone&command=listResourceIcon&response=json&sessionkey=<redacted>",
+      "status": 200,
+      "mimeType": "application/json"
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 12186,
+      "id": "36984.2437",
+      "url": "http://10.10.31.10:8080/client/api/?resourceids=7ef6b29a-b253-11f1-a895-0024814c313f&resourcetype=domain&command=listResourceIcon&response=json&sessionkey=<redacted>",
+      "status": 200,
+      "mimeType": "application/json"
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 12190,
+      "id": "36984.2435",
+      "url": "http://10.10.31.10:8080/client/api/?id=9d9ed195-b253-11f1-a895-0024814c313f&command=listOsTypes&response=json&sessionkey=<redacted>",
+      "status": 200,
+      "mimeType": "application/json"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 12192,
+      "id": "36984.2439",
+      "url": "http://10.10.31.10:8080/client/api/?resourceids=7efb2e28-b253-11f1-a895-0024814c313f&resourcetype=guestoscategory&command=listResourceIcon&response=json&sessionkey=<redacted>",
+      "httpMethod": "GET",
+      "parameters": {
+        "resourceids": "7efb2e28-b253-11f1-a895-0024814c313f",
+        "resourcetype": "guestoscategory",
+        "command": "listResourceIcon",
+        "response": "json"
+      }
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 12195,
+      "id": "36984.2434",
+      "url": "http://10.10.31.10:8080/client/api/?id=a32115e7-6e4e-4ec5-bc1d-9172451e3b7e&templatefilter=executable&listall=true&command=listIsos&response=json&sessionkey=<redacted>",
+      "status": 200,
+      "mimeType": "application/json"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 12197,
+      "id": "36984.2440",
+      "url": "http://10.10.31.10:8080/client/api/?showicon=true&ids=7013f5a1-de59-4cea-a596-f4f58815f31c&command=listZones&response=json&sessionkey=<redacted>",
+      "httpMethod": "GET",
+      "parameters": {
+        "showicon": "true",
+        "ids": "7013f5a1-de59-4cea-a596-f4f58815f31c",
+        "command": "listZones",
+        "response": "json"
+      }
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 12205,
+      "id": "36984.2438",
+      "url": "http://10.10.31.10:8080/client/api/?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&showicon=true&command=listAccounts&response=json&sessionkey=<redacted>",
+      "status": 200,
+      "mimeType": "application/json"
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 12209,
+      "id": "36984.2439",
+      "url": "http://10.10.31.10:8080/client/api/?resourceids=7efb2e28-b253-11f1-a895-0024814c313f&resourcetype=guestoscategory&command=listResourceIcon&response=json&sessionkey=<redacted>",
+      "status": 200,
+      "mimeType": "application/json"
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 12213,
+      "id": "36984.2440",
+      "url": "http://10.10.31.10:8080/client/api/?showicon=true&ids=7013f5a1-de59-4cea-a596-f4f58815f31c&command=listZones&response=json&sessionkey=<redacted>",
+      "status": 200,
+      "mimeType": "application/json"
+    }
+  ]
+}

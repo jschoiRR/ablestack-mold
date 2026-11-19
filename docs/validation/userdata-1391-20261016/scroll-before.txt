@@ -1,0 +1,167 @@
+Browser tab: 6, Title: "사용자 데이터 라이브러리 - ABLESTACK-Mold", URL: "http://10.10.31.10:8080/client/#/userdata/4cb11aab-bf01-4c0f-a6a1-e3c66c015dfa?tab=userdata.versions".
+1 AXWebArea 사용자 데이터 라이브러리 - ABLESTACK-Mold, URL: 10.10.31.10:8080/client/#/userdata/4cb11aab-bf01-4c0f-a6a1-e3c66c015dfa?tab=userdata.versions
+	2 container
+		309 container
+			310 text 페이지 스타일 설정
+			311 button 닫기
+				312 image close
+			462 container
+				463 heading 페이지 스타일 설정, Value: 3
+					464 text 페이지 스타일 설정
+				465 container
+					466 image
+					467 container
+						468 radio button (settable, integer) Description:  , Value: 1
+					469 image check
+				470 container
+					471 image
+					472 container
+						473 radio button (settable, integer) Description:  , Value: 0
+				474 heading 테마 색상, Value: 3
+					475 text 테마 색상
+				476 container
+					477 radio button (settable, integer) Description:  , Value: 0
+					478 image check
+				479 container
+					480 radio button (settable, integer) Description:  , Value: 0
+				481 container
+					482 radio button (settable, integer) Description:  , Value: 0
+				483 container
+					484 radio button (settable, integer) Description:  , Value: 0
+				485 container
+					486 radio button (settable, integer) Description:  , Value: 0
+				487 container
+					488 radio button (settable, integer) Description:  , Value: 0
+				489 container
+					490 radio button (settable, integer) Description:  , Value: 0
+				491 container
+					492 radio button (settable, integer) Description:  , Value: 0
+				493 heading 네비게이션 설정, Value: 3
+					494 text 네비게이션 설정
+				495 container
+					496 container
+						497 text 배경색
+						498 color well (settable) #ffffff
+					499 container
+						500 text 텍스트 색상
+						501 color well (settable) #000000
+				502 image exclamation-circle
+				503 text 설정은 현재 브라우저에서만 볼 수 있습니다. 설정을 적용하려면 JSON 파일을 다운로드하고 경로 `/public/config.json` 아래의 `config.json` 파일의 `theme` 섹션에서 해당 콘텐츠를 교체하세요.
+				504 button download 세팅값 다운로드(json)
+					505 image download
+					506 text 세팅값 다운로드(json)
+				507 button undo 기본값으로 재설정
+					508 image undo
+					509 text 기본값으로 재설정
+		122 container
+			461 image menu-unfold
+			124 container
+				125 combo box (settable) rc_select_1
+				126 image project
+				127 text 기본 보기
+			131 image translation
+			132 image bell
+			133 container
+				134 text AC admin cloud
+		135 container
+			136 container
+				137 link Description: home, Value: 10.10.31.10:8080/client/#/
+				138 text /
+				139 link Description: 사용자 데이터 라이브러리, Value: 10.10.31.10:8080/client/#/userdata
+				140 text / UD1391-31-20261016-admin
+				141 link Description: question-circle, Value: docs.ablecloud.io/latest/adminguide/virtual_machines.html#user-data-and-meta-data
+				142 button reload 업데이트
+					143 image reload
+					144 text 업데이트
+			145 button down 작업
+				146 image down
+				147 text 작업
+			148 container
+				149 image solution
+				150 heading UD1391-31-20261016-admin, Value: 4
+					151 text UD1391-31-20261016-admin
+				152 text 아이디
+				153 button barcode
+					154 image barcode
+				155 link Description: 4cb11aab-bf01-4c0f-a6a1-e3c66c015dfa , Value: javascript:;
+				156 text 계정
+				157 image user
+				158 link Description: admin, Value: 10.10.31.10:8080/client/#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f
+				159 text 도메인
+				160 image block
+				161 link Description: ROOT, Value: 10.10.31.10:8080/client/#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details
+				162 link Description: cloud-server 가상머신 보기, Value: 10.10.31.10:8080/client/#/vm?userdataid=4cb11aab-bf01-4c0f-a6a1-e3c66c015dfa
+			163 container
+				164 tab group
+					165 container
+						166 tab (selectable, settable, boolean) 상세, Value: 0, ID: rc-tabs-2-tab-details
+						167 tab (selectable, settable, boolean) 사용자 데이터 본문, Value: 0, ID: rc-tabs-2-tab-userdata.content
+						168 tab (selected, settable, boolean) 버전·변경 정책, Value: 1, ID: rc-tabs-2-tab-userdata.versions
+						169 tab (selectable, settable, boolean) 사용 가상머신, Value: 0, ID: rc-tabs-2-tab-userdata.usage.vms
+						170 tab (selectable, settable, boolean) 연결 템플릿, Value: 0, ID: rc-tabs-2-tab-userdata.usage.templates
+						171 tab (selectable, settable, boolean) 연결 ISO, Value: 0, ID: rc-tabs-2-tab-userdata.usage.isos
+						172 tab (selectable, settable, boolean) 코멘트, Value: 0, ID: rc-tabs-2-tab-comments
+				173 container Description: 버전·변경 정책, ID: rc-tabs-2-panel-userdata.versions
+					174 container
+						175 button reload 업데이트
+							176 image reload
+							177 text 업데이트
+						178 text 출처는 새 데이터의 댓글에 기록하며 이 탭에서 표시합니다. 댓글은 권한에 따라 삭제·공개 범위를 변경할 수 있으므로 변경 불가능한 감사 기록이나 자동 적용 이력이 아닙니다. 외부 API 등록 또는 출처 메모가 없는 항목의 부모·버전 순서는 추정하지 않습니다. 출처 메모는 댓글 API의 255자 제한에 맞춰 UUID·바이트 수만 기록합니다. 이름·변수는 각 버전의 상세와 복제 미리보기에서 확인하세요.
+						179 container
+							180 image info-circle
+							181 text 확인 가능한 출처 메모가 없습니다. 독립 등록·삭제된 메모·숨겨진 메모의 버전 관계는 추정하지 않습니다.
+						182 button (collapsed) 적용 범위·참조 전환·되돌리기 안내, Secondary Actions: Expand
+							183 text 적용 범위·참조 전환·되돌리기 안내
+	187 container
+		188 image info-circle
+		189 text Wall 모니터링을 사용할 수 없습니다. 기존 알림은 최신 정보가 아닐 수 있으며 Mold는 계속 사용할 수 있습니다. 비활성
+	363 container
+		364 container 복제하여 새 버전 등록
+			365 container
+				366 button Close
+					367 image close
+				368 text 복제하여 새 버전 등록
+				369 container
+					370 image info-circle
+					371 text 원본의 이름·본문·변수를 재사용해 같은 소유 범위에 새 데이터를 만듭니다. 기존 VM·템플릿·ISO에는 자동 적용되지 않습니다.
+					372 text 복제 원본: UD1391-31-20261016-admin (4cb11aab-bf01-4c0f-a6a1-e3c66c015dfa)
+					373 text admin / ROOT
+					374 link Description: 사용 가상머신, Value: 10.10.31.10:8080/client/#/userdata/4cb11aab-bf01-4c0f-a6a1-e3c66c015dfa?tab=userdata.usage.vms
+					375 link Description: 연결 템플릿, Value: 10.10.31.10:8080/client/#/userdata/4cb11aab-bf01-4c0f-a6a1-e3c66c015dfa?tab=userdata.usage.templates
+					376 link Description: 연결 ISO, Value: 10.10.31.10:8080/client/#/userdata/4cb11aab-bf01-4c0f-a6a1-e3c66c015dfa?tab=userdata.usage.isos
+					377 button (collapsed) 적용 범위·참조 전환·되돌리기 안내, Secondary Actions: Expand
+						378 text 적용 범위·참조 전환·되돌리기 안내
+					379 container userdata-registration-form
+						380 container
+							510 text * 이름
+							382 image info-circle
+						383 text field (settable) * 이름 info-circle, Value: UD1391-31-20261016-admin-v2, ID: form_item_name
+						384 container
+							511 text * 사용자 데이터
+							386 image info-circle
+						387 text entry area (settable) * 사용자 데이터 info-circle, ID: form_item_userdata, Value: 77u/I2Nsb3VkLWNvbmZpZw0KIyBVRDEzOTEtMzEtMjAyNjEwMTYg7ZWc6riAwrdVVEYtOMK38J+YgA0KIyA8c2NyaXB0PuuzuOusuOydgCDsi6TtlonrkJjsp4Ag7JWK7Iq164uI64ukPC9zY3JpcHQ+DQojIOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk65286ri07ZaJLeqwgOuCmOuLpOudvOq4tO2WiS3qsIDrgpjri6TrnbzquLTtlokt6rCA64KY64uk6528DQojIOykhCAwIO2VnOq4gCDrs7jrrLgNCiMg7KSEIDEg7ZWc6riAIOuzuOusuA0KIyDspIQgMiDtlZzquIAg67O466y4DQojIOykhCAzIO2VnOq4gCDrs7jrrLgNCiMg7KSEIDQg7ZWc6riAIOuzuOusuA0KIyDspIQgNSDtlZzquIAg67O466y4DQojIOykhCA2IO2VnOq4gCDrs7jrrLgNCiMg7KSEIDcg7ZWc6riAIOuzuOusuA0KIyDspIQgOCDtlZzquIAg67O466y4DQojIOykhCA5IO2VnOq4gCDrs7jrrLgNCiMg7KSEIDEwIO2VnOq4gCDrs7jrrLgNCiMg7KSEIDExIO2VnOq4gCDrs7jrrLgNCiMg7KSEIDEyIO2VnOq4gCDrs7jrrLgNCiMg7KSEIDEzIO2VnOq4gCDrs7jrrLgNCiMg7KSEIDE0IO2VnOq4gCDrs7jrrLgNCiMg7KSEIDE1IO2VnOq4gCDrs7jrrLgNCiMg7KSEIDE2IO2VnOq4gCDrs7jrrLgNCiMg7KSEIDE3IO2VnOq4gCDrs7jrrLgNCiMg7KSEIDE4IO2VnOq4gCDrs7jrrLgNCiMg7KSEIDE5IO2VnOq4gCDrs7jrrLgNCiMg7KSEIDIwIO2VnOq4gCDrs7jrrLgNCiMg7KSEIDIxIO2VnOq4gCDrs7jrrLgNCiMg7KSEIDIyIO2VnOq4gCDrs7jrrLgNCiMg7KSEIDIzIO2VnOq4gCDrs7jrrLgNCiMg7KSEIDI0IO2VnOq4gCDrs7jrrLgNCiMg7KSEIDI1IO2VnOq4gCDrs7jrrLgNCiMg7KSEIDI2IO2VnOq4gCDrs7jrrLgNCiMg7KSEIDI3IO2VnOq4gCDrs7jrrLgNCiMg7KSEIDI4IO2VnOq4gCDrs7jrrLgNCiMg7KSEIDI5IO2VnOq4gCDrs7jrrLgNCiMg7KSEIDMwIO2VnOq4gCDrs7jrrLgNCiMg7KSEIDMxIO2VnOq4gCDrs7jrrLgNCiMg7KSEIDMyIO2VnOq4gCDrs7jrrLgNCiMg7KSEIDMzIO2VnOq4gCDrs7jrrLgNCiMg7KSEIDM0IO2VnOq4gCDrs7jrrLgNCiMg7KSEIDM1IO2VnOq4gCDrs7jrrLgNCiMg7KSEIDM2IO2VnOq4gCDrs7jrrLgNCiMg7KSEIDM3IO2VnOq4gCDrs7jrrLgNCiMg7KSEIDM4IO2VnOq4gCDrs7jrrLgNCiMg7KSEIDM5IO2VnOq4gCDrs7jrrLgNCiMg7KSEIDQwIO2VnOq4gCDrs7jrrLgNCiMg7KSEIDQxIO2VnOq4gCDrs7jrrLgNCiMg7KSEIDQyIO2VnOq4gCDrs7jrrLgNCiMg7KSEIDQzIO2VnOq4gCDrs7jrrLgNCiMg7KSEIDQ0IO2VnOq4gCDrs7jrrLgNCiMg7KSEIDQ1IO2VnOq4gCDrs7jrrLgNCiMg7KSEIDQ2IO2VnOq4gCDrs7jrrLgNCiMg7KSEIDQ3IO2VnOq4gCDrs7jrrLgNCiMg7KSEIDQ4IO2VnOq4gCDrs7jrrLgNCiMg7KSEIDQ5IO2VnOq4gCDrs7jrrLgNCiMg7KSEIDUwIO2VnOq4gCDrs7jrrLgNCiMg7KSEIDUxIO2VnOq4gCDrs7jrrLgNCiMg7KSEIDUyIO2VnOq4gCDrs7jrrLgNCiMg7KSEIDUzIO2VnOq4gCDrs7jrrLgNCiMg7KSEIDU0IO2VnOq4gCDrs7jrrLgNCiMg7KSEIDU1IO2VnOq4gCDrs7jrrLgNCiMg7KSEIDU2IO2VnOq4gCDrs7jrrLgNCiMg7KSEIDU3IO2VnOq4gCDrs7jrrLgNCiMg7KSEIDU4IO2VnOq4gCDrs7jrrLgNCiMg7KSEIDU5IO2VnOq4gCDrs7jrrLgNCiMg7KSEIDYwIO2VnOq4gCDrs7jrrLgNCiMg7KSEIDYxIO2VnOq4gCDrs7jrrLgNCiMg7KSEIDYyIO2VnOq4gCDrs7jrrLgNCiMg7KSEIDYzIO2VnOq4gCDrs7jrrLgNCiMg7KSEIDY0IO2VnOq4gCDrs7jrrLgNCiMg7KSEIDY1IO2VnOq4gCDrs7jrrLgNCiMg7KSEIDY2IO2VnOq4gCDrs7jrrLgNCiMg7KSEIDY3IO2VnOq4gCDrs7jrrLgNCiMg7KSEIDY4IO2VnOq4gCDrs7jrrLgNCiMg7KSEIDY5IO2VnOq4gCDrs7jrrLgNCiMg7KSEIDcwIO2VnOq4gCDrs7jrrLgNCiMg7KSEIDcxIO2VnOq4gCDrs7jrrLgNCiMg7KSEIDcyIO2VnOq4gCDrs7jrrLgNCiMg7KSEIDczIO2VnOq4gCDrs7jrrLgNCiMg7KSEIDc0IO2VnOq4gCDrs7jrrLgNCiMg7KSEIDc1IO2VnOq4gCDrs7jrrLgNCiMg7KSEIDc2IO2VnOq4gCDrs7jrrLgNCiMg7KSEIDc3IO2VnOq4gCDrs7jrrLgNCiMg7KSEIDc4IO2VnOq4gCDrs7jrrLgNCiMg7KSEIDc5IO2VnOq4gCDrs7jrrLgNCiMg7KSEIDgwIO2VnOq4gCDrs7jrrLgNCiMg7KSEIDgxIO2VnOq4gCDrs7jrrLgNCiMg7KSEIDgyIO2VnOq4gCDrs7jrrLgNCiMg7KSEIDgzIO2VnOq4gCDrs7jrrLgNCiMg7KSEIDg0IO2VnOq4gCDrs7jrrLgNCiMg7KSEIDg1IO2VnOq4gCDrs7jrrLgNCiMg7KSEIDg2IO2VnOq4gCDrs7jrrLgNCiMg7KSEIDg3IO2VnOq4gCDrs7jrrLgNCiMg7KSEIDg4IO2VnOq4gCDrs7jrrLgNCiMg7KSEIDg5IO2VnOq4gCDrs7jrrLgNCiMg7KSEIDkwIO2VnOq4gCDrs7jrrLgNCiMg7KSEIDkxIO2VnOq4gCDrs7jrrLgNCiMg7KSEIDkyIO2VnOq4gCDrs7jrrLgNCiMg7KSEIDkzIO2VnOq4gCDrs7jrrLgNCiMg7KSEIDk0IO2VnOq4gCDrs7jrrLgNCiMg7KSEIDk1IO2VnOq4gCDrs7jrrLgNCiMg7KSEIDk2IO2VnOq4gCDrs7jrrLgNCiMg7KSEIDk3IO2VnOq4gCDrs7jrrLgNCiMg7KSEIDk4IO2VnOq4gCDrs7jrrLgNCiMg7KSEIDk5IO2VnOq4gCDrs7jrrLgNCg0K
+						388 text Base64 인코드
+						389 container
+							390 checkbox (settable, integer) Base64 인코드  , Value: 1, ID: form_item_isbase64
+							391 text 처음에는 원본 바이트를 보존하는 Base64로 채웁니다. UTF-8 본문은 원문 편집을 선택할 수 있습니다. 아래 미리보기에서 변경 내용을 확인하세요.
+							392 button 원문으로 편집
+						393 container
+							394 text 사용자 데이터 매개변수
+							395 image info-circle
+						396 container
+							397 combo box (settable) 사용자 데이터 매개변수 info-circle, ID: form_item_params
+							398 text comma separated list of variables declared in user data content
+						399 container
+							400 image exclamation-circle
+							401 text 본문이 원본과 같습니다. 이름·변수만 바꾸는 버전은 같은 소유자의 동일 본문 중복 금지 정책에 따라 등록할 수 없습니다.
+						402 container
+							403 text 원본 12012바이트 → 새 버전 12012바이트 · 최초 차이 바이트 위치: -
+							404 text 사용자 데이터 매개변수: - → -
+						405 button (collapsed) 원본 본문 확인, Secondary Actions: Expand
+							406 text 원본 본문 확인
+						407 button (collapsed) 새 버전 본문 미리보기, Secondary Actions: Expand
+							408 text 새 버전 본문 미리보기
+				409 button 취소
+				410 button 새 버전 등록
+
+The focused UI element is 383 text field (settable) * 이름 info-circle, Value: UD1391-31-20261016-admin-v2, ID: form_item_name

@@ -1723,6 +1723,10 @@ public class ApiDBUtils {
         return s_asVmGroupDao.findById(groupId);
     }
 
+    public static Map<String, Integer> countAutoScaleMemberStates(long groupId) {
+        return s_autoScaleVmGroupVmMapDao.countMemberStates(groupId);
+    }
+
     public static int countAvailableVmsByGroupId(long groupId) {
         return s_autoScaleVmGroupVmMapDao.countAvailableVmsByGroup(groupId);
     }

@@ -1,0 +1,213 @@
+{
+  "timestamp": 1791685202.0637207,
+  "sourceCommit": "ab86c636070e7d0d33778beec810d4b1307f9a4d",
+  "vms": [
+    {
+      "cluster": 31,
+      "instance": "i-35-397-VM",
+      "host": "10.10.31.1",
+      "diskType": "file",
+      "driver": {
+        "name": "qemu",
+        "type": "qcow2",
+        "cache": "none",
+        "io": "io_uring",
+        "discard": "unmap"
+      },
+      "source": {
+        "file": "/mnt/glue-gfs/7d97eaef-5619-494b-92a4-ddddb13cfa11",
+        "index": "3"
+      },
+      "qemuImage": {
+        "children": [
+          {
+            "name": "file",
+            "info": {
+              "children": [],
+              "virtual-size": 107390828544,
+              "filename": "/mnt/glue-gfs/7d97eaef-5619-494b-92a4-ddddb13cfa11",
+              "format": "file",
+              "actual-size": 3579531264,
+              "format-specific": {
+                "type": "file",
+                "data": {}
+              },
+              "dirty-flag": false
+            }
+          }
+        ],
+        "virtual-size": 107374182400,
+        "filename": "/mnt/glue-gfs/7d97eaef-5619-494b-92a4-ddddb13cfa11",
+        "cluster-size": 65536,
+        "format": "qcow2",
+        "actual-size": 3579531264,
+        "format-specific": {
+          "type": "qcow2",
+          "data": {
+            "compat": "1.1",
+            "compression-type": "zlib",
+            "lazy-refcounts": false,
+            "refcount-bits": 16,
+            "corrupt": false,
+            "extended-l2": false
+          }
+        },
+        "dirty-flag": false
+      }
+    },
+    {
+      "cluster": 31,
+      "instance": "i-35-422-VM",
+      "host": "10.10.31.2",
+      "diskType": "file",
+      "driver": {
+        "name": "qemu",
+        "type": "qcow2",
+        "cache": "none",
+        "io": "io_uring",
+        "discard": "unmap"
+      },
+      "source": {
+        "file": "/mnt/glue-gfs/e1dab0b8-0663-4f50-a717-c7effc4a9f93",
+        "index": "3"
+      },
+      "qemuImage": {
+        "children": [
+          {
+            "name": "file",
+            "info": {
+              "children": [],
+              "virtual-size": 107390828544,
+              "filename": "/mnt/glue-gfs/e1dab0b8-0663-4f50-a717-c7effc4a9f93",
+              "format": "file",
+              "actual-size": 3568517120,
+              "format-specific": {
+                "type": "file",
+                "data": {}
+              },
+              "dirty-flag": false
+            }
+          }
+        ],
+        "virtual-size": 107374182400,
+        "filename": "/mnt/glue-gfs/e1dab0b8-0663-4f50-a717-c7effc4a9f93",
+        "cluster-size": 65536,
+        "format": "qcow2",
+        "actual-size": 3568517120,
+        "format-specific": {
+          "type": "qcow2",
+          "data": {
+            "compat": "1.1",
+            "compression-type": "zlib",
+            "lazy-refcounts": false,
+            "refcount-bits": 16,
+            "corrupt": false,
+            "extended-l2": false
+          }
+        },
+        "dirty-flag": false
+      }
+    },
+    {
+      "cluster": 31,
+      "instance": "i-35-423-VM",
+      "host": "10.10.31.3",
+      "diskType": "file",
+      "driver": {
+        "name": "qemu",
+        "type": "qcow2",
+        "cache": "none",
+        "io": "io_uring",
+        "discard": "unmap"
+      },
+      "source": {
+        "file": "/mnt/glue-gfs/551a19db-a136-45a8-adea-7199f216be14",
+        "index": "3"
+      },
+      "qemuImage": {
+        "children": [
+          {
+            "name": "file",
+            "info": {
+              "children": [],
+              "virtual-size": 107390828544,
+              "filename": "/mnt/glue-gfs/551a19db-a136-45a8-adea-7199f216be14",
+              "format": "file",
+              "actual-size": 3567894528,
+              "format-specific": {
+                "type": "file",
+                "data": {}
+              },
+              "dirty-flag": false
+            }
+          }
+        ],
+        "virtual-size": 107374182400,
+        "filename": "/mnt/glue-gfs/551a19db-a136-45a8-adea-7199f216be14",
+        "cluster-size": 65536,
+        "format": "qcow2",
+        "actual-size": 3567894528,
+        "format-specific": {
+          "type": "qcow2",
+          "data": {
+            "compat": "1.1",
+            "compression-type": "zlib",
+            "lazy-refcounts": false,
+            "refcount-bits": 16,
+            "corrupt": false,
+            "extended-l2": false
+          }
+        },
+        "dirty-flag": false
+      }
+    },
+    {
+      "cluster": 32,
+      "instance": "i-6-73-VM",
+      "host": "10.10.32.2",
+      "diskType": "block",
+      "driver": {
+        "name": "qemu",
+        "type": "raw",
+        "cache": "none",
+        "discard": "unmap"
+      },
+      "source": {
+        "dev": "/dev/rbd/rbd/d38a9172-aa7f-4ab5-80c8-cff68a74ab28",
+        "index": "3"
+      }
+    },
+    {
+      "cluster": 32,
+      "instance": "i-6-98-VM",
+      "host": "10.10.32.2",
+      "diskType": "block",
+      "driver": {
+        "name": "qemu",
+        "type": "raw",
+        "cache": "none",
+        "discard": "unmap"
+      },
+      "source": {
+        "dev": "/dev/rbd/rbd/03642a8c-767d-44e6-a484-69a737b8a0b9",
+        "index": "3"
+      }
+    },
+    {
+      "cluster": 32,
+      "instance": "i-6-99-VM",
+      "host": "10.10.32.3",
+      "diskType": "block",
+      "driver": {
+        "name": "qemu",
+        "type": "raw",
+        "cache": "none",
+        "discard": "unmap"
+      },
+      "source": {
+        "dev": "/dev/rbd/rbd/7d7244d6-4051-462a-a741-3d393995244c",
+        "index": "3"
+      }
+    }
+  ]
+}

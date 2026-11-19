@@ -1,0 +1,830 @@
+- complementary:
+  - menu:
+    - menuitem "dashboard 대시보드":
+      - link "dashboard 대시보드":
+        - /url: "#/dashboard"
+        - img "dashboard":
+        - text: 대시보드
+    - img "cloud":
+    - text: 컴퓨트
+    - list:
+      - menuitem "cloud-server 가상머신":
+        - link "cloud-server 가상머신":
+          - /url: "#/vm"
+          - img "cloud-server":
+          - text: 가상머신
+      - menuitem "camera VM 스냅샷":
+        - link "camera VM 스냅샷":
+          - /url: "#/vmsnapshot"
+          - img "camera":
+          - text: VM 스냅샷
+      - menuitem "쿠버네티스":
+        - link "쿠버네티스":
+          - /url: "#/kubernetes"
+          - text: 쿠버네티스
+      - menuitem "fullscreen 오토스케일 VM 그룹":
+        - link "fullscreen 오토스케일 VM 그룹":
+          - /url: "#/autoscalevmgroup"
+          - img "fullscreen":
+          - text: 오토스케일 VM 그룹
+      - menuitem "gold 가상머신 그룹":
+        - link "gold 가상머신 그룹":
+          - /url: "#/vmgroup"
+          - img "gold":
+          - text: 가상머신 그룹
+      - menuitem "key SSH 키 쌍":
+        - link "key SSH 키 쌍":
+          - /url: "#/ssh"
+          - img "key":
+          - text: SSH 키 쌍
+      - menuitem "solution 사용자 데이터 라이브러리":
+        - link "solution 사용자 데이터 라이브러리":
+          - /url: "#/userdata"
+          - img "solution":
+          - text: 사용자 데이터 라이브러리
+      - menuitem "solution CNI 구성":
+        - link "solution CNI 구성":
+          - /url: "#/cniconfiguration"
+          - img "solution":
+          - text: CNI 구성
+      - menuitem "swap Affinity 그룹":
+        - link "swap Affinity 그룹":
+          - /url: "#/affinitygroup"
+          - img "swap":
+          - text: Affinity 그룹
+    - img "hdd":
+    - text: 스토리지
+    - img "wifi":
+    - text: 네트워크
+    - img "picture":
+    - text: 이미지
+    - img "lock":
+    - text: 키 관리
+    - menuitem "schedule 이벤트":
+      - link "schedule 이벤트":
+        - /url: "#/event"
+        - img "schedule":
+        - text: 이벤트
+    - menuitem "project 프로젝트":
+      - link "project 프로젝트":
+        - /url: "#/project"
+        - img "project":
+        - text: 프로젝트
+    - menuitem "idcard 역할":
+      - link "idcard 역할":
+        - /url: "#/role"
+        - img "idcard":
+        - text: 역할
+    - menuitem "team 계정":
+      - link "team 계정":
+        - /url: "#/account"
+        - img "team":
+        - text: 계정
+    - menuitem "block 도메인":
+      - link "block 도메인":
+        - /url: "#/domain"
+        - img "block":
+        - text: 도메인
+    - img "bank":
+    - text: 인프라스트럭쳐
+    - img "shopping":
+    - text: 서비스 오퍼링
+    - img "setting":
+    - text: 구성
+    - menuitem "appstore-add 확장":
+      - link "appstore-add 확장":
+        - /url: "#/extension"
+        - img "appstore-add":
+        - text: 확장
+    - img "tool":
+    - text: 도구
+    - menuitem "read API 문서":
+      - link "read API 문서":
+        - /url: "#/apidocs/"
+        - img "read":
+        - text: API 문서
+- generic: 페이지 스타일 설정
+- button "닫기":
+  - img "close":
+- heading "페이지 스타일 설정" [level=3]
+- radio [checked]
+- img "check":
+- radio
+- heading "테마 색상" [level=3]
+- radio
+- img "check"
+- radio
+- radio
+- radio
+- radio
+- radio
+- radio
+- radio
+- separator
+- heading "네비게이션 설정" [level=3]
+- generic: 배경색
+- textbox: "#ffffff"
+- generic: 텍스트 색상
+- textbox: "#000000"
+- separator
+- alert:
+  - img "exclamation-circle":
+  - generic: "설정은 현재 브라우저에서만 볼 수 있습니다. 설정을 적용하려면 JSON 파일을 다운로드하고 경로 `/public/config.json` 아래의 `config.json` 파일의 `theme` 섹션에서 해당 콘텐츠를 교체하세요."
+- button "download 세팅값 다운로드(json)":
+  - img "download":
+  - generic: 세팅값 다운로드(json)
+- button "undo 기본값으로 재설정":
+  - img "undo":
+  - generic: 기본값으로 재설정
+- img "menu-fold":
+- combobox
+- img "project":
+- text: 기본 보기
+- button "생성 down":
+  - generic: 생성
+  - img "down":
+- img "translation":
+- img "bell":
+- generic: AC
+- generic: admin cloud
+- main:
+  - generic: 새 오토스케일 VM 그룹
+  - form "새 오토스케일 VM 그룹":
+    - button "1 Zone 선택 Zone은 원래 단일 데이터 센터에 해당합니다. 다수의 Zone을 설정하고 물리적으로 분리하는 방법으로 클라우드의 신뢰성을 높일 수 있습니다. * Zone global Zone":
+      - generic: "1"
+      - generic: Zone 선택
+      - text: Zone은 원래 단일 데이터 센터에 해당합니다. 다수의 Zone을 설정하고 물리적으로 분리하는 방법으로 클라우드의 신뢰성을 높일 수 있습니다.
+      - generic "Zone": "* Zone"
+      - radio "global Zone" [checked]
+      - img "global":
+      - text: Zone
+    - button "2 템플릿 선택 운영체제 Ubuntu Debian Rocky Linux Windows 사용자 공유 필터링 기준 search Ubuntu 26.04 Server Base Install (without QGA) arrows-alt 추천 공개 HVM Ubuntu 24.04 Server Base Install (without QGA) arrows-alt 추천 공개 HVM Ubuntu 22.04 Server Base Install (without QGA) arrows-alt 추천 공개 HVM AS04 기능 검증용 Ubuntu HTTP8080 HVM 전체 4 개 항목 left 1 right 10 / 쪽 루트 디스크 크기 무시":
+      - generic: "2"
+      - generic: 템플릿 선택
+      - generic "운영체제"
+      - radio "Ubuntu" [checked]
+      - generic: Ubuntu
+      - radio "Debian"
+      - generic: Debian
+      - radio "Rocky Linux"
+      - generic: Rocky Linux
+      - radio "Windows"
+      - generic: Windows
+      - radio "사용자"
+      - generic: 사용자
+      - radio "공유"
+      - generic: 공유
+      - combobox
+      - generic: 필터링 기준
+      - textbox "검색"
+      - button "search":
+        - img "search":
+      - list:
+        - radio "Ubuntu 26.04 Server Base Install (without QGA) arrows-alt 추천 공개 HVM" [checked]
+        - text: Ubuntu 26.04 Server Base Install (without QGA)
+        - img "arrows-alt":
+        - generic: 추천
+        - generic: 공개
+        - generic: HVM
+        - radio "Ubuntu 24.04 Server Base Install (without QGA) arrows-alt 추천 공개 HVM"
+        - text: Ubuntu 24.04 Server Base Install (without QGA)
+        - img "arrows-alt":
+        - generic: 추천
+        - generic: 공개
+        - generic: HVM
+        - radio "Ubuntu 22.04 Server Base Install (without QGA) arrows-alt 추천 공개 HVM"
+        - text: Ubuntu 22.04 Server Base Install (without QGA)
+        - img "arrows-alt":
+        - generic: 추천
+        - generic: 공개
+        - generic: HVM
+        - radio "AS04 기능 검증용 Ubuntu HTTP8080 HVM"
+        - text: AS04 기능 검증용 Ubuntu HTTP8080
+        - generic: HVM
+      - list:
+        - listitem: 전체 4 개 항목
+        - listitem "이전 페이지":
+          - button "left" [disabled]:
+            - img "left":
+        - listitem "1":
+          - generic: "1"
+        - listitem "다음 페이지":
+          - button "right" [disabled]:
+            - img "right":
+        - combobox
+        - generic: 10 / 쪽
+      - text: 루트 디스크 크기 무시
+      - switch
+    - button "3 컴퓨트 오퍼링 search 컴퓨트 오퍼링 appstore CPU bulb 메모리 appstore 압축/중복제거 tag 스토리지 태그 1C1GB-TO-64C128GB-FR-GFS-None 1-64 CPU x 2.00 Ghz 1024-131072 MB 비활성화 1C1GB-TO-64C128GB-FR-GFS 1-64 CPU x 2.00 Ghz 1024-131072 MB 비활성화 glue-gfs 1C1GB-TO-64C128GB-FR-CLVM 1-64 CPU x 2.00 Ghz 1024-131072 MB 비활성화 clvm 1C1GB-TO-64C128GB-FR-CLVM-NG 1-64 CPU x 2.00 Ghz 1024-131072 MB 비활성화 clvm-ng 1C1GB-TO-32C64GB-thin-wb-ha 1-32 CPU x 2.00 Ghz 1024-32768 MB 비활성화 glue-gfs 8Core-16GB-Fixed-Offering 8 CPU x 2.00 Ghz 16384 MB 비활성화 glue-gfs 4Core 8GB 4 CPU x 2.00 Ghz 8192 MB 비활성화 2Core 2GB 2 CPU x 2.00 Ghz 2048 MB 비활성화 glue-gfs 2C-4GB-GFS 2 CPU x 2.00 Ghz 4096 MB 비활성화 glue-gfs RT1230-GFS2-4C8G 4 CPU x 2.00 Ghz 8192 MB 비활성화 glue-gfs 전체 15 개 항목 left 1 2 right 10 / 쪽 루트 디스크 오퍼링 무시 루트 디스크 크기(GB) Increase Value Decrease Value 100 GB":
+      - generic: "3"
+      - generic: 컴퓨트 오퍼링
+      - alert:
+        - img "info-circle":
+        - generic: 오토스케일은 고정 컴퓨트 오퍼링을 사용합니다. 사용자 지정 오퍼링은 선택할 수 없습니다.
+      - textbox "검색"
+      - button "search":
+        - img "search":
+      - table:
+        - rowgroup:
+          - row "컴퓨트 오퍼링 appstore CPU bulb 메모리 appstore 압축/중복제거 tag 스토리지 태그":
+            - columnheader
+            - columnheader "컴퓨트 오퍼링"
+            - columnheader "appstore CPU":
+              - img "appstore":
+              - text: CPU
+            - columnheader "bulb 메모리":
+              - img "bulb":
+              - text: 메모리
+            - columnheader "appstore 압축/중복제거":
+              - img "appstore":
+              - text: 압축/중복제거
+            - columnheader "tag 스토리지 태그":
+              - img "tag":
+              - text: 스토리지 태그
+            - columnheader
+      - table:
+        - rowgroup:
+          - row "1C1GB-TO-64C128GB-FR-GFS-None 1-64 CPU x 2.00 Ghz 1024-131072 MB 비활성화":
+            - cell:
+              - radio [disabled]
+            - cell "1C1GB-TO-64C128GB-FR-GFS-None"
+            - cell "1-64 CPU x 2.00 Ghz"
+            - cell "1024-131072 MB"
+            - cell "비활성화"
+            - cell
+          - row "1C1GB-TO-64C128GB-FR-GFS 1-64 CPU x 2.00 Ghz 1024-131072 MB 비활성화 glue-gfs":
+            - cell:
+              - radio [disabled]
+            - cell "1C1GB-TO-64C128GB-FR-GFS"
+            - cell "1-64 CPU x 2.00 Ghz"
+            - cell "1024-131072 MB"
+            - cell "비활성화"
+            - cell "glue-gfs"
+          - row "1C1GB-TO-64C128GB-FR-CLVM 1-64 CPU x 2.00 Ghz 1024-131072 MB 비활성화 clvm":
+            - cell:
+              - radio [disabled]
+            - cell "1C1GB-TO-64C128GB-FR-CLVM"
+            - cell "1-64 CPU x 2.00 Ghz"
+            - cell "1024-131072 MB"
+            - cell "비활성화"
+            - cell "clvm"
+          - row "1C1GB-TO-64C128GB-FR-CLVM-NG 1-64 CPU x 2.00 Ghz 1024-131072 MB 비활성화 clvm-ng":
+            - cell:
+              - radio [disabled]
+            - cell "1C1GB-TO-64C128GB-FR-CLVM-NG"
+            - cell "1-64 CPU x 2.00 Ghz"
+            - cell "1024-131072 MB"
+            - cell "비활성화"
+            - cell "clvm-ng"
+          - row "1C1GB-TO-32C64GB-thin-wb-ha 1-32 CPU x 2.00 Ghz 1024-32768 MB 비활성화 glue-gfs":
+            - cell:
+              - radio [disabled]
+            - cell "1C1GB-TO-32C64GB-thin-wb-ha"
+            - cell "1-32 CPU x 2.00 Ghz"
+            - cell "1024-32768 MB"
+            - cell "비활성화"
+            - cell "glue-gfs"
+          - row "8Core-16GB-Fixed-Offering 8 CPU x 2.00 Ghz 16384 MB 비활성화 glue-gfs":
+            - cell:
+              - radio [checked]
+            - cell "8Core-16GB-Fixed-Offering"
+            - cell "8 CPU x 2.00 Ghz"
+            - cell "16384 MB"
+            - cell "비활성화"
+            - cell "glue-gfs"
+          - row "4Core 8GB 4 CPU x 2.00 Ghz 8192 MB 비활성화":
+            - cell:
+              - radio
+            - cell "4Core 8GB"
+            - cell "4 CPU x 2.00 Ghz"
+            - cell "8192 MB"
+            - cell "비활성화"
+            - cell
+          - row "2Core 2GB 2 CPU x 2.00 Ghz 2048 MB 비활성화 glue-gfs":
+            - cell:
+              - radio
+            - cell "2Core 2GB"
+            - cell "2 CPU x 2.00 Ghz"
+            - cell "2048 MB"
+            - cell "비활성화"
+            - cell "glue-gfs"
+          - row "2C-4GB-GFS 2 CPU x 2.00 Ghz 4096 MB 비활성화 glue-gfs":
+            - cell:
+              - radio
+            - cell "2C-4GB-GFS"
+            - cell "2 CPU x 2.00 Ghz"
+            - cell "4096 MB"
+            - cell "비활성화"
+            - cell "glue-gfs"
+          - row "RT1230-GFS2-4C8G 4 CPU x 2.00 Ghz 8192 MB 비활성화 glue-gfs":
+            - cell:
+              - radio
+            - cell "RT1230-GFS2-4C8G"
+            - cell "4 CPU x 2.00 Ghz"
+            - cell "8192 MB"
+            - cell "비활성화"
+            - cell "glue-gfs"
+      - list:
+        - listitem: 전체 15 개 항목
+        - listitem "이전 페이지":
+          - button "left" [disabled]:
+            - img "left":
+        - listitem "1":
+          - generic: "1"
+        - listitem "2":
+          - generic: "2"
+        - listitem "다음 페이지":
+          - button "right":
+            - img "right":
+        - combobox
+        - generic: 10 / 쪽
+      - text: 루트 디스크 오퍼링 무시
+      - switch
+      - generic "루트 디스크 크기(GB)"
+      - button "Increase Value":
+        - img "up":
+      - button "Decrease Value":
+        - img "down":
+      - spinbutton: "100"
+      - generic: GB
+    - button "4 데이터 디스크 데이터 디스크":
+      - generic: "4"
+      - generic: 데이터 디스크
+      - text: 데이터 디스크
+      - switch
+    - button "5 네트워크 선택 오토스케일 VM 그룹의 VM에 대해 하나 이상의 네트워크를 선택하십시오. 기본 네트워크는 VM 오토스케일을 지원하고 부하 분산 규칙이 있는 격리된 네트워크 또는 VPC 계층이어야 합니다. search 새로운 네트워크 생성 네트워크 게스트 유형 VPC VM 오토스케일링 지원 Expand row apartment AS-PROD-31-AS01-net Isolated 예 Expand row apartment E1335-VM-Origin-L2 L2 아니오 Expand row apartment k8s-ui1330-gfs2-net Isolated 아니오 Expand row apartment Admin-Isoloated-Net Isolated 예 Expand row apartment L2-Test L2 아니오 Expand row apartment ADMIN-L2-Network L2 아니오 전체 6 개 항목 left 1 right 10 / 쪽":
+      - generic: "5"
+      - generic: 네트워크 선택
+      - text: 오토스케일 VM 그룹의 VM에 대해 하나 이상의 네트워크를 선택하십시오. 기본 네트워크는 VM 오토스케일을 지원하고 부하 분산 규칙이 있는 격리된 네트워크 또는 VPC 계층이어야 합니다.
+      - textbox "검색"
+      - button "search":
+        - img "search":
+      - button "새로운 네트워크 생성":
+        - generic: 새로운 네트워크 생성
+      - table:
+        - rowgroup:
+          - row "네트워크 게스트 유형 VPC VM 오토스케일링 지원":
+            - columnheader
+            - columnheader:
+              - checkbox
+            - columnheader "네트워크"
+            - columnheader "게스트 유형"
+            - columnheader "VPC"
+            - columnheader "VM 오토스케일링 지원"
+            - columnheader
+      - table:
+        - rowgroup:
+          - row "Expand row apartment AS-PROD-31-AS01-net Isolated 예":
+            - cell "Expand row":
+              - button "Expand row"
+            - cell:
+              - checkbox
+            - cell "apartment AS-PROD-31-AS01-net":
+              - img "apartment":
+              - text: AS-PROD-31-AS01-net
+            - cell "Isolated"
+            - cell
+            - cell "예"
+          - row "Expand row apartment E1335-VM-Origin-L2 L2 아니오":
+            - cell "Expand row":
+              - button "Expand row"
+            - cell:
+              - checkbox
+            - cell "apartment E1335-VM-Origin-L2":
+              - img "apartment":
+              - text: E1335-VM-Origin-L2
+            - cell "L2"
+            - cell
+            - cell "아니오"
+          - row "Expand row apartment k8s-ui1330-gfs2-net Isolated 아니오":
+            - cell "Expand row":
+              - button "Expand row"
+            - cell:
+              - checkbox
+            - cell "apartment k8s-ui1330-gfs2-net":
+              - img "apartment":
+              - text: k8s-ui1330-gfs2-net
+            - cell "Isolated"
+            - cell
+            - cell "아니오"
+          - row "Expand row apartment Admin-Isoloated-Net Isolated 예":
+            - cell "Expand row":
+              - button "Expand row"
+            - cell:
+              - checkbox
+            - cell "apartment Admin-Isoloated-Net":
+              - img "apartment":
+              - text: Admin-Isoloated-Net
+            - cell "Isolated"
+            - cell
+            - cell "예"
+          - row "Expand row apartment L2-Test L2 아니오":
+            - cell "Expand row":
+              - button "Expand row"
+            - cell:
+              - checkbox
+            - cell "apartment L2-Test":
+              - img "apartment":
+              - text: L2-Test
+            - cell "L2"
+            - cell
+            - cell "아니오"
+          - row "Expand row apartment ADMIN-L2-Network L2 아니오":
+            - cell "Expand row":
+              - button "Expand row"
+            - cell:
+              - checkbox
+            - cell "apartment ADMIN-L2-Network":
+              - img "apartment":
+              - text: ADMIN-L2-Network
+            - cell "L2"
+            - cell
+            - cell "아니오"
+      - list:
+        - listitem: 전체 6 개 항목
+        - listitem "이전 페이지":
+          - button "left" [disabled]:
+            - img "left":
+        - listitem "1":
+          - generic: "1"
+        - listitem "다음 페이지":
+          - button "right" [disabled]:
+            - img "right":
+        - combobox
+        - generic: 10 / 쪽
+    - button "6 스케일업 정책 적어도 스케일업 정책을 추가하십시오. 스케일업 정책의 모든 조건이 일치하면 오토스케일 VM 그룹이 확장됩니다. 스케일업 정책은 스케일다운 정책보다 먼저 확인됩니다. 스케일업 정책 ScaleUpPolicy-0 plus 정책 추가 delete 정책 삭제 * 이름 info-circle ScaleUpPolicy-0 * 기간(초) info-circle 재조정 대기 시간(초) info-circle *카운터 info-circle *관계 연산자 info-circle 초과 *임계값 info-circle 동작 plus 조건 추가 카운터 관계 연산자 임계값 작업 데이터 없음":
+      - generic: "6"
+      - generic: 스케일업 정책
+      - text: 적어도 스케일업 정책을 추가하십시오. 스케일업 정책의 모든 조건이 일치하면 오토스케일 VM 그룹이 확장됩니다. 스케일업 정책은 스케일다운 정책보다 먼저 확인됩니다.
+      - separator
+      - strong: 스케일업 정책
+      - combobox
+      - generic: ScaleUpPolicy-0
+      - button "plus 정책 추가":
+        - img "plus":
+        - generic: 정책 추가
+      - button "delete 정책 삭제":
+        - img "delete":
+        - generic: 정책 삭제
+      - generic: "*"
+      - text: 이름
+      - img "info-circle":
+      - textbox: ScaleUpPolicy-0
+      - generic: "*"
+      - text: 기간(초)
+      - img "info-circle":
+      - spinbutton "* 기간(초) info-circle * 기간(초) info-circle"
+      - text: 재조정 대기 시간(초)
+      - img "info-circle":
+      - spinbutton "재조정 대기 시간(초) info-circle 재조정 대기 시간(초) info-circle": "300"
+      - separator
+      - text: "*"
+      - text: 카운터
+      - img "info-circle":
+      - combobox
+      - text: "*"
+      - text: 관계 연산자
+      - img "info-circle":
+      - combobox
+      - generic: 초과
+      - text: "*"
+      - text: 임계값
+      - img "info-circle":
+      - spinbutton
+      - generic: 동작
+      - button "plus 조건 추가":
+        - img "plus":
+        - generic: 조건 추가
+      - separator
+      - table:
+        - rowgroup:
+          - row "카운터 관계 연산자 임계값 작업":
+            - columnheader "카운터"
+            - columnheader "관계 연산자"
+            - columnheader "임계값"
+            - columnheader "작업"
+        - rowgroup:
+          - row "데이터 없음":
+            - cell "데이터 없음":
+              - paragraph: 데이터 없음
+    - button "7 스케일다운 정책 적어도 스케일다운 정책을 추가하십시오. 스케일다운 정책의 모든 조건이 일치하면 오토스케일 VM 그룹이 축소됩니다. 스케일업 정책 이후에 스케일다운 정책이 확인됩니다. 스케일다운 정책 ScaleDownPolicy-0 plus 정책 추가 delete 정책 삭제 * 이름 info-circle ScaleDownPolicy-0 * 기간(초) info-circle 재조정 대기 시간(초) info-circle *카운터 info-circle *관계 연산자 info-circle 미만 *임계값 info-circle 동작 plus 조건 추가 카운터 관계 연산자 임계값 작업 데이터 없음":
+      - generic: "7"
+      - generic: 스케일다운 정책
+      - text: 적어도 스케일다운 정책을 추가하십시오. 스케일다운 정책의 모든 조건이 일치하면 오토스케일 VM 그룹이 축소됩니다. 스케일업 정책 이후에 스케일다운 정책이 확인됩니다.
+      - separator
+      - strong: 스케일다운 정책
+      - combobox
+      - generic: ScaleDownPolicy-0
+      - button "plus 정책 추가":
+        - img "plus":
+        - generic: 정책 추가
+      - button "delete 정책 삭제":
+        - img "delete":
+        - generic: 정책 삭제
+      - generic: "*"
+      - text: 이름
+      - img "info-circle":
+      - textbox: ScaleDownPolicy-0
+      - generic: "*"
+      - text: 기간(초)
+      - img "info-circle":
+      - spinbutton
+      - text: 재조정 대기 시간(초)
+      - img "info-circle":
+      - spinbutton: "300"
+      - separator
+      - text: "*"
+      - text: 카운터
+      - img "info-circle":
+      - combobox
+      - text: "*"
+      - text: 관계 연산자
+      - img "info-circle":
+      - combobox
+      - generic: 미만
+      - text: "*"
+      - text: 임계값
+      - img "info-circle":
+      - spinbutton
+      - generic: 동작
+      - button "plus 조건 추가":
+        - img "plus":
+        - generic: 조건 추가
+      - separator
+      - table:
+        - rowgroup:
+          - row "카운터 관계 연산자 임계값 작업":
+            - columnheader "카운터"
+            - columnheader "관계 연산자"
+            - columnheader "임계값"
+            - columnheader "작업"
+        - rowgroup:
+          - row "데이터 없음":
+            - cell "데이터 없음":
+              - paragraph: 데이터 없음
+    - button:
+      - generic: "8"
+      - generic: 확장 모드
+      - text: 고급 설정 표시
+      - switch [checked]
+      - generic "SSH 키 쌍"
+      - textbox "검색"
+      - button "search":
+        - img "search":
+      - table:
+        - rowgroup:
+          - row "SSH 키 쌍 user 계정 block 도메인":
+            - columnheader:
+              - checkbox
+            - columnheader "SSH 키 쌍"
+            - columnheader "user 계정":
+              - img "user":
+              - text: 계정
+            - columnheader "block 도메인":
+              - img "block":
+              - text: 도메인
+            - columnheader
+      - table:
+        - rowgroup:
+          - row "ssh-test-dhslove admin ROOT":
+            - cell:
+              - checkbox
+            - cell "ssh-test-dhslove"
+            - cell "admin"
+            - cell "ROOT"
+          - row "k1230-20261006 admin ROOT":
+            - cell:
+              - checkbox
+            - cell "k1230-20261006"
+            - cell "admin"
+            - cell "ROOT"
+          - row "k8s-1 admin ROOT":
+            - cell:
+              - checkbox
+            - cell "k8s-1"
+            - cell "admin"
+            - cell "ROOT"
+      - list:
+        - listitem: 전체 3 개 항목
+        - listitem "이전 페이지":
+          - button "left" [disabled]:
+            - img "left":
+        - listitem "1":
+          - generic: "1"
+        - listitem "다음 페이지":
+          - button "right" [disabled]:
+            - img "right":
+        - combobox
+        - generic: 10 / 쪽
+      - generic "Affinity 그룹"
+      - text: 이 VM이 속할 Affinity 그룹을 선택하십시오.
+      - textbox "검색"
+      - button "search":
+        - img "search":
+      - region "전체 선택":
+        - strong: "전체 선택: 1"
+        - button "모든 페이지 선택 해제":
+          - generic: 모든 페이지 선택 해제
+        - paragraph: 표 머리글의 체크박스는 현재 페이지에만 적용됩니다. 검색·페이지를 바꿔도 전체 선택은 유지되며, 아래 항목에서 개별 해제할 수 있습니다.
+        - list:
+          - 'button "선택 해제: qa-ag06-prefer-anti"':
+            - generic: qa-ag06-prefer-anti ×
+      - table:
+        - rowgroup:
+          - row "Affinity 그룹 유형 설명":
+            - columnheader:
+              - checkbox
+            - columnheader "Affinity 그룹"
+            - columnheader "유형"
+            - columnheader "설명"
+            - columnheader
+      - table:
+        - rowgroup:
+          - row "qa-ag06-strict-aff host affinity AG06 disposable integrated qualification":
+            - cell:
+              - checkbox
+            - cell "qa-ag06-strict-aff"
+            - cell "host affinity"
+            - cell "AG06 disposable integrated qualification"
+          - row "qa-ag06-strict-anti host anti-affinity AG06 disposable integrated qualification":
+            - cell:
+              - checkbox
+            - cell "qa-ag06-strict-anti"
+            - cell "host anti-affinity"
+            - cell "AG06 disposable integrated qualification"
+          - row "qa-ag06-prefer-aff non-strict host affinity AG06 disposable integrated qualification":
+            - cell:
+              - checkbox
+            - cell "qa-ag06-prefer-aff"
+            - cell "non-strict host affinity"
+            - cell "AG06 disposable integrated qualification"
+          - row "qa-ag06-prefer-anti non-strict host anti-affinity AG06 disposable integrated qualification":
+            - cell:
+              - checkbox [checked] [active]
+            - cell "qa-ag06-prefer-anti"
+            - cell "non-strict host anti-affinity"
+            - cell "AG06 disposable integrated qualification"
+          - row "qa-ag06-page-01 host affinity AG06 disposable integrated qualification":
+            - cell:
+              - checkbox
+            - cell "qa-ag06-page-01"
+            - cell "host affinity"
+            - cell "AG06 disposable integrated qualification"
+          - row "qa-ag06-page-02 host affinity AG06 disposable integrated qualification":
+            - cell:
+              - checkbox
+            - cell "qa-ag06-page-02"
+            - cell "host affinity"
+            - cell "AG06 disposable integrated qualification"
+          - row "qa-ag06-page-03 host affinity AG06 disposable integrated qualification":
+            - cell:
+              - checkbox
+            - cell "qa-ag06-page-03"
+            - cell "host affinity"
+            - cell "AG06 disposable integrated qualification"
+          - row "qa-ag06-page-04 host affinity AG06 disposable integrated qualification":
+            - cell:
+              - checkbox
+            - cell "qa-ag06-page-04"
+            - cell "host affinity"
+            - cell "AG06 disposable integrated qualification"
+          - row "qa-ag06-page-05 host affinity AG06 disposable integrated qualification":
+            - cell:
+              - checkbox
+            - cell "qa-ag06-page-05"
+            - cell "host affinity"
+            - cell "AG06 disposable integrated qualification"
+          - row "qa-ag06-page-06 host affinity AG06 disposable integrated qualification":
+            - cell:
+              - checkbox
+            - cell "qa-ag06-page-06"
+            - cell "host affinity"
+            - cell "AG06 disposable integrated qualification"
+      - list:
+        - listitem: 전체 18 개 항목
+        - listitem "이전 페이지":
+          - button "left" [disabled]:
+            - img "left":
+        - listitem "1":
+          - generic: "1"
+        - listitem "2":
+          - generic: "2"
+        - listitem "다음 페이지":
+          - button "right":
+            - img "right":
+        - combobox
+        - generic: 10 / 쪽
+      - text: 사용자 데이터
+      - img "info-circle":
+      - tablist:
+        - tab "저장된 User Data" [selected]
+        - tab "수동 User Data 입력"
+      - tabpanel "저장된 User Data"
+      - radio "설정 안함" [checked]
+      - generic: 설정 안함
+      - textbox "사용자 데이터 검색":
+        - /placeholder: 검색
+      - button "search":
+        - img "search":
+      - table:
+        - rowgroup:
+          - row "solution 사용자 데이터 user 계정 block 도메인":
+            - columnheader
+            - columnheader "solution 사용자 데이터":
+              - img "solution":
+              - text: 사용자 데이터
+            - columnheader "user 계정":
+              - img "user":
+              - text: 계정
+            - columnheader "block 도메인":
+              - img "block":
+              - text: 도메인
+            - columnheader
+      - table:
+        - rowgroup:
+          - row "AS-PROD-31-AS01-HTTP admin ROOT":
+            - cell:
+              - radio
+            - cell "AS-PROD-31-AS01-HTTP"
+            - cell "admin"
+            - cell "ROOT"
+      - list:
+        - listitem: "전체: 1"
+        - listitem "이전 페이지":
+          - button "left" [disabled]:
+            - img "left":
+        - listitem "1":
+          - generic: "1"
+        - listitem "다음 페이지":
+          - button "right" [disabled]:
+            - img "right":
+        - combobox
+        - generic: 10 / 쪽
+    - button "9 상세 * 이름 info-circle * VM 삭제 유예 기간(초) info-circle * 최대 멤버 수 info-circle * 최소 멤버 수 info-circle * 폴링 주기(초) info-circle":
+      - generic: "9"
+      - generic: 상세
+      - text: "*"
+      - text: 이름
+      - img "info-circle":
+      - textbox "* 이름 info-circle"
+      - text: "*"
+      - text: VM 삭제 유예 기간(초)
+      - img "info-circle":
+      - spinbutton "* VM 삭제 유예 기간(초) info-circle"
+      - text: "*"
+      - text: 최대 멤버 수
+      - img "info-circle":
+      - spinbutton "* 최대 멤버 수 info-circle"
+      - text: "*"
+      - text: 최소 멤버 수
+      - img "info-circle":
+      - spinbutton "* 최소 멤버 수 info-circle"
+      - text: "*"
+      - text: 폴링 주기(초)
+      - img "info-circle":
+      - spinbutton "* 폴링 주기(초) info-circle"
+  - generic: 귀하의 오토스케일 VM 그룹
+  - region "귀하의 오토스케일 VM 그룹":
+    - heading [level=4]
+    - separator
+    - generic: OS 유형
+    - generic: Ubuntu 26.04 (64-bit)
+    - generic: CPU
+    - text: 8 CPU x 2.00 GHz
+    - img "question-circle":
+    - generic: 메모리
+    - text: 16384 MB 메모리
+    - generic: 디스크 크기(GB 단위)
+    - img "database":
+    - text: 100 GB (Root)
+    - region "생성 전 그룹 설정 확인":
+      - heading "생성 전 그룹 설정 확인" [level=4]
+      - term: 조정 대상 VM · 범위
+      - definition: 최소 — · 최대 —
+      - term: 폴링 주기(초)
+      - definition: — 초
+      - term: 부하 분산 규칙
+      - definition: —
+      - term: 공인 → 게스트 포트
+      - definition: —:— → —
+      - paragraph: 그룹 이름은 게스트 호스트 이름에 사용되므로 영문·숫자·하이픈으로 입력하세요. 정책 이름과 설명은 한글을 사용할 수 있습니다.
+    - generic: Affinity 그룹
+    - img "swap":
+    - link "qa-ag06-prefer-anti":
+      - /url: "#/affinitygroup/15610aff-43d1-425b-838b-535c7b5f3f04"
+    - generic: 템플릿
+    - img "save":
+    - generic: Ubuntu 26.04 Server Base Install (without QGA)
+    - generic: 컴퓨트 오퍼링
+    - img "cloud":
+    - link "8Core-16GB-Fixed-Offering":
+      - /url: "#/computeoffering/0c668eb3-a9ab-4bc3-b29d-26b107727b9b"
+    - generic: Zone
+    - img "global":
+    - link "Zone":
+      - /url: "#/zone/7013f5a1-de59-4cea-a596-f4f58815f31c"
+  - button "생성":
+    - generic: 생성
+- alert:
+  - img "info-circle":
+  - generic: Wall 모니터링을 사용할 수 없습니다. 기존 알림은 최신 정보가 아닐 수 있으며 Mold는 계속 사용할 수 있습니다. 비활성

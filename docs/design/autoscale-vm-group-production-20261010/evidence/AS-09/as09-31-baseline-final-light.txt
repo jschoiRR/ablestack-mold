@@ -1,0 +1,181 @@
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+
+/오토스케일 VM 그룹/AS-PROD-31-AS04-CONCURRENCY업데이트
+작업
+AS-PROD-31-AS04-CONCURRENCY
+상태
+비활성화
+아이디
+bf0f5385-ae2c-4da4-aec4-eb985dbdeba4
+프로젝트
+AS-PROD-31-AS01-project
+조정 대상 VM · 범위
+1 · 최소 1 · 최대 3
+공인 → 게스트 포트
+8084 → 8080
+마지막 모니터 확인
+2026. 10. 12. 오전 12:01:36
+연결된 네트워크
+AS-PROD-31-AS01-projectNetwork
+Public IP 주소
+10.10.31.104
+
+도메인
+ROOT
+생성일
+2026. 10. 11. 오전 10:19:39
+가상머신 보기
+상세
+운영 상태
+오토스케일 VM 프로필
+부하 분산 규칙
+스케일업 정책
+스케일다운 정책
+스케줄
+이벤트
+코멘트
+
+Cloud API를 통해 그룹·멤버·LB·이벤트를 각각 조회합니다. 출처별 조회 시각이 다를 수 있습니다.
+
+운영 정보 새로고침
+그룹 · 2026. 10. 12. 오전 2:29:48
+멤버 · 2026. 10. 12. 오전 2:29:48
+LB 매핑 · 2026. 10. 12. 오전 2:29:48
+최근 이벤트 · 2026. 10. 12. 오전 2:29:48
+그룹 운영 요약
+
+Cloud API/DB에 기록된 멤버 상태입니다. 실행 중은 VM 프로세스 상태이며 애플리케이션의 정상 응답을 보장하지 않습니다. 조정 대상 VM 수는 실행·시작·정지 중·이동 중의 합계입니다.
+
+실행 중
+1
+전환 중
+0
+정지
+0
+오류·알 수 없음
+0
+삭제·정리 대기
+0
+기타 상태
+0
+기록된 멤버
+1
+VM 상태 집계 시각
+2026. 10. 12. 오전 2:29:51
+마지막 모니터 확인
+2026. 10. 12. 오전 12:01:36
+마지막 자동 조정 성공
+2026. 10. 12. 오전 12:01:26
+자동 정책 조정이 중지되어 있습니다. 이미 수락한 작업은 비활성화 후에도 정리·복구를 계속할 수 있습니다.
+최근 정책 평가
+비활성화 상태에서는 새 정책을 평가하지 않습니다. 아래는 마지막 평가 기록입니다.
+
+마지막 평가 후 경과: 8971 초
+
+데이터 확인 대기
+평가 시각
+2026. 10. 12. 오전 12:00:16
+수집 시각
+기록 없음
+ScaleUpPolicy-0 · 평가 보류
+
+멤버 변경 후 새 기간의 표본을 기다립니다.
+
+기간(초): 60
+
+VM CPU 평균 사용률
+관측 평균값: — % · GT 20
+표본 수: 0 · 대상 수: 2 · 기록 없음
+수집한 표본이 없습니다.
+ScaleDownPolicy-0 · 평가 보류
+
+멤버 변경 후 새 기간의 표본을 기다립니다.
+
+기간(초): 60
+
+VM CPU 평균 사용률
+관측 평균값: — % · LT 10
+표본 수: 0 · 대상 수: 2 · 기록 없음
+수집한 표본이 없습니다.
+멤버 VM
+
+LB 등록·적용 상태는 Cloud 설정 정보입니다. 트래픽 정상 처리 여부는 별도의 애플리케이션 검증이 필요합니다. 매핑 미등록은 애플리케이션 장애 판정이 아닙니다.
+
+가상머신 이름	Cloud VM 상태	LB 등록·적용 상태
+
+
+
+
+
+
+
+autoScaleVm-AS-PROD-31-AS04-CONCURRENCY-1-rvajox
+실행 중
+	등록됨
+1
+최근 작업·장애 이벤트 (최대 5건)
+
+그룹에 연결된 최근 이벤트입니다. 이벤트 ID와 상위 작업 ID로 상세 기록을 확인하세요. API 작업 완료는 애플리케이션 서비스 정상과 구분됩니다.
+
+2026. 10. 12. 오전 12:01:59 · 정보
+
+그룹 설정 변경 ·
+완료됨
+
+이벤트 ID: cc2390d7-712e-4460-9fe1-2b68bbbdc621
+
+상위 작업 이벤트 ID: 551eb545-c133-4934-9a06-46df4088dc4b
+
+서버 원문 보기
+2026. 10. 12. 오전 12:01:59 · 정보
+
+그룹 설정 변경 ·
+시작됨
+
+이벤트 ID: 77d9fb6e-607e-49c8-862c-0922090fd915
+
+상위 작업 이벤트 ID: 551eb545-c133-4934-9a06-46df4088dc4b
+
+서버 원문 보기
+2026. 10. 12. 오전 12:01:59 · 정보
+
+그룹 설정 변경 ·
+예약됨
+
+이벤트 ID: 551eb545-c133-4934-9a06-46df4088dc4b
+서버 원문 보기
+2026. 10. 12. 오전 12:01:47 · 정보
+
+자동 조정 비활성화 ·
+완료됨
+
+이벤트 ID: 03ce6036-d3cf-4341-8a17-db966b8e3b71
+
+상위 작업 이벤트 ID: 9507ff8d-b6ce-4f28-8755-5260431e0ff7
+
+서버 원문 보기
+2026. 10. 12. 오전 12:01:45 · 정보
+
+자동 조정 비활성화 ·
+시작됨
+
+이벤트 ID: 149daf6c-1d70-442d-817a-31e3ec4c303a
+
+상위 작업 이벤트 ID: 9507ff8d-b6ce-4f28-8755-5260431e0ff7
+
+서버 원문 보기

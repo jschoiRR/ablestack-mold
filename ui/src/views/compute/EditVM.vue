@@ -49,6 +49,7 @@
             return option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0
           }"
           :loading="osTypes.loading"
+          :disabled="osTypes.loading || !osTypes.opts.length"
           v-model:value="form.ostypeid">
           <a-select-option v-for="(ostype) in osTypes.opts" :key="ostype.id" :label="ostype.description">
             {{ ostype.description }}
@@ -59,24 +60,29 @@
         <template #label>
           <tooltip-label :title="$t('label.isdynamicallyscalable')" :tooltip="apiParams.isdynamicallyscalable.description"/>
         </template>
-        <a-switch v-model:checked="form.isdynamicallyscalable" />
+        <a-switch v-model:checked="form.isdynamicallyscalable" :disabled="!dynamicScalingEditable" />
+        <div v-if="!metadataReady" role="status">{{ $t('message.vm.edit.metadata.unavailable') }}</div>
       </a-form-item>
       <a-form-item name="haenable" ref="haenable" v-if="!cloneEditRestricted && serviceOffering?.offerha">
         <template #label>
           <tooltip-label :title="$t('label.haenable')" :tooltip="apiParams.haenable.description"/>
         </template>
-        <a-switch v-model:checked="form.haenable" />
+        <a-switch v-model:checked="form.haenable" :disabled="offeringStatus !== 'ready'" />
       </a-form-item>
-      <a-form-item name="group" ref="group">
+      <a-form-item name="group" ref="group" :extra="$t('message.vm.group.no.restart')">
         <template #label>
           <tooltip-label :title="$t('label.group')" :tooltip="apiParams.group.description"/>
         </template>
         <a-auto-complete
           v-model:value="form.group"
+          allowClear
+          :disabled="!groupLookupReady"
           :filterOption="(input, option) => {
             return option.value.toLowerCase().indexOf(input.toLowerCase()) >= 0
           }"
           :options="groups.opts" />
+        <div role="status" aria-live="polite">{{ $t('message.vm.group.lookup.' + groups.status) }}</div>
+        <a-button v-if="['error', 'forbidden', 'empty'].includes(groups.status)" size="small" :loading="groups.loading" @click="fetchInstanceGroups">{{ $t('label.refresh') }}</a-button>
       </a-form-item>
       <a-form-item v-if="!cloneEditRestricted && userDataEnabled">
         <template #label>
@@ -156,6 +162,8 @@
 <script>
 import { ref, reactive, toRaw } from 'vue'
 import { getAPI, postAPI } from '@/api'
+import { buildVmGroupUpdate, isGroupOnlyEdit } from '@/utils/vmGroupAssignment'
+import { createVmGroupLookup, vmGroupOwnerKey, vmGroupLookupReady } from '@/utils/vmGroupLookup'
 import TooltipLabel from '@/components/widgets/TooltipLabel'
 import { getFastClonePhase } from '@/utils/fastClone'
 
@@ -178,9 +186,14 @@ export default {
     return {
       serviceOffering: {},
       template: {},
+      offeringStatus: 'loading',
+      templateStatus: 'loading',
+      metadataGeneration: 0,
       userDataEnabled: false,
       securityGroupsEnabled: false,
       loading: false,
+      initialForm: {},
+      initialResourceContextKey: '',
       securitygroups: {
         loading: false,
         opts: []
@@ -191,6 +204,8 @@ export default {
       },
       groups: {
         loading: false,
+        status: 'unavailable',
+        scopeKey: '',
         opts: []
       },
       isLeaseEditable: this.$store.getters.features.instanceleaseenabled && this.resource.leaseduration > -1,
@@ -205,6 +220,12 @@ export default {
     }
   },
   computed: {
+    resourceContextKey () {
+      return JSON.stringify([this.resource.id, vmGroupOwnerKey(this.resource), this.resource.templateid, this.resource.serviceofferingid, this.resource.zoneid])
+    },
+    groupLookupReady () { return this.initialResourceContextKey === this.resourceContextKey && vmGroupLookupReady(this.groups, this.resource) },
+    metadataReady () { return this.templateStatus === 'ready' && this.offeringStatus === 'ready' },
+    dynamicScalingEditable () { return this.metadataReady && this.isDynamicScalingEnabled() },
     cloneEditRestricted () {
       const details = this.resource.details || {}
       const status = String(this.resource.clonefaststatus || details['clone.fast.status'] || '').toLowerCase()
@@ -227,11 +248,18 @@ export default {
     this.apiParams = this.$getApiParams('updateVirtualMachine')
   },
   created () {
+    this.groupLookup = createVmGroupLookup(getAPI, state => { this.groups = state })
     this.initForm()
     this.fetchData()
   },
+  watch: {
+    resourceContextKey () { this.initForm(); this.fetchData() },
+    '$store.getters.apis.listInstanceGroups' () { this.fetchInstanceGroups() }
+  },
+  beforeUnmount () { this.groupLookup.dispose(); this.metadataGeneration++ },
   methods: {
     initForm () {
+      this.initialResourceContextKey = this.resourceContextKey
       this.formRef = ref()
       this.form = reactive({
         name: this.resource.name,
@@ -249,9 +277,15 @@ export default {
       this.rules = reactive({
         leaseduration: [this.naturalNumberRule]
       })
+      this.initialForm = JSON.parse(JSON.stringify(toRaw(this.form)))
       this.showLeaseOptions = this.isLeaseEditable
     },
     fetchData () {
+      this.metadataGeneration++
+      this.serviceOffering = {}
+      this.template = {}
+      this.userDataEnabled = false
+      this.securityGroupsEnabled = false
       this.fetchZoneDetails()
       this.fetchSecurityGroups()
       this.fetchOsTypes()
@@ -261,19 +295,24 @@ export default {
       this.fetchUserData()
     },
     fetchZoneDetails () {
+      const generation = this.metadataGeneration
       getAPI('listZones', {
         id: this.resource.zoneid
       }).then(response => {
+        if (generation !== this.metadataGeneration) return
         const zone = response?.listzonesresponse?.zone || []
         this.securityGroupsEnabled = zone?.[0]?.securitygroupsenabled || this.$store.getters.showSecurityGroups
-      })
+      }).catch(() => {})
     },
     fetchSecurityGroups () {
+      const generation = this.metadataGeneration
       this.securitygroups.loading = true
+      this.securitygroups.opts = []
       getAPI('listSecurityGroups', {
         zoneid: this.resource.zoneid
       }).then(json => {
-        const items = json.listsecuritygroupsresponse.securitygroup || []
+        if (generation !== this.metadataGeneration) return
+        const items = json?.listsecuritygroupsresponse?.securitygroup || []
         if (items && items.length > 0) {
           for (let i = 0; i < items.length; i++) {
             this.securitygroups.opts.push(items[i])
@@ -284,31 +323,39 @@ export default {
             return 0
           })
         }
-      }).finally(() => {
-        this.securitygroups.loading = false
+      }).catch(() => {}).finally(() => {
+        if (generation === this.metadataGeneration) this.securitygroups.loading = false
       })
     },
     fetchServiceOfferingData () {
+      const generation = this.metadataGeneration
+      this.offeringStatus = 'loading'
       const params = {}
       params.id = this.resource.serviceofferingid
       params.isrecursive = true
       var apiName = 'listServiceOfferings'
-      getAPI(apiName, params).then(json => {
+      return getAPI(apiName, params, { preserveOnFailure: true, timeout: 20000 }).then(json => {
+        if (generation !== this.metadataGeneration) return
         const offerings = json?.listserviceofferingsresponse?.serviceoffering || []
         this.serviceOffering = offerings[0] || {}
-      })
+        this.offeringStatus = offerings[0] ? 'ready' : 'empty'
+      }).catch(() => { if (generation === this.metadataGeneration) { this.serviceOffering = {}; this.offeringStatus = 'error' } })
     },
     fetchTemplateData () {
+      const generation = this.metadataGeneration
+      this.templateStatus = 'loading'
       const params = {}
       params.id = this.resource.templateid
       params.isrecursive = true
       params.templatefilter = 'all'
       params.isready = true
       var apiName = 'listTemplates'
-      getAPI(apiName, params).then(json => {
-        const templateResponses = json.listtemplatesresponse.template
-        this.template = templateResponses[0]
-      })
+      return getAPI(apiName, params, { preserveOnFailure: true, timeout: 20000 }).then(json => {
+        if (generation !== this.metadataGeneration) return
+        const templates = json?.listtemplatesresponse?.template || []
+        this.template = templates[0] || {}
+        this.templateStatus = templates[0] ? 'ready' : 'empty'
+      }).catch(() => { if (generation === this.metadataGeneration) { this.template = {}; this.templateStatus = 'error' } })
     },
     fetchDynamicScalingVmConfig () {
       const params = {}
@@ -316,9 +363,9 @@ export default {
       params.zoneid = this.resource.zoneid
       var apiName = 'listConfigurations'
       getAPI(apiName, params).then(json => {
-        const configResponse = json.listconfigurationsresponse.configuration
+        const configResponse = json?.listconfigurationsresponse?.configuration || []
         this.dynamicScalingVmConfig = configResponse[0]?.value === 'true'
-      })
+      }).catch(() => { this.dynamicScalingVmConfig = false })
     },
     canDynamicScalingEnabled () {
       return this.template.isdynamicallyscalable && this.serviceOffering.dynamicscalingenabled && this.dynamicScalingVmConfig
@@ -327,34 +374,18 @@ export default {
       return this.template.isdynamicallyscalable && this.serviceOffering.dynamicscalingenabled && this.$store.getters.features.dynamicscalingenabled
     },
     fetchOsTypes () {
+      const generation = this.metadataGeneration
       this.osTypes.loading = true
       this.osTypes.opts = []
       getAPI('listOsTypes').then(json => {
-        this.osTypes.opts = json.listostypesresponse.ostype || []
+        if (generation !== this.metadataGeneration) return
+        this.osTypes.opts = json?.listostypesresponse?.ostype || []
       }).catch(error => {
-        this.$notifyError(error)
-      }).finally(() => { this.osTypes.loading = false })
+        if (generation === this.metadataGeneration) this.$notifyError(error)
+      }).finally(() => { if (generation === this.metadataGeneration) this.osTypes.loading = false })
     },
     fetchInstanceGroups () {
-      this.groups.loading = true
-      this.groups.opts = []
-      const params = {
-        domainid: this.$store.getters.userInfo.domainid,
-        listall: true
-      }
-      if (this.$store.getters.project && this.$store.getters.project.id) {
-        params.projectid = this.$store.getters.project.id
-      } else {
-        params.account = this.$store.getters.userInfo.account
-      }
-      getAPI('listInstanceGroups', params).then(json => {
-        const groups = json.listinstancegroupsresponse.instancegroup || []
-        groups.forEach(x => {
-          this.groups.opts.push({ id: x.name, value: x.name })
-        })
-      }).catch(error => {
-        this.$notifyError(error)
-      }).finally(() => { this.groups.loading = false })
+      return this.groupLookup.load(this.resource, 'listInstanceGroups' in this.$store.getters.apis)
     },
     decodeUserData (userdata) {
       const decodedData = Buffer.from(userdata, 'base64')
@@ -369,8 +400,9 @@ export default {
       return initialSecurityGroupIds.join(',') !== currentIds.join(',')
     },
     fetchUserData () {
+      const generation = this.metadataGeneration
       let networkId
-      this.resource.nic.forEach(nic => {
+      ;(this.resource.nic || []).forEach(nic => {
         if (nic.isdefault) {
           networkId = nic.networkid
         }
@@ -382,27 +414,44 @@ export default {
         id: networkId,
         listall: true
       }
-      getAPI(`listNetworks`, listNetworkParams).then(json => {
-        json.listnetworksresponse.network[0].service.forEach(service => {
+      getAPI('listNetworks', listNetworkParams).then(json => {
+        if (generation !== this.metadataGeneration) return
+        (json?.listnetworksresponse?.network?.[0]?.service || []).forEach(service => {
           if (service.name === 'UserData') {
-            this.userDataEnabled = true
-
             const listVmParams = {
               id: this.resource.id,
               userdata: true,
               listall: true
             }
             getAPI('listVirtualMachines', listVmParams).then(json => {
-              this.form.userdata = atob(json.listvirtualmachinesresponse.virtualmachine[0].userdata || '')
-            })
+              if (generation !== this.metadataGeneration) return
+              const vm = json?.listvirtualmachinesresponse?.virtualmachine?.[0]
+              if (!vm) { this.userDataEnabled = false; return }
+              this.form.userdata = atob(vm.userdata || '')
+              this.initialForm.userdata = this.form.userdata
+              this.userDataEnabled = true
+            }).catch(() => { if (generation === this.metadataGeneration) this.userDataEnabled = false })
           }
         })
-      })
+      }).catch(() => { if (generation === this.metadataGeneration) this.userDataEnabled = false })
     },
     handleSubmit () {
       this.formRef.value.validate().then(() => {
         const values = toRaw(this.form)
-        const params = {}
+        if (this.initialResourceContextKey !== this.resourceContextKey) {
+          this.$message.error(this.$t('message.vm.group.lookup.blocked'))
+          return
+        }
+        if ((values.group || '') !== (this.resource.group || '') && !this.groupLookupReady) {
+          this.$message.error(this.$t('message.vm.group.lookup.blocked'))
+          return
+        }
+        if ((!this.dynamicScalingEditable && values.isdynamicallyscalable !== this.initialForm.isdynamicallyscalable) ||
+            (this.offeringStatus !== 'ready' && values.haenable !== this.initialForm.haenable)) {
+          this.$message.error(this.$t('message.vm.edit.metadata.unavailable'))
+          return
+        }
+        let params = {}
         params.id = this.resource.id
         params.displayname = values.displayname
         params.ostypeid = values.ostypeid
@@ -411,19 +460,27 @@ export default {
             params.securitygroupids = values.securitygroupids || []
           }
         }
-        if (values.isdynamicallyscalable !== undefined) {
+        if (this.dynamicScalingEditable && values.isdynamicallyscalable !== undefined) {
           params.isdynamicallyscalable = values.isdynamicallyscalable
         }
         if (values.deleteprotection !== undefined) {
           params.deleteprotection = values.deleteprotection
         }
-        if (values.haenable !== undefined) {
+        if (this.offeringStatus === 'ready' && values.haenable !== undefined) {
           params.haenable = values.haenable
         }
-        if (values.group && values.group.length > 0) {
-          params.group = values.group
+        let groupUpdate
+        try {
+          groupUpdate = buildVmGroupUpdate(this.resource, values.group, this.groups.opts, {
+            groupId: 'groupid' in this.apiParams,
+            clearGroup: 'cleargroup' in this.apiParams
+          })
+        } catch (error) {
+          this.$message.error(this.$t(error.message))
+          return
         }
-        if (values.userdata && values.userdata.length > 0) {
+        Object.assign(params, groupUpdate)
+        if (this.userDataEnabled && values.userdata && values.userdata.length > 0) {
           params.userdata = this.$toBase64AndURIEncoded(values.userdata)
         }
         if (values.leaseduration !== undefined && (values.leaseduration === -1 || values.leaseduration > 0)) {
@@ -439,8 +496,11 @@ export default {
         }
         // Do not submit unchanged hardware or lifecycle settings during a clone operation.
         if (this.cloneEditRestricted) {
-          const allowed = ['id', 'displayname', 'group', 'deleteprotection']
+          const allowed = ['id', 'displayname', 'group', 'groupid', 'cleargroup', 'deleteprotection']
           Object.keys(params).filter(key => !allowed.includes(key)).forEach(key => delete params[key])
+        }
+        if (Object.keys(groupUpdate).length > 0 && isGroupOnlyEdit(values, this.initialForm)) {
+          params = { id: this.resource.id, ...groupUpdate }
         }
         this.loading = true
 

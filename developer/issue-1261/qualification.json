@@ -1,0 +1,417 @@
+{
+  "base": "5b6751ff0f86919601c3b8036bf5fe430659b114",
+  "fixture": "nic1261-q35-ubuntu",
+  "scenarios": [
+    {
+      "scenario": "original-ubuntu-third-failed",
+      "job": "0fa6b524-aa61-4e85-a69e-e45703ab3869",
+      "status": 2,
+      "error": "null job execution result"
+    },
+    {
+      "scenario": "patched-ui-failure",
+      "job": "d41d48f7-6190-47af-9e88-dcf2d1950f6b",
+      "status": 2,
+      "error": "Unable to add NIC to i-185-644-VM: Resource [Host:1] is unreachable: Unable to add NIC to VM i-185-644-VM: NIC hotplug failed: No more available PCI slots in the running VM. Stop and start the VM in Mold to prepare PCIe hotplug ports, then retry adding the NIC. Alternatively, add the NIC while the VM is stopped and then start it."
+    },
+    {
+      "scenario": "third-hot-ui",
+      "job": "8c0f3414-e43e-4dda-b8ed-9883478d09a4",
+      "status": 1
+    },
+    {
+      "scenario": "patched-fourth-api",
+      "job": "2dbdfe76-1ece-4484-bebc-7c6bbfc9f5aa",
+      "status": 1
+    },
+    {
+      "scenario": "fourth-hot-remove-ui",
+      "job": "f735e072-6f09-47c9-a32c-8ad77d395540",
+      "status": 1
+    },
+    {
+      "scenario": "stopped-fourth-add",
+      "job": "5c953043-9151-40f8-beeb-b1e6ebb9c997",
+      "status": 1
+    },
+    {
+      "scenario": "stopped-fourth-start",
+      "job": "4a76df26-7623-42f2-a51f-91ec56a34146",
+      "status": 1
+    }
+  ],
+  "topology": {
+    "original-ubuntu-one-nic": {
+      "machine": "pc-q35-rhel9.8.0",
+      "ports": 6,
+      "emptyRootPorts": [
+        7
+      ],
+      "vm": "7e6c1579-3817-4dc8-bf2d-7797da0983e8",
+      "nics": [
+        {
+          "id": "89c82001-0168-451b-a085-ec95fa3abf57",
+          "networkid": "50c404ca-3013-4fb8-b8ab-599c7200f021",
+          "macaddress": "02:1f:01:43:00:04",
+          "ipaddress": "10.126.0.202",
+          "deviceid": "0",
+          "isdefault": true
+        }
+      ]
+    },
+    "original-ubuntu-two-nics": {
+      "machine": "pc-q35-rhel9.8.0",
+      "ports": 6,
+      "emptyRootPorts": [],
+      "vm": "7e6c1579-3817-4dc8-bf2d-7797da0983e8",
+      "nics": [
+        {
+          "id": "89c82001-0168-451b-a085-ec95fa3abf57",
+          "networkid": "50c404ca-3013-4fb8-b8ab-599c7200f021",
+          "macaddress": "02:1f:01:43:00:04",
+          "ipaddress": "10.126.0.202",
+          "deviceid": "0",
+          "isdefault": true
+        },
+        {
+          "id": "31f9f816-a0b9-4f54-9756-1a84b74552de",
+          "networkid": "d1f5512b-9194-4d76-8352-8b7d62033304",
+          "macaddress": "02:1f:01:44:00:05",
+          "ipaddress": "10.126.1.213",
+          "deviceid": "1",
+          "isdefault": false
+        }
+      ]
+    },
+    "patched-running-after-failure": {
+      "machine": "pc-q35-rhel9.8.0",
+      "ports": 6,
+      "emptyRootPorts": [],
+      "vm": "7e6c1579-3817-4dc8-bf2d-7797da0983e8",
+      "nics": [
+        {
+          "id": "89c82001-0168-451b-a085-ec95fa3abf57",
+          "networkid": "50c404ca-3013-4fb8-b8ab-599c7200f021",
+          "macaddress": "02:1f:01:43:00:04",
+          "ipaddress": "10.126.0.202",
+          "deviceid": "0",
+          "isdefault": true
+        },
+        {
+          "id": "31f9f816-a0b9-4f54-9756-1a84b74552de",
+          "networkid": "d1f5512b-9194-4d76-8352-8b7d62033304",
+          "macaddress": "02:1f:01:44:00:05",
+          "ipaddress": "10.126.1.213",
+          "deviceid": "1",
+          "isdefault": false
+        }
+      ]
+    },
+    "patched-cold-start": {
+      "machine": "pc-q35-rhel9.8.0",
+      "ports": 32,
+      "emptyRootPorts": [
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32
+      ],
+      "vm": "7e6c1579-3817-4dc8-bf2d-7797da0983e8",
+      "nics": [
+        {
+          "id": "89c82001-0168-451b-a085-ec95fa3abf57",
+          "networkid": "50c404ca-3013-4fb8-b8ab-599c7200f021",
+          "macaddress": "02:1f:01:43:00:04",
+          "ipaddress": "10.126.0.202",
+          "deviceid": "0",
+          "isdefault": true
+        },
+        {
+          "id": "31f9f816-a0b9-4f54-9756-1a84b74552de",
+          "networkid": "d1f5512b-9194-4d76-8352-8b7d62033304",
+          "macaddress": "02:1f:01:44:00:05",
+          "ipaddress": "10.126.1.213",
+          "deviceid": "1",
+          "isdefault": false
+        }
+      ]
+    },
+    "patched-four-nics": {
+      "machine": "pc-q35-rhel9.8.0",
+      "ports": 32,
+      "emptyRootPorts": [
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32
+      ],
+      "vm": "7e6c1579-3817-4dc8-bf2d-7797da0983e8",
+      "nics": [
+        {
+          "id": "89c82001-0168-451b-a085-ec95fa3abf57",
+          "networkid": "50c404ca-3013-4fb8-b8ab-599c7200f021",
+          "macaddress": "02:1f:01:43:00:04",
+          "ipaddress": "10.126.0.202",
+          "deviceid": "0",
+          "isdefault": true
+        },
+        {
+          "id": "31f9f816-a0b9-4f54-9756-1a84b74552de",
+          "networkid": "d1f5512b-9194-4d76-8352-8b7d62033304",
+          "macaddress": "02:1f:01:44:00:05",
+          "ipaddress": "10.126.1.213",
+          "deviceid": "1",
+          "isdefault": false
+        },
+        {
+          "id": "ff57453a-e38e-443a-bc2a-85338844d9f8",
+          "networkid": "6924999b-80c7-4d8f-9f47-1dcca2d2b0a5",
+          "macaddress": "02:1f:01:45:00:06",
+          "ipaddress": "10.126.2.231",
+          "deviceid": "2",
+          "isdefault": false
+        },
+        {
+          "id": "0a93c345-1f72-42b4-aaa6-12a01523b401",
+          "networkid": "fe75cb69-2f84-4220-901b-8ecbd28bd23b",
+          "macaddress": "02:1f:01:46:00:01",
+          "ipaddress": "10.126.3.43",
+          "deviceid": "3",
+          "isdefault": false
+        }
+      ]
+    },
+    "fourth-hot-removed": {
+      "machine": "pc-q35-rhel9.8.0",
+      "ports": 32,
+      "emptyRootPorts": [
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32
+      ],
+      "vm": "7e6c1579-3817-4dc8-bf2d-7797da0983e8",
+      "nics": [
+        {
+          "id": "89c82001-0168-451b-a085-ec95fa3abf57",
+          "networkid": "50c404ca-3013-4fb8-b8ab-599c7200f021",
+          "macaddress": "02:1f:01:43:00:04",
+          "ipaddress": "10.126.0.202",
+          "deviceid": "0",
+          "isdefault": true
+        },
+        {
+          "id": "31f9f816-a0b9-4f54-9756-1a84b74552de",
+          "networkid": "d1f5512b-9194-4d76-8352-8b7d62033304",
+          "macaddress": "02:1f:01:44:00:05",
+          "ipaddress": "10.126.1.213",
+          "deviceid": "1",
+          "isdefault": false
+        },
+        {
+          "id": "ff57453a-e38e-443a-bc2a-85338844d9f8",
+          "networkid": "6924999b-80c7-4d8f-9f47-1dcca2d2b0a5",
+          "macaddress": "02:1f:01:45:00:06",
+          "ipaddress": "10.126.2.231",
+          "deviceid": "2",
+          "isdefault": false
+        }
+      ]
+    },
+    "stopped-add-started": {
+      "machine": "pc-q35-rhel9.8.0",
+      "ports": 32,
+      "emptyRootPorts": [
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32
+      ],
+      "vm": "7e6c1579-3817-4dc8-bf2d-7797da0983e8",
+      "nics": [
+        {
+          "id": "89c82001-0168-451b-a085-ec95fa3abf57",
+          "networkid": "50c404ca-3013-4fb8-b8ab-599c7200f021",
+          "macaddress": "02:1f:01:43:00:04",
+          "ipaddress": "10.126.0.202",
+          "deviceid": "0",
+          "isdefault": true
+        },
+        {
+          "id": "31f9f816-a0b9-4f54-9756-1a84b74552de",
+          "networkid": "d1f5512b-9194-4d76-8352-8b7d62033304",
+          "macaddress": "02:1f:01:44:00:05",
+          "ipaddress": "10.126.1.213",
+          "deviceid": "1",
+          "isdefault": false
+        },
+        {
+          "id": "ff57453a-e38e-443a-bc2a-85338844d9f8",
+          "networkid": "6924999b-80c7-4d8f-9f47-1dcca2d2b0a5",
+          "macaddress": "02:1f:01:45:00:06",
+          "ipaddress": "10.126.2.231",
+          "deviceid": "2",
+          "isdefault": false
+        },
+        {
+          "id": "075da8d9-ab8c-4bb7-994c-3c2270cb3ecc",
+          "networkid": "fe75cb69-2f84-4220-901b-8ecbd28bd23b",
+          "macaddress": "02:1f:01:46:00:03",
+          "ipaddress": "10.126.3.30",
+          "deviceid": "3",
+          "isdefault": false
+        }
+      ]
+    }
+  },
+  "failedVmWork": {
+    "id": 13148,
+    "status": 2,
+    "uuid": "43ca4473-4009-4d80-a577-79fe1636a281"
+  },
+  "guest": {
+    "agent": "SSH; template intentionally has no QGA",
+    "failedAdditionPing": "160/160",
+    "hotRemovalPing": "120/120",
+    "gatewayPingPerNIC": "3/3 on all 4 NICs before and after stopped-add/start",
+    "persistentFileSHA256": "7ae79ae4faa5098ae4bdb758a1be6a37f10fd35a14b0a725fb3f5c50d559c302",
+    "osConfig": "new non-primary NICs configured by MAC with API-assigned IP; template only configures enp3s0"
+  },
+  "dhcpFailureCleanup": {
+    "activeHosts": 0,
+    "activeOptions": 0,
+    "processedCacheEntries": "remove=true tombstones; not active reservations"
+  },
+  "foreignAccount": {
+    "status": 531,
+    "errorcode": 531,
+    "message": "Caller does not have permission to operate with provided resource."
+  },
+  "preservation": {
+    "vmStableDifferences": [],
+    "vms": {
+      "count": 111,
+      "preserved": true
+    },
+    "clusters": {
+      "count": 7,
+      "preserved": true
+    },
+    "cni": {
+      "count": 3,
+      "preserved": true
+    }
+  },
+  "operational168XMLSHA256": "3e2e613c5cefee369cac0e0353d92aead4d9d4f18247960b6c1c3694c064cf1b",
+  "baselineDBRows": 36,
+  "baselineDBSHA256": "2d61f159980ac4fa490f62c74e16ce6024ac1f8bb9210c2c6caaa366c74357f7",
+  "cleanup": {
+    "VM": 0,
+    "NIC": 0,
+    "VOLUME": 0,
+    "NETWORK": 0,
+    "IP": 0,
+    "DHCP_OPTION": 0,
+    "ACCOUNT": 0,
+    "DOMAIN": 0,
+    "VM_WORK": 0,
+    "API_JOB": 0
+  },
+  "excludedFixtureSetupFailures": [
+    "Q35 BIOS + IDE CDROM rejected at definition",
+    "Rocky cloud image had no UEFI boot option; only topology observations retained"
+  ],
+  "startupReadiness": "Immediate post-start SSH initially refused connection; guest checks passed after SSH readiness",
+  "hostCleanup": {
+    "fixtureDomains": 7,
+    "residual": {
+      "10.10.31.1": [],
+      "10.10.31.2": [],
+      "10.10.31.3": []
+    }
+  },
+  "finalFocusedTests": 25
+}

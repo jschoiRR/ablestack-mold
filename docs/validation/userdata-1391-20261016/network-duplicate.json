@@ -1,0 +1,25 @@
+{
+  "start": 21796,
+  "cursor": 21808,
+  "truncated": false,
+  "hasMore": false,
+  "events": [
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 21803,
+      "requestId": "25396.3899",
+      "api": "listUserData",
+      "id": "4cb11aab-bf01-4c0f-a6a1-e3c66c015dfa",
+      "entityid": null,
+      "projectid": null,
+      "path": "/client/api/"
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 21805,
+      "requestId": "25396.3899",
+      "api": "listUserData",
+      "status": 200
+    }
+  ]
+}

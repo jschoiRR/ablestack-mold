@@ -1,0 +1,78 @@
+{
+  "site": "32",
+  "phase": "partial-move",
+  "vms": [
+    {
+      "id": "c04c035c-9677-4512-b2db-cdd8974eb490",
+      "state": "Stopped",
+      "groupid": "04477df7-af0a-475a-bd9a-9868ebd9f0e3",
+      "properties_unchanged": true,
+      "volumes_unchanged": true
+    },
+    {
+      "id": "ce9995c0-b2ad-465d-af2e-11b019fac482",
+      "state": "Stopped",
+      "groupid": "e53dac6b-9687-473d-9b7e-c689e831d63c",
+      "properties_unchanged": true,
+      "volumes_unchanged": true
+    },
+    {
+      "id": "8c268887-1f08-4508-9184-13fd249b4952",
+      "state": "Stopped",
+      "groupid": null,
+      "properties_unchanged": true,
+      "volumes_unchanged": true
+    },
+    {
+      "id": "15cf1972-bbea-40a7-a222-8b27ec99ceaa",
+      "state": "Stopped",
+      "groupid": null,
+      "properties_unchanged": true,
+      "volumes_unchanged": true
+    }
+  ],
+  "groups": [
+    {
+      "id": "e53dac6b-9687-473d-9b7e-c689e831d63c",
+      "count": 1,
+      "states": {
+        "Stopped": 1
+      }
+    },
+    {
+      "id": "04477df7-af0a-475a-bd9a-9868ebd9f0e3",
+      "count": 1,
+      "states": {
+        "Stopped": 1
+      }
+    },
+    {
+      "id": "2b1ff920-9d35-4963-a11a-b8d5950a9b99",
+      "count": 0,
+      "states": {}
+    },
+    {
+      "id": "42b8191e-79f9-4b58-a908-9b1a29cc6c99",
+      "count": 0,
+      "states": {}
+    },
+    {
+      "id": "8b14d280-4c39-4daf-aeb5-1ca8700192e0",
+      "count": 0,
+      "states": {}
+    },
+    {
+      "id": "f0b293b5-32be-4fe3-ad69-ac949e841400",
+      "count": 0,
+      "states": {}
+    }
+  ],
+  "db_map_counts": {
+    "15cf1972-bbea-40a7-a222-8b27ec99ceaa": 0,
+    "8c268887-1f08-4508-9184-13fd249b4952": 0,
+    "c04c035c-9677-4512-b2db-cdd8974eb490": 1,
+    "ce9995c0-b2ad-465d-af2e-11b019fac482": 1
+  },
+  "one_vm_zero_or_one_group": true,
+  "summary_member_api_match": true
+}

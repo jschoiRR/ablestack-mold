@@ -1,0 +1,44 @@
+// Licensed to the Apache Software Foundation (ASF) under one
+// or more contributor license agreements. See the NOTICE file
+// distributed with this work for additional information
+// regarding copyright ownership. The ASF licenses this file
+// to you under the Apache License, Version 2.0 (the
+// "License"); you may not use this file except in compliance
+// with the License. You may obtain a copy of the License at
+//
+//   http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing,
+// software distributed under the License is distributed on an
+// "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+// KIND, either express or implied. See the License for the
+// specific language governing permissions and limitations
+
+
+> cloudstack-ui@4.22.0 test:unit
+> vue-cli-service test:unit --coverage=false --runInBand --silent --forceExit --runTestsByPath tests/unit/components/view/ListViewSSHKeyPair.spec.js tests/unit/components/view/SSHKeyPairNamePresentation.spec.js tests/unit/views/compute/CreateSSHKeyPair.spec.js tests/unit/views/AutogenView.spec.js tests/unit/components/view/ResourceView.spec.js tests/unit/views/AutogenSSHKeyPairIdentity.spec.js tests/unit/components/view/ListViewSnapshotContext.spec.js tests/unit/views/AutogenVmGroupQuery.spec.js tests/unit/components/view/ListViewProjectReference.spec.js tests/unit/utils/sshKeyPairIdentity.spec.js tests/unit/components/view/InfoCardSSHKeyPairVmQuery.spec.js tests/unit/components/view/ListViewAccounts.spec.js tests/unit/components/view/ListViewDiskOffering.spec.js tests/unit/api/request.spec.js tests/unit/api/optionalRequest.spec.js
+
+Browserslist: caniuse-lite is outdated. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+PASS tests/unit/components/view/ListViewSSHKeyPair.spec.js
+PASS tests/unit/views/AutogenView.spec.js (17.807s)
+PASS tests/unit/components/view/ResourceView.spec.js
+PASS tests/unit/components/view/SSHKeyPairNamePresentation.spec.js
+PASS tests/unit/components/view/ListViewSnapshotContext.spec.js
+PASS tests/unit/views/AutogenVmGroupQuery.spec.js
+PASS tests/unit/views/AutogenSSHKeyPairIdentity.spec.js
+PASS tests/unit/components/view/ListViewAccounts.spec.js
+PASS tests/unit/components/view/ListViewProjectReference.spec.js
+PASS tests/unit/components/view/ListViewDiskOffering.spec.js
+PASS tests/unit/components/view/InfoCardSSHKeyPairVmQuery.spec.js
+PASS tests/unit/api/request.spec.js
+PASS tests/unit/utils/sshKeyPairIdentity.spec.js
+PASS tests/unit/views/compute/CreateSSHKeyPair.spec.js
+PASS tests/unit/api/optionalRequest.spec.js
+
+Test Suites: 15 passed, 15 total
+Tests:       334 passed, 334 total
+Snapshots:   0 total
+Time:        36.315s
+Force exiting Jest: Have you considered using `--detectOpenHandles` to detect async operations that kept running after all tests finished?

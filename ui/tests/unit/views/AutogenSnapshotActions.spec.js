@@ -1,0 +1,116 @@
+// Licensed to the Apache Software Foundation (ASF) under one
+// or more contributor license agreements. See the NOTICE file
+// distributed with this work for additional information
+// regarding copyright ownership. The ASF licenses this file
+// to you under the Apache License, Version 2.0 (the
+// "License"); you may not use this file except in compliance
+// with the License. You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing,
+// software distributed under the License is distributed on an
+// "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+// KIND, either express or implied. See the License for the
+// specific language governing permissions and limitations
+// under the License.
+import AutogenView from '@/views/AutogenView'
+import compute from '@/config/section/compute'
+import { getAPI, postAPI } from '@/api'
+import { clearSnapshotJobs, snapshotBusy } from '@/utils/vmSnapshotActions'
+jest.mock('@/api', () => ({ getAPI: jest.fn(), postAPI: jest.fn(), callAPI: jest.fn() }))
+const action = { api: 'createVMSnapshot', resource: Object.freeze({ id: 'vm-b' }), show: vm => vm.state === 'Running', disabled: vm => !!vm.vmsnapshotblockedreason }
+let context
+beforeEach(() => {
+  jest.clearAllMocks(); clearSnapshotJobs()
+  context = { $store: { getters: { apis: { createVMSnapshot: {} }, userInfo: { id: 'user' }, project: {} }, state: { user: { token: 'token' } } }, $t: key => key }
+  getAPI.mockImplementation((api) => Promise.resolve(api === 'listVirtualMachines' ? { listvirtualmachinesresponse: { virtualmachine: [{ id: 'vm-b', state: 'Running' }] } } : { listvmsnapshotresponse: { vmSnapshot: [], count: 0 } }))
+  postAPI.mockResolvedValue({ createvmsnapshotresponse: { jobid: 'job' } })
+})
+test('create submits the frozen VM UUID after preflight even if mutable form mapping changed', async () => {
+  await AutogenView.methods.postSnapshotAwareAction.call(context, action, { virtualmachineid: 'vm-a', name: 'snapshot' })
+  expect(postAPI).toHaveBeenCalledWith('createVMSnapshot', { virtualmachineid: 'vm-b', name: 'snapshot' })
+})
+test('fresh VM eligibility changed before create blocks POST', async () => {
+  getAPI.mockImplementation((api) => Promise.resolve(api === 'listVirtualMachines' ? { listvirtualmachinesresponse: { virtualmachine: [{ id: 'vm-b', state: 'Starting' }] } } : { listvmsnapshotresponse: { vmSnapshot: [], count: 0 } }))
+  await expect(AutogenView.methods.postSnapshotAwareAction.call(context, action, {})).rejects.toThrow('message.vmsnapshot.vm.state')
+  expect(postAPI).not.toHaveBeenCalled()
+})
+test('project changes during create preflight prevent POST', async () => {
+  const original = getAPI.getMockImplementation()
+  getAPI.mockImplementation((api, args) => { if (api === 'listVirtualMachines') context.$store.getters.project.id = 'other'; return original(api, args) })
+  await expect(AutogenView.methods.postSnapshotAwareAction.call(context, action, {})).rejects.toThrow('message.vmsnapshot.permission')
+  expect(postAPI).not.toHaveBeenCalled()
+})
+
+test('snapshot deletion stays in the context menu and creation remains in the toolbar after selection', () => {
+  const actions = compute.children.find(section => section.name === 'vmsnapshot').actions
+  const create = actions.find(action => action.api === 'createVMSnapshot')
+  const bulk = actions.find(action => action.api === 'deleteVMSnapshot')
+  const existingGroup = { api: 'stopVirtualMachine', groupAction: true }
+  const view = { actions: [create, bulk, existingGroup], dataView: false, selectedRowKeys: ['one', 'two'], selectedItems: [], resource: {}, $store: { getters: { apis: { createVMSnapshot: {}, deleteVMSnapshot: {}, stopVirtualMachine: {} } } } }
+  expect(AutogenView.computed.visibleListActions.call(view)).toEqual([create])
+  view.selectedRowKeys = []
+  expect(AutogenView.computed.visibleListActions.call(view)).toEqual([create])
+})
+
+test.each([['vmsnapshot', {}, 'message.vmsnapshot.list.empty'], ['vmsnapshot', { current: 'false' }, 'message.vmsnapshot.list.no.results'], ['vmsnapshot', { keyword: 'missing' }, 'message.vmsnapshot.list.no.results'], ['vm', {}, '']])('empty state distinguishes %s %j', (name, query, expected) => {
+  expect(AutogenView.computed.snapshotEmptyText.call({ $route: { name, query }, $t: key => key })).toBe(expected)
+})
+
+test('lost create response blocks repeat submissions without claiming job failure', async () => {
+  postAPI.mockRejectedValue(Object.assign(new Error('Network Error'), { isAxiosError: true }))
+  await expect(AutogenView.methods.postSnapshotAwareAction.call(context, action, {})).rejects.toMatchObject({ trackingStatus: 'unknown' })
+  expect(snapshotBusy('vm-b')).toBe(true)
+  await expect(AutogenView.methods.postSnapshotAwareAction.call(context, action, {})).rejects.toThrow('message.vmsnapshot.busy')
+  expect(postAPI).toHaveBeenCalledTimes(1)
+})
+
+test('a storage restore dialog freezes its target and returns focus to the action trigger on close', () => {
+  const trigger = document.createElement('button')
+  const dialogButton = document.createElement('button')
+  document.body.append(trigger, dialogButton)
+  const row = { id: 'fixed-snapshot', name: 'selected snapshot' }
+  const view = { $route: { path: '/snapshot/fixed-snapshot', meta: { name: 'snapshot' } }, $refs: { detailActionsTrigger: { $el: trigger } }, resource: row, storageActionGeneration: 0, $nextTick: callback => callback() }
+  try {
+    AutogenView.methods.execAction.call(view, { api: 'revertSnapshot', storageSnapshotMode: true, resource: row }, false)
+    row.id = 'later-selection'
+    expect(view.currentAction.storageSnapshotTargets[0].id).toBe('fixed-snapshot')
+    dialogButton.focus()
+    AutogenView.methods.closeAction.call(view)
+    expect(document.activeElement).toBe(trigger)
+    expect(view.showAction).toBe(false)
+  } finally { trigger.remove(); dialogButton.remove() }
+})
+
+test('a snapshot form returns to the stable action button when its portal menu item remains connected', () => {
+  const trigger = document.createElement('li'); trigger.tabIndex = 0; trigger.style.display = 'none'
+  const replacement = document.createElement('button'); const input = document.createElement('input')
+  document.body.append(trigger, replacement, input); input.focus()
+  const view = { currentAction: { snapshotStandardDialog: true, api: 'createSnapshot' }, actionTrigger: trigger, actionOriginPath: '/volume/source', $route: { path: '/volume/source' }, $refs: { detailActionsTrigger: { $el: replacement } }, $nextTick: callback => callback() }
+  try { AutogenView.methods.closeAction.call(view); expect(document.activeElement).toBe(replacement) } finally { trigger.remove(); replacement.remove(); input.remove() }
+})
+
+test('a closed snapshot dialog repairs focus after its Affix button is replaced, without stealing user focus', () => {
+  const first = document.createElement('button'); const second = document.createElement('button'); const other = document.createElement('input')
+  document.body.append(first, second, other)
+  const view = { currentAction: { snapshotStandardDialog: true }, storageActionGeneration: 1, actionOriginPath: '/volume/source', $route: { path: '/volume/source' }, $refs: { detailActionsTrigger: { $el: first } }, $nextTick: callback => callback(), listScope: () => 'owner' }
+  try {
+    AutogenView.methods.closeAction.call(view); expect(document.activeElement).toBe(first)
+    first.remove(); view.$refs.detailActionsTrigger.$el = second
+    AutogenView.methods.restoreClosedActionFocus.call(view); expect(document.activeElement).toBe(second)
+    other.focus(); AutogenView.methods.restoreClosedActionFocus.call(view); expect(document.activeElement).toBe(other)
+  } finally { first.remove(); second.remove(); other.remove() }
+})
+test.each(['generation', 'scope', 'route'])('a deferred snapshot focus repair rejects a changed %s', change => {
+  const button = document.createElement('button'); document.body.append(button)
+  let scope = 'owner'
+  const view = { currentAction: { snapshotStandardDialog: true }, storageActionGeneration: 1, actionOriginPath: '/volume/source', $route: { path: '/volume/source' }, $refs: { detailActionsTrigger: { $el: button } }, $nextTick: callback => callback(), listScope: () => scope }
+  try {
+    AutogenView.methods.closeAction.call(view); button.blur()
+    if (change === 'generation') view.storageActionGeneration++
+    if (change === 'scope') scope = 'project'
+    if (change === 'route') view.$route.path = '/volume/new'
+    AutogenView.methods.restoreClosedActionFocus.call(view); expect(document.activeElement).not.toBe(button)
+  } finally { button.remove() }
+})

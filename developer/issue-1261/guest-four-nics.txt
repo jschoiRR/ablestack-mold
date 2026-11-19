@@ -1,0 +1,48 @@
+7ae79ae4faa5098ae4bdb758a1be6a37f10fd35a14b0a725fb3f5c50d559c302  /home/ablecloud/nic1261-preserved.txt
+lo               UNKNOWN        00:00:00:00:00:00 <LOOPBACK,UP,LOWER_UP>
+enp3s0           UP             02:1f:01:43:00:04 <BROADCAST,MULTICAST,UP,LOWER_UP>
+enp4s0           DOWN           02:1f:01:44:00:05 <BROADCAST,MULTICAST>
+enp8s0           DOWN           02:1f:01:45:00:06 <BROADCAST,MULTICAST>
+enp9s0           DOWN           02:1f:01:46:00:01 <BROADCAST,MULTICAST>
+DEVICE 0 MAC 02:1f:01:43:00:04 IFACE enp3s0
+PING 10.126.0.1 (10.126.0.1) from 10.126.0.202 enp3s0: 56(84) bytes of data.
+64 bytes from 10.126.0.1: icmp_seq=1 ttl=64 time=0.216 ms
+64 bytes from 10.126.0.1: icmp_seq=2 ttl=64 time=0.258 ms
+64 bytes from 10.126.0.1: icmp_seq=3 ttl=64 time=0.254 ms
+
+--- 10.126.0.1 ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2047ms
+rtt min/avg/max/mdev = 0.216/0.242/0.258/0.018 ms
+DEVICE 1 MAC 02:1f:01:44:00:05 IFACE enp4s0
+PING 10.126.1.1 (10.126.1.1) from 10.126.1.213 enp4s0: 56(84) bytes of data.
+64 bytes from 10.126.1.1: icmp_seq=1 ttl=64 time=0.527 ms
+64 bytes from 10.126.1.1: icmp_seq=2 ttl=64 time=0.286 ms
+64 bytes from 10.126.1.1: icmp_seq=3 ttl=64 time=0.306 ms
+
+--- 10.126.1.1 ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2038ms
+rtt min/avg/max/mdev = 0.286/0.373/0.527/0.109 ms
+DEVICE 2 MAC 02:1f:01:45:00:06 IFACE enp8s0
+PING 10.126.2.1 (10.126.2.1) from 10.126.2.231 enp8s0: 56(84) bytes of data.
+64 bytes from 10.126.2.1: icmp_seq=1 ttl=64 time=0.699 ms
+64 bytes from 10.126.2.1: icmp_seq=2 ttl=64 time=0.379 ms
+64 bytes from 10.126.2.1: icmp_seq=3 ttl=64 time=0.405 ms
+
+--- 10.126.2.1 ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2038ms
+rtt min/avg/max/mdev = 0.379/0.494/0.699/0.145 ms
+DEVICE 3 MAC 02:1f:01:46:00:01 IFACE enp9s0
+PING 10.126.3.1 (10.126.3.1) from 10.126.3.43 enp9s0: 56(84) bytes of data.
+64 bytes from 10.126.3.1: icmp_seq=1 ttl=64 time=0.577 ms
+64 bytes from 10.126.3.1: icmp_seq=2 ttl=64 time=0.270 ms
+64 bytes from 10.126.3.1: icmp_seq=3 ttl=64 time=0.223 ms
+
+--- 10.126.3.1 ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2038ms
+rtt min/avg/max/mdev = 0.223/0.356/0.577/0.156 ms
+lo               UNKNOWN        127.0.0.1/8
+enp3s0           UP             10.126.0.202/24 metric 100
+enp4s0           UP             10.126.1.213/24
+enp8s0           UP             10.126.2.231/24
+enp9s0           UP             10.126.3.43/24
+162.40 317.96

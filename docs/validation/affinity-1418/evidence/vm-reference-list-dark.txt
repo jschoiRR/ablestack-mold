@@ -1,0 +1,834 @@
+Browser tab: 6, Title: "가상머신 - ABLESTACK-Mold", URL: "http://10.10.31.10:8080/client/#/vm".
+1 AXWebArea 가상머신 - ABLESTACK-Mold, URL: 10.10.31.10:8080/client/#/vm
+	2 container
+		3 container
+			4 image
+			5 menu
+				6 dashboard 대시보드
+					7 link Description: dashboard 대시보드, Value: 10.10.31.10:8080/client/#/dashboard
+				8 container
+					9 image cloud
+					10 text 컴퓨트
+				11 content list sub_menu_1_$$_/compute-popup
+					12 cloud-server 가상머신
+						13 link Description: cloud-server 가상머신, Value: 10.10.31.10:8080/client/#/vm
+					14 camera VM 스냅샷
+						15 link Description: camera VM 스냅샷, Value: 10.10.31.10:8080/client/#/vmsnapshot
+					16 쿠버네티스
+						17 link Description: 쿠버네티스, Value: 10.10.31.10:8080/client/#/kubernetes
+					18 fullscreen 오토스케일 VM 그룹
+						19 link Description: fullscreen 오토스케일 VM 그룹, Value: 10.10.31.10:8080/client/#/autoscalevmgroup
+					20 gold 가상머신 그룹
+						21 link Description: gold 가상머신 그룹, Value: 10.10.31.10:8080/client/#/vmgroup
+					22 key SSH 키 쌍
+						23 link Description: key SSH 키 쌍, Value: 10.10.31.10:8080/client/#/ssh
+					24 solution 사용자 데이터 라이브러리
+						25 link Description: solution 사용자 데이터 라이브러리, Value: 10.10.31.10:8080/client/#/userdata
+					26 solution CNI 구성
+						27 link Description: solution CNI 구성, Value: 10.10.31.10:8080/client/#/cniconfiguration
+					28 swap Affinity 그룹
+						29 link Description: swap Affinity 그룹, Value: 10.10.31.10:8080/client/#/affinitygroup
+				30 container
+					31 image hdd
+					32 text 스토리지
+				33 container
+					34 image wifi
+					35 text 네트워크
+				36 container
+					37 image picture
+					38 text 이미지
+				39 container
+					40 image lock
+					41 text 키 관리
+				42 schedule 이벤트
+					43 link Description: schedule 이벤트, Value: 10.10.31.10:8080/client/#/event
+				44 project 프로젝트
+					45 link Description: project 프로젝트, Value: 10.10.31.10:8080/client/#/project
+				46 idcard 역할
+					47 link Description: idcard 역할, Value: 10.10.31.10:8080/client/#/role
+				48 team 계정
+					49 link Description: team 계정, Value: 10.10.31.10:8080/client/#/account
+				50 block 도메인
+					51 link Description: block 도메인, Value: 10.10.31.10:8080/client/#/domain
+				52 container
+					53 image bank
+					54 text 인프라스트럭쳐
+				55 container
+					56 image shopping
+					57 text 서비스 오퍼링
+				58 container
+					59 image setting
+					60 text 구성
+				61 appstore-add 확장
+					62 link Description: appstore-add 확장, Value: 10.10.31.10:8080/client/#/extension
+				63 container
+					64 image tool
+					65 text 도구
+				66 read API 문서
+					67 link Description: read API 문서, Value: 10.10.31.10:8080/client/#/apidocs/
+		68 container
+			69 text 페이지 스타일 설정
+			70 button 닫기
+				71 image close
+			72 heading 페이지 스타일 설정, Value: 3
+				73 text 페이지 스타일 설정
+			74 container
+				75 container
+					76 image
+					77 container
+						78 radio button (settable, integer) Description:  , Value: 0
+				79 container
+					80 image
+					81 container
+						82 radio button (settable, integer) Description:  , Value: 1
+					83 image check
+			84 heading 테마 색상, Value: 3
+				85 text 테마 색상
+			86 container
+				87 container
+					88 radio button (settable, integer) Description:  , Value: 0
+					89 image check
+				90 container
+					91 radio button (settable, integer) Description:  , Value: 0
+				92 container
+					93 radio button (settable, integer) Description:  , Value: 0
+				94 container
+					95 radio button (settable, integer) Description:  , Value: 0
+				96 container
+					97 radio button (settable, integer) Description:  , Value: 0
+				98 container
+					99 radio button (settable, integer) Description:  , Value: 0
+				100 container
+					101 radio button (settable, integer) Description:  , Value: 0
+				102 container
+					103 radio button (settable, integer) Description:  , Value: 0
+			104 heading 네비게이션 설정, Value: 3
+				105 text 네비게이션 설정
+			106 container
+				107 container
+					108 text 배경색
+					109 color well (disabled, settable) #ffffff
+				110 container
+					111 text 텍스트 색상
+					112 color well (disabled, settable) #000000
+			113 container
+				114 image exclamation-circle
+				115 text 설정은 현재 브라우저에서만 볼 수 있습니다. 설정을 적용하려면 JSON 파일을 다운로드하고 경로 `/public/config.json` 아래의 `config.json` 파일의 `theme` 섹션에서 해당 콘텐츠를 교체하세요.
+			116 button download 세팅값 다운로드(json)
+				117 image download
+				118 text 세팅값 다운로드(json)
+			119 button undo 기본값으로 재설정
+				120 image undo
+				121 text 기본값으로 재설정
+		122 container
+			123 image menu-fold
+			124 container
+				125 combo box (settable) rc_select_0
+				126 image project
+				127 text 기본 보기
+			128 button 생성 down
+				129 text 생성
+				130 image down
+			131 image translation
+			132 image bell
+			133 container
+				134 text AC admin cloud
+		135 container
+			136 container
+				137 container
+					138 link Description: home, Value: 10.10.31.10:8080/client/#/
+					139 text /
+					140 link Description: 가상머신, Value: 10.10.31.10:8080/client/#/vm
+					141 link Description: question-circle, Value: docs.ablecloud.io/latest/adminguide/virtual_machines.html
+					142 button reload 업데이트
+						533 image reload
+						144 text 업데이트
+					534 container
+						535 combo box (settable) rc_select_2
+						536 text 모두
+					537 switch 메트릭, Value: 0
+						538 text 메트릭
+					145 switch 프로젝트, Value: 0
+						146 text 프로젝트
+				147 button 가상머신 추가
+					148 image plus
+					539 text 가상머신 추가
+				150 container
+					151 button 고급 검색
+						152 image filter
+					153 text field (settable)
+					154 button search
+						155 image search
+			156 table
+				157 row
+					158 cell
+						159 container
+							160 checkbox (settable, integer) Description:  , Value: 0
+					540 cell
+						541 container
+							542 text VM 표시 명
+							543 image caret-up
+							544 image caret-down
+					545 cell
+						546 container
+							547 text 내부 이름
+							548 image caret-up
+							549 image caret-down
+					550 cell
+						551 container
+							552 text 상태
+							553 image caret-up
+							554 image caret-down
+					555 cell
+						556 container
+							557 text 할당 자원
+							558 image caret-up
+							559 image caret-down
+					560 cell
+						561 container
+							562 text 에이전트 버전
+							563 image caret-up
+							564 image caret-down
+					565 cell
+						566 container
+							567 text IP 주소
+							568 image caret-up
+							569 image caret-down
+					570 cell
+						571 container
+							572 text 템플릿 형식
+							573 image caret-up
+							574 image caret-down
+					575 cell
+						576 container
+							577 text 백업 오퍼링 이름
+							578 image caret-up
+							579 image caret-down
+					580 cell
+						581 container
+							582 text CPU 아키텍처
+							583 image caret-up
+							584 image caret-down
+					585 cell
+						586 container
+							587 text 호스트
+							588 image caret-up
+							589 image caret-down
+					181 cell
+						182 container
+							183 text 계정
+							184 image caret-up
+							185 image caret-down
+					590 cell
+						591 container
+							592 text Zone
+							593 image caret-up
+							594 image caret-down
+					191 cell
+						192 button filter
+							193 image filter
+				595 row
+					596 cell
+						597 container
+							598 checkbox (settable, integer) Description:  , Value: 0
+					599 cell
+						600 link Description: GFS-TEST-VM, Value: 10.10.31.10:8080/client/#/vm/05f940bb-5ca7-4f58-8e41-ed8440758f0b
+					601 cell
+						602 text i-2-7-VM
+					603 cell
+						604 text 실행 중
+					605 cell
+						606 text 4 CPU 8192 MB
+					607 cell
+						608 text 10.1.0
+					609 cell
+						610 link Description: 10.10.254.105 , Value: javascript:;
+						611 button +4 더보기
+					612 cell
+						613 link Description: USER, Value: 10.10.31.10:8080/client/#/vm/USER
+					614 cell
+						615 link 10.10.31.10:8080/client/#/backupoffering/undefined
+					616 cell
+						617 text x86_64
+					618 cell
+						619 link Description: ablecube31-1, Value: 10.10.31.10:8080/client/#/host/159baf9a-89ad-4a94-91dc-e7395a670bf4
+					620 cell
+						621 link Description: admin, Value: 10.10.31.10:8080/client/#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&dataView=true
+					622 cell
+						623 link Description: Zone, Value: 10.10.31.10:8080/client/#/zone/7013f5a1-de59-4cea-a596-f4f58815f31c
+				624 row
+					625 cell
+						626 container
+							627 checkbox (settable, integer) Description:  , Value: 0
+					628 cell
+						629 link Description: W2025-GFS2-Sparse, Value: 10.10.31.10:8080/client/#/vm/36d5333d-670a-4644-8c68-1f1dc154ba3a
+					630 cell
+						631 text i-2-13-VM
+					632 cell
+						633 text 실행 중
+					634 cell
+						635 text 4 CPU 8192 MB
+					636 cell
+						637 text 110.2.3
+					638 cell
+						639 link Description: 10.10.254.210/16 , Value: javascript:;
+						640 button +4 더보기
+					641 cell
+						642 link Description: USER, Value: 10.10.31.10:8080/client/#/vm/USER
+					643 cell
+						644 link 10.10.31.10:8080/client/#/backupoffering/undefined
+					645 cell
+						646 text x86_64
+					647 cell
+						648 link Description: ablecube31-3, Value: 10.10.31.10:8080/client/#/host/384871b9-7c75-4717-a673-e96a76abeb71
+					649 cell
+						650 link Description: admin, Value: 10.10.31.10:8080/client/#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&dataView=true
+					651 cell
+						652 link Description: Zone, Value: 10.10.31.10:8080/client/#/zone/7013f5a1-de59-4cea-a596-f4f58815f31c
+				653 row
+					654 cell
+						655 container
+							656 checkbox (settable, integer) Description:  , Value: 0
+					657 cell
+						658 link Description: R10-Sparse, Value: 10.10.31.10:8080/client/#/vm/2f35ea9a-7ff2-494f-a857-6527e0fb1976
+					659 cell
+						660 text i-2-14-VM
+					661 cell
+						662 text 실행 중
+					663 cell
+						664 text 2 CPU 4096 MB
+					665 cell
+						666 text 10.1.0
+					667 cell
+						668 link Description: 10.10.254.209 , Value: javascript:;
+						669 button +4 더보기
+					670 cell
+						671 link Description: USER, Value: 10.10.31.10:8080/client/#/vm/USER
+					672 cell
+						673 link 10.10.31.10:8080/client/#/backupoffering/undefined
+					674 cell
+						675 text x86_64
+					676 cell
+						677 link Description: ablecube31-1, Value: 10.10.31.10:8080/client/#/host/159baf9a-89ad-4a94-91dc-e7395a670bf4
+					678 cell
+						679 link Description: admin, Value: 10.10.31.10:8080/client/#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&dataView=true
+					680 cell
+						681 link Description: Zone, Value: 10.10.31.10:8080/client/#/zone/7013f5a1-de59-4cea-a596-f4f58815f31c
+				682 row
+					683 cell
+						684 container
+							685 checkbox (settable, integer) Description:  , Value: 0
+					686 cell
+						687 link Description: R10-Sparse-Clone1, Value: 10.10.31.10:8080/client/#/vm/708d87cd-1d8a-4911-b22a-4211cdf1634f
+					688 cell
+						689 text i-2-15-VM
+					690 cell
+						691 text 실행 중
+					692 cell
+						693 text 2 CPU 4096 MB
+					694 cell
+						695 text 10.1.0
+					696 cell
+						697 link Description: 10.10.254.114 , Value: javascript:;
+						698 button +4 더보기
+					699 cell
+						700 link Description: USER, Value: 10.10.31.10:8080/client/#/vm/USER
+					701 cell
+						702 link 10.10.31.10:8080/client/#/backupoffering/undefined
+					703 cell
+						704 text x86_64
+					705 cell
+						706 link Description: ablecube31-1, Value: 10.10.31.10:8080/client/#/host/159baf9a-89ad-4a94-91dc-e7395a670bf4
+					707 cell
+						708 link Description: admin, Value: 10.10.31.10:8080/client/#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&dataView=true
+					709 cell
+						710 link Description: Zone, Value: 10.10.31.10:8080/client/#/zone/7013f5a1-de59-4cea-a596-f4f58815f31c
+				711 row
+					712 cell
+						713 container
+							714 checkbox (settable, integer) Description:  , Value: 0
+					715 cell
+						716 link Description: R10-Sparse-Clone2, Value: 10.10.31.10:8080/client/#/vm/dbdefe41-64a0-4ab1-a596-5d5f5131517c
+					717 cell
+						718 text i-2-16-VM
+					719 cell
+						720 text 실행 중
+					721 cell
+						722 text 2 CPU 4096 MB
+					723 cell
+						724 text 10.1.0
+					725 cell
+						726 link Description: 10.10.254.237 , Value: javascript:;
+						727 button +4 더보기
+					728 cell
+						729 link Description: USER, Value: 10.10.31.10:8080/client/#/vm/USER
+					730 cell
+						731 link 10.10.31.10:8080/client/#/backupoffering/undefined
+					732 cell
+						733 text x86_64
+					734 cell
+						735 link Description: ablecube31-2, Value: 10.10.31.10:8080/client/#/host/3fb147f3-aea4-4f65-b8c6-e7192ea26138
+					736 cell
+						737 link Description: admin, Value: 10.10.31.10:8080/client/#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&dataView=true
+					738 cell
+						739 link Description: Zone, Value: 10.10.31.10:8080/client/#/zone/7013f5a1-de59-4cea-a596-f4f58815f31c
+				740 row
+					741 cell
+						742 container
+							743 checkbox (settable, integer) Description:  , Value: 0
+					744 cell
+						745 link Description: R10-Sparse-Clone3, Value: 10.10.31.10:8080/client/#/vm/1fdd690d-b0ca-45bf-9088-8534e409b866
+					746 cell
+						747 text i-2-17-VM
+					748 cell
+						749 text 실행 중
+					750 cell
+						751 text 2 CPU 4096 MB
+					752 cell
+						753 text 10.1.0
+					754 cell
+						755 link Description: 10.10.254.116 , Value: javascript:;
+						756 button +4 더보기
+					757 cell
+						758 link Description: USER, Value: 10.10.31.10:8080/client/#/vm/USER
+					759 cell
+						760 link 10.10.31.10:8080/client/#/backupoffering/undefined
+					761 cell
+						762 text x86_64
+					763 cell
+						764 link Description: ablecube31-3, Value: 10.10.31.10:8080/client/#/host/384871b9-7c75-4717-a673-e96a76abeb71
+					765 cell
+						766 link Description: admin, Value: 10.10.31.10:8080/client/#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&dataView=true
+					767 cell
+						768 link Description: Zone, Value: 10.10.31.10:8080/client/#/zone/7013f5a1-de59-4cea-a596-f4f58815f31c
+				769 row
+					770 cell
+						771 container
+							772 checkbox (settable, integer) Description:  , Value: 0
+					773 cell
+						774 link Description: R10-Sparse-Clone4, Value: 10.10.31.10:8080/client/#/vm/3f135c5e-a3cf-4eec-9e90-51f3148c406d
+					775 cell
+						776 text i-2-18-VM
+					777 cell
+						778 text 실행 중
+					779 cell
+						780 text 2 CPU 4096 MB
+					781 cell
+						782 text 10.1.0
+					783 cell
+						784 link Description: 10.10.254.144 , Value: javascript:;
+						785 button +4 더보기
+					786 cell
+						787 link Description: USER, Value: 10.10.31.10:8080/client/#/vm/USER
+					788 cell
+						789 link 10.10.31.10:8080/client/#/backupoffering/undefined
+					790 cell
+						791 text x86_64
+					792 cell
+						793 link Description: ablecube31-1, Value: 10.10.31.10:8080/client/#/host/159baf9a-89ad-4a94-91dc-e7395a670bf4
+					794 cell
+						795 link Description: admin, Value: 10.10.31.10:8080/client/#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&dataView=true
+					796 cell
+						797 link Description: Zone, Value: 10.10.31.10:8080/client/#/zone/7013f5a1-de59-4cea-a596-f4f58815f31c
+				798 row
+					799 cell
+						800 container
+							801 checkbox (settable, integer) Description:  , Value: 0
+					802 cell
+						803 link Description: R10-Sparse-Clone5, Value: 10.10.31.10:8080/client/#/vm/c475abf7-2346-4015-9cef-001a78472c25
+					804 cell
+						805 text i-2-19-VM
+					806 cell
+						807 text 실행 중
+					808 cell
+						809 text 8 CPU 16384 MB
+					810 cell
+						811 text 10.1.0
+					812 cell
+						813 link Description: 10.10.254.115 , Value: javascript:;
+						814 button +4 더보기
+					815 cell
+						816 link Description: USER, Value: 10.10.31.10:8080/client/#/vm/USER
+					817 cell
+						818 link …
+					819 cell
+						820 text x86_64
+					821 cell
+						822 link Description: ablecube31-1, Value: …
+					823 cell
+						824 link Description: admin, Value: …
+					825 cell
+						826 link Description: Zone, Value: …
+				827 row
+					828 cell
+						829 container
+							830 checkbox (settable, integer) Description:  , Value: 0
+					831 cell
+						832 link Description: VM-630888e1-bcef-4b40-9952-b3409a664bae, Value: …
+					833 cell
+						834 text i-2-22-VM
+					835 cell
+						836 text 실행 중
+					837 cell
+						838 text 1 CPU 1024 MB
+					839 cell
+						840 text 8.2.0
+					841 cell
+						842 link Description: 10.10.254.204 , Value: …
+						843 button +4 더보기
+					844 cell
+						845 link Description: USER, Value: …
+					846 cell
+						847 link …
+					848 cell
+						849 text x86_64
+					850 cell
+						851 link Description: ablecube31-2, Value: …
+					852 cell
+						853 link Description: admin, Value: …
+					854 cell
+						855 link Description: Zone, Value: …
+				856 row
+					857 cell
+						858 container
+							859 checkbox (settable, integer) Description:  , Value: 0
+					860 cell
+						861 link Description: W2025-Sparse-Clone1, Value: …
+					862 cell
+						863 text i-2-25-VM
+					864 cell
+						865 text 실행 중
+					866 cell
+						867 text 4 CPU 8192 MB
+					868 cell
+						869 text 110.2.3
+					870 cell
+						871 link Description: 10.10.254.121/16 , Value: …
+						872 button +4 더보기
+					873 cell
+						874 link Description: USER, Value: …
+					875 cell
+						876 link …
+					877 cell
+						878 text x86_64
+					879 cell
+						880 link Description: ablecube31-2, Value: …
+					881 cell
+						882 link Description: admin, Value: …
+					883 cell
+						884 link Description: Zone, Value: …
+				885 row
+					886 cell
+						887 container
+							888 checkbox (settable, integer) Description:  , Value: 0
+					889 cell
+						890 link Description: W2025-Sparse-Clone2, Value: …
+					891 cell
+						892 text i-2-26-VM
+					893 cell
+						894 text 실행 중
+					895 cell
+						896 text 4 CPU 8192 MB
+					897 cell
+						898 text 110.2.3
+					899 cell
+						900 link Description: 10.10.254.118/16 , Value: …
+						901 button +4 더보기
+					902 cell
+						903 link Description: USER, Value: …
+					904 cell
+						905 link …
+					906 cell
+						907 text x86_64
+					908 cell
+						909 link Description: ablecube31-2, Value: …
+					910 cell
+						911 link Description: admin, Value: …
+					912 cell
+						913 link Description: Zone, Value: …
+				914 row
+					915 cell
+						916 container
+							917 checkbox (settable, integer) Description:  , Value: 0
+					918 cell
+						919 link Description: W2025-Sparse-Clone3, Value: …
+					920 cell
+						921 text i-2-27-VM
+					922 cell
+						923 text 실행 중
+					924 cell
+						925 text 4 CPU 8192 MB
+					926 cell
+						927 text 110.2.3
+					928 cell
+						929 link Description: 10.10.254.120 , Value: …
+						930 button +4 더보기
+					931 cell
+						932 link Description: USER, Value: …
+					933 cell
+						934 link …
+					935 cell
+						936 text x86_64
+					937 cell
+						938 link Description: ablecube31-3, Value: …
+					939 cell
+						940 link Description: admin, Value: …
+					941 cell
+						942 link Description: Zone, Value: …
+				943 row
+					944 cell
+						945 container
+							946 checkbox (settable, integer) Description:  , Value: 0
+					947 cell
+						948 link Description: U26-Sparse, Value: …
+					949 cell
+						950 text i-2-28-VM
+					951 cell
+						952 text 실행 중
+					953 cell
+						954 text 2 CPU 4096 MB
+					955 cell
+						956 text 10.2.1
+					957 cell
+						958 link Description: 10.10.254.140/16 , Value: …
+						959 button +4 더보기
+					960 cell
+						961 link Description: USER, Value: …
+					962 cell
+						963 link …
+					964 cell
+						965 text x86_64
+					966 cell
+						967 link Description: ablecube31-1, Value: …
+					968 cell
+						969 link Description: admin, Value: …
+					970 cell
+						971 link Description: Zone, Value: …
+				972 row
+					973 cell
+						974 container
+							975 checkbox (settable, integer) Description:  , Value: 0
+					976 cell
+						977 link Description: Koral-ISO-Build-VM, Value: …
+					978 cell
+						979 text i-2-29-VM
+					980 cell
+						981 text 실행 중
+					982 cell
+						983 text 4 CPU 8192 MB
+					984 cell
+						985 text 10.1.0
+					986 cell
+						987 link Description: 10.10.254.7 , Value: …
+						988 button +5 더보기
+					989 cell
+						990 link Description: USER, Value: …
+					991 cell
+						992 link …
+					993 cell
+						994 text x86_64
+					995 cell
+						996 link Description: ablecube31-3, Value: …
+					997 cell
+						998 link Description: admin, Value: …
+					999 cell
+						1000 link Description: Zone, Value: …
+				1001 row
+					1002 cell
+						1003 container
+							1004 checkbox (settable, integer) Description:  , Value: 0
+					1005 cell
+						1006 link Description: Ubuntu22-Sparse, Value: …
+					1007 cell
+						1008 text i-2-52-VM
+					1009 cell
+						1010 text 실행 중
+					1011 cell
+						1012 text 2 CPU 4096 MB
+					1013 cell
+						1014 text 6.2.0
+					1015 cell
+						1016 link Description: 10.10.254.1/16 , Value: …
+						1017 button +4 더보기
+					1018 cell
+						1019 link Description: USER, Value: …
+					1020 cell
+						1021 link …
+					1022 cell
+						1023 text x86_64
+					1024 cell
+						1025 link Description: ablecube31-2, Value: …
+					1026 cell
+						1027 link Description: admin, Value: …
+					1028 cell
+						1029 link Description: Zone, Value: …
+				1030 row
+					1031 cell
+						1032 container
+							1033 checkbox (settable, integer) Description:  , Value: 0
+					1034 cell
+						1035 link Description: Ubuntu24-Sparse, Value: …
+					1036 cell
+						1037 text i-2-56-VM
+					1038 cell
+						1039 text 실행 중
+					1040 cell
+						1041 text 2 CPU 4096 MB
+					1042 cell
+						1043 text 8.2.2
+					1044 cell
+						1045 link Description: 10.10.254.129/16 , Value: …
+						1046 button +4 더보기
+					1047 cell
+						1048 link Description: USER, Value: …
+					1049 cell
+						1050 link …
+					1051 cell
+						1052 text x86_64
+					1053 cell
+						1054 link Description: ablecube31-3, Value: …
+					1055 cell
+						1056 link Description: admin, Value: …
+					1057 cell
+						1058 link Description: Zone, Value: …
+				1059 row
+					1060 cell
+						1061 container
+							1062 checkbox (settable, integer) Description:  , Value: 0
+					1063 cell
+						1064 link Description: Debian12-Sparse, Value: …
+					1065 cell
+						1066 text i-2-61-VM
+					1067 cell
+						1068 text 실행 중
+					1069 cell
+						1070 text 2 CPU 4096 MB
+					1071 cell
+						1072 text 7.2.22
+					1073 cell
+						1074 link Description: 10.10.254.133/16 , Value: …
+						1075 button +11 더보기
+					1076 cell
+						1077 link Description: USER, Value: …
+					1078 cell
+						1079 link …
+					1080 cell
+						1081 text x86_64
+					1082 cell
+						1083 link Description: ablecube31-1, Value: …
+					1084 cell
+						1085 link Description: admin, Value: …
+					1086 cell
+						1087 link Description: Zone, Value: …
+				1088 row
+					1089 cell
+						1090 container
+							1091 checkbox (settable, integer) Description:  , Value: 0
+					1092 cell
+						1093 link Description: Debian13-Sparse, Value: …
+					1094 cell
+						1095 text i-2-62-VM
+					1096 cell
+						1097 text 실행 중
+					1098 cell
+						1099 text 2 CPU 4096 MB
+					1100 cell
+						1101 text 10.0.13
+					1102 cell
+						1103 link Description: 10.10.254.135/16 , Value: …
+						1104 button +11 더보기
+					1105 cell
+						1106 link Description: USER, Value: …
+					1107 cell
+						1108 link …
+					1109 cell
+						1110 text x86_64
+					1111 cell
+						1112 link Description: ablecube31-3, Value: …
+					1113 cell
+						1114 link Description: admin, Value: …
+					1115 cell
+						1116 link Description: Zone, Value: …
+				1117 row
+					1118 cell
+						1119 container
+							1120 checkbox (settable, integer) Description:  , Value: 0
+					1121 cell
+						1122 link Description: Rocky9-Sparse, Value: …
+					1123 cell
+						1124 text i-2-69-VM
+					1125 cell
+						1126 text 실행 중
+					1127 cell
+						1128 text 2 CPU 4096 MB
+					1129 cell
+						1130 text 10.1.0
+					1131 cell
+						1132 link Description: 10.10.254.136 , Value: …
+						1133 button +4 더보기
+					1134 cell
+						1135 link Description: USER, Value: …
+					1136 cell
+						1137 link …
+					1138 cell
+						1139 text x86_64
+					1140 cell
+						1141 link Description: ablecube31-3, Value: …
+					1142 cell
+						1143 link Description: admin, Value: …
+					1144 cell
+						1145 link Description: Zone, Value: …
+				1146 row
+					1147 cell
+						1148 container
+							1149 checkbox (settable, integer) Description:  , Value: 0
+					1150 cell
+						1151 link Description: Rocky8-Sparse, Value: …
+					1152 cell
+						1153 text i-2-70-VM
+					1154 cell
+						1155 text 실행 중
+					1156 cell
+						1157 text 2 CPU 4096 MB
+					1158 cell
+						1159 text 6.2.0
+					1160 cell
+						1161 link Description: 10.10.254.137 , Value: …
+						1162 button +4 더보기
+					1163 cell
+						1164 link Description: USER, Value: …
+					1165 cell
+						1166 link …
+					1167 cell
+						1168 text x86_64
+					1169 cell
+						1170 link Description: ablecube31-3, Value: …
+					1171 cell
+						1172 link Description: admin, Value: …
+					1173 cell
+						1174 link Description: Zone, Value: …
+			514 content list
+				515 text 전체 115 개 항목 중 1-20 표시
+				516 container 이전 페이지
+					517 button (disabled) left
+						518 image left
+				1175 text 1
+				1176 text 2
+				1177 text 3
+				1178 text 4
+				1179 text 5
+				1180 text 6
+				521 container 다음 페이지
+					522 button right
+						523 image right
+				524 container
+					525 container
+						526 combo box (settable) rc_select_1
+						527 text 20 / 쪽
+					1181 text 이동하기
+					1182 text field (settable)
+	530 container
+		531 image info-circle
+		532 text Wall 모니터링을 사용할 수 없습니다. 기존 알림은 최신 정보가 아닐 수 있으며 Mold는 계속 사용할 수 있습니다. 비활성
+
+The focused UI element is 1 AXWebArea 가상머신 - ABLESTACK-Mold, URL: 10.10.31.10:8080/client/#/vm

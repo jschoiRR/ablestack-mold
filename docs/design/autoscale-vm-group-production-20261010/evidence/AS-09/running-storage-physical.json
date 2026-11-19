@@ -1,0 +1,79 @@
+[
+  {
+    "cluster": 31,
+    "host": 1,
+    "vms": []
+  },
+  {
+    "cluster": 31,
+    "host": 2,
+    "vms": []
+  },
+  {
+    "cluster": 31,
+    "host": 3,
+    "vms": [
+      {
+        "instance": "i-35-479-VM",
+        "path": "ad23d97d-3e5c-408c-9481-c6bddfbd1831",
+        "provisioning": "sparse",
+        "state": "running",
+        "diskType": "file",
+        "driver": {
+          "name": "qemu",
+          "type": "qcow2",
+          "cache": "none",
+          "io": "io_uring",
+          "discard": "unmap"
+        },
+        "source": "/mnt/glue-gfs/ad23d97d-3e5c-408c-9481-c6bddfbd1831",
+        "filesystem": "gfs2",
+        "image": {
+          "format": "qcow2",
+          "virtual-size": 107374182400,
+          "actual-size": 3559247872
+        }
+      }
+    ]
+  },
+  {
+    "cluster": 32,
+    "host": 1,
+    "vms": []
+  },
+  {
+    "cluster": 32,
+    "host": 2,
+    "vms": []
+  },
+  {
+    "cluster": 32,
+    "host": 3,
+    "vms": [
+      {
+        "instance": "i-6-155-VM",
+        "path": "1692c1a7-9a2f-43d8-95c0-c605ad70c7b5",
+        "provisioning": "thin",
+        "state": "running",
+        "diskType": "block",
+        "driver": {
+          "name": "qemu",
+          "type": "raw",
+          "cache": "none",
+          "discard": "unmap"
+        },
+        "source": "/dev/rbd/rbd/1692c1a7-9a2f-43d8-95c0-c605ad70c7b5",
+        "krbdMapping": [
+          {
+            "id": "7",
+            "pool": "rbd",
+            "namespace": "",
+            "name": "1692c1a7-9a2f-43d8-95c0-c605ad70c7b5",
+            "snap": "-",
+            "device": "/dev/rbd7"
+          }
+        ]
+      }
+    ]
+  }
+]

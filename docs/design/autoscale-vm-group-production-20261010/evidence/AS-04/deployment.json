@@ -1,0 +1,76 @@
+{
+  "sourceCommit": "ab86c636070e7d0d33778beec810d4b1307f9a4d",
+  "modules": [
+    {
+      "module": "api",
+      "sha256": "3c6afaee2a74f60ac118ed56e58431dbbf13fbf81a58aeec8204236c9450c458"
+    },
+    {
+      "module": "engine/schema",
+      "sha256": "816d9a5286ca93036c16923391a5f6e667efa2313b5f16f2dfd07997e13b6cc3"
+    },
+    {
+      "module": "server",
+      "sha256": "0beb8d8a2e5787ed63ae36d8f45c10d100d6a09c0584743854a3e61df2c20d0f"
+    }
+  ],
+  "ui": {
+    "file": "ui-as04-ab86c636070.tgz",
+    "sourceCommit": "ab86c636070e7d0d33778beec810d4b1307f9a4d",
+    "compiledUiCommit": "ab86c636070e7d0d33778beec810d4b1307f9a4d",
+    "staticLocalesCommit": "ab86c636070e7d0d33778beec810d4b1307f9a4d",
+    "sha256": "ccdbc092b4e35c71e54db78b63d9ae6da9c7796da61bd8589f6be3b78e07d326",
+    "size": 15016366
+  },
+  "verifiedAt": "2026-10-11T11:29:19+0900",
+  "finalRuntime": [
+    {
+      "cluster": 31,
+      "jarSha256": "e56c0c4daa3c06176516a48e9fdddffb5101687f646e818b9ed28acd264376d2",
+      "uiFilesVerified": 840,
+      "webInf": true,
+      "configPreserved": true,
+      "clientHttp": 200,
+      "markers": {
+        "blockingLoadingState": true,
+        "fetchSyncProgress": true,
+        "extractJobId": true,
+        "operationinprogress": true,
+        "checkingEligibility": true
+      },
+      "service": "active",
+      "managementPid": "367669"
+    },
+    {
+      "cluster": 32,
+      "jarSha256": "4c1e12f06394af8acbe81742eeb6458d5a885e3bdc65d26a0cf7e9a53cd5ee52",
+      "uiFilesVerified": 840,
+      "webInf": true,
+      "configPreserved": true,
+      "clientHttp": 200,
+      "markers": {
+        "blockingLoadingState": true,
+        "fetchSyncProgress": true,
+        "extractJobId": true,
+        "operationinprogress": true,
+        "checkingEligibility": true
+      },
+      "service": "active",
+      "managementPid": "815853"
+    }
+  ],
+  "management": [
+    {
+      "cluster": 31,
+      "activePath": "/usr/share/cloudstack-management/lib/cloudstack-4.23.0.0-Mold.Europa-202609222315.jar",
+      "patchedSha256": "e56c0c4daa3c06176516a48e9fdddffb5101687f646e818b9ed28acd264376d2",
+      "sourceCommit": "ab86c636070e7d0d33778beec810d4b1307f9a4d"
+    },
+    {
+      "cluster": 32,
+      "activePath": "/usr/share/cloudstack-management/lib/cloudstack-4.23.0.0.jar",
+      "patchedSha256": "4c1e12f06394af8acbe81742eeb6458d5a885e3bdc65d26a0cf7e9a53cd5ee52",
+      "sourceCommit": "ab86c636070e7d0d33778beec810d4b1307f9a4d"
+    }
+  ]
+}

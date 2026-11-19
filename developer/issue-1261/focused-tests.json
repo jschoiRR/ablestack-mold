@@ -1,0 +1,37 @@
+{
+  "total": 123,
+  "suites": [
+    {
+      "suite": "com.cloud.vm.NicHotplugFailureTest",
+      "tests": 8
+    },
+    {
+      "suite": "org.apache.cloudstack.engine.orchestration.NetworkOrchestratorTest",
+      "tests": 61
+    },
+    {
+      "suite": "com.cloud.vm.NicAdditionRollbackTest",
+      "tests": 5
+    },
+    {
+      "suite": "com.cloud.hypervisor.kvm.resource.LibvirtComputingResourceTest",
+      "tests": 7
+    },
+    {
+      "suite": "com.cloud.hypervisor.kvm.resource.LibvirtVMDefTest",
+      "tests": 30
+    },
+    {
+      "suite": "com.cloud.hypervisor.kvm.resource.wrapper.LibvirtPlugNicFailureTest",
+      "tests": 4
+    },
+    {
+      "suite": "com.cloud.hypervisor.kvm.resource.LibvirtNicHotplugTopologyTest",
+      "tests": 8
+    }
+  ],
+  "fullCloudBuild": false,
+  "fullCI": false,
+  "checkstyle": "skipped",
+  "rat": "skipped"
+}

@@ -1,0 +1,287 @@
+- complementary:
+  - menu:
+    - menuitem "dashboard 대시보드":
+      - link "dashboard 대시보드":
+        - /url: "#/dashboard"
+        - img "dashboard":
+        - text: 대시보드
+    - img "cloud":
+    - text: 컴퓨트
+    - img "hdd":
+    - text: 스토리지
+    - img "wifi":
+    - text: 네트워크
+    - img "picture":
+    - text: 이미지
+    - menuitem "schedule 이벤트":
+      - link "schedule 이벤트":
+        - /url: "#/event"
+        - img "schedule":
+        - text: 이벤트
+    - menuitem "project 프로젝트":
+      - link "project 프로젝트":
+        - /url: "#/project"
+        - img "project":
+        - text: 프로젝트
+    - menuitem "idcard 역할":
+      - link "idcard 역할":
+        - /url: "#/role"
+        - img "idcard":
+        - text: 역할
+    - menuitem "team 계정":
+      - link "team 계정":
+        - /url: "#/account"
+        - img "team":
+        - text: 계정
+    - menuitem "block 도메인":
+      - link "block 도메인":
+        - /url: "#/domain"
+        - img "block":
+        - text: 도메인
+    - img "bank":
+    - text: 인프라스트럭쳐
+    - menuitem "global Zone":
+      - link "global Zone":
+        - /url: "#/zones"
+        - img "global":
+        - text: Zone
+    - img "shopping":
+    - text: 서비스 오퍼링
+    - img "setting":
+    - text: 구성
+    - menuitem "appstore-add 확장":
+      - link "appstore-add 확장":
+        - /url: "#/extension"
+        - img "appstore-add":
+        - text: 확장
+    - img "tool":
+    - text: 도구
+    - menuitem "read API 문서":
+      - link "read API 문서":
+        - /url: "#/apidocs/"
+        - img "read":
+        - text: API 문서
+- img "menu-fold":
+- combobox
+- img "project":
+- text: 기본 보기
+- button "생성 down":
+  - generic: 생성
+  - img "down":
+- img "translation":
+- img "bell":
+- generic: AR
+- generic: AG06 restricted
+- main:
+  - heading "dashboard 리소스" [level=3]:
+    - img "dashboard":
+    - text: 리소스
+  - separator
+  - link "가상머신 cloud-server 0":
+    - /url: "#/vm"
+    - generic: 가상머신
+    - img "cloud-server":
+    - generic: "0"
+  - link "쿠버네티스 클러스터 cluster 0":
+    - /url: "#/kubernetes"
+    - generic: 쿠버네티스 클러스터
+    - img "cluster":
+    - generic: "0"
+  - link "볼륨 hdd 0":
+    - /url: "#/volume"
+    - generic: 볼륨
+    - img "hdd":
+    - generic: "0"
+  - link "스냅샷 build 0":
+    - /url: "#/snapshot"
+    - generic: 스냅샷
+    - img "build":
+    - generic: "0"
+  - link "가상머신용 네트워크 apartment 0":
+    - /url: "#/guestnetwork"
+    - generic: 가상머신용 네트워크
+    - img "apartment":
+    - generic: "0"
+  - link "VPCs deployment-unit 0":
+    - /url: "#/vpc"
+    - generic: VPCs
+    - img "deployment-unit":
+    - generic: "0"
+  - link "Public IP 주소 environment 0":
+    - /url: "#/publicip"
+    - generic: Public IP 주소
+    - img "environment":
+    - generic: "0"
+  - link "템플릿 picture 0":
+    - /url: "#/template?templatefilter=self&filter=self"
+    - generic: 템플릿
+    - img "picture":
+    - generic: "0"
+  - heading "cloud 컴퓨트" [level=3]:
+    - img "cloud":
+    - text: 컴퓨트
+  - separator
+  - link "실행 중 가상머신 0":
+    - /url: "#/vm?state=running&filter=running"
+    - generic: 실행 중 가상머신
+    - generic: "0"
+  - link "정지된 VM 가상머신 0":
+    - /url: "#/vm?state=stopped&filter=stopped"
+    - generic: 정지된 VM 가상머신
+    - generic: "0"
+  - separator
+  - strong: 가상머신
+  - generic: 0 사용됨
+  - generic "0%"
+  - generic: 20 사용 가능 | 20 제한
+  - strong: CPU 코어
+  - generic: 0 사용됨
+  - generic "0%"
+  - generic: 40 사용 가능 | 40 제한
+  - strong: 메모리
+  - generic: 0.00 GiB 사용됨
+  - generic "0%"
+  - generic: 40.00 GiB 사용 가능 | 40.00 GiB 제한
+  - strong: GPU
+  - generic: 0 사용됨
+  - generic "0%"
+  - generic: 20 사용 가능 | 20 제한
+  - strong: 프로젝트
+  - generic: 0 사용됨
+  - generic "0%"
+  - generic: 10 사용 가능 | 10 제한
+  - heading "hdd 스토리지" [level=3]:
+    - img "hdd":
+    - text: 스토리지
+  - separator
+  - strong: 볼륨
+  - generic: 0 사용됨
+  - generic "0%"
+  - generic: 20 사용 가능 | 20 제한
+  - strong: 스냅샷
+  - generic: 0 사용됨
+  - generic "0%"
+  - generic: 20 사용 가능 | 20 제한
+  - strong: 템플릿
+  - generic: 0 사용됨
+  - generic "0%"
+  - generic: 20 사용 가능 | 20 제한
+  - strong: 기본 스토리지
+  - generic: 0.00 GiB 사용됨
+  - generic "0%"
+  - generic: 200.00 GiB 사용 가능 | 200.00 GiB 제한
+  - strong: 2차 스토리지
+  - generic: 0.00 GiB 사용됨
+  - generic "0%"
+  - generic: 400.00 GiB 사용 가능 | 400.00 GiB 제한
+  - strong: 백업
+  - generic: 0 사용됨
+  - generic "0%"
+  - generic: 20 사용 가능 | 20 제한
+  - strong: 백업 스토리지
+  - generic: 0.00 GiB 사용됨
+  - generic "0%"
+  - generic: 400.00 GiB 사용 가능 | 400.00 GiB 제한
+  - strong: 버킷
+  - generic: 0 사용됨
+  - generic "0%"
+  - generic: 20 사용 가능 | 20 제한
+  - strong: Object 스토리지
+  - generic: 0.00 GiB 사용됨
+  - generic "0%"
+  - generic: 400.00 GiB 사용 가능 | 400.00 GiB 제한
+  - heading "apartment 네트워크" [level=3]:
+    - img "apartment":
+    - text: 네트워크
+  - separator
+  - strong: Public IP 주소
+  - generic: 0 사용됨
+  - generic "0%"
+  - generic: 20 사용 가능 | 20 제한
+  - strong: 네트워크
+  - generic: 0 사용됨
+  - generic "0%"
+  - generic: 20 사용 가능 | 20 제한
+  - strong: VPCs
+  - generic: 0 사용됨
+  - generic "0%"
+  - generic: 20 사용 가능 | 20 제한
+  - heading "question-circle 도움말" [level=3]:
+    - img "question-circle":
+    - text: 도움말
+  - separator
+  - list:
+    - img "read":
+    - heading "Documentation" [level=4]:
+      - link "Documentation":
+        - /url: http://docs.ablecloud.io/latest
+        - heading "Documentation" [level=4]
+    - generic: ABLESTACK documentation website
+    - img "mail":
+    - heading "Email Support" [level=4]:
+      - link "Email Support":
+        - /url: mailto:support@ablecloud.io
+        - heading "Email Support" [level=4]
+    - generic: Join ABLESTACK users mailing list to seek and provide support
+    - img "bug":
+    - heading "Report Issue" [level=4]:
+      - link "Report Issue":
+        - /url: https://github.com/ablecloud-team/ablestack-cloud/issues/new
+        - heading "Report Issue" [level=4]
+    - generic: Submit a bug or improvement request
+  - heading "schedule 이벤트" [level=3]:
+    - img "schedule":
+    - text: 이벤트
+  - separator
+  - list:
+    - generic: 2026. 10. 19. 오후 3:52:11
+    - link "USER.LOGIN":
+      - /url: "#/event/57ec764e-4cf3-4646-a8f2-d632235fb975"
+    - img "user":
+    - link "qa-ag06-restricted":
+      - /url: "#/accountuser/88eb5277-dd0d-4262-9d2e-cfc26fd683ac"
+    - text: (qa-ag06-restricted) user has logged in from IP Address /10.10.21.101
+    - generic: 2026. 10. 19. 오후 3:49:12
+    - link "AG.CREATE":
+      - /url: "#/event/9451e860-f622-41d3-91b5-c0f815c47740"
+    - img "swap":
+    - link "qa-ag06-restricted-target":
+      - /url: "#/affinitygroup/d5052258-63c0-447a-a6aa-7bb90caf049c"
+    - text: (admin) creating Affinity Group
+    - generic: 2026. 10. 19. 오후 3:39:15
+    - link "USER.LOGIN":
+      - /url: "#/event/7236bbb4-b63f-4109-8cab-f8a80ebd8ea0"
+    - img "user":
+    - link "qa-ag06-restricted":
+      - /url: "#/accountuser/88eb5277-dd0d-4262-9d2e-cfc26fd683ac"
+    - text: (qa-ag06-restricted) user has logged in from IP Address /10.10.21.101
+    - generic: 2026. 10. 19. 오후 3:38:23
+    - link "USER.LOGIN":
+      - /url: "#/event/f9598f7b-78b3-4a4c-b6d6-f08a833212b8"
+    - img "user":
+    - link "qa-ag06-restricted":
+      - /url: "#/accountuser/88eb5277-dd0d-4262-9d2e-cfc26fd683ac"
+    - text: (qa-ag06-restricted) user has logged in from IP Address /10.10.21.101
+  - link "보기 이벤트":
+    - /url: "#/event"
+    - button "보기 이벤트":
+      - generic: 보기 이벤트
+- menu:
+  - menuitem "user 정보":
+    - img "user":
+    - text: 정보
+  - menuitem "control 제한":
+    - img "control":
+    - text: 제한
+  - menuitem "clock-circle 로컬 시간대 사용":
+    - img "clock-circle":
+    - text: 로컬 시간대 사용
+    - switch [checked]
+  - menuitem "question-circle 도움말":
+    - img "question-circle":
+    - text: 도움말
+  - link "logout 로그아웃":
+    - /url: javascript:;
+    - menuitem "logout 로그아웃":
+      - img "logout":
+      - text: 로그아웃

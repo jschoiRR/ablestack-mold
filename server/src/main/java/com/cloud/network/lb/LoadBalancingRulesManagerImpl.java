@@ -545,8 +545,7 @@ public class LoadBalancingRulesManagerImpl<Type> extends ManagerBase implements 
                         loadBalancer.setState(FirewallRule.State.Active);
                         logger.debug("LB rule {} state is set to Active", loadBalancer);
                         _lbDao.persist(loadBalancer);
-                        vmGroup.setState(AutoScaleVmGroup.State.ENABLED);
-                        _autoScaleVmGroupDao.persist(vmGroup);
+                        _autoScaleVmGroupDao.updateState(vmGroupid, AutoScaleVmGroup.State.NEW, AutoScaleVmGroup.State.ENABLED);
                         logger.debug("LB Auto Scale Vm Group: {} is set to Enabled state.", vmGroup);
                     }
                 });
@@ -1246,8 +1245,7 @@ public class LoadBalancingRulesManagerImpl<Type> extends ManagerBase implements 
         try {
             loadBalancer.setState(FirewallRule.State.Add);
             _lbDao.persist(loadBalancer);
-            applyLoadBalancerConfig(loadBalancerId);
-            success = true;
+            success = applyLoadBalancerConfig(loadBalancerId);
         } catch (ResourceUnavailableException e) {
             logger.warn("Unable to apply the load balancer config because resource is unavailable.", e);
             success = false;
@@ -1578,8 +1576,10 @@ public class LoadBalancingRulesManagerImpl<Type> extends ManagerBase implements 
             if (_autoScaleVmGroupDao.isAutoScaleLoadBalancer(loadBalancerId)) {
                 List<Long> vmIdsList = new ArrayList<>(vmIdIpMap.keySet());
                 _lb2VmMapDao.remove(loadBalancer.getId(), vmIdsList, null);
-                for (Long instanceId: vmIdsList){
-                    autoScaleVmGroupVmMapDao.removeByVm(instanceId);
+                if (!isAutoScaleVM) {
+                    for (Long instanceId : vmIdsList) {
+                        autoScaleVmGroupVmMapDao.removeByVm(instanceId);
+                    }
                 }
             }
 
@@ -2384,6 +2384,9 @@ public class LoadBalancingRulesManagerImpl<Type> extends ManagerBase implements 
             throw new InvalidParameterValueException("Unable to find lb rule by id=" + lbRuleId);
         }
         boolean previousBackendSsl = isBackendSslEnabled(lbRuleId);
+        String previousCidrList = lb.getCidrList();
+        String updatedCidrList = cmd.getCidrList() == null ? previousCidrList : generateCidrString(cmd.getCidrList());
+        boolean cidrChanged = !Objects.equals(previousCidrList, updatedCidrList);
 
         // check permissions
         _accountMgr.checkAccess(caller, null, true, lb);
@@ -2412,6 +2415,10 @@ public class LoadBalancingRulesManagerImpl<Type> extends ManagerBase implements 
             lb.setLbProtocol(lbProtocol);
         }
 
+        if (cidrChanged) {
+            lb.setCidrList(updatedCidrList);
+        }
+
         validateInputsForExternalNetworkProvider(lb, algorithm, lbProtocol);
         String effectiveLbProtocol = StringUtils.isNotBlank(lbProtocol) ? lbProtocol : lb.getLbProtocol();
         if (!NetUtils.SSL_PROTO.equals(effectiveLbProtocol) && backendSsl == null && previousBackendSsl) {
@@ -2437,7 +2444,7 @@ public class LoadBalancingRulesManagerImpl<Type> extends ManagerBase implements 
         // If algorithm or lb protocol is changed, have to reapply the lb config
         boolean needToReApplyRule = (algorithm != null && !algorithm.equals(tmplbVo.getAlgorithm()))
                 || (StringUtils.isNotBlank(lbProtocol) && !lbProtocol.equals(tmplbVo.getLbProtocol()))
-                || backendSslChanged;
+                || backendSslChanged || cidrChanged;
         if (needToReApplyRule) {
             try {
                 lb.setState(FirewallRule.State.Add);
@@ -2465,6 +2472,7 @@ public class LoadBalancingRulesManagerImpl<Type> extends ManagerBase implements 
                     if (lbBackup.getLbProtocol() != null) {
                         lb.setLbProtocol(lbBackup.getLbProtocol());
                     }
+                    lb.setCidrList(previousCidrList);
                     setBackendSslDetail(lbRuleId, previousBackendSsl);
                     lb.setState(lbBackup.getState());
                     _lbDao.update(lb.getId(), lb);

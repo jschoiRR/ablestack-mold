@@ -1,0 +1,240 @@
+{
+  "passed": 28,
+  "total": 28,
+  "tests": [
+    {
+      "label": "root-root_a",
+      "passed": true,
+      "ids": [
+        "7ea443a5-01c5-46e9-a3bb-83ca1f52058d",
+        "982d89aa-6fc3-4ad7-832b-75894ae2c9d9"
+      ],
+      "count": 2
+    },
+    {
+      "label": "root-root_b",
+      "passed": true,
+      "ids": [
+        "982d89aa-6fc3-4ad7-832b-75894ae2c9d9",
+        "d93a9ed4-59fe-4839-945b-18545520257e"
+      ],
+      "count": 2
+    },
+    {
+      "label": "root-unused",
+      "passed": true,
+      "ids": [],
+      "count": 0
+    },
+    {
+      "label": "root-user_a",
+      "passed": true,
+      "ids": [
+        "a1aee733-65b8-4a52-b513-642ad8d1e0db"
+      ],
+      "count": 1
+    },
+    {
+      "label": "root-project_a",
+      "passed": true,
+      "ids": [
+        "2c8f8249-20c0-4c36-8023-9d1ea032ad43"
+      ],
+      "count": 1
+    },
+    {
+      "label": "root-usedForeign",
+      "passed": true,
+      "ids": [],
+      "count": 0
+    },
+    {
+      "label": "actual-19-existing-vms",
+      "passed": true,
+      "ids": [
+        "dcced222-bc4e-4d62-bf58-163f84c8db9e",
+        "581dbb97-0a98-4e62-b8fb-b63d38658404",
+        "d9b1866e-3d77-4dc3-a04f-f9da96744e8e",
+        "ea22f68a-445a-47ee-9e8a-0d788239d4e9",
+        "fe40dc29-baa6-4b9a-aee5-a4d5d46796b6",
+        "1ccaff45-bfdf-4b19-91cd-09ef21c6c64b",
+        "70fa4a54-6aaf-4a98-afc9-8c0258303b47",
+        "6813d7b8-eb20-4277-8c23-6959cae7b48a",
+        "940c1031-36d9-4505-b66e-f23d9fca0af0",
+        "a4519646-0fc5-4f57-b6ee-8195eee8e6d1",
+        "90a7f3fa-5674-4fc4-a3e4-a72f1530c1b3",
+        "f7dda5d1-ef35-457e-9658-ad926d433646",
+        "45cd82fc-fe24-43be-a72d-717b15a3572d",
+        "3322f877-9275-4dfb-9a78-5807643c4d9c",
+        "e7fd5a23-eb83-40b8-8ceb-4acfde1e5026",
+        "d3f477db-e142-4392-a2b3-6defd01944f5",
+        "2bc185d1-b52e-4c92-b018-0e284ccbb73e",
+        "e94939f1-ff13-4aaf-9e70-d21581c2cd95",
+        "5887ae10-1f39-4ba4-a80a-97297c958114"
+      ],
+      "count": 19
+    },
+    {
+      "label": "server-page-1",
+      "passed": true,
+      "count": 19,
+      "ids": [
+        "dcced222-bc4e-4d62-bf58-163f84c8db9e",
+        "581dbb97-0a98-4e62-b8fb-b63d38658404",
+        "d9b1866e-3d77-4dc3-a04f-f9da96744e8e",
+        "ea22f68a-445a-47ee-9e8a-0d788239d4e9",
+        "fe40dc29-baa6-4b9a-aee5-a4d5d46796b6",
+        "1ccaff45-bfdf-4b19-91cd-09ef21c6c64b",
+        "70fa4a54-6aaf-4a98-afc9-8c0258303b47",
+        "6813d7b8-eb20-4277-8c23-6959cae7b48a",
+        "940c1031-36d9-4505-b66e-f23d9fca0af0",
+        "a4519646-0fc5-4f57-b6ee-8195eee8e6d1"
+      ]
+    },
+    {
+      "label": "server-page-2",
+      "passed": true,
+      "count": 19,
+      "ids": [
+        "90a7f3fa-5674-4fc4-a3e4-a72f1530c1b3",
+        "f7dda5d1-ef35-457e-9658-ad926d433646",
+        "45cd82fc-fe24-43be-a72d-717b15a3572d",
+        "3322f877-9275-4dfb-9a78-5807643c4d9c",
+        "e7fd5a23-eb83-40b8-8ceb-4acfde1e5026",
+        "d3f477db-e142-4392-a2b3-6defd01944f5",
+        "2bc185d1-b52e-4c92-b018-0e284ccbb73e",
+        "e94939f1-ff13-4aaf-9e70-d21581c2cd95",
+        "5887ae10-1f39-4ba4-a80a-97297c958114"
+      ]
+    },
+    {
+      "label": "server-pages-distinct-no-loss",
+      "passed": true
+    },
+    {
+      "label": "keyword-all-results",
+      "passed": true,
+      "ids": [
+        "982d89aa-6fc3-4ad7-832b-75894ae2c9d9"
+      ],
+      "count": 1
+    },
+    {
+      "label": "uuid-root_a",
+      "passed": true
+    },
+    {
+      "label": "uuid-root_b",
+      "passed": true
+    },
+    {
+      "label": "db-actual-created-vm-key-details",
+      "passed": true,
+      "rows": 10
+    },
+    {
+      "label": "actual-deploy-root_single",
+      "passed": true,
+      "id": "7ea443a5-01c5-46e9-a3bb-83ca1f52058d",
+      "state": "Stopped",
+      "keys": [
+        "ssh1377-20261015-same"
+      ]
+    },
+    {
+      "label": "actual-deploy-root_multi",
+      "passed": true,
+      "id": "982d89aa-6fc3-4ad7-832b-75894ae2c9d9",
+      "state": "Stopped",
+      "keys": [
+        "ssh1377-20261015-same",
+        "ssh1377-20261015-second"
+      ]
+    },
+    {
+      "label": "actual-deploy-root_second",
+      "passed": true,
+      "id": "d93a9ed4-59fe-4839-945b-18545520257e",
+      "state": "Stopped",
+      "keys": [
+        "ssh1377-20261015-second"
+      ]
+    },
+    {
+      "label": "actual-deploy-root_none",
+      "passed": true,
+      "id": "3470d5cf-85c5-4e31-9f7f-bdbddeafa756",
+      "state": "Stopped",
+      "keys": []
+    },
+    {
+      "label": "actual-deploy-user_single",
+      "passed": true,
+      "id": "a1aee733-65b8-4a52-b513-642ad8d1e0db",
+      "state": "Stopped",
+      "keys": [
+        "ssh1377-20261015-same"
+      ]
+    },
+    {
+      "label": "actual-deploy-project_single",
+      "passed": true,
+      "id": "2c8f8249-20c0-4c36-8023-9d1ea032ad43",
+      "state": "Stopped",
+      "keys": [
+        "ssh1377-20261015-same"
+      ]
+    },
+    {
+      "label": "user-correct-usage",
+      "passed": true,
+      "ids": [
+        "a1aee733-65b8-4a52-b513-642ad8d1e0db"
+      ],
+      "count": 1
+    },
+    {
+      "label": "user-foreign-material-unused",
+      "passed": true,
+      "ids": [],
+      "count": 0
+    },
+    {
+      "label": "user-cannot-read-root-key",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "label": "domain_admin-correct-usage",
+      "passed": true,
+      "ids": [
+        "a1aee733-65b8-4a52-b513-642ad8d1e0db"
+      ],
+      "count": 1
+    },
+    {
+      "label": "domain_admin-foreign-material-unused",
+      "passed": true,
+      "ids": [],
+      "count": 0
+    },
+    {
+      "label": "domain_admin-cannot-read-root-key",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "label": "project-member-correct-usage",
+      "passed": true,
+      "ids": [
+        "2c8f8249-20c0-4c36-8023-9d1ea032ad43"
+      ],
+      "count": 1
+    },
+    {
+      "label": "role-no-vm-and-annotations-permission",
+      "passed": true,
+      "status": 432
+    }
+  ]
+}

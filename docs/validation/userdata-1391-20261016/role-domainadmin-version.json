@@ -1,0 +1,787 @@
+{
+  "body": {
+    "rect": null,
+    "style": null
+  },
+  "buttons": [
+    {
+      "disabled": false,
+      "rect": {
+        "height": 32,
+        "width": 75.765625,
+        "x": 1055.09375,
+        "y": 16
+      },
+      "style": {
+        "background": "rgb(24, 144, 255)",
+        "border": "rgb(24, 144, 255)",
+        "color": "rgb(255, 255, 255)",
+        "font": "14px",
+        "outline": "rgb(255, 255, 255) none 0px",
+        "overflowY": "visible",
+        "padding": "4px 15px"
+      },
+      "text": "생성"
+    },
+    {
+      "disabled": false,
+      "rect": {
+        "height": 24,
+        "width": 99.53125,
+        "x": 281,
+        "y": 119
+      },
+      "style": {
+        "background": "rgb(39, 46, 54)",
+        "border": "rgb(62, 70, 80)",
+        "color": "rgb(197, 204, 212)",
+        "font": "14px",
+        "outline": "rgb(197, 204, 212) none 0px",
+        "overflowY": "visible",
+        "padding": "0px 12px"
+      },
+      "text": "업데이트"
+    },
+    {
+      "disabled": false,
+      "rect": {
+        "height": 32,
+        "width": 79.765625,
+        "x": 1337.234375,
+        "y": 93
+      },
+      "style": {
+        "background": "rgb(64, 169, 255)",
+        "border": "rgb(64, 169, 255)",
+        "color": "rgb(255, 255, 255)",
+        "font": "14px",
+        "outline": "rgb(255, 255, 255) none 0px",
+        "overflowY": "visible",
+        "padding": "4px 15px"
+      },
+      "text": "작업"
+    },
+    {
+      "disabled": false,
+      "rect": {
+        "height": 24,
+        "width": 24,
+        "x": 299,
+        "y": 353.5
+      },
+      "style": {
+        "background": "rgb(39, 46, 54)",
+        "border": "rgb(62, 70, 80)",
+        "color": "rgb(197, 204, 212)",
+        "font": "14px",
+        "outline": "rgb(197, 204, 212) none 0px",
+        "overflowY": "visible",
+        "padding": "0px"
+      },
+      "text": ""
+    },
+    {
+      "disabled": false,
+      "rect": {
+        "height": 32,
+        "width": 135.125,
+        "x": 299,
+        "y": 574.5
+      },
+      "style": {
+        "background": "rgb(39, 46, 54)",
+        "border": "rgb(62, 70, 80)",
+        "color": "rgb(197, 204, 212)",
+        "font": "14px",
+        "outline": "rgb(197, 204, 212) none 0px",
+        "overflowY": "visible",
+        "padding": "4px 15px"
+      },
+      "text": "가상머신 보기"
+    },
+    {
+      "disabled": false,
+      "rect": {
+        "height": 38,
+        "width": 46,
+        "x": 631.90625,
+        "y": 214
+      },
+      "style": {
+        "background": "rgba(0, 0, 0, 0)",
+        "border": "rgb(197, 204, 212)",
+        "color": "rgb(197, 204, 212)",
+        "font": "14px",
+        "outline": "rgb(197, 204, 212) none 3px",
+        "overflowY": "visible",
+        "padding": "8px 16px"
+      },
+      "text": ""
+    },
+    {
+      "disabled": false,
+      "rect": {
+        "height": 32,
+        "width": 105.53125,
+        "x": 798.625,
+        "y": 214
+      },
+      "style": {
+        "background": "rgb(39, 46, 54)",
+        "border": "rgb(62, 70, 80)",
+        "color": "rgb(197, 204, 212)",
+        "font": "14px",
+        "outline": "rgb(197, 204, 212) none 0px",
+        "overflowY": "visible",
+        "padding": "4px 15px"
+      },
+      "text": "업데이트"
+    }
+  ],
+  "focus": "<button class=\"ant-btn ant-btn-primary autogen-action-dropdown__button ant-dropdown-trigger\" type=\"button\" data-v-c595e45e=\"\" ant-click-animating-without-extra-node=\"false\"><span role=\"img\" aria-label=\"down\" class=\"anticon anticon-down\" data-v-c595e45e=\"\"><svg focusable=\"false\" data-icon=\"down\" width=\"1em\" height=\"1em\" fill=\"currentColor\" aria-hidden=\"true\" viewBox=\"64 64 896 896\"><path d=\"M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 ",
+  "footer": null,
+  "header": null,
+  "labels": [
+    {
+      "rect": {
+        "height": 19,
+        "width": 81.53125,
+        "x": 24,
+        "y": 74.5
+      },
+      "style": {
+        "background": "rgba(0, 0, 0, 0)",
+        "border": "rgba(255, 255, 255, 0.65)",
+        "color": "rgba(255, 255, 255, 0.65)",
+        "font": "14px",
+        "outline": "rgba(255, 255, 255, 0.65) none 3px",
+        "overflowY": "visible",
+        "padding": "0px"
+      },
+      "text": "대시보드"
+    },
+    {
+      "rect": {
+        "height": 19,
+        "width": 81.53125,
+        "x": 48,
+        "y": 162.5
+      },
+      "style": {
+        "background": "rgba(0, 0, 0, 0)",
+        "border": "rgba(255, 255, 255, 0.65)",
+        "color": "rgba(255, 255, 255, 0.65)",
+        "font": "14px",
+        "outline": "rgba(255, 255, 255, 0.65) none 3px",
+        "overflowY": "visible",
+        "padding": "0px"
+      },
+      "text": "가상머신"
+    },
+    {
+      "rect": {
+        "height": 19,
+        "width": 93.75,
+        "x": 48,
+        "y": 202.5
+      },
+      "style": {
+        "background": "rgba(0, 0, 0, 0)",
+        "border": "rgba(255, 255, 255, 0.65)",
+        "color": "rgba(255, 255, 255, 0.65)",
+        "font": "14px",
+        "outline": "rgba(255, 255, 255, 0.65) none 3px",
+        "overflowY": "visible",
+        "padding": "0px"
+      },
+      "text": "VM 스냅샷"
+    },
+    {
+      "rect": {
+        "height": 19,
+        "width": 94.40625,
+        "x": 48,
+        "y": 242.5
+      },
+      "style": {
+        "background": "rgba(0, 0, 0, 0)",
+        "border": "rgba(255, 255, 255, 0.65)",
+        "color": "rgba(255, 255, 255, 0.65)",
+        "font": "14px",
+        "outline": "rgba(255, 255, 255, 0.65) none 3px",
+        "overflowY": "visible",
+        "padding": "0px"
+      },
+      "text": "쿠버네티스"
+    },
+    {
+      "rect": {
+        "height": 19,
+        "width": 149.109375,
+        "x": 48,
+        "y": 282.5
+      },
+      "style": {
+        "background": "rgba(0, 0, 0, 0)",
+        "border": "rgba(255, 255, 255, 0.65)",
+        "color": "rgba(255, 255, 255, 0.65)",
+        "font": "14px",
+        "outline": "rgba(255, 255, 255, 0.65) none 3px",
+        "overflowY": "visible",
+        "padding": "0px"
+      },
+      "text": "오토스케일 VM 그룹"
+    },
+    {
+      "rect": {
+        "height": 19,
+        "width": 111.125,
+        "x": 48,
+        "y": 322.5
+      },
+      "style": {
+        "background": "rgba(0, 0, 0, 0)",
+        "border": "rgba(255, 255, 255, 0.65)",
+        "color": "rgba(255, 255, 255, 0.65)",
+        "font": "14px",
+        "outline": "rgba(255, 255, 255, 0.65) none 3px",
+        "overflowY": "visible",
+        "padding": "0px"
+      },
+      "text": "가상머신 그룹"
+    },
+    {
+      "rect": {
+        "height": 19,
+        "width": 88.25,
+        "x": 48,
+        "y": 362.5
+      },
+      "style": {
+        "background": "rgba(0, 0, 0, 0)",
+        "border": "rgba(255, 255, 255, 0.65)",
+        "color": "rgba(255, 255, 255, 0.65)",
+        "font": "14px",
+        "outline": "rgba(255, 255, 255, 0.65) none 3px",
+        "overflowY": "visible",
+        "padding": "0px"
+      },
+      "text": "SSH 키 쌍"
+    },
+    {
+      "rect": {
+        "height": 19,
+        "width": 179.359375,
+        "x": 48,
+        "y": 402.5
+      },
+      "style": {
+        "background": "rgba(0, 0, 0, 0)",
+        "border": "rgba(255, 255, 255, 0.65)",
+        "color": "rgba(255, 255, 255, 0.65)",
+        "font": "14px",
+        "outline": "rgba(255, 255, 255, 0.65) none 3px",
+        "overflowY": "visible",
+        "padding": "0px"
+      },
+      "text": "사용자 데이터 라이브러리"
+    },
+    {
+      "rect": {
+        "height": 19,
+        "width": 82.46875,
+        "x": 48,
+        "y": 442.5
+      },
+      "style": {
+        "background": "rgba(0, 0, 0, 0)",
+        "border": "rgba(255, 255, 255, 0.65)",
+        "color": "rgba(255, 255, 255, 0.65)",
+        "font": "14px",
+        "outline": "rgba(255, 255, 255, 0.65) none 3px",
+        "overflowY": "visible",
+        "padding": "0px"
+      },
+      "text": "CNI 구성"
+    },
+    {
+      "rect": {
+        "height": 19,
+        "width": 103.625,
+        "x": 48,
+        "y": 482.5
+      },
+      "style": {
+        "background": "rgba(0, 0, 0, 0)",
+        "border": "rgba(255, 255, 255, 0.65)",
+        "color": "rgba(255, 255, 255, 0.65)",
+        "font": "14px",
+        "outline": "rgba(255, 255, 255, 0.65) none 3px",
+        "overflowY": "visible",
+        "padding": "0px"
+      },
+      "text": "Affinity 그룹"
+    },
+    {
+      "rect": {
+        "height": 19,
+        "width": 68.640625,
+        "x": 24,
+        "y": 670.5625
+      },
+      "style": {
+        "background": "rgba(0, 0, 0, 0)",
+        "border": "rgba(255, 255, 255, 0.65)",
+        "color": "rgba(255, 255, 255, 0.65)",
+        "font": "14px",
+        "outline": "rgba(255, 255, 255, 0.65) none 3px",
+        "overflowY": "visible",
+        "padding": "0px"
+      },
+      "text": "이벤트"
+    },
+    {
+      "rect": {
+        "height": 19,
+        "width": 81.53125,
+        "x": 24,
+        "y": 710.5625
+      },
+      "style": {
+        "background": "rgba(0, 0, 0, 0)",
+        "border": "rgba(255, 255, 255, 0.65)",
+        "color": "rgba(255, 255, 255, 0.65)",
+        "font": "14px",
+        "outline": "rgba(255, 255, 255, 0.65) none 3px",
+        "overflowY": "visible",
+        "padding": "0px"
+      },
+      "text": "프로젝트"
+    },
+    {
+      "rect": {
+        "height": 19,
+        "width": 55.765625,
+        "x": 24,
+        "y": 750.5625
+      },
+      "style": {
+        "background": "rgba(0, 0, 0, 0)",
+        "border": "rgba(255, 255, 255, 0.65)",
+        "color": "rgba(255, 255, 255, 0.65)",
+        "font": "14px",
+        "outline": "rgba(255, 255, 255, 0.65) none 3px",
+        "overflowY": "visible",
+        "padding": "0px"
+      },
+      "text": "계정"
+    },
+    {
+      "rect": {
+        "height": 19,
+        "width": 68.640625,
+        "x": 24,
+        "y": 790.5625
+      },
+      "style": {
+        "background": "rgba(0, 0, 0, 0)",
+        "border": "rgba(255, 255, 255, 0.65)",
+        "color": "rgba(255, 255, 255, 0.65)",
+        "font": "14px",
+        "outline": "rgba(255, 255, 255, 0.65) none 3px",
+        "overflowY": "visible",
+        "padding": "0px"
+      },
+      "text": "도메인"
+    },
+    {
+      "rect": {
+        "height": 19,
+        "width": 61.4375,
+        "x": 24,
+        "y": 830.5625
+      },
+      "style": {
+        "background": "rgba(0, 0, 0, 0)",
+        "border": "rgba(255, 255, 255, 0.65)",
+        "color": "rgba(255, 255, 255, 0.65)",
+        "font": "14px",
+        "outline": "rgba(255, 255, 255, 0.65) none 3px",
+        "overflowY": "visible",
+        "padding": "0px"
+      },
+      "text": "Zone"
+    },
+    {
+      "rect": {
+        "height": 19,
+        "width": 80.203125,
+        "x": 24,
+        "y": 966.59375
+      },
+      "style": {
+        "background": "rgba(0, 0, 0, 0)",
+        "border": "rgba(255, 255, 255, 0.65)",
+        "color": "rgba(255, 255, 255, 0.65)",
+        "font": "14px",
+        "outline": "rgba(255, 255, 255, 0.65) none 3px",
+        "overflowY": "visible",
+        "padding": "0px"
+      },
+      "text": "API 문서"
+    },
+    {
+      "rect": {
+        "height": 19,
+        "width": 16,
+        "x": 281,
+        "y": 98
+      },
+      "style": {
+        "background": "rgba(0, 0, 0, 0)",
+        "border": "rgba(255, 255, 255, 0.65)",
+        "color": "rgba(255, 255, 255, 0.65)",
+        "font": "14px",
+        "outline": "rgba(255, 255, 255, 0.65) none 3px",
+        "overflowY": "visible",
+        "padding": "0px"
+      },
+      "text": ""
+    },
+    {
+      "rect": {
+        "height": 19,
+        "width": 149.359375,
+        "x": 318.46875,
+        "y": 98
+      },
+      "style": {
+        "background": "rgba(0, 0, 0, 0)",
+        "border": "rgba(255, 255, 255, 0.65)",
+        "color": "rgba(255, 255, 255, 0.65)",
+        "font": "14px",
+        "outline": "rgba(255, 255, 255, 0.65) none 3px",
+        "overflowY": "visible",
+        "padding": "0px"
+      },
+      "text": "사용자 데이터 라이브러리"
+    },
+    {
+      "rect": {
+        "height": 19,
+        "width": 247.421875,
+        "x": 489.296875,
+        "y": 98
+      },
+      "style": {
+        "background": "rgba(0, 0, 0, 0)",
+        "border": "rgba(255, 255, 255, 0.85)",
+        "color": "rgba(255, 255, 255, 0.85)",
+        "font": "14px",
+        "outline": "rgba(255, 255, 255, 0.85) none 3px",
+        "overflowY": "visible",
+        "padding": "0px"
+      },
+      "text": "UD1391-31-20261016-domainadmin-v2"
+    },
+    {
+      "rect": {
+        "height": 19,
+        "width": 14,
+        "x": 744.71875,
+        "y": 98
+      },
+      "style": {
+        "background": "rgba(0, 0, 0, 0)",
+        "border": "rgba(255, 255, 255, 0.85)",
+        "color": "rgba(255, 255, 255, 0.85)",
+        "font": "14px",
+        "outline": "rgba(255, 255, 255, 0.85) none 3px",
+        "overflowY": "visible",
+        "padding": "0px"
+      },
+      "text": ""
+    },
+    {
+      "rect": {
+        "height": 41,
+        "width": 225.421875,
+        "x": 333,
+        "y": 344.5
+      },
+      "style": {
+        "background": "rgba(0, 0, 0, 0)",
+        "border": "rgb(24, 144, 255)",
+        "color": "rgb(24, 144, 255)",
+        "font": "14px",
+        "outline": "rgb(24, 144, 255) none 3px",
+        "overflowY": "visible",
+        "padding": "0px"
+      },
+      "text": "b94d63dd-8e89-47f1-9a8b-b205c037747b "
+    },
+    {
+      "rect": {
+        "height": 22,
+        "width": 224.3125,
+        "x": 323,
+        "y": 434.5
+      },
+      "style": {
+        "background": "rgba(0, 0, 0, 0)",
+        "border": "rgb(24, 144, 255)",
+        "color": "rgb(24, 144, 255)",
+        "font": "14px",
+        "outline": "rgb(24, 144, 255) none 3px",
+        "overflowY": "visible",
+        "padding": "0px"
+      },
+      "text": "ud1391-31-20261016-domainadmin"
+    },
+    {
+      "rect": {
+        "height": 22,
+        "width": 133.03125,
+        "x": 323,
+        "y": 503.5
+      },
+      "style": {
+        "background": "rgba(0, 0, 0, 0)",
+        "border": "rgb(24, 144, 255)",
+        "color": "rgb(24, 144, 255)",
+        "font": "14px",
+        "outline": "rgb(24, 144, 255) none 3px",
+        "overflowY": "visible",
+        "padding": "0px"
+      },
+      "text": "ud1391-31-20261016"
+    },
+    {
+      "rect": {
+        "height": 32,
+        "width": 264.90625,
+        "x": 299,
+        "y": 574.5
+      },
+      "style": {
+        "background": "rgba(0, 0, 0, 0)",
+        "border": "rgb(24, 144, 255)",
+        "color": "rgb(24, 144, 255)",
+        "font": "14px",
+        "outline": "rgb(24, 144, 255) none 3px",
+        "overflowY": "visible",
+        "padding": "0px"
+      },
+      "text": "가상머신 보기"
+    },
+    {
+      "rect": {
+        "height": 88,
+        "width": 594.359375,
+        "x": 798.625,
+        "y": 266
+      },
+      "style": {
+        "background": "rgba(0, 0, 0, 0)",
+        "border": "rgb(197, 204, 212)",
+        "color": "rgb(197, 204, 212)",
+        "font": "14px",
+        "outline": "rgb(197, 204, 212) none 3px",
+        "overflowY": "visible",
+        "padding": "0px"
+      },
+      "text": "출처는 새 데이터의 댓글에 기록하며 이 탭에서 표시합니다. 댓글은 권한에 따라 삭제·공개 범위를 변경할 수 있으므로 변경 불가능한 감사 기록이나 자동 적용 이력이 아닙니다. 외부 API 등록 또는 출처 메모가 없는 항목의 부모·버전 순서는 추정하지 않습니다. 출처 메모는 댓글 API의 255자 제한에 맞춰 UUID·바이트 수만 기록합니다. 이름·변수는 각 "
+    },
+    {
+      "rect": {
+        "height": 19,
+        "width": 257.84375,
+        "x": 959.265625,
+        "y": 380
+      },
+      "style": {
+        "background": "rgba(0, 0, 0, 0)",
+        "border": "rgb(24, 144, 255)",
+        "color": "rgb(24, 144, 255)",
+        "font": "14px",
+        "outline": "rgb(24, 144, 255) none 3px",
+        "overflowY": "visible",
+        "padding": "0px"
+      },
+      "text": "a51e3cb0-a780-4b97-8fd6-9c0e3a47597c"
+    },
+    {
+      "rect": {
+        "height": 22,
+        "width": 594.359375,
+        "x": 798.625,
+        "y": 583
+      },
+      "style": {
+        "background": "rgba(0, 0, 0, 0)",
+        "border": "rgb(197, 204, 212)",
+        "color": "rgb(197, 204, 212)",
+        "font": "14px",
+        "outline": "rgb(197, 204, 212) none 3px",
+        "overflowY": "visible",
+        "padding": "0px"
+      },
+      "text": "적용 범위·참조 전환·되돌리기 안내"
+    },
+    {
+      "rect": {
+        "height": 66,
+        "width": 594.359375,
+        "x": 798.625,
+        "y": 613
+      },
+      "style": {
+        "background": "rgba(0, 0, 0, 0)",
+        "border": "rgb(197, 204, 212)",
+        "color": "rgb(197, 204, 212)",
+        "font": "14px",
+        "outline": "rgb(197, 204, 212) none 3px",
+        "overflowY": "visible",
+        "padding": "0px"
+      },
+      "text": "각 UUID는 변경하지 않는 독립 버전입니다. 본문을 바꾼 뒤 새 이름으로 등록하세요. 동일 소유자의 같은 본문은 이름이나 변수 선언만 바꿔도 중복으로 거절됩니다. 별도 수정 API와 자동 버전 번호는 제공하지 않습니다."
+    },
+    {
+      "rect": {
+        "height": 88,
+        "width": 594.359375,
+        "x": 798.625,
+        "y": 687
+      },
+      "style": {
+        "background": "rgba(0, 0, 0, 0)",
+        "border": "rgb(197, 204, 212)",
+        "color": "rgb(197, 204, 212)",
+        "font": "14px",
+        "outline": "rgb(197, 204, 212) none 3px",
+        "overflowY": "visible",
+        "padding": "0px"
+      },
+      "text": "적용 전 원본의 적용 VM·템플릿·ISO 탭을 확인하세요. VM별 사용자 데이터 재설정에서 새 UUID와 변수 값을 명시적으로 선택하고 상태·재부팅 조건을 확인합니다. 되돌릴 때는 이전 UUID와 당시 변수 값을 다시 선택합니다. 참조 ID만으로 저장 본문이 같다고 판단하지 말고 VM 저장 본문 조회로 대조하세요. 게스트에서 이미 실행된 스크립트의 효과는 "
+    },
+    {
+      "rect": {
+        "height": 66,
+        "width": 594.359375,
+        "x": 798.625,
+        "y": 783
+      },
+      "style": {
+        "background": "rgba(0, 0, 0, 0)",
+        "border": "rgb(197, 204, 212)",
+        "color": "rgb(197, 204, 212)",
+        "font": "14px",
+        "outline": "rgb(197, 204, 212) none 3px",
+        "overflowY": "visible",
+        "padding": "0px"
+      },
+      "text": "템플릿·ISO의 사용자 데이터 연결에서 새 UUID와 기존 연결 정책을 명시적으로 선택합니다. 이후 생성되는 VM에 적용되며 기존 VM은 유지됩니다. 되돌릴 때는 이전 UUID와 정책을 다시 연결합니다. 사용 중인 이전 버전은 참조 해제 전까지 보존하세요."
+    },
+    {
+      "rect": {
+        "height": 66,
+        "width": 594.359375,
+        "x": 798.625,
+        "y": 857
+      },
+      "style": {
+        "background": "rgba(0, 0, 0, 0)",
+        "border": "rgb(197, 204, 212)",
+        "color": "rgb(197, 204, 212)",
+        "font": "14px",
+        "outline": "rgb(197, 204, 212) none 3px",
+        "overflowY": "visible",
+        "padding": "0px"
+      },
+      "text": "등록·복제는 BOM·CRLF·바이너리 바이트를 보존합니다. 현재 APPEND 병합은 BOM으로 시작하는 cloud-config를 인식하지 못할 수 있습니다. 병합용 새 버전은 BOM 없는 지원 형식으로 작성하고 실제 생성으로 검증하세요. 원문 편집을 선택하면 줄바꿈은 LF로 바뀝니다."
+    },
+    {
+      "rect": {
+        "height": 88,
+        "width": 594.359375,
+        "x": 798.625,
+        "y": 931
+      },
+      "style": {
+        "background": "rgba(0, 0, 0, 0)",
+        "border": "rgb(197, 204, 212)",
+        "color": "rgb(197, 204, 212)",
+        "font": "14px",
+        "outline": "rgb(197, 204, 212) none 3px",
+        "overflowY": "visible",
+        "padding": "0px"
+      },
+      "text": "출처는 새 데이터의 댓글에 기록하며 이 탭에서 표시합니다. 댓글은 권한에 따라 삭제·공개 범위를 변경할 수 있으므로 변경 불가능한 감사 기록이나 자동 적용 이력이 아닙니다. 외부 API 등록 또는 출처 메모가 없는 항목의 부모·버전 순서는 추정하지 않습니다. 출처 메모는 댓글 API의 255자 제한에 맞춰 UUID·바이트 수만 기록합니다. 이름·변수는 각 "
+    }
+  ],
+  "modal": null,
+  "pageWidth": 1430,
+  "url": "#/userdata/b94d63dd-8e89-47f1-9a8b-b205c037747b?tab=userdata.versions",
+  "viewport": {
+    "height": 1000,
+    "width": 1440
+  },
+  "bodyStyle": {
+    "background": "rgb(22, 27, 34)",
+    "border": "rgba(250, 173, 20, 0.46)",
+    "color": "rgb(197, 204, 212)",
+    "font": "14px",
+    "outline": "rgb(197, 204, 212) none 3px",
+    "padding": "0px",
+    "placeholder": "rgb(197, 204, 212)"
+  },
+  "contentScripts": 0,
+  "inputs": [
+    {
+      "checked": false,
+      "disabled": false,
+      "id": "rc_select_16",
+      "style": {
+        "background": "rgb(34, 40, 47)",
+        "border": "rgb(197, 204, 212)",
+        "color": "rgb(197, 204, 212)",
+        "font": "14px",
+        "outline": "rgb(197, 204, 212) none 3px",
+        "padding": "0px",
+        "placeholder": "rgb(197, 204, 212)"
+      },
+      "value": ""
+    }
+  ],
+  "modalStyle": null,
+  "tabLabels": [
+    {
+      "selected": "false",
+      "text": "상세"
+    },
+    {
+      "selected": "false",
+      "text": "사용자 데이터 본문"
+    },
+    {
+      "selected": "true",
+      "text": "버전·변경 정책"
+    },
+    {
+      "selected": "false",
+      "text": "사용 가상머신"
+    },
+    {
+      "selected": "false",
+      "text": "연결 템플릿"
+    },
+    {
+      "selected": "false",
+      "text": "연결 ISO"
+    },
+    {
+      "selected": "false",
+      "text": "코멘트"
+    }
+  ]
+}

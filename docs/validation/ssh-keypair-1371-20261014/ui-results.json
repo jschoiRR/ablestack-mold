@@ -1,0 +1,194 @@
+[
+  {
+    "label": "01-list-links",
+    "url": "http://10.10.31.10:8080/client/#/ssh",
+    "passed": true,
+    "source": "d73dff5d4b5ce4df6cbde34170fb148d5099d07d"
+  },
+  {
+    "label": "02-annotated-name",
+    "url": "http://10.10.31.10:8080/client/#/ssh/694b51fd-0d5c-42be-851e-9bc505175876?account=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f",
+    "passed": true,
+    "source": "d73dff5d4b5ce4df6cbde34170fb148d5099d07d"
+  },
+  {
+    "label": "03-comment-icon",
+    "url": "http://10.10.31.10:8080/client/#/ssh/694b51fd-0d5c-42be-851e-9bc505175876?account=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&tab=comments",
+    "passed": true,
+    "source": "d73dff5d4b5ce4df6cbde34170fb148d5099d07d"
+  },
+  {
+    "label": "04-reload-comment",
+    "url": "http://10.10.31.10:8080/client/#/ssh/694b51fd-0d5c-42be-851e-9bc505175876?account=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&tab=comments",
+    "passed": true,
+    "source": "d73dff5d4b5ce4df6cbde34170fb148d5099d07d"
+  },
+  {
+    "label": "05-other-owner",
+    "url": "http://10.10.31.10:8080/client/#/ssh/fdfe7843-1040-414f-9bbb-94f2b525c861?account=ssh1371-20261014&domainid=a91ee6a8-4226-48fb-9399-cf7e712874fd",
+    "passed": true,
+    "source": "d73dff5d4b5ce4df6cbde34170fb148d5099d07d"
+  },
+  {
+    "label": "06-direct-uuid",
+    "url": "http://10.10.31.10:8080/client/#/ssh/694b51fd-0d5c-42be-851e-9bc505175876?account=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f",
+    "passed": true,
+    "source": "d73dff5d4b5ce4df6cbde34170fb148d5099d07d"
+  },
+  {
+    "label": "07-history-back",
+    "url": "http://10.10.31.10:8080/client/#/ssh/fdfe7843-1040-414f-9bbb-94f2b525c861?account=ssh1371-20261014&domainid=a91ee6a8-4226-48fb-9399-cf7e712874fd",
+    "passed": true,
+    "source": "d73dff5d4b5ce4df6cbde34170fb148d5099d07d"
+  },
+  {
+    "label": "08-history-forward",
+    "url": "http://10.10.31.10:8080/client/#/ssh/694b51fd-0d5c-42be-851e-9bc505175876?account=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f",
+    "passed": true,
+    "source": "d73dff5d4b5ce4df6cbde34170fb148d5099d07d"
+  },
+  {
+    "label": "09-legacy-owner-name",
+    "url": "http://10.10.31.10:8080/client/#/ssh/ssh1371-20261014-same?account=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f",
+    "passed": true,
+    "source": "d73dff5d4b5ce4df6cbde34170fb148d5099d07d"
+  },
+  {
+    "label": "10-uuid-shaped-name",
+    "url": "http://10.10.31.10:8080/client/#/ssh/11111111-1111-1111-1111-111111111111?account=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&keypairname=11111111-1111-1111-1111-111111111111",
+    "passed": true,
+    "source": "d73dff5d4b5ce4df6cbde34170fb148d5099d07d"
+  },
+  {
+    "label": "11-encoded-name",
+    "url": "http://10.10.31.10:8080/client/#/ssh/ssh1371-20261014%2Fspace%20%3F%2B%23?account=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&keypairname=ssh1371-20261014%2Fspace%20%3F%2B%23",
+    "passed": true,
+    "source": "d73dff5d4b5ce4df6cbde34170fb148d5099d07d"
+  },
+  {
+    "label": "12-ambiguous-name",
+    "url": "http://10.10.31.10:8080/client/#/ssh/ssh1371-20261014-same",
+    "passed": true,
+    "detailHidden": true,
+    "actionsHidden": true,
+    "source": "d73dff5d4b5ce4df6cbde34170fb148d5099d07d"
+  },
+  {
+    "label": "13-missing-uuid",
+    "url": "http://10.10.31.10:8080/client/#/ssh/99999999-9999-4999-8999-999999999999",
+    "passed": true,
+    "source": "d73dff5d4b5ce4df6cbde34170fb148d5099d07d",
+    "detailHidden": true,
+    "actionsHidden": true
+  },
+  {
+    "label": "14-wrong-owner",
+    "url": "http://10.10.31.10:8080/client/#/ssh/694b51fd-0d5c-42be-851e-9bc505175876?account=ssh1371-20261014&domainid=a91ee6a8-4226-48fb-9399-cf7e712874fd",
+    "passed": true,
+    "source": "d73dff5d4b5ce4df6cbde34170fb148d5099d07d",
+    "detailHidden": true,
+    "actionsHidden": true
+  },
+  {
+    "label": "15-project-same-name",
+    "url": "http://10.10.31.10:8080/client/#/ssh/5a2b815d-32d3-4e52-b116-f015afe85543?projectid=4425c0db-740a-43ef-9df6-063a95a69a27&domainid=7ef6b29a-b253-11f1-a895-0024814c313f",
+    "passed": true,
+    "source": "d73dff5d4b5ce4df6cbde34170fb148d5099d07d"
+  },
+  {
+    "label": "23-project-reload",
+    "url": "http://10.10.31.10:8080/client/#/ssh/5a2b815d-32d3-4e52-b116-f015afe85543?projectid=4425c0db-740a-43ef-9df6-063a95a69a27&domainid=7ef6b29a-b253-11f1-a895-0024814c313f",
+    "passed": true,
+    "source": "d73dff5d4b5ce4df6cbde34170fb148d5099d07d"
+  },
+  {
+    "label": "16-wrong-uuid-response",
+    "url": "http://10.10.31.10:8080/client/#/ssh/694b51fd-0d5c-42be-851e-9bc505175876?account=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f",
+    "passed": true,
+    "source": "d73dff5d4b5ce4df6cbde34170fb148d5099d07d",
+    "detailHidden": true,
+    "actionsHidden": true
+  },
+  {
+    "label": "17-error-recovery",
+    "url": "http://10.10.31.10:8080/client/#/ssh/694b51fd-0d5c-42be-851e-9bc505175876?account=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f",
+    "passed": true,
+    "source": "d73dff5d4b5ce4df6cbde34170fb148d5099d07d"
+  },
+  {
+    "label": "18-multiple-uuid-response",
+    "url": "http://10.10.31.10:8080/client/#/ssh/694b51fd-0d5c-42be-851e-9bc505175876?account=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f",
+    "passed": true,
+    "source": "d73dff5d4b5ce4df6cbde34170fb148d5099d07d",
+    "detailHidden": true,
+    "actionsHidden": true
+  },
+  {
+    "label": "19-service-error",
+    "url": "http://10.10.31.10:8080/client/#/ssh/694b51fd-0d5c-42be-851e-9bc505175876?account=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f",
+    "passed": true,
+    "source": "d73dff5d4b5ce4df6cbde34170fb148d5099d07d",
+    "detailHidden": true,
+    "actionsHidden": true
+  },
+  {
+    "label": "20-permission-error",
+    "url": "http://10.10.31.10:8080/client/#/ssh/694b51fd-0d5c-42be-851e-9bc505175876?account=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f",
+    "passed": true,
+    "source": "d73dff5d4b5ce4df6cbde34170fb148d5099d07d",
+    "detailHidden": true,
+    "actionsHidden": true
+  },
+  {
+    "label": "21-fault-recovery",
+    "url": "http://10.10.31.10:8080/client/#/ssh/694b51fd-0d5c-42be-851e-9bc505175876?account=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f",
+    "passed": true,
+    "source": "d73dff5d4b5ce4df6cbde34170fb148d5099d07d"
+  },
+  {
+    "label": "22-vm-ssh-link",
+    "url": "http://10.10.31.10:8080/client/#/ssh/k1230-20261006?account=k1230-20261006&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&keypairname=k1230-20261006",
+    "passed": true,
+    "source": "d73dff5d4b5ce4df6cbde34170fb148d5099d07d"
+  },
+  {
+    "label": "24-account-in-project",
+    "url": "http://10.10.31.10:8080/client/#/ssh/694b51fd-0d5c-42be-851e-9bc505175876?account=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f",
+    "passed": true,
+    "source": "d73dff5d4b5ce4df6cbde34170fb148d5099d07d"
+  },
+  {
+    "label": "25-delete-preserves-project-key",
+    "url": "http://10.10.31.10:8080/client/#/ssh/5a2b815d-32d3-4e52-b116-f015afe85543?projectid=4425c0db-740a-43ef-9df6-063a95a69a27&domainid=7ef6b29a-b253-11f1-a895-0024814c313f",
+    "passed": true,
+    "source": "d73dff5d4b5ce4df6cbde34170fb148d5099d07d"
+  },
+  {
+    "label": "26-deleted-key-missing",
+    "url": "http://10.10.31.10:8080/client/#/ssh/694b51fd-0d5c-42be-851e-9bc505175876?account=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f",
+    "passed": true,
+    "source": "d73dff5d4b5ce4df6cbde34170fb148d5099d07d",
+    "detailHidden": true,
+    "actionsHidden": true
+  },
+  {
+    "label": "27-user-own-key",
+    "url": "http://10.10.31.10:8080/client/#/ssh/fdfe7843-1040-414f-9bbb-94f2b525c861",
+    "passed": true,
+    "source": "d73dff5d4b5ce4df6cbde34170fb148d5099d07d"
+  },
+  {
+    "label": "28-user-foreign-key-blocked",
+    "url": "http://10.10.31.10:8080/client/#/ssh/ee623d9c-54da-4fd2-a42c-0b6eaffc3cef",
+    "passed": true,
+    "source": "d73dff5d4b5ce4df6cbde34170fb148d5099d07d",
+    "detailHidden": true,
+    "actionsHidden": true
+  },
+  {
+    "label": "29-cleanup-original-keys",
+    "url": "http://10.10.31.10:8080/client/#/ssh",
+    "passed": true,
+    "source": "d73dff5d4b5ce4df6cbde34170fb148d5099d07d"
+  }
+]

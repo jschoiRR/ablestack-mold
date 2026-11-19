@@ -17,6 +17,8 @@
 package com.cloud.api.query.dao;
 
 import java.util.List;
+import java.util.Map;
+import java.sql.SQLException;
 
 
 import com.cloud.user.AccountManager;
@@ -30,6 +32,8 @@ import org.apache.cloudstack.api.response.InstanceGroupResponse;
 import com.cloud.api.ApiResponseHelper;
 import com.cloud.api.query.vo.InstanceGroupJoinVO;
 import com.cloud.utils.db.GenericDaoBase;
+import com.cloud.utils.db.TransactionLegacy;
+import com.cloud.utils.exception.CloudRuntimeException;
 import com.cloud.utils.db.SearchBuilder;
 import com.cloud.utils.db.SearchCriteria;
 import com.cloud.vm.InstanceGroup;
@@ -53,6 +57,16 @@ public class InstanceGroupJoinDaoImpl extends GenericDaoBase<InstanceGroupJoinVO
         vrIdSearch.done();
 
         this._count = "select count(distinct id) from instance_group_view WHERE ";
+    }
+
+    @Override
+    public Map<Long, Map<String, Long>> listMemberStateCounts(List<Long> visibleGroupIds, boolean includeHidden) {
+        try {
+            return InstanceGroupMemberCounts.query(visibleGroupIds, includeHidden,
+                    sql -> TransactionLegacy.currentTxn().prepareAutoCloseStatement(sql));
+        } catch (SQLException e) {
+            throw new CloudRuntimeException("Unable to query VM group member state counts", e);
+        }
     }
 
     @Override

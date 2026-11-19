@@ -1,0 +1,517 @@
+- complementary:
+  - menu:
+    - menuitem "dashboard 대시보드":
+      - link "dashboard 대시보드":
+        - /url: "#/dashboard"
+        - img "dashboard":
+        - text: 대시보드
+    - img "cloud":
+    - text: 컴퓨트
+    - list:
+      - menuitem "cloud-server 가상머신":
+        - link "cloud-server 가상머신":
+          - /url: "#/vm"
+          - img "cloud-server":
+          - text: 가상머신
+      - menuitem "camera VM 스냅샷":
+        - link "camera VM 스냅샷":
+          - /url: "#/vmsnapshot"
+          - img "camera":
+          - text: VM 스냅샷
+      - menuitem "쿠버네티스":
+        - link "쿠버네티스":
+          - /url: "#/kubernetes"
+          - text: 쿠버네티스
+      - menuitem "fullscreen 오토스케일 VM 그룹":
+        - link "fullscreen 오토스케일 VM 그룹":
+          - /url: "#/autoscalevmgroup"
+          - img "fullscreen":
+          - text: 오토스케일 VM 그룹
+      - menuitem "gold 가상머신 그룹":
+        - link "gold 가상머신 그룹":
+          - /url: "#/vmgroup"
+          - img "gold":
+          - text: 가상머신 그룹
+      - menuitem "key SSH 키 쌍":
+        - link "key SSH 키 쌍":
+          - /url: "#/ssh"
+          - img "key":
+          - text: SSH 키 쌍
+      - menuitem "solution 사용자 데이터 라이브러리":
+        - link "solution 사용자 데이터 라이브러리":
+          - /url: "#/userdata"
+          - img "solution":
+          - text: 사용자 데이터 라이브러리
+      - menuitem "solution CNI 구성":
+        - link "solution CNI 구성":
+          - /url: "#/cniconfiguration"
+          - img "solution":
+          - text: CNI 구성
+      - menuitem "swap Affinity 그룹":
+        - link "swap Affinity 그룹" [active]:
+          - /url: "#/affinitygroup"
+          - img "swap":
+          - text: Affinity 그룹
+    - img "hdd":
+    - text: 스토리지
+    - img "wifi":
+    - text: 네트워크
+    - img "picture":
+    - text: 이미지
+    - menuitem "schedule 이벤트":
+      - link "schedule 이벤트":
+        - /url: "#/event"
+        - img "schedule":
+        - text: 이벤트
+    - menuitem "project 프로젝트":
+      - link "project 프로젝트":
+        - /url: "#/project"
+        - img "project":
+        - text: 프로젝트
+    - menuitem "team 계정":
+      - link "team 계정":
+        - /url: "#/account"
+        - img "team":
+        - text: 계정
+    - menuitem "block 도메인":
+      - link "block 도메인":
+        - /url: "#/domain"
+        - img "block":
+        - text: 도메인
+    - menuitem "global Zone":
+      - link "global Zone":
+        - /url: "#/zones"
+        - img "global":
+        - text: Zone
+    - img "shopping":
+    - text: 서비스 오퍼링
+    - img "tool":
+    - text: 도구
+    - menuitem "read API 문서":
+      - link "read API 문서":
+        - /url: "#/apidocs/"
+        - img "read":
+        - text: API 문서
+- img "menu-fold":
+- combobox
+- img "project":
+- text: 기본 보기
+- button "생성 down":
+  - generic: 생성
+  - img "down":
+- img "translation":
+- img "bell":
+- generic: AD
+- generic: AG07 domainadmin
+- main:
+  - link "home":
+    - /url: "#/"
+    - img "home":
+  - text: /
+  - link "Affinity 그룹":
+    - /url: "#/affinitygroup"
+  - link "question-circle":
+    - /url: http://docs.ablecloud.io/latest/adminguide/virtual_machines.html#affinity-groups
+    - img "question-circle":
+  - button "reload 업데이트":
+    - img "reload":
+    - generic: 업데이트
+  - switch "프로젝트":
+    - generic: 프로젝트
+  - button "새 Affinity 그룹 추가":
+    - img "plus":
+    - generic: 새 Affinity 그룹 추가
+  - button "고급 검색":
+    - img "filter":
+  - textbox "검색"
+  - button "search":
+    - img "search":
+  - table:
+    - rowgroup:
+      - row "이름 caret-up caret-down 유형 caret-up caret-down 연결 VM 수 caret-up caret-down 설명 caret-up caret-down 계정 caret-up caret-down 도메인 caret-up caret-down filter":
+        - columnheader:
+          - checkbox
+        - columnheader "이름 caret-up caret-down":
+          - generic: 이름
+          - img "caret-up":
+          - img "caret-down":
+        - columnheader "유형 caret-up caret-down":
+          - generic: 유형
+          - img "caret-up":
+          - img "caret-down":
+        - columnheader "연결 VM 수 caret-up caret-down":
+          - generic: 연결 VM 수
+          - img "caret-up":
+          - img "caret-down":
+        - columnheader "설명 caret-up caret-down":
+          - generic: 설명
+          - img "caret-up":
+          - img "caret-down":
+        - columnheader "계정 caret-up caret-down":
+          - generic: 계정
+          - img "caret-up":
+          - img "caret-down":
+        - columnheader "도메인 caret-up caret-down":
+          - generic: 도메인
+          - img "caret-up":
+          - img "caret-down":
+        - columnheader "filter":
+          - button "filter":
+            - img "filter":
+    - rowgroup:
+      - row "qa-ag07-user-a 같은 호스트 배치 · 엄격 2 AG07 disposable query qualification qa-ag07-user-a qa-ag07-parent":
+        - cell:
+          - checkbox
+        - cell "qa-ag07-user-a":
+          - link "qa-ag07-user-a":
+            - /url: "#/affinitygroup/880b5855-d129-4f8d-8a6a-7b32e366f6d5"
+        - cell "같은 호스트 배치 · 엄격":
+          - generic "host affinity": 같은 호스트 배치 · 엄격
+        - cell "2"
+        - cell "AG07 disposable query qualification"
+        - cell "qa-ag07-user-a":
+          - link "qa-ag07-user-a":
+            - /url: "#/account?name=qa-ag07-user-a&domainid=33966e55-de22-4c43-adaa-6c949f24a5e5&dataView=true"
+        - cell "qa-ag07-parent":
+          - link "qa-ag07-parent":
+            - /url: "#/domain/33966e55-de22-4c43-adaa-6c949f24a5e5?tab=details"
+        - cell
+      - row "qa-ag07-user-b 같은 호스트 배치 · 엄격 0 AG07 disposable query qualification qa-ag07-user-b qa-ag07-parent":
+        - cell:
+          - checkbox
+        - cell "qa-ag07-user-b":
+          - link "qa-ag07-user-b":
+            - /url: "#/affinitygroup/709aaeed-122d-4e0c-80cc-6013578c8051"
+        - cell "같은 호스트 배치 · 엄격":
+          - generic "host affinity": 같은 호스트 배치 · 엄격
+        - cell "0"
+        - cell "AG07 disposable query qualification"
+        - cell "qa-ag07-user-b":
+          - link "qa-ag07-user-b":
+            - /url: "#/account?name=qa-ag07-user-b&domainid=33966e55-de22-4c43-adaa-6c949f24a5e5&dataView=true"
+        - cell "qa-ag07-parent":
+          - link "qa-ag07-parent":
+            - /url: "#/domain/33966e55-de22-4c43-adaa-6c949f24a5e5?tab=details"
+        - cell
+      - row "qa-ag07-domainadmin 같은 호스트 배치 · 엄격 0 AG07 disposable query qualification qa-ag07-domainadmin qa-ag07-parent":
+        - cell:
+          - checkbox
+        - cell "qa-ag07-domainadmin":
+          - link "qa-ag07-domainadmin":
+            - /url: "#/affinitygroup/b79b9a82-6925-452f-b03b-74e3d69df79b"
+        - cell "같은 호스트 배치 · 엄격":
+          - generic "host affinity": 같은 호스트 배치 · 엄격
+        - cell "0"
+        - cell "AG07 disposable query qualification"
+        - cell "qa-ag07-domainadmin":
+          - link "qa-ag07-domainadmin":
+            - /url: "#/account?name=qa-ag07-domainadmin&domainid=33966e55-de22-4c43-adaa-6c949f24a5e5&dataView=true"
+        - cell "qa-ag07-parent":
+          - link "qa-ag07-parent":
+            - /url: "#/domain/33966e55-de22-4c43-adaa-6c949f24a5e5?tab=details"
+        - cell
+      - row "qa-ag07-shared 전용 자원 배치 3 AG07 disposable query qualification system qa-ag07-parent":
+        - cell:
+          - checkbox
+        - cell "qa-ag07-shared":
+          - link "qa-ag07-shared":
+            - /url: "#/affinitygroup/ada0808c-1039-465f-b0c7-389808c110cf"
+        - cell "전용 자원 배치":
+          - generic "ExplicitDedication": 전용 자원 배치
+        - cell "3"
+        - cell "AG07 disposable query qualification"
+        - cell "system":
+          - link "system":
+            - /url: "#/account?name=system&domainid=33966e55-de22-4c43-adaa-6c949f24a5e5&dataView=true"
+        - cell "qa-ag07-parent":
+          - link "qa-ag07-parent":
+            - /url: "#/domain/33966e55-de22-4c43-adaa-6c949f24a5e5?tab=details"
+        - cell
+      - row "qa-ag07-child 같은 호스트 배치 · 엄격 0 AG07 disposable query qualification qa-ag07-child qa-ag07-child":
+        - cell:
+          - checkbox
+        - cell "qa-ag07-child":
+          - link "qa-ag07-child":
+            - /url: "#/affinitygroup/4fbacc33-d386-438c-8d49-b7f9c54e4b81"
+        - cell "같은 호스트 배치 · 엄격":
+          - generic "host affinity": 같은 호스트 배치 · 엄격
+        - cell "0"
+        - cell "AG07 disposable query qualification"
+        - cell "qa-ag07-child":
+          - link "qa-ag07-child":
+            - /url: "#/account?name=qa-ag07-child&domainid=b20bca7f-5723-4449-9091-6b6cf959c5c3&dataView=true"
+        - cell "qa-ag07-child":
+          - link "qa-ag07-child":
+            - /url: "#/domain/b20bca7f-5723-4449-9091-6b6cf959c5c3?tab=details"
+        - cell
+      - row "qa-ag07-page-01 같은 호스트 배치 · 엄격 0 AG07 disposable query qualification qa-ag07-domainadmin qa-ag07-parent":
+        - cell:
+          - checkbox
+        - cell "qa-ag07-page-01":
+          - link "qa-ag07-page-01":
+            - /url: "#/affinitygroup/13b59359-2a34-415d-9c01-8f3638cab5b2"
+        - cell "같은 호스트 배치 · 엄격":
+          - generic "host affinity": 같은 호스트 배치 · 엄격
+        - cell "0"
+        - cell "AG07 disposable query qualification"
+        - cell "qa-ag07-domainadmin":
+          - link "qa-ag07-domainadmin":
+            - /url: "#/account?name=qa-ag07-domainadmin&domainid=33966e55-de22-4c43-adaa-6c949f24a5e5&dataView=true"
+        - cell "qa-ag07-parent":
+          - link "qa-ag07-parent":
+            - /url: "#/domain/33966e55-de22-4c43-adaa-6c949f24a5e5?tab=details"
+        - cell
+      - row "qa-ag07-page-02 같은 호스트 배치 · 엄격 0 AG07 disposable query qualification qa-ag07-domainadmin qa-ag07-parent":
+        - cell:
+          - checkbox
+        - cell "qa-ag07-page-02":
+          - link "qa-ag07-page-02":
+            - /url: "#/affinitygroup/9c7e5394-4b92-4e12-ae18-bebd2f52cfab"
+        - cell "같은 호스트 배치 · 엄격":
+          - generic "host affinity": 같은 호스트 배치 · 엄격
+        - cell "0"
+        - cell "AG07 disposable query qualification"
+        - cell "qa-ag07-domainadmin":
+          - link "qa-ag07-domainadmin":
+            - /url: "#/account?name=qa-ag07-domainadmin&domainid=33966e55-de22-4c43-adaa-6c949f24a5e5&dataView=true"
+        - cell "qa-ag07-parent":
+          - link "qa-ag07-parent":
+            - /url: "#/domain/33966e55-de22-4c43-adaa-6c949f24a5e5?tab=details"
+        - cell
+      - row "qa-ag07-page-03 같은 호스트 배치 · 엄격 0 AG07 disposable query qualification qa-ag07-domainadmin qa-ag07-parent":
+        - cell:
+          - checkbox
+        - cell "qa-ag07-page-03":
+          - link "qa-ag07-page-03":
+            - /url: "#/affinitygroup/d9c12b5e-9bf6-41b8-a0dc-3b1324cedc42"
+        - cell "같은 호스트 배치 · 엄격":
+          - generic "host affinity": 같은 호스트 배치 · 엄격
+        - cell "0"
+        - cell "AG07 disposable query qualification"
+        - cell "qa-ag07-domainadmin":
+          - link "qa-ag07-domainadmin":
+            - /url: "#/account?name=qa-ag07-domainadmin&domainid=33966e55-de22-4c43-adaa-6c949f24a5e5&dataView=true"
+        - cell "qa-ag07-parent":
+          - link "qa-ag07-parent":
+            - /url: "#/domain/33966e55-de22-4c43-adaa-6c949f24a5e5?tab=details"
+        - cell
+      - row "qa-ag07-page-04 같은 호스트 배치 · 엄격 0 AG07 disposable query qualification qa-ag07-domainadmin qa-ag07-parent":
+        - cell:
+          - checkbox
+        - cell "qa-ag07-page-04":
+          - link "qa-ag07-page-04":
+            - /url: "#/affinitygroup/f84fd92e-8718-4478-b3fa-e711fb72d8ec"
+        - cell "같은 호스트 배치 · 엄격":
+          - generic "host affinity": 같은 호스트 배치 · 엄격
+        - cell "0"
+        - cell "AG07 disposable query qualification"
+        - cell "qa-ag07-domainadmin":
+          - link "qa-ag07-domainadmin":
+            - /url: "#/account?name=qa-ag07-domainadmin&domainid=33966e55-de22-4c43-adaa-6c949f24a5e5&dataView=true"
+        - cell "qa-ag07-parent":
+          - link "qa-ag07-parent":
+            - /url: "#/domain/33966e55-de22-4c43-adaa-6c949f24a5e5?tab=details"
+        - cell
+      - row "qa-ag07-page-05 같은 호스트 배치 · 엄격 0 AG07 disposable query qualification qa-ag07-domainadmin qa-ag07-parent":
+        - cell:
+          - checkbox
+        - cell "qa-ag07-page-05":
+          - link "qa-ag07-page-05":
+            - /url: "#/affinitygroup/d0342e94-72c6-49d1-b32a-6f2ba915f621"
+        - cell "같은 호스트 배치 · 엄격":
+          - generic "host affinity": 같은 호스트 배치 · 엄격
+        - cell "0"
+        - cell "AG07 disposable query qualification"
+        - cell "qa-ag07-domainadmin":
+          - link "qa-ag07-domainadmin":
+            - /url: "#/account?name=qa-ag07-domainadmin&domainid=33966e55-de22-4c43-adaa-6c949f24a5e5&dataView=true"
+        - cell "qa-ag07-parent":
+          - link "qa-ag07-parent":
+            - /url: "#/domain/33966e55-de22-4c43-adaa-6c949f24a5e5?tab=details"
+        - cell
+      - row "qa-ag07-page-06 같은 호스트 배치 · 엄격 0 AG07 disposable query qualification qa-ag07-domainadmin qa-ag07-parent":
+        - cell:
+          - checkbox
+        - cell "qa-ag07-page-06":
+          - link "qa-ag07-page-06":
+            - /url: "#/affinitygroup/40b5dae1-f95b-43c8-a586-e8b6aa7446e6"
+        - cell "같은 호스트 배치 · 엄격":
+          - generic "host affinity": 같은 호스트 배치 · 엄격
+        - cell "0"
+        - cell "AG07 disposable query qualification"
+        - cell "qa-ag07-domainadmin":
+          - link "qa-ag07-domainadmin":
+            - /url: "#/account?name=qa-ag07-domainadmin&domainid=33966e55-de22-4c43-adaa-6c949f24a5e5&dataView=true"
+        - cell "qa-ag07-parent":
+          - link "qa-ag07-parent":
+            - /url: "#/domain/33966e55-de22-4c43-adaa-6c949f24a5e5?tab=details"
+        - cell
+      - row "qa-ag07-page-07 같은 호스트 배치 · 엄격 0 AG07 disposable query qualification qa-ag07-domainadmin qa-ag07-parent":
+        - cell:
+          - checkbox
+        - cell "qa-ag07-page-07":
+          - link "qa-ag07-page-07":
+            - /url: "#/affinitygroup/55f1ab83-ac96-4378-8c8f-5bb80d73973e"
+        - cell "같은 호스트 배치 · 엄격":
+          - generic "host affinity": 같은 호스트 배치 · 엄격
+        - cell "0"
+        - cell "AG07 disposable query qualification"
+        - cell "qa-ag07-domainadmin":
+          - link "qa-ag07-domainadmin":
+            - /url: "#/account?name=qa-ag07-domainadmin&domainid=33966e55-de22-4c43-adaa-6c949f24a5e5&dataView=true"
+        - cell "qa-ag07-parent":
+          - link "qa-ag07-parent":
+            - /url: "#/domain/33966e55-de22-4c43-adaa-6c949f24a5e5?tab=details"
+        - cell
+      - row "qa-ag07-page-08 같은 호스트 배치 · 엄격 0 AG07 disposable query qualification qa-ag07-domainadmin qa-ag07-parent":
+        - cell:
+          - checkbox
+        - cell "qa-ag07-page-08":
+          - link "qa-ag07-page-08":
+            - /url: "#/affinitygroup/9cb6286d-7d05-4c2c-9fdf-6b8ff00e88b1"
+        - cell "같은 호스트 배치 · 엄격":
+          - generic "host affinity": 같은 호스트 배치 · 엄격
+        - cell "0"
+        - cell "AG07 disposable query qualification"
+        - cell "qa-ag07-domainadmin":
+          - link "qa-ag07-domainadmin":
+            - /url: "#/account?name=qa-ag07-domainadmin&domainid=33966e55-de22-4c43-adaa-6c949f24a5e5&dataView=true"
+        - cell "qa-ag07-parent":
+          - link "qa-ag07-parent":
+            - /url: "#/domain/33966e55-de22-4c43-adaa-6c949f24a5e5?tab=details"
+        - cell
+      - row "qa-ag07-page-09 같은 호스트 배치 · 엄격 0 AG07 disposable query qualification qa-ag07-domainadmin qa-ag07-parent":
+        - cell:
+          - checkbox
+        - cell "qa-ag07-page-09":
+          - link "qa-ag07-page-09":
+            - /url: "#/affinitygroup/2a03323a-d434-4010-adf7-cb2cf1d8bdc6"
+        - cell "같은 호스트 배치 · 엄격":
+          - generic "host affinity": 같은 호스트 배치 · 엄격
+        - cell "0"
+        - cell "AG07 disposable query qualification"
+        - cell "qa-ag07-domainadmin":
+          - link "qa-ag07-domainadmin":
+            - /url: "#/account?name=qa-ag07-domainadmin&domainid=33966e55-de22-4c43-adaa-6c949f24a5e5&dataView=true"
+        - cell "qa-ag07-parent":
+          - link "qa-ag07-parent":
+            - /url: "#/domain/33966e55-de22-4c43-adaa-6c949f24a5e5?tab=details"
+        - cell
+      - row "qa-ag07-page-10 같은 호스트 배치 · 엄격 0 AG07 disposable query qualification qa-ag07-domainadmin qa-ag07-parent":
+        - cell:
+          - checkbox
+        - cell "qa-ag07-page-10":
+          - link "qa-ag07-page-10":
+            - /url: "#/affinitygroup/a992af0e-22a1-432f-b7da-dca85728226d"
+        - cell "같은 호스트 배치 · 엄격":
+          - generic "host affinity": 같은 호스트 배치 · 엄격
+        - cell "0"
+        - cell "AG07 disposable query qualification"
+        - cell "qa-ag07-domainadmin":
+          - link "qa-ag07-domainadmin":
+            - /url: "#/account?name=qa-ag07-domainadmin&domainid=33966e55-de22-4c43-adaa-6c949f24a5e5&dataView=true"
+        - cell "qa-ag07-parent":
+          - link "qa-ag07-parent":
+            - /url: "#/domain/33966e55-de22-4c43-adaa-6c949f24a5e5?tab=details"
+        - cell
+      - row "qa-ag07-page-11 같은 호스트 배치 · 엄격 0 AG07 disposable query qualification qa-ag07-domainadmin qa-ag07-parent":
+        - cell:
+          - checkbox
+        - cell "qa-ag07-page-11":
+          - link "qa-ag07-page-11":
+            - /url: "#/affinitygroup/866d26eb-36d2-4786-a177-5046dd4b2623"
+        - cell "같은 호스트 배치 · 엄격":
+          - generic "host affinity": 같은 호스트 배치 · 엄격
+        - cell "0"
+        - cell "AG07 disposable query qualification"
+        - cell "qa-ag07-domainadmin":
+          - link "qa-ag07-domainadmin":
+            - /url: "#/account?name=qa-ag07-domainadmin&domainid=33966e55-de22-4c43-adaa-6c949f24a5e5&dataView=true"
+        - cell "qa-ag07-parent":
+          - link "qa-ag07-parent":
+            - /url: "#/domain/33966e55-de22-4c43-adaa-6c949f24a5e5?tab=details"
+        - cell
+      - row "qa-ag07-page-12 같은 호스트 배치 · 엄격 0 AG07 disposable query qualification qa-ag07-domainadmin qa-ag07-parent":
+        - cell:
+          - checkbox
+        - cell "qa-ag07-page-12":
+          - link "qa-ag07-page-12":
+            - /url: "#/affinitygroup/8e133995-1b12-4ad5-a62c-e6c1543219d1"
+        - cell "같은 호스트 배치 · 엄격":
+          - generic "host affinity": 같은 호스트 배치 · 엄격
+        - cell "0"
+        - cell "AG07 disposable query qualification"
+        - cell "qa-ag07-domainadmin":
+          - link "qa-ag07-domainadmin":
+            - /url: "#/account?name=qa-ag07-domainadmin&domainid=33966e55-de22-4c43-adaa-6c949f24a5e5&dataView=true"
+        - cell "qa-ag07-parent":
+          - link "qa-ag07-parent":
+            - /url: "#/domain/33966e55-de22-4c43-adaa-6c949f24a5e5?tab=details"
+        - cell
+      - row "qa-ag07-page-13 같은 호스트 배치 · 엄격 0 AG07 disposable query qualification qa-ag07-domainadmin qa-ag07-parent":
+        - cell:
+          - checkbox
+        - cell "qa-ag07-page-13":
+          - link "qa-ag07-page-13":
+            - /url: "#/affinitygroup/9253f433-45b7-4ce8-aa48-ee7ccd4b3558"
+        - cell "같은 호스트 배치 · 엄격":
+          - generic "host affinity": 같은 호스트 배치 · 엄격
+        - cell "0"
+        - cell "AG07 disposable query qualification"
+        - cell "qa-ag07-domainadmin":
+          - link "qa-ag07-domainadmin":
+            - /url: "#/account?name=qa-ag07-domainadmin&domainid=33966e55-de22-4c43-adaa-6c949f24a5e5&dataView=true"
+        - cell "qa-ag07-parent":
+          - link "qa-ag07-parent":
+            - /url: "#/domain/33966e55-de22-4c43-adaa-6c949f24a5e5?tab=details"
+        - cell
+      - row "qa-ag07-page-14 같은 호스트 배치 · 엄격 0 AG07 disposable query qualification qa-ag07-domainadmin qa-ag07-parent":
+        - cell:
+          - checkbox
+        - cell "qa-ag07-page-14":
+          - link "qa-ag07-page-14":
+            - /url: "#/affinitygroup/949245cf-bb39-46ea-8fbb-3696e5a0f6f9"
+        - cell "같은 호스트 배치 · 엄격":
+          - generic "host affinity": 같은 호스트 배치 · 엄격
+        - cell "0"
+        - cell "AG07 disposable query qualification"
+        - cell "qa-ag07-domainadmin":
+          - link "qa-ag07-domainadmin":
+            - /url: "#/account?name=qa-ag07-domainadmin&domainid=33966e55-de22-4c43-adaa-6c949f24a5e5&dataView=true"
+        - cell "qa-ag07-parent":
+          - link "qa-ag07-parent":
+            - /url: "#/domain/33966e55-de22-4c43-adaa-6c949f24a5e5?tab=details"
+        - cell
+      - row "qa-ag07-page-15 같은 호스트 배치 · 엄격 0 AG07 disposable query qualification qa-ag07-domainadmin qa-ag07-parent":
+        - cell:
+          - checkbox
+        - cell "qa-ag07-page-15":
+          - link "qa-ag07-page-15":
+            - /url: "#/affinitygroup/59b2b9e6-d669-4c5b-806c-1d74d0345e6f"
+        - cell "같은 호스트 배치 · 엄격":
+          - generic "host affinity": 같은 호스트 배치 · 엄격
+        - cell "0"
+        - cell "AG07 disposable query qualification"
+        - cell "qa-ag07-domainadmin":
+          - link "qa-ag07-domainadmin":
+            - /url: "#/account?name=qa-ag07-domainadmin&domainid=33966e55-de22-4c43-adaa-6c949f24a5e5&dataView=true"
+        - cell "qa-ag07-parent":
+          - link "qa-ag07-parent":
+            - /url: "#/domain/33966e55-de22-4c43-adaa-6c949f24a5e5?tab=details"
+        - cell
+  - list:
+    - listitem: 전체 27 개 항목 중 1-20 표시
+    - listitem "이전 페이지":
+      - button "left" [disabled]:
+        - img "left":
+    - listitem "1":
+      - generic: "1"
+    - listitem "2":
+      - generic: "2"
+    - listitem "다음 페이지":
+      - button "right":
+        - img "right":
+    - combobox
+    - generic: 20 / 쪽
+    - text: 이동하기
+    - textbox

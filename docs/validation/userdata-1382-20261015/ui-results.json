@@ -1,0 +1,65 @@
+{
+  "cases": [
+    {
+      "test": "blank-name-and-body-client-validation",
+      "passed": true,
+      "requestCount": 1
+    },
+    {
+      "test": "malformed-base64-client-validation",
+      "passed": true
+    },
+    {
+      "test": "server-duplicate-retains-form",
+      "passed": true
+    },
+    {
+      "test": "configured-byte-limit-client-validation",
+      "passed": true
+    },
+    {
+      "test": "variable-format-client-validation",
+      "passed": true
+    },
+    {
+      "test": "ordinary-user-ui-register-and-validation",
+      "passed": true
+    },
+    {
+      "test": "domainadmin-ui-register-and-validation",
+      "passed": true
+    },
+    {
+      "test": "normal-dark-error-states-four-viewports",
+      "passed": true,
+      "viewports": [
+        "1440x1000",
+        "1280x720",
+        "390x844",
+        "390x480"
+      ],
+      "modalShellFollowup": 1383
+    },
+    {
+      "test": "no-unexpected-javascript-errors",
+      "passed": true,
+      "count": 0
+    },
+    {
+      "test": "bom-only-name-and-body-client-rejection-final-backend",
+      "passed": true
+    }
+  ],
+  "networkPartial": true,
+  "registerRequests": [
+    {
+      "command": "registerUserData",
+      "method": "POST",
+      "name": "UD1382-31-20261015-ui-domainadmin",
+      "projectid": null,
+      "base64Length": 44,
+      "params": null
+    }
+  ],
+  "unexpectedJavaScriptErrorCount": 0
+}

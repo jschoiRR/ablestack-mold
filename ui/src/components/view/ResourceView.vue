@@ -16,34 +16,39 @@
 // under the License.
 
 <template>
-  <resource-layout :wide="wideLayout">
+  <resource-layout :wide="wideLayout" :class="{ 'autoscale-resource': $route.meta?.name === 'autoscalevmgroup', 'affinity-resource': $route.meta?.name === 'affinitygroup' }">
     <template #left>
       <slot name="info-card">
         <info-card
           :resource="resource"
           :loading="loading"
           :actions="actions"
-          @exec-action="$emit('exec-action', $event)" />
+          @backup-controls-change="$emit('backup-controls-change', $event)"
+          @exec-action="$emit('exec-action', $event)">
+          <template #details><auto-scale-info-summary v-if="$route.meta?.name === 'autoscalevmgroup'" :resource="resource" /><AffinityGroupSummary v-if="$route.meta?.name === 'affinitygroup'" :resource="resource" /><StorageSnapshotSummary v-if="$route.meta?.name === 'snapshot'" :resource="resource" /></template>
+        </info-card>
       </slot>
     </template>
     <template #right>
       <a-card
         class="spin-content resource-content-card"
-        :loading="loading"
+        :loading="loading && !resource.id"
         :bordered="true"
         style="width:100%">
-        <keep-alive v-if="tabs.length === 1">
+        <keep-alive v-if="tabs.length === 1 && $route.meta?.name !== 'snapshotpolicy'">
           <component
             :is="tabs[0].component"
             :key="tabs[0].name"
             :resource="resource"
             :loading="loading"
             :tab="tabs[0].name"
+            @refresh="['buckets', 'objectstore'].includes($route.meta.name) && $emit('refresh')"
             @wide-layout-change="onWideLayoutChange" />
         </keep-alive>
         <a-tabs
           v-else
-          style="width: 100%; margin-top: -12px"
+          :style="{ width: '100%', marginTop: resourceTabPosition === 'top' ? '-12px' : '0' }"
+          :tabPosition="resourceTabPosition"
           :animated="false"
           :activeKey="activeTab"
           @change="onTabChange" >
@@ -61,6 +66,7 @@
                   :loading="loading"
                   :tab="activeTab"
                   @change-resource="$emit('change-resource', $event)"
+                  @refresh="['buckets', 'objectstore'].includes($route.meta.name) && $emit('refresh')"
                   @wide-layout-change="onWideLayoutChange" />
               </keep-alive>
             </a-tab-pane>
@@ -74,6 +80,9 @@
 <script>
 import DetailsTab from '@/components/view/DetailsTab'
 import InfoCard from '@/components/view/InfoCard'
+import AutoScaleInfoSummary from '@/views/compute/AutoScaleInfoSummary'
+import AffinityGroupSummary from '@/views/compute/AffinityGroupSummary'
+import StorageSnapshotSummary from '@/views/storage/StorageSnapshotSummary'
 import ResourceLayout from '@/layouts/ResourceLayout'
 import { getAPI } from '@/api'
 import { mixinDevice } from '@/utils/mixin.js'
@@ -82,10 +91,15 @@ export default {
   name: 'ResourceView',
   components: {
     InfoCard,
+    AutoScaleInfoSummary,
+    AffinityGroupSummary,
+    StorageSnapshotSummary,
     ResourceLayout
   },
   mixins: [mixinDevice],
   props: {
+    readyForActions: { type: Boolean, default: true },
+    readPending: { type: Boolean, default: false },
     resource: {
       type: Object,
       required: true
@@ -114,6 +128,7 @@ export default {
       default: ''
     }
   },
+  provide () { return { resourceActionReady: () => this.readyForActions, resourceReadPending: () => this.readPending || this.loading } },
   data () {
     return {
       activeTab: '',
@@ -166,6 +181,11 @@ export default {
       this.wideLayout = false
       const query = Object.assign({}, this.$route.query)
       query.tab = key
+      if (['ssh', 'userdata', 'cniconfiguration', 'affinitygroup', 'volume', 'computeoffering', 'diskoffering'].includes(this.$route.meta?.name)) {
+        this.$router.push({ path: this.$route.path, query })
+        this.$emit('onTabChange', key)
+        return
+      }
       this.$route.query.tab = key
       history.pushState(
         {},
@@ -198,8 +218,18 @@ export default {
     },
     setActiveTab () {
       const requestedTab = this.$route.query.tab || this.historyTab
-      const selected = this.tabs.find(tab => tab.name === requestedTab) || this.tabs[0]
+      const available = ['ssh', 'userdata', 'cniconfiguration', 'affinitygroup', 'volume', 'computeoffering', 'diskoffering'].includes(this.$route.meta?.name) ? this.tabs.filter(tab => this.showTab(tab)) : this.tabs
+      const selected = available.find(tab => tab.name === requestedTab) || available[0]
       this.activeTab = selected ? selected.name : ''
+      // Invalid library deep links use the visible fallback tab in the URL too.
+      // A departing KeepAlive view can observe the destination route before its
+      // own tabs are replaced. Only the destination's tab configuration may
+      // canonicalize its URL.
+      const routeTabs = this.$route.meta?.tabs
+      const ownsRouteTabs = !routeTabs || (routeTabs.length === this.tabs.length && routeTabs.every((tab, index) => tab.name === this.tabs[index].name))
+      if (ownsRouteTabs && ['userdata', 'cniconfiguration', 'volume', 'computeoffering', 'diskoffering'].includes(this.$route.meta?.name) && this.$route.query.tab && selected && requestedTab !== selected.name) {
+        this.$router.replace({ path: this.$route.path, query: { ...this.$route.query, tab: selected.name } })
+      }
     }
   }
 }

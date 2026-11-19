@@ -1,0 +1,136 @@
+{
+  "job": {
+    "jobid": "a3481103-91c7-4b52-af78-644dcad68a56"
+  },
+  "result": {
+    "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+    "account": "admin",
+    "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+    "domainpath": "ROOT",
+    "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+    "cmd": "org.apache.cloudstack.api.command.admin.affinitygroup.UpdateVMAffinityGroupCmdByAdmin",
+    "jobprocstatus": 0,
+    "jobresultcode": 530,
+    "jobresulttype": "object",
+    "jobresult": {
+      "errorcode": 530,
+      "errortext": "Entity AffinityGroup {\"id\":66,\"name\":\"qa-ag04-target\",\"uuid\":\"22ee18c3-4a24-4617-84ed-dde3fe7b592a\"} and entity Account [{\"accountName\":\"PrjAcct-qa-ag04-project-1\",\"id\":195,\"uuid\":\"5e33c1d1-ae50-4998-be43-84e75cf55e16\"}] belong to different accounts"
+    },
+    "created": "2026-10-19T08:01:41+0900",
+    "completed": "2026-10-19T08:01:41+0900",
+    "jobid": "a3481103-91c7-4b52-af78-644dcad68a56",
+    "jobstatus": 2
+  },
+  "before": {
+    "count": 1,
+    "virtualmachine": [
+      {
+        "id": "ba74e59a-2834-45e8-aa60-778d4bc86bde",
+        "name": "qa-ag04-project-vm",
+        "displayname": "qa-ag04-project-vm",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "username": "admin",
+        "projectid": "78a38450-86a1-483c-b607-e23f862fe320",
+        "project": "qa-ag04-project",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domain": "ROOT",
+        "domainpath": "ROOT",
+        "created": "2026-10-19T07:56:56+0900",
+        "state": "Stopped",
+        "haenable": false,
+        "zoneid": "7013f5a1-de59-4cea-a596-f4f58815f31c",
+        "zonename": "Zone",
+        "volumemutationblockedreason": "",
+        "guestosid": "9708b6ac-b253-11f1-a895-0024814c313f",
+        "securitygroup": [],
+        "nic": [],
+        "hypervisor": "KVM",
+        "instancename": "i-195-663-VM",
+        "details": {
+          "deployvm": "true",
+          "tpmversion": "NONE",
+          "rootDiskController": "osdefault"
+        },
+        "clonefastsourcepowerallowed": false,
+        "clonefastpowerallowed": false,
+        "affinitygroup": [
+          {
+            "id": "23d3082b-1abe-4e57-b789-81ec4d8baed9",
+            "name": "qa-ag04-project-other",
+            "account": "PrjAcct-qa-ag04-project-1"
+          }
+        ],
+        "displayvm": true,
+        "isdynamicallyscalable": true,
+        "deleteprotection": false,
+        "ostypeid": "9708b6ac-b253-11f1-a895-0024814c313f",
+        "osdisplayname": "Rocky Linux 9",
+        "receivedbytes": 0,
+        "sentbytes": 0,
+        "vbmcport": "None",
+        "kvdoenable": false,
+        "kvdoinuse": false,
+        "arch": "x86_64",
+        "vbmcstatus": "Unallocated",
+        "tags": [],
+        "hasannotations": false
+      }
+    ]
+  },
+  "after": {
+    "count": 1,
+    "virtualmachine": [
+      {
+        "id": "ba74e59a-2834-45e8-aa60-778d4bc86bde",
+        "name": "qa-ag04-project-vm",
+        "displayname": "qa-ag04-project-vm",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "username": "admin",
+        "projectid": "78a38450-86a1-483c-b607-e23f862fe320",
+        "project": "qa-ag04-project",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domain": "ROOT",
+        "domainpath": "ROOT",
+        "created": "2026-10-19T07:56:56+0900",
+        "state": "Stopped",
+        "haenable": false,
+        "zoneid": "7013f5a1-de59-4cea-a596-f4f58815f31c",
+        "zonename": "Zone",
+        "volumemutationblockedreason": "",
+        "guestosid": "9708b6ac-b253-11f1-a895-0024814c313f",
+        "securitygroup": [],
+        "nic": [],
+        "hypervisor": "KVM",
+        "instancename": "i-195-663-VM",
+        "details": {
+          "deployvm": "true",
+          "tpmversion": "NONE",
+          "rootDiskController": "osdefault"
+        },
+        "clonefastsourcepowerallowed": false,
+        "clonefastpowerallowed": false,
+        "affinitygroup": [
+          {
+            "id": "23d3082b-1abe-4e57-b789-81ec4d8baed9",
+            "name": "qa-ag04-project-other",
+            "account": "PrjAcct-qa-ag04-project-1"
+          }
+        ],
+        "displayvm": true,
+        "isdynamicallyscalable": true,
+        "deleteprotection": false,
+        "ostypeid": "9708b6ac-b253-11f1-a895-0024814c313f",
+        "osdisplayname": "Rocky Linux 9",
+        "receivedbytes": 0,
+        "sentbytes": 0,
+        "vbmcport": "None",
+        "kvdoenable": false,
+        "kvdoinuse": false,
+        "arch": "x86_64",
+        "vbmcstatus": "Unallocated",
+        "tags": [],
+        "hasannotations": false
+      }
+    ]
+  }
+}

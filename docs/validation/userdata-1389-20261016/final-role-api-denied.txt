@@ -1,0 +1,235 @@
+Browser tab: 4, Title: "대시보드 - ABLESTACK-Mold", URL: "http://10.10.31.10:8080/client/#/dashboard".
+1 AXWebArea 대시보드 - ABLESTACK-Mold, URL: 10.10.31.10:8080/client/#/dashboard
+	2 container
+		3 container
+			4 image
+			5 menu
+				6 dashboard 대시보드
+					7 link Description: dashboard 대시보드, Value: 10.10.31.10:8080/client/#/dashboard
+				8 container
+					9 image cloud
+					10 text 컴퓨트
+				11 container
+					12 image hdd
+					13 text 스토리지
+				14 container
+					15 image wifi
+					16 text 네트워크
+				17 container
+					18 image picture
+					19 text 이미지
+				20 schedule 이벤트
+					21 link Description: schedule 이벤트, Value: 10.10.31.10:8080/client/#/event
+				22 project 프로젝트
+					23 link Description: project 프로젝트, Value: 10.10.31.10:8080/client/#/project
+				24 idcard 역할
+					25 link Description: idcard 역할, Value: 10.10.31.10:8080/client/#/role
+				26 team 계정
+					27 link Description: team 계정, Value: 10.10.31.10:8080/client/#/account
+				28 block 도메인
+					29 link Description: block 도메인, Value: 10.10.31.10:8080/client/#/domain
+				30 container
+					31 image bank
+					32 text 인프라스트럭쳐
+				33 global Zone
+					34 link Description: global Zone, Value: 10.10.31.10:8080/client/#/zones
+				35 container
+					36 image shopping
+					37 text 서비스 오퍼링
+				38 container
+					39 image setting
+					40 text 구성
+				41 appstore-add 확장
+					42 link Description: appstore-add 확장, Value: 10.10.31.10:8080/client/#/extension
+				43 container
+					44 image tool
+					45 text 도구
+				46 read API 문서
+					47 link Description: read API 문서, Value: 10.10.31.10:8080/client/#/apidocs/
+		48 container
+			49 image menu-fold
+			50 container
+				51 combo box (settable) rc_select_11
+				52 image project
+				53 text 기본 보기
+			54 image translation
+			55 image bell
+			56 container
+				57 text UO UD1389 outsider
+		58 container
+			59 container
+				60 heading dashboard 리소스, Value: 3
+					61 image dashboard
+					62 text  리소스
+				63 container
+					64 link Description: 가상머신 cloud-server   0, Value: 10.10.31.10:8080/client/#/vm
+					65 link Description: 쿠버네티스 클러스터 cluster   0, Value: 10.10.31.10:8080/client/#/kubernetes
+					66 link Description: 볼륨 hdd   0, Value: 10.10.31.10:8080/client/#/volume
+					67 link Description: 스냅샷 build   0, Value: 10.10.31.10:8080/client/#/snapshot
+					68 link Description: 가상머신용 네트워크 apartment   0, Value: 10.10.31.10:8080/client/#/guestnetwork
+					69 link Description: VPCs deployment-unit   0, Value: 10.10.31.10:8080/client/#/vpc
+					70 link Description: Public IP 주소 environment   0, Value: 10.10.31.10:8080/client/#/publicip
+					71 link Description: 템플릿 picture   0, Value: 10.10.31.10:8080/client/#/template?templatefilter=self&filter=self
+			72 container
+				73 heading cloud 컴퓨트, Value: 3
+					74 image cloud
+					75 text  컴퓨트
+				76 container
+					77 link Description: 실행 중 가상머신 0, Value: 10.10.31.10:8080/client/#/vm?state=running&filter=running
+					78 link Description: 정지된 VM 가상머신 0, Value: 10.10.31.10:8080/client/#/vm?state=stopped&filter=stopped
+					79 text 가상머신
+					80 text 0 사용됨
+					81 text 0%
+					82 text 20 사용 가능 | 20 제한
+					83 text CPU 코어
+					84 text 0 사용됨
+					85 text 0%
+					86 text 40 사용 가능 | 40 제한
+					87 text 메모리
+					88 text 0.00 GiB 사용됨
+					89 text 0%
+					90 text 40.00 GiB 사용 가능 | 40.00 GiB 제한
+					91 text GPU
+					92 text 0 사용됨
+					93 text 0%
+					94 text 20 사용 가능 | 20 제한
+					95 text 프로젝트
+					96 text 0 사용됨
+					97 text 0%
+					98 text 10 사용 가능 | 10 제한
+			99 container
+				100 heading hdd 스토리지, Value: 3
+					101 image hdd
+					102 text  스토리지
+				103 container
+					104 text 볼륨
+					105 text 0 사용됨
+					106 text 0%
+					107 text 20 사용 가능 | 20 제한
+					108 text 스냅샷
+					109 text 0 사용됨
+					110 text 0%
+					111 text 20 사용 가능 | 20 제한
+					112 text 템플릿
+					113 text 0 사용됨
+					114 text 0%
+					115 text 20 사용 가능 | 20 제한
+					116 text 기본 스토리지
+					117 text 0.00 GiB 사용됨
+					118 text 0%
+					119 text 200.00 GiB 사용 가능 | 200.00 GiB 제한
+					120 text 2차 스토리지
+					121 text 0.00 GiB 사용됨
+					122 text 0%
+					123 text 400.00 GiB 사용 가능 | 400.00 GiB 제한
+					124 text 백업
+					125 text 0 사용됨
+					126 text 0%
+					127 text 20 사용 가능 | 20 제한
+					128 text 백업 스토리지
+					129 text 0.00 GiB 사용됨
+					130 text 0%
+					131 text 400.00 GiB 사용 가능 | 400.00 GiB 제한
+					132 text 버킷
+					133 text 0 사용됨
+					134 text 0%
+					135 text 20 사용 가능 | 20 제한
+					136 text Object 스토리지
+					137 text 0.00 GiB 사용됨
+					138 text 0%
+					139 text 400.00 GiB 사용 가능 | 400.00 GiB 제한
+			140 container
+				141 heading apartment 네트워크, Value: 3
+					142 image apartment
+					143 text  네트워크
+				144 container
+					145 text Public IP 주소
+					146 text 0 사용됨
+					147 text 0%
+					148 text 20 사용 가능 | 20 제한
+					149 text 네트워크
+					150 text 0 사용됨
+					151 text 0%
+					152 text 20 사용 가능 | 20 제한
+					153 text VPCs
+					154 text 0 사용됨
+					155 text 0%
+					156 text 20 사용 가능 | 20 제한
+			157 container
+				158 heading question-circle 도움말, Value: 3
+					159 image question-circle
+					160 text  도움말
+				161 container
+					162 content list
+						163 container
+							164 image read
+							165 heading Documentation, Value: 4
+								166 link Description: Documentation, Value: docs.ablecloud.io/latest
+							167 text ABLESTACK documentation website
+						168 container
+							169 image mail
+							170 heading Email Support, Value: 4
+								171 link Description: Email Support, Value: mailto:support@ablecloud.io
+							172 text Join ABLESTACK users mailing list to seek and provide support
+						173 container
+							174 image bug
+							175 heading Report Issue, Value: 4
+								176 link Description: Report Issue, Value: github.com/ablecloud-team/ablestack-cloud/issues/new
+							177 text Submit a bug or improvement request
+			178 container
+				179 heading schedule 이벤트, Value: 3
+					180 image schedule
+					181 text  이벤트
+				182 container
+					183 content list
+						184 container
+							185 text 2026. 10. 16. 오후 3:08:54
+							186 link Description: USER.LOGIN, Value: 10.10.31.10:8080/client/#/event/6c327ecc-01e7-4236-a7d2-5f2e6be136da
+							187 container
+								188 image user
+								189 link Description: ud1389-31-20261016-outsider, Value: 10.10.31.10:8080/client/#/accountuser/9cad5cf1-6f94-4a10-8021-459b6b6a942f
+							190 text (ud1389-31-20261016-outsider) user has logged in from IP Address /10.10.21.101
+						191 container
+							192 text 2026. 10. 16. 오후 2:57:23
+							193 link Description: USER.LOGIN, Value: 10.10.31.10:8080/client/#/event/46f72e57-1732-450c-a3a0-5c4d7bd36d53
+							194 container
+								195 image user
+								196 link Description: ud1389-31-20261016-outsider, Value: 10.10.31.10:8080/client/#/accountuser/9cad5cf1-6f94-4a10-8021-459b6b6a942f
+							197 text (ud1389-31-20261016-outsider) user has logged in from IP Address /10.10.21.101
+						198 container
+							199 text 2026. 10. 16. 오후 2:45:58
+							200 link Description: USER.LOGOUT, Value: 10.10.31.10:8080/client/#/event/8a60db71-fa38-455f-8411-71cd54491479
+							201 container
+								202 image user
+								203 link Description: ud1389-31-20261016-outsider, Value: 10.10.31.10:8080/client/#/accountuser/9cad5cf1-6f94-4a10-8021-459b6b6a942f
+							204 text (ud1389-31-20261016-outsider) user has logged out
+						205 container
+							206 text 2026. 10. 16. 오후 2:45:55
+							207 link Description: USER.LOGIN, Value: 10.10.31.10:8080/client/#/event/2bb44a1a-1724-427a-88d4-a9c7193282c0
+							208 container
+								209 image user
+								210 link Description: ud1389-31-20261016-outsider, Value: 10.10.31.10:8080/client/#/accountuser/9cad5cf1-6f94-4a10-8021-459b6b6a942f
+							211 text (ud1389-31-20261016-outsider) user has logged in from IP Address /10.10.21.101
+						212 container
+							213 text 2026. 10. 16. 오후 2:30:04
+							214 link Description: USER.LOGIN, Value: 10.10.31.10:8080/client/#/event/6d5a7344-ae9f-47cf-be4d-ea26885796d5
+							215 container
+								216 image user
+								217 link Description: ud1389-31-20261016-outsider, Value: 10.10.31.10:8080/client/#/accountuser/9cad5cf1-6f94-4a10-8021-459b6b6a942f
+							218 text (ud1389-31-20261016-outsider) user has logged in from IP Address /10.10.21.101
+						219 container
+							220 text 2026. 10. 16. 오후 2:29:50
+							221 link Description: USER.LOGIN, Value: 10.10.31.10:8080/client/#/event/51a41752-80b7-441b-836c-4972d6af73c9
+							222 container
+								223 image user
+								224 link Description: ud1389-31-20261016-outsider, Value: 10.10.31.10:8080/client/#/accountuser/9cad5cf1-6f94-4a10-8021-459b6b6a942f
+							225 text (ud1389-31-20261016-outsider) user has logged in from IP Address /10.10.21.101
+					226 link Description: 보기 이벤트, Value: 10.10.31.10:8080/client/#/event
+	237 container
+		238 image check-circle
+		239 text 사용 가능한 모든 기능을 발견했습니다!
+	234 container
+		235 image info-circle
+		236 text Wall 모니터링을 사용할 수 없습니다. 기존 알림은 최신 정보가 아닐 수 있으며 Mold는 계속 사용할 수 있습니다. 비활성
+
+The focused UI element is 1 AXWebArea 대시보드 - ABLESTACK-Mold, URL: 10.10.31.10:8080/client/#/dashboard

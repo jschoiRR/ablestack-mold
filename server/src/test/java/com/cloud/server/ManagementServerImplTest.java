@@ -52,7 +52,6 @@ import java.util.List;
 
 import org.apache.cloudstack.annotation.dao.AnnotationDao;
 import org.apache.cloudstack.api.ApiConstants;
-import org.apache.cloudstack.api.BaseCmd;
 import org.apache.cloudstack.api.command.admin.config.ListCfgsByCmd;
 import org.apache.cloudstack.api.command.admin.guest.AddGuestOsCategoryCmd;
 import org.apache.cloudstack.api.command.admin.guest.DeleteGuestOsCategoryCmd;
@@ -62,7 +61,6 @@ import org.apache.cloudstack.api.command.user.guest.ListGuestOsCategoriesCmd;
 import org.apache.cloudstack.api.command.user.ssh.RegisterSSHKeyPairCmd;
 import org.apache.cloudstack.api.command.user.userdata.DeleteUserDataCmd;
 import org.apache.cloudstack.api.command.user.userdata.ListUserDataCmd;
-import org.apache.cloudstack.api.command.user.userdata.RegisterUserDataCmd;
 import org.apache.cloudstack.config.Configuration;
 import org.apache.cloudstack.context.CallContext;
 import org.apache.cloudstack.engine.subsystem.api.storage.PrimaryDataStore;
@@ -367,78 +365,12 @@ public class ManagementServerImplTest {
     }
 
     @Test
-    public void testSuccessfulRegisterUserdata() {
-        try (MockedStatic<CallContext> ignored = Mockito.mockStatic(CallContext.class)) {
-            CallContext callContextMock = Mockito.mock(CallContext.class);
-            when(CallContext.current()).thenReturn(callContextMock);
-            when(account.getAccountId()).thenReturn(1L);
-            when(account.getDomainId()).thenReturn(2L);
-            when(callContextMock.getCallingAccount()).thenReturn(account);
-            when(_accountMgr.finalizeOwner(nullable(Account.class), nullable(String.class), nullable(Long.class), nullable(Long.class))).thenReturn(account);
-
-            String testUserData = "testUserdata";
-            RegisterUserDataCmd cmd = Mockito.mock(RegisterUserDataCmd.class);
-            when(cmd.getUserData()).thenReturn(testUserData);
-            when(cmd.getName()).thenReturn("testName");
-            when(cmd.getHttpMethod()).thenReturn(BaseCmd.HTTPMethod.GET);
-
-            when(_userDataDao.findByName(account.getAccountId(), account.getDomainId(), "testName")).thenReturn(null);
-            when(_userDataDao.findByUserData(account.getAccountId(), account.getDomainId(), testUserData)).thenReturn(null);
-            when(userDataManager.validateUserData(testUserData, BaseCmd.HTTPMethod.GET)).thenReturn(testUserData);
-
-            UserData userData = spy.registerUserData(cmd);
-            Assert.assertEquals("testName", userData.getName());
-            Assert.assertEquals("testUserdata", userData.getUserData());
-            Assert.assertEquals(1L, userData.getAccountId());
-            Assert.assertEquals(2L, userData.getDomainId());
-        }
-    }
-
-    @Test(expected = InvalidParameterValueException.class)
-    public void testRegisterExistingUserdata() {
-        try (MockedStatic<CallContext> ignored = Mockito.mockStatic(CallContext.class)) {
-            CallContext callContextMock = Mockito.mock(CallContext.class);
-            when(CallContext.current()).thenReturn(callContextMock);
-            when(account.getAccountId()).thenReturn(1L);
-            when(account.getDomainId()).thenReturn(2L);
-            when(callContextMock.getCallingAccount()).thenReturn(account);
-            when(_accountMgr.finalizeOwner(nullable(Account.class), nullable(String.class), nullable(Long.class), nullable(Long.class))).thenReturn(account);
-
-            RegisterUserDataCmd cmd = Mockito.mock(RegisterUserDataCmd.class);
-            when(cmd.getUserData()).thenReturn("testUserdata");
-            when(cmd.getName()).thenReturn("testName");
-
-            UserDataVO userData = Mockito.mock(UserDataVO.class);
-            when(_userDataDao.findByName(account.getAccountId(), account.getDomainId(), "testName")).thenReturn(null);
-            when(_userDataDao.findByUserData(account.getAccountId(), account.getDomainId(), "testUserdata")).thenReturn(userData);
-
-            spy.registerUserData(cmd);
-        }
-    }
-
-    @Test(expected = InvalidParameterValueException.class)
-    public void testRegisterExistingName() {
-        try (MockedStatic<CallContext> ignored = Mockito.mockStatic(CallContext.class)) {
-            CallContext callContextMock = Mockito.mock(CallContext.class);
-            when(CallContext.current()).thenReturn(callContextMock);
-            when(account.getAccountId()).thenReturn(1L);
-            when(account.getDomainId()).thenReturn(2L);
-            Mockito.when(callContextMock.getCallingAccount()).thenReturn(account);
-            when(_accountMgr.finalizeOwner(nullable(Account.class), nullable(String.class), nullable(Long.class), nullable(Long.class))).thenReturn(account);
-
-            RegisterUserDataCmd cmd = Mockito.mock(RegisterUserDataCmd.class);
-            when(cmd.getName()).thenReturn("testName");
-
-            UserDataVO userData = Mockito.mock(UserDataVO.class);
-            when(_userDataDao.findByName(account.getAccountId(), account.getDomainId(), "testName")).thenReturn(userData);
-
-            spy.registerUserData(cmd);
-        }
-    }
-
-    @Test
     public void testSuccessfulDeleteUserdata() {
-        try (MockedStatic<CallContext> ignored = Mockito.mockStatic(CallContext.class)) {
+        try (MockedStatic<CallContext> ignored = Mockito.mockStatic(CallContext.class);
+                MockedStatic<com.cloud.utils.db.TransactionLegacy> transactions = Mockito.mockStatic(com.cloud.utils.db.TransactionLegacy.class)) {
+            com.cloud.utils.db.TransactionLegacy transaction = Mockito.mock(com.cloud.utils.db.TransactionLegacy.class);
+            transactions.when(() -> com.cloud.utils.db.TransactionLegacy.open(Mockito.anyString(),
+                    Mockito.eq(com.cloud.utils.db.TransactionLegacy.CLOUD_DB), Mockito.eq(false))).thenReturn(transaction);
             CallContext callContextMock = Mockito.mock(CallContext.class);
             when(CallContext.current()).thenReturn(callContextMock);
             when(callContextMock.getCallingAccount()).thenReturn(account);

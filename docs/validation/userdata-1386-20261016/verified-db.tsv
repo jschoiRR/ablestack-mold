@@ -1,0 +1,26 @@
+resource	active_residuals
+userdata	5
+vm	6
+volume	6
+template	0
+network	6
+account	2
+project	1
+project-account	1
+domain	1
+role	2
+router	1
+router-volume	1
+uuid	display_name	state	removed	user_data_id	library_uuid	user_data_details	userdata_sha256
+704c3735-85e2-4fa8-94e5-c20c82c46bed	UD1386-31-20261016-unsupported	Stopped	0	258	c483043f-3de0-4870-bb82-cfe421423f9d	{TAG=A-value}	83ce842e14c6a731172b1c35e49ab0807e567fcd8f8e41fcef5eaddd3f28c9f8
+9bb5a1c7-29b9-4051-ad2d-1ba5aaa851f7	UD1386-31-20261016-configdrive	Stopped	0	263	b4355df8-70bc-41c5-bc45-301d92433210	{TAG=최종 ConfigDrive 한글}	2a74dc644e924c4bd6963fd991d2b466c47966394f69fe48f8b370371851fbad
+ee2f21dc-6281-439e-bbfb-11ad6013ec97	UD1386-31-20261016-vr	Stopped	0	263	b4355df8-70bc-41c5-bc45-301d92433210	{TAG=최종 VR 한글}	2a74dc644e924c4bd6963fd991d2b466c47966394f69fe48f8b370371851fbad
+cd356e22-0eac-4362-a070-e843c00b3235	UD1386-31-20261016-user	Stopped	0	260	08b9e0f6-30c1-40dc-801b-95d8264c6ec6	{TAG=일반 사용자 한글}	68f9789660e70233115508f760beb8605e46d8b2a3fa6091068500028312dd25
+fd2d5507-a549-4339-acde-fe0c6e398541	UD1386-31-20261016-domainadmin	Stopped	0	261	e8d48dff-b274-45a9-b04f-fb6b69413d64	{TAG=도메인 관리자 한글}	d253791dfc00dc23586b57e669fbb4f9f0498d1000debe183a9f12de6805b922
+cf64f1f6-c1d5-4535-990e-a28d101b3e52	UD1386-31-20261016-project	Stopped	0	262	9f5ae634-6f57-4b3a-9ebd-88cf1979fe54	{TAG=프로젝트 한글}	a31a613d33648aed0b0ca1d4f68846f89991f5060e61577f391ef28b8da39201
+library_uuid	name	active_vm_refs
+c483043f-3de0-4870-bb82-cfe421423f9d	UD1386-31-20261016-A	1
+08b9e0f6-30c1-40dc-801b-95d8264c6ec6	UD1386-31-20261016-user	1
+e8d48dff-b274-45a9-b04f-fb6b69413d64	UD1386-31-20261016-domainadmin	1
+9f5ae634-6f57-4b3a-9ebd-88cf1979fe54	UD1386-31-20261016-project	1
+b4355df8-70bc-41c5-bc45-301d92433210	UD1386-31-20261016-B	2

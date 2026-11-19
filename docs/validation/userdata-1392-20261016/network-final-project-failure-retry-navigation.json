@@ -1,0 +1,1046 @@
+{
+  "name": "final-project-failure-retry-navigation",
+  "truncated": false,
+  "events": [
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.6834",
+      "url": "http://10.10.31.10:8080/client/api/?projectid=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6&command=listApis&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.6834",
+      "status": 503,
+      "url": "http://10.10.31.10:8080/client/api/?projectid=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6&command=listApis&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.6836",
+      "url": "http://10.10.31.10:8080/client/api/?projectid=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6&command=listApis&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.6836",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?projectid=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6&command=listApis&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.6837",
+      "url": "http://10.10.31.10:8080/client/api/?name=favicon.state.interval&command=listConfigurations&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.6838",
+      "url": "http://10.10.31.10:8080/client/api/?name=favicon.state.yellow.capacity&command=listConfigurations&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.6839",
+      "url": "http://10.10.31.10:8080/client/api/?name=favicon.state.red.capacity&command=listConfigurations&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.6840",
+      "url": "http://10.10.31.10:8080/client/api/?id=6ab285d3-d90d-4da1-98dc-652ac5c17f14&account=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&listall=true&page=1&pagesize=2&command=listUserData&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.6841",
+      "url": "http://10.10.31.10:8080/client/api/?id=6ab285d3-d90d-4da1-98dc-652ac5c17f14&account=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&listall=true&page=1&pagesize=2&command=listUserData&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.6842",
+      "url": "http://10.10.31.10:8080/client/api/?resourceids=7ef6b29a-b253-11f1-a895-0024814c313f&resourcetype=domain&command=listResourceIcon&response=json&sessionkey=%5Bredacted%5D&projectid=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.6843",
+      "url": "http://10.10.31.10:8080/client/api/?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&showicon=true&command=listAccounts&response=json&sessionkey=%5Bredacted%5D&projectid=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.6844",
+      "url": "http://10.10.31.10:8080/client/api/?command=listZones&response=json&sessionkey=%5Bredacted%5D&projectid=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.6845",
+      "url": "http://10.10.31.10:8080/client/api/?showicon=true&command=listZones&response=json&sessionkey=%5Bredacted%5D&projectid=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.6846",
+      "url": "http://10.10.31.10:8080/client/api/?page=1&pagesize=8&listall=true&command=listAlerts&response=json&sessionkey=%5Bredacted%5D&projectid=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.6847",
+      "url": "http://10.10.31.10:8080/client/api/?page=1&pagesize=8&listall=true&command=listEvents&response=json&sessionkey=%5Bredacted%5D&projectid=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.6848",
+      "url": "http://10.10.31.10:8080/client/api/?id=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6&listall=true&command=listProjects&response=json&sessionkey=%5Bredacted%5D&projectid=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.6849",
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&details=min&page=1&pagesize=1&command=listVirtualMachines&response=json&sessionkey=%5Bredacted%5D&projectid=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.6850",
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&details=min&state=running&page=1&pagesize=1&command=listVirtualMachines&response=json&sessionkey=%5Bredacted%5D&projectid=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.6851",
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&details=min&state=stopped&page=1&pagesize=1&command=listVirtualMachines&response=json&sessionkey=%5Bredacted%5D&projectid=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.6852",
+      "url": "http://10.10.31.10:8080/client/api/?page=1&pagesize=8&listall=true&command=listEvents&response=json&sessionkey=%5Bredacted%5D&projectid=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.6853",
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&page=1&pagesize=1&command=listKubernetesClusters&response=json&sessionkey=%5Bredacted%5D&projectid=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.6854",
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&page=1&pagesize=1&command=listVolumes&response=json&sessionkey=%5Bredacted%5D&projectid=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.6855",
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&page=1&pagesize=1&command=listSnapshots&response=json&sessionkey=%5Bredacted%5D&projectid=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.6856",
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&page=1&pagesize=1&command=listNetworks&response=json&sessionkey=%5Bredacted%5D&projectid=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.6857",
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&page=1&pagesize=1&command=listVPCs&response=json&sessionkey=%5Bredacted%5D&projectid=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.6858",
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&page=1&pagesize=1&command=listPublicIpAddresses&response=json&sessionkey=%5Bredacted%5D&projectid=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.6859",
+      "url": "http://10.10.31.10:8080/client/api/?templatefilter=self&listall=true&page=1&pagesize=1&command=listTemplates&response=json&sessionkey=%5Bredacted%5D&projectid=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.6839",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?name=favicon.state.red.capacity&command=listConfigurations&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.6837",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?name=favicon.state.interval&command=listConfigurations&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.6838",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?name=favicon.state.yellow.capacity&command=listConfigurations&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.6840",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?id=6ab285d3-d90d-4da1-98dc-652ac5c17f14&account=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&listall=true&page=1&pagesize=2&command=listUserData&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.6842",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?resourceids=7ef6b29a-b253-11f1-a895-0024814c313f&resourcetype=domain&command=listResourceIcon&response=json&sessionkey=%5Bredacted%5D&projectid=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.6841",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?id=6ab285d3-d90d-4da1-98dc-652ac5c17f14&account=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&listall=true&page=1&pagesize=2&command=listUserData&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.6844",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?command=listZones&response=json&sessionkey=%5Bredacted%5D&projectid=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.6846",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?page=1&pagesize=8&listall=true&command=listAlerts&response=json&sessionkey=%5Bredacted%5D&projectid=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.6845",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?showicon=true&command=listZones&response=json&sessionkey=%5Bredacted%5D&projectid=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.6847",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?page=1&pagesize=8&listall=true&command=listEvents&response=json&sessionkey=%5Bredacted%5D&projectid=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.6860",
+      "url": "http://10.10.31.10:8080/client/api/?managementserverid=716fb21e-86f3-4f8c-b34d-11c8d0220230&command=readyForShutdown&response=json&sessionkey=%5Bredacted%5D&projectid=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.6850",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&details=min&state=running&page=1&pagesize=1&command=listVirtualMachines&response=json&sessionkey=%5Bredacted%5D&projectid=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.6843",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&showicon=true&command=listAccounts&response=json&sessionkey=%5Bredacted%5D&projectid=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.6848",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?id=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6&listall=true&command=listProjects&response=json&sessionkey=%5Bredacted%5D&projectid=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.6853",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&page=1&pagesize=1&command=listKubernetesClusters&response=json&sessionkey=%5Bredacted%5D&projectid=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.6849",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&details=min&page=1&pagesize=1&command=listVirtualMachines&response=json&sessionkey=%5Bredacted%5D&projectid=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.6855",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&page=1&pagesize=1&command=listSnapshots&response=json&sessionkey=%5Bredacted%5D&projectid=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.6851",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&details=min&state=stopped&page=1&pagesize=1&command=listVirtualMachines&response=json&sessionkey=%5Bredacted%5D&projectid=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.6854",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&page=1&pagesize=1&command=listVolumes&response=json&sessionkey=%5Bredacted%5D&projectid=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.6858",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&page=1&pagesize=1&command=listPublicIpAddresses&response=json&sessionkey=%5Bredacted%5D&projectid=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.6857",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&page=1&pagesize=1&command=listVPCs&response=json&sessionkey=%5Bredacted%5D&projectid=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.6859",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?templatefilter=self&listall=true&page=1&pagesize=1&command=listTemplates&response=json&sessionkey=%5Bredacted%5D&projectid=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.6852",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?page=1&pagesize=8&listall=true&command=listEvents&response=json&sessionkey=%5Bredacted%5D&projectid=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.6856",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&page=1&pagesize=1&command=listNetworks&response=json&sessionkey=%5Bredacted%5D&projectid=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.6860",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?managementserverid=716fb21e-86f3-4f8c-b34d-11c8d0220230&command=readyForShutdown&response=json&sessionkey=%5Bredacted%5D&projectid=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.6861",
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&page=1&pagesize=20&command=listUserData&response=json&sessionkey=%5Bredacted%5D&projectid=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.6861",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&page=1&pagesize=20&command=listUserData&response=json&sessionkey=%5Bredacted%5D&projectid=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.6863",
+      "url": "http://10.10.31.10:8080/client/api/?projectid=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6&command=listApis&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.6863",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?projectid=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6&command=listApis&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.6864",
+      "url": "http://10.10.31.10:8080/client/api/?name=favicon.state.interval&command=listConfigurations&response=json&sessionkey=%5Bredacted%5D&projectid=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.6865",
+      "url": "http://10.10.31.10:8080/client/api/?name=favicon.state.yellow.capacity&command=listConfigurations&response=json&sessionkey=%5Bredacted%5D&projectid=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.6866",
+      "url": "http://10.10.31.10:8080/client/api/?name=favicon.state.red.capacity&command=listConfigurations&response=json&sessionkey=%5Bredacted%5D&projectid=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.6867",
+      "url": "http://10.10.31.10:8080/client/api/?command=listZones&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.6868",
+      "url": "http://10.10.31.10:8080/client/api/?showicon=true&command=listZones&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.6869",
+      "url": "http://10.10.31.10:8080/client/api/?page=1&pagesize=8&listall=true&command=listAlerts&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.6870",
+      "url": "http://10.10.31.10:8080/client/api/?page=1&pagesize=8&listall=true&command=listEvents&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.6866",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?name=favicon.state.red.capacity&command=listConfigurations&response=json&sessionkey=%5Bredacted%5D&projectid=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.6865",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?name=favicon.state.yellow.capacity&command=listConfigurations&response=json&sessionkey=%5Bredacted%5D&projectid=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.6864",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?name=favicon.state.interval&command=listConfigurations&response=json&sessionkey=%5Bredacted%5D&projectid=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.6868",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?showicon=true&command=listZones&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.6871",
+      "url": "http://10.10.31.10:8080/client/api/?zoneid=7013f5a1-de59-4cea-a596-f4f58815f31c&fetchlatest=false&command=listCapacity&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.6872",
+      "url": "http://10.10.31.10:8080/client/api/?command=listPods&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.6873",
+      "url": "http://10.10.31.10:8080/client/api/?command=listClusters&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.6874",
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&details=min&type=routing&page=1&pagesize=1&command=listHosts&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.6875",
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&details=min&type=routing&command=listHosts&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.6876",
+      "url": "http://10.10.31.10:8080/client/api/?command=listStoragePools&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.6877",
+      "url": "http://10.10.31.10:8080/client/api/?command=listSystemVms&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.6878",
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&projectid=-1&command=listRouters&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.6879",
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&projectid=-1&details=min&page=1&pagesize=1&command=listVirtualMachines&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.6867",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?command=listZones&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.6869",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?page=1&pagesize=8&listall=true&command=listAlerts&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.6870",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?page=1&pagesize=8&listall=true&command=listEvents&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.6872",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?command=listPods&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.6871",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?zoneid=7013f5a1-de59-4cea-a596-f4f58815f31c&fetchlatest=false&command=listCapacity&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.6873",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?command=listClusters&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.6875",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&details=min&type=routing&command=listHosts&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.6876",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?command=listStoragePools&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.6874",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&details=min&type=routing&page=1&pagesize=1&command=listHosts&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.6877",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?command=listSystemVms&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.6879",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&projectid=-1&details=min&page=1&pagesize=1&command=listVirtualMachines&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.6880",
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&page=1&pagesize=20&command=listUserData&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.6878",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&projectid=-1&command=listRouters&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.6880",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&page=1&pagesize=20&command=listUserData&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.6881",
+      "url": "http://10.10.31.10:8080/client/api/?managementserverid=716fb21e-86f3-4f8c-b34d-11c8d0220230&command=readyForShutdown&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.6881",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?managementserverid=716fb21e-86f3-4f8c-b34d-11c8d0220230&command=readyForShutdown&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.6882",
+      "url": "http://10.10.31.10:8080/client/api/?command=listZones&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.6883",
+      "url": "http://10.10.31.10:8080/client/api/?showicon=true&command=listZones&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.6884",
+      "url": "http://10.10.31.10:8080/client/api/?page=1&pagesize=8&listall=true&command=listAlerts&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.6885",
+      "url": "http://10.10.31.10:8080/client/api/?page=1&pagesize=8&listall=true&command=listEvents&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.6882",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?command=listZones&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.6883",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?showicon=true&command=listZones&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.6886",
+      "url": "http://10.10.31.10:8080/client/api/?zoneid=7013f5a1-de59-4cea-a596-f4f58815f31c&fetchlatest=false&command=listCapacity&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.6887",
+      "url": "http://10.10.31.10:8080/client/api/?command=listPods&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.6888",
+      "url": "http://10.10.31.10:8080/client/api/?command=listClusters&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.6889",
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&details=min&type=routing&page=1&pagesize=1&command=listHosts&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.6890",
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&details=min&type=routing&command=listHosts&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.6891",
+      "url": "http://10.10.31.10:8080/client/api/?command=listStoragePools&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.6892",
+      "url": "http://10.10.31.10:8080/client/api/?command=listSystemVms&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.6893",
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&projectid=-1&command=listRouters&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.6894",
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&projectid=-1&details=min&page=1&pagesize=1&command=listVirtualMachines&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.6884",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?page=1&pagesize=8&listall=true&command=listAlerts&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.6887",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?command=listPods&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.6888",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?command=listClusters&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.6885",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?page=1&pagesize=8&listall=true&command=listEvents&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.6889",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&details=min&type=routing&page=1&pagesize=1&command=listHosts&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.6886",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?zoneid=7013f5a1-de59-4cea-a596-f4f58815f31c&fetchlatest=false&command=listCapacity&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.6890",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&details=min&type=routing&command=listHosts&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.6891",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?command=listStoragePools&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.6892",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?command=listSystemVms&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.6894",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&projectid=-1&details=min&page=1&pagesize=1&command=listVirtualMachines&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.6893",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&projectid=-1&command=listRouters&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.6895",
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&page=1&pagesize=20&command=listUserData&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.6895",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&page=1&pagesize=20&command=listUserData&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.6896",
+      "url": "http://10.10.31.10:8080/client/api/?command=listZones&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.6897",
+      "url": "http://10.10.31.10:8080/client/api/?showicon=true&command=listZones&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.6898",
+      "url": "http://10.10.31.10:8080/client/api/?page=1&pagesize=8&listall=true&command=listAlerts&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.6899",
+      "url": "http://10.10.31.10:8080/client/api/?page=1&pagesize=8&listall=true&command=listEvents&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.6896",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?command=listZones&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.6897",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?showicon=true&command=listZones&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.6900",
+      "url": "http://10.10.31.10:8080/client/api/?zoneid=7013f5a1-de59-4cea-a596-f4f58815f31c&fetchlatest=false&command=listCapacity&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.6901",
+      "url": "http://10.10.31.10:8080/client/api/?command=listPods&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.6902",
+      "url": "http://10.10.31.10:8080/client/api/?command=listClusters&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.6903",
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&details=min&type=routing&page=1&pagesize=1&command=listHosts&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.6904",
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&details=min&type=routing&command=listHosts&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.6905",
+      "url": "http://10.10.31.10:8080/client/api/?command=listStoragePools&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.6906",
+      "url": "http://10.10.31.10:8080/client/api/?command=listSystemVms&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.6907",
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&projectid=-1&command=listRouters&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.6908",
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&projectid=-1&details=min&page=1&pagesize=1&command=listVirtualMachines&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.6898",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?page=1&pagesize=8&listall=true&command=listAlerts&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.6901",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?command=listPods&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.6900",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?zoneid=7013f5a1-de59-4cea-a596-f4f58815f31c&fetchlatest=false&command=listCapacity&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.6902",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?command=listClusters&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.6905",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?command=listStoragePools&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.6903",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&details=min&type=routing&page=1&pagesize=1&command=listHosts&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.6904",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&details=min&type=routing&command=listHosts&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.6899",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?page=1&pagesize=8&listall=true&command=listEvents&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.6906",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?command=listSystemVms&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.6908",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&projectid=-1&details=min&page=1&pagesize=1&command=listVirtualMachines&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.6907",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&projectid=-1&command=listRouters&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.6909",
+      "url": "http://10.10.31.10:8080/client/api/?managementserverid=716fb21e-86f3-4f8c-b34d-11c8d0220230&command=readyForShutdown&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.6909",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?managementserverid=716fb21e-86f3-4f8c-b34d-11c8d0220230&command=readyForShutdown&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.6910",
+      "url": "http://10.10.31.10:8080/client/api/?managementserverid=716fb21e-86f3-4f8c-b34d-11c8d0220230&command=readyForShutdown&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.6910",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?managementserverid=716fb21e-86f3-4f8c-b34d-11c8d0220230&command=readyForShutdown&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.6911",
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&page=1&pagesize=20&command=listUserData&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.6911",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&page=1&pagesize=20&command=listUserData&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.6912",
+      "url": "http://10.10.31.10:8080/client/api/?command=getWallAlertAvailability&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.6912",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?command=getWallAlertAvailability&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.6913",
+      "url": "http://10.10.31.10:8080/client/api/?managementserverid=716fb21e-86f3-4f8c-b34d-11c8d0220230&command=readyForShutdown&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.6913",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?managementserverid=716fb21e-86f3-4f8c-b34d-11c8d0220230&command=readyForShutdown&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.6914",
+      "url": "http://10.10.31.10:8080/client/api/?managementserverid=716fb21e-86f3-4f8c-b34d-11c8d0220230&command=readyForShutdown&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.6914",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?managementserverid=716fb21e-86f3-4f8c-b34d-11c8d0220230&command=readyForShutdown&response=json&sessionkey=%5Bredacted%5D"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "requestId": "36984.6915",
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&page=1&pagesize=20&command=listUserData&response=json&sessionkey=%5Bredacted%5D",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.responseReceived",
+      "requestId": "36984.6915",
+      "status": 200,
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&page=1&pagesize=20&command=listUserData&response=json&sessionkey=%5Bredacted%5D"
+    }
+  ]
+}

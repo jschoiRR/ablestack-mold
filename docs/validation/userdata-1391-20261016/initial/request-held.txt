@@ -1,0 +1,22 @@
+Browser tab: 6, Title: "사용자 데이터 라이브러리 - ABLESTACK-Mold", URL: "http://10.10.31.10:8080/client/#/userdata/4cb11aab-bf01-4c0f-a6a1-e3c66c015dfa?tab=userdata.versions".
+The following is a diff from the previous accessibility tree with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+Removed element IDs: 194-195, 209, 213, 228, 239
++					241 image loading
++							242 text * 이름
+~						211 text field (disabled) * 이름 info-circle, Value: UD1391-31-20261016-interceptor-probe, ID: form_item_name
++							243 text * 사용자 데이터
+~						215 text entry area (disabled) * 사용자 데이터 info-circle, ID: form_item_userdata, Value: #cloud-config
+# interceptor probe UD1391
+
+~							218 checkbox (disabled, settable, integer) Base64 인코드  , Value: 0, ID: form_item_isbase64
+~							220 button (disabled) 원문으로 편집
+~							225 combo box (disabled, collapsed, settable) 사용자 데이터 매개변수 info-circle, ID: form_item_params, Secondary Actions: Expand
++							244 image info-circle
+~							229 text 본문이 변경되었습니다. 새 버전 등록은 기존 참조와 VM 저장 본문을 바꾸지 않습니다.
+~							231 text 원본 12012바이트 → 새 버전 41바이트 · 최초 차이 바이트 위치: 1
++					245 text 등록 중입니다. 결과를 받을 때까지 이 창과 페이지를 유지해 주세요.
+~				237 button (disabled) 취소
+~				238 button loading 등록 결과 확인
++					246 image loading
+~					240 text 등록 결과 확인
+The focused UI element is 238 button loading 등록 결과 확인

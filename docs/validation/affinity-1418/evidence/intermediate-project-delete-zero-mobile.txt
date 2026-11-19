@@ -1,0 +1,101 @@
+Browser tab: 6, Title: "Affinity 그룹 - ABLESTACK-Mold", URL: "http://10.10.31.10:8080/client/#/affinitygroup/e1dcc4fd-3c54-4db4-97f4-635cad715ddb".
+1 AXWebArea Affinity 그룹 - ABLESTACK-Mold, URL: 10.10.31.10:8080/client/#/affinitygroup/e1dcc4fd-3c54-4db4-97f4-635cad715ddb
+	2 container
+		55 container
+			572 image menu-unfold
+			57 container
+				426 combo box (collapsed, settable) ID: rc_select_62, Secondary Actions: Expand
+				388 image project
+				389 text qa-ag05-project
+			64 image translation
+			65 image bell
+			66 container
+				67 text AQ AG05 QA
+		68 container
+			482 container
+				483 container
+					484 link Description: home, Value: 10.10.31.10:8080/client/#/
+					485 text /
+					486 link Description: Affinity 그룹, Value: 10.10.31.10:8080/client/#/affinitygroup
+					487 text / qa-ag05-project-ui
+					488 link Description: question-circle, Value: docs.ablecloud.io/latest/adminguide/virtual_machines.html#affinity-groups
+					489 button reload 업데이트
+						490 image reload
+						491 text 업데이트
+				492 button down 작업
+					493 image down
+					494 text 작업
+			495 container
+				496 image swap
+				497 heading qa-ag05-project-ui, Value: 4
+					498 text qa-ag05-project-ui
+				499 text 같은 호스트 우선 · 선호
+				500 text 아이디
+				501 button barcode
+					502 image barcode
+				503 link Description: e1dcc4fd-3c54-4db4-97f4-635cad715ddb , Value: javascript:;
+				504 text 프로젝트
+				505 image project
+				506 link Description: qa-ag05-project, Value: 10.10.31.10:8080/client/#/project/6d077125-d983-4ed7-9473-93f629196980
+				507 text 가능하면 같은 호스트에 배치합니다. 조건을 만족하지 못하면 다른 호스트에도 배치할 수 있습니다. 연결 VM 수 0 도메인
+				508 image block
+				509 text ROOT
+				510 link Description: cloud-server 가상머신 보기, Value: 10.10.31.10:8080/client/#/vm?affinitygroupid=e1dcc4fd-3c54-4db4-97f4-635cad715ddb&projectid=6d077125-d983-4ed7-9473-93f629196980
+			511 container
+				512 tab group
+					513 container
+						514 tab (selected, settable, boolean) 상세, Value: 1, ID: rc-tabs-22-tab-details
+						515 tab (selectable, settable, boolean) 가상머신, Value: 0, ID: rc-tabs-22-tab-instances
+						516 tab (selectable, settable, boolean) 이벤트, Value: 0, ID: rc-tabs-22-tab-events
+				517 container Description: 상세, ID: rc-tabs-22-panel-details
+					518 content list
+						519 container
+							520 text 이름
+							521 text qa-ag05-project-ui
+						522 container
+							523 text 아이디
+							524 text e1dcc4fd-3c54-4db4-97f4-635cad715ddb
+						525 container
+							526 text 설명
+							527 text —
+						528 container
+							529 text 유형
+							530 text 같은 호스트 우선 · 선호
+							531 text 가능하면 같은 호스트에 배치합니다. 조건을 만족하지 못하면 다른 호스트에도 배치할 수 있습니다.
+						532 container
+							533 text 연결 VM 수
+							534 text 0
+						535 container
+							536 text 프로젝트
+							537 text qa-ag05-project
+						538 container
+							539 text 도메인
+							540 text ROOT
+	546 container
+		547 container Affinity 그룹 삭제
+			548 container
+				549 button Close
+					550 image close
+				551 text Affinity 그룹 삭제
+				552 text 1 / 1
+				553 table
+					554 row
+						555 cell
+							556 text 이름
+						557 cell
+							558 text qa-ag05-project-ui
+					559 row
+						560 cell
+							561 text VM 소유 범위
+						562 cell
+							563 text qa-ag05-project / ROOT
+					564 row
+						565 cell
+							566 text 연결 VM 수
+						567 cell
+							568 text 0
+				569 text 이 Affinity 그룹을 삭제하면 해당 그룹의 모든 VM 연결이 해제됩니다. VM 자체와 다른 그룹 연결은 보존됩니다.
+				570 button 취소
+				571 button Affinity 그룹 삭제
+
+The focused UI element is 573 container

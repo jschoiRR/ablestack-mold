@@ -1,0 +1,132 @@
+{
+  "passed": 2,
+  "total": 2,
+  "tests": [
+    {
+      "label": "ui-control-states-light",
+      "passed": true,
+      "samples": [
+        {
+          "state": "hover",
+          "colors": {
+            "text": "rgb(31, 41, 55)",
+            "bg": "rgb(255, 255, 255)",
+            "border": "rgb(9, 105, 218)",
+            "placeholder": "rgb(102, 112, 133)"
+          },
+          "ratios": {
+            "text": 14.67911847763172,
+            "border": 5.192060987927794,
+            "placeholder": 4.974752735406439
+          }
+        },
+        {
+          "state": "focus",
+          "colors": {
+            "text": "rgb(31, 41, 55)",
+            "bg": "rgb(255, 255, 255)",
+            "border": "rgb(9, 105, 218)",
+            "placeholder": "rgb(102, 112, 133)"
+          },
+          "ratios": {
+            "text": 14.67911847763172,
+            "border": 5.192060987927794,
+            "placeholder": 4.974752735406439
+          }
+        },
+        {
+          "state": "validation-error",
+          "colors": {
+            "text": "rgb(31, 41, 55)",
+            "bg": "rgb(255, 255, 255)",
+            "border": "rgb(207, 19, 34)",
+            "placeholder": "rgb(102, 112, 133)"
+          },
+          "ratios": {
+            "text": 14.67911847763172,
+            "border": 5.571286067441564,
+            "placeholder": 4.974752735406439
+          }
+        },
+        {
+          "state": "disabled-loading",
+          "colors": {
+            "text": "rgb(75, 85, 99)",
+            "bg": "rgb(242, 244, 247)",
+            "border": "rgb(217, 223, 231)",
+            "placeholder": "rgb(102, 112, 133)"
+          },
+          "ratios": {
+            "text": 6.858789431525315,
+            "border": 1.2170902422967473,
+            "placeholder": 4.514896687792062
+          }
+        }
+      ],
+      "controlled_503_released": true
+    },
+    {
+      "label": "ui-control-states-dark",
+      "passed": true,
+      "samples": [
+        {
+          "state": "hover",
+          "colors": {
+            "text": "rgb(240, 243, 246)",
+            "bg": "rgb(27, 33, 40)",
+            "border": "rgb(105, 177, 255)",
+            "placeholder": "rgb(154, 164, 175)"
+          },
+          "ratios": {
+            "text": 14.563075473728487,
+            "border": 7.208537763371048,
+            "placeholder": 6.412815062943165
+          }
+        },
+        {
+          "state": "focus",
+          "colors": {
+            "text": "rgb(240, 243, 246)",
+            "bg": "rgb(27, 33, 40)",
+            "border": "rgb(105, 177, 255)",
+            "placeholder": "rgb(154, 164, 175)"
+          },
+          "ratios": {
+            "text": 14.563075473728487,
+            "border": 7.208537763371048,
+            "placeholder": 6.412815062943165
+          }
+        },
+        {
+          "state": "validation-error",
+          "colors": {
+            "text": "rgb(240, 243, 246)",
+            "bg": "rgb(27, 33, 40)",
+            "border": "rgb(255, 120, 117)",
+            "placeholder": "rgb(154, 164, 175)"
+          },
+          "ratios": {
+            "text": 14.563075473728487,
+            "border": 6.329589994154014,
+            "placeholder": 6.412815062943165
+          }
+        },
+        {
+          "state": "disabled-loading",
+          "colors": {
+            "text": "rgb(197, 204, 212)",
+            "bg": "rgb(48, 54, 61)",
+            "border": "rgb(67, 67, 67)",
+            "placeholder": "rgb(154, 164, 175)"
+          },
+          "ratios": {
+            "text": 7.532807215791175,
+            "border": 1.2335310120179956,
+            "placeholder": 4.825413341423061
+          }
+        }
+      ],
+      "controlled_503_released": true
+    }
+  ]
+}

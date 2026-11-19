@@ -18,7 +18,18 @@
 import { reactive } from 'vue'
 export const volumeOperations = reactive({})
 export function clearVolumeOperations () { Object.keys(volumeOperations).forEach(key => delete volumeOperations[key]) }
+export function volumeSnapshotReason (snapshots) {
+  if (snapshots == null) return 'message.vmvolume.snapshots.unknown'
+  return snapshots > 0 ? 'message.vmvolume.snapshots.present' : ''
+}
+
+export function volumeBackupReason (vm) {
+  if (!vm || typeof vm.volumemutationblockedreason !== 'string') return 'message.vmvolume.backup.unknown'
+  return vm.volumemutationblockedreason ? 'message.vmvolume.backup.blocked' : ''
+}
+
 export function volumeActionReason (api, volume, vm) {
+  if (['createVolume', 'attachVolume', 'detachVolume'].includes(api) && volumeBackupReason(vm)) return volumeBackupReason(vm)
   if (!vm || !['Running', 'Stopped'].includes(vm.state) || vm.hypervisor === 'External') return 'message.vmvolume.unavailable'
   const flatten = String(volume?.clonefastflattenstatus || volume?.details?.['clone.fast.flatten.status'] || '').toLowerCase()
   if (['pending', 'running'].includes(flatten)) return 'message.sharedmountpoint.clone.flatten.in.progress'

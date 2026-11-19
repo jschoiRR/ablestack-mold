@@ -1,0 +1,29 @@
+{
+  "checks": {
+    "raw-copy": {
+      "equal": true,
+      "bytes": 12012,
+      "actual_sha256": "679125bcb621db778e1bfc27e72374a370a255725d5a6d44902b124b6598500f",
+      "expected_sha256": "679125bcb621db778e1bfc27e72374a370a255725d5a6d44902b124b6598500f"
+    },
+    "raw-download": {
+      "equal": true,
+      "bytes": 12012,
+      "actual_sha256": "679125bcb621db778e1bfc27e72374a370a255725d5a6d44902b124b6598500f",
+      "expected_sha256": "679125bcb621db778e1bfc27e72374a370a255725d5a6d44902b124b6598500f"
+    },
+    "base64-copy": {
+      "equal": true,
+      "bytes": 16016,
+      "actual_sha256": "83cfd86907c4b064f2ac826314fc5e438eb21d20218aa376e0719d47e08a343e",
+      "expected_sha256": "83cfd86907c4b064f2ac826314fc5e438eb21d20218aa376e0719d47e08a343e"
+    },
+    "base64-download": {
+      "equal": true,
+      "bytes": 16016,
+      "actual_sha256": "83cfd86907c4b064f2ac826314fc5e438eb21d20218aa376e0719d47e08a343e",
+      "expected_sha256": "83cfd86907c4b064f2ac826314fc5e438eb21d20218aa376e0719d47e08a343e"
+    }
+  },
+  "decodedBase64MatchesOriginal": true
+}

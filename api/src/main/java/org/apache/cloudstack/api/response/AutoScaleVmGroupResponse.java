@@ -18,6 +18,7 @@ package org.apache.cloudstack.api.response;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.cloudstack.acl.RoleType;
 import org.apache.cloudstack.api.ApiConstants;
@@ -134,6 +135,67 @@ public class AutoScaleVmGroupResponse extends BaseResponseWithAnnotations implem
     @SerializedName(ApiConstants.CREATED)
     @Param(description = "The date when this Instance group was created")
     private Date created;
+
+    @SerializedName("operationinprogress")
+    @Param(description = "Whether an accepted scaling operation is still in progress")
+    private boolean operationInProgress;
+
+    @SerializedName("scalingaction")
+    @Param(description = "Direction of the accepted scaling operation")
+    private String scalingAction;
+
+    @SerializedName("scalingphase")
+    @Param(description = "Persistent phase of the accepted scaling operation")
+    private String scalingPhase;
+
+    @SerializedName("evaluation")
+    @Param(description = "Latest policy evaluation, collection times, normalized counters and reasons for deferring an action")
+    private com.google.gson.JsonObject evaluation;
+
+    @SerializedName("memberstatecounts")
+    @Param(description = "Counts of recorded group members by Cloud VM state. Removed and Missing denote pending reconciliation; Running does not imply application health")
+    private Map<String, Integer> memberStateCounts;
+
+    @SerializedName("statuscollectedat")
+    @Param(description = "Time when the Cloud member state counts were read, in epoch milliseconds")
+    private Long statusCollectedAt;
+
+    @SerializedName("lastscaledat")
+    @Param(description = "Last successful automatic scaling completion time, in epoch milliseconds; absent if none is recorded")
+    private Long lastScaledAt;
+
+    @SerializedName("lastcheckedat")
+    @Param(description = "Last group monitor interval time, in epoch milliseconds; distinct from metric collection time")
+    private Long lastCheckedAt;
+
+    @SerializedName("operationdeadline")
+    @Param(description = "Recorded drain deadline, in epoch milliseconds; reaching it does not guarantee cleanup completion")
+    private Long operationDeadline;
+
+    @SerializedName("evaluationerror")
+    @Param(description = "Whether the persisted evaluation could not be decoded; missing or corrupt data is never treated as a zero metric")
+    private boolean evaluationError;
+
+    public void setMemberStateCounts(Map<String, Integer> value) { memberStateCounts = value; }
+    public void setStatusCollectedAt(long value) { statusCollectedAt = value; }
+    public void setLastScaledAt(Date value) { lastScaledAt = value == null ? null : value.getTime(); }
+    public void setLastCheckedAt(Date value) { lastCheckedAt = value == null ? null : value.getTime(); }
+    public void setOperationDeadline(Date value) { operationDeadline = value == null ? null : value.getTime(); }
+
+    public void setEvaluation(String value) {
+        evaluation = null;
+        evaluationError = false;
+        if (value == null) { return; }
+        try {
+            evaluation = com.google.gson.JsonParser.parseString(value).getAsJsonObject();
+        } catch (RuntimeException e) {
+            evaluationError = true;
+        }
+    }
+
+    public void setOperationInProgress(boolean value) { operationInProgress = value; }
+    public void setScalingAction(String value) { scalingAction = value; }
+    public void setScalingPhase(String value) { scalingPhase = value; }
 
     public AutoScaleVmGroupResponse() {
         // Empty constructor

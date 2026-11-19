@@ -19,6 +19,7 @@
   <a-alert type="error" v-if="['vm', 'systemvm', 'router', 'ilbvm'].includes($route.meta.name) && 'hostcontrolstate' in resource && resource.hostcontrolstate !== 'Enabled'">
     <template #message>
       <div class="title">
+
         {{ $t('message.host.controlstate') }} {{ resource.hostcontrolstate }}. {{ $t('message.host.controlstate.retry') }}
       </div>
     </template>
@@ -47,17 +48,46 @@
   <a-list
     class="resource-details-list"
     size="small"
-    :dataSource="fetchDetails()">
+    :dataSource="(fetchDetails() || []).concat(Object.keys(allocationDetails))">
     <template #renderItem="{item}">
-      <a-list-item v-if="(item in dataResource && !customDisplayItems.includes(item)) || (offeringDetails.includes(item) && dataResource.serviceofferingdetails)|| ($route.path.includes('/alertRules') && ['summary', 'description'].includes(item))">
+      <a-list-item v-if="allocationDetails[item] || (item in dataResource && !customDisplayItems.includes(item)) || ($route.meta.name === 'computeoffering' && item === 'diskofferingcomputeonly' && dataResource.diskofferingid) || (offeringDetails.includes(item) && dataResource.serviceofferingdetails)|| ($route.path.includes('/alertRules') && ['summary', 'description'].includes(item))">
         <div style="width: 100%">
-          <strong>{{ item === 'service' ? $t('label.supportedservices') :
+          <strong>{{ allocationDetails[item] ? $t(allocationDetails[item].label) : item === 'service' ? $t('label.supportedservices') :
            $route.meta.name === 'cniconfiguration' && item === 'userdata' ? $t('label.' + String($route.meta.name).toLowerCase()) :
            $t(getDetailTitle(item)) }}</strong>
+          <a-tooltip v-if="allocationDetails[item]?.help" :title="allocationDetails[item].help"><QuestionCircleOutlined style="margin-left: 8px;"/></a-tooltip>
           <a-tooltip v-if="['volume', 'snapshot', 'template', 'iso'].includes($route.meta.name) && item === 'usedfsbytes'"><template #title>{{ $t('message.usedfsbytes') }}</template><QuestionCircleOutlined style="margin-left: 8px;"/></a-tooltip>
           <a-tooltip v-if="['volume', 'snapshot', 'template', 'iso'].includes($route.meta.name) && item === 'savingrate'"><template #title>{{ $t('message.savingrate') }}</template><QuestionCircleOutlined style="margin-left: 8px;"/></a-tooltip>
+          <a-tooltip v-if="$route.meta.name === 'storagepool' && item === 'disksizeallocated'" :title="$t('message.storage.allocated.meaning')"><info-circle-outlined style="margin-left: 8px" /></a-tooltip>
           <br/>
-          <div v-if="Array.isArray(dataResource[item]) && item === 'service'">
+          <div v-if="allocationDetails[item]">{{ allocationDetails[item].value }}</div>
+          <status
+            v-else-if="$route.meta.name === 'buckets' && item === 'credentialstate'"
+            :text="dataResource[item] === 'Verified' ? 'ready' : 'error'"
+            :display-label="$t(dataResource[item] === 'Verified' ? 'label.objectstore.credential.verified' : 'label.objectstore.credential.unverified')"
+            display-text />
+          <status
+v-else-if="$route.meta.name === 'buckets' && item === 'quotaoperationstate' && dataResource[item]"
+            :text="dataResource[item] === 'Succeeded' ? 'Running' : dataResource[item] === 'Failed' ? 'Error' : 'Pending'"
+            :display-label="$t('state.bucket.quota.' + dataResource[item].toLowerCase())"
+display-text />
+          <span v-else-if="$route.meta.name === 'buckets' && item === 'usagestatus'">{{ $t('label.bucket.usage.' + (['Fresh', 'Stale', 'Error', 'Unknown'].includes(dataResource[item]) ? dataResource[item] : 'Unknown').toLowerCase()) }}</span>
+          <span v-else-if="$route.meta.name === 'buckets' && ['usagelastupdated', 'usagelastattempt'].includes(item)">{{ dataResource[item] ? $toLocaleDate(dataResource[item]) : $t('label.unknown') }}</span>
+          <span v-else-if="$route.meta.name === 'buckets' && item === 'quotaoperationupdated'">{{ dataResource[item] ? $toLocaleDate(dataResource[item]) : $t('label.unknown') }}</span>
+          <span v-else-if="$route.meta.name === 'buckets' && item === 'credentialchecked'">{{ dataResource[item] ? $toLocaleDate(dataResource[item]) : $t('label.unknown') }}</span>
+          <status v-else-if="$route.meta.name === 'buckets' && item === 'state'" :text="String(dataResource[item] || '')" display-text />
+          <a-tag v-else-if="$route.meta.name === 'buckets' && ['encryption', 'versioning', 'objectlocking'].includes(item)">{{ $t(dataResource[item] === true || dataResource[item] === 'true' ? 'label.enabled' : dataResource[item] === false || dataResource[item] === 'false' ? 'label.disabled' : 'label.unknown') }}</a-tag>
+          <span v-else-if="$route.meta.name === 'buckets' && item === 'policy'">{{ ['Public', 'Private'].includes(dataResource[item]) ? $t('label.bucket.policy.' + dataResource[item].toLowerCase()) : dataResource[item] }}</span>
+          <!-- Object Store used_size retains the same legacy KiB unit as bucket.size. -->
+          <span v-else-if="$route.meta.name === 'objectstore' && item === 'storageused'">{{ $bytesToHumanReadableSize(Number(dataResource[item] || 0) * 1024) }}</span>
+          <span v-else-if="$route.meta.name === 'objectstore' && ['storagetotal', 'storageallocated'].includes(item)">{{ $bytesToHumanReadableSize(dataResource[item]) }}</span>
+          <AffinityGroupPolicy v-else-if="$route.meta.name === 'affinitygroup' && item === 'type'" :type="dataResource.type" />
+          <div v-else-if="$route.meta.name === 'kubernetes' && ['autoscalingenabled', 'csienabled'].includes(item)">{{ $t(dataResource[item] ? 'label.enabled' : 'label.disabled') }}</div>
+          <div v-else-if="$route.meta.name === 'kubernetes' && item === 'clustertype'">{{ $t(dataResource[item] === 'ExternalManaged' ? 'label.external.managed' : 'label.cloud.managed') }}</div>
+          <div v-else-if="$route.meta.name === 'vm' && item === 'vbmcport'">
+            <span>{{ dataResource[item] === 'None' ? $t('label.vbmc.Unallocated') : dataResource[item] }}</span>
+          </div>
+          <div v-else-if="Array.isArray(dataResource[item]) && item === 'service'">
             <div v-for="(service, idx) in dataResource[item]" :key="idx">
               {{ service.name }} : {{ service.provider.map(p => p.name).join(', ') }}
             </div>
@@ -107,6 +137,8 @@
               {{ dataResource.rootdisksize }} GB
             </div>
           </div>
+          <LinkedDiskOffering v-else-if="$route.meta.name === 'computeoffering' && item === 'diskofferingname'" :resource="dataResource" />
+          <LinkedDiskOffering v-else-if="$route.meta.name === 'computeoffering' && item === 'diskofferingcomputeonly'" :resource="dataResource" connection />
           <div v-else-if="$route.meta.name === 'buckets' && item === 'size'">
             <div>
               {{ convertKB(dataResource.size) }}
@@ -114,7 +146,7 @@
           </div>
           <div v-else-if="$route.meta.name === 'buckets' && item === 'quota'">
             <div>
-              {{ dataResource.quota }} GiB
+              {{ Number(dataResource.quota) > 0 ? dataResource.quota + ' GiB' : $t('label.bucket.quota.legacy') }}
             </div>
           </div>
           <div v-else-if="['template', 'iso'].includes($route.meta.name) && item === 'size'">
@@ -148,7 +180,7 @@
             </div>
           </div>
           <div v-else-if="['name', 'type'].includes(item)">
-            <span v-if="['USER.LOGIN', 'USER.LOGOUT', 'ROUTER.HEALTH.CHECKS', 'FIREWALL.CLOSE', 'ALERT.SERVICE.DOMAINROUTER'].includes(dataResource[item])">{{ $t(dataResource[item].toLowerCase()) }}</span>
+            <span v-if="!($route.meta.name === 'ssh' && item === 'name') && ['USER.LOGIN', 'USER.LOGOUT', 'ROUTER.HEALTH.CHECKS', 'FIREWALL.CLOSE', 'ALERT.SERVICE.DOMAINROUTER'].includes(dataResource[item])">{{ $t(dataResource[item].toLowerCase()) }}</span>
             <span v-else>{{ dataResource[item] }}</span>
           </div>
           <div v-else-if="['created', 'sent', 'lastannotated', 'collectiontime', 'lastboottime', 'lastserverstart', 'lastserverstop', 'removed', 'effectiveDate', 'endDate', 'startdate', 'enddate'].includes(item)">
@@ -203,7 +235,7 @@
           </div>
           <div v-else-if="item === 'summary' || item === 'description'">
             <div :class="{ preline: $route.path.startsWith('/alertRules') }">
-              {{ getSummaryOrDescriptionPlain(item) }}
+              {{ getSummaryOrDescriptionPlain(item) || ($route.meta.name === 'affinitygroup' ? '—' : '') }}
             </div>
           </div>
           <!-- 연산자 라벨(기호 X) -->
@@ -318,7 +350,7 @@
       </a-list-item>
       <div v-else-if="item === 'backupofferingdetails'">
         <a-list-item
-          v-for="(value, key) in dataResource[item]"
+          v-for="(value, key) in visibleBackupOfferingDetails"
           :key="key">
           <div>
             <strong>{{ $t('label.' + String(key).toLowerCase()) }}</strong>
@@ -337,6 +369,11 @@
 </template>
 
 <script>
+import Status from '@/components/widgets/Status'
+import { creationVmDetails } from '@/utils/creationVmPresentation'
+import { getAblestackBackupOfferingVisibleDetails } from '@/utils/ablestackBackupPolicy'
+import AffinityGroupPolicy from '@/views/compute/AffinityGroupPolicy'
+import LinkedDiskOffering from '@/components/offering/LinkedDiskOffering'
 import DedicateData from './DedicateData'
 import HostInfo from '@/views/infra/HostInfo'
 import VmwareData from './VmwareData'
@@ -348,9 +385,14 @@ import { getAPI } from '@/api'
 import CodeHighlight from 'vue-code-highlight/src/CodeHighlight.vue'
 import 'vue-code-highlight/themes/prism-okaidia.css'
 
+import { allocationDetailFields } from '@/utils/volumeAllocation'
+
 export default {
   name: 'DetailsTab',
   components: {
+    Status,
+    LinkedDiskOffering,
+    AffinityGroupPolicy,
     DedicateData,
     HostInfo,
     VmwareData,
@@ -399,6 +441,17 @@ export default {
     this.dedicatedSectionActive = this.dedicatedRoutes.includes(this.$route.meta.name)
   },
   computed: {
+    visibleBackupOfferingDetails () {
+      return getAblestackBackupOfferingVisibleDetails(this.dataResource)
+    },
+    allocationDetails () {
+      const name = this.$route.meta.name
+      if (!['volume', 'diskoffering', 'computeoffering', 'systemoffering'].includes(name)) return {}
+      return allocationDetailFields(this.resource, this.$t, value => this.$bytesToHumanReadableSize(value), {
+        volume: name === 'volume',
+        inheritance: ['computeoffering', 'systemoffering'].includes(name)
+      })
+    },
     customDisplayItems () {
       var items = ['ip4routes', 'ip6routes', 'privatemtu', 'publicmtu', 'provider', 'migrationip', 'details', 'parameters', 'secretkey', 'backupofferingdetails']
       if (this.$route.meta.name === 'webhookdeliveries' || this.$route.meta.name === 'quotasummary') {
@@ -463,7 +516,7 @@ export default {
         }
         const managementIps = []
         for (const nic of this.resource.nic) {
-          if (managementDeviceIds.includes(parseInt(nic.deviceid)) && nic.linkstate !== false && nic.ipaddress) {
+          if (managementDeviceIds.includes(parseInt(nic.deviceid)) && nic.enabled !== false && nic.ipaddress) {
             managementIps.push(nic.ipaddress)
             if (nic.publicip) {
               managementIps.push(nic.publicip)
@@ -507,7 +560,7 @@ export default {
     },
     ipV6Address () {
       if (this.dataResource.nic && this.dataResource.nic.length > 0) {
-        return this.dataResource.nic.filter(e => e.linkstate !== false && e.ip6address).map(e => e.ip6address).join(', ')
+        return this.dataResource.nic.filter(e => e.enabled !== false && e.ip6address).map(e => e.ip6address).join(', ')
       }
       return null
     },
@@ -533,7 +586,7 @@ export default {
     }
   },
   created () {
-    this.dataResource = this.resource
+    this.dataResource = creationVmDetails(this.resource, this.$t)
     this.dedicatedSectionActive = this.dedicatedRoutes.includes(this.$route.meta.name)
     if (['host'].includes(this.$route.meta.name)) {
       this.fetchLicenseInfo()
@@ -546,7 +599,7 @@ export default {
     resource: {
       deep: true,
       handler (newVal) {
-        this.dataResource = newVal
+        this.dataResource = creationVmDetails(newVal, this.$t)
         if ('account' in this.dataResource && this.dataResource.account.startsWith('PrjAcct-')) {
           this.projectname = this.dataResource.account.substring(this.dataResource.account.indexOf('-') + 1, this.dataResource.account.lastIndexOf('-'))
           this.dataResource.projectname = this.projectname
@@ -627,7 +680,7 @@ export default {
         return this.dataResource[field]
       }
 
-      return this.dataResource.nic.filter(e => e.linkstate !== false && e[field]).map(e => e[field]).join(', ')
+      return this.dataResource.nic.filter(e => e.enabled !== false && e[field]).map(e => e[field]).join(', ')
     },
     getUserSourceLabel (source) {
       if (source === 'saml2') {
@@ -763,7 +816,7 @@ export default {
         // 1) uid로 조회 (routeKey에 ':' 없으면 uid로 간주)
         if (!routeKey.includes(':')) {
           const r1 = await getAPI('listWallAlertRules', {
-            listall: true, page: 1, pagesize: 1, uid: routeKey
+            page: 1, pagesize: 1, uid: routeKey
           })
           found = takeFirst(r1)
         }
@@ -771,7 +824,7 @@ export default {
         // 2) id로 조회 (콜론 포함 키 or 1단계 실패시)
         if (!found) {
           const r2 = await getAPI('listWallAlertRules', {
-            listall: true, page: 1, pagesize: 1, id: routeKey
+            page: 1, pagesize: 1, id: routeKey
           })
           found = takeFirst(r2)
         }
@@ -779,7 +832,7 @@ export default {
         // 3) 최종 폴백: 전체 받아서 프론트에서 uid/id/name 매칭
         if (!found) {
           const r3 = await getAPI('listWallAlertRules', {
-            listall: true, page: 1, pagesize: 2000
+            page: 1, pagesize: 2000
           })
           const all =
             r3?.listwallalertrulesresponse?.wallalertrule ||

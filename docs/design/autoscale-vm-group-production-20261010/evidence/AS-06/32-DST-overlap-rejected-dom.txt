@@ -1,0 +1,317 @@
+- complementary:
+  - menu:
+    - menuitem "dashboard 대시보드":
+      - link "dashboard 대시보드":
+        - /url: "#/dashboard"
+        - img "dashboard":
+        - text: 대시보드
+    - img "cloud":
+    - text: 컴퓨트
+    - list:
+      - menuitem "cloud-server 가상머신":
+        - link "cloud-server 가상머신":
+          - /url: "#/vm"
+          - img "cloud-server":
+          - text: 가상머신
+      - menuitem "camera VM 스냅샷":
+        - link "camera VM 스냅샷":
+          - /url: "#/vmsnapshot"
+          - img "camera":
+          - text: VM 스냅샷
+      - menuitem "쿠버네티스":
+        - link "쿠버네티스":
+          - /url: "#/kubernetes"
+          - text: 쿠버네티스
+      - menuitem "fullscreen 오토스케일 VM 그룹":
+        - link "fullscreen 오토스케일 VM 그룹":
+          - /url: "#/autoscalevmgroup"
+          - img "fullscreen":
+          - text: 오토스케일 VM 그룹
+      - menuitem "gold 가상머신 그룹":
+        - link "gold 가상머신 그룹":
+          - /url: "#/vmgroup"
+          - img "gold":
+          - text: 가상머신 그룹
+      - menuitem "key SSH 키 쌍":
+        - link "key SSH 키 쌍":
+          - /url: "#/ssh"
+          - img "key":
+          - text: SSH 키 쌍
+      - menuitem "solution 사용자 데이터 라이브러리":
+        - link "solution 사용자 데이터 라이브러리":
+          - /url: "#/userdata"
+          - img "solution":
+          - text: 사용자 데이터 라이브러리
+      - menuitem "solution CNI 구성":
+        - link "solution CNI 구성":
+          - /url: "#/cniconfiguration"
+          - img "solution":
+          - text: CNI 구성
+      - menuitem "swap Affinity 그룹":
+        - link "swap Affinity 그룹":
+          - /url: "#/affinitygroup"
+          - img "swap":
+          - text: Affinity 그룹
+    - img "hdd":
+    - text: 스토리지
+    - img "wifi":
+    - text: 네트워크
+    - img "picture":
+    - text: 이미지
+    - menuitem "schedule 이벤트":
+      - link "schedule 이벤트":
+        - /url: "#/event"
+        - img "schedule":
+        - text: 이벤트
+    - menuitem "project 프로젝트":
+      - link "project 프로젝트":
+        - /url: "#/project"
+        - img "project":
+        - text: 프로젝트
+    - menuitem "team 계정":
+      - link "team 계정":
+        - /url: "#/account"
+        - img "team":
+        - text: 계정
+    - menuitem "global Zone":
+      - link "global Zone":
+        - /url: "#/zones"
+        - img "global":
+        - text: Zone
+    - img "shopping":
+    - text: 서비스 오퍼링
+    - img "tool":
+    - text: 도구
+    - menuitem "read API 문서":
+      - link "read API 문서":
+        - /url: "#/apidocs/"
+        - img "read":
+        - text: API 문서
+- img "menu-fold":
+- combobox
+- img "project":
+- text: 기본 보기
+- button "생성 down":
+  - generic: 생성
+  - img "down":
+- img "translation":
+- img "bell":
+- superscript:
+  - paragraph: "6"
+- generic: A검
+- generic: AS01 검증
+- main:
+  - link "home":
+    - /url: "#/"
+    - img "home":
+  - text: /
+  - link "오토스케일 VM 그룹":
+    - /url: "#/autoscalevmgroup"
+  - text: /
+  - generic: AS-PROD-32-AS04-CONCURRENCY
+  - link "question-circle":
+    - /url: http://docs.ablecloud.io/latest/adminguide/autoscale_with_virtual_router.html
+    - img "question-circle":
+  - button "reload 업데이트":
+    - img "reload":
+    - generic: 업데이트
+  - button "down 작업":
+    - img "down":
+    - generic: 작업
+  - img "fullscreen":
+  - heading "AS-PROD-32-AS04-CONCURRENCY" [level=4]
+  - separator
+  - generic: 상태
+  - generic: 비활성화
+  - generic: 아이디
+  - button "barcode":
+    - img "barcode":
+  - link "18bef25a-4053-4454-bc85-f6d777b9391d":
+    - /url: javascript:;
+  - generic: 연결된 네트워크
+  - img "wifi":
+  - link "AS-PROD-32-AS01-userNetwork":
+    - /url: "#/guestnetwork/f889cc7d-02c5-490b-b256-a289b73ff824"
+  - generic: Public IP 주소
+  - img "gateway":
+  - link "10.10.32.169":
+    - /url: "#/publicip/d82e3f23-29e2-4b44-a85c-6c8821f2a4f6"
+  - link "copy":
+    - /url: javascript:;
+    - img "copy":
+  - generic: 계정
+  - img "user":
+  - generic: epic1346-as01-user32
+  - generic: 도메인
+  - img "block":
+  - generic: ROOT
+  - generic: 생성일
+  - img "calendar":
+  - text: 2026. 10. 11. 오전 10:19:26
+  - separator
+  - link "cloud-server 가상머신 보기":
+    - /url: "#/vm?autoscalevmgroupid=18bef25a-4053-4454-bc85-f6d777b9391d"
+    - button "cloud-server 가상머신 보기":
+      - img "cloud-server":
+      - generic: 가상머신 보기
+  - tablist:
+    - tab "상세"
+    - tab "오토스케일 VM 프로필"
+    - tab "부하 분산 규칙"
+    - tab "스케일업 정책"
+    - tab "스케일다운 정책"
+    - tab "스케줄" [selected]
+    - tab "이벤트"
+    - tab "코멘트"
+  - tabpanel "스케줄":
+    - alert:
+      - img "info-circle":
+      - generic: 예약 시각은 선택한 시간대 기준입니다. 비활성 그룹에는 최소·최대 값만 저장하고 가상머신을 시작하지 않습니다. 같은 그룹의 같은 시각에는 먼저 생성된 예약 하나만 실행합니다. 진행 중 작업과 충돌한 변경은 거절되며, 이미 제출된 작업은 예약 비활성화로 취소되지 않습니다.
+    - button "plus 스케줄 추가":
+      - img "plus":
+      - generic: 스케줄 추가
+    - table:
+      - rowgroup:
+        - row "상태 설명 스케줄 최소 멤버 수 최대 멤버 수 시간대 시작 일시 종료 일시 생성일 작업 filter":
+          - columnheader "상태"
+          - columnheader "설명"
+          - columnheader "스케줄"
+          - columnheader "최소 멤버 수"
+          - columnheader "최대 멤버 수"
+          - columnheader "시간대"
+          - columnheader "시작 일시"
+          - columnheader "종료 일시"
+          - columnheader "생성일"
+          - columnheader "작업 filter":
+            - generic: 작업
+            - button "filter":
+              - img "filter":
+      - rowgroup:
+        - row "Enabled AS06-32-ENABLED 24 9 * * * (At 09:24 AM) 3 3 UTC [Coordinated Universal Time] 2026-10-11 09:20:44 2026. 10. 11. 오후 6:19:44 edit delete":
+          - cell "Enabled": Enabled
+          - cell "AS06-32-ENABLED"
+          - cell "24 9 * * * (At 09:24 AM)":
+            - text: 24 9 * * *
+            - text: (At 09:24 AM)
+          - cell "3"
+          - cell "3"
+          - cell "UTC [Coordinated Universal Time]"
+          - cell "2026-10-11 09:20:44"
+          - cell
+          - cell "2026. 10. 11. 오후 6:19:44"
+          - cell "edit delete":
+            - button "edit":
+              - img "edit":
+            - button "delete":
+              - img "delete":
+        - row "Enabled AS06-32-KST-CONFLICT 14 18 11 10 * (At 06:14 PM, on day 11 of the month, only in October) 2 3 Asia/Seoul [Korea Standard Time] 2026-10-11 18:10:56 2026. 10. 11. 오후 6:09:56 edit delete":
+          - cell "Enabled": Enabled
+          - cell "AS06-32-KST-CONFLICT"
+          - cell "14 18 11 10 * (At 06:14 PM, on day 11 of the month, only in October)":
+            - text: 14 18 11 10 *
+            - text: (At 06:14 PM, on day 11 of the month, only in October)
+          - cell "2"
+          - cell "3"
+          - cell "Asia/Seoul [Korea Standard Time]"
+          - cell "2026-10-11 18:10:56"
+          - cell
+          - cell "2026. 10. 11. 오후 6:09:56"
+          - cell "edit delete":
+            - button "edit":
+              - img "edit":
+            - button "delete":
+              - img "delete":
+        - row "Enabled AS06-32-UTC-EARLIEST 14 9 11 10 * (At 09:14 AM, on day 11 of the month, only in October) 3 3 UTC [Coordinated Universal Time] 2026-10-11 09:10:54 2026. 10. 11. 오후 6:09:54 edit delete":
+          - cell "Enabled": Enabled
+          - cell "AS06-32-UTC-EARLIEST"
+          - cell "14 9 11 10 * (At 09:14 AM, on day 11 of the month, only in October)":
+            - text: 14 9 11 10 *
+            - text: (At 09:14 AM, on day 11 of the month, only in October)
+          - cell "3"
+          - cell "3"
+          - cell "UTC [Coordinated Universal Time]"
+          - cell "2026-10-11 09:10:54"
+          - cell
+          - cell "2026. 10. 11. 오후 6:09:54"
+          - cell "edit delete":
+            - button "edit":
+              - img "edit":
+            - button "delete":
+              - img "delete":
+    - list:
+      - listitem: 전체 3 개 항목 중 1-3 표시
+      - listitem "이전 페이지":
+        - button "left" [disabled]:
+          - img "left":
+      - listitem "1":
+        - generic: "1"
+      - listitem "다음 페이지":
+        - button "right" [disabled]:
+          - img "right":
+      - combobox
+      - generic: 10 / 쪽
+- img "close-circle":
+- text: 일광 절약 시간 전환으로 존재하지 않거나 두 번 발생하는 시각입니다. 다른 시각을 선택하세요.
+- dialog "스케줄":
+  - document:
+    - button "Close":
+      - img "close":
+    - generic: 스케줄
+    - text: 설명
+    - img "info-circle":
+    - textbox "설명 info-circle": AS06-32-DST-NEGATIVE
+    - text: "*"
+    - generic: 최소 멤버 수
+    - button "Increase Value":
+      - img "up":
+    - button "Decrease Value" [disabled]:
+      - img "down":
+    - spinbutton: "1"
+    - text: "*"
+    - generic: 최대 멤버 수
+    - button "Increase Value":
+      - img "up":
+    - button "Decrease Value":
+      - img "down":
+    - spinbutton: "3"
+    - text: "*"
+    - text: 시간대
+    - img "info-circle":
+    - combobox "* 시간대 info-circle"
+    - generic: America/New_York [Eastern Standard Time]
+    - text: 시작 일시
+    - img "info-circle":
+    - textbox "시작 일시 info-circle":
+      - /placeholder: 시작 일자 및 시간을 선택하십시오.
+      - text: 2027-11-07 01:36:57
+    - img "calendar":
+    - button "close-circle":
+      - img "close-circle":
+    - text: 종료 일시
+    - img "info-circle":
+    - textbox "종료 일시 info-circle":
+      - /placeholder: 종료 일자 및 시간을 선택하십시오.
+    - img "calendar":
+    - text: "*"
+    - text: 스케줄
+    - img "info-circle":
+    - text: Every
+    - button "Day":
+      - generic: Day
+    - text: at
+    - button "every hour":
+      - generic: every hour
+    - text: ":"
+    - button "every minute":
+      - generic: every minute
+    - generic: Cron 모드
+    - switch "* 스케줄 info-circle"
+    - generic: Cron 표현식
+    - textbox [disabled]: "* * * * *"
+    - text: 활성화
+    - img "info-circle":
+    - switch "활성화 info-circle" [checked]
+    - button "취소":
+      - generic: 취소
+    - button "확인" [active]:
+      - generic: 확인

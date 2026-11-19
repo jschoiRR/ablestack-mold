@@ -1,0 +1,171 @@
+- img "menu-unfold":
+- combobox
+- img "project":
+- text: 기본 보기
+- img "translation":
+- img "bell":
+- generic: UQ
+- generic: UD1392 QA
+- main:
+  - link "home":
+    - /url: "#/"
+    - img "home":
+  - text: /
+  - link "사용자 데이터 라이브러리":
+    - /url: "#/userdata"
+  - text: /
+  - generic: UD1392-31-20261016-user
+  - link "question-circle":
+    - /url: http://docs.ablecloud.io/latest/adminguide/virtual_machines.html#user-data-and-meta-data
+    - img "question-circle":
+  - button "reload 업데이트":
+    - img "reload":
+    - generic: 업데이트
+  - button "down 작업":
+    - img "down":
+    - generic: 작업
+  - img "solution":
+  - heading "UD1392-31-20261016-user" [level=4]
+  - separator
+  - generic: 아이디
+  - button "barcode":
+    - img "barcode":
+  - link "8877d7e7-92e3-4925-be90-c59933b3cbb4":
+    - /url: javascript:;
+  - generic: 계정
+  - img "user":
+  - generic: ud1392-31-20261016-user
+  - generic: 도메인
+  - img "block":
+  - generic: ud1392-31-20261016
+  - separator
+  - link "cloud-server 가상머신 보기":
+    - /url: "#/vm?userdataid=8877d7e7-92e3-4925-be90-c59933b3cbb4"
+    - button "cloud-server 가상머신 보기":
+      - img "cloud-server":
+      - generic: 가상머신 보기
+  - tablist:
+    - tab "상세"
+    - tab "사용자 데이터 본문"
+    - tab "버전·변경 정책"
+    - tab "사용 가상머신" [selected]
+    - tab "연결 템플릿"
+    - tab "연결 ISO"
+    - tab "코멘트"
+    - button:
+  - tabpanel "사용 가상머신":
+    - region "참조 정보":
+      - button "reload 업데이트":
+        - img "reload":
+        - generic: 업데이트
+      - textbox "검색"
+      - button "search":
+        - img "search":
+      - paragraph: 저장된 사용자 데이터 UUID의 연결 관계입니다. 본문 복사·템플릿 상속 본문·게스트 실행 여부는 포함하지 않습니다.
+      - paragraph: 검색·페이지 이동은 서버에서 처리합니다. 열 정렬과 상태 집계는 현재 페이지에만 적용됩니다.
+      - paragraph: "조회 프로젝트: - (없으면 기본 보기). 접근 가능한 참조만 표시합니다. 다른 프로젝트는 보기를 전환하여 확인하세요."
+      - paragraph:
+        - text: "현재 페이지 상태:"
+        - generic: 정지된 VM 1
+      - table:
+        - rowgroup:
+          - row "VM 표시 명 caret-up caret-down 아이디 caret-up caret-down 상태 caret-up caret-down 계정 caret-up caret-down 프로젝트 caret-up caret-down 도메인 caret-up caret-down":
+            - columnheader "VM 표시 명 caret-up caret-down":
+              - generic: VM 표시 명
+              - img "caret-up":
+              - img "caret-down":
+            - columnheader "아이디 caret-up caret-down":
+              - generic: 아이디
+              - img "caret-up":
+              - img "caret-down":
+            - columnheader "상태 caret-up caret-down":
+              - generic: 상태
+              - img "caret-up":
+              - img "caret-down":
+            - columnheader "계정 caret-up caret-down":
+              - generic: 계정
+              - img "caret-up":
+              - img "caret-down":
+            - columnheader "프로젝트 caret-up caret-down":
+              - generic: 프로젝트
+              - img "caret-up":
+              - img "caret-down":
+            - columnheader "도메인 caret-up caret-down":
+              - generic: 도메인
+              - img "caret-up":
+              - img "caret-down":
+        - rowgroup:
+          - row "UD1392-31-20261016-user-vm-01 0a01cdbc-1bf2-4b2a-88c7-42cc7124109d 정지된 상태 ud1392-31-20261016-user ud1392-31-20261016":
+            - cell "UD1392-31-20261016-user-vm-01":
+              - link "UD1392-31-20261016-user-vm-01":
+                - /url: "#/vm/0a01cdbc-1bf2-4b2a-88c7-42cc7124109d"
+            - cell "0a01cdbc-1bf2-4b2a-88c7-42cc7124109d"
+            - cell "정지된 상태":
+              - generic: 정지된 상태
+            - cell "ud1392-31-20261016-user"
+            - cell
+            - cell "ud1392-31-20261016"
+      - list:
+        - listitem: 총 1개
+        - listitem "이전 페이지":
+          - button "left" [disabled]:
+            - img "left":
+        - listitem "1":
+          - generic: "1"
+        - listitem "다음 페이지":
+          - button "right" [disabled]:
+            - img "right":
+        - combobox
+        - generic: 20 / 쪽
+- dialog "복제하여 새 버전 등록":
+  - document:
+    - button "Close":
+      - img "close":
+    - generic: 복제하여 새 버전 등록
+    - alert:
+      - img "info-circle":
+      - generic: 원본의 이름·본문·변수를 재사용해 같은 소유 범위에 새 데이터를 만듭니다. 기존 VM·템플릿·ISO에는 자동 적용되지 않습니다.
+    - paragraph:
+      - text: "복제 원본: UD1392-31-20261016-user (8877d7e7-92e3-4925-be90-c59933b3cbb4)"
+      - text: ud1392-31-20261016-user / ud1392-31-20261016
+    - paragraph:
+      - link "사용 가상머신":
+        - /url: "#/userdata/8877d7e7-92e3-4925-be90-c59933b3cbb4?tab=userdata.usage.vms"
+      - link "연결 템플릿":
+        - /url: "#/userdata/8877d7e7-92e3-4925-be90-c59933b3cbb4?tab=userdata.usage.templates"
+      - link "연결 ISO":
+        - /url: "#/userdata/8877d7e7-92e3-4925-be90-c59933b3cbb4?tab=userdata.usage.isos"
+    - generic "적용 범위·참조 전환·되돌리기 안내"
+    - text: "*"
+    - text: 이름
+    - img "info-circle":
+    - textbox "* 이름 info-circle" [active]:
+      - /placeholder: Name of the user data
+      - text: UD1392-31-20261016-user-v2
+    - text: "*"
+    - text: 사용자 데이터
+    - img "info-circle":
+    - textbox "* 사용자 데이터 info-circle":
+      - /placeholder: 사용자 데이터를 일반 텍스트 또는 Base64 인코딩으로 입력하세요. 기본적으로 최대 32KB의 Base64 인코딩 사용자 데이터를 전송할 수 있습니다. 설정 vm.userdata.max.length를 사용하여 최대 1MB까지 제한을 늘릴 수 있습니다.
+      - text: I2Nsb3VkLWNvbmZpZwojIFVEMTM5Mi0zMS0yMDI2MTAxNiB1c2VyCg==
+    - generic "Base64 인코드"
+    - checkbox "Base64 인코드" [checked]
+    - paragraph: 처음에는 원본 바이트를 보존하는 Base64로 채웁니다. UTF-8 본문은 원문 편집을 선택할 수 있습니다. 아래 미리보기에서 변경 내용을 확인하세요.
+    - button "원문으로 편집":
+      - generic: 원문으로 편집
+    - text: 사용자 데이터 매개변수
+    - img "info-circle":
+    - combobox "사용자 데이터 매개변수 info-circle"
+    - generic: comma separated list of variables declared in user data content
+    - status:
+      - img "exclamation-circle":
+      - generic: 본문이 원본과 같습니다. 이름·변수만 바꾸는 버전은 같은 소유자의 동일 본문 중복 금지 정책에 따라 등록할 수 없습니다.
+    - paragraph:
+      - text: "원본 40바이트 → 새 버전 40바이트 · 최초 차이 바이트 위치: -"
+      - text: "사용자 데이터 매개변수: - → -"
+    - generic "원본 본문 확인"
+    - generic "새 버전 본문 미리보기"
+    - button "취소":
+      - generic: 취소
+    - button "새 버전 등록":
+      - generic: 새 버전 등록

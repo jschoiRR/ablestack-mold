@@ -1,0 +1,15 @@
+{
+  "phase": "initial A boot",
+  "source": "virsh domblklist output observed during this validation session",
+  "host": "10.10.31.1",
+  "domain": "i-2-549-VM",
+  "command": "virsh domblklist i-2-549-VM --details",
+  "root_disk": "/mnt/glue-gfs/c6c08136-9ea7-4a59-ad7e-84a5daf1d728",
+  "configdrive": {
+    "type": "file",
+    "device": "cdrom",
+    "target": "hdd",
+    "source": "/mnt/006ac919-7755-3e59-9cd8-9b906a9e22e8/i-2-549-VM.iso"
+  },
+  "iso_bytes_independently_hashed": false
+}

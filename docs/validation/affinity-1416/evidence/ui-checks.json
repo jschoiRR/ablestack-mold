@@ -1,0 +1,373 @@
+[
+  {
+    "id": "T01",
+    "status": "PASS",
+    "source": "562f39597ba1a5657fa5b98fbe7014d761e2fbf6",
+    "details": "유형 조회 중 확인 차단",
+    "evidence": "types-loading.txt"
+  },
+  {
+    "id": "T02",
+    "status": "PASS",
+    "source": "562f39597ba1a5657fa5b98fbe7014d761e2fbf6",
+    "details": "조회 실패의 재시도 표시 및 생성 차단",
+    "evidence": "types-error.txt"
+  },
+  {
+    "id": "T03",
+    "status": "PASS",
+    "source": "562f39597ba1a5657fa5b98fbe7014d761e2fbf6",
+    "details": "제어된 유형 0건 응답: 기본 선택 없음·생성 차단",
+    "evidence": "types-empty.txt"
+  },
+  {
+    "id": "T04",
+    "status": "PASS",
+    "source": "562f39597ba1a5657fa5b98fbe7014d761e2fbf6",
+    "details": "실제 API의 4개 유형 복구와 번역 표시",
+    "evidence": "types-recovered.txt"
+  },
+  {
+    "id": "B01",
+    "status": "PASS",
+    "source": "562f39597ba1a5657fa5b98fbe7014d761e2fbf6",
+    "details": "중복 431 후 이름·설명·유형·소유자·이름 초점 보존",
+    "evidence": "after-duplicate-preserved.txt"
+  },
+  {
+    "id": "C01-admin-strict-anti",
+    "status": "PASS",
+    "source": "562f39597ba1a5657fa5b98fbe7014d761e2fbf6",
+    "details": "qa-ag03-duplicate-fixed: host anti-affinity; owner=admin; jobstatus=1",
+    "evidence": "ui-network.json"
+  },
+  {
+    "id": "V01",
+    "status": "PASS",
+    "source": "562f39597ba1a5657fa5b98fbe7014d761e2fbf6",
+    "details": "공백 이름 검증 오류·POST 없음",
+    "evidence": "name-invalid.txt"
+  },
+  {
+    "id": "V02",
+    "status": "PASS",
+    "source": "562f39597ba1a5657fa5b98fbe7014d761e2fbf6",
+    "details": "공백/192자 이름의 추가 POST 없음",
+    "evidence": "name-invalid.txt"
+  },
+  {
+    "id": "V03",
+    "status": "PASS",
+    "source": "562f39597ba1a5657fa5b98fbe7014d761e2fbf6",
+    "details": "256자 설명 POST 차단 및 설명 입력으로 초점 이동",
+    "evidence": "description-invalid.txt"
+  },
+  {
+    "id": "C02-admin-strict-affinity",
+    "status": "PASS",
+    "source": "562f39597ba1a5657fa5b98fbe7014d761e2fbf6",
+    "details": "qa-ag03-ui-boundary-한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한한: host affinity; owner=admin; jobstatus=1",
+    "evidence": "ui-network.json"
+  },
+  {
+    "id": "C03-admin-nonstrict-anti",
+    "status": "PASS",
+    "source": "562f39597ba1a5657fa5b98fbe7014d761e2fbf6",
+    "details": "qa-ag03-admin-nonstrict-anti: non-strict host anti-affinity; owner=admin; jobstatus=1",
+    "evidence": "ui-network.json"
+  },
+  {
+    "id": "A01",
+    "status": "PASS",
+    "source": "562f39597ba1a5657fa5b98fbe7014d761e2fbf6",
+    "details": "접수 후 대화상자 유지·서버 최종 결과 대기",
+    "evidence": "create-pending.txt"
+  },
+  {
+    "id": "A02",
+    "status": "PASS",
+    "source": "562f39597ba1a5657fa5b98fbe7014d761e2fbf6",
+    "details": "닫기·재열기 후 같은 이름·작업 ID 복구",
+    "evidence": "create-reopened.txt"
+  },
+  {
+    "id": "C04-admin-nonstrict-affinity",
+    "status": "PASS",
+    "source": "562f39597ba1a5657fa5b98fbe7014d761e2fbf6",
+    "details": "qa-ag03-admin-nonstrict-affinity: non-strict host affinity; owner=admin; jobstatus=1",
+    "evidence": "ui-network.json"
+  },
+  {
+    "id": "A03-single-post",
+    "status": "PASS",
+    "source": "562f39597ba1a5657fa5b98fbe7014d761e2fbf6",
+    "details": "닫기·재열기에도 생성 POST 1회",
+    "evidence": "ui-network.json"
+  },
+  {
+    "id": "O01",
+    "status": "PASS",
+    "source": "562f39597ba1a5657fa5b98fbe7014d761e2fbf6",
+    "details": "실제 빈 도메인의 소유자 없음 안내·생성 차단",
+    "evidence": "owner-empty-domain.txt"
+  },
+  {
+    "id": "O02",
+    "status": "PASS",
+    "source": "562f39597ba1a5657fa5b98fbe7014d761e2fbf6",
+    "details": "유효 입력과 명시적 계정 선택 후에만 생성 허용",
+    "evidence": "owner-account-ready.txt"
+  },
+  {
+    "id": "O03",
+    "status": "PASS",
+    "source": "562f39597ba1a5657fa5b98fbe7014d761e2fbf6",
+    "details": "유효 이름·유형을 유지해도 빈 도메인 전환 시 즉시 생성 차단",
+    "evidence": "owner-valid-form-empty-domain.txt"
+  },
+  {
+    "id": "O04",
+    "status": "PASS",
+    "source": "562f39597ba1a5657fa5b98fbe7014d761e2fbf6",
+    "details": "이전 프로젝트 응답이 최신 계정 선택을 덮지 않음",
+    "evidence": "owner-stale-response.txt"
+  },
+  {
+    "id": "O05-admin-on-user",
+    "status": "PASS",
+    "source": "562f39597ba1a5657fa5b98fbe7014d761e2fbf6",
+    "details": "qa-ag03-owner-same: host affinity; owner=qa-ag03-user; jobstatus=1",
+    "evidence": "ui-network.json"
+  },
+  {
+    "id": "O06-admin-on-project",
+    "status": "PASS",
+    "source": "562f39597ba1a5657fa5b98fbe7014d761e2fbf6",
+    "details": "qa-ag03-owner-same: host affinity; owner=d6e7e875-c6a3-4c10-ab0f-fa6f0d5be138; jobstatus=1",
+    "evidence": "ui-network.json"
+  },
+  {
+    "id": "S01",
+    "status": "PASS",
+    "source": "562f39597ba1a5657fa5b98fbe7014d761e2fbf6",
+    "details": "고급 검색에서 Zone 제거·프로젝트 조건 제공",
+    "evidence": "search-fields.txt"
+  },
+  {
+    "id": "S02",
+    "status": "PASS",
+    "source": "562f39597ba1a5657fa5b98fbe7014d761e2fbf6",
+    "details": "이름·원문 type·account·domain의 URL/API 검색 결과 1건",
+    "evidence": "search-account-result.txt"
+  },
+  {
+    "id": "S03",
+    "status": "PASS",
+    "source": "562f39597ba1a5657fa5b98fbe7014d761e2fbf6",
+    "details": "새로고침 후 고급 검색 조건 복원",
+    "evidence": "search-restored.txt"
+  },
+  {
+    "id": "S04",
+    "status": "PASS",
+    "source": "562f39597ba1a5657fa5b98fbe7014d761e2fbf6",
+    "details": "프로젝트 검색은 account와 배타적이며 전역 기본 보기 유지",
+    "evidence": "search-project-result.txt"
+  },
+  {
+    "id": "S05",
+    "status": "PASS",
+    "source": "562f39597ba1a5657fa5b98fbe7014d761e2fbf6",
+    "details": "Zone URL을 제거하고 지원 필터는 보존·Zone API 전송 없음",
+    "evidence": "legacy-zone-normalized.txt"
+  },
+  {
+    "id": "A04",
+    "status": "PASS",
+    "source": "562f39597ba1a5657fa5b98fbe7014d761e2fbf6",
+    "details": "조회 실패 후 같은 작업의 재조회만 제공·생성 POST 1회",
+    "evidence": "job-query-unknown.txt"
+  },
+  {
+    "id": "A05-recheck-success",
+    "status": "PASS",
+    "source": "562f39597ba1a5657fa5b98fbe7014d761e2fbf6",
+    "details": "qa-ag03-job-recheck: host anti-affinity; owner=admin; jobstatus=1",
+    "evidence": "ui-network.json"
+  },
+  {
+    "id": "A06-no-receipt",
+    "status": "PASS",
+    "source": "562f39597ba1a5657fa5b98fbe7014d761e2fbf6",
+    "details": "제어된 POST 전달 전 실패: 재열기 후에도 재전송 차단·작업 ID 없음 안내",
+    "evidence": "post-unknown-reopened.txt"
+  },
+  {
+    "id": "C05-user-strict-affinity",
+    "status": "PASS",
+    "source": "562f39597ba1a5657fa5b98fbe7014d761e2fbf6",
+    "details": "qa-ag03-user-strict-affinity: host affinity; owner=qa-ag03-user; jobstatus=1",
+    "evidence": "ui-network.json"
+  },
+  {
+    "id": "C06-user-strict-anti",
+    "status": "PASS",
+    "source": "562f39597ba1a5657fa5b98fbe7014d761e2fbf6",
+    "details": "qa-ag03-user-strict-anti: host anti-affinity; owner=qa-ag03-user; jobstatus=1",
+    "evidence": "ui-network.json"
+  },
+  {
+    "id": "C07-user-nonstrict-affinity",
+    "status": "PASS",
+    "source": "562f39597ba1a5657fa5b98fbe7014d761e2fbf6",
+    "details": "qa-ag03-user-nonstrict-affinity: non-strict host affinity; owner=qa-ag03-user; jobstatus=1",
+    "evidence": "ui-network.json"
+  },
+  {
+    "id": "C08-user-nonstrict-anti",
+    "status": "PASS",
+    "source": "562f39597ba1a5657fa5b98fbe7014d761e2fbf6",
+    "details": "qa-ag03-user-nonstrict-anti: non-strict host anti-affinity; owner=qa-ag03-user; jobstatus=1",
+    "evidence": "ui-network.json"
+  },
+  {
+    "id": "C09-project-strict-affinity",
+    "status": "PASS",
+    "source": "562f39597ba1a5657fa5b98fbe7014d761e2fbf6",
+    "details": "qa-ag03-project-strict-affinity: host affinity; owner=d6e7e875-c6a3-4c10-ab0f-fa6f0d5be138; jobstatus=1",
+    "evidence": "ui-network.json"
+  },
+  {
+    "id": "C10-project-strict-anti",
+    "status": "PASS",
+    "source": "562f39597ba1a5657fa5b98fbe7014d761e2fbf6",
+    "details": "qa-ag03-project-strict-anti: host anti-affinity; owner=d6e7e875-c6a3-4c10-ab0f-fa6f0d5be138; jobstatus=1",
+    "evidence": "ui-network.json"
+  },
+  {
+    "id": "C11-project-nonstrict-affinity",
+    "status": "PASS",
+    "source": "562f39597ba1a5657fa5b98fbe7014d761e2fbf6",
+    "details": "qa-ag03-project-nonstrict-affinity: non-strict host affinity; owner=d6e7e875-c6a3-4c10-ab0f-fa6f0d5be138; jobstatus=1",
+    "evidence": "ui-network.json"
+  },
+  {
+    "id": "C12-project-nonstrict-anti",
+    "status": "PASS",
+    "source": "562f39597ba1a5657fa5b98fbe7014d761e2fbf6",
+    "details": "qa-ag03-project-nonstrict-anti: non-strict host anti-affinity; owner=d6e7e875-c6a3-4c10-ab0f-fa6f0d5be138; jobstatus=1",
+    "evidence": "ui-network.json"
+  },
+  {
+    "id": "D01-project-delete",
+    "status": "PASS",
+    "source": "562f39597ba1a5657fa5b98fbe7014d761e2fbf6",
+    "details": "qa-ag03-project-strict-affinity: UI 삭제·최종 jobstatus=1",
+    "evidence": "ui-network.json"
+  },
+  {
+    "id": "D02-user-delete",
+    "status": "PASS",
+    "source": "562f39597ba1a5657fa5b98fbe7014d761e2fbf6",
+    "details": "qa-ag03-user-strict-affinity: UI 삭제·최종 jobstatus=1",
+    "evidence": "ui-network.json"
+  },
+  {
+    "id": "F01-account-domain",
+    "status": "PASS",
+    "source": "e695b7aa68b228fe44f90c4b39c4464808830c01",
+    "details": "최종 배포: 도메인 미선택 계정 검색 비활성",
+    "evidence": "final-search-initial.txt"
+  },
+  {
+    "id": "F02-domain-options",
+    "status": "PASS",
+    "source": "e695b7aa68b228fe44f90c4b39c4464808830c01",
+    "details": "ROOT 선택 시 하위 도메인 계정 제외·ROOT 계정만 표시",
+    "evidence": "final-domain-options.txt"
+  },
+  {
+    "id": "F03-open-form-back",
+    "status": "PASS",
+    "source": "e695b7aa68b228fe44f90c4b39c4464808830c01",
+    "details": "열린 폼의 뒤로 가기: URL·계정·프로젝트 선택 동시 복원",
+    "evidence": "final-search-back.txt"
+  },
+  {
+    "id": "F04-open-form-forward",
+    "status": "PASS",
+    "source": "e695b7aa68b228fe44f90c4b39c4464808830c01",
+    "details": "앞으로 가기에서 프로젝트 조건 복원·전역 기본 보기 유지",
+    "evidence": "final-search-forward.txt"
+  },
+  {
+    "id": "F05-reload",
+    "status": "PASS",
+    "source": "e695b7aa68b228fe44f90c4b39c4464808830c01",
+    "details": "최종 배포 새로고침 후 이름·유형·프로젝트 조건 복원",
+    "evidence": "final-search-reload.txt"
+  },
+  {
+    "id": "F06-zone-url",
+    "status": "PASS",
+    "source": "e695b7aa68b228fe44f90c4b39c4464808830c01",
+    "details": "최종 배포도 Zone URL 제거·API 인자 배제",
+    "evidence": "final-zone-normalized.txt"
+  },
+  {
+    "id": "F07-search-error",
+    "status": "PASS",
+    "source": "e695b7aa68b228fe44f90c4b39c4464808830c01",
+    "details": "잘못된 도메인 API 431에서 검색 경로 유지·오류 상태 표시",
+    "evidence": "final-search-invalid-domain.txt"
+  },
+  {
+    "id": "F08-search-recovery",
+    "status": "PASS",
+    "source": "e695b7aa68b228fe44f90c4b39c4464808830c01",
+    "details": "올바른 검색으로 복구 시 오류 해제·프로젝트 결과 재조회",
+    "evidence": "final-search-recovered.txt"
+  },
+  {
+    "id": "F09-empty",
+    "status": "PASS",
+    "source": "e695b7aa68b228fe44f90c4b39c4464808830c01",
+    "details": "정상 0건 API 200과 조회 실패를 구분",
+    "evidence": "final-empty-search.txt"
+  },
+  {
+    "id": "F10-reset",
+    "status": "PASS",
+    "source": "e695b7aa68b228fe44f90c4b39c4464808830c01",
+    "details": "재설정으로 이름·유형·소유자 검색 제거",
+    "evidence": "final-reset.txt"
+  },
+  {
+    "id": "F11-final-create-form",
+    "status": "PASS",
+    "source": "e695b7aa68b228fe44f90c4b39c4464808830c01",
+    "details": "최종 배포의 VM 표준 md 대화상자·중복 오류 입력/소유자/초점 보존",
+    "evidence": "final-duplicate-preserved.txt"
+  },
+  {
+    "id": "F12-final-create-success",
+    "status": "PASS",
+    "source": "e695b7aa68b228fe44f90c4b39c4464808830c01",
+    "details": "qa-ag03-final-smoke: host anti-affinity; owner=admin; jobstatus=1",
+    "evidence": "ui-network.json"
+  },
+  {
+    "id": "D03-admin-delete",
+    "status": "PASS",
+    "source": "e695b7aa68b228fe44f90c4b39c4464808830c01",
+    "details": "qa-ag03-final-smoke: UI 삭제·최종 jobstatus=1",
+    "evidence": "ui-network.json"
+  },
+  {
+    "id": "P01-ui-cleanup",
+    "status": "PASS",
+    "source": "e695b7aa68b228fe44f90c4b39c4464808830c01",
+    "details": "기본 보기 원래 그룹 3개만 표시·전용 그룹 없음(API 전체 프로젝트 포함 원래 4개)",
+    "evidence": "after-cleanup.txt"
+  }
+]

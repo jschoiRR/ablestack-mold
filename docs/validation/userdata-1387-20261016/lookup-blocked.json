@@ -1,0 +1,132 @@
+{
+  "issue": 1387,
+  "source": "1a9553261a7d45a3acf079f21d0ba7db360492f6",
+  "dialog": {
+    "bodyHeight": 374,
+    "bodyOverflow": "auto",
+    "bodyRect": {
+      "bottom": 542,
+      "height": 374,
+      "left": 161,
+      "right": 1119,
+      "top": 168,
+      "width": 958,
+      "x": 161,
+      "y": 168
+    },
+    "bodyScrollHeight": 374,
+    "buttons": [
+      {
+        "disabled": false,
+        "padding": "4px 15px",
+        "rect": {
+          "bottom": 591,
+          "height": 32,
+          "left": 900.28125,
+          "right": 958.046875,
+          "top": 559,
+          "width": 57.765625,
+          "x": 900.28125,
+          "y": 559
+        },
+        "text": "닫기"
+      },
+      {
+        "disabled": false,
+        "padding": "4px 15px",
+        "rect": {
+          "bottom": 591,
+          "height": 32,
+          "left": 974.046875,
+          "right": 1091,
+          "top": 559,
+          "width": 116.953125,
+          "x": 974.046875,
+          "y": 559
+        },
+        "text": "현재 상태 확인"
+      }
+    ],
+    "rect": {
+      "bottom": 608,
+      "height": 496,
+      "left": 160,
+      "right": 1120,
+      "top": 112,
+      "width": 960,
+      "x": 160,
+      "y": 112
+    },
+    "states": [
+      "blocked"
+    ],
+    "styles": [
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(75, 85, 99)",
+        "text": "사용자 데이터 제거"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(92, 59, 0)",
+        "text": "선택한 사용자 데이터 라이브러리 항목을 삭제합니다. 사용 중인 항목은 서버가 삭제를 거절합니다. 항목별 결과를 확인하세요."
+      },
+      {
+        "background": "rgb(250, 250, 250)",
+        "color": "rgb(75, 85, 99)",
+        "text": "이름"
+      },
+      {
+        "background": "rgb(250, 250, 250)",
+        "color": "rgb(75, 85, 99)",
+        "text": "계정"
+      },
+      {
+        "background": "rgb(250, 250, 250)",
+        "color": "rgb(75, 85, 99)",
+        "text": "작업 상태"
+      },
+      {
+        "background": "rgb(250, 250, 250)",
+        "color": "rgb(75, 85, 99)",
+        "text": "사유"
+      },
+      {
+        "background": "rgb(255, 255, 255)",
+        "color": "rgb(75, 85, 99)",
+        "text": "UD1387-31-20261016-root-read-fail57826a6d-d156-4741-a9a2-a9a55bfb1aa7"
+      },
+      {
+        "background": "rgb(255, 255, 255)",
+        "color": "rgb(75, 85, 99)",
+        "text": "adminROOT"
+      },
+      {
+        "background": "rgb(255, 255, 255)",
+        "color": "rgb(75, 85, 99)",
+        "text": "차단"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgba(0, 0, 0, 0.65)",
+        "text": "차단"
+      },
+      {
+        "background": "rgb(255, 255, 255)",
+        "color": "rgb(75, 85, 99)",
+        "text": "현재 대상 또는 권한을 조회하지 못해 삭제를 차단했습니다. 상태 확인 후 재시도하세요."
+      }
+    ]
+  },
+  "scripts": [
+    "http://10.10.31.10:8080/client/js/chunk-3c753768.8c400be1.js",
+    "http://10.10.31.10:8080/client/js/less.min.js",
+    "http://10.10.31.10:8080/client/js/vendors.3ea5c3f6.js",
+    "http://10.10.31.10:8080/client/js/app.028b9b59.js"
+  ],
+  "theme": "ant-scrolling-effect",
+  "viewport": {
+    "height": 720,
+    "width": 1280
+  }
+}

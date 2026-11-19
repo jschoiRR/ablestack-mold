@@ -1,0 +1,109 @@
+{
+  "complete": true,
+  "time": "2026-10-19T09:27:20+0900",
+  "source": "56955af91402f518a1b7911a338a77faaf8bf885",
+  "upstreamEuropa": "d9f068bbbba048313b6d38539651d19444c4d7c7",
+  "tests": {
+    "suites": 14,
+    "passed": 250,
+    "lint": "pass",
+    "uiBuild": "pass",
+    "fullCloudBuild": false
+  },
+  "ui": {
+    "historicalPassed": 44,
+    "finalPassed": 35,
+    "finalDeleteRequests": 2,
+    "finalUpdateAttempts": 8,
+    "source": "56955af91402f518a1b7911a338a77faaf8bf885",
+    "historicalReproduced": 2,
+    "historicalNetworkWindowIncomplete": true,
+    "controlledUndeliveredPost": 1
+  },
+  "uiReceiptJobs": {
+    "count": 32,
+    "allDatabaseStatus1": true
+  },
+  "deployment": {
+    "source": "56955af91402f518a1b7911a338a77faaf8bf885",
+    "time": "2026-10-19T09:17:37+0900",
+    "package": "b22891828e4e4e8ab73068e6611e061b448acc12d299a174151e46316fb7738e",
+    "index": "fe9f627a07570dc8d77ba889e95f2c963deb966d7a28fd67700c689a606bb044",
+    "files": 893,
+    "staticHashesMatch": true,
+    "serverFilesPreserved": true,
+    "jarCount": 9,
+    "pid": "1765167",
+    "state": "active",
+    "http": "200",
+    "markers": {
+      "affinity-members-toolbar": true,
+      "affinity-member-results": true,
+      "affinity-create-dialog": true,
+      "affinity-group-owner": true,
+      "listAffinityGroupTypes": true,
+      "affinity-selection-summary": true,
+      "preserveSelectedRowKeys": true,
+      "blockingLoadingState": true,
+      "fetchSyncProgress": true,
+      "extractJobId": true
+    },
+    "backup": "/root/ag04-ui-deploy-refresh-20261019/webapp-backup"
+  },
+  "health": {
+    "time": "2026-10-19T09:26:48+0900",
+    "source": "56955af91402f518a1b7911a338a77faaf8bf885",
+    "checks": {
+      "webinf": true,
+      "metainf": true,
+      "config": true,
+      "jars": true,
+      "staticHashes": true,
+      "pid": true
+    },
+    "files": 893,
+    "pid": "1765167",
+    "state": "active",
+    "http": "200",
+    "index": "fe9f627a07570dc8d77ba889e95f2c963deb966d7a28fd67700c689a606bb044"
+  },
+  "cleanup": {
+    "activeCounters": {
+      "active_test_vms": 0,
+      "test_affinity_groups": 0,
+      "test_affinity_maps": 0,
+      "active_test_volumes": 0,
+      "active_test_nics": 0,
+      "active_test_networks": 0,
+      "active_test_accounts": 0,
+      "active_test_users": 0,
+      "active_test_projects": 0,
+      "test_roles": 0
+    },
+    "originalResources": {
+      "groups": {
+        "before": 4,
+        "after": 4,
+        "same": true,
+        "beforeHash": "40491a582bf199f5733dd53c0e6cc3170883d254ced6abcc9b19d55f80fc3be4",
+        "afterHash": "40491a582bf199f5733dd53c0e6cc3170883d254ced6abcc9b19d55f80fc3be4"
+      },
+      "vms": {
+        "before": 119,
+        "after": 119,
+        "same": true,
+        "beforeHash": "a19593a10ac3460b2753ef7dee32cc41225f88b35cf2ad6a3a170b4f04006031",
+        "afterHash": "a19593a10ac3460b2753ef7dee32cc41225f88b35cf2ad6a3a170b4f04006031"
+      }
+    },
+    "physicalRunningDomainDiskConfigDriveAbsent": true
+  },
+  "originalFTCTLFilesPreserved": true,
+  "sourceManifestMatches": true,
+  "limitations": [
+    "No CAS in replacement API: final-read-to-write race remains",
+    "Receipts are app-session memory only",
+    "Full Epic style/role/theme/host-placement qualification deferred to AG05/AG06",
+    "Historical network window incomplete; source-tagged receipts and API/DB evidence retained"
+  ]
+}

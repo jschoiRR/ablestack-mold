@@ -1,0 +1,116 @@
+{
+  "truncated": false,
+  "events": [
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 15122,
+      "id": "36984.2843",
+      "url": "http://10.10.31.10:8080/client/api/",
+      "httpMethod": "POST",
+      "parameters": {
+        "command": "updateIso",
+        "response": "json",
+        "id": "a32115e7-6e4e-4ec5-bc1d-9172451e3b7e",
+        "name": "UD1392-31-20261016-isos-0",
+        "displaytext": "UD1392-31-20261016-isos-0",
+        "ostypeid": "9d9ed195-b253-11f1-a895-0024814c313f",
+        "forceupdateostype": "false"
+      }
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 15123,
+      "id": "36984.2844",
+      "url": "http://10.10.31.10:8080/client/api/?managementserverid=716fb21e-86f3-4f8c-b34d-11c8d0220230&command=readyForShutdown&response=json&sessionkey=<redacted>",
+      "httpMethod": "GET",
+      "parameters": {
+        "managementserverid": "716fb21e-86f3-4f8c-b34d-11c8d0220230",
+        "command": "readyForShutdown",
+        "response": "json"
+      }
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 15126,
+      "id": "36984.2844",
+      "url": "http://10.10.31.10:8080/client/api/?managementserverid=716fb21e-86f3-4f8c-b34d-11c8d0220230&command=readyForShutdown&response=json&sessionkey=<redacted>",
+      "status": 200,
+      "mimeType": "application/json"
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 15132,
+      "id": "36984.2843",
+      "url": "http://10.10.31.10:8080/client/api/",
+      "status": 200,
+      "mimeType": "application/json"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 15134,
+      "id": "36984.2845",
+      "url": "http://10.10.31.10:8080/client/api/",
+      "httpMethod": "POST",
+      "parameters": {
+        "command": "linkUserDataToTemplate",
+        "response": "json",
+        "templateid": "a32115e7-6e4e-4ec5-bc1d-9172451e3b7e",
+        "userdataid": "522593c9-e180-4771-b7ed-48949dd16815",
+        "userdatapolicy": "append"
+      }
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 15142,
+      "id": "36984.2847",
+      "url": "http://10.10.31.10:8080/client/api/?managementserverid=716fb21e-86f3-4f8c-b34d-11c8d0220230&command=readyForShutdown&response=json&sessionkey=<redacted>",
+      "httpMethod": "GET",
+      "parameters": {
+        "managementserverid": "716fb21e-86f3-4f8c-b34d-11c8d0220230",
+        "command": "readyForShutdown",
+        "response": "json"
+      }
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 15145,
+      "id": "36984.2847",
+      "url": "http://10.10.31.10:8080/client/api/?managementserverid=716fb21e-86f3-4f8c-b34d-11c8d0220230&command=readyForShutdown&response=json&sessionkey=<redacted>",
+      "status": 200,
+      "mimeType": "application/json"
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 15151,
+      "id": "36984.2845",
+      "url": "http://10.10.31.10:8080/client/api/",
+      "status": 503,
+      "mimeType": "application/json"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 15153,
+      "id": "36984.2848",
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&isofilter=all&id=a32115e7-6e4e-4ec5-bc1d-9172451e3b7e&page=1&pagesize=20&showIcon=true&command=listIsos&response=json&sessionkey=<redacted>",
+      "httpMethod": "GET",
+      "parameters": {
+        "listall": "true",
+        "isofilter": "all",
+        "id": "a32115e7-6e4e-4ec5-bc1d-9172451e3b7e",
+        "page": "1",
+        "pagesize": "20",
+        "showIcon": "true",
+        "command": "listIsos",
+        "response": "json"
+      }
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 15156,
+      "id": "36984.2848",
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&isofilter=all&id=a32115e7-6e4e-4ec5-bc1d-9172451e3b7e&page=1&pagesize=20&showIcon=true&command=listIsos&response=json&sessionkey=<redacted>",
+      "status": 200,
+      "mimeType": "application/json"
+    }
+  ]
+}

@@ -99,6 +99,57 @@ public class AutoScaleVmGroupVO implements AutoScaleVmGroup, InternalIdentity, I
     @Column(name = "next_vm_seq")
     private long nextVmSeq = 1L;
 
+    @Column(name = "operation_uuid")
+    private String operationUuid;
+
+    @Column(name = "operation_action")
+    private String operationAction;
+
+    @Column(name = "operation_phase")
+    private String operationPhase;
+
+    @Column(name = "operation_vm_id")
+    private Long operationVmId;
+
+    @Column(name = "operation_deadline")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date operationDeadline;
+
+    @Column(name = "evaluation", length = 16777215)
+    private String evaluation;
+
+    @Column(name = "last_scaled_ms")
+    private Long lastScaledMillis;
+
+    @Override
+    public String getEvaluation() { return evaluation; }
+    public void setEvaluation(String value) { evaluation = value; }
+    @Column(name = "evaluation_time_ms")
+    private Long evaluationTimeMillis;
+
+    public void setEvaluationTimeMillis(Long value) { evaluationTimeMillis = value; }
+    public void setLastScaledMillis(Long value) { lastScaledMillis = value; }
+
+    public Date getEvaluationTime() { return evaluationTimeMillis == null ? null : new Date(evaluationTimeMillis); }
+    public void setEvaluationTime(Date value) { setEvaluationTimeMillis(value == null ? null : value.getTime()); }
+    public Date getLastScaled() { return lastScaledMillis == null ? null : new Date(lastScaledMillis); }
+    public void setLastScaled(Date value) { setLastScaledMillis(value == null ? null : value.getTime()); }
+
+    public String getOperationUuid() { return operationUuid; }
+    public void setOperationUuid(String value) { operationUuid = value; }
+    @Override
+    public boolean isOperationInProgress() { return operationUuid != null || state == State.SCALING; }
+    @Override
+    public String getOperationAction() { return operationAction; }
+    public void setOperationAction(String value) { operationAction = value; }
+    @Override
+    public String getOperationPhase() { return operationPhase; }
+    public void setOperationPhase(String value) { operationPhase = value; }
+    public Long getOperationVmId() { return operationVmId; }
+    public void setOperationVmId(Long value) { operationVmId = value; }
+    public Date getOperationDeadline() { return operationDeadline; }
+    public void setOperationDeadline(Date value) { operationDeadline = value; }
+
     public AutoScaleVmGroupVO() {
     }
 

@@ -1,0 +1,602 @@
+- complementary:
+  - menu:
+    - menuitem "dashboard 대시보드":
+      - link "dashboard 대시보드":
+        - /url: "#/dashboard"
+        - img "dashboard":
+        - text: 대시보드
+    - img "cloud":
+    - text: 컴퓨트
+    - list:
+      - menuitem "cloud-server 가상머신":
+        - link "cloud-server 가상머신":
+          - /url: "#/vm"
+          - img "cloud-server":
+          - text: 가상머신
+      - menuitem "camera VM 스냅샷":
+        - link "camera VM 스냅샷":
+          - /url: "#/vmsnapshot"
+          - img "camera":
+          - text: VM 스냅샷
+      - menuitem "쿠버네티스":
+        - link "쿠버네티스":
+          - /url: "#/kubernetes"
+          - text: 쿠버네티스
+      - menuitem "fullscreen 오토스케일 VM 그룹":
+        - link "fullscreen 오토스케일 VM 그룹":
+          - /url: "#/autoscalevmgroup"
+          - img "fullscreen":
+          - text: 오토스케일 VM 그룹
+      - menuitem "gold 가상머신 그룹":
+        - link "gold 가상머신 그룹":
+          - /url: "#/vmgroup"
+          - img "gold":
+          - text: 가상머신 그룹
+      - menuitem "key SSH 키 쌍":
+        - link "key SSH 키 쌍":
+          - /url: "#/ssh"
+          - img "key":
+          - text: SSH 키 쌍
+      - menuitem "solution 사용자 데이터 라이브러리":
+        - link "solution 사용자 데이터 라이브러리":
+          - /url: "#/userdata"
+          - img "solution":
+          - text: 사용자 데이터 라이브러리
+      - menuitem "solution CNI 구성":
+        - link "solution CNI 구성":
+          - /url: "#/cniconfiguration"
+          - img "solution":
+          - text: CNI 구성
+      - menuitem "swap Affinity 그룹":
+        - link "swap Affinity 그룹":
+          - /url: "#/affinitygroup"
+          - img "swap":
+          - text: Affinity 그룹
+    - img "hdd":
+    - text: 스토리지
+    - img "wifi":
+    - text: 네트워크
+    - img "picture":
+    - text: 이미지
+    - img "lock":
+    - text: 키 관리
+    - menuitem "schedule 이벤트":
+      - link "schedule 이벤트":
+        - /url: "#/event"
+        - img "schedule":
+        - text: 이벤트
+    - menuitem "project 프로젝트":
+      - link "project 프로젝트":
+        - /url: "#/project"
+        - img "project":
+        - text: 프로젝트
+    - menuitem "idcard 역할":
+      - link "idcard 역할":
+        - /url: "#/role"
+        - img "idcard":
+        - text: 역할
+    - menuitem "team 계정":
+      - link "team 계정":
+        - /url: "#/account"
+        - img "team":
+        - text: 계정
+    - menuitem "block 도메인":
+      - link "block 도메인":
+        - /url: "#/domain"
+        - img "block":
+        - text: 도메인
+    - img "bank":
+    - text: 인프라스트럭쳐
+    - img "shopping":
+    - text: 서비스 오퍼링
+    - img "setting":
+    - text: 구성
+    - menuitem "appstore-add 확장":
+      - link "appstore-add 확장":
+        - /url: "#/extension"
+        - img "appstore-add":
+        - text: 확장
+    - img "tool":
+    - text: 도구
+    - menuitem "read API 문서":
+      - link "read API 문서":
+        - /url: "#/apidocs/"
+        - img "read":
+        - text: API 문서
+- generic: 페이지 스타일 설정
+- button "닫기":
+  - img "close":
+- heading "페이지 스타일 설정" [level=3]
+- radio [checked]
+- img "check":
+- radio
+- heading "테마 색상" [level=3]
+- radio
+- img "check"
+- radio
+- radio
+- radio
+- radio
+- radio
+- radio
+- radio
+- separator
+- heading "네비게이션 설정" [level=3]
+- generic: 배경색
+- textbox: "#ffffff"
+- generic: 텍스트 색상
+- textbox: "#000000"
+- separator
+- alert:
+  - img "exclamation-circle":
+  - generic: "설정은 현재 브라우저에서만 볼 수 있습니다. 설정을 적용하려면 JSON 파일을 다운로드하고 경로 `/public/config.json` 아래의 `config.json` 파일의 `theme` 섹션에서 해당 콘텐츠를 교체하세요."
+- button "download 세팅값 다운로드(json)":
+  - img "download":
+  - generic: 세팅값 다운로드(json)
+- button "undo 기본값으로 재설정":
+  - img "undo":
+  - generic: 기본값으로 재설정
+- img "menu-fold":
+- combobox
+- img "project":
+- text: 기본 보기
+- button "생성 down":
+  - generic: 생성
+  - img "down":
+- img "translation":
+- img "bell":
+- generic: AC
+- generic: admin cloud
+- main:
+  - generic: 새 가상머신
+  - form "새 가상머신":
+    - button "1 다른 계정에 가상머신 할당 생성할 가상머신을 특정 계정에 할당할 수 있습니다. 소유자 유형 계정 * 도메인 block ROOT * 계정 team admin":
+      - generic: "1"
+      - generic: 다른 계정에 가상머신 할당
+      - text: 생성할 가상머신을 특정 계정에 할당할 수 있습니다.
+      - generic "소유자 유형"
+      - combobox
+      - generic: 계정
+      - generic "도메인": "* 도메인"
+      - combobox
+      - img "block":
+      - text: ROOT
+      - generic "계정": "* 계정"
+      - combobox
+      - img "team":
+      - text: admin
+    - button "2 배포 인프라 선택 Zone은 원래 단일 데이터 센터에 해당합니다. 다수의 Zone을 설정하고 물리적으로 분리하는 방법으로 클라우드의 신뢰성을 높일 수 있습니다. * Zone global Zone Pod 클러스터 호스트":
+      - generic: "2"
+      - generic: 배포 인프라 선택
+      - text: Zone은 원래 단일 데이터 센터에 해당합니다. 다수의 Zone을 설정하고 물리적으로 분리하는 방법으로 클라우드의 신뢰성을 높일 수 있습니다.
+      - generic "Zone": "* Zone"
+      - radio "global Zone" [checked]
+      - img "global":
+      - text: Zone
+      - generic "Pod"
+      - combobox "Pod"
+      - generic "클러스터"
+      - combobox "클러스터"
+      - generic "호스트"
+      - combobox "호스트"
+    - button "3 이미지 유형 템플릿 ISO 볼륨 스냅샷 VM의 시작에 사용할 수 있는 OS 이미지 운영체제 Ubuntu Debian Rocky Linux Windows 사용자 필터링 기준 search rocky-9-4-minimal.qcow22 arrows-alt file-zip 추천 공개 HVM nginx-lb-test.qcow2 arrows-alt file-zip 추천 공개 HVM Rocky-Linux-9-5-x86-64-Server-Cloud-Image.qcow2 arrows-alt file-zip 추천 공개 HVM UD1392-31-20261016-templates-0 solution 직접 다운로드 HVM UD1392-31-20261016-templates-1 solution 직접 다운로드 HVM 전체 5 개 항목 left 1 right 10 / 쪽":
+      - generic: "3"
+      - generic: 이미지
+      - generic "유형"
+      - radio "템플릿" [checked]
+      - generic: 템플릿
+      - radio "ISO"
+      - generic: ISO
+      - radio "볼륨"
+      - generic: 볼륨
+      - radio "스냅샷"
+      - generic: 스냅샷
+      - generic: VM의 시작에 사용할 수 있는 OS 이미지
+      - generic "운영체제"
+      - radio "Ubuntu"
+      - generic: Ubuntu
+      - radio "Debian"
+      - generic: Debian
+      - radio "Rocky Linux" [checked]
+      - generic: Rocky Linux
+      - radio "Windows"
+      - generic: Windows
+      - radio "사용자"
+      - generic: 사용자
+      - combobox
+      - generic: 필터링 기준
+      - textbox "검색"
+      - button "search":
+        - img "search":
+      - list:
+        - radio "rocky-9-4-minimal.qcow22 arrows-alt file-zip 추천 공개 HVM"
+        - text: rocky-9-4-minimal.qcow22
+        - img "arrows-alt":
+        - img "file-zip":
+        - generic: 추천
+        - generic: 공개
+        - generic: HVM
+        - radio "nginx-lb-test.qcow2 arrows-alt file-zip 추천 공개 HVM"
+        - text: nginx-lb-test.qcow2
+        - img "arrows-alt":
+        - img "file-zip":
+        - generic: 추천
+        - generic: 공개
+        - generic: HVM
+        - radio "Rocky-Linux-9-5-x86-64-Server-Cloud-Image.qcow2 arrows-alt file-zip 추천 공개 HVM" [checked]
+        - text: Rocky-Linux-9-5-x86-64-Server-Cloud-Image.qcow2
+        - img "arrows-alt":
+        - img "file-zip":
+        - generic: 추천
+        - generic: 공개
+        - generic: HVM
+        - radio "UD1392-31-20261016-templates-0 solution 직접 다운로드 HVM"
+        - text: UD1392-31-20261016-templates-0
+        - img "solution":
+        - generic: 직접 다운로드
+        - generic: HVM
+        - radio "UD1392-31-20261016-templates-1 solution 직접 다운로드 HVM"
+        - text: UD1392-31-20261016-templates-1
+        - img "solution":
+        - generic: 직접 다운로드
+        - generic: HVM
+      - list:
+        - listitem: 전체 5 개 항목
+        - listitem "이전 페이지":
+          - button "left" [disabled]:
+            - img "left":
+        - listitem "1":
+          - generic: "1"
+        - listitem "다음 페이지":
+          - button "right" [disabled]:
+            - img "right":
+        - combobox
+        - generic: 10 / 쪽
+    - button "4 컴퓨트 오퍼링 search 컴퓨트 오퍼링 appstore CPU bulb 메모리 appstore 압축/중복제거 tag 스토리지 태그 1C1GB-TO-64C128GB-FR-GFS-None 1-64 CPU x 2.00 Ghz 1024-131072 MB 비활성화 1C1GB-TO-64C128GB-FR-GFS 1-64 CPU x 2.00 Ghz 1024-131072 MB 비활성화 glue-gfs 1C1GB-TO-64C128GB-FR-CLVM 1-64 CPU x 2.00 Ghz 1024-131072 MB 비활성화 clvm 1C1GB-TO-64C128GB-FR-CLVM-NG 1-64 CPU x 2.00 Ghz 1024-131072 MB 비활성화 clvm-ng 1C1GB-TO-32C64GB-thin-wb-ha 1-32 CPU x 2.00 Ghz 1024-32768 MB 비활성화 glue-gfs 8Core-16GB-Fixed-Offering 8 CPU x 2.00 Ghz 16384 MB 비활성화 glue-gfs 4Core 8GB 4 CPU x 2.00 Ghz 8192 MB 비활성화 2Core 2GB 2 CPU x 2.00 Ghz 2048 MB 비활성화 glue-gfs 2C-4GB-GFS 2 CPU x 2.00 Ghz 4096 MB 비활성화 glue-gfs RT1230-GFS2-4C8G 4 CPU x 2.00 Ghz 8192 MB 비활성화 glue-gfs 전체 15 개 항목 left 1 2 right 10 / 쪽":
+      - generic: "4"
+      - generic: 컴퓨트 오퍼링
+      - textbox "검색"
+      - button "search":
+        - img "search":
+      - table:
+        - rowgroup:
+          - row "컴퓨트 오퍼링 appstore CPU bulb 메모리 appstore 압축/중복제거 tag 스토리지 태그":
+            - columnheader
+            - columnheader "컴퓨트 오퍼링"
+            - columnheader "appstore CPU":
+              - img "appstore":
+              - text: CPU
+            - columnheader "bulb 메모리":
+              - img "bulb":
+              - text: 메모리
+            - columnheader "appstore 압축/중복제거":
+              - img "appstore":
+              - text: 압축/중복제거
+            - columnheader "tag 스토리지 태그":
+              - img "tag":
+              - text: 스토리지 태그
+            - columnheader
+      - table:
+        - rowgroup:
+          - row "1C1GB-TO-64C128GB-FR-GFS-None 1-64 CPU x 2.00 Ghz 1024-131072 MB 비활성화":
+            - cell:
+              - radio
+            - cell "1C1GB-TO-64C128GB-FR-GFS-None"
+            - cell "1-64 CPU x 2.00 Ghz"
+            - cell "1024-131072 MB"
+            - cell "비활성화"
+            - cell
+          - row "1C1GB-TO-64C128GB-FR-GFS 1-64 CPU x 2.00 Ghz 1024-131072 MB 비활성화 glue-gfs":
+            - cell:
+              - radio
+            - cell "1C1GB-TO-64C128GB-FR-GFS"
+            - cell "1-64 CPU x 2.00 Ghz"
+            - cell "1024-131072 MB"
+            - cell "비활성화"
+            - cell "glue-gfs"
+          - row "1C1GB-TO-64C128GB-FR-CLVM 1-64 CPU x 2.00 Ghz 1024-131072 MB 비활성화 clvm":
+            - cell:
+              - radio
+            - cell "1C1GB-TO-64C128GB-FR-CLVM"
+            - cell "1-64 CPU x 2.00 Ghz"
+            - cell "1024-131072 MB"
+            - cell "비활성화"
+            - cell "clvm"
+          - row "1C1GB-TO-64C128GB-FR-CLVM-NG 1-64 CPU x 2.00 Ghz 1024-131072 MB 비활성화 clvm-ng":
+            - cell:
+              - radio
+            - cell "1C1GB-TO-64C128GB-FR-CLVM-NG"
+            - cell "1-64 CPU x 2.00 Ghz"
+            - cell "1024-131072 MB"
+            - cell "비활성화"
+            - cell "clvm-ng"
+          - row "1C1GB-TO-32C64GB-thin-wb-ha 1-32 CPU x 2.00 Ghz 1024-32768 MB 비활성화 glue-gfs":
+            - cell:
+              - radio
+            - cell "1C1GB-TO-32C64GB-thin-wb-ha"
+            - cell "1-32 CPU x 2.00 Ghz"
+            - cell "1024-32768 MB"
+            - cell "비활성화"
+            - cell "glue-gfs"
+          - row "8Core-16GB-Fixed-Offering 8 CPU x 2.00 Ghz 16384 MB 비활성화 glue-gfs":
+            - cell:
+              - radio
+            - cell "8Core-16GB-Fixed-Offering"
+            - cell "8 CPU x 2.00 Ghz"
+            - cell "16384 MB"
+            - cell "비활성화"
+            - cell "glue-gfs"
+          - row "4Core 8GB 4 CPU x 2.00 Ghz 8192 MB 비활성화":
+            - cell:
+              - radio
+            - cell "4Core 8GB"
+            - cell "4 CPU x 2.00 Ghz"
+            - cell "8192 MB"
+            - cell "비활성화"
+            - cell
+          - row "2Core 2GB 2 CPU x 2.00 Ghz 2048 MB 비활성화 glue-gfs":
+            - cell:
+              - radio [checked] [active]
+            - cell "2Core 2GB"
+            - cell "2 CPU x 2.00 Ghz"
+            - cell "2048 MB"
+            - cell "비활성화"
+            - cell "glue-gfs"
+          - row "2C-4GB-GFS 2 CPU x 2.00 Ghz 4096 MB 비활성화 glue-gfs":
+            - cell:
+              - radio
+            - cell "2C-4GB-GFS"
+            - cell "2 CPU x 2.00 Ghz"
+            - cell "4096 MB"
+            - cell "비활성화"
+            - cell "glue-gfs"
+          - row "RT1230-GFS2-4C8G 4 CPU x 2.00 Ghz 8192 MB 비활성화 glue-gfs":
+            - cell:
+              - radio
+            - cell "RT1230-GFS2-4C8G"
+            - cell "4 CPU x 2.00 Ghz"
+            - cell "8192 MB"
+            - cell "비활성화"
+            - cell "glue-gfs"
+      - list:
+        - listitem: 전체 15 개 항목
+        - listitem "이전 페이지":
+          - button "left" [disabled]:
+            - img "left":
+        - listitem "1":
+          - generic: "1"
+        - listitem "2":
+          - generic: "2"
+        - listitem "다음 페이지":
+          - button "right":
+            - img "right":
+        - combobox
+        - generic: 10 / 쪽
+    - button "5 루트 디스크 1 루트 디스크 오퍼링 루트 디스크 오퍼링 무시 다른 디스크 오퍼링을 선택해 루트 디스크를 구성합니다. 2Core 2GB 컴퓨트 오퍼링 기본값 2 루트 디스크 용량 100 GB 루트 디스크 크기 무시 현재 루트 디스크 오퍼링을 유지하고 용량만 변경합니다. 3 루트 디스크의 기본 스토리지 reload 업데이트 search 자동 선택 스토리지 총 용량 할당 용량 물리 여유 추가 할당 가능 필요 용량 Primary SharedMountPoint · CLUSTER 21.83 TiB 10.06 TiB 18.73 TiB 11.76 TiB 100 GiB 할당 용량에는 예약 용량이 포함됩니다. 물리 여유와 추가 할당 가능 용량은 서로 다를 수 있습니다. · 오후 10:45:14":
+      - generic: "5"
+      - generic: 루트 디스크
+      - heading "1 루트 디스크 오퍼링" [level=4]:
+        - generic: "1"
+        - text: 루트 디스크 오퍼링
+      - generic "루트 디스크 오퍼링 무시"
+      - switch
+      - paragraph: 다른 디스크 오퍼링을 선택해 루트 디스크를 구성합니다.
+      - generic: 2Core 2GB
+      - generic: 컴퓨트 오퍼링 기본값
+      - heading "2 루트 디스크 용량" [level=4]:
+        - generic: "2"
+        - text: 루트 디스크 용량
+      - generic: 100 GB
+      - generic "루트 디스크 크기 무시"
+      - switch
+      - paragraph: 현재 루트 디스크 오퍼링을 유지하고 용량만 변경합니다.
+      - strong: 3 루트 디스크의 기본 스토리지
+      - button "reload 업데이트":
+        - img "reload":
+        - generic: 업데이트
+      - textbox "검색"
+      - button "search":
+        - img "search":
+      - radio "자동 선택" [checked]
+      - generic: 자동 선택
+      - table:
+        - rowgroup:
+          - row "스토리지 총 용량 할당 용량 물리 여유 추가 할당 가능 필요 용량":
+            - columnheader
+            - columnheader "스토리지"
+            - columnheader "총 용량"
+            - columnheader "할당 용량"
+            - columnheader "물리 여유"
+            - columnheader "추가 할당 가능"
+            - columnheader "필요 용량"
+        - rowgroup:
+          - row "Primary SharedMountPoint · CLUSTER 21.83 TiB 10.06 TiB 18.73 TiB 11.76 TiB 100 GiB":
+            - cell:
+              - radio
+            - cell "Primary SharedMountPoint · CLUSTER":
+              - text: Primary
+              - generic: SharedMountPoint · CLUSTER
+            - cell "21.83 TiB"
+            - cell "10.06 TiB"
+            - cell "18.73 TiB"
+            - cell "11.76 TiB"
+            - cell "100 GiB"
+      - paragraph: 할당 용량에는 예약 용량이 포함됩니다. 물리 여유와 추가 할당 가능 용량은 서로 다를 수 있습니다. · 오후 10:45:14
+    - button "6 데이터 디스크 search 디스크 오퍼링 hdd 디스크 크기(GB 단위) rocket 최소 IOPS/최대 IOPS 설정 안함 - - 전체 0 개 항목 left 1 right 10 / 쪽":
+      - generic: "6"
+      - generic: 데이터 디스크
+      - textbox "검색"
+      - button "search":
+        - img "search":
+      - table:
+        - rowgroup:
+          - row "디스크 오퍼링 hdd 디스크 크기(GB 단위) rocket 최소 IOPS/최대 IOPS":
+            - columnheader
+            - columnheader "디스크 오퍼링"
+            - columnheader "hdd 디스크 크기(GB 단위)":
+              - img "hdd":
+              - text: 디스크 크기(GB 단위)
+            - columnheader "rocket 최소 IOPS/최대 IOPS":
+              - img "rocket":
+              - text: 최소 IOPS/최대 IOPS
+            - columnheader
+      - table:
+        - rowgroup:
+          - row "설정 안함 - -":
+            - cell:
+              - radio [checked]
+            - cell "설정 안함"
+            - cell "-":
+              - generic: "-"
+            - cell "-"
+      - list:
+        - listitem: 전체 0 개 항목
+        - listitem "이전 페이지":
+          - button "left" [disabled]:
+            - img "left":
+        - listitem "1":
+          - generic: "1"
+        - listitem "다음 페이지":
+          - button "right" [disabled]:
+            - img "right":
+        - combobox
+        - generic: 10 / 쪽
+    - button "7 네트워크 인스턴스를 연결할 네트워크를 하나 이상 선택하세요. 여기에서 새 네트워크를 만들 수도 있습니다. 여기에서 새 네트워크를 생성할 수도 있습니다. search 새로운 네트워크 생성 네트워크 게스트 유형 VPC VM 오토스케일링 지원 데이터 없음 전체 0 개 항목 left 1 right 10 / 쪽":
+      - generic: "7"
+      - generic: 네트워크
+      - generic: 인스턴스를 연결할 네트워크를 하나 이상 선택하세요. 여기에서 새 네트워크를 만들 수도 있습니다. 여기에서 새 네트워크를 생성할 수도 있습니다.
+      - textbox "검색"
+      - button "search":
+        - img "search":
+      - button "새로운 네트워크 생성":
+        - generic: 새로운 네트워크 생성
+      - table:
+        - rowgroup:
+          - row "네트워크 게스트 유형 VPC VM 오토스케일링 지원":
+            - columnheader
+            - columnheader:
+              - checkbox [disabled]
+            - columnheader "네트워크"
+            - columnheader "게스트 유형"
+            - columnheader "VPC"
+            - columnheader "VM 오토스케일링 지원"
+            - columnheader
+      - table:
+        - rowgroup:
+          - row "데이터 없음":
+            - cell "데이터 없음":
+              - paragraph: 데이터 없음
+      - list:
+        - listitem: 전체 0 개 항목
+        - listitem "이전 페이지":
+          - button "left" [disabled]:
+            - img "left":
+        - listitem "1":
+          - generic: "1"
+        - listitem "다음 페이지":
+          - button "right" [disabled]:
+            - img "right":
+        - combobox
+        - generic: 10 / 쪽
+    - button "8 SSH 키 쌍 search SSH 키 쌍 user 계정 block 도메인 데이터 없음 전체 0 개 항목 left 1 right 10 / 쪽":
+      - generic: "8"
+      - generic: SSH 키 쌍
+      - textbox "검색"
+      - button "search":
+        - img "search":
+      - table:
+        - rowgroup:
+          - row "SSH 키 쌍 user 계정 block 도메인":
+            - columnheader:
+              - checkbox [disabled]
+            - columnheader "SSH 키 쌍"
+            - columnheader "user 계정":
+              - img "user":
+              - text: 계정
+            - columnheader "block 도메인":
+              - img "block":
+              - text: 도메인
+            - columnheader
+      - table:
+        - rowgroup:
+          - row "데이터 없음":
+            - cell "데이터 없음":
+              - paragraph: 데이터 없음
+      - list:
+        - listitem: 전체 0 개 항목
+        - listitem "이전 페이지":
+          - button "left" [disabled]:
+            - img "left":
+        - listitem "1":
+          - generic: "1"
+        - listitem "다음 페이지":
+          - button "right" [disabled]:
+            - img "right":
+        - combobox
+        - generic: 10 / 쪽
+    - button "9 확장 모드 고급 설정 표시":
+      - generic: "9"
+      - generic: 확장 모드
+      - text: 고급 설정 표시
+      - switch
+    - button "10 상세 가상머신을 생성하기 전에 다음 설정을 확인해 주세요. 이름(옵션) 그룹(옵션) 업데이트 키보드 언어 생성할 가상머신 수 Increase Value Decrease Value 1 가상머신 생성 후 바로 시작 가상머신을 생성하고 중지 상태로 유지합니다. 생성 후 상세 화면에서 시작할 수 있습니다.":
+      - generic: "10"
+      - generic: 상세
+      - text: 가상머신을 생성하기 전에 다음 설정을 확인해 주세요.
+      - generic "이름(옵션)"
+      - textbox "이름(옵션)"
+      - generic "그룹(옵션)"
+      - combobox "그룹(옵션)"
+      - status: 대상 소유 범위에 그룹이 없습니다. 새 이름을 입력하면 해당 소유 범위에 생성합니다.
+      - button "업데이트":
+        - generic: 업데이트
+      - generic "키보드 언어"
+      - combobox "키보드 언어"
+      - generic "생성할 가상머신 수"
+      - button "Increase Value":
+        - img "up":
+      - button "Decrease Value" [disabled]:
+        - img "down":
+      - spinbutton: "1"
+      - generic "가상머신 생성 후 바로 시작"
+      - switch "가상머신 생성 후 바로 시작"
+      - paragraph: 가상머신을 생성하고 중지 상태로 유지합니다. 생성 후 상세 화면에서 시작할 수 있습니다.
+  - generic: 귀하의 가상머신
+  - heading [level=4]
+  - generic: KVM
+  - separator
+  - generic: OS 유형
+  - generic: Rocky Linux 9
+  - generic: CPU
+  - text: 2 CPU x 2.00 GHz
+  - img "question-circle":
+  - generic: 메모리
+  - text: 2048 MB 메모리
+  - generic: 디스크 크기(GB 단위)
+  - img "database":
+  - text: 100 GB (Root)
+  - strong: 루트 디스크의 기본 스토리지
+  - text: 자동 선택 · 100 GB
+  - generic: 템플릿
+  - img "save":
+  - generic: Rocky-Linux-9-5-x86-64-Server-Cloud-Image.qcow2
+  - generic: 컴퓨트 오퍼링
+  - img "cloud":
+  - link "2Core 2GB":
+    - /url: "#/computeoffering/cd928fb0-6e2b-4ec8-b02b-023aed55b2b1"
+  - generic: Zone
+  - img "global":
+  - link "Zone":
+    - /url: "#/zone/7013f5a1-de59-4cea-a596-f4f58815f31c"
+  - generic: 부팅 유형
+  - generic: BIOS
+  - generic: 부팅 모드
+  - generic: LEGACY
+  - button "rocket 가상머신 생성" [disabled]:
+    - img "rocket":
+    - generic: 가상머신 생성
+  - button "down" [disabled]:
+    - img "down":
+- alert:
+  - img "info-circle":
+  - generic: Wall 모니터링을 사용할 수 없습니다. 기존 알림은 최신 정보가 아닐 수 있으며 Mold는 계속 사용할 수 있습니다. 비활성

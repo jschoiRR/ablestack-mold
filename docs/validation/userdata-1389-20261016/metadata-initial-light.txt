@@ -1,0 +1,54 @@
+Browser tab: 4, Title: "사용자 데이터 라이브러리 - ABLESTACK-Mold", URL: "http://10.10.31.10:8080/client/#/userdata/1fc463a9-c04b-4a1d-b1d3-75a9ac8c0e3c".
+The following is a diff from the previous accessibility tree with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+Removed element IDs: 201-409
+~0 AXWebArea 사용자 데이터 라이브러리 - ABLESTACK-Mold, URL: 10.10.31.10:8080/client/#/userdata/1fc463a9-c04b-4a1d-b1d3-75a9ac8c0e3c
+~					199 text / UD1389-31-20261016-main
+~					200 link Description: question-circle, Value: docs.ablecloud.io/latest/adminguide/virtual_machines.html#user-data-and-meta-data
++					201 button reload 업데이트
++						202 image reload
++						203 text 업데이트
++				204 button down 작업
++					205 image down
++					206 text 작업
++			207 container
++				208 image solution
++				209 heading UD1389-31-20261016-main, Value: 4
++					210 text UD1389-31-20261016-main
++				211 text 아이디
++				212 button barcode
++					213 image barcode
++				214 link Description: 1fc463a9-c04b-4a1d-b1d3-75a9ac8c0e3c , Value: javascript:;
++				215 text 계정
++				216 image user
++				217 link Description: admin, Value: 10.10.31.10:8080/client/#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f
++				218 text 도메인
++				219 image block
++				220 link Description: ROOT, Value: 10.10.31.10:8080/client/#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details
++				221 link Description: cloud-server 가상머신 보기, Value: 10.10.31.10:8080/client/#/vm?userdataid=1fc463a9-c04b-4a1d-b1d3-75a9ac8c0e3c
++			222 container
++				223 tab group
++					224 container
++						225 tab (selected, settable, boolean) 상세, Value: 1, ID: rc-tabs-2-tab-details
++						226 tab (selectable, settable, boolean) 사용자 데이터 본문, Value: 0, ID: rc-tabs-2-tab-userdata.content
++						227 tab (selectable, settable, boolean) 사용 가상머신, Value: 0, ID: rc-tabs-2-tab-userdata.usage.vms
++						228 tab (selectable, settable, boolean) 연결 템플릿, Value: 0, ID: rc-tabs-2-tab-userdata.usage.templates
++						229 tab (selectable, settable, boolean) 연결 ISO, Value: 0, ID: rc-tabs-2-tab-userdata.usage.isos
++						230 tab (selectable, settable, boolean) 코멘트, Value: 0, ID: rc-tabs-2-tab-comments
++				231 container Description: 상세, ID: rc-tabs-2-panel-details
++					232 content list
++						233 container
++							234 text 아이디
++							235 text 1fc463a9-c04b-4a1d-b1d3-75a9ac8c0e3c
++						236 container
++							237 text 이름
++							238 text UD1389-31-20261016-main
++						239 container
++							240 text 계정
++							241 text admin
++						242 container
++							243 text 도메인
++							244 text ROOT
++						245 container
++							246 text 동적 파라미터 키
++							247 text hostname,QA_KEY
+The focused UI element is 225 tab (selected, settable, boolean) 상세, Value: 1, ID: rc-tabs-2-tab-details

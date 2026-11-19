@@ -16,7 +16,10 @@
 // under the License.
 import { shallowRef, defineAsyncComponent } from 'vue'
 import store from '@/store'
-import { getFilteredExternalDetails } from '@/utils/extension'
+import { getAblestackBackupOfferingDeletionMessage } from '@/utils/ablestackBackupPolicy'
+import { canManageStorageOffering } from '@/utils/storageManagement'
+
+const canManageOffering = record => canManageStorageOffering(record, store.getters.userInfo.roletype)
 
 export default {
   name: 'offering',
@@ -39,9 +42,9 @@ export default {
         return params
       },
       filters: ['active', 'inactive'],
-      columns: ['name', 'displaytext', 'state', 'cpunumber', 'cpuspeed', 'memory', 'diskofferingname', 'gpu', 'domain', 'zone', 'order'],
+      columns: ['name', 'displaytext', 'state', 'cpunumber', 'cpuspeed', 'memory', { customTitle: 'linked.disk.offering', field: 'diskofferingname' }, 'gpu', 'domain', 'zone', 'order'],
       details: () => {
-        var fields = ['name', 'id', 'displaytext', 'offerha', 'provisioningtype', 'cachemode', 'storagetype', 'iscustomized', 'iscustomizediops', 'limitcpuuse', 'cpunumber', 'cpuspeed', 'memory', 'hosttags', 'tags', 'storagetags', 'domain', 'zone', 'created', 'dynamicscalingenabled', 'diskofferingstrictness', 'encryptroot', 'shareable', 'kvdoenable', 'purgeresources']
+        var fields = ['name', 'id', 'displaytext', 'offerha', 'provisioningtype', 'cachemode', 'storagetype', 'iscustomized', 'iscustomizediops', 'limitcpuuse', 'cpunumber', 'cpuspeed', 'memory', 'diskofferingname', 'diskofferingcomputeonly', 'hosttags', 'tags', 'storagetags', 'domain', 'zone', 'created', 'dynamicscalingenabled', 'diskofferingstrictness', 'encryptroot', 'shareable', 'kvdoenable', 'purgeresources', 'diskIopsReadRate', 'diskIopsReadRateMax', 'diskIopsReadRateMaxLength', 'diskIopsWriteRate', 'diskIopsWriteRateMax', 'diskIopsWriteRateMaxLength', 'diskBytesReadRate', 'diskBytesReadRateMax', 'diskBytesReadRateMaxLength', 'diskBytesWriteRate', 'diskBytesWriteRateMax', 'diskBytesWriteRateMaxLength']
         if (store.getters.apis.createServiceOffering &&
           store.getters.apis.createServiceOffering.params.filter(x => x.name === 'storagepolicy').length > 0) {
           fields.splice(6, 0, 'vspherestoragepolicy')
@@ -66,6 +69,11 @@ export default {
           component: shallowRef(defineAsyncComponent(() => import('@/components/view/DetailsTab.vue')))
         },
         {
+          name: 'instances',
+          component: shallowRef(defineAsyncComponent(() => import('@/views/storage/StorageRelatedResources.vue'))),
+          show: () => 'listVirtualMachines' in store.getters.apis
+        },
+        {
           name: 'events',
           resourceType: 'ServiceOffering',
           component: shallowRef(defineAsyncComponent(() => import('@/components/view/EventsTab.vue'))),
@@ -74,7 +82,7 @@ export default {
         {
           name: 'comments',
           component: shallowRef(defineAsyncComponent(() => import('@/components/view/AnnotationsTab.vue'))),
-          show: (record, route, user) => { return ['Admin', 'DomainAdmin'].includes(user.roletype) }
+          show: (record, route, user) => { return ['Admin', 'DomainAdmin'].includes(user.roletype) && 'listAnnotations' in store.getters.apis }
         }
       ],
       related: [{
@@ -96,12 +104,9 @@ export default {
         label: 'label.edit',
         docHelp: 'adminguide/service_offerings.html#modifying-or-deleting-a-service-offering',
         dataView: true,
-        args: ['name', 'displaytext', 'storagetags', 'hosttags', 'externaldetails'],
-        mapping: {
-          externaldetails: {
-            transformedvalue: (record) => { return getFilteredExternalDetails(record.serviceofferingdetails) }
-          }
-        }
+        popup: true,
+        show: canManageOffering,
+        component: shallowRef(defineAsyncComponent(() => import('@/views/offering/UpdateComputeOffering.vue')))
       }, {
         api: 'updateServiceOffering',
         icon: 'lock-outlined',
@@ -109,7 +114,8 @@ export default {
         docHelp: 'adminguide/service_offerings.html#modifying-or-deleting-a-service-offering',
         dataView: true,
         popup: true,
-        component: shallowRef(defineAsyncComponent(() => import('@/views/offering/UpdateOfferingAccess.vue')))
+        show: canManageOffering,
+        component: shallowRef(defineAsyncComponent(() => import('@/views/offering/UpdateStorageOfferingAccess.vue')))
       },
       {
         api: 'updateServiceOffering',
@@ -125,7 +131,7 @@ export default {
         },
         groupAction: true,
         popup: true,
-        show: (record) => { return record.state !== 'Active' },
+        show: (record) => { return canManageOffering(record) && record.state !== 'Active' },
         groupMap: (selection) => { return selection.map(x => { return { id: x, state: 'Active' } }) }
       }, {
         api: 'updateServiceOffering',
@@ -141,7 +147,7 @@ export default {
             value: (record) => { return 'Inactive' }
           }
         },
-        show: (record) => { return record.state === 'Active' },
+        show: (record) => { return canManageOffering(record) && record.state === 'Active' },
         groupMap: (selection) => { return selection.map(x => { return { id: x, state: 'Inactive' } }) }
       }, {
         api: 'cloneServiceOffering',
@@ -262,7 +268,7 @@ export default {
       filters: ['active', 'inactive'],
       details: () => {
         var fields = ['name', 'id', 'displaytext', 'disksize', 'provisioningtype', 'storagetype', 'iscustomized', 'disksizestrictness', 'iscustomizediops',
-          'diskIopsReadRate', 'diskIopsWriteRate', 'diskBytesReadRate', 'diskBytesReadRateMax', 'diskBytesWriteRate', 'diskBytesWriteRateMax', 'miniops', 'maxiops', 'tags',
+          'cachemode', 'diskIopsReadRate', 'diskIopsReadRateMax', 'diskIopsReadRateMaxLength', 'diskIopsWriteRate', 'diskIopsWriteRateMax', 'diskIopsWriteRateMaxLength', 'diskBytesReadRate', 'diskBytesReadRateMax', 'diskBytesReadRateMaxLength', 'diskBytesWriteRate', 'diskBytesWriteRateMax', 'diskBytesWriteRateMaxLength', 'miniops', 'maxiops', 'tags',
           'domain', 'zone', 'created', 'encrypt', 'shareable', 'kvdoenable']
         if (store.getters.apis.createDiskOffering &&
           store.getters.apis.createDiskOffering.params.filter(x => x.name === 'storagepolicy').length > 0) {
@@ -277,6 +283,11 @@ export default {
           component: shallowRef(defineAsyncComponent(() => import('@/components/view/DetailsTab.vue')))
         },
         {
+          name: 'volumes',
+          component: shallowRef(defineAsyncComponent(() => import('@/views/storage/StorageRelatedResources.vue'))),
+          show: () => 'listVolumes' in store.getters.apis
+        },
+        {
           name: 'events',
           resourceType: 'DiskOffering',
           component: shallowRef(defineAsyncComponent(() => import('@/components/view/EventsTab.vue'))),
@@ -285,7 +296,7 @@ export default {
         {
           name: 'comments',
           component: shallowRef(defineAsyncComponent(() => import('@/components/view/AnnotationsTab.vue'))),
-          show: (record, route, user) => { return ['Admin', 'DomainAdmin'].includes(user.roletype) }
+          show: (record, route, user) => { return ['Admin', 'DomainAdmin'].includes(user.roletype) && 'listAnnotations' in store.getters.apis }
         }
       ],
       related: [{
@@ -307,7 +318,9 @@ export default {
         label: 'label.edit',
         docHelp: 'adminguide/service_offerings.html#modifying-or-deleting-a-service-offering',
         dataView: true,
-        args: ['name', 'displaytext', 'tags']
+        popup: true,
+        show: canManageOffering,
+        component: shallowRef(defineAsyncComponent(() => import('@/views/offering/UpdateDiskOffering.vue')))
       }, {
         api: 'updateDiskOffering',
         icon: 'lock-outlined',
@@ -315,7 +328,8 @@ export default {
         docHelp: 'adminguide/service_offerings.html#modifying-or-deleting-a-service-offering',
         dataView: true,
         popup: true,
-        component: shallowRef(defineAsyncComponent(() => import('@/views/offering/UpdateOfferingAccess.vue')))
+        show: canManageOffering,
+        component: shallowRef(defineAsyncComponent(() => import('@/views/offering/UpdateStorageOfferingAccess.vue')))
       }, {
         api: 'updateDiskOffering',
         icon: 'play-circle-outlined',
@@ -331,7 +345,7 @@ export default {
         },
         groupAction: true,
         popup: true,
-        show: (record) => { return record.state !== 'Active' },
+        show: (record) => { return canManageOffering(record) && record.state !== 'Active' },
         groupMap: (selection) => { return selection.map(x => { return { id: x, state: 'Active' } }) }
       }, {
         api: 'updateDiskOffering',
@@ -347,7 +361,7 @@ export default {
             value: (record) => { return 'Inactive' }
           }
         },
-        show: (record) => { return record.state === 'Active' },
+        show: (record) => { return canManageOffering(record) && record.state === 'Active' },
         groupMap: (selection) => { return selection.map(x => { return { id: x, state: 'Inactive' } }) }
       }, {
         api: 'cloneDiskOffering',
@@ -414,13 +428,13 @@ export default {
         docHelp: 'adminguide/virtual_machines.html#importing-backup-offerings',
         dataView: true,
         popup: true,
-        show: (record) => { return !['commvault', 'ablestack-commvault', 'netbackup', 'ablestack-netbackup'].includes(record.provider) },
+        show: (record) => { return !['ablestack-commvault', 'ablestack-netbackup'].includes(record.provider) },
         component: shallowRef(defineAsyncComponent(() => import('@/views/offering/CloneBackupOffering.vue')))
       }, {
         api: 'deleteBackupOffering',
         icon: 'delete-outlined',
         label: 'label.action.delete.backup.offering',
-        message: 'message.action.delete.backup.offering',
+        message: getAblestackBackupOfferingDeletionMessage,
         docHelp: 'adminguide/service_offerings.html#modifying-or-deleting-a-service-offering',
         dataView: true,
         groupAction: true,

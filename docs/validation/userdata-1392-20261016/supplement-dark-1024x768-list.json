@@ -1,0 +1,792 @@
+{
+  "active": {
+    "role": null,
+    "tag": "BUTTON",
+    "text": ""
+  },
+  "app": "http://10.10.31.10:8080/client/js/app.84e04274.js",
+  "body": null,
+  "bodyScroll": null,
+  "buttons": [],
+  "controls": [
+    {
+      "class": "ant-switch",
+      "disabled": false,
+      "ratio": 4.825413341423061,
+      "rect": {
+        "height": 23,
+        "width": 93.53125,
+        "x": 445.359375,
+        "y": 143
+      }
+    },
+    {
+      "class": "ant-input",
+      "disabled": false,
+      "ratio": 5.8780506695177355,
+      "rect": {
+        "height": 22,
+        "width": 149.28125,
+        "x": 781.71875,
+        "y": 144
+      }
+    },
+    {
+      "class": "ant-checkbox-inner",
+      "disabled": false,
+      "ratio": 6.4128150629431655,
+      "rect": {
+        "height": 16,
+        "width": 16,
+        "x": 100,
+        "y": 281.796875
+      }
+    },
+    {
+      "class": "ant-checkbox-inner",
+      "disabled": false,
+      "ratio": 6.4128150629431655,
+      "rect": {
+        "height": 16,
+        "width": 16,
+        "x": 100,
+        "y": 328.796875
+      }
+    },
+    {
+      "class": "ant-select-selector",
+      "disabled": false,
+      "ratio": 6.839629710480972,
+      "rect": {
+        "height": 24,
+        "width": 78.109375,
+        "x": 328.296875,
+        "y": 395.5
+      }
+    }
+  ],
+  "dpr": 1,
+  "footer": null,
+  "header": null,
+  "height": 768,
+  "modal": null,
+  "modalOverflow": null,
+  "pageOverflow": 0,
+  "spacing": [],
+  "tabs": [],
+  "text": [
+    {
+      "background": [
+        34,
+        40,
+        47,
+        1
+      ],
+      "class": "ant-breadcrumb-separator",
+      "color": [
+        255,
+        255,
+        255,
+        0.85
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 11.117067846548215,
+      "rect": {
+        "height": 19,
+        "width": 5.46875,
+        "x": 141,
+        "y": 145
+      },
+      "tag": "SPAN",
+      "text": "/"
+    },
+    {
+      "background": [
+        34,
+        40,
+        47,
+        1
+      ],
+      "class": "",
+      "color": [
+        255,
+        255,
+        255,
+        0.85
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 11.117067846548215,
+      "rect": {
+        "height": 19,
+        "width": 149.359375,
+        "x": 154.46875,
+        "y": 145
+      },
+      "tag": "SPAN",
+      "text": "사용자 데이터 라이브러리"
+    },
+    {
+      "background": [
+        39,
+        46,
+        54,
+        1
+      ],
+      "class": "",
+      "color": [
+        255,
+        255,
+        255,
+        0.85
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 10.347540736999903,
+      "rect": {
+        "height": 22,
+        "width": 51.53125,
+        "x": 372.828125,
+        "y": 144
+      },
+      "tag": "SPAN",
+      "text": "업데이트"
+    },
+    {
+      "background": [
+        48,
+        54,
+        61,
+        1
+      ],
+      "class": "ant-switch-inner",
+      "color": [
+        255,
+        255,
+        255,
+        1
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 12.204145767206985,
+      "rect": {
+        "height": 22,
+        "width": 51.53125,
+        "x": 473.359375,
+        "y": 143.5
+      },
+      "tag": "SPAN",
+      "text": "프로젝트"
+    },
+    {
+      "background": [
+        9,
+        105,
+        218,
+        1
+      ],
+      "class": "",
+      "color": [
+        255,
+        255,
+        255,
+        1
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 5.192060987927794,
+      "rect": {
+        "height": 22,
+        "width": 110.71875,
+        "x": 591,
+        "y": 144
+      },
+      "tag": "SPAN",
+      "text": "사용자 데이터 등록"
+    },
+    {
+      "background": [
+        34,
+        40,
+        47,
+        1
+      ],
+      "class": "ant-input",
+      "color": [
+        154,
+        164,
+        175,
+        1
+      ],
+      "disabled": false,
+      "placeholder": true,
+      "ratio": 5.8780506695177355,
+      "rect": {
+        "height": 22,
+        "width": 149.28125,
+        "x": 781.71875,
+        "y": 144
+      },
+      "tag": "INPUT",
+      "text": "검색"
+    },
+    {
+      "background": [
+        22,
+        27,
+        34,
+        1
+      ],
+      "class": "list-description",
+      "color": [
+        197,
+        204,
+        212,
+        1
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 10.67713963364982,
+      "rect": {
+        "height": 44,
+        "width": 910,
+        "x": 92,
+        "y": 209
+      },
+      "tag": "P",
+      "text": "검색창: 이름 포함 검색 또는 정확한 UUID. 필터: UUID·정확한 이름·도메인·소유 계정. 프로젝트는 상단 공통 보기를 선택하세요. 열 정렬은 현재 페이지에만 적용됩니다."
+    },
+    {
+      "background": [
+        34,
+        40,
+        47,
+        1
+      ],
+      "class": "ant-table-column-title",
+      "color": [
+        255,
+        255,
+        255,
+        0.85
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 11.117067846548215,
+      "rect": {
+        "height": 22,
+        "width": 225.609375,
+        "x": 132,
+        "y": 279
+      },
+      "tag": "SPAN",
+      "text": "이름"
+    },
+    {
+      "background": [
+        34,
+        40,
+        47,
+        1
+      ],
+      "class": "ant-table-column-title",
+      "color": [
+        255,
+        255,
+        255,
+        0.85
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 11.117067846548215,
+      "rect": {
+        "height": 22,
+        "width": 369.765625,
+        "x": 388.609375,
+        "y": 279
+      },
+      "tag": "SPAN",
+      "text": "아이디"
+    },
+    {
+      "background": [
+        34,
+        40,
+        47,
+        1
+      ],
+      "class": "ant-table-column-title",
+      "color": [
+        255,
+        255,
+        255,
+        0.85
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 11.117067846548215,
+      "rect": {
+        "height": 22,
+        "width": 51.890625,
+        "x": 789.375,
+        "y": 279
+      },
+      "tag": "SPAN",
+      "text": "계정"
+    },
+    {
+      "background": [
+        34,
+        40,
+        47,
+        1
+      ],
+      "class": "ant-table-column-title",
+      "color": [
+        255,
+        255,
+        255,
+        0.85
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 11.117067846548215,
+      "rect": {
+        "height": 22,
+        "width": 70.734375,
+        "x": 872.265625,
+        "y": 279
+      },
+      "tag": "SPAN",
+      "text": "도메인"
+    },
+    {
+      "background": [
+        34,
+        40,
+        47,
+        1
+      ],
+      "class": "",
+      "color": [
+        105,
+        177,
+        255,
+        1
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 6.607418085557632,
+      "rect": {
+        "height": 19,
+        "width": 154.703125,
+        "x": 137,
+        "y": 327
+      },
+      "tag": "A",
+      "text": "AS-PROD-31-AS01-HTTP"
+    },
+    {
+      "background": [
+        34,
+        40,
+        47,
+        1
+      ],
+      "class": "ant-table-cell",
+      "color": [
+        197,
+        204,
+        212,
+        1
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 9.176047597421212,
+      "rect": {
+        "height": 47,
+        "width": 400.765625,
+        "x": 380.609375,
+        "y": 314
+      },
+      "tag": "TD",
+      "text": "a28893ee-4662-45cd-8f30-79527368c809"
+    },
+    {
+      "background": [
+        34,
+        40,
+        47,
+        1
+      ],
+      "class": "",
+      "color": [
+        105,
+        177,
+        255,
+        1
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 6.607418085557632,
+      "rect": {
+        "height": 19,
+        "width": 38.75,
+        "x": 789.375,
+        "y": 327
+      },
+      "tag": "A",
+      "text": "admin"
+    },
+    {
+      "background": [
+        34,
+        40,
+        47,
+        1
+      ],
+      "class": "",
+      "color": [
+        105,
+        177,
+        255,
+        1
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 6.607418085557632,
+      "rect": {
+        "height": 19,
+        "width": 36.0625,
+        "x": 872.265625,
+        "y": 327
+      },
+      "tag": "A",
+      "text": "ROOT"
+    },
+    {
+      "background": [
+        22,
+        27,
+        34,
+        1
+      ],
+      "class": "ant-pagination-total-text",
+      "color": [
+        255,
+        255,
+        255,
+        0.65
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 7.887039278328169,
+      "rect": {
+        "height": 24,
+        "width": 154.296875,
+        "x": 92,
+        "y": 395.5
+      },
+      "tag": "LI",
+      "text": "전체 1 개 항목 중 1-1 표시"
+    },
+    {
+      "background": [
+        34,
+        40,
+        47,
+        1
+      ],
+      "class": "",
+      "color": [
+        105,
+        177,
+        255,
+        1
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 6.607418085557632,
+      "rect": {
+        "height": 22,
+        "width": 22,
+        "x": 279.296875,
+        "y": 396.5
+      },
+      "tag": "A",
+      "text": "1"
+    },
+    {
+      "background": [
+        22,
+        27,
+        34,
+        1
+      ],
+      "class": "",
+      "color": [
+        240,
+        243,
+        246,
+        1
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 15.53234308309772,
+      "rect": {
+        "height": 19,
+        "width": 41.109375,
+        "x": 336.296875,
+        "y": 397.5
+      },
+      "tag": "SPAN",
+      "text": "20 / 쪽"
+    }
+  ],
+  "theme": "dark",
+  "url": "http://10.10.31.10:8080/client/#/userdata",
+  "width": 1024,
+  "essentialPaint": [
+    {
+      "after": {
+        "bg": "rgba(0, 0, 0, 0)",
+        "border": "rgba(0, 0, 0, 0.65)",
+        "color": "rgba(0, 0, 0, 0.65)"
+      },
+      "bg": "rgb(48, 54, 61)",
+      "border": "rgb(154, 164, 175)",
+      "borderWidth": "0px",
+      "class": "ant-switch",
+      "color": "rgba(0, 0, 0, 0.65)",
+      "opacity": "1",
+      "outline": "rgba(0, 0, 0, 0.65)",
+      "outlineWidth": "3px",
+      "parents": [
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgb(34, 40, 47)",
+        "rgb(34, 40, 47)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgb(22, 27, 34)",
+        "rgb(22, 27, 34)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgb(22, 27, 34)",
+        "rgba(0, 0, 0, 0)",
+        "rgb(22, 27, 34)",
+        "rgb(22, 27, 34)",
+        "rgb(22, 27, 34)",
+        "rgb(22, 27, 34)"
+      ],
+      "rect": {
+        "height": 23,
+        "width": 93.53125,
+        "x": 445.359375,
+        "y": 143
+      },
+      "shadow": "none",
+      "tag": "BUTTON",
+      "text": "프로젝트",
+      "textContrast": 1.5267790673908372,
+      "borderOutside": 5.8780506695177355,
+      "borderInside": 4.825413341423061,
+      "fillOutside": 1.2181444891069668,
+      "outlineContrast": 1.3006489283533058,
+      "afterContrast": 1.5267790673908372
+    },
+    {
+      "after": {
+        "bg": "rgba(0, 0, 0, 0)",
+        "border": "rgba(255, 255, 255, 0.65)",
+        "color": "rgba(255, 255, 255, 0.65)"
+      },
+      "bg": "rgb(27, 33, 40)",
+      "border": "rgb(154, 164, 175)",
+      "borderWidth": "1px",
+      "class": "ant-checkbox-inner",
+      "color": "rgba(255, 255, 255, 0.65)",
+      "opacity": "1",
+      "outline": "rgba(255, 255, 255, 0.65)",
+      "outlineWidth": "3px",
+      "parents": [
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgb(34, 40, 47)",
+        "rgba(0, 0, 0, 0)",
+        "rgb(34, 40, 47)",
+        "rgba(0, 0, 0, 0)",
+        "rgb(34, 40, 47)",
+        "rgb(34, 40, 47)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgb(22, 27, 34)",
+        "rgb(22, 27, 34)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgb(22, 27, 34)",
+        "rgba(0, 0, 0, 0)",
+        "rgb(22, 27, 34)",
+        "rgb(22, 27, 34)",
+        "rgb(22, 27, 34)",
+        "rgb(22, 27, 34)"
+      ],
+      "rect": {
+        "height": 16,
+        "width": 16,
+        "x": 100,
+        "y": 281.796875
+      },
+      "shadow": "none",
+      "tag": "SPAN",
+      "text": "",
+      "textContrast": 7.566530394874558,
+      "borderOutside": 5.8780506695177355,
+      "borderInside": 6.4128150629431655,
+      "fillOutside": 1.0909764858269424,
+      "outlineContrast": 7.128935659391724,
+      "afterContrast": 7.566530394874558
+    },
+    {
+      "after": {
+        "bg": "rgba(0, 0, 0, 0)",
+        "border": "rgba(255, 255, 255, 0.65)",
+        "color": "rgba(255, 255, 255, 0.65)"
+      },
+      "bg": "rgb(27, 33, 40)",
+      "border": "rgb(154, 164, 175)",
+      "borderWidth": "1px",
+      "class": "ant-checkbox-inner",
+      "color": "rgba(255, 255, 255, 0.65)",
+      "opacity": "1",
+      "outline": "rgba(255, 255, 255, 0.65)",
+      "outlineWidth": "3px",
+      "parents": [
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgb(34, 40, 47)",
+        "rgb(34, 40, 47)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgb(34, 40, 47)",
+        "rgb(34, 40, 47)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgb(22, 27, 34)",
+        "rgb(22, 27, 34)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgb(22, 27, 34)",
+        "rgba(0, 0, 0, 0)",
+        "rgb(22, 27, 34)",
+        "rgb(22, 27, 34)",
+        "rgb(22, 27, 34)",
+        "rgb(22, 27, 34)"
+      ],
+      "rect": {
+        "height": 16,
+        "width": 16,
+        "x": 100,
+        "y": 328.796875
+      },
+      "shadow": "none",
+      "tag": "SPAN",
+      "text": "",
+      "textContrast": 7.566530394874558,
+      "borderOutside": 5.8780506695177355,
+      "borderInside": 6.4128150629431655,
+      "fillOutside": 1.0909764858269424,
+      "outlineContrast": 7.128935659391724,
+      "afterContrast": 7.566530394874558
+    },
+    {
+      "after": {
+        "bg": "rgba(0, 0, 0, 0)",
+        "border": "rgba(255, 255, 255, 0.65)",
+        "color": "rgba(255, 255, 255, 0.65)"
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "border": "rgb(154, 164, 175)",
+      "borderWidth": "1px",
+      "class": "ant-select-selector",
+      "color": "rgba(255, 255, 255, 0.65)",
+      "opacity": "1",
+      "outline": "rgba(255, 255, 255, 0.65)",
+      "outlineWidth": "3px",
+      "parents": [
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgb(22, 27, 34)",
+        "rgb(22, 27, 34)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgb(22, 27, 34)",
+        "rgba(0, 0, 0, 0)",
+        "rgb(22, 27, 34)",
+        "rgb(22, 27, 34)",
+        "rgb(22, 27, 34)",
+        "rgb(22, 27, 34)"
+      ],
+      "rect": {
+        "height": 24,
+        "width": 78.109375,
+        "x": 328.296875,
+        "y": 395.5
+      },
+      "shadow": "none",
+      "tag": "DIV",
+      "text": "20 / 쪽",
+      "textContrast": 7.887039278328169,
+      "borderOutside": 6.839629710480972,
+      "borderInside": 6.839629710480972,
+      "fillOutside": 1,
+      "outlineContrast": 7.887039278328169,
+      "afterContrast": 7.887039278328169
+    }
+  ],
+  "mainOverflow": 0,
+  "styles": [
+    "http://10.10.31.10:8080/client/css/vendors.eb47fec1.css",
+    "http://10.10.31.10:8080/client/css/app.7008f873.css",
+    "http://10.10.31.10:8080/client/css/chunk-3a25f630.4a8605da.css",
+    "http://10.10.31.10:8080/client/css/chunk-3be8a0aa.2b2c9aa8.css",
+    "http://10.10.31.10:8080/client/css/chunk-59db5447.951ae637.css",
+    "http://10.10.31.10:8080/client/css/chunk-b6f1c0ca.bf4fcaad.css",
+    "http://10.10.31.10:8080/client/css/chunk-b225b68e.e4cb8bda.css",
+    "http://10.10.31.10:8080/client/css/chunk-48b54486.8df4c550.css",
+    "http://10.10.31.10:8080/client/css/chunk-2ba46c8a.45eee0b9.css",
+    "http://10.10.31.10:8080/client/css/chunk-fb0c6ee4.65ce41d6.css",
+    "http://10.10.31.10:8080/client/css/chunk-2e4d3950.d234a2f8.css",
+    "http://10.10.31.10:8080/client/css/chunk-a106f6f0.37b6aed6.css",
+    "http://10.10.31.10:8080/client/css/chunk-7caedf80.2b2c9aa8.css",
+    "http://10.10.31.10:8080/client/css/chunk-0042e5d4.63ac4bf3.css",
+    "http://10.10.31.10:8080/client/css/chunk-f665d1a2.3d3f93f2.css",
+    "http://10.10.31.10:8080/client/css/chunk-fbd48a9a.f25f2ff8.css",
+    "http://10.10.31.10:8080/client/css/auth.c401ba6d.css",
+    "http://10.10.31.10:8080/client/css/chunk-5cb1e349.a039f094.css",
+    "http://10.10.31.10:8080/client/css/chunk-47064a74.bb9620a8.css"
+  ]
+}

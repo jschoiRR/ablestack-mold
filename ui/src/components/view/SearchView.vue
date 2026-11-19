@@ -16,7 +16,9 @@
 // under the License.
 
 <template>
-  <span :style="styleSearch">
+  <SnapshotSearch v-if="apiName === 'listSnapshots'" @search="$emit('search', $event)" />
+  <SnapshotPolicySearch v-else-if="apiName === 'listSnapshotPolicies'" @search="$emit('search', $event)" />
+  <span v-else :style="styleSearch">
     <span v-if="!searchFilters || searchFilters.length === 0" style="display: flex;">
       <a-input-search
         v-model:value="searchQuery"
@@ -43,6 +45,7 @@
             <template #content v-if="visibleFilter">
               <a-form
                 style="min-width: 170px"
+                :class="{ 'storage-standard-search-form': ['listVolumes', 'listServiceOfferings', 'listDiskOfferings'].includes(apiName) }"
                 :ref="formRef"
                 :model="form"
                 :rules="rules"
@@ -55,18 +58,28 @@
                   :name="field.name"
                   :key="index"
                   :label="retrieveFieldLabel(field.name)">
+                  <VolumeSearchSelect
+                    v-if="field.name === 'volumeid'"
+                    :key="volumeLookupReset"
+                    v-model:value="form.volumeid"
+                    :scope="volumeScope"
+                    @blocked="volumeLookupBlocked = $event" />
                   <a-select
                     allowClear
-                    v-if="field.type==='list'"
+                    v-else-if="field.type==='list'"
                     v-model:value="form[field.name]"
                     showSearch
                     :dropdownMatchSelectWidth="false"
                     optionFilterProp="label"
-                    :filterOption="(input, option) => {
+                    :filterOption="field.name === 'virtualmachineid' && $route.name === 'vmsnapshot' ? false : (input, option) => {
                       return option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0
                     }"
+                    @search="searchVmOptions($event, field)"
+                    @popupScroll="moreVmOptions($event, field)"
                     :loading="field.loading"
-                    @input="onchange($event, field.name)"
+                    :disabled="apiName === 'listAffinityGroups' && (field.loading || !!field.error || (field.name === 'account' && !form.domainid))"
+                    :placeholder="apiName === 'listAffinityGroups' && field.name === 'account' && !form.domainid ? $t('message.affinity.search.account.domain') : undefined"
+                    @input="field.name === 'virtualmachineid' && $route.name === 'vmsnapshot' ? null : onchange($event, field.name)"
                     @change="onSelectFieldChange(field.name)">
                     <a-select-option
                       v-for="(opt, idx) in field.opts"
@@ -128,6 +141,9 @@
                     :filterOption="(inputValue, option) => {
                       return option.value.toLowerCase().indexOf(inputValue.toLowerCase()) !== -1
                     }" />
+                  <a-alert v-if="apiName === 'listAffinityGroups' && field.error" type="error" :message="$t('error.fetching.data')">
+                    <template #description><a-button size="small" @click="fetchAffinityFilters([field.name])">{{ $t('label.retry') }}</a-button></template>
+                  </a-alert>
                 </a-form-item>
                 <div class="filter-group-button">
                   <a-button
@@ -143,6 +159,7 @@
                     type="primary"
                     size="small"
                     ref="submit"
+                    :disabled="fields.some(field => field.name === 'volumeid') && volumeLookupBlocked"
                     html-type="submit">
                     <template #icon><search-outlined /></template>
                     {{ $t('label.search') }}
@@ -153,7 +170,8 @@
             <a-button
               class="filter-button"
               size="small"
-              @click="() => { searchQuery = null }">
+              :aria-label="$t('label.advanced.search')"
+                  @click="() => { if (!['listCniConfiguration', 'listAffinityGroups'].includes(apiName)) searchQuery = null }">
               <filter-two-tone v-if="isFiltered" />
               <filter-outlined v-else />
             </a-button>
@@ -171,14 +189,21 @@ import { isAdmin } from '@/role'
 import TooltipButton from '@/components/widgets/TooltipButton'
 import ResourceIcon from '@/components/view/ResourceIcon'
 import Status from '@/components/widgets/Status'
+import SnapshotSearch from '@/components/view/SnapshotSearch'
+import SnapshotPolicySearch from '@/components/view/SnapshotPolicySearch'
+import VolumeSearchSelect from '@/components/view/VolumeSearchSelect'
 import { i18n } from '@/locales'
+import { affinityOwnerOptions, affinityTypeOptions } from '@/utils/affinityGroupCreation'
 
 export default {
   name: 'SearchView',
   components: {
     TooltipButton,
     ResourceIcon,
-    Status
+    Status,
+    SnapshotSearch,
+    SnapshotPolicySearch,
+    VolumeSearchSelect
   },
   props: {
     searchFilters: {
@@ -191,7 +216,7 @@ export default {
     },
     searchParams: {
       type: Object,
-      default: () => {}
+      default: () => ({})
     }
   },
   data () {
@@ -204,7 +229,15 @@ export default {
       inputValue: null,
       fieldValues: {},
       isFiltered: false,
-      alertTypes: []
+      alertTypes: [],
+      vmOptionPage: 1,
+      vmOptionTotal: 0,
+      vmOptionKeyword: '',
+      cniOptionsVersion: {},
+      affinityOptionsVersion: {},
+      vmOptionVersion: 0,
+      volumeLookupReset: 0,
+      volumeLookupBlocked: true
     }
   },
   created () {
@@ -213,6 +246,11 @@ export default {
     this.rules = reactive({})
   },
   watch: {
+    volumeOwnerContext () {
+      this.visibleFilter = false
+      this.form.volumeid = undefined
+      this.volumeLookupReset++
+    },
     visibleFilter (newValue, oldValue) {
       if (newValue) {
         this.initFormFieldData()
@@ -224,6 +262,10 @@ export default {
         this.searchQuery = to.query.q
       }
       this.updateIsFiltered()
+      if (this.apiName === 'listAffinityGroups' && to?.meta?.name === 'affinitygroup' && this.visibleFilter) {
+        this.fillFormFieldValues()
+        this.fetchAffinityFilters(this.fields.map(field => field.name))
+      }
     }
   },
   mounted () {
@@ -234,6 +276,14 @@ export default {
     this.updateIsFiltered()
   },
   computed: {
+    volumeOwnerContext () {
+      return JSON.stringify([this.$store.getters.userInfo?.id, this.$store.getters.userInfo?.roletype, this.$store.state?.user?.token, this.$store.getters.project?.id, this.$store.getters.listAllProjects, this.$route.query.projectid, Object.keys(this.$store.getters.apis || {}).sort()])
+    },
+    volumeScope () {
+      const projectid = this.$route.query.projectid || this.$store.getters.project?.id || (this.$store.getters.listAllProjects ? '-1' : '')
+      if (projectid) return { projectid }
+      return Object.fromEntries(['domainid', 'account', 'zoneid'].filter(key => this.searchFilters.includes(key) && this.form[key]).map(key => [key, this.form[key]]))
+    },
     styleSearch () {
       if (!this.searchFilters || this.searchFilters.length === 0) {
         return {
@@ -250,12 +300,41 @@ export default {
     }
   },
   methods: {
+    async searchVmOptions (keyword, field) {
+      if (field.name !== 'virtualmachineid' || this.$route.name !== 'vmsnapshot') return
+      this.vmOptionKeyword = keyword; this.vmOptionPage = 1
+      const version = ++this.vmOptionVersion
+      field.loading = true
+      try {
+        const response = await this.fetchVirtualMachines(keyword, 1)
+        if (version === this.vmOptionVersion) field.opts = response.data || []
+      } catch (error) { this.$notifyError(error) } finally { if (version === this.vmOptionVersion) field.loading = false }
+    },
+    async moreVmOptions (event, field) {
+      if (field.name !== 'virtualmachineid' || this.$route.name !== 'vmsnapshot' || field.loading || field.opts.length >= this.vmOptionTotal) return
+      if (event.target.scrollHeight - event.target.scrollTop - event.target.clientHeight > 24) return
+      const version = this.vmOptionVersion
+      field.loading = true
+      try {
+        const response = await this.fetchVirtualMachines(this.vmOptionKeyword, this.vmOptionPage + 1)
+        if (version === this.vmOptionVersion) { this.vmOptionPage++; field.opts = [...new Map([...field.opts, ...(response.data || [])].map(row => [row.id, row])).values()] }
+      } catch (error) { this.$notifyError(error) } finally { if (version === this.vmOptionVersion) field.loading = false }
+    },
     onchange: async function (event, fieldname) {
       this.fetchDynamicFieldData(fieldname, event.target.value)
     },
     onSelectFieldChange (fieldname) {
+      if (this.apiName === 'listAffinityGroups') {
+        if (fieldname === 'domainid') {
+          this.form.account = undefined; this.form.projectid = undefined
+          this.fetchAffinityFilters(['account', 'projectid'])
+        } else if (fieldname === 'projectid' && this.form.projectid) this.form.account = undefined
+        else if (fieldname === 'account' && this.form.account) this.form.projectid = undefined
+        return
+      }
       const fetchAccountOptions = fieldname === 'domainid' && this.fields.some((field) => field.name === 'account')
       if (fetchAccountOptions) {
+        if (this.apiName === 'listCniConfiguration') this.form.account = undefined
         this.fetchDynamicFieldData('account')
       }
 
@@ -272,6 +351,7 @@ export default {
       this.initFormFieldData()
     },
     retrieveFieldLabel (fieldName) {
+      if (this.apiName === 'listAffinityGroups' && fieldName === 'projectid') return this.$t('label.project')
       if (fieldName === 'groupid') {
         fieldName = 'group'
       }
@@ -320,7 +400,7 @@ export default {
         if (item === 'usagetype' && !('listUsageTypes' in this.$store.getters.apis)) {
           return true
         }
-        if (['isencrypted', 'volumeid'].includes(item) && !('listVolumes' in this.$store.getters.apis)) {
+        if (item === 'volumeid' && !('listVolumes' in this.$store.getters.apis)) {
           return true
         }
         if (item === 'backupofferingid' && !('listBackupOfferings' in this.$store.getters.apis)) {
@@ -337,7 +417,7 @@ export default {
           'type', 'scope', 'managementserverid', 'serviceofferingid',
           'diskofferingid', 'networkid', 'usagetype', 'restartrequired', 'gpuenabled',
           'displaynetwork', 'guestiptype', 'usersource', 'arch', 'oscategoryid', 'templatetype', 'gpucardid', 'vgpuprofileid',
-          'extensionid', 'backupoffering', 'volumeid', 'virtualmachineid', 'hsmprofileid', 'kmskeyid'].includes(item) || (item === 'status' && this.apiName === 'listBackups')
+          'extensionid', 'backupoffering', 'volumeid', 'virtualmachineid', 'hsmprofileid', 'kmskeyid', 'current'].includes(item) || (item === 'status' && this.apiName === 'listBackups')
         ) {
           type = 'list'
         } else if (item === 'tags') {
@@ -348,6 +428,10 @@ export default {
           type = 'boolean'
         }
 
+        if (this.apiName === 'listAffinityGroups' && item === 'projectid') {
+          if (!('listProjects' in this.$store.getters.apis)) return
+          type = 'list'
+        }
         this.fields.push({
           type: type,
           name: item,
@@ -359,6 +443,12 @@ export default {
       return arrayField
     },
     fetchStaticFieldData (arrayField) {
+      if (this.$route.name === 'vmsnapshot') {
+        const type = this.fields.find(field => field.name === 'type')
+        if (type) type.opts = [{ id: 'Disk', name: 'label.vmsnapshot.disk' }, { id: 'DiskAndMemory', name: 'label.vmsnapshot.disk.memory' }]
+        const current = this.fields.find(field => field.name === 'current')
+        if (current) current.opts = [{ id: 'true', name: 'label.vmsnapshot.current.yes' }, { id: 'false', name: 'label.vmsnapshot.current.filter.no' }]
+      }
       if (arrayField.includes('displaynetwork')) {
         const typeIndex = this.fields.findIndex(item => item.name === 'displaynetwork')
         this.fields[typeIndex].loading = true
@@ -506,6 +596,8 @@ export default {
       }
     },
     async fetchDynamicFieldData (arrayField, searchKeyword) {
+      if (this.apiName === 'listAffinityGroups') return this.fetchAffinityFilters(arrayField)
+      if (this.apiName === 'listCniConfiguration') return this.fetchCniOwnerOptions(arrayField, searchKeyword)
       const promises = []
       let typeIndex = -1
       let zoneIndex = -1
@@ -522,7 +614,6 @@ export default {
       let diskOfferingIndex = -1
       let networkIndex = -1
       let usageTypeIndex = -1
-      let volumeIndex = -1
       let virtualmachineIndex = -1
       let backupOfferingIndex = -1
       let osCategoryIndex = -1
@@ -641,12 +732,6 @@ export default {
         promises.push(await this.fetchUsageTypes())
       }
 
-      if (arrayField.includes('isencrypted')) {
-        volumeIndex = this.fields.findIndex(item => item.name === 'isencrypted')
-        this.fields[volumeIndex].loading = true
-        promises.push(await this.fetchVolumes(searchKeyword))
-      }
-
       if (arrayField.includes('oscategoryid')) {
         osCategoryIndex = this.fields.findIndex(item => item.name === 'oscategoryid')
         this.fields[osCategoryIndex].loading = true
@@ -669,12 +754,6 @@ export default {
         vgpuProfileIndex = this.fields.findIndex(item => item.name === 'vgpuprofileid')
         this.fields[vgpuProfileIndex].loading = true
         promises.push(await this.fetchVgpuProfiles(searchKeyword))
-      }
-
-      if (arrayField.includes('volumeid')) {
-        volumeIndex = this.fields.findIndex(item => item.name === 'volumeid')
-        this.fields[volumeIndex].loading = true
-        promises.push(await this.fetchVolumes(searchKeyword))
       }
 
       if (this.apiName === 'listBackups' && arrayField.includes('status')) {
@@ -825,13 +904,6 @@ export default {
           }
         }
 
-        if (volumeIndex > -1) {
-          const volumes = response.filter(item => ['volumeid', 'isencrypted'].includes(item.type))
-          if (volumes && volumes.length > 0) {
-            this.fields[volumeIndex].opts = this.sortArray(volumes[0].data)
-          }
-        }
-
         if (virtualmachineIndex > -1) {
           const virtualMachines = response.filter(item => item.type === 'virtualmachineid')
           if (virtualMachines && virtualMachines.length > 0) {
@@ -913,9 +985,6 @@ export default {
         if (vgpuProfileIndex > -1) {
           this.fields[vgpuProfileIndex].loading = false
         }
-        if (volumeIndex > -1) {
-          this.fields[volumeIndex].loading = false
-        }
         if (virtualmachineIndex > -1) {
           this.fields[virtualmachineIndex].loading = false
         }
@@ -925,13 +994,53 @@ export default {
         if (kmsKeyIndex > -1) {
           this.fields[kmsKeyIndex].loading = false
         }
-        if (Array.isArray(arrayField)) {
+        if (Array.isArray(arrayField) && !arrayField.includes('volumeid')) {
           this.fillFormFieldValues()
         }
       })
     },
+    async fetchAffinityFilters (arrayField) {
+      const domainid = this.form.domainid
+      const fields = this.fields.filter(field => ['type', 'domainid', 'account', 'projectid'].includes(field.name) && arrayField.includes(field.name))
+      await Promise.all(fields.map(async field => {
+        const version = this.affinityOptionsVersion[field.name] = (this.affinityOptionsVersion[field.name] || 0) + 1
+        field.loading = true; field.error = false; field.opts = []
+        try {
+          if (field.name === 'account' && !domainid) return
+          const rows = field.name === 'type'
+            ? affinityTypeOptions(await getAPI('listAffinityGroupTypes', { ignoreproject: true }, { preserveOnFailure: true, timeout: 15000 }))
+            : await affinityOwnerOptions(getAPI, { domainid: 'domain', account: 'account', projectid: 'project' }[field.name], domainid)
+          if (version !== this.affinityOptionsVersion[field.name] || (['account', 'projectid'].includes(field.name) && domainid !== this.form.domainid)) return
+          // Root-admin listAccounts can include descendants despite isrecursive=false.
+          const eligible = rows.filter(row => !['account', 'projectid'].includes(field.name) || !domainid || row.domainid === domainid)
+          field.opts = this.sortArray(eligible.map(row => ({ ...row, ...(row.labelKey ? { name: this.$t(row.labelKey) } : {}) })), field.name === 'domainid' ? 'path' : 'name')
+        } catch (_) { if (version === this.affinityOptionsVersion[field.name]) field.error = true } finally {
+          if (version === this.affinityOptionsVersion[field.name]) field.loading = false
+        }
+      }))
+    },
+    async fetchCniOwnerOptions (arrayField, searchKeyword) {
+      const domainid = this.form.domainid
+      const fields = this.fields.filter(field => ['domainid', 'account'].includes(field.name) && arrayField.includes(field.name))
+      fields.forEach(field => { field.loading = true; field.opts = [] })
+      await Promise.all(fields.map(async field => {
+        const version = this.cniOptionsVersion[field.name] = (this.cniOptionsVersion[field.name] || 0) + 1
+        try {
+          const isAccount = field.name === 'account'
+          const json = await getAPI(isAccount ? 'listAccounts' : 'listDomains', { listall: true, keyword: searchKeyword, ...(isAccount ? { isrecursive: false, ...(domainid ? { domainid } : {}) } : { details: 'min' }) })
+          if (version !== this.cniOptionsVersion[field.name] || (isAccount && domainid !== this.form.domainid)) return
+          const rows = isAccount ? json?.listaccountsresponse?.account : json?.listdomainsresponse?.domain
+          field.opts = this.sortArray((rows || []).filter(row => !isAccount || !domainid || row.domainid === domainid), isAccount ? 'name' : 'path')
+        } catch (_) {
+          if (version === this.cniOptionsVersion[field.name]) this.$message.error(this.$t('error.fetching.data'))
+        } finally {
+          if (version === this.cniOptionsVersion[field.name]) field.loading = false
+        }
+      }))
+    },
     initFormFieldData () {
       const arrayField = this.initFields()
+      if (['listCniConfiguration', 'listAffinityGroups'].includes(this.apiName) || arrayField.includes('volumeid')) this.fillFormFieldValues()
 
       this.fetchStaticFieldData(arrayField)
 
@@ -951,13 +1060,16 @@ export default {
     fillFormFieldValues () {
       this.fieldValues = {}
       if (Object.keys(this.$route.query).length > 0) {
-        this.fieldValues = this.$route.query
+        this.fieldValues = { ...this.$route.query }
       }
       if (this.$route.meta.params) {
         Object.assign(this.fieldValues, this.$route.meta.params)
       }
       this.fields.forEach(field => {
-        this.form[field.name] = this.fieldValues[field.name]
+        const value = this.fieldValues[field.name]
+        this.form[field.name] = field.type === 'boolean'
+          ? value === true || value === 'true' ? true : value === false || value === 'false' ? false : undefined
+          : value
       })
       this.inputKey = this.fieldValues['tags[0].key'] || null
       this.inputValue = this.fieldValues['tags[0].value'] || null
@@ -1196,23 +1308,15 @@ export default {
         })
       }
     },
-    fetchVolumes (searchKeyword) {
+    fetchVirtualMachines (searchKeyword, page = 1) {
       return new Promise((resolve, reject) => {
-        getAPI('listvolumes', { listAll: true, isencrypted: searchKeyword }).then(json => {
-          const volumes = json.listvolumesresponse.volume
-          resolve({
-            type: 'isencrypted',
-            data: volumes
-          })
-        }).catch(error => {
-          reject(error.response.headers['x-description'])
-        })
-      })
-    },
-    fetchVirtualMachines (searchKeyword) {
-      return new Promise((resolve, reject) => {
-        getAPI('listVirtualMachines', { listAll: true, keyword: searchKeyword }).then(json => {
-          const virtualMachines = json.listvirtualmachinesresponse.virtualmachine
+        const snapshotList = this.$route.name === 'vmsnapshot'
+        getAPI('listVirtualMachines', { listAll: true, keyword: searchKeyword, ...(snapshotList ? { page, pagesize: 50 } : {}) }).then(json => {
+          let virtualMachines = json.listvirtualmachinesresponse.virtualmachine
+          if (snapshotList) {
+            this.vmOptionTotal = json.listvirtualmachinesresponse.count || 0
+            virtualMachines = (virtualMachines || []).map(vm => ({ ...vm, name: `${vm.displayname || vm.name} · ${vm.account || ''} · ${vm.id}` }))
+          }
           resolve({
             type: 'virtualmachineid',
             data: virtualMachines
@@ -1402,7 +1506,9 @@ export default {
     },
     fetchState () {
       var state = []
-      if (this.apiName.includes('listVolumes')) {
+      if (this.apiName === 'listVMSnapshot') {
+        state = ['Allocated', 'Creating', 'Ready', 'Reverting', 'Expunging', 'Error'].map(id => ({ id, name: 'state.' + id.toLowerCase() }))
+      } else if (this.apiName.includes('listVolumes')) {
         state = [
           {
             id: 'Allocated',
@@ -1720,6 +1826,7 @@ export default {
       this.$emit('search', { searchQuery: this.searchQuery })
     },
     async onClear () {
+      this.volumeLookupReset++
       this.formRef.value.resetFields()
       this.form = reactive({})
       this.isFiltered = false
@@ -1728,6 +1835,11 @@ export default {
       this.searchQuery = null
       this.paramsFilter = {}
 
+      if (this.apiName === 'listAffinityGroups') {
+        await this.fetchAffinityFilters(['domainid', 'account', 'projectid', 'type'])
+        this.$emit('search', {})
+        return
+      }
       const refreshAccountOptions = ['account', 'domainid'].every((field) => {
         return this.fields.some((searchViewField) => searchViewField.name === field)
       })
@@ -1745,6 +1857,11 @@ export default {
       this.$emit('search', this.paramsFilter)
     },
     handleSubmit () {
+      if (this.fields.some(field => field.name === 'volumeid') && this.volumeLookupBlocked) return
+      if (this.apiName === 'listAffinityGroups' && this.form.account && !this.form.domainid) {
+        this.$message.error(this.$t('message.affinity.search.account.domain'))
+        return
+      }
       this.paramsFilter = {}
       this.formRef.value.validate().then(() => {
         const values = toRaw(this.form)
@@ -1769,8 +1886,9 @@ export default {
       this.$emit('change-filter', filter)
     },
     updateIsFiltered () {
+      const params = ['listCniConfiguration', 'listAffinityGroups'].includes(this.apiName) ? this.$route.query : this.searchParams
       this.isFiltered = this.searchFilters.some(item => {
-        if (this.searchParams[item]) {
+        if (params[item]) {
           return true
         }
       })
@@ -1779,46 +1897,4 @@ export default {
 }
 </script>
 
-<style scoped lang="less">
-.input-search {
-  margin-left: 10px;
-}
-
-.filter-group {
-  :deep(.ant-input-group-addon) {
-    padding: 0 5px;
-  }
-
-  &-button {
-    background: inherit;
-    border: 0;
-    padding: 0;
-  }
-
-  &-button {
-    position: relative;
-    display: block;
-    min-height: 25px;
-
-    &-clear {
-      position: absolute;
-      left: 0;
-    }
-
-    &-search {
-      position: absolute;
-      right: 0;
-    }
-  }
-}
-
-.filter-button {
-  background: inherit;
-  border: 0;
-  padding: 0;
-  position: relative;
-  display: block;
-  min-height: 25px;
-  width: 20px;
-}
-</style>
+<style scoped lang="less" src="@/style/components/view/search-view.less" />

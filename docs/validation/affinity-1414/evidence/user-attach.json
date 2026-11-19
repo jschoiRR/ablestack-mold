@@ -1,0 +1,186 @@
+[
+  {
+    "request": {
+      "command": "queryAsyncJobResult",
+      "jobid": "dba9df10-3fdc-4686-a57f-3a9ded1a40df"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "334c1abc-6048-4331-95b5-358e4974898f",
+        "account": "qa-ag01-1019",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "bf41bee4-985e-4075-9d86-85bc1fc11d9e",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.UpdateVMAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "virtualmachine": {
+            "id": "2c861d94-08ff-4811-81c0-fb6f705d565b",
+            "name": "qa-ag01-20261019-user",
+            "displayname": "qa-ag01-20261019-user",
+            "account": "qa-ag01-1019",
+            "userid": "bf41bee4-985e-4075-9d86-85bc1fc11d9e",
+            "username": "qa-ag01-1019",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "created": "2026-10-19T01:23:50+0900",
+            "state": "Stopped",
+            "haenable": false,
+            "zoneid": "7013f5a1-de59-4cea-a596-f4f58815f31c",
+            "zonename": "Zone",
+            "volumemutationblockedreason": "",
+            "guestosid": "9708b6ac-b253-11f1-a895-0024814c313f",
+            "securitygroup": [],
+            "nic": [
+              {
+                "id": "8551b319-86a2-4591-9a56-15a4925ff1df",
+                "networkid": "6c9b8d97-2586-4532-ad0a-ddf6a788779f",
+                "networkname": "qa-ag01-20261019-user-L2",
+                "isolationuri": "vlan://3148",
+                "broadcasturi": "vlan://3148",
+                "traffictype": "Guest",
+                "type": "L2",
+                "isdefault": true,
+                "macaddress": "02:1f:01:47:00:01",
+                "secondaryip": [],
+                "extradhcpoption": [],
+                "deviceid": "0",
+                "enabled": true
+              }
+            ],
+            "hypervisor": "KVM",
+            "details": {
+              "deployvm": "true",
+              "tpmversion": "NONE",
+              "rootDiskController": "osdefault"
+            },
+            "clonefastsourcepowerallowed": false,
+            "clonefastpowerallowed": false,
+            "readonlydetails": "dataDiskController, rootDiskController, backupValidationCommandTimeout, backupValidationScreenshotWait, backupValidationBootTimeout",
+            "affinitygroup": [
+              {
+                "id": "4c73af99-934b-472d-97eb-e80d10556c70",
+                "name": "qa-ag01-20261019-user",
+                "description": "AG01 disposable user",
+                "account": "qa-ag01-1019"
+              },
+              {
+                "id": "19c27a5d-fa81-4599-bd42-29a3c154d07c",
+                "name": "qa-ag01-20261019-shared",
+                "description": "AG01 empty domain-wide group; no host dedication",
+                "account": "qa-ag01-1019"
+              }
+            ],
+            "displayvm": true,
+            "isdynamicallyscalable": true,
+            "deleteprotection": false,
+            "ostypeid": "9708b6ac-b253-11f1-a895-0024814c313f",
+            "osdisplayname": "Rocky Linux 9",
+            "receivedbytes": 0,
+            "sentbytes": 0,
+            "vbmcport": "None",
+            "kvdoenable": false,
+            "kvdoinuse": false,
+            "vbmcstatus": "Unallocated",
+            "tags": [],
+            "hasannotations": false
+          }
+        },
+        "created": "2026-10-19T01:40:32+0900",
+        "completed": "2026-10-19T01:40:32+0900",
+        "jobid": "dba9df10-3fdc-4686-a57f-3a9ded1a40df",
+        "jobstatus": 1
+      }
+    }
+  },
+  {
+    "request": {
+      "command": "listVirtualMachines",
+      "id": "2c861d94-08ff-4811-81c0-fb6f705d565b",
+      "details": "min,affgrp"
+    },
+    "response": {
+      "listvirtualmachinesresponse": {
+        "count": 1,
+        "virtualmachine": [
+          {
+            "id": "2c861d94-08ff-4811-81c0-fb6f705d565b",
+            "name": "qa-ag01-20261019-user",
+            "displayname": "qa-ag01-20261019-user",
+            "account": "qa-ag01-1019",
+            "userid": "bf41bee4-985e-4075-9d86-85bc1fc11d9e",
+            "username": "qa-ag01-1019",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "created": "2026-10-19T01:23:50+0900",
+            "state": "Stopped",
+            "haenable": false,
+            "zoneid": "7013f5a1-de59-4cea-a596-f4f58815f31c",
+            "zonename": "Zone",
+            "volumemutationblockedreason": "",
+            "guestosid": "9708b6ac-b253-11f1-a895-0024814c313f",
+            "securitygroup": [],
+            "nic": [
+              {
+                "id": "8551b319-86a2-4591-9a56-15a4925ff1df",
+                "networkid": "6c9b8d97-2586-4532-ad0a-ddf6a788779f",
+                "networkname": "qa-ag01-20261019-user-L2",
+                "isolationuri": "vlan://3148",
+                "broadcasturi": "vlan://3148",
+                "traffictype": "Guest",
+                "type": "L2",
+                "isdefault": true,
+                "macaddress": "02:1f:01:47:00:01",
+                "secondaryip": [],
+                "extradhcpoption": [],
+                "deviceid": "0",
+                "enabled": true
+              }
+            ],
+            "hypervisor": "KVM",
+            "instancename": "i-189-648-VM",
+            "details": {
+              "deployvm": "true",
+              "tpmversion": "NONE",
+              "rootDiskController": "osdefault"
+            },
+            "clonefastsourcepowerallowed": false,
+            "clonefastpowerallowed": false,
+            "affinitygroup": [
+              {
+                "id": "4c73af99-934b-472d-97eb-e80d10556c70",
+                "name": "qa-ag01-20261019-user",
+                "description": "AG01 disposable user",
+                "account": "qa-ag01-1019"
+              },
+              {
+                "id": "19c27a5d-fa81-4599-bd42-29a3c154d07c",
+                "name": "qa-ag01-20261019-shared",
+                "description": "AG01 empty domain-wide group; no host dedication",
+                "account": "qa-ag01-1019"
+              }
+            ],
+            "displayvm": true,
+            "isdynamicallyscalable": true,
+            "deleteprotection": false,
+            "ostypeid": "9708b6ac-b253-11f1-a895-0024814c313f",
+            "osdisplayname": "Rocky Linux 9",
+            "receivedbytes": 0,
+            "sentbytes": 0,
+            "vbmcport": "None",
+            "kvdoenable": false,
+            "kvdoinuse": false,
+            "arch": "x86_64",
+            "vbmcstatus": "Unallocated",
+            "tags": [],
+            "hasannotations": false
+          }
+        ]
+      }
+    }
+  }
+]

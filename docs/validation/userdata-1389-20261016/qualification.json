@@ -1,0 +1,934 @@
+{
+  "issue": 1389,
+  "source": "8629c06d37a4f51c0acb7b9cb084e7bc744c37e1",
+  "passed": 181,
+  "checks": [
+    {
+      "name": "runtime-static-backend-preserved",
+      "passed": true
+    },
+    {
+      "name": "focused-tests-lint-build",
+      "passed": true
+    },
+    {
+      "name": "API-contract",
+      "passed": true
+    },
+    {
+      "name": "export-raw-copy",
+      "passed": true,
+      "bytes": 12012
+    },
+    {
+      "name": "export-raw-download",
+      "passed": true,
+      "bytes": 12012
+    },
+    {
+      "name": "export-base64-copy",
+      "passed": true,
+      "bytes": 16016
+    },
+    {
+      "name": "export-base64-download",
+      "passed": true,
+      "bytes": 16016
+    },
+    {
+      "name": "git-bytes-raw-copy",
+      "passed": true
+    },
+    {
+      "name": "git-bytes-raw-download",
+      "passed": true
+    },
+    {
+      "name": "git-bytes-base64-copy",
+      "passed": true
+    },
+    {
+      "name": "git-bytes-base64-download",
+      "passed": true
+    },
+    {
+      "name": "body-bounds-light-1440x1000",
+      "passed": true
+    },
+    {
+      "name": "list-bounds-light-1440x1000",
+      "passed": true
+    },
+    {
+      "name": "metadata-bounds-light-1440x1000",
+      "passed": true
+    },
+    {
+      "name": "vms-bounds-light-1440x1000",
+      "passed": true
+    },
+    {
+      "name": "error-bounds-light-1440x1000",
+      "passed": true
+    },
+    {
+      "name": "bundle-light-1440x1000",
+      "passed": true
+    },
+    {
+      "name": "tab-order-light-1440x1000",
+      "passed": true
+    },
+    {
+      "name": "body-bytes-light-1440x1000",
+      "passed": true
+    },
+    {
+      "name": "body-buttons-light-1440x1000",
+      "passed": true
+    },
+    {
+      "name": "refresh-icon-light-1440x1000",
+      "passed": true
+    },
+    {
+      "name": "tabs-body-light-1440x1000",
+      "passed": true
+    },
+    {
+      "name": "vms-UUID-light-1440x1000",
+      "passed": true
+    },
+    {
+      "name": "list-page-light-1440x1000",
+      "passed": true
+    },
+    {
+      "name": "metadata-light-1440x1000",
+      "passed": true
+    },
+    {
+      "name": "stale-error-light-1440x1000",
+      "passed": true
+    },
+    {
+      "name": "body-bounds-light-1280x720",
+      "passed": true
+    },
+    {
+      "name": "list-bounds-light-1280x720",
+      "passed": true
+    },
+    {
+      "name": "metadata-bounds-light-1280x720",
+      "passed": true
+    },
+    {
+      "name": "vms-bounds-light-1280x720",
+      "passed": true
+    },
+    {
+      "name": "error-bounds-light-1280x720",
+      "passed": true
+    },
+    {
+      "name": "bundle-light-1280x720",
+      "passed": true
+    },
+    {
+      "name": "tab-order-light-1280x720",
+      "passed": true
+    },
+    {
+      "name": "body-bytes-light-1280x720",
+      "passed": true
+    },
+    {
+      "name": "body-buttons-light-1280x720",
+      "passed": true
+    },
+    {
+      "name": "refresh-icon-light-1280x720",
+      "passed": true
+    },
+    {
+      "name": "tabs-body-light-1280x720",
+      "passed": true
+    },
+    {
+      "name": "vms-UUID-light-1280x720",
+      "passed": true
+    },
+    {
+      "name": "list-page-light-1280x720",
+      "passed": true
+    },
+    {
+      "name": "metadata-light-1280x720",
+      "passed": true
+    },
+    {
+      "name": "stale-error-light-1280x720",
+      "passed": true
+    },
+    {
+      "name": "body-bounds-light-390x844",
+      "passed": true
+    },
+    {
+      "name": "list-bounds-light-390x844",
+      "passed": true
+    },
+    {
+      "name": "metadata-bounds-light-390x844",
+      "passed": true
+    },
+    {
+      "name": "vms-bounds-light-390x844",
+      "passed": true
+    },
+    {
+      "name": "error-bounds-light-390x844",
+      "passed": true
+    },
+    {
+      "name": "bundle-light-390x844",
+      "passed": true
+    },
+    {
+      "name": "tab-order-light-390x844",
+      "passed": true
+    },
+    {
+      "name": "body-bytes-light-390x844",
+      "passed": true
+    },
+    {
+      "name": "body-buttons-light-390x844",
+      "passed": true
+    },
+    {
+      "name": "refresh-icon-light-390x844",
+      "passed": true
+    },
+    {
+      "name": "tabs-body-light-390x844",
+      "passed": true
+    },
+    {
+      "name": "vms-UUID-light-390x844",
+      "passed": true
+    },
+    {
+      "name": "list-page-light-390x844",
+      "passed": true
+    },
+    {
+      "name": "metadata-light-390x844",
+      "passed": true
+    },
+    {
+      "name": "stale-error-light-390x844",
+      "passed": true
+    },
+    {
+      "name": "body-bounds-light-390x480",
+      "passed": true
+    },
+    {
+      "name": "list-bounds-light-390x480",
+      "passed": true
+    },
+    {
+      "name": "metadata-bounds-light-390x480",
+      "passed": true
+    },
+    {
+      "name": "vms-bounds-light-390x480",
+      "passed": true
+    },
+    {
+      "name": "error-bounds-light-390x480",
+      "passed": true
+    },
+    {
+      "name": "bundle-light-390x480",
+      "passed": true
+    },
+    {
+      "name": "tab-order-light-390x480",
+      "passed": true
+    },
+    {
+      "name": "body-bytes-light-390x480",
+      "passed": true
+    },
+    {
+      "name": "body-buttons-light-390x480",
+      "passed": true
+    },
+    {
+      "name": "refresh-icon-light-390x480",
+      "passed": true
+    },
+    {
+      "name": "tabs-body-light-390x480",
+      "passed": true
+    },
+    {
+      "name": "vms-UUID-light-390x480",
+      "passed": true
+    },
+    {
+      "name": "list-page-light-390x480",
+      "passed": true
+    },
+    {
+      "name": "metadata-light-390x480",
+      "passed": true
+    },
+    {
+      "name": "stale-error-light-390x480",
+      "passed": true
+    },
+    {
+      "name": "body-bounds-dark-1440x1000",
+      "passed": true
+    },
+    {
+      "name": "list-bounds-dark-1440x1000",
+      "passed": true
+    },
+    {
+      "name": "metadata-bounds-dark-1440x1000",
+      "passed": true
+    },
+    {
+      "name": "vms-bounds-dark-1440x1000",
+      "passed": true
+    },
+    {
+      "name": "error-bounds-dark-1440x1000",
+      "passed": true
+    },
+    {
+      "name": "bundle-dark-1440x1000",
+      "passed": true
+    },
+    {
+      "name": "tab-order-dark-1440x1000",
+      "passed": true
+    },
+    {
+      "name": "body-bytes-dark-1440x1000",
+      "passed": true
+    },
+    {
+      "name": "body-buttons-dark-1440x1000",
+      "passed": true
+    },
+    {
+      "name": "refresh-icon-dark-1440x1000",
+      "passed": true
+    },
+    {
+      "name": "tabs-body-dark-1440x1000",
+      "passed": true
+    },
+    {
+      "name": "vms-UUID-dark-1440x1000",
+      "passed": true
+    },
+    {
+      "name": "list-page-dark-1440x1000",
+      "passed": true
+    },
+    {
+      "name": "metadata-dark-1440x1000",
+      "passed": true
+    },
+    {
+      "name": "stale-error-dark-1440x1000",
+      "passed": true
+    },
+    {
+      "name": "body-bounds-dark-1280x720",
+      "passed": true
+    },
+    {
+      "name": "list-bounds-dark-1280x720",
+      "passed": true
+    },
+    {
+      "name": "metadata-bounds-dark-1280x720",
+      "passed": true
+    },
+    {
+      "name": "vms-bounds-dark-1280x720",
+      "passed": true
+    },
+    {
+      "name": "error-bounds-dark-1280x720",
+      "passed": true
+    },
+    {
+      "name": "bundle-dark-1280x720",
+      "passed": true
+    },
+    {
+      "name": "tab-order-dark-1280x720",
+      "passed": true
+    },
+    {
+      "name": "body-bytes-dark-1280x720",
+      "passed": true
+    },
+    {
+      "name": "body-buttons-dark-1280x720",
+      "passed": true
+    },
+    {
+      "name": "refresh-icon-dark-1280x720",
+      "passed": true
+    },
+    {
+      "name": "tabs-body-dark-1280x720",
+      "passed": true
+    },
+    {
+      "name": "vms-UUID-dark-1280x720",
+      "passed": true
+    },
+    {
+      "name": "list-page-dark-1280x720",
+      "passed": true
+    },
+    {
+      "name": "metadata-dark-1280x720",
+      "passed": true
+    },
+    {
+      "name": "stale-error-dark-1280x720",
+      "passed": true
+    },
+    {
+      "name": "body-bounds-dark-390x844",
+      "passed": true
+    },
+    {
+      "name": "list-bounds-dark-390x844",
+      "passed": true
+    },
+    {
+      "name": "metadata-bounds-dark-390x844",
+      "passed": true
+    },
+    {
+      "name": "vms-bounds-dark-390x844",
+      "passed": true
+    },
+    {
+      "name": "error-bounds-dark-390x844",
+      "passed": true
+    },
+    {
+      "name": "bundle-dark-390x844",
+      "passed": true
+    },
+    {
+      "name": "tab-order-dark-390x844",
+      "passed": true
+    },
+    {
+      "name": "body-bytes-dark-390x844",
+      "passed": true
+    },
+    {
+      "name": "body-buttons-dark-390x844",
+      "passed": true
+    },
+    {
+      "name": "refresh-icon-dark-390x844",
+      "passed": true
+    },
+    {
+      "name": "tabs-body-dark-390x844",
+      "passed": true
+    },
+    {
+      "name": "vms-UUID-dark-390x844",
+      "passed": true
+    },
+    {
+      "name": "list-page-dark-390x844",
+      "passed": true
+    },
+    {
+      "name": "metadata-dark-390x844",
+      "passed": true
+    },
+    {
+      "name": "stale-error-dark-390x844",
+      "passed": true
+    },
+    {
+      "name": "body-bounds-dark-390x480",
+      "passed": true
+    },
+    {
+      "name": "list-bounds-dark-390x480",
+      "passed": true
+    },
+    {
+      "name": "metadata-bounds-dark-390x480",
+      "passed": true
+    },
+    {
+      "name": "vms-bounds-dark-390x480",
+      "passed": true
+    },
+    {
+      "name": "error-bounds-dark-390x480",
+      "passed": true
+    },
+    {
+      "name": "bundle-dark-390x480",
+      "passed": true
+    },
+    {
+      "name": "tab-order-dark-390x480",
+      "passed": true
+    },
+    {
+      "name": "body-bytes-dark-390x480",
+      "passed": true
+    },
+    {
+      "name": "body-buttons-dark-390x480",
+      "passed": true
+    },
+    {
+      "name": "refresh-icon-dark-390x480",
+      "passed": true
+    },
+    {
+      "name": "tabs-body-dark-390x480",
+      "passed": true
+    },
+    {
+      "name": "vms-UUID-dark-390x480",
+      "passed": true
+    },
+    {
+      "name": "list-page-dark-390x480",
+      "passed": true
+    },
+    {
+      "name": "metadata-dark-390x480",
+      "passed": true
+    },
+    {
+      "name": "stale-error-dark-390x480",
+      "passed": true
+    },
+    {
+      "name": "state-empty",
+      "passed": true
+    },
+    {
+      "name": "state-forbidden",
+      "passed": true
+    },
+    {
+      "name": "state-missing",
+      "passed": true
+    },
+    {
+      "name": "state-invalid",
+      "passed": true
+    },
+    {
+      "name": "state-mismatch",
+      "passed": true
+    },
+    {
+      "name": "state-binary",
+      "passed": true
+    },
+    {
+      "name": "reference-templates",
+      "passed": true
+    },
+    {
+      "name": "reference-isos",
+      "passed": true
+    },
+    {
+      "name": "history-back",
+      "passed": true
+    },
+    {
+      "name": "history-forward",
+      "passed": true
+    },
+    {
+      "name": "history-reload",
+      "passed": true
+    },
+    {
+      "name": "late-response",
+      "passed": true
+    },
+    {
+      "name": "roles",
+      "passed": true
+    },
+    {
+      "name": "list-search-page-selection",
+      "passed": true
+    },
+    {
+      "name": "cleanup-API",
+      "passed": true
+    },
+    {
+      "name": "cleanup-DB",
+      "passed": true
+    },
+    {
+      "name": "complete-network-final-actual-deletion",
+      "passed": true
+    },
+    {
+      "name": "complete-network-final-admin-restored",
+      "passed": true
+    },
+    {
+      "name": "complete-network-final-binary",
+      "passed": true
+    },
+    {
+      "name": "complete-network-final-cleanup",
+      "passed": true
+    },
+    {
+      "name": "complete-network-final-content-states",
+      "passed": true
+    },
+    {
+      "name": "complete-network-final-dark-1280-clear",
+      "passed": true
+    },
+    {
+      "name": "complete-network-final-dark-1280-repeat",
+      "passed": true
+    },
+    {
+      "name": "complete-network-final-dark-1280",
+      "passed": true
+    },
+    {
+      "name": "complete-network-final-dark-1440-clear",
+      "passed": true
+    },
+    {
+      "name": "complete-network-final-dark-1440-repeat",
+      "passed": true
+    },
+    {
+      "name": "complete-network-final-dark-1440",
+      "passed": true
+    },
+    {
+      "name": "complete-network-final-dark-mobile-clear",
+      "passed": true
+    },
+    {
+      "name": "complete-network-final-dark-mobile-small-clear",
+      "passed": true
+    },
+    {
+      "name": "complete-network-final-dark-mobile-small",
+      "passed": true
+    },
+    {
+      "name": "complete-network-final-dark-mobile",
+      "passed": true
+    },
+    {
+      "name": "complete-network-final-filter-dialog",
+      "passed": true
+    },
+    {
+      "name": "complete-network-final-light-1280",
+      "passed": true
+    },
+    {
+      "name": "complete-network-final-light-1440",
+      "passed": true
+    },
+    {
+      "name": "complete-network-final-light-mobile-small",
+      "passed": true
+    },
+    {
+      "name": "complete-network-final-light-mobile",
+      "passed": true
+    },
+    {
+      "name": "complete-network-final-list-contract",
+      "passed": true
+    },
+    {
+      "name": "complete-network-final-role-api-denied",
+      "passed": true
+    },
+    {
+      "name": "complete-network-final-role-domainadmin",
+      "passed": true
+    },
+    {
+      "name": "complete-network-final-role-project",
+      "passed": true
+    },
+    {
+      "name": "complete-network-final-role-user",
+      "passed": true
+    },
+    {
+      "name": "complete-network-final-state-empty-forbidden",
+      "passed": true
+    },
+    {
+      "name": "complete-network-final-tabs-history",
+      "passed": true
+    },
+    {
+      "name": "known-common-cancellation-315",
+      "passed": true
+    },
+    {
+      "name": "known-common-cancellation-312",
+      "passed": true
+    },
+    {
+      "name": "dialog-footer-final-registration-dark-desktop",
+      "passed": true
+    },
+    {
+      "name": "dialog-footer-final-registration-dark-mobile",
+      "passed": true
+    },
+    {
+      "name": "actual-deleted-target",
+      "passed": true
+    },
+    {
+      "name": "base64-decoding",
+      "passed": true
+    },
+    {
+      "name": "browser-restored",
+      "passed": true
+    }
+  ],
+  "complete_network_intervals": 27,
+  "runtime_exceptions": [
+    {
+      "sequence": 18765,
+      "source": {
+        "tabId": 4
+      },
+      "method": "Runtime.exceptionThrown",
+      "params": {
+        "exceptionDetails": {
+          "columnNumber": 308779,
+          "exception": {
+            "className": "i",
+            "description": "i",
+            "objectId": "-6480967067822580589.15.15",
+            "preview": {
+              "description": "i",
+              "overflow": false,
+              "properties": [
+                {
+                  "name": "message",
+                  "type": "string",
+                  "value": "canceled"
+                },
+                {
+                  "name": "name",
+                  "type": "string",
+                  "value": "CanceledError"
+                },
+                {
+                  "name": "code",
+                  "type": "string",
+                  "value": "ERR_CANCELED"
+                },
+                {
+                  "name": "stack",
+                  "type": "string",
+                  "value": "CanceledError: canceled\n    at Object.cancel (http…31.10:8080/client/js/vendors.3ea5c3f6.js:82:22618"
+                }
+              ],
+              "type": "object"
+            },
+            "type": "object"
+          },
+          "exceptionId": 315,
+          "executionContextId": 15,
+          "lineNumber": 154,
+          "scriptId": "11",
+          "stackTrace": {
+            "callFrames": [
+              {
+                "columnNumber": 308779,
+                "functionName": "",
+                "lineNumber": 154,
+                "scriptId": "11",
+                "url": "http://10.10.31.10:8080/client/js/vendors.3ea5c3f6.js"
+              },
+              {
+                "columnNumber": 682844,
+                "functionName": "cancel",
+                "lineNumber": 0,
+                "scriptId": "1122",
+                "url": "http://10.10.31.10:8080/client/js/app.50a3be37.js"
+              },
+              {
+                "columnNumber": 550685,
+                "functionName": "beforeRouteLeave",
+                "lineNumber": 0,
+                "scriptId": "1122",
+                "url": "http://10.10.31.10:8080/client/js/app.50a3be37.js"
+              },
+              {
+                "columnNumber": 13574,
+                "functionName": "",
+                "lineNumber": 81,
+                "scriptId": "11",
+                "url": "http://10.10.31.10:8080/client/js/vendors.3ea5c3f6.js"
+              },
+              {
+                "columnNumber": 13388,
+                "functionName": "",
+                "lineNumber": 81,
+                "scriptId": "11",
+                "url": "http://10.10.31.10:8080/client/js/vendors.3ea5c3f6.js"
+              },
+              {
+                "columnNumber": 22617,
+                "functionName": "",
+                "lineNumber": 81,
+                "scriptId": "11",
+                "url": "http://10.10.31.10:8080/client/js/vendors.3ea5c3f6.js"
+              }
+            ]
+          },
+          "text": "Uncaught (in promise)",
+          "url": "http://10.10.31.10:8080/client/js/vendors.3ea5c3f6.js"
+        },
+        "timestamp": 1792130921230.481
+      }
+    },
+    {
+      "sequence": 18528,
+      "source": {
+        "tabId": 4
+      },
+      "method": "Runtime.exceptionThrown",
+      "params": {
+        "exceptionDetails": {
+          "columnNumber": 308779,
+          "exception": {
+            "className": "i",
+            "description": "i",
+            "objectId": "-6480967067822580589.15.12",
+            "preview": {
+              "description": "i",
+              "overflow": false,
+              "properties": [
+                {
+                  "name": "message",
+                  "type": "string",
+                  "value": "canceled"
+                },
+                {
+                  "name": "name",
+                  "type": "string",
+                  "value": "CanceledError"
+                },
+                {
+                  "name": "code",
+                  "type": "string",
+                  "value": "ERR_CANCELED"
+                },
+                {
+                  "name": "stack",
+                  "type": "string",
+                  "value": "CanceledError: canceled\n    at Object.cancel (http…31.10:8080/client/js/vendors.3ea5c3f6.js:82:22618"
+                }
+              ],
+              "type": "object"
+            },
+            "type": "object"
+          },
+          "exceptionId": 312,
+          "executionContextId": 15,
+          "lineNumber": 154,
+          "scriptId": "11",
+          "stackTrace": {
+            "callFrames": [
+              {
+                "columnNumber": 308779,
+                "functionName": "",
+                "lineNumber": 154,
+                "scriptId": "11",
+                "url": "http://10.10.31.10:8080/client/js/vendors.3ea5c3f6.js"
+              },
+              {
+                "columnNumber": 682844,
+                "functionName": "cancel",
+                "lineNumber": 0,
+                "scriptId": "1122",
+                "url": "http://10.10.31.10:8080/client/js/app.50a3be37.js"
+              },
+              {
+                "columnNumber": 550685,
+                "functionName": "beforeRouteLeave",
+                "lineNumber": 0,
+                "scriptId": "1122",
+                "url": "http://10.10.31.10:8080/client/js/app.50a3be37.js"
+              },
+              {
+                "columnNumber": 13574,
+                "functionName": "",
+                "lineNumber": 81,
+                "scriptId": "11",
+                "url": "http://10.10.31.10:8080/client/js/vendors.3ea5c3f6.js"
+              },
+              {
+                "columnNumber": 13388,
+                "functionName": "",
+                "lineNumber": 81,
+                "scriptId": "11",
+                "url": "http://10.10.31.10:8080/client/js/vendors.3ea5c3f6.js"
+              },
+              {
+                "columnNumber": 22617,
+                "functionName": "",
+                "lineNumber": 81,
+                "scriptId": "11",
+                "url": "http://10.10.31.10:8080/client/js/vendors.3ea5c3f6.js"
+              }
+            ]
+          },
+          "text": "Uncaught (in promise)",
+          "url": "http://10.10.31.10:8080/client/js/vendors.3ea5c3f6.js"
+        },
+        "timestamp": 1792130888229.044
+      }
+    }
+  ]
+}

@@ -1,0 +1,214 @@
+- complementary:
+  - menu:
+    - menuitem "dashboard 대시보드":
+      - link "dashboard 대시보드":
+        - /url: "#/dashboard"
+        - img "dashboard":
+        - generic: 대시보드
+    - img "cloud":
+    - generic: 컴퓨트
+    - img "hdd":
+    - generic: 스토리지
+    - img "wifi":
+    - generic: 네트워크
+    - img "picture":
+    - generic: 이미지
+    - img "lock":
+    - generic: 키 관리
+    - menuitem "schedule 이벤트":
+      - link "schedule 이벤트":
+        - /url: "#/event"
+        - img "schedule":
+        - generic: 이벤트
+    - menuitem "project 프로젝트":
+      - link "project 프로젝트":
+        - /url: "#/project"
+        - img "project":
+        - generic: 프로젝트
+    - menuitem "idcard 역할":
+      - link "idcard 역할":
+        - /url: "#/role"
+        - img "idcard":
+        - generic: 역할
+    - menuitem "team 계정":
+      - link "team 계정":
+        - /url: "#/account"
+        - img "team":
+        - generic: 계정
+    - menuitem "block 도메인":
+      - link "block 도메인":
+        - /url: "#/domain"
+        - img "block":
+        - generic: 도메인
+    - img "bank":
+    - generic: 인프라스트럭쳐
+    - img "shopping":
+    - generic: 서비스 오퍼링
+    - img "setting":
+    - generic: 구성
+    - menuitem "appstore-add 확장":
+      - link "appstore-add 확장":
+        - /url: "#/extension"
+        - img "appstore-add":
+        - generic: 확장
+    - img "tool":
+    - generic: 도구
+    - menuitem "read API 문서":
+      - link "read API 문서":
+        - /url: "#/apidocs/"
+        - img "read":
+        - generic: API 문서
+- generic: 페이지 스타일 설정
+- button "닫기":
+  - img "close":
+- heading "페이지 스타일 설정" [level=3]
+- radio [checked]
+- img "check":
+- radio
+- heading "테마 색상" [level=3]
+- radio
+- img "check"
+- radio
+- radio
+- radio
+- radio
+- radio
+- radio
+- radio
+- separator
+- heading "네비게이션 설정" [level=3]
+- generic: 배경색
+- textbox: "#ffffff"
+- generic: 텍스트 색상
+- textbox: "#000000"
+- separator
+- alert:
+  - img "exclamation-circle":
+  - generic: "설정은 현재 브라우저에서만 볼 수 있습니다. 설정을 적용하려면 JSON 파일을 다운로드하고 경로 `/public/config.json` 아래의 `config.json` 파일의 `theme` 섹션에서 해당 콘텐츠를 교체하세요."
+- button "download 세팅값 다운로드(json)":
+  - img "download":
+  - generic: 세팅값 다운로드(json)
+- button "undo 기본값으로 재설정":
+  - img "undo":
+  - generic: 기본값으로 재설정
+- img "menu-unfold":
+- combobox
+- img "project":
+- text: 기본 보기
+- img "translation":
+- img "bell":
+- generic: AC
+- generic: admin cloud
+- main:
+  - link "home":
+    - /url: "#/"
+    - img "home":
+  - text: /
+  - link "사용자 데이터 라이브러리":
+    - /url: "#/userdata"
+  - text: /
+  - generic: UD1392-31-20261016-ui-text
+  - link "question-circle":
+    - /url: http://docs.ablecloud.io/latest/adminguide/virtual_machines.html#user-data-and-meta-data
+    - img "question-circle":
+  - button "reload 업데이트":
+    - img "reload":
+    - generic: 업데이트
+  - button "down 작업":
+    - img "down":
+    - generic: 작업
+  - img "solution":
+  - heading "UD1392-31-20261016-ui-text" [level=4]
+  - separator
+  - generic: 아이디
+  - button "barcode":
+    - img "barcode":
+  - link "0817ee26-99f2-47b9-a0c4-028e68ace786":
+    - /url: javascript:;
+  - generic: 계정
+  - img "user":
+  - link "admin":
+    - /url: "#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f"
+  - generic: 도메인
+  - img "block":
+  - link "ROOT":
+    - /url: "#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details"
+  - separator
+  - link "cloud-server 가상머신 보기":
+    - /url: "#/vm?userdataid=0817ee26-99f2-47b9-a0c4-028e68ace786"
+    - button "cloud-server 가상머신 보기":
+      - img "cloud-server":
+      - generic: 가상머신 보기
+  - tablist:
+    - tab "상세"
+    - tab "사용자 데이터 본문"
+    - tab "버전·변경 정책" [selected]
+    - tab "사용 가상머신"
+    - tab "연결 템플릿"
+    - tab "연결 ISO"
+    - tab "코멘트"
+  - tabpanel "버전·변경 정책":
+    - button "reload 업데이트":
+      - img "reload":
+      - generic: 업데이트
+    - paragraph: 출처는 새 데이터의 댓글에 기록하며 이 탭에서 표시합니다. 댓글은 권한에 따라 삭제·공개 범위를 변경할 수 있으므로 변경 불가능한 감사 기록이나 자동 적용 이력이 아닙니다. 외부 API 등록 또는 출처 메모가 없는 항목의 부모·버전 순서는 추정하지 않습니다. 출처 메모는 댓글 API의 255자 제한에 맞춰 UUID·바이트 수만 기록합니다. 이름·변수는 각 버전의 상세와 복제 미리보기에서 확인하세요.
+    - status:
+      - img "info-circle":
+      - generic: 확인 가능한 출처 메모가 없습니다. 독립 등록·삭제된 메모·숨겨진 메모의 버전 관계는 추정하지 않습니다.
+    - generic "적용 범위·참조 전환·되돌리기 안내"
+- alert:
+  - img "info-circle":
+  - generic: Wall 모니터링을 사용할 수 없습니다. 기존 알림은 최신 정보가 아닐 수 있으며 Mold는 계속 사용할 수 있습니다. 비활성
+- dialog "복제하여 새 버전 등록":
+  - document:
+    - button "Close":
+      - img "close":
+    - generic: 복제하여 새 버전 등록
+    - alert:
+      - img "info-circle":
+      - generic: 원본의 이름·본문·변수를 재사용해 같은 소유 범위에 새 데이터를 만듭니다. 기존 VM·템플릿·ISO에는 자동 적용되지 않습니다.
+    - paragraph:
+      - text: "복제 원본: UD1392-31-20261016-ui-text (0817ee26-99f2-47b9-a0c4-028e68ace786)"
+      - text: admin / ROOT
+    - paragraph:
+      - link "사용 가상머신":
+        - /url: "#/userdata/0817ee26-99f2-47b9-a0c4-028e68ace786?tab=userdata.usage.vms"
+      - link "연결 템플릿":
+        - /url: "#/userdata/0817ee26-99f2-47b9-a0c4-028e68ace786?tab=userdata.usage.templates"
+      - link "연결 ISO":
+        - /url: "#/userdata/0817ee26-99f2-47b9-a0c4-028e68ace786?tab=userdata.usage.isos"
+    - generic "적용 범위·참조 전환·되돌리기 안내"
+    - text: "*"
+    - text: 이름
+    - img "info-circle":
+    - textbox "* 이름 info-circle" [active]:
+      - /placeholder: Name of the user data
+      - text: UD1392-31-20261016-ui-text-v2
+    - text: "*"
+    - text: 사용자 데이터
+    - img "info-circle":
+    - textbox "* 사용자 데이터 info-circle":
+      - /placeholder: 사용자 데이터를 일반 텍스트 또는 Base64 인코딩으로 입력하세요. 기본적으로 최대 32KB의 Base64 인코딩 사용자 데이터를 전송할 수 있습니다. 설정 vm.userdata.max.length를 사용하여 최대 1MB까지 제한을 늘릴 수 있습니다.
+      - text: I2Nsb3VkLWNvbmZpZwojIFVEMTM5Mi0zMS0yMDI2MTAxNiBVVEYtOCDtlZzquIAg8J+YgCAke1RPS0VOfQojIOq4tO2WiS3qsIDrgpjri6Trnbzwn5iA6ri07ZaJLeqwgOuCmOuLpOudvPCfmIDquLTtlokt6rCA64KY64uk65288J+YgOq4tO2WiS3qsIDrgpjri6Trnbzwn5iA6ri07ZaJLeqwgOuCmOuLpOudvPCfmIDquLTtlokt6rCA64KY64uk65288J+YgOq4tO2WiS3qsIDrgpjri6Trnbzwn5iA6ri07ZaJLeqwgOuCmOuLpOudvPCfmIDquLTtlokt6rCA64KY64uk65288J+YgOq4tO2WiS3qsIDrgpjri6Trnbzwn5iA6ri07ZaJLeqwgOuCmOuLpOudvPCfmIDquLTtlokt6rCA64KY64uk65288J+YgOq4tO2WiS3qsIDrgpjri6Trnbzwn5iA6ri07ZaJLeqwgOuCmOuLpOudvPCfmIDquLTtlokt6rCA64KY64uk65288J+YgOq4tO2WiS3qsIDrgpjri6Trnbzwn5iA6ri07ZaJLeqwgOuCmOuLpOudvPCfmIDquLTtlokt6rCA64KY64uk65288J+YgOq4tO2WiS3qsIDrgpjri6Trnbzwn5iA6ri07ZaJLeqwgOuCmOuLpOudvPCfmIDquLTtlokt6rCA64KY64uk65288J+YgOq4tO2WiS3qsIDrgpjri6Trnbzwn5iA6ri07ZaJLeqwgOuCmOuLpOudvPCfmIDquLTtlokt6rCA64KY64uk65288J+YgOq4tO2WiS3qsIDrgpjri6Trnbzwn5iA6ri07ZaJLeqwgOuCmOuLpOudvPCfmIDquLTtlokt6rCA64KY64uk65288J+YgOq4tO2WiS3qsIDrgpjri6Trnbzwn5iA6ri07ZaJLeqwgOuCmOuLpOudvPCfmIDquLTtlokt6rCA64KY64uk65288J+YgOq4tO2WiS3qsIDrgpjri6Trnbzwn5iA6ri07ZaJLeqwgOuCmOuLpOudvPCfmIDquLTtlokt6rCA64KY64uk65288J+YgOq4tO2WiS3qsIDrgpjri6Trnbzwn5iA6ri07ZaJLeqwgOuCmOuLpOudvPCfmIDquLTtlokt6rCA64KY64uk65288J+YgOq4tO2WiS3qsIDrgpjri6Trnbzwn5iA6ri07ZaJLeqwgOuCmOuLpOudvPCfmIDquLTtlokt6rCA64KY64uk65288J+YgOq4tO2WiS3qsIDrgpjri6Trnbzwn5iA6ri07ZaJLeqwgOuCmOuLpOudvPCfmIDquLTtlokt6rCA64KY64uk65288J+YgOq4tO2WiS3qsIDrgpjri6Trnbzwn5iA6ri07ZaJLeqwgOuCmOuLpOudvPCfmIDquLTtlokt6rCA64KY64uk65288J+YgOq4tO2WiS3qsIDrgpjri6Trnbzwn5iA6ri07ZaJLeqwgOuCmOuLpOudvPCfmIDquLTtlokt6rCA64KY64uk65288J+YgOq4tO2WiS3qsIDrgpjri6Trnbzwn5iA6ri07ZaJLeqwgOuCmOuLpOudvPCfmIDquLTtlokt6rCA64KY64uk65288J+YgOq4tO2WiS3qsIDrgpjri6Trnbzwn5iA6ri07ZaJLeqwgOuCmOuLpOudvPCfmIDquLTtlokt6rCA64KY64uk65288J+YgOq4tO2WiS3qsIDrgpjri6Trnbzwn5iA6ri07ZaJLeqwgOuCmOuLpOudvPCfmIDquLTtlokt6rCA64KY64uk65288J+YgOq4tO2WiS3qsIDrgpjri6Trnbzwn5iA6ri07ZaJLeqwgOuCmOuLpOudvPCfmIDquLTtlokt6rCA64KY64uk65288J+YgOq4tO2WiS3qsIDrgpjri6Trnbzwn5iA6ri07ZaJLeqwgOuCmOuLpOudvPCfmIDquLTtlokt6rCA64KY64uk65288J+YgOq4tO2WiS3qsIDrgpjri6Trnbzwn5iA6ri07ZaJLeqwgOuCmOuLpOudvPCfmIDquLTtlokt6rCA64KY64uk65288J+YgOq4tO2WiS3qsIDrgpjri6Trnbzwn5iA6ri07ZaJLeqwgOuCmOuLpOudvPCfmIDquLTtlokt6rCA64KY64uk65288J+YgOq4tO2WiS3qsIDrgpjri6Trnbzwn5iA6ri07ZaJLeqwgOuCmOuLpOudvPCfmIDquLTtlokt6rCA64KY64uk65288J+YgOq4tO2WiS3qsIDrgpjri6Trnbzwn5iA6ri07ZaJLeqwgOuCmOuLpOudvPCfmIDquLTtlokt6rCA64KY64uk65288J+YgOq4tO2WiS3qsIDrgpjri6Trnbzwn5iA6ri07ZaJLeqwgOuCmOuLpOudvPCfmIDquLTtlokt6rCA64KY64uk65288J+YgOq4tO2WiS3qsIDrgpjri6Trnbzwn5iA6ri07ZaJLeqwgOuCmOuLpOudvPCfmIDquLTtlokt6rCA64KY64uk65288J+YgOq4tO2WiS3qsIDrgpjri6Trnbzwn5iA6ri07ZaJLeqwgOuCmOuLpOudvPCfmIDquLTtlokt6rCA64KY64uk65288J+YgOq4tO2WiS3qsIDrgpjri6Trnbzwn5iA6ri07ZaJLeqwgOuCmOuLpOudvPCfmIDquLTtlokt6rCA64KY64uk65288J+YgOq4tO2WiS3qsIDrgpjri6Trnbzwn5iA6ri07ZaJLeqwgOuCmOuLpOudvPCfmIDquLTtlokt6rCA64KY64uk65288J+YgOq4tO2WiS3qsIDrgpjri6Trnbzwn5iA6ri07ZaJLeqwgOuCmOuLpOudvPCfmIDquLTtlokt6rCA64KY64uk65288J+YgOq4tO2WiS3qsIDrgpjri6Trnbzwn5iA6ri07ZaJLeqwgOuCmOuLpOudvPCfmIDquLTtlokt6rCA64KY64uk65288J+YgOq4tO2WiS3qsIDrgpjri6Trnbzwn5iA6ri07ZaJLeqwgOuCmOuLpOudvPCfmIDquLTtlokt6rCA64KY64uk65288J+YgOq4tO2WiS3qsIDrgpjri6Trnbzwn5iACiMg7KSEIDAg6rKA7KadCiMg7KSEIDEg6rKA7KadCiMg7KSEIDIg6rKA7KadCiMg7KSEIDMg6rKA7KadCiMg7KSEIDQg6rKA7KadCiMg7KSEIDUg6rKA7KadCiMg7KSEIDYg6rKA7KadCiMg7KSEIDcg6rKA7KadCiMg7KSEIDgg6rKA7KadCiMg7KSEIDkg6rKA7KadCiMg7KSEIDEwIOqygOymnQojIOykhCAxMSDqsoDspp0KIyDspIQgMTIg6rKA7KadCiMg7KSEIDEzIOqygOymnQojIOykhCAxNCDqsoDspp0KIyDspIQgMTUg6rKA7KadCiMg7KSEIDE2IOqygOymnQojIOykhCAxNyDqsoDspp0KIyDspIQgMTgg6rKA7KadCiMg7KSEIDE5IOqygOymnQojIOykhCAyMCDqsoDspp0KIyDspIQgMjEg6rKA7KadCiMg7KSEIDIyIOqygOymnQojIOykhCAyMyDqsoDspp0KIyDspIQgMjQg6rKA7KadCiMg7KSEIDI1IOqygOymnQojIOykhCAyNiDqsoDspp0KIyDspIQgMjcg6rKA7KadCiMg7KSEIDI4IOqygOymnQojIOykhCAyOSDqsoDspp0KIyDspIQgMzAg6rKA7KadCiMg7KSEIDMxIOqygOymnQojIOykhCAzMiDqsoDspp0KIyDspIQgMzMg6rKA7KadCiMg7KSEIDM0IOqygOymnQojIOykhCAzNSDqsoDspp0KIyDspIQgMzYg6rKA7KadCiMg7KSEIDM3IOqygOymnQojIOykhCAzOCDqsoDspp0KIyDspIQgMzkg6rKA7KadCiMg7KSEIDQwIOqygOymnQojIOykhCA0MSDqsoDspp0KIyDspIQgNDIg6rKA7KadCiMg7KSEIDQzIOqygOymnQojIOykhCA0NCDqsoDspp0K
+    - generic "Base64 인코드"
+    - checkbox "Base64 인코드" [checked]
+    - paragraph: 처음에는 원본 바이트를 보존하는 Base64로 채웁니다. UTF-8 본문은 원문 편집을 선택할 수 있습니다. 아래 미리보기에서 변경 내용을 확인하세요.
+    - button "원문으로 편집":
+      - generic: 원문으로 편집
+    - text: 사용자 데이터 매개변수
+    - img "info-circle":
+    - generic "TOKEN":
+      - generic: TOKEN
+    - combobox "사용자 데이터 매개변수 info-circle"
+    - status:
+      - img "exclamation-circle":
+      - generic: 본문이 원본과 같습니다. 이름·변수만 바꾸는 버전은 같은 소유자의 동일 본문 중복 금지 정책에 따라 등록할 수 없습니다.
+    - paragraph:
+      - text: "원본 3075바이트 → 새 버전 3075바이트 · 최초 차이 바이트 위치: -"
+      - text: "사용자 데이터 매개변수: TOKEN → TOKEN"
+    - generic "원본 본문 확인"
+    - generic "새 버전 본문 미리보기"
+    - button "취소":
+      - generic: 취소
+    - button "새 버전 등록":
+      - generic: 새 버전 등록

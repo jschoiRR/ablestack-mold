@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1480" viewBox="0 0 1800 1480">
+<rect width="100%" height="100%" fill="white"/>
+<text x="72" y="48" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="52" font-weight="700" fill="#172B45">UI 소스 폴더와 역할</text>
+<text x="72" y="127" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="36" font-weight="400" fill="#506378">ui/ 안에서 화면 · API 호출 · 메뉴 정의 · 번역 파일을 찾습니다</text>
+<rect x="120" y="212" width="1608" height="106" rx="16" fill="#F0F7FF" stroke="none" stroke-width="2"/>
+<polyline points="88,197 88,333" fill="none" stroke="#D8E2ED" stroke-width="3"/>
+<polyline points="88,262 116,262" fill="none" stroke="#146CBA" stroke-width="4"/>
+<text x="150" y="234" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="40" font-weight="700" fill="#146CBA">src/api/index.js</text>
+<text x="835" y="234" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="40" font-weight="400" fill="#506378">API 호출 래퍼 callAPI · getAPI · postAPI</text>
+<rect x="120" y="333" width="1608" height="106" rx="16" fill="#F5F2FF" stroke="none" stroke-width="2"/>
+<polyline points="88,318 88,454" fill="none" stroke="#D8E2ED" stroke-width="3"/>
+<polyline points="88,383 116,383" fill="none" stroke="#6554B7" stroke-width="4"/>
+<text x="150" y="355" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="40" font-weight="700" fill="#6554B7">src/components/</text>
+<text x="835" y="355" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="40" font-weight="400" fill="#506378">재사용 가능한 공통 컴포넌트</text>
+<rect x="120" y="454" width="1608" height="106" rx="16" fill="#EFF9F6" stroke="none" stroke-width="2"/>
+<polyline points="88,439 88,575" fill="none" stroke="#D8E2ED" stroke-width="3"/>
+<polyline points="88,504 116,504" fill="none" stroke="#008878" stroke-width="4"/>
+<text x="150" y="476" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="40" font-weight="700" fill="#008878">src/router/</text>
+<text x="835" y="476" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="40" font-weight="400" fill="#506378">화면 라우터 구성</text>
+<rect x="120" y="575" width="1608" height="106" rx="16" fill="#F0F7FF" stroke="none" stroke-width="2"/>
+<polyline points="88,560 88,696" fill="none" stroke="#D8E2ED" stroke-width="3"/>
+<polyline points="88,625 116,625" fill="none" stroke="#146CBA" stroke-width="4"/>
+<text x="150" y="597" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="40" font-weight="700" fill="#146CBA">src/config/section/</text>
+<text x="835" y="597" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="40" font-weight="400" fill="#506378">compute.js 등 메뉴별 뷰 정의</text>
+<rect x="120" y="696" width="1608" height="106" rx="16" fill="#F5F2FF" stroke="none" stroke-width="2"/>
+<polyline points="88,681 88,817" fill="none" stroke="#D8E2ED" stroke-width="3"/>
+<polyline points="88,746 116,746" fill="none" stroke="#6554B7" stroke-width="4"/>
+<text x="150" y="718" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="40" font-weight="700" fill="#6554B7">src/views/</text>
+<text x="835" y="718" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="40" font-weight="400" fill="#506378">각 화면 페이지 컴포넌트</text>
+<rect x="120" y="817" width="1608" height="106" rx="16" fill="#EFF9F6" stroke="none" stroke-width="2"/>
+<polyline points="88,802 88,938" fill="none" stroke="#D8E2ED" stroke-width="3"/>
+<polyline points="88,867 116,867" fill="none" stroke="#008878" stroke-width="4"/>
+<text x="150" y="839" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="40" font-weight="700" fill="#008878">src/views/compute/</text>
+<text x="835" y="839" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="40" font-weight="400" fill="#506378">DeployVM.vue 등 인스턴스 목록과 상세 화면</text>
+<rect x="120" y="938" width="1608" height="106" rx="16" fill="#F0F7FF" stroke="none" stroke-width="2"/>
+<polyline points="88,923 88,1059" fill="none" stroke="#D8E2ED" stroke-width="3"/>
+<polyline points="88,988 116,988" fill="none" stroke="#146CBA" stroke-width="4"/>
+<text x="150" y="960" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="40" font-weight="700" fill="#146CBA">src/locales/</text>
+<text x="835" y="960" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="40" font-weight="400" fill="#506378">i18n 초기화와 언어 로딩</text>
+<rect x="120" y="1059" width="1608" height="106" rx="16" fill="#F5F2FF" stroke="none" stroke-width="2"/>
+<polyline points="88,1044 88,1180" fill="none" stroke="#D8E2ED" stroke-width="3"/>
+<polyline points="88,1109 116,1109" fill="none" stroke="#6554B7" stroke-width="4"/>
+<text x="150" y="1081" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="40" font-weight="700" fill="#6554B7">public/locales/ko_KR.json</text>
+<text x="835" y="1081" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="40" font-weight="400" fill="#506378">한국어 번역 키와 문구</text>
+<rect x="120" y="1180" width="1608" height="106" rx="16" fill="#EFF9F6" stroke="none" stroke-width="2"/>
+<polyline points="88,1165 88,1301" fill="none" stroke="#D8E2ED" stroke-width="3"/>
+<polyline points="88,1230 116,1230" fill="none" stroke="#008878" stroke-width="4"/>
+<text x="150" y="1202" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="40" font-weight="700" fill="#008878">.env.local</text>
+<text x="835" y="1202" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="40" font-weight="400" fill="#506378">개발용 프록시 CS_URL 설정</text>
+<rect x="120" y="1301" width="1608" height="106" rx="16" fill="#F0F7FF" stroke="none" stroke-width="2"/>
+<polyline points="88,1286 88,1422" fill="none" stroke="#D8E2ED" stroke-width="3"/>
+<polyline points="88,1351 116,1351" fill="none" stroke="#146CBA" stroke-width="4"/>
+<text x="150" y="1323" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="40" font-weight="700" fill="#146CBA">package.json</text>
+<text x="835" y="1323" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="40" font-weight="400" fill="#506378">UI 의존성과 실행 스크립트</text>
+</svg>

@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1130" viewBox="0 0 1800 1130">
+<rect width="100%" height="100%" fill="white"/>
+<text x="72" y="48" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="52" font-weight="700" fill="#172B45">소스 수정부터 서버 반영까지</text>
+<text x="72" y="127" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="36" font-weight="400" fill="#506378">연구소 Rocky Linux 9 빌드서버를 사용하는 기본 개발 흐름</text>
+<rect x="72" y="225" width="516" height="310" rx="18" fill="#F0F7FF" stroke="none" stroke-width="2"/>
+<rect x="96" y="250" width="48" height="48" rx="24" fill="#146CBA" stroke="none" stroke-width="2"/>
+<text x="110" y="260" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="29" font-weight="700" fill="white">1</text>
+<text x="96" y="320" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="40" font-weight="700" fill="#172B45">Mac · 소스 확인</text>
+<text x="96" y="423" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="35" font-weight="400" fill="#506378">Maven 빌드와 필요한 테스트</text>
+<text x="96" y="479" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="35" font-weight="400" fill="#506378">UI 화면 확인</text>
+<polyline points="594,380 632,380" fill="none" stroke="#146CBA" stroke-width="4"/>
+<polygon points="632,380 616.0,372.0 616.0,388.0" fill="#146CBA"/>
+<rect x="642" y="225" width="516" height="310" rx="18" fill="#F5F2FF" stroke="none" stroke-width="2"/>
+<rect x="666" y="250" width="48" height="48" rx="24" fill="#6554B7" stroke="none" stroke-width="2"/>
+<text x="680" y="260" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="29" font-weight="700" fill="white">2</text>
+<text x="666" y="320" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="40" font-weight="700" fill="#172B45">Mac · 커밋과 push</text>
+<text x="666" y="423" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="35" font-weight="400" fill="#506378">검토한 변경을</text>
+<text x="666" y="479" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="35" font-weight="400" fill="#506378">원격 저장소에 전달</text>
+<polyline points="1164,380 1202,380" fill="none" stroke="#6554B7" stroke-width="4"/>
+<polygon points="1202,380 1186.0,372.0 1186.0,388.0" fill="#6554B7"/>
+<rect x="1212" y="225" width="516" height="310" rx="18" fill="#EFF9F6" stroke="none" stroke-width="2"/>
+<rect x="1236" y="250" width="48" height="48" rx="24" fill="#008878" stroke="none" stroke-width="2"/>
+<text x="1250" y="260" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="29" font-weight="700" fill="white">3</text>
+<text x="1236" y="320" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="40" font-weight="700" fill="#172B45">빌드서버 · RPM</text>
+<text x="1236" y="423" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="35" font-weight="400" fill="#506378">/root/build/europa에서</text>
+<text x="1236" y="479" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="35" font-weight="400" fill="#506378">같은 커밋으로 빌드</text>
+<rect x="72" y="640" width="516" height="310" rx="18" fill="#F0F7FF" stroke="none" stroke-width="2"/>
+<rect x="96" y="665" width="48" height="48" rx="24" fill="#146CBA" stroke="none" stroke-width="2"/>
+<text x="110" y="675" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="29" font-weight="700" fill="white">4</text>
+<text x="96" y="735" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="40" font-weight="700" fill="#172B45">대상 서버 · 설치</text>
+<text x="96" y="838" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="35" font-weight="400" fill="#506378">CCVM·KVM 호스트 역할별로</text>
+<text x="96" y="894" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="35" font-weight="400" fill="#506378">RPM을 나누어 반영</text>
+<polyline points="594,795 632,795" fill="none" stroke="#146CBA" stroke-width="4"/>
+<polygon points="632,795 616.0,787.0 616.0,803.0" fill="#146CBA"/>
+<rect x="642" y="640" width="516" height="310" rx="18" fill="#F5F2FF" stroke="none" stroke-width="2"/>
+<rect x="666" y="665" width="48" height="48" rx="24" fill="#6554B7" stroke="none" stroke-width="2"/>
+<text x="680" y="675" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="29" font-weight="700" fill="white">5</text>
+<text x="666" y="735" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="40" font-weight="700" fill="#172B45">대상 서버 · 기능 확인</text>
+<text x="666" y="838" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="35" font-weight="400" fill="#506378">서비스 상태와</text>
+<text x="666" y="894" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="35" font-weight="400" fill="#506378">수정한 기능의 실제 결과</text>
+<polyline points="1164,795 1202,795" fill="none" stroke="#6554B7" stroke-width="4"/>
+<polygon points="1202,795 1186.0,787.0 1186.0,803.0" fill="#6554B7"/>
+<rect x="1212" y="640" width="516" height="310" rx="18" fill="#EFF9F6" stroke="none" stroke-width="2"/>
+<rect x="1236" y="665" width="48" height="48" rx="24" fill="#008878" stroke="none" stroke-width="2"/>
+<text x="1250" y="675" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="29" font-weight="700" fill="white">6</text>
+<text x="1236" y="735" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="40" font-weight="700" fill="#172B45">실습 기록</text>
+<text x="1236" y="838" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="35" font-weight="400" fill="#506378">커밋·RPM·적용 서버와</text>
+<text x="1236" y="894" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="35" font-weight="400" fill="#506378">확인 결과 기록</text>
+<polyline points="1470,542 1470,590 330,590 330,625" fill="none" stroke="#6554B7" stroke-width="4"/>
+<polyline points="330,615 330,633" fill="none" stroke="#6554B7" stroke-width="4"/>
+<polygon points="330,633 338.0,617.0 322.0,617.0" fill="#6554B7"/>
+<text x="72" y="1010" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="38" font-weight="700" fill="#172B45">UI 파일만 수동 반영할 때는 9-5절의 dist 업로드 절차를 따릅니다.</text>
+</svg>

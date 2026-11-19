@@ -1,0 +1,312 @@
+{
+  "31": {
+    "group": {
+      "id": "1d539f2d-3e42-4843-abc8-56e3726ac4b7",
+      "name": "AS-PROD-31-AS09-UI",
+      "lbruleid": "e2b46c91-768a-4abe-97f3-16dd35137006",
+      "associatednetworkname": "AS-PROD-31-AS01-projectNetwork",
+      "associatednetworkid": "797d8d5e-efff-4364-a53c-c2ac90596fe8",
+      "lbprovider": "VirtualRouter",
+      "publicipid": "67ede107-b283-4b65-b16a-d675f7709aa4",
+      "publicip": "10.10.31.104",
+      "publicport": "8089",
+      "privateport": "8080",
+      "vmprofileid": "757c76f1-1f2b-44ec-9909-b44dd8866f38",
+      "minmembers": 1,
+      "maxmembers": 1,
+      "availablevirtualmachinecount": 1,
+      "interval": 10,
+      "state": "ENABLED",
+      "scaleuppolicies": [
+        {
+          "id": "da3a87d6-4582-434e-adac-17c4eb485ab5",
+          "name": "AS09 한글 확장",
+          "action": "SCALEUP",
+          "duration": 60,
+          "quiettime": 10,
+          "conditions": [
+            {
+              "id": "d5da134a-950f-4d71-85d4-6626d6fa1338",
+              "threshold": 80,
+              "relationaloperator": "GT",
+              "counterid": "978ac6cb-b253-11f1-a895-0024814c313f",
+              "countername": "VM CPU - average percentage",
+              "counter": {
+                "id": "978ac6cb-b253-11f1-a895-0024814c313f",
+                "name": "VM CPU - average percentage",
+                "source": "CPU",
+                "value": "vm.cpu.average.percentage",
+                "provider": "VirtualRouter"
+              },
+              "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+              "domain": "ROOT",
+              "domainpath": "ROOT",
+              "projectid": "fb318714-bc01-4be5-9e33-0f49a7013127",
+              "project": "AS-PROD-31-AS01-project"
+            }
+          ],
+          "projectid": "fb318714-bc01-4be5-9e33-0f49a7013127",
+          "project": "AS-PROD-31-AS01-project",
+          "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+          "domain": "ROOT",
+          "domainpath": "ROOT"
+        }
+      ],
+      "scaledownpolicies": [
+        {
+          "id": "2d3b3c8a-aff7-4b02-92eb-b0a6a1a7b65d",
+          "name": "AS09 한글 축소",
+          "action": "SCALEDOWN",
+          "duration": 60,
+          "quiettime": 10,
+          "conditions": [
+            {
+              "id": "f31e5802-b9b2-4db0-b1fd-38739690ca27",
+              "threshold": 1,
+              "relationaloperator": "LT",
+              "counterid": "978ac6cb-b253-11f1-a895-0024814c313f",
+              "countername": "VM CPU - average percentage",
+              "counter": {
+                "id": "978ac6cb-b253-11f1-a895-0024814c313f",
+                "name": "VM CPU - average percentage",
+                "source": "CPU",
+                "value": "vm.cpu.average.percentage",
+                "provider": "VirtualRouter"
+              },
+              "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+              "domain": "ROOT",
+              "domainpath": "ROOT",
+              "projectid": "fb318714-bc01-4be5-9e33-0f49a7013127",
+              "project": "AS-PROD-31-AS01-project"
+            }
+          ],
+          "projectid": "fb318714-bc01-4be5-9e33-0f49a7013127",
+          "project": "AS-PROD-31-AS01-project",
+          "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+          "domain": "ROOT",
+          "domainpath": "ROOT"
+        }
+      ],
+      "projectid": "fb318714-bc01-4be5-9e33-0f49a7013127",
+      "project": "AS-PROD-31-AS01-project",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "domain": "ROOT",
+      "domainpath": "ROOT",
+      "fordisplay": true,
+      "created": "2026-10-12T01:57:58+0900",
+      "operationinprogress": false,
+      "memberstatecounts": {
+        "Running": 1
+      },
+      "statuscollectedat": 1791737916833,
+      "lastscaledat": 1791737912486,
+      "evaluationerror": false,
+      "hasannotations": false
+    },
+    "members": [
+      {
+        "id": "a50f0049-0425-42a6-8616-187441645b3e",
+        "name": "autoScaleVm-AS-PROD-31-AS09-UI-1-zeipma",
+        "displayname": "autoScaleVm-AS-PROD-31-AS09-UI-1-zeipma",
+        "instancename": "i-35-479-VM",
+        "state": "Running",
+        "templateid": "0963fa5a-0062-4d61-b565-2cb170d41831",
+        "serviceofferingid": "39c3aa33-5632-4dea-bd84-ba794d292c87",
+        "hostname": "ablecube31-3",
+        "volumes": [
+          {
+            "id": "ad23d97d-3e5c-408c-9481-c6bddfbd1831",
+            "name": "ROOT-479",
+            "type": "ROOT",
+            "size": 107374182400,
+            "state": "Ready",
+            "path": "ad23d97d-3e5c-408c-9481-c6bddfbd1831",
+            "storage": "Primary",
+            "provisioningtype": "sparse",
+            "diskofferingid": null
+          }
+        ]
+      }
+    ]
+  },
+  "32": {
+    "group": {
+      "id": "68f15279-834c-406b-972a-c9a168a7dfb2",
+      "name": "AS-PROD-32-AS09-UI",
+      "lbruleid": "1ea586ef-a9bd-4757-9ce6-8ae2cdd7dacf",
+      "associatednetworkname": "AS-PROD-32-AS01-userNetwork",
+      "associatednetworkid": "f889cc7d-02c5-490b-b256-a289b73ff824",
+      "lbprovider": "VirtualRouter",
+      "publicipid": "d82e3f23-29e2-4b44-a85c-6c8821f2a4f6",
+      "publicip": "10.10.32.169",
+      "publicport": "8089",
+      "privateport": "8080",
+      "vmprofileid": "ede68423-c20c-4ea8-addd-439d49e302e4",
+      "minmembers": 1,
+      "maxmembers": 1,
+      "availablevirtualmachinecount": 1,
+      "interval": 10,
+      "state": "DISABLED",
+      "scaleuppolicies": [
+        {
+          "id": "bafc9426-cbd3-4965-aa26-ac8e8cc37703",
+          "name": "AS09 한글 확장",
+          "action": "SCALEUP",
+          "duration": 60,
+          "quiettime": 10,
+          "conditions": [
+            {
+              "id": "1325bc96-30ef-4cad-9485-1a5da19f9bf7",
+              "threshold": 80,
+              "relationaloperator": "GT",
+              "counterid": "58eefbed-b23b-11f1-990e-0024811f8935",
+              "countername": "VM CPU - average percentage",
+              "counter": {
+                "id": "58eefbed-b23b-11f1-990e-0024811f8935",
+                "name": "VM CPU - average percentage",
+                "source": "CPU",
+                "value": "vm.cpu.average.percentage",
+                "provider": "VirtualRouter"
+              },
+              "domainid": "2246448b-b23b-11f1-990e-0024811f8935",
+              "domain": "ROOT",
+              "domainpath": "ROOT",
+              "account": "epic1346-as01-user32"
+            }
+          ],
+          "account": "epic1346-as01-user32",
+          "domainid": "2246448b-b23b-11f1-990e-0024811f8935",
+          "domain": "ROOT",
+          "domainpath": "ROOT"
+        }
+      ],
+      "scaledownpolicies": [
+        {
+          "id": "7f778875-a069-4dfc-85c2-055749fd79c6",
+          "name": "AS09 한글 축소",
+          "action": "SCALEDOWN",
+          "duration": 60,
+          "quiettime": 10,
+          "conditions": [
+            {
+              "id": "28eb7204-3e27-434f-a926-886c7c78383c",
+              "threshold": 1,
+              "relationaloperator": "LT",
+              "counterid": "58eefbed-b23b-11f1-990e-0024811f8935",
+              "countername": "VM CPU - average percentage",
+              "counter": {
+                "id": "58eefbed-b23b-11f1-990e-0024811f8935",
+                "name": "VM CPU - average percentage",
+                "source": "CPU",
+                "value": "vm.cpu.average.percentage",
+                "provider": "VirtualRouter"
+              },
+              "domainid": "2246448b-b23b-11f1-990e-0024811f8935",
+              "domain": "ROOT",
+              "domainpath": "ROOT",
+              "account": "epic1346-as01-user32"
+            }
+          ],
+          "account": "epic1346-as01-user32",
+          "domainid": "2246448b-b23b-11f1-990e-0024811f8935",
+          "domain": "ROOT",
+          "domainpath": "ROOT"
+        }
+      ],
+      "account": "epic1346-as01-user32",
+      "domainid": "2246448b-b23b-11f1-990e-0024811f8935",
+      "domain": "ROOT",
+      "domainpath": "ROOT",
+      "fordisplay": true,
+      "created": "2026-10-12T01:24:59+0900",
+      "operationinprogress": false,
+      "evaluation": {
+        "evaluatedat": 1791735965550,
+        "cooldownuntil": 1791735929962,
+        "policies": [
+          {
+            "id": "bafc9426-cbd3-4965-aa26-ac8e8cc37703",
+            "action": "SCALEUP",
+            "duration": 60,
+            "conditions": [
+              {
+                "id": "1325bc96-30ef-4cad-9485-1a5da19f9bf7",
+                "countername": "VM CPU - average percentage",
+                "source": "CPU",
+                "unit": "%",
+                "operator": "GT",
+                "threshold": 80,
+                "value": 8.766704175702882,
+                "samples": 3,
+                "resources": 1,
+                "collectedat": 1791735960000,
+                "reason": "INSUFFICIENT_DURATION",
+                "matched": false
+              }
+            ],
+            "status": "BLOCKED",
+            "reason": "COLLECTION_UNAVAILABLE"
+          },
+          {
+            "id": "7f778875-a069-4dfc-85c2-055749fd79c6",
+            "action": "SCALEDOWN",
+            "duration": 60,
+            "conditions": [
+              {
+                "id": "28eb7204-3e27-434f-a926-886c7c78383c",
+                "countername": "VM CPU - average percentage",
+                "source": "CPU",
+                "unit": "%",
+                "operator": "LT",
+                "threshold": 1,
+                "value": 8.766704175702882,
+                "samples": 3,
+                "resources": 1,
+                "collectedat": 1791735960000,
+                "reason": "INSUFFICIENT_DURATION",
+                "matched": false
+              }
+            ],
+            "status": "BLOCKED",
+            "reason": "COLLECTION_UNAVAILABLE"
+          }
+        ],
+        "collectedat": 1791735960000,
+        "status": "WAITING"
+      },
+      "memberstatecounts": {
+        "Running": 1
+      },
+      "statuscollectedat": 1791737916938,
+      "lastscaledat": 1791735919962,
+      "lastcheckedat": 1791735960000,
+      "evaluationerror": false,
+      "hasannotations": false
+    },
+    "members": [
+      {
+        "id": "03852587-1741-4617-94a1-bf0b941b8b30",
+        "name": "autoScaleVm-AS-PROD-32-AS09-UI-1-dexccq",
+        "displayname": "autoScaleVm-AS-PROD-32-AS09-UI-1-dexccq",
+        "instancename": "i-6-155-VM",
+        "state": "Running",
+        "templateid": "b31d2c92-67b9-40c4-a137-4ff9778c6b0d",
+        "serviceofferingid": "b02ac1bf-2da7-46e1-8961-d94d76dad9ab",
+        "hostname": "ablecube32-3",
+        "volumes": [
+          {
+            "id": "1692c1a7-9a2f-43d8-95c0-c605ad70c7b5",
+            "name": "ROOT-155",
+            "type": "ROOT",
+            "size": 107374182400,
+            "state": "Ready",
+            "path": "1692c1a7-9a2f-43d8-95c0-c605ad70c7b5",
+            "storage": "Primary",
+            "provisioningtype": "thin",
+            "diskofferingid": null
+          }
+        ]
+      }
+    ]
+  }
+}

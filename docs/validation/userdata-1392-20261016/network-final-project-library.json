@@ -1,0 +1,426 @@
+{
+  "truncated": false,
+  "events": [
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 24595,
+      "id": "36984.4185",
+      "url": "http://10.10.31.10:8080/client/api/?projectid=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6&command=listApis&response=json&sessionkey=<redacted>",
+      "httpMethod": "GET",
+      "parameters": {
+        "projectid": "7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6",
+        "command": "listApis",
+        "response": "json"
+      }
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 24598,
+      "id": "36984.4185",
+      "url": "http://10.10.31.10:8080/client/api/?projectid=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6&command=listApis&response=json&sessionkey=<redacted>",
+      "status": 200,
+      "mimeType": "application/json"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 24679,
+      "id": "36984.4186",
+      "url": "http://10.10.31.10:8080/client/api/?name=favicon.state.interval&command=listConfigurations&response=json&sessionkey=<redacted>",
+      "httpMethod": "GET",
+      "parameters": {
+        "name": "favicon.state.interval",
+        "command": "listConfigurations",
+        "response": "json"
+      }
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 24680,
+      "id": "36984.4187",
+      "url": "http://10.10.31.10:8080/client/api/?name=favicon.state.yellow.capacity&command=listConfigurations&response=json&sessionkey=<redacted>",
+      "httpMethod": "GET",
+      "parameters": {
+        "name": "favicon.state.yellow.capacity",
+        "command": "listConfigurations",
+        "response": "json"
+      }
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 24681,
+      "id": "36984.4188",
+      "url": "http://10.10.31.10:8080/client/api/?name=favicon.state.red.capacity&command=listConfigurations&response=json&sessionkey=<redacted>",
+      "httpMethod": "GET",
+      "parameters": {
+        "name": "favicon.state.red.capacity",
+        "command": "listConfigurations",
+        "response": "json"
+      }
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 24682,
+      "id": "36984.4189",
+      "url": "http://10.10.31.10:8080/client/api/?id=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6&listall=true&command=listProjects&response=json&sessionkey=<redacted>&projectid=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6",
+      "httpMethod": "GET",
+      "parameters": {
+        "id": "7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6",
+        "listall": "true",
+        "command": "listProjects",
+        "response": "json",
+        "projectid": "7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6"
+      }
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 24683,
+      "id": "36984.4190",
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&details=min&page=1&pagesize=1&command=listVirtualMachines&response=json&sessionkey=<redacted>&projectid=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6",
+      "httpMethod": "GET",
+      "parameters": {
+        "listall": "true",
+        "details": "min",
+        "page": "1",
+        "pagesize": "1",
+        "command": "listVirtualMachines",
+        "response": "json",
+        "projectid": "7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6"
+      }
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 24684,
+      "id": "36984.4191",
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&details=min&state=running&page=1&pagesize=1&command=listVirtualMachines&response=json&sessionkey=<redacted>&projectid=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6",
+      "httpMethod": "GET",
+      "parameters": {
+        "listall": "true",
+        "details": "min",
+        "state": "running",
+        "page": "1",
+        "pagesize": "1",
+        "command": "listVirtualMachines",
+        "response": "json",
+        "projectid": "7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6"
+      }
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 24685,
+      "id": "36984.4192",
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&details=min&state=stopped&page=1&pagesize=1&command=listVirtualMachines&response=json&sessionkey=<redacted>&projectid=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6",
+      "httpMethod": "GET",
+      "parameters": {
+        "listall": "true",
+        "details": "min",
+        "state": "stopped",
+        "page": "1",
+        "pagesize": "1",
+        "command": "listVirtualMachines",
+        "response": "json",
+        "projectid": "7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6"
+      }
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 24686,
+      "id": "36984.4193",
+      "url": "http://10.10.31.10:8080/client/api/?page=1&pagesize=8&listall=true&command=listEvents&response=json&sessionkey=<redacted>&projectid=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6",
+      "httpMethod": "GET",
+      "parameters": {
+        "page": "1",
+        "pagesize": "8",
+        "listall": "true",
+        "command": "listEvents",
+        "response": "json",
+        "projectid": "7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6"
+      }
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 24687,
+      "id": "36984.4194",
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&page=1&pagesize=1&command=listKubernetesClusters&response=json&sessionkey=<redacted>&projectid=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6",
+      "httpMethod": "GET",
+      "parameters": {
+        "listall": "true",
+        "page": "1",
+        "pagesize": "1",
+        "command": "listKubernetesClusters",
+        "response": "json",
+        "projectid": "7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6"
+      }
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 24688,
+      "id": "36984.4195",
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&page=1&pagesize=1&command=listVolumes&response=json&sessionkey=<redacted>&projectid=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6",
+      "httpMethod": "GET",
+      "parameters": {
+        "listall": "true",
+        "page": "1",
+        "pagesize": "1",
+        "command": "listVolumes",
+        "response": "json",
+        "projectid": "7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6"
+      }
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 24689,
+      "id": "36984.4196",
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&page=1&pagesize=1&command=listSnapshots&response=json&sessionkey=<redacted>&projectid=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6",
+      "httpMethod": "GET",
+      "parameters": {
+        "listall": "true",
+        "page": "1",
+        "pagesize": "1",
+        "command": "listSnapshots",
+        "response": "json",
+        "projectid": "7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6"
+      }
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 24690,
+      "id": "36984.4197",
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&page=1&pagesize=1&command=listNetworks&response=json&sessionkey=<redacted>&projectid=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6",
+      "httpMethod": "GET",
+      "parameters": {
+        "listall": "true",
+        "page": "1",
+        "pagesize": "1",
+        "command": "listNetworks",
+        "response": "json",
+        "projectid": "7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6"
+      }
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 24691,
+      "id": "36984.4198",
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&page=1&pagesize=1&command=listVPCs&response=json&sessionkey=<redacted>&projectid=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6",
+      "httpMethod": "GET",
+      "parameters": {
+        "listall": "true",
+        "page": "1",
+        "pagesize": "1",
+        "command": "listVPCs",
+        "response": "json",
+        "projectid": "7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6"
+      }
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 24692,
+      "id": "36984.4199",
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&page=1&pagesize=1&command=listPublicIpAddresses&response=json&sessionkey=<redacted>&projectid=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6",
+      "httpMethod": "GET",
+      "parameters": {
+        "listall": "true",
+        "page": "1",
+        "pagesize": "1",
+        "command": "listPublicIpAddresses",
+        "response": "json",
+        "projectid": "7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6"
+      }
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 24693,
+      "id": "36984.4200",
+      "url": "http://10.10.31.10:8080/client/api/?templatefilter=self&listall=true&page=1&pagesize=1&command=listTemplates&response=json&sessionkey=<redacted>&projectid=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6",
+      "httpMethod": "GET",
+      "parameters": {
+        "templatefilter": "self",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "1",
+        "command": "listTemplates",
+        "response": "json",
+        "projectid": "7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6"
+      }
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 24694,
+      "id": "36984.4201",
+      "url": "http://10.10.31.10:8080/client/assets/white-logo-ablestack.png",
+      "httpMethod": "GET",
+      "parameters": {}
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 24698,
+      "id": "36984.4201",
+      "url": "http://10.10.31.10:8080/client/assets/white-logo-ablestack.png",
+      "status": 200,
+      "mimeType": "image/png"
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 24701,
+      "id": "36984.4188",
+      "url": "http://10.10.31.10:8080/client/api/?name=favicon.state.red.capacity&command=listConfigurations&response=json&sessionkey=<redacted>",
+      "status": 200,
+      "mimeType": "application/json"
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 24705,
+      "id": "36984.4186",
+      "url": "http://10.10.31.10:8080/client/api/?name=favicon.state.interval&command=listConfigurations&response=json&sessionkey=<redacted>",
+      "status": 200,
+      "mimeType": "application/json"
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 24709,
+      "id": "36984.4187",
+      "url": "http://10.10.31.10:8080/client/api/?name=favicon.state.yellow.capacity&command=listConfigurations&response=json&sessionkey=<redacted>",
+      "status": 200,
+      "mimeType": "application/json"
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 24713,
+      "id": "36984.4194",
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&page=1&pagesize=1&command=listKubernetesClusters&response=json&sessionkey=<redacted>&projectid=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6",
+      "status": 200,
+      "mimeType": "application/json"
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 24717,
+      "id": "36984.4191",
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&details=min&state=running&page=1&pagesize=1&command=listVirtualMachines&response=json&sessionkey=<redacted>&projectid=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6",
+      "status": 200,
+      "mimeType": "application/json"
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 24721,
+      "id": "36984.4192",
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&details=min&state=stopped&page=1&pagesize=1&command=listVirtualMachines&response=json&sessionkey=<redacted>&projectid=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6",
+      "status": 200,
+      "mimeType": "application/json"
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 24725,
+      "id": "36984.4193",
+      "url": "http://10.10.31.10:8080/client/api/?page=1&pagesize=8&listall=true&command=listEvents&response=json&sessionkey=<redacted>&projectid=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6",
+      "status": 200,
+      "mimeType": "application/json"
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 24729,
+      "id": "36984.4189",
+      "url": "http://10.10.31.10:8080/client/api/?id=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6&listall=true&command=listProjects&response=json&sessionkey=<redacted>&projectid=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6",
+      "status": 200,
+      "mimeType": "application/json"
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 24733,
+      "id": "36984.4196",
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&page=1&pagesize=1&command=listSnapshots&response=json&sessionkey=<redacted>&projectid=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6",
+      "status": 200,
+      "mimeType": "application/json"
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 24737,
+      "id": "36984.4195",
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&page=1&pagesize=1&command=listVolumes&response=json&sessionkey=<redacted>&projectid=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6",
+      "status": 200,
+      "mimeType": "application/json"
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 24741,
+      "id": "36984.4199",
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&page=1&pagesize=1&command=listPublicIpAddresses&response=json&sessionkey=<redacted>&projectid=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6",
+      "status": 200,
+      "mimeType": "application/json"
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 24745,
+      "id": "36984.4198",
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&page=1&pagesize=1&command=listVPCs&response=json&sessionkey=<redacted>&projectid=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6",
+      "status": 200,
+      "mimeType": "application/json"
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 24749,
+      "id": "36984.4190",
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&details=min&page=1&pagesize=1&command=listVirtualMachines&response=json&sessionkey=<redacted>&projectid=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6",
+      "status": 200,
+      "mimeType": "application/json"
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 24753,
+      "id": "36984.4197",
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&page=1&pagesize=1&command=listNetworks&response=json&sessionkey=<redacted>&projectid=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6",
+      "status": 200,
+      "mimeType": "application/json"
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 24757,
+      "id": "36984.4200",
+      "url": "http://10.10.31.10:8080/client/api/?templatefilter=self&listall=true&page=1&pagesize=1&command=listTemplates&response=json&sessionkey=<redacted>&projectid=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6",
+      "status": 200,
+      "mimeType": "application/json"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 24761,
+      "id": "36984.4202",
+      "url": "http://10.10.31.10:8080/client/api/?managementserverid=716fb21e-86f3-4f8c-b34d-11c8d0220230&command=readyForShutdown&response=json&sessionkey=<redacted>&projectid=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6",
+      "httpMethod": "GET",
+      "parameters": {
+        "managementserverid": "716fb21e-86f3-4f8c-b34d-11c8d0220230",
+        "command": "readyForShutdown",
+        "response": "json",
+        "projectid": "7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6"
+      }
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 24764,
+      "id": "36984.4202",
+      "url": "http://10.10.31.10:8080/client/api/?managementserverid=716fb21e-86f3-4f8c-b34d-11c8d0220230&command=readyForShutdown&response=json&sessionkey=<redacted>&projectid=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6",
+      "status": 200,
+      "mimeType": "application/json"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 24778,
+      "id": "36984.4203",
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&page=1&pagesize=20&command=listUserData&response=json&sessionkey=<redacted>&projectid=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6",
+      "httpMethod": "GET",
+      "parameters": {
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20",
+        "command": "listUserData",
+        "response": "json",
+        "projectid": "7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6"
+      }
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 24782,
+      "id": "36984.4203",
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&page=1&pagesize=20&command=listUserData&response=json&sessionkey=<redacted>&projectid=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6",
+      "status": 200,
+      "mimeType": "application/json"
+    }
+  ]
+}

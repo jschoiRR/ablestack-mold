@@ -22,7 +22,7 @@
       :title="title"
       @contextmenu="handleContextMenu">
       <div class="card-body">
-        <div class="card-content">
+        <div class="card-content" :tabindex="scrollable ? 0 : undefined" :role="scrollable ? 'region' : undefined" :aria-label="scrollable ? title : undefined">
           <div>
             <div class="resource-details">
               <div class="resource-details__name">
@@ -55,7 +55,7 @@
                   </slot>
                 </div>
                 <slot name="name">
-                  <div v-if="['USER.LOGIN', 'USER.LOGOUT', 'ROUTER.HEALTH.CHECKS', 'FIREWALL.CLOSE', 'ALERT.SERVICE.DOMAINROUTER'].includes(resource.name)">{{ $t(resource.name.toLowerCase()) }}</div>
+                  <div v-if="$route.meta.name !== 'ssh' && ['USER.LOGIN', 'USER.LOGOUT', 'ROUTER.HEALTH.CHECKS', 'FIREWALL.CLOSE', 'ALERT.SERVICE.DOMAINROUTER'].includes(resource.name)">{{ $t(resource.name.toLowerCase()) }}</div>
                   <div v-else>
                     <h4 class="name">
                       {{ name }}
@@ -71,7 +71,8 @@
                   <a-tag :color="$config.theme['@link-color']" v-if="$route.path.startsWith('/extension') && !resource.isuserdefined">
                     {{ $t('label.inbuilt') }}
                   </a-tag>
-                  <a-tag v-if="resource.type">
+                  <AffinityGroupPolicy v-if="resource.type && $route.meta.name === 'affinitygroup'" :type="resource.type" compact />
+                  <a-tag v-else-if="resource.type">
                     <span v-if="['USER.LOGIN', 'USER.LOGOUT', 'ROUTER.HEALTH.CHECKS', 'FIREWALL.CLOSE', 'ALERT.SERVICE.DOMAINROUTER'].includes(resource.type)">{{ $t(resource.type.toLowerCase()) }}</span>
                     <span v-else>
                       {{ resource.type }}
@@ -127,7 +128,14 @@
             <div class="resource-detail-item" v-if="(resource.state || resource.status) && !['zone', 'keypair'].includes($route.meta.name)">
           <div class="resource-detail-item__label">{{ $t('label.status') }}</div>
           <div class="resource-detail-item__details">
-            <status v-if="isFastCloneSourceFlattenActive(resource)" class="status" :text="resource.state || resource.status" displayText>
+            <backup-progress
+              v-if="$route.meta.name === 'backup'"
+              :record="resource"
+              :statusText="resource.status"
+              @capabilities-change="resource.capabilities !== $event && $emit('backup-controls-change', { capabilities: $event })"
+              @cancellation-change="resource.backupcancellationpending !== $event && $emit('backup-controls-change', { backupcancellationpending: $event })"
+              @restore-finished="$emit('backup-controls-change', { restoreoperationpending: false, restorejobstate: $event })" />
+            <status v-else-if="isFastCloneSourceFlattenActive(resource)" class="status" :text="resource.state || resource.status" displayText>
               <template #tooltip>
                 <div class="clone-fast-flatten-source-tooltip">
                   <div class="clone-fast-flatten-source-tooltip-title">{{ getCloneFastSourceTooltipTitle(resource) }}</div>
@@ -174,6 +182,9 @@
           <div class="resource-detail-item__details">
             <status class="status" :text="resource.resourcestate" displayText/>
           </div>
+        </div>
+        <div class="resource-detail-item" v-if="$route.meta.name === 'buckets'">
+          <BucketUsageStatus :resource="resource" compact />
         </div>
         <div class="resource-detail-item" v-if="$route.meta.name === 'buckets' && bucketQuotaKB > 0">
           <div class="resource-detail-item__label">사용량</div>
@@ -277,14 +288,14 @@
                 </div>
               </div>
             </div>
-        <div class="resource-detail-item" v-if="resource.ostypename && resource.ostypeid">
+        <div class="resource-detail-item" v-if="executionOsName && resource.ostypeid">
           <div class="resource-detail-item__label">{{ $t('label.ostypename') }}</div>
           <div class="resource-detail-item__details">
             <span v-if="resource.icon && resource.icon.base64image || images.template || images.iso">
               <resource-icon :image="getImage(images.template || images.iso)" size="1x" style="margin-right: 5px"/>
             </span>
-            <os-logo v-else :osId="resource.ostypeid" :osName="resource.ostypename" size="lg" style="margin-left: -1px" />
-            <span style="margin-left: 8px">{{ resource.ostypename }}</span>
+            <os-logo v-else :osId="resource.ostypeid" :osName="executionOsName" size="lg" style="margin-left: -1px" />
+            <span style="margin-left: 8px">{{ executionOsName }}</span>
           </div>
         </div>
         <div class="resource-detail-item" v-if="resource.ipaddress">
@@ -322,8 +333,8 @@
             </a-tooltip>
           </div>
         </div>
-        <div class="resource-detail-item" v-if="('cpunumber' in resource && 'cpuspeed' in resource) || resource.cputotal">
-          <div class="resource-detail-item__label">{{ $t('label.cpu') }}</div>
+        <div class="resource-detail-item" v-if="('cpunumber' in resource && 'cpuspeed' in resource) || resource.cputotal || ($route.meta.name === 'kubernetes' && 'cpunumber' in resource)">
+          <div class="resource-detail-item__label">{{ $t($route.meta.name === 'kubernetes' ? 'label.cpunumber' : 'label.cpu') }}</div>
           <div class="resource-detail-item__details">
             <font-awesome-icon
               :icon="['fa-solid', 'fa-microchip']"
@@ -337,6 +348,7 @@
                 <QuestionCircleOutlined />
               </a-tooltip>
             </span>
+            <span v-else-if="$route.meta.name === 'kubernetes'">{{ resource.cpunumber }}</span>
             <span v-else>{{ resource.cputotal }}</span>
             <a-tag v-if="resource.arch" style="margin-left: 10px">
               {{ resource.arch }}
@@ -660,7 +672,7 @@
                   <resource-icon :image="getImage(images.project)" size="1x" style="margin-right: 5px"/>
                 </span>
                 <project-outlined v-else />
-                <router-link v-if="!isStatic && resource.projectid" :to="{ path: '/project/' + resource.projectid }">{{ resource.project || resource.projectname || resource.projectid }}</router-link>
+                <router-link v-if="!isStatic && resource.projectid && ($route.meta.name !== 'snapshot' || 'listProjects' in $store.getters.apis)" :to="{ path: '/project/' + resource.projectid }">{{ resource.project || resource.projectname || resource.projectid }}</router-link>
                 <span v-else>{{ resource.projectname || resource.projectid }}</span>
               </div>
             </div>
@@ -693,7 +705,7 @@
                     :key="keypair"
                     style="margin-top: 5px;">
                     <key-outlined />
-                    <router-link :to="{ path: '/ssh/' + keypair }" style="margin-right: 5px">{{ keypair }}</router-link>
+                    <router-link :to="sshKeyPairNameLink(keypair, resource)" style="margin-right: 5px">{{ keypair }}</router-link>
                   </div>
                 </div>
               </div>
@@ -704,19 +716,20 @@
                 <resource-label :resourceType="resource.resourcetype" :resourceId="resource.resourceid" :resourceName="resource.resourcename" />
               </div>
             </div>
-            <div class="resource-detail-item" v-if="resource.virtualmachineid">
+            <div class="resource-detail-item" v-if="resource.virtualmachineid && $route.meta.name !== 'snapshot'">
               <div class="resource-detail-item__label">{{ $t('label.vmname') }}</div>
               <div class="resource-detail-item__details">
                 <desktop-outlined />
-                <router-link :to="{ path: createPathBasedOnVmType(resource.vmtype || resource.virtualmachinetype, resource.virtualmachineid) }">{{ resource.vmname || resource.vm || resource.virtualmachinename || resource.virtualmachineid }} </router-link>
+                <router-link v-if="volumeVmPath(resource, $router)" :to="{ path: volumeVmPath(resource, $router) }">{{ resource.vmname || resource.vm || resource.virtualmachinename || resource.virtualmachineid }} </router-link>
+                <span v-else>{{ resource.vmname || resource.virtualmachinename || resource.virtualmachineid }}</span>
                 <status class="status status--end" :text="resource.vmstate" v-if="resource.vmstate"/>
               </div>
             </div>
-            <div class="resource-detail-item" v-if="resource.volumeid">
+            <div class="resource-detail-item" v-if="resource.volumeid && $route.meta.name !== 'snapshot'">
               <div class="resource-detail-item__label">{{ $t('label.volume') }}</div>
               <div class="resource-detail-item__details">
                 <hdd-outlined />
-                <router-link v-if="validLinks.volume" :to="{ path: '/volume/' + resource.volumeid }">{{ resource.volumename || resource.volume || resource.volumeid }} </router-link>
+                <router-link v-if="validLinks.volume && ($route.meta?.name !== 'snapshotpolicy' || policyVolumePath(resource, $store.getters.apis))" :to="$route.meta?.name === 'snapshotpolicy' ? policyVolumePath(resource, $store.getters.apis) : { path: '/volume/' + resource.volumeid }">{{ resource.volumename || resource.volume || resource.volumeid }} </router-link>
                 <span v-else>{{ resource.volumename || resource.volume || resource.volumeid }}</span>
               </div>
             </div>
@@ -784,7 +797,7 @@
               </span>
             </div>
             <div class="resource-detail-item" v-if="resource.templateid">
-              <div class="resource-detail-item__label">{{ resource.templateformat === 'ISO'? $t('label.iso') : $t('label.templatename') }}</div>
+              <div class="resource-detail-item__label">{{ resource.templateformat === 'ISO'? $t('label.vmiso.source') : $t($route.meta.name === 'kubernetes' ? 'label.cks.cluster.default.template' : 'label.templatename') }}</div>
               <div class="resource-detail-item__details">
                 <resource-icon v-if="images.template || images.guestoscategory" :image="images.template || images.guestoscategory" size="1x" style="margin-right: 5px"/>
                 <SaveOutlined v-else />
@@ -792,13 +805,19 @@
                 <span v-else>{{ resource.templatedisplaytext || resource.templatename || resource.templateid }}</span>
               </div>
             </div>
-            <div class="resource-detail-item" v-if="resource.isoid">
-              <div class="resource-detail-item__label">{{ $t('label.isoname') }}</div>
+            <div class="resource-detail-item" v-for="template in kubernetesNodeTemplates" :key="template.role">
+              <div class="resource-detail-item__label">{{ $t(template.label) }}</div>
               <div class="resource-detail-item__details">
-                <resource-icon v-if="images.iso || (resource.isoid === resource.templateid && images.guestoscategory)" :image="images.iso || images.guestoscategory" size="1x" style="margin-right: 5px"/>
-                <UsbOutlined v-else />
-                <router-link v-if="validLinks.iso" :to="{ path: '/iso/' + resource.isoid }">{{ resource.isodisplaytext || resource.isoname || resource.isoid }} </router-link>
-                <span v-else>{{ resource.isodisplaytext || resource.isoname || resource.isoid }}</span>
+                <SaveOutlined />
+                <router-link v-if="validLinks.template" :to="{ path: '/template/' + template.id }">{{ template.name || template.id }}</router-link>
+                <span v-else>{{ template.name || template.id }}</span>
+              </div>
+            </div>
+            <div class="resource-detail-item" v-if="attachedIsoRows.length">
+              <div class="resource-detail-item__label">{{ $t('label.isoname') }}</div>
+              <div class="resource-detail-item__details" v-for="iso in attachedIsoRows" :key="iso.id">
+                <router-link v-if="'listIsos' in $store.getters.apis" :to="{ path: '/iso/' + iso.id }">{{ iso.displaytext || iso.name || iso.id }}</router-link>
+                <span v-else>{{ iso.displaytext || iso.name || iso.id }}</span>
               </div>
             </div>
             <div class="resource-detail-item" v-if="resource.serviceofferingname && resource.serviceofferingid">
@@ -921,7 +940,7 @@
                 <span v-else>{{ resource.podname || resource.pod || resource.podid }}</span>
               </div>
             </div>
-            <div class="resource-detail-item" v-if="resource.zoneid && !['template', 'iso'].includes($route.path.split('/')[1])">
+            <div class="resource-detail-item" v-if="resource.zoneid && !['template', 'iso', 'snapshot'].includes($route.path.split('/')[1])">
               <div class="resource-detail-item__label">{{ $t('label.zone') }}</div>
               <div class="resource-detail-item__details">
                 <span v-if="images.zone">
@@ -971,7 +990,7 @@
                   <resource-icon :image="images.account" size="1x" style="margin-right: 5px"/>
                 </span>
                 <user-outlined v-else />
-                <router-link v-if="!isStatic && $store.getters.userInfo.roletype !== 'User'" :to="{ path: '/account', query: { name: resource.account, domainid: resource.domainid } }">{{ resource.account }}</router-link>
+                <router-link v-if="!isStatic && $store.getters.userInfo.roletype !== 'User' && ($route.meta.name !== 'snapshot' || 'listAccounts' in $store.getters.apis)" :to="{ path: '/account', query: { name: resource.account, domainid: resource.domainid } }">{{ resource.account }}</router-link>
                 <span v-else>{{ resource.account }}</span>
               </div>
             </div>
@@ -996,7 +1015,7 @@
               <div class="resource-detail-item__details">
                 <resource-icon v-if="images.domain" :image="images.domain" size="1x" style="margin-right: 5px"/>
                 <block-outlined v-else />
-                <router-link v-if="!isStatic && $store.getters.userInfo.roletype !== 'User'" :to="{ path: '/domain/' + resource.domainid, query: { tab: 'details'}  }">{{ resource.domain || resource.domainid }}</router-link>
+                <router-link v-if="!isStatic && $store.getters.userInfo.roletype !== 'User' && ($route.meta.name !== 'snapshot' || 'listDomains' in $store.getters.apis)" :to="{ path: '/domain/' + resource.domainid, query: { tab: 'details'}  }">{{ resource.domain || resource.domainid }}</router-link>
                 <span v-else>{{ resource.domain || resource.domainid }}</span>
               </div>
             </div>
@@ -1102,45 +1121,11 @@
               :osCategoryId="osCategoryId" />
           </div>
 
-          <div class="account-center-tags" v-if="!isStatic && resourceType && tagsSupportingResourceTypes.includes(this.resourceType) && 'listTags' in $store.getters.apis">
-            <a-divider/>
-            <a-spin :spinning="loadingTags">
-              <div class="title">{{ $t('label.tags') }}</div>
-              <div>
-                <template v-for="(tag, index) in tags" :key="index">
-                  <a-tag :closable="isAdminOrOwner() && 'deleteTags' in $store.getters.apis" @close="() => handleDeleteTag(tag)">
-                    {{ tag.key }} = {{ tag.value }}
-                  </a-tag>
-                </template>
-
-                <div v-if="inputVisible">
-                  <a-input-group
-                    type="text"
-                    size="small"
-                    @blur="handleInputConfirm"
-                    @keyup.enter="handleInputConfirm"
-                    compact>
-                    <a-input ref="input" :value="inputKey" @change="handleKeyChange" style="width: 30%; text-align: center" :placeholder="$t('label.key')" />
-                    <a-input
-                      class="tag-disabled-input"
-                      style="width: 30px; border-left: 0; pointer-events: none; text-align: center"
-                      placeholder="="
-                      disabled />
-                    <a-input :value="inputValue" @change="handleValueChange" style="width: 30%; text-align: center; border-left: 0" :placeholder="$t('label.value')" />
-                    <tooltip-button :tooltip="$t('label.ok')" icon="CheckOutlined" size="small" @onClick="handleInputConfirm" />
-                    <tooltip-button :tooltip="$t('label.cancel')" icon="CloseOutlined" size="small" @onClick="inputVisible=false" />
-                  </a-input-group>
-                </div>
-                <a-tag
-                  @click="showInput"
-                  class="btn-add-tag"
-                  style="borderStyle: dashed;"
-                  v-else-if="isAdminOrOwner() && 'createTags' in $store.getters.apis">
-                  <plus-outlined  /> {{ $t('label.new.tag') }}
-                </a-tag>
-              </div>
-            </a-spin>
-          </div>
+          <resource-tags
+            v-if="!isStatic && resourceType && tagsSupportingResourceTypes.includes(resourceType) && 'listTags' in $store.getters.apis"
+            :resource="resource"
+            :resource-type="resourceType"
+            :can-edit="isAdminOrOwner()" />
         </div>
         <div class="card-footer" v-if="footerVisible">
           <slot name="footer-content"></slot>
@@ -1158,13 +1143,21 @@
 </template>
 
 <script>
-import { getAPI, postAPI } from '@/api'
-import axios from 'axios'
+import { volumeVmPath } from '@/utils/storageUi'
+import { policyVolumePath } from '@/utils/snapshotPolicyDetail'
+import { creationVmOsName } from '@/utils/creationVmPresentation'
+import BucketUsageStatus from '@/components/view/BucketUsageStatus'
+import AffinityGroupPolicy from '@/views/compute/AffinityGroupPolicy'
+import { sshKeyPairNameLink, sshKeyPairVmQuery } from '@/utils/sshKeyPairIdentity'
+import { attachedIsos } from '@/utils/vmIsoActions'
+import { getAPI } from '@/api'
+import ResourceTags from '@/components/view/ResourceTags'
 import { createPathBasedOnVmType } from '@/utils/plugins'
 import { validateLinksAsync } from '@/utils/links'
 import Console from '@/components/widgets/Console'
 import OsLogo from '@/components/widgets/OsLogo'
 import Status from '@/components/widgets/Status'
+import BackupProgress from '@/components/view/BackupProgress'
 import CloneFlattenControl from '@/components/widgets/CloneFlattenControl'
 import { getFastClonePhaseLabel, getFastClonePhaseDescription, isFastCloneFlattenStatusVisible } from '@/utils/fastClone'
 import CopyLabel from '@/components/widgets/CopyLabel'
@@ -1181,9 +1174,12 @@ import ResourceContextMenu from '@/components/view/ResourceContextMenu'
 export default {
   name: 'InfoCard',
   components: {
+    BucketUsageStatus,
+    AffinityGroupPolicy,
     Console,
     OsLogo,
     Status,
+    BackupProgress,
     CloneFlattenControl,
     CopyLabel,
     TooltipButton,
@@ -1193,7 +1189,8 @@ export default {
     ImageDeployInstanceButton,
     FileTextOutlined,
     ActionButton,
-    ResourceContextMenu
+    ResourceContextMenu,
+    ResourceTags
   },
   props: {
     resource: {
@@ -1220,6 +1217,10 @@ export default {
       type: Boolean,
       default: false
     },
+    scrollable: {
+      type: Boolean,
+      default: false
+    },
     actions: {
       type: Array,
       default: () => []
@@ -1231,13 +1232,9 @@ export default {
       ipaddressSource: '',
       drclusterip: '',
       resourceType: '',
-      inputVisible: false,
-      inputKey: '',
-      inputValue: '',
-      tags: [],
       showKeys: false,
-      loadingTags: false,
       showUpload: false,
+      iconActive: true,
       images: {
         zone: '',
         template: '',
@@ -1289,7 +1286,19 @@ export default {
     })
     this.updateResourceAdditionalData()
   },
+  beforeUnmount () { this.iconActive = false },
   computed: {
+    executionOsName () { return creationVmOsName(this.resource, this.$t) },
+    kubernetesNodeTemplates () {
+      if (this.$route.meta.name !== 'kubernetes') return []
+      return ['control', 'worker', 'etcd'].map(role => ({
+        role,
+        id: this.resource[role + 'templateid'],
+        name: this.resource[role + 'templatename'],
+        label: 'label.cks.cluster.' + role + '.nodes.templateid'
+      })).filter(template => template.id && (template.role !== 'etcd' || Number(this.resource.etcdnodes) > 0))
+    },
+    attachedIsoRows () { return attachedIsos(this.resource) },
     tagsSupportingResourceTypes () {
       return ['UserVm', 'Template', 'ISO', 'Volume', 'RbdImages', 'Snapshot', 'Backup', 'Network',
         'LoadBalancer', 'PortForwardingRule', 'FirewallRule', 'SecurityGroup', 'SecurityGroupRule',
@@ -1376,17 +1385,13 @@ export default {
     }
   },
   methods: {
+    policyVolumePath,
+    volumeVmPath,
+    sshKeyPairNameLink,
     createPathBasedOnVmType: createPathBasedOnVmType,
     updateResourceAdditionalData () {
       if (!this.resource) return
       this.resourceType = this.$route.meta.resourceType
-      if (this.tagsSupportingResourceTypes.includes(this.resourceType)) {
-        if ('tags' in this.resource) {
-          this.tags = this.resource.tags
-        } else if (this.resourceType) {
-          this.getTags()
-        }
-      }
       this.fetchOsCategoryAndIcon()
       this.getIcons()
     },
@@ -1454,7 +1459,8 @@ export default {
     fetchOsCategoryAndIcon () {
       const osId = this.resource.guestosid || this.resource.ostypeid
       if (osId && 'listOsTypes' in this.$store.getters.apis) {
-        getAPI('listOsTypes', { id: osId }).then(json => {
+        this.readIcon('listOsTypes', { id: osId }).then(json => {
+          if (!json) return
           this.osCategoryId = json?.listostypesresponse?.ostype?.[0]?.oscategoryid || null
           if (this.osCategoryId) {
             this.fetchResourceIcon(this.osCategoryId, 'guestoscategory')
@@ -1496,35 +1502,42 @@ export default {
       }
     },
     fetchAccount () {
-      return new Promise((resolve, reject) => {
-        getAPI('listAccounts', {
-          name: this.resource.account,
-          domainid: this.resource.domainid,
-          showicon: true
-        }).then(async json => {
-          const response = json?.listaccountsresponse?.account || []
-          if (response?.[0]?.icon) {
-            this.images.account = response[0].icon.base64image
-          }
-        })
+      return this.readIcon('listAccounts', {
+        name: this.resource.account,
+        domainid: this.resource.domainid,
+        showicon: true
+      }).then(json => {
+        const response = json?.listaccountsresponse?.account || []
+        if (response?.[0]?.icon) {
+          this.images.account = response[0].icon.base64image
+        }
       })
+    },
+    iconScope () {
+      return JSON.stringify([this.$route.fullPath, this.resource.id, this.$store.getters.userInfo?.id,
+        this.$store.getters.project?.id, this.$store.state?.user?.token])
+    },
+    async readIcon (command, params) {
+      if (!(command in this.$store.getters.apis)) return
+      const scope = this.iconScope()
+      try {
+        const result = await getAPI(command, params, { preserveOnFailure: true })
+        if (this.iconActive && scope === this.iconScope()) return result
+      } catch { /* Optional decoration may be canceled by navigation. */ }
     },
     fetchResourceIcon (resourceid, type) {
       if (resourceid) {
-        return new Promise((resolve, reject) => {
-          getAPI('listResourceIcon', {
-            resourceids: resourceid,
-            resourcetype: type
-          }).then(json => {
-            const response = json.listresourceiconresponse.icon || []
-            this.images[type] = response?.[0]?.base64image || null
-            resolve(this.images)
-          }).catch(error => {
-            reject(error)
-          })
+        return this.readIcon('listResourceIcon', {
+          resourceids: resourceid,
+          resourcetype: type
+        }).then(json => {
+          if (!json) return
+          const response = json.listresourceiconresponse.icon || []
+          this.images[type] = response?.[0]?.base64image || null
+          return this.images
         })
       } else {
-        this.images.type = null
+        this.images[type] = null
       }
     },
     setData () {
@@ -1533,7 +1546,7 @@ export default {
         this.ipaddress = summary.representativeaddress
         this.ipaddressSource = 'QGA'
       } else if (this.resource.nic && this.resource.nic.length > 0) {
-        const activeNics = this.resource.nic.filter(e => e.linkstate !== false)
+        const activeNics = this.resource.nic.filter(e => e.enabled !== false)
         const defaultNic = activeNics.find(e => e.isdefault) || activeNics[0]
         this.ipaddress = defaultNic
           ? (defaultNic.ipaddress || defaultNic.ip6address || '')
@@ -1567,30 +1580,6 @@ export default {
         this.$emit('change-resource', this.newResource)
       })
     },
-    getTags () {
-      if (!('listTags' in this.$store.getters.apis) || !this.resource || !this.resource.id) {
-        return
-      }
-      this.loadingTags = true
-      this.tags = []
-      const params = {
-        listall: true,
-        resourceid: this.resource.id,
-        resourcetype: this.resourceType
-      }
-      if (this.$route.meta.name === 'project') {
-        params.projectid = this.resource.id
-      }
-      getAPI('listTags', params).then(json => {
-        if (json.listtagsresponse && json.listtagsresponse.tag) {
-          this.tags = json.listtagsresponse.tag
-        }
-      }).catch(error => {
-        if (!axios.isCancel(error)) this.$notifyError(error)
-      }).finally(() => {
-        this.loadingTags = false
-      })
-    },
     isAdminOrOwner () {
       return ['Admin'].includes(this.$store.getters.userInfo.roletype) ||
         (this.resource.domainid === this.$store.getters.userInfo.domainid && this.resource.account === this.$store.getters.userInfo.account) ||
@@ -1598,46 +1587,6 @@ export default {
     },
     isAdmin () {
       return ['Admin'].includes(this.$store.getters.userInfo.roletype)
-    },
-    showInput () {
-      this.inputVisible = true
-      this.$nextTick(function () {
-        this.$refs.input.focus()
-      })
-    },
-    handleKeyChange (e) {
-      this.inputKey = e.target.value
-    },
-    handleValueChange (e) {
-      this.inputValue = e.target.value
-    },
-    handleInputConfirm () {
-      const args = {}
-      this.loadingTags = true
-      args.resourceids = this.resource.id
-      args.resourcetype = this.resourceType
-      args['tags[0].key'] = this.inputKey
-      args['tags[0].value'] = this.inputValue
-      postAPI('createTags', args).then(json => {
-      }).finally(e => {
-        this.getTags()
-      })
-
-      this.inputVisible = false
-      this.inputKey = ''
-      this.inputValue = ''
-    },
-    handleDeleteTag (tag) {
-      const args = {}
-      this.loadingTags = true
-      args.resourceids = this.resource.id
-      args.resourcetype = this.resourceType
-      args['tags[0].key'] = tag.key
-      args['tags[0].value'] = tag.value
-      postAPI('deleteTags', args).then(json => {
-      }).finally(e => {
-        this.getTags()
-      })
     },
     getRouterQuery (item) {
       const query = {}
@@ -1656,13 +1605,12 @@ export default {
           query[item.param] = this.resource.name
           query.domainid = this.resource.domainid
         } else if (item.param === 'keypair') {
-          query[item.param] = this.resource.name
-          query.account = this.resource.account
-          query.domainid = this.resource.domainid
+          return sshKeyPairVmQuery(this.resource)
         } else {
           query[item.param] = this.resource.id
         }
       }
+      if (item.param === 'affinitygroupid' && this.resource.projectid) query.projectid = this.resource.projectid
       return query
     },
     handleContextMenu (event) {
@@ -1743,40 +1691,7 @@ export default {
 
   }
 }
-.resource-detail-item {
-  margin-bottom: 20px;
-  word-break: break-all;
 
-  &__details {
-    display: flex;
-    align-items: center;
-
-    &--start {
-      align-items: flex-start;
-
-      i {
-        margin-top: 4px;
-      }
-
-    }
-
-    &--column {
-      align-items: stretch;
-      flex-direction: column;
-    }
-
-  }
-
-  .anticon {
-    margin-right: 10px;
-  }
-
-  &__label {
-    margin-bottom: 5px;
-    font-weight: bold;
-  }
-
-}
 .user-keys {
   word-wrap: break-word;
 }
@@ -1878,3 +1793,5 @@ export default {
 }
 
 </style>
+
+<style scoped src="@/style/components/view/resource-detail-fields.css"></style>

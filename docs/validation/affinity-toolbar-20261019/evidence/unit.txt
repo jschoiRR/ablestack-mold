@@ -1,0 +1,13 @@
+
+> cloudstack-ui@4.22.0 test:unit
+> vue-cli-service test:unit --runInBand --coverage=false --silent --runTestsByPath tests/unit/views/compute/AffinityGroupMembers.spec.js
+
+Browserslist: caniuse-lite is outdated. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+PASS tests/unit/views/compute/AffinityGroupMembers.spec.js
+
+Test Suites: 1 passed, 1 total
+Tests:       16 passed, 16 total
+Snapshots:   0 total
+Time:        7.238s, estimated 13s

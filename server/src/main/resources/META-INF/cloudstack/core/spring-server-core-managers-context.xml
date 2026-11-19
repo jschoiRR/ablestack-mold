@@ -84,6 +84,14 @@
 
     <bean id="storageManagerImpl" class="com.cloud.storage.StorageManagerImpl" />
 
+    <bean id="vmCreationSourceValidator" class="com.cloud.vm.VmCreationSourceValidator" />
+
+    <bean id="vmInstanceGroupAssignment" class="com.cloud.vm.VmInstanceGroupAssignment" />
+
+    <bean id="vmStorageSelectionManager" class="com.cloud.storage.VmStorageSelectionManager">
+        <property name="storagePoolAllocators" value="#{storagePoolAllocatorsRegistry.registered}" />
+    </bean>
+
     <bean id="resourceManagerImpl" class="com.cloud.resource.ResourceManagerImpl">
         <property name="discoverers"
             value="#{resourceDiscoverersRegistry.registered}" />
@@ -136,6 +144,9 @@
 
 
     <bean id="alertManagerImpl" class="com.cloud.alert.AlertManagerImpl" />
+
+    <bean id="vmCloneBatchManager" class="com.cloud.vm.VmCloneBatchManager" />
+    <bean id="autoScaleCreationRequestManager" class="com.cloud.network.as.AutoScaleCreationRequestManager" />
 
     <bean id="autoScaleManagerImpl" class="com.cloud.network.as.AutoScaleManagerImpl" />
 
@@ -284,6 +295,10 @@
 
     <bean id="statsCollector" class="com.cloud.server.StatsCollector" />
 
+    <bean id="vmProcessProfileServiceImpl" class="com.cloud.vm.process.VmProcessProfileServiceImpl" />
+    <bean id="vmProcessActionServiceImpl" class="com.cloud.vm.process.VmProcessActionServiceImpl" />
+    <bean id="vmProcessSnapshotServiceImpl" class="com.cloud.vm.process.VmProcessSnapshotServiceImpl" />
+    <bean id="vmProcessCapabilityServiceImpl" class="com.cloud.vm.process.VmProcessCapabilityServiceImpl" />
     <bean id="vmGuestNetworkApiServiceImpl" class="com.cloud.vm.guestnetwork.VmGuestNetworkApiServiceImpl" />
 
     <bean id="vmGuestNetworkStateServiceImpl" class="com.cloud.vm.guestnetwork.VmGuestNetworkStateServiceImpl" />
@@ -299,6 +314,8 @@
     <bean id="downloadMonitorImpl" class="com.cloud.storage.download.DownloadMonitorImpl" />
 
     <bean id="lBHealthCheckManagerImpl" class="com.cloud.network.lb.LBHealthCheckManagerImpl" />
+
+    <bean id="volumeAllocationManager" class="com.cloud.storage.VolumeAllocationManagerImpl" />
 
     <bean id="volumeApiServiceImpl" class="com.cloud.storage.VolumeApiServiceImpl">
         <property name="storagePoolAllocators"
@@ -359,11 +376,22 @@
 
     <bean id="DiagnosticsService" class="org.apache.cloudstack.diagnostics.DiagnosticsServiceImpl" />
 
+    <bean id="backupVolumeGuard" class="org.apache.cloudstack.backup.BackupVolumeGuard" />
+    <bean id="ablestackBackupVmRemovalGuard" class="org.apache.cloudstack.backup.AblestackBackupVmRemovalGuard" />
+    <bean id="ablestackRestoreInstanceCleanup" class="org.apache.cloudstack.backup.AblestackRestoreInstanceCleanup" />
+
     <bean id="backupManager" class="org.apache.cloudstack.backup.BackupManagerImpl">
         <property name="backupProviders" value="#{backupProvidersRegistry.registered}" />
         <property name="asyncJobDispatcher" ref="ApiAsyncJobDispatcher" />
     </bean>
 
+    <bean id="backupVolumeAllocationService" class="org.apache.cloudstack.backup.BackupVolumeAllocationServiceImpl" />
+    <bean id="backupSnapshotGuard" class="org.apache.cloudstack.backup.BackupSnapshotGuard" />
+    <bean id="ablestackBackupOperationGuard" class="org.apache.cloudstack.backup.AblestackBackupOperationGuard" />
+    <bean id="thirdPartyBackupStagingService" class="org.apache.cloudstack.backup.ThirdPartyBackupStagingServiceImpl" />
+    <bean id="thirdPartyBackupStagingConfigurationSync" class="org.apache.cloudstack.backup.ThirdPartyBackupStagingConfigurationSync" />
+    <bean id="backupDeletionService" class="org.apache.cloudstack.backup.BackupDeletionServiceImpl" />
+    <bean id="thirdPartyBackupVolumeService" class="org.apache.cloudstack.backup.ThirdPartyBackupVolumeServiceImpl" />
     <bean id="netBackupRestoreCoordinator" class="org.apache.cloudstack.backup.NetBackupRestoreCoordinator" />
 
     <bean id="backupRepositoryService" class="org.apache.cloudstack.backup.BackupRepositoryServiceImpl" />

@@ -60,6 +60,9 @@ import com.cloud.vm.VirtualMachine;
 
 @Component
 public class VolumeJoinDaoImpl extends GenericDaoBaseWithTagInformation<VolumeJoinVO, VolumeResponse> implements VolumeJoinDao {
+    @Inject
+    private org.apache.cloudstack.backup.BackupVolumeGuard backupVolumeGuard;
+
     private static final String FAST_CLONE_FLATTEN_STATUS = "clone.fast.flatten.status";
 
     @Inject
@@ -99,7 +102,12 @@ public class VolumeJoinDaoImpl extends GenericDaoBaseWithTagInformation<VolumeJo
     @Override
     public VolumeResponse newVolumeResponse(ResponseView view, VolumeJoinVO volume) {
         VolumeResponse volResponse = new VolumeResponse();
+        if (volume.getVmId() > 0) volResponse.setVolumeMutationBlockedReason(backupVolumeGuard.reason(volume.getVmId()));
         volResponse.setId(volume.getUuid());
+        volResponse.setAllocation(com.cloud.storage.VolumeAllocationPolicy.describe(
+                volumeDetailsDao.listDetailsKeyPairs(volume.getId()),
+                volume.getProvisioningType() == null ? "unknown" : volume.getProvisioningType().toString(),
+                volume.getFormat() == null ? null : volume.getFormat().toString()));
 
         if (volume.getName() != null) {
             volResponse.setName(volume.getName());
@@ -241,8 +249,8 @@ public class VolumeJoinDaoImpl extends GenericDaoBaseWithTagInformation<VolumeJo
                 volResponse.setStorageType(volume.isUseLocalStorage() ? ServiceOffering.StorageType.local.toString() : ServiceOffering.StorageType.shared.toString());
             }
             volResponse.setBytesReadRate(volume.getBytesReadRate());
-            volResponse.setBytesWriteRate(volume.getBytesReadRate());
-            volResponse.setIopsReadRate(volume.getIopsWriteRate());
+            volResponse.setBytesWriteRate(volume.getBytesWriteRate());
+            volResponse.setIopsReadRate(volume.getIopsReadRate());
             volResponse.setIopsWriteRate(volume.getIopsWriteRate());
             volResponse.setCacheMode(volume.getCacheMode());
 

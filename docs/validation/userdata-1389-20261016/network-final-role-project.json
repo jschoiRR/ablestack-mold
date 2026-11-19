@@ -1,0 +1,775 @@
+{
+  "start": 18500,
+  "cursor": 18724,
+  "truncated": false,
+  "events": [
+    {
+      "sequence": 18512,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4006",
+      "type": "XHR",
+      "params": {
+        "command": "listUserData",
+        "id": "b234e5ec-6ccf-4a27-9ad8-05081d7a78a9",
+        "account": "ud1389-31-20261016-user",
+        "domainid": "6cb61eee-eff1-4007-b6ea-bcb7f4d94be7",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "2"
+      }
+    },
+    {
+      "sequence": 18513,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4007",
+      "type": "XHR",
+      "params": {
+        "command": "listResourceIcon",
+        "projectid": "4bac1248-9871-4e0b-ba78-8d3073b8bfe6"
+      }
+    },
+    {
+      "sequence": 18514,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4008",
+      "type": "XHR",
+      "params": {
+        "command": "listAccounts",
+        "name": "ud1389-31-20261016-user",
+        "domainid": "6cb61eee-eff1-4007-b6ea-bcb7f4d94be7",
+        "projectid": "4bac1248-9871-4e0b-ba78-8d3073b8bfe6"
+      }
+    },
+    {
+      "sequence": 18515,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4009",
+      "type": "XHR",
+      "params": {
+        "command": "listProjects",
+        "id": "4bac1248-9871-4e0b-ba78-8d3073b8bfe6",
+        "projectid": "4bac1248-9871-4e0b-ba78-8d3073b8bfe6",
+        "listall": "true"
+      }
+    },
+    {
+      "sequence": 18516,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4010",
+      "type": "XHR",
+      "params": {
+        "command": "listVirtualMachines",
+        "projectid": "4bac1248-9871-4e0b-ba78-8d3073b8bfe6",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "1"
+      }
+    },
+    {
+      "sequence": 18517,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4011",
+      "type": "XHR",
+      "params": {
+        "command": "listVirtualMachines",
+        "projectid": "4bac1248-9871-4e0b-ba78-8d3073b8bfe6",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "1"
+      }
+    },
+    {
+      "sequence": 18518,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4012",
+      "type": "XHR",
+      "params": {
+        "command": "listVirtualMachines",
+        "projectid": "4bac1248-9871-4e0b-ba78-8d3073b8bfe6",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "1"
+      }
+    },
+    {
+      "sequence": 18519,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4013",
+      "type": "XHR",
+      "params": {
+        "command": "listEvents",
+        "projectid": "4bac1248-9871-4e0b-ba78-8d3073b8bfe6",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "8"
+      }
+    },
+    {
+      "sequence": 18520,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4014",
+      "type": "XHR",
+      "params": {
+        "command": "listKubernetesClusters",
+        "projectid": "4bac1248-9871-4e0b-ba78-8d3073b8bfe6",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "1"
+      }
+    },
+    {
+      "sequence": 18521,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4015",
+      "type": "XHR",
+      "params": {
+        "command": "listVolumes",
+        "projectid": "4bac1248-9871-4e0b-ba78-8d3073b8bfe6",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "1"
+      }
+    },
+    {
+      "sequence": 18522,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4016",
+      "type": "XHR",
+      "params": {
+        "command": "listSnapshots",
+        "projectid": "4bac1248-9871-4e0b-ba78-8d3073b8bfe6",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "1"
+      }
+    },
+    {
+      "sequence": 18523,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4017",
+      "type": "XHR",
+      "params": {
+        "command": "listNetworks",
+        "projectid": "4bac1248-9871-4e0b-ba78-8d3073b8bfe6",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "1"
+      }
+    },
+    {
+      "sequence": 18524,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4018",
+      "type": "XHR",
+      "params": {
+        "command": "listVPCs",
+        "projectid": "4bac1248-9871-4e0b-ba78-8d3073b8bfe6",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "1"
+      }
+    },
+    {
+      "sequence": 18525,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4019",
+      "type": "XHR",
+      "params": {
+        "command": "listPublicIpAddresses",
+        "projectid": "4bac1248-9871-4e0b-ba78-8d3073b8bfe6",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "1"
+      }
+    },
+    {
+      "sequence": 18526,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4020",
+      "type": "XHR",
+      "params": {
+        "command": "listTemplates",
+        "projectid": "4bac1248-9871-4e0b-ba78-8d3073b8bfe6",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "1",
+        "templatefilter": "self"
+      }
+    },
+    {
+      "sequence": 18528,
+      "source": {
+        "tabId": 4
+      },
+      "method": "Runtime.exceptionThrown",
+      "params": {
+        "exceptionDetails": {
+          "columnNumber": 308779,
+          "exception": {
+            "className": "i",
+            "description": "i",
+            "objectId": "-6480967067822580589.15.12",
+            "preview": {
+              "description": "i",
+              "overflow": false,
+              "properties": [
+                {
+                  "name": "message",
+                  "type": "string",
+                  "value": "canceled"
+                },
+                {
+                  "name": "name",
+                  "type": "string",
+                  "value": "CanceledError"
+                },
+                {
+                  "name": "code",
+                  "type": "string",
+                  "value": "ERR_CANCELED"
+                },
+                {
+                  "name": "stack",
+                  "type": "string",
+                  "value": "CanceledError: canceled\n    at Object.cancel (http…31.10:8080/client/js/vendors.3ea5c3f6.js:82:22618"
+                }
+              ],
+              "type": "object"
+            },
+            "type": "object"
+          },
+          "exceptionId": 312,
+          "executionContextId": 15,
+          "lineNumber": 154,
+          "scriptId": "11",
+          "stackTrace": {
+            "callFrames": [
+              {
+                "columnNumber": 308779,
+                "functionName": "",
+                "lineNumber": 154,
+                "scriptId": "11",
+                "url": "http://10.10.31.10:8080/client/js/vendors.3ea5c3f6.js"
+              },
+              {
+                "columnNumber": 682844,
+                "functionName": "cancel",
+                "lineNumber": 0,
+                "scriptId": "1122",
+                "url": "http://10.10.31.10:8080/client/js/app.50a3be37.js"
+              },
+              {
+                "columnNumber": 550685,
+                "functionName": "beforeRouteLeave",
+                "lineNumber": 0,
+                "scriptId": "1122",
+                "url": "http://10.10.31.10:8080/client/js/app.50a3be37.js"
+              },
+              {
+                "columnNumber": 13574,
+                "functionName": "",
+                "lineNumber": 81,
+                "scriptId": "11",
+                "url": "http://10.10.31.10:8080/client/js/vendors.3ea5c3f6.js"
+              },
+              {
+                "columnNumber": 13388,
+                "functionName": "",
+                "lineNumber": 81,
+                "scriptId": "11",
+                "url": "http://10.10.31.10:8080/client/js/vendors.3ea5c3f6.js"
+              },
+              {
+                "columnNumber": 22617,
+                "functionName": "",
+                "lineNumber": 81,
+                "scriptId": "11",
+                "url": "http://10.10.31.10:8080/client/js/vendors.3ea5c3f6.js"
+              }
+            ]
+          },
+          "text": "Uncaught (in promise)",
+          "url": "http://10.10.31.10:8080/client/js/vendors.3ea5c3f6.js"
+        },
+        "timestamp": 1792130888229.044
+      }
+    },
+    {
+      "sequence": 18539,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4006",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listUserData",
+        "id": "b234e5ec-6ccf-4a27-9ad8-05081d7a78a9",
+        "account": "ud1389-31-20261016-user",
+        "domainid": "6cb61eee-eff1-4007-b6ea-bcb7f4d94be7",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "2"
+      }
+    },
+    {
+      "sequence": 18543,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4007",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listResourceIcon",
+        "projectid": "4bac1248-9871-4e0b-ba78-8d3073b8bfe6"
+      }
+    },
+    {
+      "sequence": 18566,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4010",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listVirtualMachines",
+        "projectid": "4bac1248-9871-4e0b-ba78-8d3073b8bfe6",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "1"
+      }
+    },
+    {
+      "sequence": 18570,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4012",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listVirtualMachines",
+        "projectid": "4bac1248-9871-4e0b-ba78-8d3073b8bfe6",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "1"
+      }
+    },
+    {
+      "sequence": 18574,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4013",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listEvents",
+        "projectid": "4bac1248-9871-4e0b-ba78-8d3073b8bfe6",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "8"
+      }
+    },
+    {
+      "sequence": 18578,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4008",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listAccounts",
+        "name": "ud1389-31-20261016-user",
+        "domainid": "6cb61eee-eff1-4007-b6ea-bcb7f4d94be7",
+        "projectid": "4bac1248-9871-4e0b-ba78-8d3073b8bfe6"
+      }
+    },
+    {
+      "sequence": 18582,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4011",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listVirtualMachines",
+        "projectid": "4bac1248-9871-4e0b-ba78-8d3073b8bfe6",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "1"
+      }
+    },
+    {
+      "sequence": 18586,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4014",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listKubernetesClusters",
+        "projectid": "4bac1248-9871-4e0b-ba78-8d3073b8bfe6",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "1"
+      }
+    },
+    {
+      "sequence": 18590,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4009",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listProjects",
+        "id": "4bac1248-9871-4e0b-ba78-8d3073b8bfe6",
+        "projectid": "4bac1248-9871-4e0b-ba78-8d3073b8bfe6",
+        "listall": "true"
+      }
+    },
+    {
+      "sequence": 18594,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4015",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listVolumes",
+        "projectid": "4bac1248-9871-4e0b-ba78-8d3073b8bfe6",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "1"
+      }
+    },
+    {
+      "sequence": 18598,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4017",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listNetworks",
+        "projectid": "4bac1248-9871-4e0b-ba78-8d3073b8bfe6",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "1"
+      }
+    },
+    {
+      "sequence": 18602,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4016",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listSnapshots",
+        "projectid": "4bac1248-9871-4e0b-ba78-8d3073b8bfe6",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "1"
+      }
+    },
+    {
+      "sequence": 18606,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4019",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listPublicIpAddresses",
+        "projectid": "4bac1248-9871-4e0b-ba78-8d3073b8bfe6",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "1"
+      }
+    },
+    {
+      "sequence": 18610,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4018",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listVPCs",
+        "projectid": "4bac1248-9871-4e0b-ba78-8d3073b8bfe6",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "1"
+      }
+    },
+    {
+      "sequence": 18615,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4020",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listTemplates",
+        "projectid": "4bac1248-9871-4e0b-ba78-8d3073b8bfe6",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "1",
+        "templatefilter": "self"
+      }
+    },
+    {
+      "sequence": 18629,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4021",
+      "type": "XHR",
+      "params": {
+        "command": "listUserData",
+        "projectid": "4bac1248-9871-4e0b-ba78-8d3073b8bfe6",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "sequence": 18633,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4021",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listUserData",
+        "projectid": "4bac1248-9871-4e0b-ba78-8d3073b8bfe6",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "sequence": 18647,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4022",
+      "type": "XHR",
+      "params": {
+        "command": "listUserData",
+        "id": "9f5810e1-4356-49fd-a9fd-efd9636a580d",
+        "projectid": "4bac1248-9871-4e0b-ba78-8d3073b8bfe6",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "sequence": 18653,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4022",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listUserData",
+        "id": "9f5810e1-4356-49fd-a9fd-efd9636a580d",
+        "projectid": "4bac1248-9871-4e0b-ba78-8d3073b8bfe6",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "sequence": 18655,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4023",
+      "type": "XHR",
+      "params": {
+        "command": "listResourceIcon",
+        "projectid": "4bac1248-9871-4e0b-ba78-8d3073b8bfe6"
+      }
+    },
+    {
+      "sequence": 18656,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4024",
+      "type": "XHR",
+      "params": {
+        "command": "listResourceIcon",
+        "projectid": "4bac1248-9871-4e0b-ba78-8d3073b8bfe6"
+      }
+    },
+    {
+      "sequence": 18659,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4023",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listResourceIcon",
+        "projectid": "4bac1248-9871-4e0b-ba78-8d3073b8bfe6"
+      }
+    },
+    {
+      "sequence": 18663,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4024",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listResourceIcon",
+        "projectid": "4bac1248-9871-4e0b-ba78-8d3073b8bfe6"
+      }
+    },
+    {
+      "sequence": 18668,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4025",
+      "type": "XHR",
+      "params": {
+        "command": "listUserData",
+        "id": "9f5810e1-4356-49fd-a9fd-efd9636a580d",
+        "projectid": "4bac1248-9871-4e0b-ba78-8d3073b8bfe6",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "2"
+      }
+    },
+    {
+      "sequence": 18682,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4026",
+      "type": "XHR",
+      "params": {
+        "command": "listUserData",
+        "id": "9f5810e1-4356-49fd-a9fd-efd9636a580d",
+        "projectid": "4bac1248-9871-4e0b-ba78-8d3073b8bfe6",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "sequence": 18683,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4027",
+      "type": "XHR",
+      "params": {
+        "command": "listResourceIcon",
+        "projectid": "4bac1248-9871-4e0b-ba78-8d3073b8bfe6"
+      }
+    },
+    {
+      "sequence": 18684,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4028",
+      "type": "XHR",
+      "params": {
+        "command": "listResourceIcon",
+        "projectid": "4bac1248-9871-4e0b-ba78-8d3073b8bfe6"
+      }
+    },
+    {
+      "sequence": 18686,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4025",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listUserData",
+        "id": "9f5810e1-4356-49fd-a9fd-efd9636a580d",
+        "projectid": "4bac1248-9871-4e0b-ba78-8d3073b8bfe6",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "2"
+      }
+    },
+    {
+      "sequence": 18692,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4027",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listResourceIcon",
+        "projectid": "4bac1248-9871-4e0b-ba78-8d3073b8bfe6"
+      }
+    },
+    {
+      "sequence": 18696,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4028",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listResourceIcon",
+        "projectid": "4bac1248-9871-4e0b-ba78-8d3073b8bfe6"
+      }
+    },
+    {
+      "sequence": 18700,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4026",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listUserData",
+        "id": "9f5810e1-4356-49fd-a9fd-efd9636a580d",
+        "projectid": "4bac1248-9871-4e0b-ba78-8d3073b8bfe6",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "sequence": 18702,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4029",
+      "type": "XHR",
+      "params": {
+        "command": "listUserData",
+        "id": "9f5810e1-4356-49fd-a9fd-efd9636a580d",
+        "projectid": "4bac1248-9871-4e0b-ba78-8d3073b8bfe6",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "2"
+      }
+    },
+    {
+      "sequence": 18703,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4030",
+      "type": "XHR",
+      "params": {
+        "command": "listResourceIcon",
+        "projectid": "4bac1248-9871-4e0b-ba78-8d3073b8bfe6"
+      }
+    },
+    {
+      "sequence": 18704,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.4031",
+      "type": "XHR",
+      "params": {
+        "command": "listResourceIcon",
+        "projectid": "4bac1248-9871-4e0b-ba78-8d3073b8bfe6"
+      }
+    },
+    {
+      "sequence": 18713,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4030",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listResourceIcon",
+        "projectid": "4bac1248-9871-4e0b-ba78-8d3073b8bfe6"
+      }
+    },
+    {
+      "sequence": 18717,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4029",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listUserData",
+        "id": "9f5810e1-4356-49fd-a9fd-efd9636a580d",
+        "projectid": "4bac1248-9871-4e0b-ba78-8d3073b8bfe6",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "2"
+      }
+    },
+    {
+      "sequence": 18721,
+      "method": "Network.responseReceived",
+      "requestId": "23116.4031",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listResourceIcon",
+        "projectid": "4bac1248-9871-4e0b-ba78-8d3073b8bfe6"
+      }
+    }
+  ]
+}

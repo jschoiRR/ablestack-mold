@@ -57,3 +57,12 @@ describe('job tracker', () => {
     expect((await tracker.track('a')).trackingStatus).toBe('unknown'); expect(query).toHaveBeenCalledTimes(1)
   })
 })
+
+test('an optional deadline settles even a query which never returns', async () => {
+  jest.useFakeTimers()
+  let respond
+  const onState = jest.fn(); const tracker = createJobTracker({ query: () => new Promise(resolve => { respond = resolve }), onState, maxDuration: 100 })
+  const job = tracker.track('slow'); jest.advanceTimersByTime(100)
+  expect((await job).trackingStatus).toBe('timeout'); respond({ jobstatus: 1 }); await flush(); expect(onState).toHaveBeenCalledTimes(1)
+  jest.useRealTimers()
+})

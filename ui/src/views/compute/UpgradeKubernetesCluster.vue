@@ -20,6 +20,10 @@
     <a-spin :spinning="loading">
       <a-alert type="warning">
         <template #message>{{ $t('message.kubernetes.cluster.upgrade') }}</template>
+        <template #description>
+          <p v-if="Number(resource.controlnodes) === 1">{{ $t('message.kubernetes.cluster.upgrade.single.control') }}</p>
+          <p>{{ $t('message.kubernetes.cluster.upgrade.workload.availability') }}</p>
+        </template>
       </a-alert>
       <br />
       <a-form
@@ -27,7 +31,9 @@
         :model="form"
         :rules="rules"
         @finish="handleSubmit"
-        layout="vertical">
+        layout="vertical"
+class="mold-form-dialog">
+      <div class="mold-form-content"><KubernetesDialogContext :resource="resource" />
         <a-form-item name="kubernetesversionid" ref="kubernetesversionid">
           <template #label>
             <tooltip-label :title="$t('label.kubernetesversionid')" :tooltip="apiParams.kubernetesversionid.description"/>
@@ -41,7 +47,7 @@
               return option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0
             }"
             :loading="kubernetesVersionLoading"
-            :placeholder="apiParams.kubernetesversionid.description"
+            :placeholder="$t('label.kubernetesversionid')"
             v-focus="true" >
             <a-select-option v-for="(opt, optIndex) in this.kubernetesVersions" :key="optIndex" :label="opt.name || opt.description">
               {{ opt.name || opt.description }}
@@ -49,7 +55,8 @@
           </a-select>
         </a-form-item>
 
-        <div :span="24" class="action-button">
+        </div>
+      <div :span="24" class="action-button">
           <a-button @click="closeAction">{{ $t('label.cancel') }}</a-button>
           <a-button :loading="loading" ref="submit" type="primary" @click="handleSubmit">{{ $t('label.ok') }}</a-button>
         </div>
@@ -60,12 +67,15 @@
 
 <script>
 import { ref, reactive, toRaw } from 'vue'
+import KubernetesDialogContext from '@/components/view/KubernetesDialogContext'
 import { getAPI, postAPI } from '@/api'
 import TooltipLabel from '@/components/widgets/TooltipLabel'
+import { isKubernetesUpgradeTarget } from '@/utils/kubernetesUpgrade'
 
 export default {
   name: 'UpgradeKubernetesCluster',
   components: {
+    KubernetesDialogContext,
     TooltipLabel
   },
   props: {
@@ -112,12 +122,13 @@ export default {
     },
     fetchKubernetesVersionData () {
       this.kubernetesVersions = []
+      this.form.kubernetesversionid = undefined
       const params = {}
       if (!this.isObjectEmpty(this.resource)) {
         params.minimumkubernetesversionid = this.resource.kubernetesversionid
       }
       this.kubernetesVersionLoading = true
-      getAPI('listKubernetesSupportedVersions', params).then(json => {
+      return getAPI('listKubernetesSupportedVersions', params).then(json => {
         const versionObjs = json.listkubernetessupportedversionsresponse.kubernetessupportedversion
         if (this.arrayHasItems(versionObjs)) {
           var clusterVersion = null
@@ -129,7 +140,8 @@ export default {
           }
           for (var i = 0; i < versionObjs.length; i++) {
             if (versionObjs[i].id !== this.resource.kubernetesversionid &&
-              (clusterVersion == null || (clusterVersion != null && versionObjs[i].semanticversion !== clusterVersion.semanticversion)) &&
+              clusterVersion != null &&
+              isKubernetesUpgradeTarget(clusterVersion.semanticversion, versionObjs[i].semanticversion) &&
               versionObjs[i].state === 'Enabled' && versionObjs[i].isostate === 'Ready') {
               this.kubernetesVersions.push({
                 id: versionObjs[i].id,
@@ -138,6 +150,8 @@ export default {
             }
           }
         }
+      }).catch(error => {
+        this.$notifyError(error)
       }).finally(() => {
         this.kubernetesVersionLoading = false
         if (this.arrayHasItems(this.kubernetesVersions)) {

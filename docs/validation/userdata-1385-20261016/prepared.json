@@ -1,0 +1,43 @@
+{
+  "prefix": "UD1385-31-20261016",
+  "userdata_count": 14,
+  "templates": [
+    {
+      "id": "2d5bc063-75c7-4850-b76e-dbe6d7af2430",
+      "name": "UD1385-31-20261016-ALLOWOVERRIDE",
+      "policy": "ALLOWOVERRIDE"
+    },
+    {
+      "id": "244d31a8-7d16-45a6-944b-a2b90c6eee13",
+      "name": "UD1385-31-20261016-APPEND",
+      "policy": "APPEND"
+    },
+    {
+      "id": "dd5557f4-5c61-426c-bc8b-664ee9e8666f",
+      "name": "UD1385-31-20261016-DENYOVERRIDE",
+      "policy": "DENYOVERRIDE"
+    }
+  ],
+  "vms": [
+    {
+      "id": "db065200-f6f0-48ed-9b4e-19415bbe6cef",
+      "name": "UD1385-31-20261016-base",
+      "suffix": "base"
+    },
+    {
+      "id": "fe3c993c-6bf9-4666-afae-251b1a1dae1f",
+      "name": "UD1385-31-20261016-ALLOWOVERRIDE",
+      "suffix": "ALLOWOVERRIDE"
+    },
+    {
+      "id": "3e56db2c-7b14-4c30-9d85-58ce88aacc7d",
+      "name": "UD1385-31-20261016-APPEND",
+      "suffix": "APPEND"
+    },
+    {
+      "id": "e5187f51-a49e-4549-98b2-0c3da9ec7dad",
+      "name": "UD1385-31-20261016-DENYOVERRIDE",
+      "suffix": "DENYOVERRIDE"
+    }
+  ]
+}

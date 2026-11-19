@@ -1,0 +1,104 @@
+Browser tab: 6, Title: "Affinity 그룹 - ABLESTACK-Mold", URL: "http://10.10.31.10:8080/client/#/affinitygroup/61967909-c9a1-4d0f-bf90-af9455193518".
+1 AXWebArea Affinity 그룹 - ABLESTACK-Mold, URL: 10.10.31.10:8080/client/#/affinitygroup/61967909-c9a1-4d0f-bf90-af9455193518
+	2 container
+		55 container
+			252 image menu-unfold
+			57 container
+				58 combo box (settable) rc_select_62
+				59 image project
+				60 text 기본 보기
+			64 image translation
+			65 image bell
+			66 container
+				67 text AQ AG05 QA
+		68 container
+			69 container
+				70 container
+					71 link Description: home, Value: 10.10.31.10:8080/client/#/
+					72 text /
+					73 link Description: Affinity 그룹, Value: 10.10.31.10:8080/client/#/affinitygroup
+					168 text / qa-ag05-user-ui
+					169 link Description: question-circle, Value: docs.ablecloud.io/latest/adminguide/virtual_machines.html#affinity-groups
+					170 button reload 업데이트
+						171 image reload
+						172 text 업데이트
+				173 button down 작업
+					174 image down
+					175 text 작업
+			176 container
+				177 image swap
+				178 heading qa-ag05-user-ui, Value: 4
+					179 text qa-ag05-user-ui
+				180 text 다른 호스트 분산 우선 · 선호
+				181 text 아이디
+				182 button barcode
+					183 image barcode
+				184 link Description: 61967909-c9a1-4d0f-bf90-af9455193518 , Value: javascript:;
+				185 text 가능하면 서로 다른 호스트에 분산합니다. 조건을 만족하지 못하면 같은 호스트에도 배치할 수 있습니다. 연결 VM 수 0 계정
+				186 image user
+				187 text qa-ag05-user 도메인
+				188 image block
+				189 text ROOT
+				190 link Description: cloud-server 가상머신 보기, Value: 10.10.31.10:8080/client/#/vm?affinitygroupid=61967909-c9a1-4d0f-bf90-af9455193518
+			191 container
+				192 tab group
+					193 container
+						194 tab (selected, settable, boolean) 상세, Value: 1, ID: rc-tabs-21-tab-details
+						195 tab (selectable, settable, boolean) 가상머신, Value: 0, ID: rc-tabs-21-tab-instances
+						196 tab (selectable, settable, boolean) 이벤트, Value: 0, ID: rc-tabs-21-tab-events
+				197 container Description: 상세, ID: rc-tabs-21-panel-details
+					198 content list
+						199 container
+							200 text 이름
+							201 text qa-ag05-user-ui
+						202 container
+							203 text 아이디
+							204 text 61967909-c9a1-4d0f-bf90-af9455193518
+						205 container
+							206 text 설명
+							207 text —
+						208 container
+							209 text 유형
+							210 text 다른 호스트 분산 우선 · 선호
+							211 text 가능하면 서로 다른 호스트에 분산합니다. 조건을 만족하지 못하면 같은 호스트에도 배치할 수 있습니다.
+						212 container
+							213 text 연결 VM 수
+							214 text 0
+						215 container
+							216 text 계정
+							217 text qa-ag05-user
+						218 container
+							219 text 도메인
+							220 text ROOT
+	165 container
+		166 image check-circle
+		167 text 사용 가능한 모든 기능을 발견했습니다!
+	226 container
+		227 container Affinity 그룹 삭제
+			228 container
+				229 button Close
+					230 image close
+				231 text Affinity 그룹 삭제
+				253 container
+					254 text 1 / 1
+					255 table
+						256 row
+							257 cell
+								258 text 이름
+							259 cell
+								260 text qa-ag05-user-ui
+						261 row
+							262 cell
+								263 text VM 소유 범위
+							264 cell
+								265 text qa-ag05-user / ROOT
+						266 row
+							267 cell
+								268 text 연결 VM 수
+							269 cell
+								270 text 0
+					271 text 이 Affinity 그룹을 삭제하면 해당 그룹의 모든 VM 연결이 해제됩니다. VM 자체와 다른 그룹 연결은 보존됩니다.
+				250 button 취소
+				251 button Affinity 그룹 삭제
+
+The focused UI element is 272 container

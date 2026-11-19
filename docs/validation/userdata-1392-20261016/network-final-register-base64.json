@@ -1,0 +1,48 @@
+{
+  "truncated": false,
+  "events": [
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 25168,
+      "id": "36984.4249",
+      "url": "http://10.10.31.10:8080/client/api/",
+      "httpMethod": "POST",
+      "parameters": {
+        "command": "registerUserData",
+        "response": "json",
+        "name": "UD1392-31-20261016-b64-가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라",
+        "userdata": "77u/I2Nsb3VkLWNvbmZpZw0KIyBVRDEzOTIgQmFzZTY0IO2VnOq4gCDwn5iAIOuztOyhtA0K"
+      }
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 25170,
+      "id": "36984.4249",
+      "url": "http://10.10.31.10:8080/client/api/",
+      "status": 200,
+      "mimeType": "application/json"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 25172,
+      "id": "36984.4250",
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&page=1&pagesize=20&command=listUserData&response=json&sessionkey=<redacted>",
+      "httpMethod": "GET",
+      "parameters": {
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20",
+        "command": "listUserData",
+        "response": "json"
+      }
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 25177,
+      "id": "36984.4250",
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&page=1&pagesize=20&command=listUserData&response=json&sessionkey=<redacted>",
+      "status": 200,
+      "mimeType": "application/json"
+    }
+  ]
+}

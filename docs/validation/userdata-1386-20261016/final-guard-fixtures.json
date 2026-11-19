@@ -1,0 +1,43 @@
+{
+  "vm": {
+    "id": "60f51d19-2a34-41af-949c-a09e921ba476",
+    "name": "UD1386-31-20261016-final-guard",
+    "instancename": "i-2-555-VM",
+    "state": "Running",
+    "hostid": "159baf9a-89ad-4a94-91dc-e7395a670bf4",
+    "hostname": "ablecube31-1",
+    "nic": [
+      {
+        "id": "5a438008-3a92-4f4d-8e9b-ea634c667a34",
+        "networkid": "79717c42-b6ca-4c43-ba73-838fd79b4fbc",
+        "networkname": "UD1386-31-20261016-final-guard",
+        "netmask": "255.255.255.0",
+        "gateway": "10.138.7.1",
+        "ipaddress": "10.138.7.254",
+        "isolationuri": "vlan://192",
+        "broadcasturi": "vlan://192",
+        "traffictype": "Guest",
+        "type": "Isolated",
+        "isdefault": true,
+        "macaddress": "02:1f:01:27:00:01",
+        "secondaryip": [],
+        "extradhcpoption": [],
+        "deviceid": "0",
+        "enabled": true
+      }
+    ]
+  },
+  "network_id": "79717c42-b6ca-4c43-ba73-838fd79b4fbc",
+  "userdata_ids": {
+    "A": "4908f8f8-716e-4cea-9ac4-7a3a2bb4ed9c",
+    "B": "dd3bce0c-d6bf-46be-90e5-87557c385a83"
+  },
+  "router": {
+    "id": "b6b353a7-2a45-4fbf-a69e-573c0fdb7841",
+    "name": "r-556-VM",
+    "hostname": "ablecube31-3",
+    "hostid": "384871b9-7c75-4717-a673-e96a76abeb71",
+    "linklocalip": "169.254.241.52",
+    "guestipaddress": "10.138.7.1"
+  }
+}

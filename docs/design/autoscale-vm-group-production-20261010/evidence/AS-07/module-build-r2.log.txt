@@ -1,0 +1,41 @@
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+
+[INFO]
+[INFO] --- jar:3.2.0:jar (default-jar) @ cloud-server ---
+[INFO] Building jar: /home/ablecloud/work/autoscale-review-20261010/source/server/target/cloud-server-4.23.0.0.jar
+[INFO]
+[INFO] --- site:3.21.0:attach-descriptor (attach-descriptor) @ cloud-server ---
+[INFO] Skipping because packaging 'jar' is not pom.
+[INFO]
+[INFO] --- install:2.3.1:install (default-install) @ cloud-server ---
+[INFO] Installing /home/ablecloud/work/autoscale-review-20261010/source/server/target/cloud-server-4.23.0.0.jar to /home/ablecloud/.m2/repository/org/apache/cloudstack/cloud-server/4.23.0.0/cloud-server-4.23.0.0.jar
+[INFO] Installing /home/ablecloud/work/autoscale-review-20261010/source/server/pom.xml to /home/ablecloud/.m2/repository/org/apache/cloudstack/cloud-server/4.23.0.0/cloud-server-4.23.0.0.pom
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary for Apache CloudStack API 4.23.0.0:
+[INFO]
+[INFO] Apache CloudStack API .............................. SUCCESS [ 33.046 s]
+[INFO] Apache CloudStack Cloud Engine Schema Component .... SUCCESS [ 29.264 s]
+[INFO] Apache CloudStack Server ........................... SUCCESS [01:01 min]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  02:05 min
+[INFO] Finished at: 2026-10-11T22:49:20+09:00
+[INFO] ------------------------------------------------------------------------

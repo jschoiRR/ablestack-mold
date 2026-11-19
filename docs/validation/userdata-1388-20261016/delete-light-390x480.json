@@ -1,0 +1,167 @@
+{
+  "bodyClass": "ant-scrolling-effect",
+  "buttons": [
+    {
+      "background": "rgb(255, 255, 255)",
+      "color": "rgb(75, 85, 99)",
+      "disabled": false,
+      "height": 32,
+      "padding": "4px 15px",
+      "text": "업데이트"
+    },
+    {
+      "background": "rgb(255, 255, 255)",
+      "color": "rgba(0, 0, 0, 0.45)",
+      "disabled": false,
+      "height": 32,
+      "padding": "0px",
+      "text": ""
+    },
+    {
+      "background": "rgb(255, 255, 255)",
+      "color": "rgba(0, 0, 0, 0.25)",
+      "disabled": true,
+      "height": 32,
+      "padding": "0px",
+      "text": ""
+    },
+    {
+      "background": "rgb(255, 255, 255)",
+      "color": "rgba(0, 0, 0, 0.25)",
+      "disabled": true,
+      "height": 32,
+      "padding": "0px",
+      "text": ""
+    },
+    {
+      "background": "rgb(255, 255, 255)",
+      "color": "rgb(9, 105, 218)",
+      "disabled": false,
+      "height": 32,
+      "padding": "4px 15px",
+      "text": "취소"
+    },
+    {
+      "background": "rgb(180, 35, 24)",
+      "color": "rgb(255, 255, 255)",
+      "disabled": false,
+      "height": 32,
+      "padding": "4px 15px",
+      "text": "삭제"
+    }
+  ],
+  "dialog": {
+    "body": {
+      "bottom": 402,
+      "clientHeight": 334,
+      "height": 334,
+      "left": 13,
+      "right": 377,
+      "scrollHeight": 576,
+      "top": 68,
+      "width": 364
+    },
+    "footer": {
+      "bottom": 467,
+      "clientHeight": 64,
+      "height": 65,
+      "left": 13,
+      "right": 377,
+      "scrollHeight": 64,
+      "top": 402,
+      "width": 364
+    },
+    "header": {
+      "bottom": 68,
+      "clientHeight": 54,
+      "height": 55,
+      "left": 13,
+      "right": 377,
+      "scrollHeight": 54,
+      "top": 13,
+      "width": 364
+    },
+    "rect": {
+      "bottom": 468,
+      "clientHeight": 454,
+      "height": 456,
+      "left": 12,
+      "right": 378,
+      "scrollHeight": 454,
+      "top": 12,
+      "width": 366
+    },
+    "states": [
+      "ready"
+    ],
+    "text": "사용자 데이터 제거\n선택한 사용자 데이터 라이브러리 항목을 삭제합니다. 사용 중인 항목은 서버가 삭제를 거절합니다. 항목별 결과를 확인하세요.\n\n삭제 대상 1개\n\n이름\t계정\t작업 상태\t사유\n\n \n\t\n \n\t\n \n\t\n \n\nUD1388-31-20261016-A\n0609f5b0-b1f0-4c66-b17c-1dff58d0c2f7\n\tadmin\nROOT\n\t대기\t\n사용 가상머신: 12\n연결 템플릿: 2\n연결 ISO: 2\n1\n\n삭제가 확인된 항목만 목록에서 제거됩니다. 실패한 항목은 남으며, 재시도는 실패한 대상만 처리합니다. 결과 미확인은 현재 상태 확인 후 재시도하세요.\n\n현재 보기에서 접근 가능한 참조 건수입니다. 링크에서 VM 사용자 데이터를 변경·해제하거나 템플릿·ISO 연결을 해제한 뒤 새로고침하세요. 다른 계정·프로젝트 참조는 관리자에게 확인하세요. 조회 후 새 참조가 생길 수 있으므로 서버가 삭제 가능 여부를 최종 확인합니다.\n\n참조 정보 새로고침\n취소\n삭제"
+  },
+  "documentWidth": 380,
+  "height": 480,
+  "notes": [
+    {
+      "color": "rgb(75, 85, 99)",
+      "text": "저장된 사용자 데이터 UUID의 연결 관계입니다. 본문 복사·템플릿 상속 본문·게스트 실행 여부는 포함하지 않습니다."
+    },
+    {
+      "color": "rgb(75, 85, 99)",
+      "text": "검색·페이지 이동은 서버에서 처리합니다. 열 정렬과 상태 집계는 현재 페이지에만 적용됩니다."
+    },
+    {
+      "color": "rgb(75, 85, 99)",
+      "text": "조회 프로젝트: - (없으면 기본 보기). 접근 가능한 참조만 표시합니다. 다른 프로젝트는 보기를 전환하여 확인하세요."
+    }
+  ],
+  "rows": [
+    "UD1388-31-20261016-A-vm-01\t9fec78b2-39ef-40b5-896a-b428cad2876b\t\n정지된 상태\n\tadmin\t\tROOT",
+    "UD1388-31-20261016-A-vm-02\t01b2ceac-f707-49d1-a524-6aeaf0287ee3\t\n정지된 상태\n\tadmin\t\tROOT",
+    "UD1388-31-20261016-A-vm-03\t7378556c-dbd6-4f4e-a139-18471c66ab28\t\n정지된 상태\n\tadmin\t\tROOT",
+    "UD1388-31-20261016-A-vm-04\tbbdc5bff-23e7-4101-abae-6633a96461a2\t\n정지된 상태\n\tadmin\t\tROOT",
+    "UD1388-31-20261016-A-vm-05\te59a0c2b-4346-41a5-9c61-c6ff281bed07\t\n정지된 상태\n\tadmin\t\tROOT",
+    "UD1388-31-20261016-A-vm-06\t43c03270-81a6-4df8-862c-20e58c9b45a2\t\n정지된 상태\n\tadmin\t\tROOT",
+    "UD1388-31-20261016-A-vm-07\te9eb90cb-6bc0-417a-90ef-193193b5c9ae\t\n정지된 상태\n\tadmin\t\tROOT",
+    "UD1388-31-20261016-A-vm-08\td0ebc642-0e7c-42ae-8cfc-0114705b6230\t\n정지된 상태\n\tadmin\t\tROOT",
+    "UD1388-31-20261016-A-vm-09\t5669685e-2a13-4364-9b46-aa3dca1bf3a6\t\n정지된 상태\n\tadmin\t\tROOT",
+    "UD1388-31-20261016-A-vm-10\tc7b5411f-d46e-4a4f-baba-7696c6d43e66\t\n정지된 상태\n\tadmin\t\tROOT",
+    "UD1388-31-20261016-A-vm-11\t6e89d25c-4d57-4313-acbe-b38447f0f324\t\n정지된 상태\n\tadmin\t\tROOT",
+    "UD1388-31-20261016-ui-created\tfe75feb7-256b-48bc-9131-fc9f94fe46b6\t\n정지된 상태\n\tadmin\t\tROOT"
+  ],
+  "scripts": [
+    "http://10.10.31.10:8080/client/js/chunk-6f1952aa.32ca33b4.js",
+    "http://10.10.31.10:8080/client/js/chunk-2ba46c8a.d503c8e2.js",
+    "http://10.10.31.10:8080/client/js/chunk-fb0c6ee4.b97c255e.js",
+    "http://10.10.31.10:8080/client/js/chunk-2e4d3950.ad2bdb41.js",
+    "http://10.10.31.10:8080/client/js/chunk-d4dc1dfc.61b797f7.js",
+    "http://10.10.31.10:8080/client/js/chunk-7f2d3fc9.9f7499a4.js",
+    "http://10.10.31.10:8080/client/js/chunk-edc5a4ca.8c2f60b1.js",
+    "http://10.10.31.10:8080/client/js/chunk-daaf0010.3bc24670.js",
+    "http://10.10.31.10:8080/client/js/less.min.js",
+    "http://10.10.31.10:8080/client/js/vendors.3ea5c3f6.js",
+    "http://10.10.31.10:8080/client/js/app.325357a9.js"
+  ],
+  "tabs": [
+    {
+      "selected": "false",
+      "text": "상세"
+    },
+    {
+      "selected": "true",
+      "text": "사용 가상머신"
+    },
+    {
+      "selected": "false",
+      "text": "연결 템플릿"
+    },
+    {
+      "selected": "false",
+      "text": "연결 ISO"
+    },
+    {
+      "selected": "false",
+      "text": "코멘트"
+    }
+  ],
+  "url": "http://10.10.31.10:8080/client/#/userdata/0609f5b0-b1f0-4c66-b17c-1dff58d0c2f7?account=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&ignoreproject=true&tab=userdata.usage.vms",
+  "usageText": "업데이트\n\n저장된 사용자 데이터 UUID의 연결 관계입니다. 본문 복사·템플릿 상속 본문·게스트 실행 여부는 포함하지 않습니다.\n\n검색·페이지 이동은 서버에서 처리합니다. 열 정렬과 상태 집계는 현재 페이지에만 적용됩니다.\n\n조회 프로젝트: - (없으면 기본 보기). 접근 가능한 참조만 표시합니다. 다른 프로젝트는 보기를 전환하여 확인하세요.\n\n현재 페이지 상태: \n 정지된 VM 12\n\nVM 표시 명\n\t\n아이디\n\t\n상태\n\t\n계정\n\t\n프로젝트\n\t\n도메인\n\nUD1388-31-20261016-A-vm-01\t9fec78b2-39ef-40b5-896a-b428cad2876b\t\n정지된 상태\n\tadmin\t\tROOT\nUD1388-31-20261016-A-vm-02\t01b2ceac-f707-49d1-a524-6aeaf0287ee3\t\n정지된 상태\n\tadmin\t\tROOT\nUD1388-31-20261016-A-vm-03\t7378556c-dbd6-4f4e-a139-18471c66ab28\t\n정지된 상태\n\tadmin\t\tROOT\nUD1388-31-20261016-A-vm-04\tbbdc5bff-23e7-4101-abae-6633a96461a2\t\n정지된 상태\n\tadmin\t\tROOT\nUD1388-31-20261016-A-vm-05\te59a0c2b-4346-41a5-9c61-c6ff281bed07\t\n정지된 상태\n\tadmin\t\tROOT\nUD1388-31-20261016-A-vm-06\t43c03270-81a6-4df8-862c-20e58c9b45a2\t\n정지된 상태\n\tadmin\t\tROOT\nUD1388-31-20261016-A-vm-07\te9eb90cb-6bc0-417a-90ef-193193b5c9ae\t\n정지된 상태\n\tadmin\t\tROOT\nUD1388-31-20261016-A-vm-08\td0ebc642-0e7c-42ae-8cfc-0114705b6230\t\n정지된 상태\n\tadmin\t\tROOT\nUD1388-31-20261016-A-vm-09\t5669685e-2a13-4364-9b46-aa3dca1bf3a6\t\n정지된 상태\n\tadmin\t\tROOT\nUD1388-31-20261016-A-vm-10\tc7b5411f-d46e-4a4f-baba-7696c6d43e66\t\n정지된 상태\n\tadmin\t\tROOT\nUD1388-31-20261016-A-vm-11\t6e89d25c-4d57-4313-acbe-b38447f0f324\t\n정지된 상태\n\tadmin\t\tROOT\nUD1388-31-20261016-ui-created\tfe75feb7-256b-48bc-9131-fc9f94fe46b6\t\n정지된 상태\n\tadmin\t\tROOT\n총 12개\n1\n20 / 쪽",
+  "width": 390
+}

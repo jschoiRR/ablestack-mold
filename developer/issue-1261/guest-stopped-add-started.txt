@@ -1,0 +1,43 @@
+7ae79ae4faa5098ae4bdb758a1be6a37f10fd35a14b0a725fb3f5c50d559c302  /home/ablecloud/nic1261-preserved.txt
+DEVICE 0 IFACE enp3s0
+PING 10.126.0.1 (10.126.0.1) from 10.126.0.202 enp3s0: 56(84) bytes of data.
+64 bytes from 10.126.0.1: icmp_seq=1 ttl=64 time=0.235 ms
+64 bytes from 10.126.0.1: icmp_seq=2 ttl=64 time=0.343 ms
+64 bytes from 10.126.0.1: icmp_seq=3 ttl=64 time=0.365 ms
+
+--- 10.126.0.1 ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2074ms
+rtt min/avg/max/mdev = 0.235/0.314/0.365/0.056 ms
+DEVICE 1 IFACE enp4s0
+PING 10.126.1.1 (10.126.1.1) from 10.126.1.213 enp4s0: 56(84) bytes of data.
+64 bytes from 10.126.1.1: icmp_seq=1 ttl=64 time=0.401 ms
+64 bytes from 10.126.1.1: icmp_seq=2 ttl=64 time=0.366 ms
+64 bytes from 10.126.1.1: icmp_seq=3 ttl=64 time=0.355 ms
+
+--- 10.126.1.1 ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2032ms
+rtt min/avg/max/mdev = 0.355/0.374/0.401/0.019 ms
+DEVICE 2 IFACE enp5s0
+PING 10.126.2.1 (10.126.2.1) from 10.126.2.231 enp5s0: 56(84) bytes of data.
+64 bytes from 10.126.2.1: icmp_seq=1 ttl=64 time=0.518 ms
+64 bytes from 10.126.2.1: icmp_seq=2 ttl=64 time=0.296 ms
+64 bytes from 10.126.2.1: icmp_seq=3 ttl=64 time=0.356 ms
+
+--- 10.126.2.1 ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2037ms
+rtt min/avg/max/mdev = 0.296/0.390/0.518/0.093 ms
+DEVICE 3 IFACE enp6s0
+PING 10.126.3.1 (10.126.3.1) from 10.126.3.30 enp6s0: 56(84) bytes of data.
+64 bytes from 10.126.3.1: icmp_seq=1 ttl=64 time=0.283 ms
+64 bytes from 10.126.3.1: icmp_seq=2 ttl=64 time=0.299 ms
+64 bytes from 10.126.3.1: icmp_seq=3 ttl=64 time=0.212 ms
+
+--- 10.126.3.1 ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2033ms
+rtt min/avg/max/mdev = 0.212/0.264/0.299/0.037 ms
+lo               UNKNOWN        127.0.0.1/8
+enp3s0           UP             10.126.0.202/24 metric 100
+enp4s0           UP             10.126.1.213/24
+enp5s0           UP             10.126.2.231/24
+enp6s0           UP             10.126.3.30/24
+100.45 193.71

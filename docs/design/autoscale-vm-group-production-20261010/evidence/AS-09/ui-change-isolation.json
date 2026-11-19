@@ -1,0 +1,56 @@
+{
+  "base": "1cbb5c562493d47cf7eff7c48f07d3feac838410",
+  "source": "cd4221a3c7a5169cc56fdaa7442170ecce750af4",
+  "changedFiles": [
+    "api/src/main/java/org/apache/cloudstack/api/command/user/autoscale/CreateAutoScaleVmProfileCmd.java",
+    "api/src/test/java/org/apache/cloudstack/api/command/test/CreateAutoScaleVmProfileCmdTest.java",
+    "docs/design/autoscale-vm-group-production-20261010/AS-09.ko.md",
+    "server/src/main/java/com/cloud/network/as/AutoScaleManagerImpl.java",
+    "server/src/test/java/com/cloud/network/as/AutoScaleManagerImplTest.java",
+    "ui/public/locales/en.json",
+    "ui/public/locales/ko_KR.json",
+    "ui/src/components/view/DetailsTab.vue",
+    "ui/src/components/view/ListView.vue",
+    "ui/src/components/view/ResourceView.vue",
+    "ui/src/config/section/compute.js",
+    "ui/src/style/components/view/autoscale.less",
+    "ui/src/utils/autoScaleUi.js",
+    "ui/src/views/AutogenView.vue",
+    "ui/src/views/compute/AutoScaleCreationProgress.vue",
+    "ui/src/views/compute/AutoScaleCreationSummary.vue",
+    "ui/src/views/compute/AutoScaleDownPolicyTab.vue",
+    "ui/src/views/compute/AutoScaleEvaluation.vue",
+    "ui/src/views/compute/AutoScaleInfoSummary.vue",
+    "ui/src/views/compute/AutoScaleListCell.vue",
+    "ui/src/views/compute/AutoScaleLoadBalancing.vue",
+    "ui/src/views/compute/AutoScaleOperationalSummary.vue",
+    "ui/src/views/compute/AutoScaleOperations.vue",
+    "ui/src/views/compute/AutoScaleUpPolicyTab.vue",
+    "ui/src/views/compute/AutoScaleVmProfile.vue",
+    "ui/src/views/compute/CreateAutoScaleVmGroup.vue",
+    "ui/src/views/compute/wizard/NetworkSelection.vue",
+    "ui/tests/unit/views/compute/AutoScaleCreationPreflight.spec.js",
+    "ui/tests/unit/views/compute/AutoScaleUiStandard.spec.js"
+  ],
+  "protected": {
+    "ui/src/components/view/EventsTab.vue": {
+      "unchanged": true,
+      "sha256": "800afeb82a2a4cac72a29a1902d865971fe5d679be615f94831f7efe217ea171"
+    },
+    "ui/src/components/view/AnnotationsTab.vue": {
+      "unchanged": true,
+      "sha256": "ed91a5291c5d810d7e90baec8bbd1812c7af251109c53025744282ecb07a457d"
+    },
+    "ui/src/layouts/ResourceLayout.vue": {
+      "unchanged": true,
+      "sha256": "0be02f1511ba10ed27a6b103178681fa0f950384d419ba53403a132352d7f20a"
+    },
+    "ui/src/components/view/InfoCard.vue": {
+      "unchanged": true,
+      "sha256": "ffd9eb3e5b0a7d6a3ada411b12e6263e241fe457773506d1ea050d7ddd867aa5"
+    }
+  },
+  "detailsAutoScaleInjectionAbsent": true,
+  "utf8ReplacementCharacters": 0,
+  "javaSourceChanged": true
+}

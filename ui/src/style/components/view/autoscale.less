@@ -1,0 +1,217 @@
+// Licensed to the Apache Software Foundation (ASF) under one
+// or more contributor license agreements.  See the NOTICE file
+// distributed with this work for additional information
+// regarding copyright ownership.  The ASF licenses this file
+// to you under the Apache License, Version 2.0 (the
+// "License"); you may not use this file except in compliance
+// with the License.  You may obtain a copy of the License at
+//
+//   http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing,
+// software distributed under the License is distributed on an
+// "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+// KIND, either express or implied.  See the License for the
+// specific language governing permissions and limitations
+// under the License.
+
+.autoscale-tab, .autoscale-create {
+  color: var(--ui-text-primary);
+  min-width: 0;
+  overflow-wrap: anywhere;
+  .ant-card, .ant-card-head, .ant-steps-item-title, .ant-steps-item-description { color: var(--ui-text-primary); }
+  .form__label, .update-condition__label { color: var(--ui-text-primary); font-weight: 600; }
+  .form__required { color: var(--ui-error-text); }
+  .form { display: flex; flex-wrap: wrap; gap: 12px; margin-right: 0; align-items: center; }
+  .form > .ant-select { width: 320px !important; max-width: 100%; }
+  .form > .ant-btn { margin-left: 0 !important; }
+  .ant-table-wrapper { max-width: 100%; overflow-x: auto; }
+  .ant-input, .ant-select { max-width: 100%; }
+  .ant-alert { margin-bottom: 12px; }
+  .zone-radio-button { min-width: 0; }
+  .ant-radio-wrapper { white-space: normal; }
+  .vm-info-card .resource-detail-item__details a { color: var(--ui-text-primary); }
+}
+.autoscale-dialog {
+  color: var(--ui-text-primary);
+  .form, .update-condition { width: 100%; min-width: 0; margin-right: 0; }
+  .form__label, .update-condition__label { color: var(--ui-text-primary); font-weight: 600; }
+  .action-button { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; }
+  .action-button button { margin-left: 0; }
+  .form__required { color: var(--ui-error-text); }
+}
+.autoscale-operations .operations-toolbar { justify-content: flex-start; }
+.autoscale-operations .operations-toolbar > p { flex-basis: 100%; }
+.autoscale-operations .operations-toolbar .ant-btn { flex: 0 0 auto; }
+@media (max-width: 768px) {
+  .autoscale-tab .form__item, .autoscale-dialog .form__item { width: 100%; flex-basis: 100%; padding-right: 0; }
+  .autoscale-create .ant-card-body { padding: 16px 12px; }
+  .autoscale-create .form { margin-right: 0; }
+  .autoscale-create .form__item { width: 100%; padding-right: 0; }
+  .autoscale-dialog .ant-modal-footer .action-button { width: 100%; }
+}
+
+.autoscale-tab, .autoscale-create, .autoscale-dialog {
+  .ant-input, .ant-input-number, .ant-select:not(.ant-select-customize-input) .ant-select-selector {
+    border-color: var(--ui-text-muted);
+    color: var(--ui-text-primary);
+  }
+  .ant-input:disabled, .ant-select-disabled.ant-select:not(.ant-select-customize-input) .ant-select-selector {
+    color: var(--ui-text-secondary);
+    -webkit-text-fill-color: var(--ui-text-secondary);
+  }
+  .ant-input::placeholder { color: var(--ui-text-muted); }
+}
+
+// Match the VM Mold dialog action palette, limited to this resource's screens.
+body .autoscale-screen, body .autoscale-create, body .autoscale-dialog {
+  .ant-btn-primary:not(:disabled) {
+    background-color: var(--ui-action-primary-bg) !important;
+    border-color: var(--ui-action-primary-bg) !important;
+    color: var(--ui-action-primary-text) !important;
+    > span, .anticon { color: inherit !important; }
+    &:hover, &:focus { background-color: var(--ui-action-primary-hover) !important; border-color: var(--ui-action-primary-hover) !important; }
+    &.ant-btn-dangerous { background-color: var(--ui-action-danger-bg) !important; border-color: var(--ui-action-danger-bg) !important; }
+  }
+  .ant-btn:disabled > span, .ant-btn:disabled .anticon { color: var(--ui-text-secondary) !important; }
+  .ant-btn:disabled { background: var(--ui-bg-disabled) !important; color: var(--ui-text-secondary) !important; border-color: var(--ui-border-strong) !important; }
+  .ant-input:disabled, .ant-select-disabled .ant-select-selection-item { color: var(--ui-text-secondary) !important; -webkit-text-fill-color: var(--ui-text-secondary) !important; }
+}
+
+body .autoscale-create .vm-info-card .resource-detail-item__details a {
+  color: var(--ui-text-primary) !important;
+}
+body .autoscale-resource .ant-tabs-tab-active .ant-tabs-tab-btn { color: var(--ui-link) !important; }
+body .autoscale-screen, body .autoscale-create, body .autoscale-dialog {
+  .ant-input::placeholder, .ant-select-selection-placeholder { color: var(--ui-text-muted) !important; }
+  .form__required, .error-text { color: var(--ui-error-text) !important; }
+}
+
+body .autoscale-screen {
+  .ant-breadcrumb, .ant-breadcrumb-separator, .ant-breadcrumb-link,
+  .ant-breadcrumb-link > a, .ant-breadcrumb-link > a > span,
+  .ant-breadcrumb-link > span { color: var(--ui-text-secondary) !important; }
+}
+
+body .autoscale-create, body .autoscale-dialog, body .autoscale-screen {
+  .ant-form-item-explain-error, .ant-form-item-label > label.ant-form-item-required::before { color: var(--ui-error-text) !important; }
+}
+body .autoscale-create .ant-steps-item-process .ant-steps-item-icon {
+  background: var(--ui-action-primary-bg) !important; border-color: var(--ui-action-primary-bg) !important;
+  .ant-steps-icon { color: var(--ui-action-primary-text) !important; }
+}
+body .autoscale-create .ant-steps-item-wait .ant-steps-item-icon .ant-steps-icon { color: var(--ui-text-secondary) !important; }
+
+body .autoscale-screen, body .autoscale-create, body .autoscale-dialog {
+  .ant-btn:not(.ant-btn-primary):not(.ant-btn-dangerous):not(:disabled):hover,
+  .ant-btn:not(.ant-btn-primary):not(.ant-btn-dangerous):not(:disabled):focus {
+    color: var(--ui-link) !important;
+    border-color: var(--ui-link) !important;
+    > span, .anticon { color: inherit !important; }
+  }
+}
+
+body .autoscale-screen, body .autoscale-create, body .autoscale-dialog {
+  .ant-pagination-item a { color: var(--ui-text-primary) !important; }
+  .ant-pagination-item-active { border-color: var(--ui-link) !important; }
+  .ant-pagination-item-active a { color: var(--ui-link) !important; }
+}
+
+// Existing tab actions follow the VM toolbar. No global/shared tab styles.
+.autoscale-toolbar.ant-space {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 8px !important;
+  margin-bottom: 20px !important;
+  .ant-space-item { margin-bottom: 0 !important; }
+}
+.autoscale-tab > .ant-card { margin-bottom: 16px; background: var(--ui-bg-surface); }
+.autoscale-tab .ant-descriptions-item-label, .autoscale-tab .ant-descriptions-item-content { color: var(--ui-text-primary); }
+.autoscale-dialog {
+  .form { align-items: stretch; }
+  .ant-input, .ant-input-number, .ant-select-selector, .ant-input-number-input { background: var(--ui-bg-input); color: var(--ui-text-primary); }
+  .ant-form-item-label > label, .ant-descriptions-item-label, .ant-descriptions-item-content { color: var(--ui-text-primary); }
+  .add-tags { flex-wrap: wrap; gap: 8px; }
+  .add-tags__input { flex: 1; min-width: 160px; }
+}
+body .autoscale-screen, body .autoscale-dialog {
+  .ant-radio-inner { background: var(--ui-bg-input); border-color: var(--ui-text-muted); }
+  .ant-radio-checked .ant-radio-inner { border-color: var(--ui-link); }
+  .ant-radio-checked .ant-radio-inner::after { background-color: var(--ui-link); }
+}
+@media (max-width: 768px) { .autoscale-toolbar.ant-space { margin-bottom: 16px !important; } }
+
+body .autoscale-dialog {
+  .ant-input-group-addon, .ant-input-group-addon-disabled {
+    background: var(--ui-bg-elevated) !important; color: var(--ui-text-primary) !important; border-color: var(--ui-border-strong) !important;
+  }
+}
+.autoscale-schedule-picker {
+  .ant-picker-panel-container, .ant-picker-panel { background: var(--ui-bg-elevated); color: var(--ui-text-primary); }
+  .ant-picker-header, .ant-picker-footer, .ant-picker-content, .ant-picker-time-panel, .ant-picker-time-panel-column { border-color: var(--ui-border); }
+  .ant-picker-header button, .ant-picker-content th, .ant-picker-cell-in-view, .ant-picker-time-panel-cell-inner { color: var(--ui-text-primary) !important; }
+  .ant-picker-cell { color: var(--ui-text-muted); }
+  .ant-picker-cell:hover .ant-picker-cell-inner, .ant-picker-time-panel-cell:hover .ant-picker-time-panel-cell-inner { background: var(--ui-bg-hover); }
+  .ant-picker-cell-selected .ant-picker-cell-inner, .ant-picker-time-panel-cell-selected .ant-picker-time-panel-cell-inner { color: var(--ui-text-primary); background: var(--ui-bg-selected); }
+  .ant-picker-header button:hover { color: var(--ui-link) !important; }
+  @media (max-width: 600px) {
+    .ant-picker-panel-container { max-height: calc(100vh - 48px); max-height: calc(100dvh - 48px); overflow-y: auto; }
+    .ant-picker-panel, .ant-picker-datetime-panel { width: 280px; max-width: calc(100vw - 32px); }
+    .ant-picker-datetime-panel { flex-direction: column; }
+    .ant-picker-time-panel { width: 100%; border-left: 0; border-top: 1px solid var(--ui-border); }
+    .ant-picker-time-panel .ant-picker-content { height: 112px; }
+    .ant-picker-time-panel-column { flex: 1; }
+  }
+}
+
+
+body .autoscale-schedule-picker .ant-btn:disabled {
+  background: var(--ui-bg-disabled) !important; color: var(--ui-text-secondary) !important; border-color: var(--ui-border-strong) !important;
+}
+
+// The picker and confirmations are teleported outside the dialog resource root.
+body .autoscale-schedule-picker, body .autoscale-confirm {
+  .ant-btn-primary:not(:disabled) {
+    background: var(--ui-action-primary-bg) !important; border-color: var(--ui-action-primary-bg) !important; color: var(--ui-action-primary-text) !important;
+    > span, .anticon { color: inherit !important; }
+    &:hover, &:focus { background: var(--ui-action-primary-hover) !important; border-color: var(--ui-action-primary-hover) !important; }
+  }
+  .ant-btn:not(.ant-btn-primary) { color: var(--ui-text-secondary); }
+}
+.autoscale-confirm {
+  max-width: min(420px, calc(100vw - 32px));
+  .ant-popover-inner { background: var(--ui-bg-elevated); color: var(--ui-text-primary); }
+  .ant-popover-message-title { color: var(--ui-text-primary); white-space: normal; overflow-wrap: anywhere; }
+}
+.autoscale-dialog .ant-table-wrapper { max-width: 100%; overflow-x: auto; }
+
+body .autoscale-dialog .ant-tabs-tab-active .ant-tabs-tab-btn {
+  color: var(--ui-link) !important;
+}
+
+// Row actions stay with their resource, using the VM table's small-button layout.
+.autoscale-row-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+.autoscale-userdata-form .ant-table table { table-layout: fixed; }
+.autoscale-userdata-form .ant-table-cell { overflow-wrap: anywhere; }
+
+// Use the same portal dropdown palette as the VM row action menus.
+.autoscale-row-menu .ant-dropdown-menu { background: var(--ui-bg-surface); color: var(--ui-text-primary); border: 1px solid var(--ui-border-strong); }
+.autoscale-row-menu .ant-dropdown-menu-item { color: var(--ui-text-primary); }
+.autoscale-row-menu .ant-dropdown-menu-item-disabled { color: var(--ui-text-secondary) !important; }
+.autoscale-row-menu .ant-dropdown-menu-item-active { background: var(--ui-bg-elevated); }
+.autoscale-dialog .autoscale-stickiness-form { width: 100%; }
+.autoscale-dialog .autoscale-stickiness-form .ant-form-item { margin-bottom: 16px; }
+.autoscale-dialog .autoscale-stickiness-form .ant-select { width: 100%; }
+
+.autoscale-row-menu .ant-dropdown-menu-item-danger { color: var(--ui-error-text) !important; }
+
+// Sticky action cells must cover the horizontally scrolling columns beneath them.
+body .autoscale-screen .ant-table-cell-fix-right,
+body .autoscale-screen .ant-table-cell-fix-left {
+  background: var(--ui-bg-surface) !important;
+}
+body .autoscale-screen .ant-table-tbody > tr:hover > .ant-table-cell-fix-right,
+body .autoscale-screen .ant-table-tbody > tr:hover > .ant-table-cell-fix-left {
+  background: var(--ui-bg-hover) !important;
+}

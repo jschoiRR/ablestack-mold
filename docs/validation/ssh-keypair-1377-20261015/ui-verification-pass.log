@@ -1,0 +1,72 @@
+// Licensed to the Apache Software Foundation (ASF) under one
+// or more contributor license agreements. See the NOTICE file
+// distributed with this work for additional information
+// regarding copyright ownership. The ASF licenses this file
+// to you under the Apache License, Version 2.0 (the
+// "License"); you may not use this file except in compliance
+// with the License. You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing,
+// software distributed under the License is distributed on an
+// "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+// KIND, either express or implied. See the License for the
+// specific language governing permissions and limitations
+// under the License.
+
+PASS ui-root-single-and-multikey
+PASS ui-tab-order-read-only-list
+PASS ui-tab-back-forward
+PASS ui-second-key-multikey
+PASS ui-empty-distinct
+PASS ui-same-name-public-other-domain-unused
+PASS ui-root-other-account-scope
+PASS ui-root-project-scope
+PASS ui-exact-vm-detail-both-keys
+PASS ui-existing-related-link-same-results
+PASS ui-server-page-2-count-19
+PASS ui-server-search-all-results
+PASS ui-search-page-back-forward-restoration
+PASS ui-current-page-sort-and-url
+PASS ui-manual-refresh-preserves-rows-page
+PASS ui-automatic-refresh-preserves-page
+PASS ui-refresh-error-keeps-last-result
+PASS ui-error-retry-recovers
+PASS ui-forbidden-clears-last-result
+PASS ui-first-load-error-is-not-empty
+PASS ui-page-size-change-resets-page
+PASS ui-actual-reset-association-refresh
+PASS ui-actual-reset-multiple-keys-restored
+PASS ui-old-key-response-cannot-replace-new-key
+PASS ui-layout-light-desktop
+PASS ui-layout-light-tablet
+PASS ui-layout-light-mobile
+PASS ui-layout-light-short
+PASS ui-layout-dark-desktop
+PASS ui-layout-dark-tablet
+PASS ui-layout-dark-mobile
+PASS ui-layout-dark-short
+PASS ui-normal-user-own-association
+PASS ui-normal-user-foreign-material-unused
+PASS ui-domain-admin-own-domain
+PASS ui-project-member-association
+PASS ui-no-vm-permission-no-query-comments-hidden
+PASS ui-recreated-name-does-not-publish-previous-key-usage
+PASS ui-vm-displayname-remains-raw
+PASS ui-delete-dialog-same-usage-contract
+PASS ui-global-all-projects-retains-explicit-owner
+PASS ui-mobile-content-and-horizontal-scroll-light
+PASS ui-mobile-content-and-horizontal-scroll-dark
+PASS ui-inactive-tab-does-not-refresh-vms
+PASS ui-focus-tab-escape-return
+PASS ui-mask-click-keeps-dialog
+PASS ui-contrast-light
+PASS ui-contrast-dark
+PASS ui-regression-vm-snapshot-light
+PASS ui-regression-autogen-vm-group-light
+PASS ui-regression-vm-snapshot-dark
+PASS ui-regression-autogen-vm-group-dark
+PASS ui-cleanup-existing-keys
+PASS ui-existing-material-owner-key-no-false-vms
+UI_TOTAL 54 PASS

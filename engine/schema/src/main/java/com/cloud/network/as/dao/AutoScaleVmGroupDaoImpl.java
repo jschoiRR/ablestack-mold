@@ -17,6 +17,10 @@
 package com.cloud.network.as.dao;
 
 import java.util.List;
+import java.util.Date;
+import java.util.Objects;
+import com.cloud.utils.db.Transaction;
+import com.cloud.utils.db.TransactionCallback;
 
 import org.springframework.stereotype.Component;
 
@@ -35,6 +39,9 @@ public class AutoScaleVmGroupDaoImpl extends GenericDaoBase<AutoScaleVmGroupVO, 
 
     SearchBuilder<AutoScaleVmGroupVO> AllFieldsSearch;
 
+    SearchBuilder<AutoScaleVmGroupVO> OperationSearch;
+    SearchBuilder<AutoScaleVmGroupVO> IdleSearch;
+
     @PostConstruct
     public void init() {
         AllFieldsSearch = createSearchBuilder();
@@ -44,6 +51,15 @@ public class AutoScaleVmGroupDaoImpl extends GenericDaoBase<AutoScaleVmGroupVO, 
         AllFieldsSearch.and("state", AllFieldsSearch.entity().getState(), SearchCriteria.Op.EQ);
         AllFieldsSearch.and("accountId", AllFieldsSearch.entity().getAccountId(), SearchCriteria.Op.EQ);
         AllFieldsSearch.done();
+        OperationSearch = createSearchBuilder();
+        OperationSearch.and("id", OperationSearch.entity().getId(), SearchCriteria.Op.EQ);
+        OperationSearch.and("token", OperationSearch.entity().getOperationUuid(), SearchCriteria.Op.EQ);
+        OperationSearch.done();
+        IdleSearch = createSearchBuilder();
+        IdleSearch.and("id", IdleSearch.entity().getId(), SearchCriteria.Op.EQ);
+        IdleSearch.and("state", IdleSearch.entity().getState(), SearchCriteria.Op.EQ);
+        IdleSearch.and("idle", IdleSearch.entity().getOperationUuid(), SearchCriteria.Op.NULL);
+        IdleSearch.done();
     }
 
     @Override
@@ -79,15 +95,112 @@ public class AutoScaleVmGroupDaoImpl extends GenericDaoBase<AutoScaleVmGroupVO, 
 
     @Override
     public boolean updateState(long groupId, AutoScaleVmGroup.State oldState, AutoScaleVmGroup.State newState) {
+        if (oldState == newState) {
+            return false;
+        }
         SearchCriteria<AutoScaleVmGroupVO> sc = AllFieldsSearch.create();
         sc.setParameters("id", groupId);
         sc.setParameters("state", oldState);
-        AutoScaleVmGroupVO group = findOneBy(sc);
-        if (group == null) {
-            return false;
-        }
-        group.setState(newState);
-        return update(groupId, group);
+        AutoScaleVmGroupVO update = createForUpdate(groupId);
+        update.setState(newState);
+        return update(update, sc) == 1;
+    }
+
+    @Override
+    public boolean beginOperation(long groupId, String token, String action) {
+        SearchCriteria<AutoScaleVmGroupVO> sc = IdleSearch.create();
+        sc.setParameters("id", groupId);
+        sc.setParameters("state", AutoScaleVmGroup.State.ENABLED);
+        AutoScaleVmGroupVO update = createForUpdate(groupId);
+        update.setState(AutoScaleVmGroup.State.SCALING);
+        update.setOperationUuid(token);
+        update.setOperationAction(action);
+        update.setOperationPhase("ACCEPTED");
+        return update(update, sc) == 1;
+    }
+
+    @Override
+    public boolean beginCleanupOperation(long groupId, String token) {
+        return Transaction.execute((TransactionCallback<Boolean>) status -> {
+            AutoScaleVmGroupVO current = lockRow(groupId, true);
+            if (current == null || current.isOperationInProgress()) { return false; }
+            AutoScaleVmGroupVO update = createForUpdate(groupId);
+            update.setState(AutoScaleVmGroup.State.DISABLED);
+            update.setOperationUuid(token);
+            update.setOperationAction("CLEANUP");
+            update.setOperationPhase("ACCEPTED");
+            update.setOperationVmId(null);
+            update.setOperationDeadline(null);
+            return update(groupId, update);
+        });
+    }
+
+    @Override
+    public boolean checkpointOperation(long groupId, String token, String phase, Long vmId, Date deadline) {
+        SearchCriteria<AutoScaleVmGroupVO> sc = OperationSearch.create();
+        sc.setParameters("id", groupId);
+        sc.setParameters("token", token);
+        AutoScaleVmGroupVO update = createForUpdate(groupId);
+        update.setOperationPhase(phase);
+        update.setOperationVmId(vmId);
+        update.setOperationDeadline(deadline);
+        return update(update, sc) == 1;
+    }
+
+    @Override
+    public boolean finishOperation(long groupId, String token) {
+        return Transaction.execute((TransactionCallback<Boolean>) status -> {
+            AutoScaleVmGroupVO current = lockRow(groupId, true);
+            if (current == null || token == null || !Objects.equals(token, current.getOperationUuid())) {
+                return false;
+            }
+            AutoScaleVmGroupVO update = createForUpdate(groupId);
+            if (current.getState() == AutoScaleVmGroup.State.SCALING) {
+                update.setState(AutoScaleVmGroup.State.ENABLED);
+            }
+            update.setOperationUuid(null);
+            update.setOperationAction(null);
+            update.setOperationPhase(null);
+            update.setOperationVmId(null);
+            update.setOperationDeadline(null);
+            return update(groupId, update);
+        });
+    }
+
+    @Override
+    public boolean updateEvaluation(long groupId, String evaluation, Date timestamp) {
+        return Transaction.execute((TransactionCallback<Boolean>) status -> {
+            AutoScaleVmGroupVO current = lockRow(groupId, true);
+            if (current == null || (current.getEvaluationTime() != null && current.getEvaluationTime().after(timestamp))) { return false; }
+            AutoScaleVmGroupVO update = createForUpdate(groupId);
+            update.setEvaluation(evaluation);
+            update.setEvaluationTime(timestamp);
+            return update(groupId, update);
+        });
+    }
+
+    @Override
+    public boolean updateLastScaled(long groupId, Date timestamp) {
+        AutoScaleVmGroupVO update = createForUpdate(groupId);
+        update.setLastScaled(timestamp);
+        return update(groupId, update);
+    }
+
+    @Override
+    public boolean updateLastInterval(long groupId, Date interval) {
+        SearchCriteria<AutoScaleVmGroupVO> sc = IdleSearch.create();
+        sc.setParameters("id", groupId);
+        sc.setParameters("state", AutoScaleVmGroup.State.ENABLED);
+        AutoScaleVmGroupVO update = createForUpdate(groupId);
+        update.setLastInterval(interval);
+        return update(update, sc) == 1;
+    }
+
+    @Override
+    public boolean updateNextVmSeq(long groupId, long sequence) {
+        AutoScaleVmGroupVO update = createForUpdate(groupId);
+        update.setNextVmSeq(sequence);
+        return update(groupId, update);
     }
 
     @Override

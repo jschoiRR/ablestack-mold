@@ -1,0 +1,616 @@
+{
+  "label": "initial-mobile-light-clone",
+  "controls": [
+    {
+      "bg": [
+        255,
+        255,
+        255
+      ],
+      "color": [
+        9,
+        105,
+        218,
+        1
+      ],
+      "disabled": false,
+      "ratio": 5.192060987927794,
+      "rect": {
+        "bottom": 400,
+        "height": 32,
+        "left": 29,
+        "right": 351,
+        "top": 368,
+        "width": 322,
+        "x": 29,
+        "y": 368
+      },
+      "selector": "ant-input"
+    },
+    {
+      "bg": [
+        255,
+        255,
+        255
+      ],
+      "color": [
+        102,
+        112,
+        133,
+        1
+      ],
+      "disabled": false,
+      "ratio": 4.974752735406439,
+      "rect": {
+        "bottom": 504,
+        "height": 54,
+        "left": 29,
+        "right": 351,
+        "top": 450,
+        "width": 322,
+        "x": 29,
+        "y": 450
+      },
+      "selector": "ant-input"
+    },
+    {
+      "bg": [
+        9,
+        105,
+        218
+      ],
+      "color": [
+        9,
+        105,
+        218,
+        1
+      ],
+      "disabled": false,
+      "ratio": 1,
+      "rect": {
+        "bottom": 572.796875,
+        "height": 16,
+        "left": 29,
+        "right": 45,
+        "top": 556.796875,
+        "width": 16,
+        "x": 29,
+        "y": 556.796875
+      },
+      "selector": "ant-checkbox-inner"
+    },
+    {
+      "bg": [
+        255,
+        255,
+        255
+      ],
+      "color": [
+        102,
+        112,
+        133,
+        1
+      ],
+      "disabled": false,
+      "ratio": 4.974752735406439,
+      "rect": {
+        "bottom": 770,
+        "height": 32,
+        "left": 29,
+        "right": 351,
+        "top": 738,
+        "width": 322,
+        "x": 29,
+        "y": 738
+      },
+      "selector": "ant-select-selector"
+    }
+  ],
+  "height": 480,
+  "modal": {
+    "body": {
+      "bottom": 402,
+      "height": 334,
+      "left": 13,
+      "right": 377,
+      "top": 68,
+      "width": 364,
+      "x": 13,
+      "y": 68
+    },
+    "clientHeight": 334,
+    "footer": {
+      "bottom": 467,
+      "height": 65,
+      "left": 13,
+      "right": 377,
+      "top": 402,
+      "width": 364,
+      "x": 13,
+      "y": 402
+    },
+    "footerButtons": [
+      {
+        "rect": {
+          "bottom": 451,
+          "height": 32,
+          "left": 183.15625,
+          "right": 240.921875,
+          "top": 419,
+          "width": 57.765625,
+          "x": 183.15625,
+          "y": 419
+        },
+        "text": "취소"
+      },
+      {
+        "rect": {
+          "bottom": 451,
+          "height": 32,
+          "left": 256.921875,
+          "right": 361,
+          "top": 419,
+          "width": 104.078125,
+          "x": 256.921875,
+          "y": 419
+        },
+        "text": "새 버전 등록"
+      }
+    ],
+    "header": {
+      "bottom": 68,
+      "height": 55,
+      "left": 13,
+      "right": 377,
+      "top": 13,
+      "width": 364,
+      "x": 13,
+      "y": 13
+    },
+    "rect": {
+      "bottom": 468,
+      "height": 456,
+      "left": 12,
+      "right": 378,
+      "top": 12,
+      "width": 366,
+      "x": 12,
+      "y": 12
+    },
+    "scrollHeight": 970,
+    "centerX": 0,
+    "centerY": 0
+  },
+  "pageScrollWidth": 380,
+  "text": [
+    {
+      "background": [
+        247,
+        249,
+        252
+      ],
+      "color": [
+        75,
+        85,
+        99,
+        1
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 7.165387387866874,
+      "selector": "div.ant-modal-title",
+      "text": "복제하여 새 버전 등록"
+    },
+    {
+      "background": [
+        234,
+        244,
+        255
+      ],
+      "color": [
+        11,
+        59,
+        102,
+        1
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 10.308999108587123,
+      "selector": "div.ant-alert-message",
+      "text": "원본의 이름·본문·변수를 재사용해 같은 소유 범위에 새 데이터를 만듭니다. 기존 VM·템플릿·ISO에는 자동 적용되지 않습니다."
+    },
+    {
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "color": [
+        31,
+        41,
+        55,
+        1
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 14.67911847763172,
+      "selector": "p.",
+      "text": "복제 원본: UD1392-31-20261016-A (522593c9-e180-4771-b7ed-48949dd16815) admin / ROOT"
+    },
+    {
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "color": [
+        24,
+        144,
+        255,
+        1
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 3.2446756297921104,
+      "selector": "a.",
+      "text": "사용 가상머신"
+    },
+    {
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "color": [
+        24,
+        144,
+        255,
+        1
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 3.2446756297921104,
+      "selector": "a.",
+      "text": "연결 템플릿"
+    },
+    {
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "color": [
+        24,
+        144,
+        255,
+        1
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 3.2446756297921104,
+      "selector": "a.",
+      "text": "연결 ISO"
+    },
+    {
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "color": [
+        31,
+        41,
+        55,
+        1
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 14.67911847763172,
+      "selector": "summary.",
+      "text": "적용 범위·참조 전환·되돌리기 안내"
+    },
+    {
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "color": [
+        75,
+        85,
+        99,
+        1
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 7.557378129674007,
+      "selector": "span.",
+      "text": "이름"
+    },
+    {
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "color": [
+        31,
+        41,
+        55,
+        1
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 14.67911847763172,
+      "selector": "input.ant-input",
+      "text": "UD1392-31-20261016-A-v2"
+    },
+    {
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "color": [
+        75,
+        85,
+        99,
+        1
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 7.557378129674007,
+      "selector": "span.",
+      "text": "사용자 데이터"
+    },
+    {
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "color": [
+        31,
+        41,
+        55,
+        1
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 14.67911847763172,
+      "selector": "textarea.ant-input",
+      "text": "I2Nsb3VkLWNvbmZpZwojIFVEMTM5Mi0zMS0yMDI2MTAxNiBBCg=="
+    },
+    {
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "color": [
+        75,
+        85,
+        99,
+        1
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 7.557378129674007,
+      "selector": "label.",
+      "text": "Base64 인코드"
+    },
+    {
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "color": [
+        0,
+        0,
+        0,
+        0.65
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 6.977601437110393,
+      "selector": "p.",
+      "text": "처음에는 원본 바이트를 보존하는 Base64로 채웁니다. UTF-8 본문은 원문 편집을 선택할 수 있습니다. 아래 미리보기에서 변경 내용을 확인하세요."
+    },
+    {
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "color": [
+        75,
+        85,
+        99,
+        1
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 7.557378129674007,
+      "selector": "span.",
+      "text": "원문으로 편집"
+    },
+    {
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "color": [
+        75,
+        85,
+        99,
+        1
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 7.557378129674007,
+      "selector": "span.",
+      "text": "사용자 데이터 매개변수"
+    },
+    {
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "color": [
+        102,
+        112,
+        133,
+        1
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 4.974752735406439,
+      "selector": "span.ant-select-selection-placeholder",
+      "text": "comma separated list of variables declared in user data content"
+    },
+    {
+      "background": [
+        255,
+        248,
+        230
+      ],
+      "color": [
+        92,
+        59,
+        0,
+        1
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 9.526644586621776,
+      "selector": "div.ant-alert-message",
+      "text": "본문이 원본과 같습니다. 이름·변수만 바꾸는 버전은 같은 소유자의 동일 본문 중복 금지 정책에 따라 등록할 수 없습니다."
+    },
+    {
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "color": [
+        0,
+        0,
+        0,
+        0.65
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 6.977601437110393,
+      "selector": "p.",
+      "text": "원본 37바이트 → 새 버전 37바이트 · 최초 차이 바이트 위치: - 사용자 데이터 매개변수: - → -"
+    },
+    {
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "color": [
+        0,
+        0,
+        0,
+        0.65
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 6.977601437110393,
+      "selector": "summary.",
+      "text": "원본 본문 확인"
+    },
+    {
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "color": [
+        0,
+        0,
+        0,
+        0.65
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 6.977601437110393,
+      "selector": "summary.",
+      "text": "새 버전 본문 미리보기"
+    },
+    {
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "color": [
+        75,
+        85,
+        99,
+        1
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 7.557378129674007,
+      "selector": "span.",
+      "text": "취소"
+    },
+    {
+      "background": [
+        9,
+        105,
+        218
+      ],
+      "color": [
+        255,
+        255,
+        255,
+        1
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 5.192060987927794,
+      "selector": "span.",
+      "text": "새 버전 등록"
+    }
+  ],
+  "theme": "ant-scrolling-effect",
+  "url": "http://10.10.31.10:8080/client/#/userdata/522593c9-e180-4771-b7ed-48949dd16815?tab=userdata.versions",
+  "width": 390,
+  "activeElement": {
+    "aria": null,
+    "tag": "INPUT",
+    "text": ""
+  },
+  "activeTabs": [
+    "버전·변경 정책"
+  ],
+  "app": "http://10.10.31.10:8080/client/js/app.cfa06862.js",
+  "dpr": 1,
+  "formMargins": [
+    {
+      "label": "이름",
+      "margin": "20px"
+    },
+    {
+      "label": "사용자 데이터",
+      "margin": "20px"
+    },
+    {
+      "label": "Base64 인코드",
+      "margin": "20px"
+    },
+    {
+      "label": "사용자 데이터 매개변수",
+      "margin": "20px"
+    }
+  ],
+  "modalClientWidth": 364,
+  "modalScrollWidth": 364
+}

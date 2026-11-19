@@ -1,0 +1,67 @@
+{
+  "label": "user-bulk-success",
+  "requests": [
+    {
+      "id": "34440.1653",
+      "command": "listUserData",
+      "params": {
+        "id": "78f50c2f-776a-4d24-913d-cd6e4ff66f88",
+        "account": "ud1387-31-20261016-user",
+        "domainid": "02c07834-7449-4be3-b22e-795c39909601",
+        "page": "1",
+        "pagesize": "2"
+      }
+    },
+    {
+      "id": "34440.1654",
+      "command": "deleteUserData",
+      "params": {
+        "id": "78f50c2f-776a-4d24-913d-cd6e4ff66f88",
+        "account": "ud1387-31-20261016-user",
+        "domainid": "02c07834-7449-4be3-b22e-795c39909601"
+      }
+    },
+    {
+      "id": "34440.1655",
+      "command": "listUserData",
+      "params": {
+        "id": "7278b2e9-837e-4698-a821-ebc394701133",
+        "account": "ud1387-31-20261016-user",
+        "domainid": "02c07834-7449-4be3-b22e-795c39909601",
+        "page": "1",
+        "pagesize": "2"
+      }
+    },
+    {
+      "id": "34440.1656",
+      "command": "deleteUserData",
+      "params": {
+        "id": "7278b2e9-837e-4698-a821-ebc394701133",
+        "account": "ud1387-31-20261016-user",
+        "domainid": "02c07834-7449-4be3-b22e-795c39909601"
+      }
+    }
+  ],
+  "responses": [
+    {
+      "id": "34440.1653",
+      "status": 200
+    },
+    {
+      "id": "34440.1654",
+      "status": 200
+    },
+    {
+      "id": "34440.1655",
+      "status": 200
+    },
+    {
+      "id": "34440.1656",
+      "status": 200
+    }
+  ],
+  "exceptions": [],
+  "truncated": false,
+  "hasMore": false,
+  "cursor": 6861
+}

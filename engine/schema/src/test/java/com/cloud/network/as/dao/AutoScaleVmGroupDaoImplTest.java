@@ -103,34 +103,15 @@ public class AutoScaleVmGroupDaoImplTest {
 
     @Test
     public void testUpdateState1() throws Exception {
-        Mockito.doNothing().when(searchCriteriaAutoScaleVmGroupVOMock).setParameters(Mockito.anyString(), Mockito.any());
-        Mockito.doReturn(null).when(AutoScaleVmGroupDaoImplSpy).findOneBy(Mockito.any(SearchCriteria.class));
-
-        long groupId = 10L;
-        AutoScaleVmGroup.State oldState = AutoScaleVmGroup.State.ENABLED;
-        AutoScaleVmGroup.State newState = AutoScaleVmGroup.State.DISABLED;
-
-        boolean result = AutoScaleVmGroupDaoImplSpy.updateState(groupId, oldState, newState);
-        Assert.assertFalse(result);
+        Mockito.doReturn(0).when(AutoScaleVmGroupDaoImplSpy).update(Mockito.any(AutoScaleVmGroupVO.class), Mockito.any(SearchCriteria.class));
+        Assert.assertFalse(AutoScaleVmGroupDaoImplSpy.updateState(10L, AutoScaleVmGroup.State.ENABLED, AutoScaleVmGroup.State.DISABLED));
     }
 
     @Test
     public void testUpdateState2() throws Exception {
-        Mockito.doNothing().when(searchCriteriaAutoScaleVmGroupVOMock).setParameters(Mockito.anyString(), Mockito.any());
-        Mockito.doReturn(autoScaleVmGroupVOMock).when(AutoScaleVmGroupDaoImplSpy).findOneBy(Mockito.any(SearchCriteria.class));
-        Mockito.doNothing().when(autoScaleVmGroupVOMock).setState(Mockito.any(AutoScaleVmGroup.State.class));
-        Mockito.doReturn(true).when(AutoScaleVmGroupDaoImplSpy).update(Mockito.anyLong(), Mockito.any(AutoScaleVmGroupVO.class));
-
-        long groupId = 10L;
-        AutoScaleVmGroup.State oldState = AutoScaleVmGroup.State.ENABLED;
-        AutoScaleVmGroup.State newState = AutoScaleVmGroup.State.DISABLED;
-
-        boolean result = AutoScaleVmGroupDaoImplSpy.updateState(groupId, oldState, newState);
-        Assert.assertTrue(result);
-
-        Mockito.verify(searchCriteriaAutoScaleVmGroupVOMock, Mockito.times(1)).setParameters("id", groupId);
-        Mockito.verify(searchCriteriaAutoScaleVmGroupVOMock, Mockito.times(1)).setParameters("state", oldState);
-        Mockito.verify(autoScaleVmGroupVOMock, Mockito.times(1)).setState(newState);
-        Mockito.verify(AutoScaleVmGroupDaoImplSpy, Mockito.times(1)).update(groupId, autoScaleVmGroupVOMock);
+        Mockito.doReturn(1).when(AutoScaleVmGroupDaoImplSpy).update(Mockito.any(AutoScaleVmGroupVO.class), Mockito.any(SearchCriteria.class));
+        Assert.assertTrue(AutoScaleVmGroupDaoImplSpy.updateState(10L, AutoScaleVmGroup.State.ENABLED, AutoScaleVmGroup.State.DISABLED));
+        Mockito.verify(searchCriteriaAutoScaleVmGroupVOMock).setParameters("id", 10L);
+        Mockito.verify(searchCriteriaAutoScaleVmGroupVOMock).setParameters("state", AutoScaleVmGroup.State.ENABLED);
     }
 }

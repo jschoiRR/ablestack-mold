@@ -71,8 +71,14 @@ public final class KvmBoundedStats {
         return info;
     }
     public static long freeMemory(Domain domain) {
+        return freeMemory(domain, 60, System.currentTimeMillis());
+    }
+    public static long freeMemory(Domain domain, long maxAgeSeconds, long now) {
         Map<String, String> values = parse(run(domain, "domstats", "--nowait", "--raw", "--balloon"));
-        return values.containsKey("balloon.unused") ? value(values, "balloon.unused") : -1;
+        if (maxAgeSeconds <= 0 || !values.containsKey("balloon.unused") || !values.containsKey("balloon.last-update")) return -1;
+        long updated = value(values, "balloon.last-update");
+        long age = now / 1000 - updated;
+        return updated > 0 && age >= 0 && age <= maxAgeSeconds ? value(values, "balloon.unused") : -1;
     }
     public static DomainBlockStats block(Domain domain, String disk) {
         Map<String, String> values = parse(run(domain, "domblkstat", disk));

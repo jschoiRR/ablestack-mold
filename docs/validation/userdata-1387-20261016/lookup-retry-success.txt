@@ -1,0 +1,270 @@
+- complementary:
+  - menu:
+    - menuitem "dashboard 대시보드":
+      - link "dashboard 대시보드":
+        - /url: "#/dashboard"
+        - img "dashboard":
+        - text: 대시보드
+    - img "cloud":
+    - text: 컴퓨트
+    - list:
+      - menuitem "cloud-server 가상머신":
+        - link "cloud-server 가상머신":
+          - /url: "#/vm"
+          - img "cloud-server":
+          - text: 가상머신
+      - menuitem "camera VM 스냅샷":
+        - link "camera VM 스냅샷":
+          - /url: "#/vmsnapshot"
+          - img "camera":
+          - text: VM 스냅샷
+      - menuitem "쿠버네티스":
+        - link "쿠버네티스":
+          - /url: "#/kubernetes"
+          - text: 쿠버네티스
+      - menuitem "fullscreen 오토스케일 VM 그룹":
+        - link "fullscreen 오토스케일 VM 그룹":
+          - /url: "#/autoscalevmgroup"
+          - img "fullscreen":
+          - text: 오토스케일 VM 그룹
+      - menuitem "gold 가상머신 그룹":
+        - link "gold 가상머신 그룹":
+          - /url: "#/vmgroup"
+          - img "gold":
+          - text: 가상머신 그룹
+      - menuitem "key SSH 키 쌍":
+        - link "key SSH 키 쌍":
+          - /url: "#/ssh"
+          - img "key":
+          - text: SSH 키 쌍
+      - menuitem "solution 사용자 데이터 라이브러리":
+        - link "solution 사용자 데이터 라이브러리":
+          - /url: "#/userdata"
+          - img "solution":
+          - text: 사용자 데이터 라이브러리
+      - menuitem "solution CNI 구성":
+        - link "solution CNI 구성":
+          - /url: "#/cniconfiguration"
+          - img "solution":
+          - text: CNI 구성
+      - menuitem "swap Affinity 그룹":
+        - link "swap Affinity 그룹":
+          - /url: "#/affinitygroup"
+          - img "swap":
+          - text: Affinity 그룹
+    - img "hdd":
+    - text: 스토리지
+    - img "wifi":
+    - text: 네트워크
+    - img "picture":
+    - text: 이미지
+    - img "lock":
+    - text: 키 관리
+    - menuitem "schedule 이벤트":
+      - link "schedule 이벤트":
+        - /url: "#/event"
+        - img "schedule":
+        - text: 이벤트
+    - menuitem "project 프로젝트":
+      - link "project 프로젝트":
+        - /url: "#/project"
+        - img "project":
+        - text: 프로젝트
+    - menuitem "idcard 역할":
+      - link "idcard 역할":
+        - /url: "#/role"
+        - img "idcard":
+        - text: 역할
+    - menuitem "team 계정":
+      - link "team 계정":
+        - /url: "#/account"
+        - img "team":
+        - text: 계정
+    - menuitem "block 도메인":
+      - link "block 도메인":
+        - /url: "#/domain"
+        - img "block":
+        - text: 도메인
+    - img "bank":
+    - text: 인프라스트럭쳐
+    - img "shopping":
+    - text: 서비스 오퍼링
+    - img "setting":
+    - text: 구성
+    - menuitem "appstore-add 확장":
+      - link "appstore-add 확장":
+        - /url: "#/extension"
+        - img "appstore-add":
+        - text: 확장
+    - img "tool":
+    - text: 도구
+    - menuitem "read API 문서":
+      - link "read API 문서":
+        - /url: "#/apidocs/"
+        - img "read":
+        - text: API 문서
+- generic: 페이지 스타일 설정
+- button "닫기":
+  - img "close":
+- heading "페이지 스타일 설정" [level=3]
+- radio [checked]
+- img "check":
+- radio
+- heading "테마 색상" [level=3]
+- radio
+- img "check"
+- radio
+- radio
+- radio
+- radio
+- radio
+- radio
+- radio
+- separator
+- heading "네비게이션 설정" [level=3]
+- generic: 배경색
+- textbox: "#ffffff"
+- generic: 텍스트 색상
+- textbox: "#000000"
+- separator
+- alert:
+  - img "exclamation-circle":
+  - generic: "설정은 현재 브라우저에서만 볼 수 있습니다. 설정을 적용하려면 JSON 파일을 다운로드하고 경로 `/public/config.json` 아래의 `config.json` 파일의 `theme` 섹션에서 해당 콘텐츠를 교체하세요."
+- button "download 세팅값 다운로드(json)":
+  - img "download":
+  - generic: 세팅값 다운로드(json)
+- button "undo 기본값으로 재설정":
+  - img "undo":
+  - generic: 기본값으로 재설정
+- img "menu-fold":
+- combobox
+- img "project":
+- text: 기본 보기
+- button "생성 down":
+  - generic: 생성
+  - img "down":
+- img "translation":
+- img "bell":
+- generic: AC
+- generic: admin cloud
+- main:
+  - link "home":
+    - /url: "#/"
+    - img "home":
+  - text: /
+  - link "사용자 데이터 라이브러리":
+    - /url: "#/userdata"
+  - link "question-circle":
+    - /url: http://docs.ablecloud.io/latest/adminguide/virtual_machines.html#user-data-and-meta-data
+    - img "question-circle":
+  - button "reload 업데이트":
+    - img "reload":
+    - generic: 업데이트
+  - switch "프로젝트":
+    - generic: 프로젝트
+  - button "사용자 데이터 등록":
+    - img "plus":
+    - generic: 사용자 데이터 등록
+  - button "사용자 데이터 제거":
+    - img "delete":
+    - generic: 사용자 데이터 제거
+  - textbox "검색": UD1387-31-20261016-root-read-fail
+  - button "close-circle":
+  - button "search":
+    - img "search":
+  - table:
+    - rowgroup:
+      - row "이름 caret-up caret-down 아이디 caret-up caret-down 계정 caret-up caret-down 도메인 caret-up caret-down filter":
+        - columnheader:
+          - checkbox [checked]
+        - columnheader "이름 caret-up caret-down":
+          - generic: 이름
+          - img "caret-up":
+          - img "caret-down":
+        - columnheader "아이디 caret-up caret-down":
+          - generic: 아이디
+          - img "caret-up":
+          - img "caret-down":
+        - columnheader "계정 caret-up caret-down":
+          - generic: 계정
+          - img "caret-up":
+          - img "caret-down":
+        - columnheader "도메인 caret-up caret-down":
+          - generic: 도메인
+          - img "caret-up":
+          - img "caret-down":
+        - columnheader "filter":
+          - button "filter":
+            - img "filter":
+    - rowgroup:
+      - row "UD1387-31-20261016-root-read-fail 57826a6d-d156-4741-a9a2-a9a55bfb1aa7 admin ROOT":
+        - cell:
+          - checkbox [checked]
+        - cell "UD1387-31-20261016-root-read-fail":
+          - link "UD1387-31-20261016-root-read-fail":
+            - /url: "#/userdata/57826a6d-d156-4741-a9a2-a9a55bfb1aa7"
+        - cell "57826a6d-d156-4741-a9a2-a9a55bfb1aa7"
+        - cell "admin":
+          - link "admin":
+            - /url: "#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&dataView=true"
+        - cell "ROOT":
+          - link "ROOT":
+            - /url: "#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details"
+        - cell
+  - generic: 1개 선택
+  - list:
+    - listitem: 전체 1 개 항목 중 1-1 표시
+    - listitem "이전 페이지":
+      - button "left" [disabled]:
+        - img "left":
+    - listitem "1":
+      - generic: "1"
+    - listitem "다음 페이지":
+      - button "right" [disabled]:
+        - img "right":
+    - combobox
+    - generic: 20 / 쪽
+- alert:
+  - img "info-circle":
+  - generic: Wall 모니터링을 사용할 수 없습니다. 기존 알림은 최신 정보가 아닐 수 있으며 Mold는 계속 사용할 수 있습니다. 비활성
+- dialog "사용자 데이터 제거":
+  - document:
+    - button "Close":
+      - img "close":
+    - generic: 사용자 데이터 제거
+    - alert:
+      - img "exclamation-circle":
+      - generic: 선택한 사용자 데이터 라이브러리 항목을 삭제합니다. 사용 중인 항목은 서버가 삭제를 거절합니다. 항목별 결과를 확인하세요.
+    - paragraph:
+      - strong: 삭제 대상 1개
+    - status: 완료 1개 · 실패/차단 0개 · 결과 미확인 0개 · 진행/대기 0개
+    - table:
+      - rowgroup:
+        - row "이름 계정 작업 상태 사유":
+          - columnheader "이름"
+          - columnheader "계정"
+          - columnheader "작업 상태"
+          - columnheader "사유"
+      - rowgroup:
+        - row "UD1387-31-20261016-root-read-fail 57826a6d-d156-4741-a9a2-a9a55bfb1aa7 admin ROOT 삭제 완료":
+          - cell "UD1387-31-20261016-root-read-fail 57826a6d-d156-4741-a9a2-a9a55bfb1aa7":
+            - strong: UD1387-31-20261016-root-read-fail
+            - generic: 57826a6d-d156-4741-a9a2-a9a55bfb1aa7
+          - cell "admin ROOT":
+            - text: admin
+            - generic: ROOT
+          - cell "삭제 완료":
+            - generic: 삭제 완료
+          - cell
+    - list:
+      - listitem "이전 페이지":
+        - button "left" [disabled]:
+          - img "left":
+      - listitem "1":
+        - generic: "1"
+      - listitem "다음 페이지":
+        - button "right" [disabled]:
+          - img "right":
+    - paragraph: 삭제가 확인된 항목만 목록에서 제거됩니다. 실패한 항목은 남으며, 재시도는 실패한 대상만 처리합니다. 결과 미확인은 현재 상태 확인 후 재시도하세요.
+    - button "닫기":
+      - generic: 닫기

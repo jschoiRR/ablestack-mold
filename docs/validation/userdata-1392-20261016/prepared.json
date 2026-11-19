@@ -1,0 +1,117 @@
+{
+  "prefix": "UD1392-31-20261016",
+  "userdata": {
+    "A": {
+      "id": "522593c9-e180-4771-b7ed-48949dd16815",
+      "name": "UD1392-31-20261016-A",
+      "account": "admin",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "domain": "ROOT",
+      "domainpath": "ROOT",
+      "userdata": "I2Nsb3VkLWNvbmZpZwojIFVEMTM5Mi0zMS0yMDI2MTAxNiBBCg==",
+      "hasannotations": false
+    },
+    "B": {
+      "id": "6ab285d3-d90d-4da1-98dc-652ac5c17f14",
+      "name": "UD1392-31-20261016-B",
+      "account": "admin",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "domain": "ROOT",
+      "domainpath": "ROOT",
+      "userdata": "I2Nsb3VkLWNvbmZpZwojIFVEMTM5Mi0zMS0yMDI2MTAxNiBCCg==",
+      "hasannotations": false
+    },
+    "empty": {
+      "id": "daac7c2b-5a5d-47d0-b448-b0d5446e0d08",
+      "name": "UD1392-31-20261016-empty",
+      "account": "admin",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "domain": "ROOT",
+      "domainpath": "ROOT",
+      "userdata": "I2Nsb3VkLWNvbmZpZwojIFVEMTM5Mi0zMS0yMDI2MTAxNiBlbXB0eQo=",
+      "hasannotations": false
+    },
+    "user": {
+      "id": "8877d7e7-92e3-4925-be90-c59933b3cbb4",
+      "name": "UD1392-31-20261016-user",
+      "account": "ud1392-31-20261016-user",
+      "domainid": "0fb393fe-50e4-41de-9f8d-6da09f29edff",
+      "domain": "ud1392-31-20261016",
+      "domainpath": "ROOT/ud1392-31-20261016",
+      "userdata": "I2Nsb3VkLWNvbmZpZwojIFVEMTM5Mi0zMS0yMDI2MTAxNiB1c2VyCg==",
+      "hasannotations": false
+    },
+    "domainadmin": {
+      "id": "6082dcd6-47df-4ec5-8710-ca83705803e5",
+      "name": "UD1392-31-20261016-domainadmin",
+      "account": "ud1392-31-20261016-domainadmin",
+      "domainid": "0fb393fe-50e4-41de-9f8d-6da09f29edff",
+      "domain": "ud1392-31-20261016",
+      "domainpath": "ROOT/ud1392-31-20261016",
+      "userdata": "I2Nsb3VkLWNvbmZpZwojIFVEMTM5Mi0zMS0yMDI2MTAxNiBkb21haW5hZG1pbgo=",
+      "hasannotations": false
+    },
+    "project": {
+      "id": "b410c08e-cb3e-4c6a-8b70-93376fac4a67",
+      "name": "UD1392-31-20261016-project",
+      "projectid": "7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6",
+      "project": "UD1392-31-20261016-project",
+      "domainid": "0fb393fe-50e4-41de-9f8d-6da09f29edff",
+      "domain": "ud1392-31-20261016",
+      "domainpath": "ROOT/ud1392-31-20261016",
+      "userdata": "I2Nsb3VkLWNvbmZpZwojIFVEMTM5Mi0zMS0yMDI2MTAxNiBwcm9qZWN0Cg==",
+      "hasannotations": false
+    }
+  },
+  "accounts": [
+    {
+      "id": "32e79e83-53d4-438b-9491-9489e384c24a",
+      "username": "ud1392-31-20261016-user",
+      "suffix": "user"
+    },
+    {
+      "id": "8ddd5803-675d-42c6-b4b6-3f694629ada6",
+      "username": "ud1392-31-20261016-domainadmin",
+      "suffix": "domainadmin"
+    },
+    {
+      "id": "fc5e618c-ea5e-44ca-b5fb-ad42516a1ee2",
+      "username": "ud1392-31-20261016-outsider",
+      "suffix": "outsider"
+    }
+  ],
+  "vms": [
+    "f5003747-806c-439f-8b71-35ef75e28f5a",
+    "8a2d62cf-9ceb-4276-a582-138b8edda4a8",
+    "a18999db-12d3-483e-a714-3c14b140c494",
+    "f61463fb-dc5f-42aa-803c-d57a3d38d156",
+    "67d070f1-74b4-47d2-9a6f-957851ef4f77",
+    "16ec0b08-1232-4827-8b4b-fe4268240ee3",
+    "37122194-6c17-4f20-bde6-acb55fa23e97",
+    "4a48780a-d1c0-4bab-9bc9-7c06d316e6a0",
+    "798902be-4f18-43cd-8efd-f232dffd912b",
+    "b43110a8-4e2a-4f08-82c0-e0ba763c7eb4",
+    "1b36d33b-6837-4122-a982-0fa0fa4121e8",
+    "0a01cdbc-1bf2-4b2a-88c7-42cc7124109d",
+    "107293d2-7706-4f06-900e-d93e009c9a86"
+  ],
+  "networks": [
+    "d31ef903-e713-4a40-be9a-8c763f949af9",
+    "565e1be3-4370-4981-9208-eecb540ca71a",
+    "a27e1af5-7b2b-4593-b3ea-099a3c8e3c4b"
+  ],
+  "templates": [
+    "b2307bbc-6804-48bb-8209-05d2620ff14a",
+    "8b2b6433-b55d-43ee-85dc-ec853625cb28"
+  ],
+  "isos": [
+    "a32115e7-6e4e-4ec5-bc1d-9172451e3b7e",
+    "be66a857-caf2-46b3-9a86-ffd539a47c4c"
+  ],
+  "domain_id": "0fb393fe-50e4-41de-9f8d-6da09f29edff",
+  "project_id": "7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6",
+  "zone_id": "7013f5a1-de59-4cea-a596-f4f58815f31c",
+  "A_network": "d31ef903-e713-4a40-be9a-8c763f949af9",
+  "user_network": "565e1be3-4370-4981-9208-eecb540ca71a",
+  "project_network": "a27e1af5-7b2b-4593-b3ea-099a3c8e3c4b"
+}

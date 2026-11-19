@@ -1,0 +1,127 @@
+{
+  "start": 21872,
+  "cursor": 21922,
+  "truncated": false,
+  "hasMore": false,
+  "events": [
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 21874,
+      "requestId": "25396.3907",
+      "api": "listUserData",
+      "id": "4cb11aab-bf01-4c0f-a6a1-e3c66c015dfa",
+      "entityid": null,
+      "projectid": null,
+      "path": "/client/api/"
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 21876,
+      "requestId": "25396.3907",
+      "api": "listUserData",
+      "status": 200
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 21878,
+      "requestId": "25396.3908",
+      "api": "listUserData",
+      "id": null,
+      "entityid": null,
+      "projectid": null,
+      "path": "/client/api/"
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 21883,
+      "requestId": "25396.3908",
+      "api": "listUserData",
+      "status": 200
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 21885,
+      "requestId": "25396.3909",
+      "api": "registerUserData",
+      "id": null,
+      "entityid": null,
+      "projectid": null,
+      "path": "/client/api/"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 21889,
+      "requestId": "25396.3910",
+      "api": "readyForShutdown",
+      "id": null,
+      "entityid": null,
+      "projectid": null,
+      "path": "/client/api/"
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 21892,
+      "requestId": "25396.3910",
+      "api": "readyForShutdown",
+      "status": 200
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 21896,
+      "requestId": "25396.3911",
+      "api": "readyForShutdown",
+      "id": null,
+      "entityid": null,
+      "projectid": null,
+      "path": "/client/api/"
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 21899,
+      "requestId": "25396.3911",
+      "api": "readyForShutdown",
+      "status": 200
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 21905,
+      "requestId": "25396.3909",
+      "api": "registerUserData",
+      "status": 431
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 21910,
+      "requestId": "25396.3912",
+      "api": "listUserData",
+      "id": "4cb11aab-bf01-4c0f-a6a1-e3c66c015dfa",
+      "entityid": null,
+      "projectid": null,
+      "path": "/client/api/"
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 21912,
+      "requestId": "25396.3912",
+      "api": "listUserData",
+      "status": 200
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 21914,
+      "requestId": "25396.3913",
+      "api": "listUserData",
+      "id": null,
+      "entityid": null,
+      "projectid": null,
+      "path": "/client/api/"
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 21919,
+      "requestId": "25396.3913",
+      "api": "listUserData",
+      "status": 200
+    }
+  ]
+}

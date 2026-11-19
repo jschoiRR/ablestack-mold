@@ -78,9 +78,8 @@ public class AutoScaleScheduleWorkerTest {
     public void setUp() {
         closeable = MockitoAnnotations.openMocks(this);
         actionEventUtilsMocked = Mockito.mockStatic(ActionEventUtils.class);
-        Mockito.when(ActionEventUtils.onCompletedActionEvent(Mockito.anyLong(), Mockito.anyLong(), Mockito.any(),
-                Mockito.anyString(), Mockito.anyBoolean(), Mockito.anyString(),
-                Mockito.anyLong(), Mockito.anyString(), Mockito.anyLong())).thenReturn(1L);
+        Mockito.when(ActionEventUtils.onStartedActionEvent(Mockito.anyLong(), Mockito.anyLong(),
+                Mockito.anyString(), Mockito.anyString(), Mockito.anyLong(), Mockito.anyString(), Mockito.anyBoolean(), Mockito.anyLong())).thenReturn(1L);
     }
 
     @After
@@ -161,4 +160,58 @@ public class AutoScaleScheduleWorkerTest {
                 Mockito.contains("end date"),
                 Mockito.eq(1L), Mockito.anyString(), Mockito.eq(true), Mockito.eq(0L)));
     }
+    @Test public void doesNotExecuteWithoutJobLockOrWhenAlreadySubmitted() {
+        ResourceScheduledJobVO job = Mockito.mock(ResourceScheduledJobVO.class);
+        Mockito.when(job.getId()).thenReturn(91L);
+        worker.executeJobs(Map.of(1L, job));
+        Mockito.verify(worker, Mockito.never()).processJob(Mockito.any());
+        Mockito.when(resourceScheduledJobDao.acquireInLockTable(91L)).thenReturn(job);
+        Mockito.when(job.getAsyncJobId()).thenReturn(123L);
+        worker.executeJobs(Map.of(1L, job));
+        Mockito.verify(worker, Mockito.never()).processJob(Mockito.any());
+        Mockito.verify(resourceScheduledJobDao).releaseFromLockTable(91L);
+    }
+
+    @Test public void staleDisabledOrDeletedScheduleDoesNotExecute() {
+        ResourceScheduledJobVO job = Mockito.mock(ResourceScheduledJobVO.class);
+        Mockito.when(job.getId()).thenReturn(91L);
+        Mockito.when(job.getScheduleId()).thenReturn(92L);
+        Mockito.when(job.getAsyncJobId()).thenReturn(null);
+        Mockito.when(resourceScheduledJobDao.acquireInLockTable(91L)).thenReturn(job);
+        worker.executeJobs(Map.of(1L, job));
+        ResourceScheduleVO schedule = Mockito.mock(ResourceScheduleVO.class);
+        Mockito.when(resourceScheduleDao.findById(92L)).thenReturn(schedule);
+        Mockito.when(schedule.getEnabled()).thenReturn(false);
+        worker.executeJobs(Map.of(1L, job));
+        Mockito.verify(worker, Mockito.never()).processJob(Mockito.any());
+        Mockito.verify(resourceScheduledJobDao, Mockito.times(2)).releaseFromLockTable(91L);
+    }
+
+    @Test public void futureStartBoundaryIsIncluded() {
+        ResourceScheduleVO schedule = Mockito.mock(ResourceScheduleVO.class);
+        AutoScaleVmGroupVO group = Mockito.mock(AutoScaleVmGroupVO.class);
+        Date start = Date.from(java.time.Instant.parse("2027-01-01T00:01:00Z"));
+        Mockito.when(schedule.getEnabled()).thenReturn(true);
+        Mockito.when(schedule.getSchedule()).thenReturn("* * * * *");
+        Mockito.when(schedule.getStartDate()).thenReturn(start);
+        Mockito.when(schedule.getTimeZoneId()).thenReturn(ZoneId.of("UTC"));
+        Mockito.when(schedule.getResourceId()).thenReturn(1L);
+        Mockito.when(schedule.getActionName()).thenReturn("UPDATE");
+        Mockito.when(autoScaleVmGroupDao.findById(1L)).thenReturn(group);
+        Assert.assertEquals(start, worker.scheduleNextJob(schedule, DateUtils.addMinutes(start, -1)));
+        Mockito.verify(resourceScheduledJobDao).persist(Mockito.argThat(j -> start.equals(j.getScheduledTime())));
+    }
+
+    @Test public void pollDoesNotRoundIntoTheNextMinute() {
+        Date timestamp = Date.from(java.time.Instant.parse("2027-01-01T00:00:40Z"));
+        com.cloud.utils.db.GlobalLock lock = Mockito.mock(com.cloud.utils.db.GlobalLock.class);
+        Mockito.when(lock.lock(Mockito.anyInt())).thenReturn(true);
+        try (MockedStatic<com.cloud.utils.db.GlobalLock> locks = Mockito.mockStatic(com.cloud.utils.db.GlobalLock.class)) {
+            locks.when(() -> com.cloud.utils.db.GlobalLock.getInternLock(Mockito.anyString())).thenReturn(lock);
+            worker.poll(timestamp);
+        }
+        Mockito.verify(resourceScheduledJobDao).listJobsToStart(worker.getApiResourceType(),
+                Date.from(java.time.Instant.parse("2027-01-01T00:00:00Z")));
+    }
+
 }

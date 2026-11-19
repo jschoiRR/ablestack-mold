@@ -1,0 +1,232 @@
+{
+  "sourceCommit": "9b5435d3a7c85981a5ac61f52611bb47c8e7a523",
+  "baseCommit": "5c07cb2142192ba2518ad21c92994bea23de6034",
+  "bundle": "app.6c866dc6.js",
+  "tests": {
+    "suites": 9,
+    "passed": 102
+  },
+  "artifact": {
+    "file": "ui-issue1367-9b5435d3a7c8.tgz",
+    "sourceCommit": "9b5435d3a7c85981a5ac61f52611bb47c8e7a523",
+    "sha256": "ab51ed657657816b3b690f3a6ca603ae1b650e05f39f185245c5aa15186dba17",
+    "size": 15072164,
+    "fileCount": 850
+  },
+  "deployment": {
+    "31": {
+      "file": "ui-issue1367-9b5435d3a7c8.tgz",
+      "sourceCommit": "9b5435d3a7c85981a5ac61f52611bb47c8e7a523",
+      "sha256": "ab51ed657657816b3b690f3a6ca603ae1b650e05f39f185245c5aa15186dba17",
+      "size": 15072164,
+      "fileCount": 850,
+      "backup": "/root/issue1367-ui-20261014-192448",
+      "backupType": "affected-static-files-and-server-config",
+      "filesVerified": 849,
+      "configPreserved": true,
+      "webInfPreserved": true,
+      "webInfFilesVerified": 1,
+      "managementPid": "834619",
+      "service": "active",
+      "clientHttp": 200
+    },
+    "32": {
+      "file": "ui-issue1367-9b5435d3a7c8.tgz",
+      "sourceCommit": "9b5435d3a7c85981a5ac61f52611bb47c8e7a523",
+      "sha256": "ab51ed657657816b3b690f3a6ca603ae1b650e05f39f185245c5aa15186dba17",
+      "size": 15072164,
+      "fileCount": 850,
+      "backup": "/root/issue1367-ui-20261014-192453",
+      "backupType": "affected-static-files-and-server-config",
+      "filesVerified": 849,
+      "configPreserved": true,
+      "webInfPreserved": true,
+      "webInfFilesVerified": 1,
+      "managementPid": "1293012",
+      "service": "active",
+      "clientHttp": 200
+    }
+  },
+  "tableChecks": {
+    "31": {
+      "스케줄": {
+        "sameTable": true,
+        "maxSpins": 0,
+        "maxBlur": 0,
+        "rows": [
+          1
+        ],
+        "pendingTopValues": [
+          328
+        ]
+      },
+      "볼륨": {
+        "sameTable": true,
+        "maxSpins": 0,
+        "maxBlur": 0,
+        "rows": [
+          2
+        ],
+        "pendingTopValues": [
+          328
+        ]
+      },
+      "호스트 장치": {
+        "sameTable": true,
+        "maxSpins": 0,
+        "maxBlur": 0,
+        "rows": [
+          0
+        ],
+        "pendingTopValues": [
+          328
+        ]
+      }
+    },
+    "32": {
+      "스케줄": {
+        "sameTable": true,
+        "maxSpins": 0,
+        "maxBlur": 0,
+        "rows": [
+          0
+        ],
+        "pendingTopValues": [
+          328
+        ]
+      },
+      "볼륨": {
+        "sameTable": true,
+        "maxSpins": 0,
+        "maxBlur": 0,
+        "rows": [
+          1
+        ],
+        "pendingTopValues": [
+          328
+        ]
+      },
+      "호스트 장치": {
+        "sameTable": true,
+        "maxSpins": 0,
+        "maxBlur": 0,
+        "rows": [
+          0
+        ],
+        "pendingTopValues": [
+          288
+        ]
+      }
+    }
+  },
+  "failureChecks": {
+    "volume": {
+      "sameTable": true,
+      "remainsLoggedIn": true,
+      "rowsRetained": true,
+      "recoveredAlerts": []
+    },
+    "schedule": {
+      "sameTable": true,
+      "remainsLoggedIn": true,
+      "rowsRetained": true,
+      "recoveredAlerts": []
+    },
+    "devices": {
+      "sameTable": true,
+      "remainsLoggedIn": true,
+      "rowsRetained": true,
+      "recoveredAlerts": []
+    },
+    "snapshot": {
+      "sameTable": true,
+      "remainsLoggedIn": true,
+      "rowsRetained": true,
+      "recoveredAlerts": []
+    }
+  },
+  "storageFailure": {
+    "remainsLoggedIn": true,
+    "name": "E1367-sparse-data-31-final",
+    "size": "1",
+    "createCalls": 0
+  },
+  "fixtureState": {
+    "31": {
+      "vm": {
+        "id": "a3b50b22-7494-4d9b-beaf-86f504bb7894",
+        "name": "E1367-VM-DETAIL-31",
+        "state": "Stopped",
+        "account": "admin"
+      },
+      "volumes": [
+        {
+          "id": "51d9f707-6f6b-4257-81fc-411bd3a0bdcf",
+          "name": "ROOT-521",
+          "type": "ROOT",
+          "size": 107374182400,
+          "state": "Allocated",
+          "deviceid": 0,
+          "provisioningtype": "sparse",
+          "virtualmachineid": "a3b50b22-7494-4d9b-beaf-86f504bb7894",
+          "storageid": null,
+          "storage": null,
+          "diskofferingid": "38256099-fac8-4d33-a0ed-81b37a1b2b15"
+        },
+        {
+          "id": "4479523c-454b-440d-8cb1-8c19a4527444",
+          "name": "E1367-sparse-data-31",
+          "type": "DATADISK",
+          "size": 1073741824,
+          "state": "Ready",
+          "deviceid": 6,
+          "provisioningtype": "sparse",
+          "virtualmachineid": "a3b50b22-7494-4d9b-beaf-86f504bb7894",
+          "storageid": "1842fb9f-02e0-4da9-b082-422c5a184de0",
+          "storage": "Primary",
+          "diskofferingid": "38256099-fac8-4d33-a0ed-81b37a1b2b15"
+        },
+        {
+          "id": "430b34e1-d037-4379-913f-b866eabe1d42",
+          "name": "E1367-sparse-data-31-final",
+          "type": "DATADISK",
+          "size": 1073741824,
+          "state": "Ready",
+          "deviceid": 7,
+          "provisioningtype": "sparse",
+          "virtualmachineid": "a3b50b22-7494-4d9b-beaf-86f504bb7894",
+          "storageid": "1842fb9f-02e0-4da9-b082-422c5a184de0",
+          "storage": "Primary",
+          "diskofferingid": "38256099-fac8-4d33-a0ed-81b37a1b2b15"
+        }
+      ],
+      "disabledScheduleCount": 1
+    },
+    "32": {
+      "vm": {
+        "id": "4714c3bc-5c8b-4807-a736-c33c439717ae",
+        "name": "E1367-VM-DETAIL-32",
+        "state": "Stopped",
+        "account": "epic1346-as01-user32"
+      },
+      "volumes": [
+        {
+          "id": "ab298d29-6fe8-430e-922b-a6862cc53f80",
+          "name": "ROOT-188",
+          "type": "ROOT",
+          "size": 107374182400,
+          "state": "Allocated",
+          "deviceid": 0,
+          "provisioningtype": "thin",
+          "virtualmachineid": "4714c3bc-5c8b-4807-a736-c33c439717ae",
+          "storageid": null,
+          "storage": null,
+          "diskofferingid": null
+        }
+      ]
+    }
+  },
+  "originalRootPreserved": true,
+  "temporaryBrowserConditionsRestored": true,
+  "fullCloudBuildStarted": false
+}

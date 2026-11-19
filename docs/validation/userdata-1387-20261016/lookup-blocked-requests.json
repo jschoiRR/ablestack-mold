@@ -1,0 +1,50 @@
+{
+  "label": "lookup-blocked",
+  "requests": [
+    {
+      "id": "34440.1546",
+      "command": "listUserData",
+      "params": {
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "id": "34440.1547",
+      "command": "listUserData",
+      "params": {
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "id": "34440.1548",
+      "command": "listUserData",
+      "params": {
+        "id": "57826a6d-d156-4741-a9a2-a9a55bfb1aa7",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "page": "1",
+        "pagesize": "2"
+      }
+    }
+  ],
+  "responses": [
+    {
+      "id": "34440.1546",
+      "status": 200
+    },
+    {
+      "id": "34440.1547",
+      "status": 200
+    },
+    {
+      "id": "34440.1548",
+      "status": 503
+    }
+  ],
+  "exceptions": [],
+  "truncated": false,
+  "hasMore": false,
+  "cursor": 5973
+}

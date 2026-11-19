@@ -25,6 +25,7 @@ import com.cloud.agent.api.PlugNicCommand;
 import com.cloud.agent.api.to.NicTO;
 import com.cloud.exception.InternalErrorException;
 import com.cloud.hypervisor.kvm.resource.LibvirtComputingResource;
+import com.cloud.hypervisor.kvm.resource.PciTopologyInspector;
 import com.cloud.hypervisor.kvm.resource.LibvirtVMDef.InterfaceDef;
 import com.cloud.hypervisor.kvm.resource.VifDriver;
 import com.cloud.resource.CommandWrapper;
@@ -46,6 +47,9 @@ public final class LibvirtPlugNicCommandWrapper extends CommandWrapper<PlugNicCo
         final String vmName = command.getVmName();
         final VirtualMachine.Type vmType = command.getVMType();
         Domain vm = null;
+        VifDriver vifDriver = null;
+        InterfaceDef interfaceDef = null;
+        boolean attached = false;
         try {
             final LibvirtUtilitiesHelper libvirtUtilitiesHelper = libvirtComputingResource.getLibvirtUtilitiesHelper();
             final Connect conn = libvirtUtilitiesHelper.getConnectionByVmName(vmName);
@@ -60,12 +64,22 @@ public final class LibvirtPlugNicCommandWrapper extends CommandWrapper<PlugNicCo
                 }
                 nicnum++;
             }
-            final VifDriver vifDriver = libvirtComputingResource.getVifDriver(nic.getType(), nic.getName());
-            final InterfaceDef interfaceDef = vifDriver.plug(nic, "Other PV", "", null);
+            try {
+                var topology = vmType == VirtualMachine.Type.User ? PciTopologyInspector.parse(vm.getXMLDesc(0)) : null;
+                if (topology != null && PciTopologyInspector.q35(topology) && PciTopologyInspector.freeHotplugPorts(topology) == 0) {
+                    throw new InternalErrorException("PCI_TOPOLOGY_HOTPLUG_CAPACITY: no free hotplug root-port in the running VM. "
+                            + "Use a supported cold-start topology with additional capacity; a restart alone may not add ports.");
+                }
+            } catch (IllegalArgumentException error) {
+                throw new InternalErrorException("PCI_TOPOLOGY_INSPECTION_FAILED: " + error.getMessage());
+            }
+            vifDriver = libvirtComputingResource.getVifDriver(nic.getType(), nic.getName());
+            interfaceDef = vifDriver.plug(nic, "Other PV", "", null);
             if (command.getDetails() != null) {
                 libvirtComputingResource.setInterfaceDefQueueSettings(command.getDetails(), null, interfaceDef);
             }
             vm.attachDevice(interfaceDef.toString());
+            attached = true;
 
             // apply default network rules on new nic
             if (vmType == VirtualMachine.Type.User && nic.isSecurityGroupEnabled()) {
@@ -79,14 +93,22 @@ public final class LibvirtPlugNicCommandWrapper extends CommandWrapper<PlugNicCo
 
             return new PlugNicAnswer(command, true, "success");
         } catch (final LibvirtException e) {
-            final String msg = " Plug Nic failed due to " + e.toString();
+            final String msg = nicPlugFailureMessage(e);
             logger.warn(msg, e);
             return new PlugNicAnswer(command, false, msg);
         } catch (final InternalErrorException e) {
-            final String msg = " Plug Nic failed due to " + e.toString();
+            final String msg = nicPlugFailureMessage(e);
             logger.warn(msg, e);
             return new PlugNicAnswer(command, false, msg);
         } finally {
+            if (!attached && vifDriver != null && interfaceDef != null) {
+                try {
+                    // Undo only this failed VIF's bookkeeping; shared bridges and existing NICs stay in place.
+                    vifDriver.unplug(interfaceDef, false);
+                } catch (RuntimeException cleanupError) {
+                    logger.warn("Unable to clean up the unattached NIC VIF", cleanupError);
+                }
+            }
             if (vm != null) {
                 try {
                     vm.free();
@@ -95,5 +117,14 @@ public final class LibvirtPlugNicCommandWrapper extends CommandWrapper<PlugNicCo
                 }
             }
         }
+    }
+    static String nicPlugFailureMessage(Exception error) {
+        String detail = String.valueOf(error.getMessage()).toLowerCase(java.util.Locale.ROOT);
+        if (detail.contains("no more available pci slots") || detail.contains("no more available pcie slots")) {
+            return "NIC hotplug failed: No more available PCI slots in the running VM. "
+                    + "Stop and start the VM in Mold to prepare PCIe hotplug ports, then retry adding the NIC. "
+                    + "Alternatively, add the NIC while the VM is stopped and then start it.";
+        }
+        return "Plug NIC failed: " + error;
     }
 }

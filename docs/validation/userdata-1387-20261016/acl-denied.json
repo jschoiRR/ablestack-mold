@@ -1,0 +1,32 @@
+[
+  {
+    "role": "user",
+    "target": "root-denied",
+    "response": {
+      "uuidList": [],
+      "errorcode": 531,
+      "cserrorcode": 4365,
+      "errortext": "Caller does not have permission to operate with provided resource."
+    }
+  },
+  {
+    "role": "domainadmin",
+    "target": "root-denied",
+    "response": {
+      "uuidList": [],
+      "errorcode": 531,
+      "cserrorcode": 4365,
+      "errortext": "Caller does not have permission to operate with provided resource."
+    }
+  },
+  {
+    "role": "user",
+    "target": "domainadmin-bulk-A",
+    "response": {
+      "uuidList": [],
+      "errorcode": 531,
+      "cserrorcode": 4365,
+      "errortext": "Caller does not have permission to operate with provided resource."
+    }
+  }
+]

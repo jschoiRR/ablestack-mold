@@ -1,0 +1,127 @@
+{
+  "start": 24284,
+  "cursor": 24333,
+  "truncated": false,
+  "hasMore": false,
+  "events": [
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 24286,
+      "requestId": "25396.4219",
+      "api": "listUserData",
+      "id": "cdf8e6c2-a13f-41da-943a-448cd6636c2a",
+      "entityid": null,
+      "projectid": "448e5ea1-8632-4701-8388-7b98c22adaf5",
+      "path": "/client/api/"
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 24288,
+      "requestId": "25396.4219",
+      "api": "listUserData",
+      "status": 200
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 24290,
+      "requestId": "25396.4220",
+      "api": "listUserData",
+      "id": null,
+      "entityid": null,
+      "projectid": "448e5ea1-8632-4701-8388-7b98c22adaf5",
+      "path": "/client/api/"
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 24295,
+      "requestId": "25396.4220",
+      "api": "listUserData",
+      "status": 200
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 24297,
+      "requestId": "25396.4221",
+      "api": "registerUserData",
+      "id": null,
+      "entityid": null,
+      "projectid": "448e5ea1-8632-4701-8388-7b98c22adaf5",
+      "path": "/client/api/"
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 24302,
+      "requestId": "25396.4221",
+      "api": "registerUserData",
+      "status": 200
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 24304,
+      "requestId": "25396.4222",
+      "api": "listUserData",
+      "id": null,
+      "entityid": null,
+      "projectid": "448e5ea1-8632-4701-8388-7b98c22adaf5",
+      "path": "/client/api/"
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 24309,
+      "requestId": "25396.4222",
+      "api": "listUserData",
+      "status": 200
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 24311,
+      "requestId": "25396.4223",
+      "api": "listUserData",
+      "id": "cdf8e6c2-a13f-41da-943a-448cd6636c2a",
+      "entityid": null,
+      "projectid": "448e5ea1-8632-4701-8388-7b98c22adaf5",
+      "path": "/client/api/"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 24312,
+      "requestId": "25396.4224",
+      "api": "listAnnotations",
+      "id": null,
+      "entityid": "5083bf2a-d30f-40e2-81e1-01ba3fd72f7c",
+      "projectid": "448e5ea1-8632-4701-8388-7b98c22adaf5",
+      "path": "/client/api/"
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 24319,
+      "requestId": "25396.4223",
+      "api": "listUserData",
+      "status": 200
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 24323,
+      "requestId": "25396.4224",
+      "api": "listAnnotations",
+      "status": 200
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 24325,
+      "requestId": "25396.4225",
+      "api": "addAnnotation",
+      "id": null,
+      "entityid": "5083bf2a-d30f-40e2-81e1-01ba3fd72f7c",
+      "projectid": "448e5ea1-8632-4701-8388-7b98c22adaf5",
+      "path": "/client/api/"
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 24330,
+      "requestId": "25396.4225",
+      "api": "addAnnotation",
+      "status": 200
+    }
+  ]
+}

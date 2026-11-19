@@ -1,0 +1,702 @@
+- complementary:
+  - menu:
+    - menuitem "dashboard 대시보드":
+      - link "dashboard 대시보드":
+        - /url: "#/dashboard"
+        - img "dashboard":
+        - text: 대시보드
+    - img "cloud":
+    - text: 컴퓨트
+    - list:
+      - menuitem "cloud-server 가상머신":
+        - link "cloud-server 가상머신":
+          - /url: "#/vm"
+          - img "cloud-server":
+          - text: 가상머신
+      - menuitem "camera VM 스냅샷":
+        - link "camera VM 스냅샷":
+          - /url: "#/vmsnapshot"
+          - img "camera":
+          - text: VM 스냅샷
+      - menuitem "쿠버네티스":
+        - link "쿠버네티스":
+          - /url: "#/kubernetes"
+          - text: 쿠버네티스
+      - menuitem "fullscreen 오토스케일 VM 그룹":
+        - link "fullscreen 오토스케일 VM 그룹":
+          - /url: "#/autoscalevmgroup"
+          - img "fullscreen":
+          - text: 오토스케일 VM 그룹
+      - menuitem "gold 가상머신 그룹":
+        - link "gold 가상머신 그룹":
+          - /url: "#/vmgroup"
+          - img "gold":
+          - text: 가상머신 그룹
+      - menuitem "key SSH 키 쌍":
+        - link "key SSH 키 쌍":
+          - /url: "#/ssh"
+          - img "key":
+          - text: SSH 키 쌍
+      - menuitem "solution 사용자 데이터 라이브러리":
+        - link "solution 사용자 데이터 라이브러리":
+          - /url: "#/userdata"
+          - img "solution":
+          - text: 사용자 데이터 라이브러리
+      - menuitem "solution CNI 구성":
+        - link "solution CNI 구성":
+          - /url: "#/cniconfiguration"
+          - img "solution":
+          - text: CNI 구성
+      - menuitem "swap Affinity 그룹":
+        - link "swap Affinity 그룹":
+          - /url: "#/affinitygroup"
+          - img "swap":
+          - text: Affinity 그룹
+    - img "hdd":
+    - text: 스토리지
+    - img "wifi":
+    - text: 네트워크
+    - img "picture":
+    - text: 이미지
+    - img "lock":
+    - text: 키 관리
+    - menuitem "schedule 이벤트":
+      - link "schedule 이벤트":
+        - /url: "#/event"
+        - img "schedule":
+        - text: 이벤트
+    - menuitem "project 프로젝트":
+      - link "project 프로젝트":
+        - /url: "#/project"
+        - img "project":
+        - text: 프로젝트
+    - menuitem "idcard 역할":
+      - link "idcard 역할":
+        - /url: "#/role"
+        - img "idcard":
+        - text: 역할
+    - menuitem "team 계정":
+      - link "team 계정":
+        - /url: "#/account"
+        - img "team":
+        - text: 계정
+    - menuitem "block 도메인":
+      - link "block 도메인":
+        - /url: "#/domain"
+        - img "block":
+        - text: 도메인
+    - img "bank":
+    - text: 인프라스트럭쳐
+    - img "shopping":
+    - text: 서비스 오퍼링
+    - img "setting":
+    - text: 구성
+    - menuitem "appstore-add 확장":
+      - link "appstore-add 확장":
+        - /url: "#/extension"
+        - img "appstore-add":
+        - text: 확장
+    - img "tool":
+    - text: 도구
+    - menuitem "read API 문서":
+      - link "read API 문서":
+        - /url: "#/apidocs/"
+        - img "read":
+        - text: API 문서
+- generic: 페이지 스타일 설정
+- button "닫기":
+  - img "close":
+- heading "페이지 스타일 설정" [level=3]
+- radio
+- radio [checked]
+- img "check":
+- heading "테마 색상" [level=3]
+- radio
+- img "check"
+- radio
+- radio
+- radio
+- radio
+- radio
+- radio
+- radio
+- separator
+- heading "네비게이션 설정" [level=3]
+- generic: 배경색
+- textbox [disabled]: "#ffffff"
+- generic: 텍스트 색상
+- textbox [disabled]: "#000000"
+- separator
+- alert:
+  - img "exclamation-circle":
+  - generic: "설정은 현재 브라우저에서만 볼 수 있습니다. 설정을 적용하려면 JSON 파일을 다운로드하고 경로 `/public/config.json` 아래의 `config.json` 파일의 `theme` 섹션에서 해당 콘텐츠를 교체하세요."
+- button "download 세팅값 다운로드(json)":
+  - img "download":
+  - generic: 세팅값 다운로드(json)
+- button "undo 기본값으로 재설정":
+  - img "undo":
+  - generic: 기본값으로 재설정
+- img "menu-fold":
+- combobox
+- img "project":
+- text: 기본 보기
+- button "생성 down":
+  - generic: 생성
+  - img "down":
+- img "translation":
+- img "bell":
+- generic: AC
+- generic: admin cloud
+- main:
+  - link "home":
+    - /url: "#/"
+    - img "home":
+  - text: /
+  - link "가상머신":
+    - /url: "#/vm"
+  - text: /
+  - generic: qa-ag05-visual-vm-01
+  - link "question-circle":
+    - /url: http://docs.ablecloud.io/latest/adminguide/virtual_machines.html
+    - img "question-circle":
+  - button "reload 업데이트":
+    - img "reload":
+    - generic: 업데이트
+  - button "down 작업":
+    - img "down":
+    - generic: 작업
+  - img "edit":
+  - heading "qa-ag05-visual-vm-01" [level=4]
+  - generic: i-2-669-VM
+  - generic: x86_64
+  - generic: KVM
+  - generic: 동적으로 확장 가능
+  - button "code" [disabled]:
+    - img "code":
+  - separator
+  - generic: 상태
+  - generic: 정지된 상태
+  - generic: 아이디
+  - button "barcode":
+    - img "barcode":
+  - link "a70e6642-3f1a-44eb-9099-3af0817236a0":
+    - /url: javascript:;
+  - generic: CPU
+  - text: 2 CPU x 2.00 GHz
+  - img "question-circle":
+  - generic: x86_64
+  - generic: 메모리
+  - text: 2048 MB 메모리
+  - generic: 네트워크
+  - img "wifi":
+  - generic: 1 NIC(s)
+  - strong: eth0
+  - link:
+    - /url: javascript:;
+  - generic: 기본
+  - img "apartment":
+  - link "E1335-VM-Origin-L2":
+    - /url: "#/guestnetwork/ae274fff-3d8e-4285-ac73-26a767c1fea7"
+  - generic: Affinity 그룹
+  - img "swap":
+  - link "qa-ag05-visual-target":
+    - /url: "#/affinitygroup/299e546a-b031-4678-8765-7650157c952f"
+  - generic: 템플릿
+  - img "save":
+  - link "rocky-9-4-minimal.qcow22":
+    - /url: "#/template/e3d8677e-70f0-44bd-917e-6068636b97a8"
+  - generic: 컴퓨트 오퍼링
+  - img "cloud":
+  - link "AS-PROD-31-AS01-2C2G-Sparse":
+    - /url: "#/computeoffering/39c3aa33-5632-4dea-bd84-ba794d292c87"
+  - generic: Zone
+  - img "global":
+  - link "Zone":
+    - /url: "#/zone/7013f5a1-de59-4cea-a596-f4f58815f31c"
+  - generic: 계정
+  - img "user":
+  - link "admin":
+    - /url: "#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f"
+  - generic: 도메인
+  - img "block":
+  - link "ROOT":
+    - /url: "#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details"
+  - generic: 생성일
+  - img "calendar":
+  - text: 2026. 10. 19. 오후 2:33:36
+  - separator
+  - generic: 태그
+  - img "plus":
+  - text: 새 태그
+  - tablist:
+    - tab "상세"
+    - tab "IP 구성"
+    - tab "메트릭"
+    - tab "프로세스"
+    - tab "스케줄"
+    - tab "ISO"
+    - tab "볼륨" [selected]
+    - tab "NIC"
+    - tab "설정"
+    - tab "호스트 장치"
+    - tab "VM 스냅샷"
+    - tab "이벤트"
+    - tab "코멘트"
+  - tabpanel "볼륨":
+    - button "plus 생성 및 연결":
+      - img "plus":
+      - generic: 생성 및 연결
+    - button "기존 볼륨 연결":
+      - generic: 기존 볼륨 연결
+    - button "reload 업데이트":
+      - img "reload":
+      - generic: 업데이트
+    - textbox "검색"
+    - button "search":
+      - img "search":
+    - table:
+      - rowgroup:
+        - row "이름 상태 유형 볼륨 번호 (Device ID) 크기 스토리지 KMS 키 작업":
+          - columnheader "이름"
+          - columnheader "상태"
+          - columnheader "유형"
+          - columnheader "볼륨 번호 (Device ID)"
+          - columnheader "크기"
+          - columnheader "스토리지"
+          - columnheader "KMS 키"
+          - columnheader "작업"
+      - rowgroup:
+        - row "hdd ROOT-669 sparse Allocated ROOT 0 100.00 GB 디스크 분리 작업":
+          - cell "hdd ROOT-669 sparse":
+            - img "hdd":
+            - link "ROOT-669":
+              - /url: "#/volume/9b616f7e-e3a3-4da7-b543-e72bdbfb418c"
+            - generic: sparse
+          - cell "Allocated": Allocated
+          - cell "ROOT"
+          - cell "0"
+          - cell "100.00 GB"
+          - cell
+          - cell
+          - cell "디스크 분리 작업":
+            - button "디스크 분리" [disabled]:
+              - generic: 디스크 분리
+            - button "작업":
+              - img "down":
+- alert:
+  - img "info-circle":
+  - generic: Wall 모니터링을 사용할 수 없습니다. 기존 알림은 최신 정보가 아닐 수 있으며 Mold는 계속 사용할 수 있습니다. 비활성
+- dialog "ISO 연결":
+  - document:
+    - button "Close":
+      - img "close":
+    - generic: ISO 연결
+    - table:
+      - rowgroup:
+        - row "VM qa-ag05-visual-vm-01":
+          - rowheader "VM"
+          - cell "qa-ag05-visual-vm-01":
+            - generic: qa-ag05-visual-vm-01
+        - row "Zone Zone":
+          - rowheader "Zone"
+          - cell "Zone":
+            - generic: Zone
+        - row "계정 admin":
+          - rowheader "계정"
+          - cell "admin":
+            - generic: admin
+    - alert:
+      - img "info-circle":
+      - generic: "추가로 연결할 수 있는 ISO: 2개"
+    - textbox "검색"
+    - button "search":
+      - img "search":
+    - checkbox "VMware Tools Installer ISO vmware-tools.iso Zone · 데이터 미디어"
+    - strong: VMware Tools Installer ISO
+    - generic: vmware-tools.iso
+    - generic: Zone · 데이터 미디어
+    - checkbox "XenServer Tools Installer ISO (xen-pv-drv-iso) xs-tools.iso Zone · 데이터 미디어"
+    - strong: XenServer Tools Installer ISO (xen-pv-drv-iso)
+    - generic: xs-tools.iso
+    - generic: Zone · 데이터 미디어
+    - checkbox "Windows Server 2025 x86_64 DVD Windows Server 2025 x86_64 DVD Zone · 부팅 가능"
+    - strong: Windows Server 2025 x86_64 DVD
+    - generic: Windows Server 2025 x86_64 DVD
+    - generic: Zone · 부팅 가능
+    - checkbox "Windows 11 Korean x64 DVD Windows 11 Korean x64 DVD Zone · 부팅 가능"
+    - strong: Windows 11 Korean x64 DVD
+    - generic: Windows 11 Korean x64 DVD
+    - generic: Zone · 부팅 가능
+    - checkbox "Virtio Windows Driver 0.1.302 Virtio Windows Driver 0.1.302 Zone · 데이터 미디어"
+    - strong: Virtio Windows Driver 0.1.302
+    - generic: Virtio Windows Driver 0.1.302
+    - generic: Zone · 데이터 미디어
+    - checkbox "Rocky Linux 10.2 x86_64 DVD Rocky Linux 10.2 x86_64 DVD Zone · 부팅 가능"
+    - strong: Rocky Linux 10.2 x86_64 DVD
+    - generic: Rocky Linux 10.2 x86_64 DVD
+    - generic: Zone · 부팅 가능
+    - checkbox "Rocky Linux 9.8 x86_64 DVD Rocky Linux 9.8 x86_64 DVD Zone · 부팅 가능"
+    - strong: Rocky Linux 9.8 x86_64 DVD
+    - generic: Rocky Linux 9.8 x86_64 DVD
+    - generic: Zone · 부팅 가능
+    - checkbox "Ubuntu 26.04 x86_64 DVD Ubuntu 26.04 x86_64 DVD Zone · 부팅 가능"
+    - strong: Ubuntu 26.04 x86_64 DVD
+    - generic: Ubuntu 26.04 x86_64 DVD
+    - generic: Zone · 부팅 가능
+    - checkbox "Windows Server 2022 x86_64 DVD Windows Server 2022 x86_64 DVD Zone · 부팅 가능"
+    - strong: Windows Server 2022 x86_64 DVD
+    - generic: Windows Server 2022 x86_64 DVD
+    - generic: Zone · 부팅 가능
+    - checkbox "Windows Server 2019 x86_64 DVD Windows Server 2019 x86_64 DVD Zone · 부팅 가능"
+    - strong: Windows Server 2019 x86_64 DVD
+    - generic: Windows Server 2019 x86_64 DVD
+    - generic: Zone · 부팅 가능
+    - checkbox "Rocky Linux 8.10 x86_64 DVD Rocky Linux 8.10 x86_64 DVD Zone · 부팅 가능"
+    - strong: Rocky Linux 8.10 x86_64 DVD
+    - generic: Rocky Linux 8.10 x86_64 DVD
+    - generic: Zone · 부팅 가능
+    - checkbox "Ubuntu 22.04.5 Server x86_64 DVD Ubuntu 22.04.5 Server x86_64 DVD Zone · 부팅 가능"
+    - strong: Ubuntu 22.04.5 Server x86_64 DVD
+    - generic: Ubuntu 22.04.5 Server x86_64 DVD
+    - generic: Zone · 부팅 가능
+    - checkbox "Ubuntu 24.04.4 Server x86_64 DVD Ubuntu 24.04.4 Server x86_64 DVD Zone · 부팅 가능"
+    - strong: Ubuntu 24.04.4 Server x86_64 DVD
+    - generic: Ubuntu 24.04.4 Server x86_64 DVD
+    - generic: Zone · 부팅 가능
+    - checkbox "Debian 11.11 x86_64 DVD Debian 11.11 x86_64 DVD Zone · 부팅 가능"
+    - strong: Debian 11.11 x86_64 DVD
+    - generic: Debian 11.11 x86_64 DVD
+    - generic: Zone · 부팅 가능
+    - checkbox "Debian 12.15 x86_64 DVD Debian 12.15 x86_64 DVD Zone · 부팅 가능"
+    - strong: Debian 12.15 x86_64 DVD
+    - generic: Debian 12.15 x86_64 DVD
+    - generic: Zone · 부팅 가능
+    - checkbox "Debian 13.7 x86_64 DVD Debian 13.7 x86_64 DVD Zone · 부팅 가능"
+    - strong: Debian 13.7 x86_64 DVD
+    - generic: Debian 13.7 x86_64 DVD
+    - generic: Zone · 부팅 가능
+    - checkbox "1.34.2-Kubernetes-Binaries-ISO 1.34.2-Kubernetes-Binaries-ISO Zone · 데이터 미디어"
+    - strong: 1.34.2-Kubernetes-Binaries-ISO
+    - generic: 1.34.2-Kubernetes-Binaries-ISO
+    - generic: Zone · 데이터 미디어
+    - checkbox "ABLESTACK-Tools-Process-rocky-659489d ABLESTACK-Tools-Process-rocky-659489d Zone · 데이터 미디어"
+    - strong: ABLESTACK-Tools-Process-rocky-659489d
+    - generic: ABLESTACK-Tools-Process-rocky-659489d
+    - generic: Zone · 데이터 미디어
+    - checkbox "ABLESTACK-Tools-Process-ubuntu-659489d ABLESTACK-Tools-Process-ubuntu-659489d Zone · 데이터 미디어"
+    - strong: ABLESTACK-Tools-Process-ubuntu-659489d
+    - generic: ABLESTACK-Tools-Process-ubuntu-659489d
+    - generic: Zone · 데이터 미디어
+    - checkbox "ABLESTACK-Tools-Process-debian-659489d ABLESTACK-Tools-Process-debian-659489d Zone · 데이터 미디어"
+    - strong: ABLESTACK-Tools-Process-debian-659489d
+    - generic: ABLESTACK-Tools-Process-debian-659489d
+    - generic: Zone · 데이터 미디어
+    - checkbox "ABLESTACK-Tools-Process-windows-659489d ABLESTACK-Tools-Process-windows-659489d Zone · 데이터 미디어"
+    - strong: ABLESTACK-Tools-Process-windows-659489d
+    - generic: ABLESTACK-Tools-Process-windows-659489d
+    - generic: Zone · 데이터 미디어
+    - checkbox "ABLESTACK-Tools-Process-rocky-6dcb57e ABLESTACK-Tools-Process-rocky-6dcb57e Zone · 데이터 미디어"
+    - strong: ABLESTACK-Tools-Process-rocky-6dcb57e
+    - generic: ABLESTACK-Tools-Process-rocky-6dcb57e
+    - generic: Zone · 데이터 미디어
+    - checkbox "ABLESTACK-Tools-Process-ubuntu-6dcb57e ABLESTACK-Tools-Process-ubuntu-6dcb57e Zone · 데이터 미디어"
+    - strong: ABLESTACK-Tools-Process-ubuntu-6dcb57e
+    - generic: ABLESTACK-Tools-Process-ubuntu-6dcb57e
+    - generic: Zone · 데이터 미디어
+    - checkbox "ABLESTACK-Tools-Process-debian-6dcb57e ABLESTACK-Tools-Process-debian-6dcb57e Zone · 데이터 미디어"
+    - strong: ABLESTACK-Tools-Process-debian-6dcb57e
+    - generic: ABLESTACK-Tools-Process-debian-6dcb57e
+    - generic: Zone · 데이터 미디어
+    - checkbox "ABLESTACK-Tools-Process-windows-6dcb57e ABLESTACK-Tools-Process-windows-6dcb57e Zone · 데이터 미디어"
+    - strong: ABLESTACK-Tools-Process-windows-6dcb57e
+    - generic: ABLESTACK-Tools-Process-windows-6dcb57e
+    - generic: Zone · 데이터 미디어
+    - checkbox "ABLESTACK-Tools-Process-rocky-c439f93 ABLESTACK-Tools-Process-rocky-c439f93 Zone · 데이터 미디어"
+    - strong: ABLESTACK-Tools-Process-rocky-c439f93
+    - generic: ABLESTACK-Tools-Process-rocky-c439f93
+    - generic: Zone · 데이터 미디어
+    - checkbox "ABLESTACK-Tools-Process-ubuntu-c439f93 ABLESTACK-Tools-Process-ubuntu-c439f93 Zone · 데이터 미디어"
+    - strong: ABLESTACK-Tools-Process-ubuntu-c439f93
+    - generic: ABLESTACK-Tools-Process-ubuntu-c439f93
+    - generic: Zone · 데이터 미디어
+    - checkbox "ABLESTACK-Tools-Process-debian-c439f93 ABLESTACK-Tools-Process-debian-c439f93 Zone · 데이터 미디어"
+    - strong: ABLESTACK-Tools-Process-debian-c439f93
+    - generic: ABLESTACK-Tools-Process-debian-c439f93
+    - generic: Zone · 데이터 미디어
+    - checkbox "ABLESTACK-Tools-Process-windows-c439f93 ABLESTACK-Tools-Process-windows-c439f93 Zone · 데이터 미디어"
+    - strong: ABLESTACK-Tools-Process-windows-c439f93
+    - generic: ABLESTACK-Tools-Process-windows-c439f93
+    - generic: Zone · 데이터 미디어
+    - checkbox "1.35.10-Kubernetes-Binaries-ISO 1.35.10-Kubernetes-Binaries-ISO Zone · 데이터 미디어"
+    - strong: 1.35.10-Kubernetes-Binaries-ISO
+    - generic: 1.35.10-Kubernetes-Binaries-ISO
+    - generic: Zone · 데이터 미디어
+    - checkbox "1.35.9-Kubernetes-Binaries-ISO 1.35.9-Kubernetes-Binaries-ISO Zone · 데이터 미디어"
+    - strong: 1.35.9-Kubernetes-Binaries-ISO
+    - generic: 1.35.9-Kubernetes-Binaries-ISO
+    - generic: Zone · 데이터 미디어
+    - checkbox "ABLESTACK-Tools-Process-rocky-fb4078b ABLESTACK-Tools-Process-rocky-fb4078b Zone · 데이터 미디어"
+    - strong: ABLESTACK-Tools-Process-rocky-fb4078b
+    - generic: ABLESTACK-Tools-Process-rocky-fb4078b
+    - generic: Zone · 데이터 미디어
+    - checkbox "ABLESTACK-Tools-Process-ubuntu-fb4078b ABLESTACK-Tools-Process-ubuntu-fb4078b Zone · 데이터 미디어"
+    - strong: ABLESTACK-Tools-Process-ubuntu-fb4078b
+    - generic: ABLESTACK-Tools-Process-ubuntu-fb4078b
+    - generic: Zone · 데이터 미디어
+    - checkbox "ABLESTACK-Tools-Process-debian-fb4078b ABLESTACK-Tools-Process-debian-fb4078b Zone · 데이터 미디어"
+    - strong: ABLESTACK-Tools-Process-debian-fb4078b
+    - generic: ABLESTACK-Tools-Process-debian-fb4078b
+    - generic: Zone · 데이터 미디어
+    - checkbox "ABLESTACK-Tools-Process-windows-fb4078b ABLESTACK-Tools-Process-windows-fb4078b Zone · 데이터 미디어"
+    - strong: ABLESTACK-Tools-Process-windows-fb4078b
+    - generic: ABLESTACK-Tools-Process-windows-fb4078b
+    - generic: Zone · 데이터 미디어
+    - checkbox "1.34.2-Mold-1228-r1-f6b6cd62-Kubernetes-Binaries-ISO 1.34.2-Mold-1228-r1-f6b6cd62-Kubernetes-Binaries-ISO Zone · 데이터 미디어"
+    - strong: 1.34.2-Mold-1228-r1-f6b6cd62-Kubernetes-Binaries-ISO
+    - generic: 1.34.2-Mold-1228-r1-f6b6cd62-Kubernetes-Binaries-ISO
+    - generic: Zone · 데이터 미디어
+    - checkbox "1.34.9-Mold-1228-r1-f6b6cd62-Kubernetes-Binaries-ISO 1.34.9-Mold-1228-r1-f6b6cd62-Kubernetes-Binaries-ISO Zone · 데이터 미디어"
+    - strong: 1.34.9-Mold-1228-r1-f6b6cd62-Kubernetes-Binaries-ISO
+    - generic: 1.34.9-Mold-1228-r1-f6b6cd62-Kubernetes-Binaries-ISO
+    - generic: Zone · 데이터 미디어
+    - checkbox "1.34.12-Mold-1228-r1-f6b6cd62-Kubernetes-Binaries-ISO 1.34.12-Mold-1228-r1-f6b6cd62-Kubernetes-Binaries-ISO Zone · 데이터 미디어"
+    - strong: 1.34.12-Mold-1228-r1-f6b6cd62-Kubernetes-Binaries-ISO
+    - generic: 1.34.12-Mold-1228-r1-f6b6cd62-Kubernetes-Binaries-ISO
+    - generic: Zone · 데이터 미디어
+    - checkbox "1.35.9-Mold-1228-r1-f6b6cd62-Kubernetes-Binaries-ISO 1.35.9-Mold-1228-r1-f6b6cd62-Kubernetes-Binaries-ISO Zone · 데이터 미디어"
+    - strong: 1.35.9-Mold-1228-r1-f6b6cd62-Kubernetes-Binaries-ISO
+    - generic: 1.35.9-Mold-1228-r1-f6b6cd62-Kubernetes-Binaries-ISO
+    - generic: Zone · 데이터 미디어
+    - checkbox "1.36.5-Mold-1228-r1-f6b6cd62-Kubernetes-Binaries-ISO 1.36.5-Mold-1228-r1-f6b6cd62-Kubernetes-Binaries-ISO Zone · 데이터 미디어"
+    - strong: 1.36.5-Mold-1228-r1-f6b6cd62-Kubernetes-Binaries-ISO
+    - generic: 1.36.5-Mold-1228-r1-f6b6cd62-Kubernetes-Binaries-ISO
+    - generic: Zone · 데이터 미디어
+    - checkbox "1.37.1-Mold-1228-DEV-r1-f6b6cd62-Kubernetes-Binaries-ISO 1.37.1-Mold-1228-DEV-r1-f6b6cd62-Kubernetes-Binaries-ISO Zone · 데이터 미디어"
+    - strong: 1.37.1-Mold-1228-DEV-r1-f6b6cd62-Kubernetes-Binaries-ISO
+    - generic: 1.37.1-Mold-1228-DEV-r1-f6b6cd62-Kubernetes-Binaries-ISO
+    - generic: Zone · 데이터 미디어
+    - checkbox "1.34.12-Mold-1244-r1-3e41a1b3-Kubernetes-Binaries-ISO 1.34.12-Mold-1244-r1-3e41a1b3-Kubernetes-Binaries-ISO Zone · 데이터 미디어"
+    - strong: 1.34.12-Mold-1244-r1-3e41a1b3-Kubernetes-Binaries-ISO
+    - generic: 1.34.12-Mold-1244-r1-3e41a1b3-Kubernetes-Binaries-ISO
+    - generic: Zone · 데이터 미디어
+    - checkbox "1.34.2-Mold-1244-r1-3e41a1b3-Kubernetes-Binaries-ISO 1.34.2-Mold-1244-r1-3e41a1b3-Kubernetes-Binaries-ISO Zone · 데이터 미디어"
+    - strong: 1.34.2-Mold-1244-r1-3e41a1b3-Kubernetes-Binaries-ISO
+    - generic: 1.34.2-Mold-1244-r1-3e41a1b3-Kubernetes-Binaries-ISO
+    - generic: Zone · 데이터 미디어
+    - checkbox "1.34.9-Mold-1244-r1-3e41a1b3-Kubernetes-Binaries-ISO 1.34.9-Mold-1244-r1-3e41a1b3-Kubernetes-Binaries-ISO Zone · 데이터 미디어"
+    - strong: 1.34.9-Mold-1244-r1-3e41a1b3-Kubernetes-Binaries-ISO
+    - generic: 1.34.9-Mold-1244-r1-3e41a1b3-Kubernetes-Binaries-ISO
+    - generic: Zone · 데이터 미디어
+    - checkbox "1.35.9-Mold-1244-r1-3e41a1b3-Kubernetes-Binaries-ISO 1.35.9-Mold-1244-r1-3e41a1b3-Kubernetes-Binaries-ISO Zone · 데이터 미디어"
+    - strong: 1.35.9-Mold-1244-r1-3e41a1b3-Kubernetes-Binaries-ISO
+    - generic: 1.35.9-Mold-1244-r1-3e41a1b3-Kubernetes-Binaries-ISO
+    - generic: Zone · 데이터 미디어
+    - checkbox "1.36.5-Mold-1244-r1-3e41a1b3-Kubernetes-Binaries-ISO 1.36.5-Mold-1244-r1-3e41a1b3-Kubernetes-Binaries-ISO Zone · 데이터 미디어"
+    - strong: 1.36.5-Mold-1244-r1-3e41a1b3-Kubernetes-Binaries-ISO
+    - generic: 1.36.5-Mold-1244-r1-3e41a1b3-Kubernetes-Binaries-ISO
+    - generic: Zone · 데이터 미디어
+    - checkbox "1.37.1-Mold-1244-r1-3e41a1b3-DEV-Kubernetes-Binaries-ISO 1.37.1-Mold-1244-r1-3e41a1b3-DEV-Kubernetes-Binaries-ISO Zone · 데이터 미디어"
+    - strong: 1.37.1-Mold-1244-r1-3e41a1b3-DEV-Kubernetes-Binaries-ISO
+    - generic: 1.37.1-Mold-1244-r1-3e41a1b3-DEV-Kubernetes-Binaries-ISO
+    - generic: Zone · 데이터 미디어
+    - checkbox "1.34.2-Mold-1245-r1-48830e74-Kubernetes-Binaries-ISO 1.34.2-Mold-1245-r1-48830e74-Kubernetes-Binaries-ISO Zone · 데이터 미디어"
+    - strong: 1.34.2-Mold-1245-r1-48830e74-Kubernetes-Binaries-ISO
+    - generic: 1.34.2-Mold-1245-r1-48830e74-Kubernetes-Binaries-ISO
+    - generic: Zone · 데이터 미디어
+    - checkbox "1.34.9-Mold-1245-r1-48830e74-Kubernetes-Binaries-ISO 1.34.9-Mold-1245-r1-48830e74-Kubernetes-Binaries-ISO Zone · 데이터 미디어"
+    - strong: 1.34.9-Mold-1245-r1-48830e74-Kubernetes-Binaries-ISO
+    - generic: 1.34.9-Mold-1245-r1-48830e74-Kubernetes-Binaries-ISO
+    - generic: Zone · 데이터 미디어
+    - checkbox "1.34.12-Mold-1245-r1-48830e74-Kubernetes-Binaries-ISO 1.34.12-Mold-1245-r1-48830e74-Kubernetes-Binaries-ISO Zone · 데이터 미디어"
+    - strong: 1.34.12-Mold-1245-r1-48830e74-Kubernetes-Binaries-ISO
+    - generic: 1.34.12-Mold-1245-r1-48830e74-Kubernetes-Binaries-ISO
+    - generic: Zone · 데이터 미디어
+    - checkbox "1.35.9-Mold-1245-r1-48830e74-Kubernetes-Binaries-ISO 1.35.9-Mold-1245-r1-48830e74-Kubernetes-Binaries-ISO Zone · 데이터 미디어"
+    - strong: 1.35.9-Mold-1245-r1-48830e74-Kubernetes-Binaries-ISO
+    - generic: 1.35.9-Mold-1245-r1-48830e74-Kubernetes-Binaries-ISO
+    - generic: Zone · 데이터 미디어
+    - checkbox "1.36.5-Mold-1245-r1-48830e74-Kubernetes-Binaries-ISO 1.36.5-Mold-1245-r1-48830e74-Kubernetes-Binaries-ISO Zone · 데이터 미디어"
+    - strong: 1.36.5-Mold-1245-r1-48830e74-Kubernetes-Binaries-ISO
+    - generic: 1.36.5-Mold-1245-r1-48830e74-Kubernetes-Binaries-ISO
+    - generic: Zone · 데이터 미디어
+    - checkbox "1.37.1-Mold-1245-r1-48830e74-DEV-Kubernetes-Binaries-ISO 1.37.1-Mold-1245-r1-48830e74-DEV-Kubernetes-Binaries-ISO Zone · 데이터 미디어"
+    - strong: 1.37.1-Mold-1245-r1-48830e74-DEV-Kubernetes-Binaries-ISO
+    - generic: 1.37.1-Mold-1245-r1-48830e74-DEV-Kubernetes-Binaries-ISO
+    - generic: Zone · 데이터 미디어
+    - checkbox "1.35.9-Mold-1255-r1-6b757f96-Kubernetes-Binaries-ISO 1.35.9-Mold-1255-r1-6b757f96-Kubernetes-Binaries-ISO Zone · 데이터 미디어"
+    - strong: 1.35.9-Mold-1255-r1-6b757f96-Kubernetes-Binaries-ISO
+    - generic: 1.35.9-Mold-1255-r1-6b757f96-Kubernetes-Binaries-ISO
+    - generic: Zone · 데이터 미디어
+    - checkbox "1.34.12-Mold-1255-r1-6b757f96-Kubernetes-Binaries-ISO 1.34.12-Mold-1255-r1-6b757f96-Kubernetes-Binaries-ISO Zone · 데이터 미디어"
+    - strong: 1.34.12-Mold-1255-r1-6b757f96-Kubernetes-Binaries-ISO
+    - generic: 1.34.12-Mold-1255-r1-6b757f96-Kubernetes-Binaries-ISO
+    - generic: Zone · 데이터 미디어
+    - checkbox "1.36.5-Mold-1255-r1-6b757f96-Kubernetes-Binaries-ISO 1.36.5-Mold-1255-r1-6b757f96-Kubernetes-Binaries-ISO Zone · 데이터 미디어"
+    - strong: 1.36.5-Mold-1255-r1-6b757f96-Kubernetes-Binaries-ISO
+    - generic: 1.36.5-Mold-1255-r1-6b757f96-Kubernetes-Binaries-ISO
+    - generic: Zone · 데이터 미디어
+    - checkbox "1.37.1-Mold-1255-r1-6b757f96-DEV-Kubernetes-Binaries-ISO 1.37.1-Mold-1255-r1-6b757f96-DEV-Kubernetes-Binaries-ISO Zone · 데이터 미디어"
+    - strong: 1.37.1-Mold-1255-r1-6b757f96-DEV-Kubernetes-Binaries-ISO
+    - generic: 1.37.1-Mold-1255-r1-6b757f96-DEV-Kubernetes-Binaries-ISO
+    - generic: Zone · 데이터 미디어
+    - checkbox "1.34.2-Mold-1255-r1-6b757f96-Kubernetes-Binaries-ISO 1.34.2-Mold-1255-r1-6b757f96-Kubernetes-Binaries-ISO Zone · 데이터 미디어"
+    - strong: 1.34.2-Mold-1255-r1-6b757f96-Kubernetes-Binaries-ISO
+    - generic: 1.34.2-Mold-1255-r1-6b757f96-Kubernetes-Binaries-ISO
+    - generic: Zone · 데이터 미디어
+    - checkbox "1.34.9-Mold-1255-r1-6b757f96-Kubernetes-Binaries-ISO 1.34.9-Mold-1255-r1-6b757f96-Kubernetes-Binaries-ISO Zone · 데이터 미디어"
+    - strong: 1.34.9-Mold-1255-r1-6b757f96-Kubernetes-Binaries-ISO
+    - generic: 1.34.9-Mold-1255-r1-6b757f96-Kubernetes-Binaries-ISO
+    - generic: Zone · 데이터 미디어
+    - checkbox "1.35.9-Mold-1258-r1-4a2c2f10-Kubernetes-Binaries-ISO 1.35.9-Mold-1258-r1-4a2c2f10-Kubernetes-Binaries-ISO Zone · 데이터 미디어"
+    - strong: 1.35.9-Mold-1258-r1-4a2c2f10-Kubernetes-Binaries-ISO
+    - generic: 1.35.9-Mold-1258-r1-4a2c2f10-Kubernetes-Binaries-ISO
+    - generic: Zone · 데이터 미디어
+    - checkbox "1.34.12-Mold-1258-r1-4a2c2f10-Kubernetes-Binaries-ISO 1.34.12-Mold-1258-r1-4a2c2f10-Kubernetes-Binaries-ISO Zone · 데이터 미디어"
+    - strong: 1.34.12-Mold-1258-r1-4a2c2f10-Kubernetes-Binaries-ISO
+    - generic: 1.34.12-Mold-1258-r1-4a2c2f10-Kubernetes-Binaries-ISO
+    - generic: Zone · 데이터 미디어
+    - checkbox "1.36.5-Mold-1258-r1-4a2c2f10-Kubernetes-Binaries-ISO 1.36.5-Mold-1258-r1-4a2c2f10-Kubernetes-Binaries-ISO Zone · 데이터 미디어"
+    - strong: 1.36.5-Mold-1258-r1-4a2c2f10-Kubernetes-Binaries-ISO
+    - generic: 1.36.5-Mold-1258-r1-4a2c2f10-Kubernetes-Binaries-ISO
+    - generic: Zone · 데이터 미디어
+    - checkbox "1.37.1-Mold-1258-r1-4a2c2f10-DEV-Kubernetes-Binaries-ISO 1.37.1-Mold-1258-r1-4a2c2f10-DEV-Kubernetes-Binaries-ISO Zone · 데이터 미디어"
+    - strong: 1.37.1-Mold-1258-r1-4a2c2f10-DEV-Kubernetes-Binaries-ISO
+    - generic: 1.37.1-Mold-1258-r1-4a2c2f10-DEV-Kubernetes-Binaries-ISO
+    - generic: Zone · 데이터 미디어
+    - checkbox "1.34.2-Mold-1258-r1-4a2c2f10-Kubernetes-Binaries-ISO 1.34.2-Mold-1258-r1-4a2c2f10-Kubernetes-Binaries-ISO Zone · 데이터 미디어"
+    - strong: 1.34.2-Mold-1258-r1-4a2c2f10-Kubernetes-Binaries-ISO
+    - generic: 1.34.2-Mold-1258-r1-4a2c2f10-Kubernetes-Binaries-ISO
+    - generic: Zone · 데이터 미디어
+    - checkbox "1.34.9-Mold-1258-r1-4a2c2f10-Kubernetes-Binaries-ISO 1.34.9-Mold-1258-r1-4a2c2f10-Kubernetes-Binaries-ISO Zone · 데이터 미디어"
+    - strong: 1.34.9-Mold-1258-r1-4a2c2f10-Kubernetes-Binaries-ISO
+    - generic: 1.34.9-Mold-1258-r1-4a2c2f10-Kubernetes-Binaries-ISO
+    - generic: Zone · 데이터 미디어
+    - checkbox "1.34.12-Mold-1260-r1-b46a5885-Kubernetes-Binaries-ISO 1.34.12-Mold-1260-r1-b46a5885-Kubernetes-Binaries-ISO Zone · 데이터 미디어"
+    - strong: 1.34.12-Mold-1260-r1-b46a5885-Kubernetes-Binaries-ISO
+    - generic: 1.34.12-Mold-1260-r1-b46a5885-Kubernetes-Binaries-ISO
+    - generic: Zone · 데이터 미디어
+    - checkbox "1.34.2-Mold-1260-r1-b46a5885-Kubernetes-Binaries-ISO 1.34.2-Mold-1260-r1-b46a5885-Kubernetes-Binaries-ISO Zone · 데이터 미디어"
+    - strong: 1.34.2-Mold-1260-r1-b46a5885-Kubernetes-Binaries-ISO
+    - generic: 1.34.2-Mold-1260-r1-b46a5885-Kubernetes-Binaries-ISO
+    - generic: Zone · 데이터 미디어
+    - checkbox "1.34.9-Mold-1260-r1-b46a5885-Kubernetes-Binaries-ISO 1.34.9-Mold-1260-r1-b46a5885-Kubernetes-Binaries-ISO Zone · 데이터 미디어"
+    - strong: 1.34.9-Mold-1260-r1-b46a5885-Kubernetes-Binaries-ISO
+    - generic: 1.34.9-Mold-1260-r1-b46a5885-Kubernetes-Binaries-ISO
+    - generic: Zone · 데이터 미디어
+    - checkbox "1.35.9-Mold-1260-r1-b46a5885-Kubernetes-Binaries-ISO 1.35.9-Mold-1260-r1-b46a5885-Kubernetes-Binaries-ISO Zone · 데이터 미디어"
+    - strong: 1.35.9-Mold-1260-r1-b46a5885-Kubernetes-Binaries-ISO
+    - generic: 1.35.9-Mold-1260-r1-b46a5885-Kubernetes-Binaries-ISO
+    - generic: Zone · 데이터 미디어
+    - checkbox "1.36.5-Mold-1260-r1-b46a5885-Kubernetes-Binaries-ISO 1.36.5-Mold-1260-r1-b46a5885-Kubernetes-Binaries-ISO Zone · 데이터 미디어"
+    - strong: 1.36.5-Mold-1260-r1-b46a5885-Kubernetes-Binaries-ISO
+    - generic: 1.36.5-Mold-1260-r1-b46a5885-Kubernetes-Binaries-ISO
+    - generic: Zone · 데이터 미디어
+    - checkbox "1.37.1-Mold-1260-r1-b46a5885-DEV-Kubernetes-Binaries-ISO 1.37.1-Mold-1260-r1-b46a5885-DEV-Kubernetes-Binaries-ISO Zone · 데이터 미디어"
+    - strong: 1.37.1-Mold-1260-r1-b46a5885-DEV-Kubernetes-Binaries-ISO
+    - generic: 1.37.1-Mold-1260-r1-b46a5885-DEV-Kubernetes-Binaries-ISO
+    - generic: Zone · 데이터 미디어
+    - checkbox "1.34.2-Mold-1280-r1-3f24d481-Kubernetes-Binaries-ISO 1.34.2-Mold-1280-r1-3f24d481-Kubernetes-Binaries-ISO Zone · 데이터 미디어"
+    - strong: 1.34.2-Mold-1280-r1-3f24d481-Kubernetes-Binaries-ISO
+    - generic: 1.34.2-Mold-1280-r1-3f24d481-Kubernetes-Binaries-ISO
+    - generic: Zone · 데이터 미디어
+    - checkbox "1.34.2-Mold-1280-csi-r1-3f24d481-Kubernetes-Binaries-ISO 1.34.2-Mold-1280-csi-r1-3f24d481-Kubernetes-Binaries-ISO Zone · 데이터 미디어"
+    - strong: 1.34.2-Mold-1280-csi-r1-3f24d481-Kubernetes-Binaries-ISO
+    - generic: 1.34.2-Mold-1280-csi-r1-3f24d481-Kubernetes-Binaries-ISO
+    - generic: Zone · 데이터 미디어
+    - checkbox "1.34.9-Mold-1280-r1-3f24d481-Kubernetes-Binaries-ISO 1.34.9-Mold-1280-r1-3f24d481-Kubernetes-Binaries-ISO Zone · 데이터 미디어"
+    - strong: 1.34.9-Mold-1280-r1-3f24d481-Kubernetes-Binaries-ISO
+    - generic: 1.34.9-Mold-1280-r1-3f24d481-Kubernetes-Binaries-ISO
+    - generic: Zone · 데이터 미디어
+    - checkbox "1.34.9-Mold-1280-csi-r1-3f24d481-Kubernetes-Binaries-ISO 1.34.9-Mold-1280-csi-r1-3f24d481-Kubernetes-Binaries-ISO Zone · 데이터 미디어"
+    - strong: 1.34.9-Mold-1280-csi-r1-3f24d481-Kubernetes-Binaries-ISO
+    - generic: 1.34.9-Mold-1280-csi-r1-3f24d481-Kubernetes-Binaries-ISO
+    - generic: Zone · 데이터 미디어
+    - checkbox "1.34.12-Mold-1280-r1-3f24d481-Kubernetes-Binaries-ISO 1.34.12-Mold-1280-r1-3f24d481-Kubernetes-Binaries-ISO Zone · 데이터 미디어"
+    - strong: 1.34.12-Mold-1280-r1-3f24d481-Kubernetes-Binaries-ISO
+    - generic: 1.34.12-Mold-1280-r1-3f24d481-Kubernetes-Binaries-ISO
+    - generic: Zone · 데이터 미디어
+    - checkbox "1.34.12-Mold-1280-csi-r1-3f24d481-Kubernetes-Binaries-ISO 1.34.12-Mold-1280-csi-r1-3f24d481-Kubernetes-Binaries-ISO Zone · 데이터 미디어"
+    - strong: 1.34.12-Mold-1280-csi-r1-3f24d481-Kubernetes-Binaries-ISO
+    - generic: 1.34.12-Mold-1280-csi-r1-3f24d481-Kubernetes-Binaries-ISO
+    - generic: Zone · 데이터 미디어
+    - checkbox "1.35.9-Mold-1280-r1-3f24d481-Kubernetes-Binaries-ISO 1.35.9-Mold-1280-r1-3f24d481-Kubernetes-Binaries-ISO Zone · 데이터 미디어"
+    - strong: 1.35.9-Mold-1280-r1-3f24d481-Kubernetes-Binaries-ISO
+    - generic: 1.35.9-Mold-1280-r1-3f24d481-Kubernetes-Binaries-ISO
+    - generic: Zone · 데이터 미디어
+    - checkbox "1.35.9-Mold-1280-csi-r1-3f24d481-Kubernetes-Binaries-ISO 1.35.9-Mold-1280-csi-r1-3f24d481-Kubernetes-Binaries-ISO Zone · 데이터 미디어"
+    - strong: 1.35.9-Mold-1280-csi-r1-3f24d481-Kubernetes-Binaries-ISO
+    - generic: 1.35.9-Mold-1280-csi-r1-3f24d481-Kubernetes-Binaries-ISO
+    - generic: Zone · 데이터 미디어
+    - checkbox "1.36.5-Mold-1280-r1-3f24d481-Kubernetes-Binaries-ISO 1.36.5-Mold-1280-r1-3f24d481-Kubernetes-Binaries-ISO Zone · 데이터 미디어"
+    - strong: 1.36.5-Mold-1280-r1-3f24d481-Kubernetes-Binaries-ISO
+    - generic: 1.36.5-Mold-1280-r1-3f24d481-Kubernetes-Binaries-ISO
+    - generic: Zone · 데이터 미디어
+    - checkbox "1.36.5-Mold-1280-csi-r1-3f24d481-Kubernetes-Binaries-ISO 1.36.5-Mold-1280-csi-r1-3f24d481-Kubernetes-Binaries-ISO Zone · 데이터 미디어"
+    - strong: 1.36.5-Mold-1280-csi-r1-3f24d481-Kubernetes-Binaries-ISO
+    - generic: 1.36.5-Mold-1280-csi-r1-3f24d481-Kubernetes-Binaries-ISO
+    - generic: Zone · 데이터 미디어
+    - checkbox "1.37.1-Mold-1280-r1-3f24d481-DEV-Kubernetes-Binaries-ISO 1.37.1-Mold-1280-r1-3f24d481-DEV-Kubernetes-Binaries-ISO Zone · 데이터 미디어"
+    - strong: 1.37.1-Mold-1280-r1-3f24d481-DEV-Kubernetes-Binaries-ISO
+    - generic: 1.37.1-Mold-1280-r1-3f24d481-DEV-Kubernetes-Binaries-ISO
+    - generic: Zone · 데이터 미디어
+    - checkbox "1.37.1-Mold-1280-csi-r1-3f24d481-DEV-Kubernetes-Binaries-ISO 1.37.1-Mold-1280-csi-r1-3f24d481-DEV-Kubernetes-Binaries-ISO Zone · 데이터 미디어"
+    - strong: 1.37.1-Mold-1280-csi-r1-3f24d481-DEV-Kubernetes-Binaries-ISO
+    - generic: 1.37.1-Mold-1280-csi-r1-3f24d481-DEV-Kubernetes-Binaries-ISO
+    - generic: Zone · 데이터 미디어
+    - checkbox "1.35.9-Mold-RT1230-F10-modern-r26-disposable-Kubernetes-Binaries-ISO 1.35.9-Mold-RT1230-F10-modern-r26-disposable-Kubernetes-Binaries-ISO Zone · 데이터 미디어"
+    - strong: 1.35.9-Mold-RT1230-F10-modern-r26-disposable-Kubernetes-Binaries-ISO
+    - generic: 1.35.9-Mold-RT1230-F10-modern-r26-disposable-Kubernetes-Binaries-ISO
+    - generic: Zone · 데이터 미디어
+    - checkbox "1.35.9-Mold-RT1230-mold-cks-45c9aef0-disposable-Kubernetes-Binaries-ISO 1.35.9-Mold-RT1230-mold-cks-45c9aef0-disposable-Kubernetes-Binaries-ISO Zone · 데이터 미디어"
+    - strong: 1.35.9-Mold-RT1230-mold-cks-45c9aef0-disposable-Kubernetes-Binaries-ISO
+    - generic: 1.35.9-Mold-RT1230-mold-cks-45c9aef0-disposable-Kubernetes-Binaries-ISO
+    - generic: Zone · 데이터 미디어
+    - checkbox "1.36.5-Mold-RT1230-mold-cks-45c9aef0-disposable-Kubernetes-Binaries-ISO 1.36.5-Mold-RT1230-mold-cks-45c9aef0-disposable-Kubernetes-Binaries-ISO Zone · 데이터 미디어"
+    - strong: 1.36.5-Mold-RT1230-mold-cks-45c9aef0-disposable-Kubernetes-Binaries-ISO
+    - generic: 1.36.5-Mold-RT1230-mold-cks-45c9aef0-disposable-Kubernetes-Binaries-ISO
+    - generic: Zone · 데이터 미디어
+    - checkbox "1.37.1-Mold-RT1230-mold-cks-45c9aef0-disposable-Kubernetes-Binaries-ISO 1.37.1-Mold-RT1230-mold-cks-45c9aef0-disposable-Kubernetes-Binaries-ISO Zone · 데이터 미디어"
+    - strong: 1.37.1-Mold-RT1230-mold-cks-45c9aef0-disposable-Kubernetes-Binaries-ISO
+    - generic: 1.37.1-Mold-RT1230-mold-cks-45c9aef0-disposable-Kubernetes-Binaries-ISO
+    - generic: Zone · 데이터 미디어
+    - checkbox "1.35.9-Mold-RT1230-mold-cks-csi-45c9aef0-disposable-Kubernetes-Binaries-ISO 1.35.9-Mold-RT1230-mold-cks-csi-45c9aef0-disposable-Kubernetes-Binaries-ISO Zone · 데이터 미디어"
+    - strong: 1.35.9-Mold-RT1230-mold-cks-csi-45c9aef0-disposable-Kubernetes-Binaries-ISO
+    - generic: 1.35.9-Mold-RT1230-mold-cks-csi-45c9aef0-disposable-Kubernetes-Binaries-ISO
+    - generic: Zone · 데이터 미디어
+    - checkbox "1.36.5-Mold-RT1230-mold-cks-csi-45c9aef0-disposable-Kubernetes-Binaries-ISO 1.36.5-Mold-RT1230-mold-cks-csi-45c9aef0-disposable-Kubernetes-Binaries-ISO Zone · 데이터 미디어"
+    - strong: 1.36.5-Mold-RT1230-mold-cks-csi-45c9aef0-disposable-Kubernetes-Binaries-ISO
+    - generic: 1.36.5-Mold-RT1230-mold-cks-csi-45c9aef0-disposable-Kubernetes-Binaries-ISO
+    - generic: Zone · 데이터 미디어
+    - checkbox "1.37.1-Mold-RT1230-DEV-mold-cks-csi-45c9aef0-disposable-Kubernetes-Binaries-ISO 1.37.1-Mold-RT1230-DEV-mold-cks-csi-45c9aef0-disposable-Kubernetes-Binaries-ISO Zone · 데이터 미디어"
+    - strong: 1.37.1-Mold-RT1230-DEV-mold-cks-csi-45c9aef0-disposable-Kubernetes-Binaries-ISO
+    - generic: 1.37.1-Mold-RT1230-DEV-mold-cks-csi-45c9aef0-disposable-Kubernetes-Binaries-ISO
+    - generic: Zone · 데이터 미디어
+    - checkbox "1.36.5-Mold-RT1230-CSI-31ebce52-disposable-Kubernetes-Binaries-ISO 1.36.5-Mold-RT1230-CSI-31ebce52-disposable-Kubernetes-Binaries-ISO Zone · 데이터 미디어"
+    - strong: 1.36.5-Mold-RT1230-CSI-31ebce52-disposable-Kubernetes-Binaries-ISO
+    - generic: 1.36.5-Mold-RT1230-CSI-31ebce52-disposable-Kubernetes-Binaries-ISO
+    - generic: Zone · 데이터 미디어
+    - checkbox "1.37.1-Mold-RT1230-CSI-31ebce52-disposable-DEV-Kubernetes-Binaries-ISO 1.37.1-Mold-RT1230-CSI-31ebce52-disposable-DEV-Kubernetes-Binaries-ISO Zone · 데이터 미디어"
+    - strong: 1.37.1-Mold-RT1230-CSI-31ebce52-disposable-DEV-Kubernetes-Binaries-ISO
+    - generic: 1.37.1-Mold-RT1230-CSI-31ebce52-disposable-DEV-Kubernetes-Binaries-ISO
+    - generic: Zone · 데이터 미디어
+    - checkbox "ABLESTACK-Tools-Process-rocky-89806b1 ABLESTACK-Tools-Process-rocky-89806b1 Zone · 데이터 미디어"
+    - strong: ABLESTACK-Tools-Process-rocky-89806b1
+    - generic: ABLESTACK-Tools-Process-rocky-89806b1
+    - generic: Zone · 데이터 미디어
+    - checkbox "ABLESTACK-Tools-Process-ubuntu-89806b1 ABLESTACK-Tools-Process-ubuntu-89806b1 Zone · 데이터 미디어"
+    - strong: ABLESTACK-Tools-Process-ubuntu-89806b1
+    - generic: ABLESTACK-Tools-Process-ubuntu-89806b1
+    - generic: Zone · 데이터 미디어
+    - checkbox "ABLESTACK-Tools-Process-debian-89806b1 ABLESTACK-Tools-Process-debian-89806b1 Zone · 데이터 미디어"
+    - strong: ABLESTACK-Tools-Process-debian-89806b1
+    - generic: ABLESTACK-Tools-Process-debian-89806b1
+    - generic: Zone · 데이터 미디어
+    - checkbox "ABLESTACK Tools Windows 11 Server 2019 2022 2025 multi-OS ABLESTACK-Tools-Process-windows-56b6236 Zone · 데이터 미디어"
+    - strong: ABLESTACK Tools Windows 11 Server 2019 2022 2025 multi-OS
+    - generic: ABLESTACK-Tools-Process-windows-56b6236
+    - generic: Zone · 데이터 미디어
+    - paragraph: ISO별 완료를 확인한 후 다음 ISO를 연결합니다. 부팅 가능 속성은 현재 VM의 부팅 순서를 의미하지 않습니다.
+    - button "취소":
+      - generic: 취소
+    - button "0개 ISO 연결" [disabled]:
+      - generic: 0개 ISO 연결

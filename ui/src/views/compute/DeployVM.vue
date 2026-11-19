@@ -22,6 +22,7 @@
         <a-card :bordered="true" :title="$t('label.newinstance')">
           <a-form
             class="deploy-vm-form-scroll"
+            :disabled="loading.deploy"
             tabindex="0"
             :aria-label="$t('label.newinstance')"
             v-ctrl-enter="handleSubmit"
@@ -31,6 +32,25 @@
             @finish="handleSubmit"
             layout="vertical"
           >
+            <div v-for="operation in isoDataOperations" :key="operation.deployJobId" style="margin-bottom: 16px">
+              <div style="display: flex; align-items: center; gap: 10px">
+                <strong>{{ $t('label.vm.disk.progress') }} · {{ operation.vmId || operation.deployJobId }}</strong>
+                <a-button v-if="operation.status === 'failed'" :loading="loading.deploy" @click="retryIsoDisks(operation)">
+                  <template #icon><ReloadOutlined /></template>{{ $t('label.retry') }}
+                </a-button>
+              </div>
+              <p>{{ operation.disks.filter(disk => disk.status === 'attached').length }} / {{ operation.disks.length }} · {{ $t('label.vm.disk.status.' + operation.status) }}</p>
+              <p v-if="operation.status === 'complete' && !operation.started">{{ $t('message.vm.disk.logical.complete') }}</p>
+              <a-table :data-source="operation.disks" :pagination="false" row-key="index" size="small" style="margin: 8px 0">
+                <a-table-column :title="$t('label.deviceid')" data-index="deviceId" />
+                <a-table-column :title="$t('label.id')" data-index="volumeId" />
+                <a-table-column :title="$t('label.status')">
+                  <template #default="{ record }">{{ $t('label.vm.disk.item.' + record.status) }}</template>
+                </a-table-column>
+              </a-table>
+              <a-alert v-if="operation.error"  type="error" show-icon :message="operation.error" />
+            </div>
+            <creation-source-operations v-model:operations="sourceOperations" :storage-key="sourceOperationsKey" />
             <a-steps direction="vertical" size="small">
               <a-step
                 v-if="!isNormalUserOrProject"
@@ -75,6 +95,7 @@
                       ref="clusterid">
                       <a-select
                         v-model:value="form.clusterid"
+                        :disabled="imageType === 'volumeid' && selectedCreationSource?.storage?.scope === 'CLUSTER'"
                         showSearch
                         optionFilterProp="label"
                         :filterOption="filterOption"
@@ -128,8 +149,25 @@
                 :status="zoneSelected ? 'process' : 'wait'">
                 <template #description>
                   <div v-if="zoneSelected" style="margin-top: 15px">
+                    <template v-if="isCreationSource">
+                      <creation-source-selection
+                        ref="creationSourceSelection"
+                        :key="imageType"
+                        :image-type="imageType"
+                        :query="creationSourceQuery"
+                        :owner-ready="creationSourceOwnerReady"
+                        :selected="selectedCreationSource"
+                        :preselected-id="imageType === 'volumeid' ? queryVolumeId : querySnapshotId"
+                        @select="selectCreationSource"
+                        @loading="sourceLoading = $event"
+                        @change-image-type="changeImageType" />
+                      <creation-source-summary :source="selectedCreationSource" :target-storage="rootStorageSelection" :execution-profile="creationSourceExecutionProfile" />
+                      <creation-source-configuration v-if="selectedCreationSource" :source="selectedCreationSource" :value="sourceConfiguration" @update:value="sourceConfiguration = $event" />
+                      <a-alert type="info" show-icon :message="$t('message.creation.source.responsibility')" />
+                    </template>
                     <os-based-image-selection
-                      v-if="isModernImageSelection"
+                      ref="imageSelection"
+                      v-else-if="isModernImageSelection"
                       :selectedImageType="imageType"
                       :imagePreSelected="!!this.queryTemplateId || !!this.queryIsoId"
                       :guestOsCategoriesSelectionDisallowed="guestOsCategoriesSelectionDisallowed"
@@ -138,7 +176,7 @@
                       :selectedGuestOsCategoryId="form.guestoscategoryid"
                       :imageItems="imageType === 'isoid' ? options.isos : imageType === 'volumeid' ? options.volumes : imageType === 'snapshotid' ? options.snapshots : options.templates"
                       :imagesLoading="imageType === 'isoid' ? loading.isos : imageType === 'volumeid' ? loading.volumes : imageType === 'snapshotid' ? loading.snapshots : loading.templates"
-                      :diskSizeSelectionAllowed="imageType !== 'isoid' && imageType !== 'volumeid' && imageType !== 'snapshotid'"
+                      :diskSizeSelectionAllowed="false"
                       :diskSizeSelectionDeployAsIsMessageVisible="template && template.deployasis"
                       :rootDiskOverrideDisabled="rootDiskSizeFixed > 0 || (template && template.deployasis) || showOverrideDiskOfferingOption"
                       :rootDiskOverrideChecked="form.rootdisksizeitem"
@@ -153,10 +191,11 @@
                       @update-disk-size="updateFieldValue"
                       @change-iso-hypervisor="value => form.hypervisor = value" />
                     <a-card
+                      ref="legacyImageSelection"
                       v-else
                       :tabList="imageTypeList"
                       :activeTabKey="imageType"
-                      @tabChange="key => changeImageType(key)">
+                      @tabChange="key => changeImageType(key, true)">
                       <div v-if="imageType === 'templateid'">
                         {{ $t('message.template.desc') }}
                         <template-iso-selection
@@ -168,23 +207,6 @@
                           :key="templateKey"
                           @handle-search-filter="filters => fetchAllTemplates(filters)"
                           @update-template-iso="updateFieldValue" />
-                        <div v-if="!isTemplateHypervisorExternal">
-                          {{ $t('label.override.rootdisk.size') }}
-                          <a-switch
-                            v-model:checked="form.rootdisksizeitem"
-                            :disabled="rootDiskSizeFixed > 0 || (template && template.deployasis) || showOverrideDiskOfferingOption"
-                            @change="val => { showRootDiskSizeChanger = val }"
-                            style="margin-left: 10px;"/>
-                          <div v-if="(template && template.deployasis)">  {{ $t('message.deployasis') }} </div>
-                        </div>
-                        <disk-size-selection
-                          v-if="showRootDiskSizeChanger"
-                          input-decorator="rootdisksize"
-                          :preFillContent="dataPreFill"
-                          :isCustomized="true"
-                          :minDiskSize="dataPreFill.minrootdisksize"
-                          @update-disk-size="updateFieldValue"
-                          style="margin-top: 10px;"/>
                       </div>
                       <div v-else>
                         {{ $t('message.iso.desc') }}
@@ -313,16 +335,7 @@
                         <a-input v-model:value="form.memory"/>
                       </a-form-item>
                     </span>
-                    <span v-if="imageType!=='isoid' && !isTemplateHypervisorExternal">
-                      {{ $t('label.override.root.diskoffering') }}
-                      <a-switch
-                        v-model:checked="showOverrideDiskOfferingOption"
-                        :checked="serviceOffering && !serviceOffering.diskofferingstrictness && showOverrideDiskOfferingOption"
-                        :disabled="(serviceOffering && serviceOffering.diskofferingstrictness)"
-                        @change="val => { updateOverrideRootDiskShowParam(val) }"
-                        style="margin-left: 10px;"/>
-                    </span>
-                    <span v-if="imageType!=='isoid' && serviceOffering && !serviceOffering.diskofferingstrictness">
+                    <span v-if="!['templateid', 'isoid'].includes(imageType) && serviceOffering && !serviceOffering.diskofferingstrictness">
                       <a-step
                         :status="zoneSelected ? 'process' : 'wait'"
                         v-if="template && !template.deployasis && template.childtemplates && template.childtemplates.length > 0" >
@@ -336,14 +349,14 @@
                           </div>
                         </template>
                       </a-step>
-                      <a-step
-                        v-else
-                        :status="zoneSelected ? 'process' : 'wait'">
-                        <template #description>
-                          <div v-if="zoneSelected">
+                      <div v-else-if="zoneSelected" class="root-offering-selection">
                             <disk-offering-selection
                               v-if="showOverrideDiskOfferingOption"
                               :items="options.diskOfferings"
+                              all-items
+                              :scope-key="diskOfferingQueryScope"
+                              :error="diskOfferingsError"
+                              @retry="fetchOptions(params.diskOfferings, 'diskOfferings')"
                               :row-count="rowCount.diskOfferings"
                               :zoneId="zoneId"
                               :value="overrideDiskOffering ? overrideDiskOffering.id : ''"
@@ -358,6 +371,7 @@
                             <disk-size-selection
                               v-if="(overrideDiskOffering && (overrideDiskOffering.iscustomized || overrideDiskOffering.iscustomizediops || overrideDiskOffering.encrypt)) || (serviceOffering && serviceOffering.encryptroot)"
                               input-decorator="rootdisksize"
+                              :value="form.rootdisksize"
                               :preFillContent="dataPreFill"
                               :minDiskSize="dataPreFill.minrootdisksize"
                               :rootDiskSelected="overrideDiskOffering"
@@ -375,10 +389,176 @@
                             <a-form-item class="form-item-hidden">
                               <a-input v-model:value="form.offeringKvdoEnable" />
                             </a-form-item>
-                          </div>
-                        </template>
-                      </a-step>
+                      </div>
                     </span>
+                  </div>
+                </template>
+              </a-step>
+              <a-step v-if="(imageType === 'snapshotid' || selectedCreationSource?.sourceusage === 'stage-and-adopt') && storageSelectionEnabled" :title="$t('label.vm.storage.root')" status="process">
+                <template #description>
+                  <deployment-storage-selection :title="$t('label.vm.storage.root')" v-model:value="rootStorageSelection" :query="rootStorageQuery" />
+                </template>
+              </a-step>
+              <a-step
+                v-if="['templateid', 'isoid'].includes(imageType) && !isTemplateHypervisorExternal"
+                :title="$t('label.rootdisk')"
+                :status="serviceOffering?.id ? 'process' : 'wait'">
+                <template #description>
+                  <div v-if="zoneSelected && serviceOffering?.id" class="root-disk-configuration">
+                    <template v-if="imageType === 'templateid'">
+                      <section class="root-configuration-section root-offering-section">
+                        <h4 class="root-section-heading"><span class="root-section-number">1</span>{{ $t('label.vm.root.offering') }}</h4>
+                        <a-form-item :label="$t('label.override.root.diskoffering')">
+                          <a-switch
+                            v-model:checked="showOverrideDiskOfferingOption"
+                            :disabled="serviceOffering?.diskofferingstrictness || (template && template.deployasis)"
+                            @change="updateOverrideRootDiskShowParam" />
+                          <p class="option-help">{{ $t('message.vm.root.offering.override') }}</p>
+                        </a-form-item>
+                        <div v-if="!showOverrideDiskOfferingOption" class="root-default-value">
+                          <span>{{ defaultRootOfferingName }}</span>
+                          <a-tag v-if="defaultRootOfferingName !== $t('label.vm.root.offering.default')">{{ $t('label.vm.root.offering.default') }}</a-tag>
+                        </div>
+                        <p v-if="serviceOffering?.diskofferingstrictness" class="option-help">{{ $t('message.vm.root.offering.required') }}</p>
+                        <div v-if="template && template.deployasis" class="option-help">{{ $t('message.deployasis') }}</div>
+                        <template v-if="serviceOffering && !serviceOffering.diskofferingstrictness">
+                          <div
+                            v-if="template && !template.deployasis && template.childtemplates && template.childtemplates.length > 0" >
+                            <template>
+                              <div v-if="zoneSelected">
+                                <multi-disk-selection
+                                  :items="template.childtemplates"
+                                  :diskOfferings="options.diskOfferings"
+                                  :zoneId="zoneId"
+                                  @select-multi-disk-offering="updateMultiDiskOffering($event)" />
+                              </div>
+                            </template>
+                          </div>
+
+                          <template v-else>
+                            <disk-offering-selection
+                              v-if="showOverrideDiskOfferingOption"
+                              :items="options.diskOfferings"
+                              all-items
+                              :scope-key="diskOfferingQueryScope"
+                              :error="diskOfferingsError"
+                              @retry="fetchOptions(params.diskOfferings, 'diskOfferings')"
+                              :row-count="rowCount.diskOfferings"
+                              :zoneId="zoneId"
+                              :value="overrideDiskOffering ? overrideDiskOffering.id : ''"
+                              :loading="loading.diskOfferings"
+                              :preFillContent="dataPreFill"
+                              :isIsoSelected="imageType==='isoid'"
+                              :isRootDiskOffering="true"
+                              @on-selected-root-disk-size="onSelectRootDiskSize"
+                              @select-disk-offering-item="($event) => updateOverrideDiskOffering($event)"
+                              @handle-search-filter="($event) => handleSearchFilter('diskOfferings', $event)"
+                            ></disk-offering-selection>
+                          </template>
+                        </template>
+                      </section>
+                      <section class="root-configuration-section root-size-section">
+                        <h4 class="root-section-heading"><span class="root-section-number">2</span>{{ $t('label.vm.root.capacity') }}</h4>
+                        <template v-if="!showOverrideDiskOfferingOption">
+                          <div v-if="selectedRootDiskSize && !showRootDiskSizeChanger" class="root-default-value">
+                            <span>{{ selectedRootDiskSize }} GB</span>
+                            <a-tag v-if="serviceOffering?.diskofferingstrictness && !templateStrictCustomRoot">{{ $t('label.vm.disk.fixed') }}</a-tag>
+                          </div>
+                          <a-form-item :label="$t('label.override.rootdisk.size')">
+                            <a-switch
+                              v-model:checked="form.rootdisksizeitem"
+                              :disabled="templateStrictCustomRoot || serviceOffering?.diskofferingstrictness || (template && template.deployasis)"
+                              @change="changeRootDiskSizeOverride" />
+                            <p class="option-help">{{ $t('message.vm.root.size.override') }}</p>
+                          </a-form-item>
+                          <disk-size-selection
+                            v-if="showRootDiskSizeChanger"
+                            input-decorator="rootdisksize"
+                            :hide-size-label="true"
+                            :value="form.rootdisksize"
+                            :preFillContent="dataPreFill"
+                            :isCustomized="true"
+                            :minDiskSize="dataPreFill.minrootdisksize"
+                            @update-disk-size="updateFieldValue" />
+                        </template>
+                        <a-form-item v-if="showOverrideDiskOfferingOption && overrideDiskOffering?.id && !overrideDiskOffering.iscustomized">
+                          <a-input-number :value="overrideDiskOffering.disksize" disabled />
+                          <span class="root-size-unit">GB</span>
+                          <a-tag class="root-fixed-size-tag">{{ $t('label.vm.disk.fixed') }}</a-tag>
+                        </a-form-item>
+                            <disk-size-selection
+                              v-if="!serviceOffering.diskofferingstrictness && !(template?.childtemplates?.length > 0) && ((overrideDiskOffering && (overrideDiskOffering.iscustomized || overrideDiskOffering.iscustomizediops || overrideDiskOffering.encrypt)) || (serviceOffering && serviceOffering.encryptroot))"
+                              input-decorator="rootdisksize"
+                              :value="form.rootdisksize"
+                              :hide-size-label="true"
+                              :show-size="showOverrideDiskOfferingOption"
+                              :preFillContent="dataPreFill"
+                              :minDiskSize="dataPreFill.minrootdisksize"
+                              :rootDiskSelected="overrideDiskOffering"
+                              :isCustomized="overrideDiskOffering && overrideDiskOffering.iscustomized"
+                              :kmsKeys="options.kmsKeys"
+                              :loadingKmsKeys="loading.kmsKeys"
+                              :computeOfferingEncryptRoot="serviceOffering && serviceOffering.encryptroot"
+                              @handler-error="handlerError"
+                              @update-disk-size="updateFieldValue"
+                              @update-root-disk-iops-value="updateIOPSValue"
+                              @update-root-kms-key="updateRootKmsKey"/>
+
+                        <a-form-item class="form-item-hidden"><a-input v-model:value="form.rootdisksize"/></a-form-item>
+                        <a-form-item class="form-item-hidden"><a-input v-model:value="form.offeringKvdoEnable"/></a-form-item>
+                      </section>
+                    </template>
+                    <template v-else>
+                      <section class="root-configuration-section root-offering-section">
+                        <h4 class="root-section-heading"><span class="root-section-number">1</span>{{ $t('label.vm.root.offering') }}</h4>
+                        <a-alert v-if="isoRootOfferingStrict" type="info" :message="mappedRootOffering?.displaytext || serviceOffering.diskofferingname" style="margin: 12px 0" />
+                        <disk-offering-selection
+                          v-else
+                          :items="options.diskOfferings"
+                          all-items
+                          :scope-key="diskOfferingQueryScope"
+                          :error="diskOfferingsError"
+                          @retry="fetchOptions(params.diskOfferings, 'diskOfferings')"
+                          :row-count="rowCount.diskOfferings"
+                          :zoneId="zoneId"
+                          :value="diskOffering ? diskOffering.id : ''"
+                          :loading="loading.diskOfferings"
+                          :preFillContent="dataPreFill"
+                          :isIsoSelected="true"
+                          @on-selected-disk-size="onSelectDiskSize"
+                          @select-disk-offering-item="($event) => updateDiskOffering($event)"
+                          @handle-search-filter="($event) => handleSearchFilter('diskOfferings', $event)" />
+                      </section>
+                      <section v-if="diskOffering?.id" class="root-configuration-section root-size-section">
+                        <h4 class="root-section-heading"><span class="root-section-number">2</span>{{ $t('label.vm.root.capacity') }}</h4>
+                        <a-form-item v-if="!diskOffering.iscustomized">
+                          <a-input-number :value="diskOffering.disksize" disabled />
+                          <span class="root-size-unit">GB</span>
+                          <a-tag class="root-fixed-size-tag">{{ $t('label.vm.disk.fixed') }}</a-tag>
+                        </a-form-item>
+                        <disk-size-selection
+                          v-if="diskOffering.iscustomized || diskOffering.iscustomizediops || diskOffering.encrypt"
+                          input-decorator="size"
+                          :hide-size-label="true"
+                          :show-size="true"
+                          :preFillContent="dataPreFill"
+                          :diskSelected="diskSelected"
+                          :isCustomized="diskOffering.iscustomized"
+                          :kmsKeys="options.kmsKeys"
+                          :loadingKmsKeys="loading.kmsKeys"
+                          @handler-error="handlerError"
+                          @update-disk-size="updateFieldValue"
+                          @update-iops-value="updateIOPSValue"
+                          @update-data-kms-key="updateDataKmsKey" />
+                        <a-form-item class="form-item-hidden"><a-input v-model:value="form.size"/></a-form-item>
+                      </section>
+                    </template>
+                    <deployment-storage-selection
+                      v-if="storageSelectionEnabled && (imageType === 'templateid' || diskOffering?.id)"
+                      class="root-storage-section"
+                      v-model:value="rootStorageSelection"
+                      :title="$t('label.vm.storage.root')"
+                      :query="rootStorageQuery" />
                   </div>
                 </template>
               </a-step>
@@ -397,14 +577,18 @@
                 </template>
               </a-step>
               <a-step
-                v-else
-                :title="imageType === 'templateid' ? $t('label.data.disk') : $t('label.disk.size')"
+                v-else-if="imageType !== 'isoid'"
+                :title="$t('label.data.disk')"
                 :disabled="isTemplateHypervisorExternal ? true : false"
                 :status="zoneSelected ? 'process' : 'wait'">
                 <template #description>
                   <div v-if="zoneSelected && !isTemplateHypervisorExternal">
                     <disk-offering-selection
                       :items="options.diskOfferings"
+                      all-items
+                      :scope-key="diskOfferingQueryScope"
+                      :error="diskOfferingsError"
+                      @retry="fetchOptions(params.diskOfferings, 'diskOfferings')"
                       :row-count="rowCount.diskOfferings"
                       :zoneId="zoneId"
                       :value="diskOffering ? diskOffering.id : ''"
@@ -416,8 +600,9 @@
                       @handle-search-filter="($event) => handleSearchFilter('diskOfferings', $event)"
                     ></disk-offering-selection>
                     <disk-size-selection
-                      v-if="diskOffering && (diskOffering.iscustomized || diskOffering.iscustomizediops || diskOffering.encrypt)"
+                      v-if="diskOffering && (diskOffering.iscustomizediops || diskOffering.encrypt)"
                       input-decorator="size"
+                      :show-size="false"
                       :preFillContent="dataPreFill"
                       :diskSelected="diskSelected"
                       :isCustomized="diskOffering.iscustomized"
@@ -427,13 +612,44 @@
                       @update-disk-size="updateFieldValue"
                       @update-iops-value="updateIOPSValue"
                       @update-data-kms-key="updateDataKmsKey"/>
-                    <a-form-item class="form-item-hidden">
-                      <a-input v-model:value="form.size"/>
-                    </a-form-item>
+                    <a-form-item class="form-item-hidden"><a-input v-model:value="form.size"/></a-form-item>
+                    <template v-if="(imageType === 'templateid' || isCreationSource) && diskOffering?.id && diskOffering.id !== '0'">
+                      <disk-quantity-selection
+                        :offering="diskOffering"
+                        v-model:size="form.size"
+                        v-model:count="form.datadiskcount" />
+                      <deployment-storage-selection
+                        v-if="storageSelectionEnabled"
+                        v-model:value="dataStorageSelection"
+                        :title="$t('label.vm.storage.data')"
+                        :query="dataStorageQuery" />
+                    </template>
                   </div>
                   <div v-else-if="isTemplateHypervisorExternal" style="margin-bottom: 20px; margin-top: 7px">
                     {{ $t('message.host.external.datadisk') }}
                   </div>
+                </template>
+              </a-step>
+              <a-step v-if="imageType === 'isoid' && zoneSelected" :title="$t('label.data.disk')" :status="'process'">
+                <template #description>
+                  <iso-additional-data-disks
+                    v-model:value="isoDataDiskSelection"
+                    :items="options.diskOfferings"
+                    all-items
+                    :scope-key="diskOfferingQueryScope"
+                    :error="diskOfferingsError"
+                    @retry="fetchOptions(params.diskOfferings, 'diskOfferings')"
+                    :zone-id="zoneId"
+                    :loading="loading.diskOfferings"
+                    :kms-keys="options.kmsKeys"
+                    :loading-kms-keys="loading.kmsKeys"
+                    @search="handleSearchFilter('diskOfferings', $event)">
+                    <deployment-storage-selection
+                      v-if="storageSelectionEnabled"
+                        v-model:value="dataStorageSelection"
+                      :title="$t('label.vm.storage.data')"
+                      :query="dataStorageQuery" />
+                  </iso-additional-data-disks>
                 </template>
               </a-step>
               <a-step
@@ -470,6 +686,12 @@
                         @handler-error="($event) => hasError = $event"
                         @select-default-network-item="($event) => updateDefaultNetworks($event)"
                       ></network-configuration>
+                      <a-alert
+                        v-if="additionalIsoConfigDriveConflict"
+                        type="error"
+                        show-icon
+                        :message="$t('message.additional.iso.configdrive.conflict')"
+                        style="margin-top: 12px" />
                     </div>
                   </div>
                 </template>
@@ -491,7 +713,7 @@
                 </template>
               </a-step>
               <a-step
-                v-if="isUserAllowedToListSshKeys"
+                v-if="isUserAllowedToListSshKeys && !isCreationSource"
                 :title="$t('label.sshkeypairs')"
                 :status="zoneSelected ? 'process' : 'wait'">
                 <template #description>
@@ -622,7 +844,7 @@
                         </a-select>
                       </a-form-item>
                     </div>
-                    <a-form-item v-if="hypervisor === 'KVM'" name="machinecompatibility" ref="machinecompatibility">
+                    <a-form-item v-if="hypervisor === 'KVM' && !isCreationSource" name="machinecompatibility" ref="machinecompatibility">
                       <template #label>
                         <tooltip-label :title="$t('label.ft.machine.compatibility')" :tooltip="$t('message.ft.machine.compatibility.desc')"/>
                       </template>
@@ -635,7 +857,7 @@
                         </a-select-option>
                       </a-select>
                     </a-form-item>
-                    <a-form-item v-if="hypervisor === 'KVM'" :label="$t('label.tpm')" name="tpmversion" ref="tpmversion">
+                    <a-form-item v-if="hypervisor === 'KVM' && !isCreationSource" :label="$t('label.tpm')" name="tpmversion" ref="tpmversion">
                       <a-select
                         v-model:value="form.tpmversion"
                         @change="form.tpmmodel = 'tpm-tis'"
@@ -697,7 +919,7 @@
                         </a-form-item>
                       </a-col>
                     </a-row>
-                    <a-form-item :label="$t('label.user.data')">
+                    <a-form-item v-if="!isCreationSource" :label="$t('label.user.data')">
                       <a-card>
                         <div v-if="this.template && this.template.userdataid">
                           <a-typography-text>
@@ -768,19 +990,17 @@
                                   @tabChange="key => onUserdataTabChange(key, 'userdataTabKey')">
                                   <div v-if="userdataTabKey === 'userdataregistered'">
                                     <a-step
-                                      v-if="isUserAllowedToListUserDatas"
                                       :status="zoneSelected ? 'process' : 'wait'">
                                       <template #description>
                                         <div v-if="zoneSelected">
                                           <user-data-selection
-                                            :items="options.userDatas"
-                                            :row-count="rowCount.userDatas"
+                                            :scope="userDataOwner"
+                                            :value="form.userdataid"
                                             :zoneId="zoneId"
                                             :disabled="template && template.userdatapolicy === 'DENYOVERRIDE'"
-                                            :loading="loading.userDatas"
                                             :preFillContent="dataPreFill"
-                                            @select-user-data-item="($event) => updateUserData($event)"
-                                            @handle-search-filter="($event) => handleSearchFilter('userData', $event)"
+                                            @select-user-data-item="updateUserData"
+                                            @ready="userDataSelectionReady = $event"
                                           />
                                           <div v-if="userDataParams.length > 0">
                                             <a-input-group>
@@ -831,6 +1051,8 @@
                         :zoneId="zoneId"
                         :value="affinityGroupIds"
                         :loading="loading.affinityGroups"
+                        :error="affinityGroupsError"
+                        :owner="params.affinityGroups.options"
                         :preFillContent="dataPreFill"
                         @select-affinity-group-item="($event) => updateAffinityGroups($event)"
                         @handle-search-filter="($event) => handleSearchFilter('affinityGroups', $event)"/>
@@ -891,8 +1113,11 @@
                     <a-form-item :label="$t('label.group.optional')" name="group" ref="group">
                       <a-auto-complete
                         v-model:value="form.group"
+                        :disabled="!groupLookupReady"
                         :filterOption="filterOption"
                         :options="options.instanceGroups" />
+                      <div role="status" aria-live="polite">{{ $t('message.vm.group.lookup.' + groupLookupState.status) }}</div>
+                      <a-button v-if="['error', 'forbidden', 'empty'].includes(groupLookupState.status)" size="small" :loading="loading.groups" @click="fetchInstaceGroups">{{ $t('label.refresh') }}</a-button>
                     </a-form-item>
                     <a-form-item :label="$t('label.keyboard')" name="keyboard" ref="keyboard">
                       <a-select
@@ -904,7 +1129,7 @@
                       ></a-select>
                     </a-form-item>
                     <a-form-item :label="$t('label.deploy.vm.number')" name="vmNumber" ref="vmNumber">
-                      <a-input-number :min=1 :max=50 :maxlength="2" v-model:value="form.vmNumber" />
+                      <a-input-number :min=1 :max="isCreationSource ? 1 : 50" :disabled="isCreationSource" :maxlength="2" v-model:value="form.vmNumber" />
                     </a-form-item>
                     <a-form-item name="externaldetails" ref="externaldetails" v-if="imageType === 'templateid' && isTemplateHypervisorExternal">
                       <template #label>
@@ -917,8 +1142,9 @@
                           v-model:value="form.externaldetails" />
                       </a-card>
                     </a-form-item>
-                    <a-form-item :label="$t('label.action.start.instance')" name="startvm" ref="startvm">
+                    <a-form-item :label="$t('label.vm.start.after.creation')" name="startvm" ref="startvm">
                       <a-switch v-model:checked="form.startvm" />
+                      <p style="margin-top: 8px">{{ $t(form.startvm ? 'message.vm.start.enabled' : 'message.vm.start.disabled') }}</p>
                     </a-form-item>
                   </div>
                 </template>
@@ -955,6 +1181,7 @@
             <div class="card-footer" v-if="isMobile()">
               <deploy-buttons
                 :loading="loading.deploy"
+                :disabled="diskPlanIncomplete || userDataSelectionBlocked"
                 :deployButtonText="form.startvm ? $t('label.launch.vm') : $t('label.create.vm')"
                 :deployButtonMenuOptions="deployMenuOptions"
                 @handle-cancel="() => $router.back()"
@@ -966,10 +1193,20 @@
       </a-col>
       <a-col :md="24" :lg="7" v-if="!isMobile()" class="deploy-vm-summary-column">
         <div class="vm-info-card">
-          <info-card :footerVisible="true" :resource="vm" :title="$t('label.yourinstance')" @change-resource="(data) => resource = data">
+          <info-card :footerVisible="true" :resource="vmSummary" :title="$t('label.yourinstance')" @change-resource="(data) => resource = data">
+            <template #details>
+              <creation-source-summary v-if="isCreationSource" :source="selectedCreationSource" :target-storage="rootStorageSelection" :execution-profile="creationSourceExecutionProfile" />
+              <div v-if="serviceOffering?.id && !isTemplateHypervisorExternal && !isCreationSource" class="vm-storage-summary">
+                <div><strong>{{ $t('label.vm.storage.root') }}</strong><br>{{ rootStorageSelection.name || $t('label.vm.storage.auto') }} · {{ selectedRootDiskSize || '—' }} GB</div>
+                <div v-if="selectedDataDiskOffering?.id"><strong>{{ $t('label.vm.storage.data') }}</strong><br>
+                  {{ dataStorageSelection.name || $t('label.vm.storage.auto') }} · {{ selectedDataDiskSize }} GB × {{ selectedDataDiskCount }} · {{ selectedDataDiskSize * selectedDataDiskCount }} GB
+                </div>
+              </div>
+            </template>
             <template #footer-content>
               <deploy-buttons
                 :loading="loading.deploy"
+                :disabled="diskPlanIncomplete || userDataSelectionBlocked"
                 :deployButtonText="form.startvm ? $t('label.launch.vm') : $t('label.create.vm')"
                 :deployButtonMenuOptions="deployMenuOptions"
                 @handle-cancel="() => $router.back()"
@@ -980,15 +1217,35 @@
         </div>
       </a-col>
     </a-row>
+    <mold-dialog v-if="sourceConfirmVisible" :title="$t('label.creation.source.confirm')" @cancel="sourceConfirmVisible = false">
+      <p><strong>{{ form.name || $t('label.name.optional') }}</strong> · {{ $t(form.startvm ? 'label.launch.vm' : 'label.create.vm') }}</p>
+      <creation-source-summary :source="selectedCreationSource" :target-storage="rootStorageSelection" :execution-profile="creationSourceExecutionProfile" />
+      <p v-if="imageType === 'volumeid'">{{ $t('message.creation.source.delete.policy') }}</p>
+      <a-checkbox v-if="imageType === 'volumeid'" v-model:checked="sourceAcknowledged">{{ $t('label.creation.source.ack') }}</a-checkbox>
+      <template #footer>
+        <a-button @click="sourceConfirmVisible = false">{{ $t('label.cancel') }}</a-button>
+        <a-button type="primary" :disabled="imageType === 'volumeid' && !sourceAcknowledged" :loading="loading.deploy" @click="confirmCreationSource">{{ $t(form.startvm ? 'label.launch.vm' : 'label.create.vm') }}</a-button>
+      </template>
+    </mold-dialog>
   </div>
 </template>
 
 <script>
+import { strictTemplateCustomRoot } from '@/utils/templateRootDisk'
 import { deploymentTpmParams } from '@/utils/tpm'
 import AdditionalIsoSelection from './AdditionalIsoSelection.vue'
+import CreationSourceSelection from './wizard/CreationSourceSelection.vue'
+import CreationSourceSummary from './wizard/CreationSourceSummary.vue'
+import CreationSourceConfiguration from './wizard/CreationSourceConfiguration.vue'
+import CreationSourceOperations from './wizard/CreationSourceOperations.vue'
+import { vmCreationSourceErrorMessage } from '@/utils/vmCreationSourceError'
+import MoldDialog from '@/components/view/MoldDialog.vue'
 import { ref, reactive, toRaw, nextTick, h } from 'vue'
+import { ReloadOutlined } from '@ant-design/icons-vue'
 import { Button, message } from 'ant-design-vue'
+import { affinitySelectionIds, affinitySelectionGroups, fetchAffinityGroupOptions } from '@/utils/affinityGroupSelection'
 import { getAPI, postAPI } from '@/api'
+import { deploymentDiskOfferingScope, fetchDeploymentDiskOfferings } from '@/utils/deploymentDiskOfferings'
 import { isAdmin } from '@/role'
 import _ from 'lodash'
 import { mixin, mixinDevice } from '@/utils/mixin.js'
@@ -1004,6 +1261,12 @@ import BlockRadioGroupSelect from '@/components/widgets/BlockRadioGroupSelect'
 import ComputeOfferingSelection from '@views/compute/wizard/ComputeOfferingSelection'
 import ComputeSelection from '@views/compute/wizard/ComputeSelection'
 import DiskOfferingSelection from '@views/compute/wizard/DiskOfferingSelection'
+import DeploymentStorageSelection from '@views/compute/wizard/DeploymentStorageSelection'
+import IsoAdditionalDataDisks from '@views/compute/wizard/IsoAdditionalDataDisks'
+import DiskQuantitySelection from './wizard/DiskQuantitySelection'
+import { deploymentStorageQuery, dataDiskRequest, dataDiskDeviceIds, completeIsoDiskDeployment, additionalIsoConfigDriveConflict } from '@/utils/vmDiskDeployment'
+import { createVmGroupLookup, vmGroupOwner, vmGroupOwnerKey, vmGroupLookupReady } from '@/utils/vmGroupLookup'
+import { normalizeVmGroupName } from '@/utils/vmGroupNames'
 import DiskSizeSelection from '@views/compute/wizard/DiskSizeSelection'
 import MultiDiskSelection from '@views/compute/wizard/MultiDiskSelection'
 import TemplateIsoSelection from '@views/compute/wizard/TemplateIsoSelection'
@@ -1013,6 +1276,7 @@ import NetworkSelection from '@views/compute/wizard/NetworkSelection'
 import NetworkConfiguration from '@views/compute/wizard/NetworkConfiguration'
 import SshKeyPairSelection from '@views/compute/wizard/SshKeyPairSelection'
 import UserDataSelection from '@views/compute/wizard/UserDataSelection'
+import { applyUserDataSelection, userDataSelectionConsumer } from '@/utils/userDataSelection'
 import SecurityGroupSelection from '@views/compute/wizard/SecurityGroupSelection'
 import TooltipLabel from '@/components/widgets/TooltipLabel'
 import InstanceNicsNetworkSelectListView from '@/components/view/InstanceNicsNetworkSelectListView'
@@ -1022,7 +1286,13 @@ import DeployInstanceBackupSelection from '@views/compute/wizard/DeployInstanceB
 export default {
   name: 'Wizard',
   components: {
+    ReloadOutlined,
     AdditionalIsoSelection,
+    CreationSourceSelection,
+    CreationSourceSummary,
+    CreationSourceConfiguration,
+    CreationSourceOperations,
+    MoldDialog,
     OwnershipSelection,
     InfoCard,
     DeployButtons,
@@ -1037,6 +1307,9 @@ export default {
     TemplateIsoSelection,
     OsBasedImageSelection,
     DiskSizeSelection,
+    DeploymentStorageSelection,
+    IsoAdditionalDataDisks,
+    DiskQuantitySelection,
     MultiDiskSelection,
     DiskOfferingSelection,
     ComputeOfferingSelection,
@@ -1056,7 +1329,7 @@ export default {
       default: () => {}
     }
   },
-  mixins: [mixin, mixinDevice],
+  mixins: [mixin, mixinDevice, userDataSelectionConsumer],
   data () {
     return {
       deployViewportHeight: '',
@@ -1068,6 +1341,19 @@ export default {
       dynamicscalingenabled: true,
       imageType: 'templateid',
       additionalIsoSelection: { enabled: false, ids: [], valid: true },
+      rootStorageSelection: { valid: true },
+      dataStorageSelection: { valid: true },
+      isoDataDiskSelection: { count: 1 },
+      isoDataOperations: [],
+      selectedCreationSource: null,
+      sourceConfiguration: {},
+      sourceLoading: false,
+      sourceConfirmVisible: false,
+      sourceConfirmed: false,
+      sourceAcknowledged: false,
+      sourceOperations: [],
+      currentSourceOperation: null,
+
       imageSearchFilters: null,
       templateKey: 0,
       showRegisteredUserdata: true,
@@ -1120,6 +1406,9 @@ export default {
         storagePoolObjects: [],
         kmsKeys: []
       },
+      diskOfferingsError: '',
+      diskOfferingLookupToken: null,
+      diskOfferingLookupScope: '',
       rowCount: {},
       loading: {
         deploy: false,
@@ -1134,7 +1423,6 @@ export default {
         affinityGroups: false,
         networks: false,
         sshKeyPairs: false,
-        userDatas: false,
         zones: false,
         pods: false,
         clusters: false,
@@ -1147,6 +1435,7 @@ export default {
         domainid: store.getters.project?.id ? null : store.getters.userInfo.domainid,
         account: store.getters.project?.id ? null : store.getters.userInfo.account
       },
+      groupLookupState: { status: 'unavailable', scopeKey: '' },
       instanceConfig: {},
       template: {},
       defaultBootType: '',
@@ -1161,6 +1450,8 @@ export default {
       hypervisor: '',
       serviceOffering: {},
       diskOffering: {},
+      mappedRootOffering: null,
+      affinityGroupsError: '',
       affinityGroups: [],
       networks: [],
       networksAdd: [],
@@ -1215,6 +1506,7 @@ export default {
       maxIops: 0,
       zones: [],
       selectedZone: '',
+      form: {},
       formModel: {},
       nicToNetworkSelection: [],
       selectedArchitecture: null,
@@ -1240,6 +1532,199 @@ export default {
     }
   },
   computed: {
+    groupOwnerKey () { return vmGroupOwnerKey(this.owner) },
+    groupLookupReady () { return vmGroupLookupReady(this.groupLookupState, this.owner) },
+    creationSourceExecutionProfile () {
+      return this.sourceConfiguration.mode === 'manual'
+        ? { ...this.sourceConfiguration, osname: this.sourceConfiguration.osname || this.$t('label.creation.source.os.unspecified') }
+        : { ...this.selectedCreationSource?.bootprofile, mode: 'inherit' }
+    },
+    creationSourceConfigurationArgs () {
+      if (!this.sourceConfiguration.mode) return {}
+      return this.sourceConfiguration.mode === 'manual'
+        ? {
+          sourceconfiguration: 'manual',
+          sourceostypeid: this.sourceConfiguration.ostypeid || undefined,
+          sourcerootcontroller: this.sourceConfiguration.rootbus,
+          boottype: this.sourceConfiguration.boottype,
+          bootmode: this.sourceConfiguration.bootmode
+        }
+        : { sourceconfiguration: 'inherit' }
+    },
+    isCreationSource () { return ['volumeid', 'snapshotid'].includes(this.imageType) },
+    sourceOperationsKey () { return 'vm-creation-source-' + this.$store.getters.userInfo.id + '-' + (this.$store.getters.project?.id || '') },
+    creationSourceOwnerReady () {
+      return !!(store.getters.project?.id || this.owner.projectid || (this.owner.account && this.owner.domainid))
+    },
+    creationSourceQuery () {
+      return {
+        sourcekind: this.imageType === 'volumeid' ? 'volume' : 'snapshot',
+        zoneid: this.creationSourceOwnerReady ? this.form.zoneid : undefined,
+        account: store.getters.project?.id ? undefined : this.owner.account,
+        domainid: store.getters.project?.id ? undefined : this.owner.domainid,
+        projectid: store.getters.project?.id || this.owner.projectid,
+        arch: this.isZoneSelectedMultiArch ? this.selectedArchitecture : undefined
+      }
+    },
+    sourceOperationPending () { return this.sourceOperations.some(op => op.sourceid === this.selectedCreationSource?.id && ['pending', 'submitting', 'unknown'].includes(op.status)) },
+    vmSummary () {
+      // ISO data inputs are separate from formModel; always derive their summary from current selections.
+      return {
+        ...this.vm,
+        ...(this.isCreationSource ? {
+          ostypeid: this.creationSourceExecutionProfile?.ostypeid,
+          ostypename: this.creationSourceExecutionProfile?.osname,
+          templateformat: undefined,
+          templateid: undefined,
+          isoid: undefined
+        } : {}),
+        disksizetotalgb: this.diskSize || null,
+        rootdiskofferingid: this.rootDiskOffering?.id,
+        rootdiskofferingdisplaytext: this.rootDiskOffering?.displayText,
+        datadiskofferingid: this.dataDiskOffering?.id,
+        datadiskofferingdisplaytext: this.dataDiskOffering?.displayText,
+        templateformat: this.isCreationSource ? undefined : this.imageType === 'isoid' ? 'ISO' : this.template?.format,
+        isoname: this.iso?.name,
+        isodisplaytext: this.iso?.displaytext
+      }
+    },
+    templateStrictCustomRoot () {
+      return strictTemplateCustomRoot(this.imageType, this.serviceOffering, this.options.diskOfferings, this.template)
+    },
+    isoRootOfferingStrict () { return this.imageType === 'isoid' && this.serviceOffering?.diskofferingstrictness === true },
+    mappedRootOfferingQueryKey () {
+      return JSON.stringify({
+        strict: this.isoRootOfferingStrict,
+        zoneid: this.storageQuery.zoneid,
+        serviceofferingid: this.storageQuery.serviceofferingid,
+        templateid: this.storageQuery.templateid,
+        hypervisor: this.storageQuery.hypervisor
+      })
+    },
+    isoOperationsKey () {
+      return 'vm-iso-disks-' + this.$store.getters.userInfo.id + '-' + (this.$store.getters.project.id || '')
+    },
+    storageSelectionEnabled () {
+      return isAdmin() && 'listDeploymentStoragePools' in this.$store.getters.apis && !this.isTemplateHypervisorExternal &&
+        (['templateid', 'isoid', 'snapshotid'].includes(this.imageType) || this.selectedCreationSource?.sourceusage === 'stage-and-adopt') && !!this.serviceOffering?.id && !!(this.template?.id || this.iso?.id || this.selectedCreationSource?.id)
+    },
+    selectedDataDiskOffering () {
+      return this.imageType === 'isoid'
+        ? this.options.diskOfferings.find(offering => offering.id === this.isoDataDiskSelection.offeringid) || this.isoDataDiskSelection.offering
+        : this.diskOffering?.id && this.diskOffering.id !== '0' ? this.diskOffering : null
+    },
+    selectedDataDiskSize () {
+      const offering = this.selectedDataDiskOffering
+      return offering?.iscustomized ? Number(this.imageType === 'isoid' ? this.isoDataDiskSelection.size : this.form.size) || 0 : offering?.disksize || 0
+    },
+    selectedDataDiskCount () {
+      const count = this.imageType === 'isoid' ? this.isoDataDiskSelection.count : this.form.datadiskcount
+      return count === undefined ? 1 : Number(count)
+    },
+    additionalIsoConfigDriveConflict () {
+      return additionalIsoConfigDriveConflict({
+        imageType: this.imageType,
+        additionalIsoSelection: this.additionalIsoSelection,
+        networks: this.options.networks,
+        networkIds: this.form.networkids || []
+      })
+    },
+    diskOfferingQueryScope () { return deploymentDiskOfferingScope(this.params.diskOfferings.options, this.$store) },
+    diskPlanIncomplete () {
+      if (this.loading?.diskOfferings || this.diskOfferingsError) return true
+      if (this.additionalIsoConfigDriveConflict) return true
+      if (this.isCreationSource) {
+        return !this.creationSourceOwnerReady || !this.selectedCreationSource?.allowed || this.sourceLoading || this.sourceOperationPending ||
+          (this.storageSelectionEnabled && this.rootStorageSelection.valid === false) ||
+          (!!this.selectedDataDiskOffering?.id && (!(this.selectedDataDiskSize > 0) ||
+            !Number.isSafeInteger(this.selectedDataDiskCount) || this.selectedDataDiskCount < 1 ||
+            (this.storageSelectionEnabled && this.dataStorageSelection.valid === false)))
+      }
+      if (!['templateid', 'isoid'].includes(this.imageType) || this.template?.deployasis) return false
+      if (this.imageType === 'isoid' && (!this.diskOffering?.id || !(this.selectedRootDiskSize > 0))) return true
+      if (this.imageType === 'templateid' && this.showOverrideDiskOfferingOption &&
+        (!this.overrideDiskOffering?.id || this.overrideDiskOffering.iscustomized && !(this.selectedRootDiskSize > 0))) return true
+      if (this.showRootDiskSizeChanger && !(Number(this.form.rootdisksize) > 0)) return true
+      if (this.selectedDataDiskOffering?.id && (!(this.selectedDataDiskSize > 0) || !Number.isSafeInteger(this.selectedDataDiskCount) ||
+        this.selectedDataDiskCount < 1 || this.isoDataDiskSelection.invalid)) return true
+      return this.storageSelectionEnabled && (this.rootStorageSelection.valid === false ||
+        !!this.selectedDataDiskOffering?.id && this.dataStorageSelection.valid === false)
+    },
+    defaultRootOfferingName () {
+      const offering = this.options.diskOfferings.find(item => item.id === this.serviceOffering?.diskofferingid)
+      return this.serviceOffering?.diskofferingname || offering?.displaytext || this.$t('label.vm.root.offering.default')
+    },
+    selectedRootDiskSize () {
+      if (this.isCreationSource) return this.selectedCreationSource ? Math.ceil(this.selectedCreationSource.sizebytes / 1024 ** 3) : undefined
+      if (this.imageType === 'isoid') return this.diskOffering?.iscustomized ? Number(this.form.size) || undefined : this.diskOffering?.disksize
+      if (this.showOverrideDiskOfferingOption && this.overrideDiskOffering?.id) {
+        return this.overrideDiskOffering.iscustomized ? Number(this.form.rootdisksize) || undefined : this.overrideDiskOffering.disksize
+      }
+      if (this.showRootDiskSizeChanger && Number(this.form.rootdisksize) > 0) return Number(this.form.rootdisksize)
+      return this.serviceOffering?.rootdisksize || Math.ceil((this.template?.size || 0) / 1024 ** 3) || undefined
+    },
+    storageQuery () {
+      return deploymentStorageQuery({
+        form: this.form,
+        imageType: this.imageType,
+        hypervisor: this.hypervisor,
+        template: this.template
+      })
+    },
+    rootStorageQuery () {
+      if (this.isCreationSource || this.imageType === 'snapshotid') {
+        return {
+          zoneid: this.form.zoneid,
+          snapshotid: this.imageType === 'snapshotid' ? this.selectedCreationSource?.id : undefined,
+          volumeid: this.imageType === 'volumeid' ? this.selectedCreationSource?.id : undefined,
+          serviceofferingid: this.form.computeofferingid,
+          hypervisor: 'KVM',
+          rootdisk: true,
+          diskcount: 1,
+          vmcount: 1,
+          otherstorageid: this.selectedDataDiskOffering?.id ? this.dataStorageSelection.id : undefined,
+          otherrequiredbytes: this.selectedDataDiskSize * this.selectedDataDiskCount * 1024 ** 3,
+          otherrequirediops: (this.diskIOpsMin || this.selectedDataDiskOffering?.miniops || 0) * this.selectedDataDiskCount,
+          hostid: this.form.hostid,
+          clusterid: this.form.clusterid,
+          podid: this.form.podid
+        }
+      }
+      return {
+        ...this.storageQuery,
+        rootdisk: true,
+        diskcount: 1,
+        size: this.selectedRootDiskSize,
+        diskofferingid: this.imageType === 'isoid' ? this.diskOffering?.id : this.showOverrideDiskOfferingOption ? this.overrideDiskOffering?.id : undefined,
+        miniops: this.imageType === 'isoid' ? this.diskIOpsMin || undefined : this.minIops || undefined,
+        otherstorageid: this.selectedDataDiskOffering?.id ? this.dataStorageSelection.id : undefined,
+        otherrequirediops: (this.imageType === 'isoid' ? this.isoDataDiskSelection.diskIOpsMin || this.selectedDataDiskOffering?.miniops || 0 : this.diskIOpsMin || this.selectedDataDiskOffering?.miniops || 0) * this.selectedDataDiskCount * (Number(this.form.vmNumber) || 1),
+        otherrequiredbytes: this.selectedDataDiskSize * this.selectedDataDiskCount * (Number(this.form.vmNumber) || 1) * 1024 ** 3
+      }
+    },
+    dataStorageQuery () {
+      const sourceImage = this.isCreationSource || this.imageType === 'snapshotid'
+        ? {
+          templateid: undefined,
+          snapshotid: this.imageType === 'snapshotid' ? this.selectedCreationSource?.id : undefined,
+          volumeid: this.imageType === 'volumeid' ? this.selectedCreationSource?.id : undefined,
+          hypervisor: 'KVM',
+          vmcount: 1
+        }
+        : {}
+      return {
+        ...this.storageQuery,
+        ...sourceImage,
+        rootdisk: false,
+        diskcount: this.selectedDataDiskCount,
+        diskofferingid: this.selectedDataDiskOffering?.id,
+        size: this.selectedDataDiskSize || undefined,
+        miniops: this.imageType === 'isoid' ? this.isoDataDiskSelection.diskIOpsMin : this.diskIOpsMin || undefined,
+        otherstorageid: this.rootStorageSelection.id,
+        otherrequirediops: (this.imageType === 'isoid' ? this.diskIOpsMin || this.diskOffering?.miniops || 0 : this.minIops || this.serviceOffering?.miniops || 0) * (Number(this.form.vmNumber) || 1),
+        otherrequiredbytes: (this.selectedRootDiskSize || 0) * (Number(this.form.vmNumber) || 1) * 1024 ** 3
+      }
+    },
     rootDiskSize () {
       return this.showRootDiskSizeChanger && this.rootDiskSizeFixed > 0
     },
@@ -1250,6 +1735,11 @@ export default {
       return ['User'].includes(this.$store.getters.userInfo.roletype) || store.getters.project.id
     },
     diskSize () {
+      if (this.isCreationSource) {
+        const root = this.selectedCreationSource?.sizebytes
+        const data = this.selectedDataDiskSize
+        return [root ? (root / 1024 ** 3).toLocaleString() + ' GiB (Root)' : '', data ? `${data} GiB × ${this.selectedDataDiskCount} (Data)` : ''].filter(Boolean).join(' | ')
+      }
       const customRootDiskSize = _.get(this.instanceConfig, 'rootdisksize', null)
       const customDataDiskSize = _.get(this.instanceConfig, 'size', null)
       let computeOfferingDiskSize = _.get(this.serviceOffering, 'rootdisksize', null)
@@ -1261,6 +1751,7 @@ export default {
       let dataDiskSize
       if (this.vm.isoid != null) {
         rootDiskSize = this.diskOffering?.iscustomized ? customDataDiskSize : diskOfferingDiskSize
+        dataDiskSize = this.selectedDataDiskSize
       } else {
         rootDiskSize = this.overrideDiskOffering?.iscustomized ? customRootDiskSize : overrideDiskOfferingDiskSize || computeOfferingDiskSize || this.dataPreFill.minrootdisksize
         dataDiskSize = this.diskOffering?.iscustomized ? customDataDiskSize : diskOfferingDiskSize
@@ -1271,7 +1762,7 @@ export default {
         size.push(`${rootDiskSize} GB (Root)`)
       }
       if (dataDiskSize) {
-        size.push(`${dataDiskSize} GB (Data)`)
+        size.push(`${dataDiskSize} GB × ${this.selectedDataDiskCount} (Data)`)
       }
       return size.join(' | ')
     },
@@ -1288,7 +1779,8 @@ export default {
     },
     dataDiskOffering () {
       if (this.vm.isoid != null) {
-        return null
+        const offering = this.selectedDataDiskOffering
+        return offering ? { id: offering.id, displayText: offering.displaytext + ' (Data)' } : null
       }
 
       const id = _.get(this.diskOffering, 'id', null)
@@ -1300,7 +1792,7 @@ export default {
       }
     },
     affinityGroupIds () {
-      return _.map(this.affinityGroups, 'id')
+      return affinitySelectionIds(this.form.affinitygroupids)
     },
     params () {
       const listAll = isAdmin()
@@ -1356,18 +1848,6 @@ export default {
         },
         sshKeyPairs: {
           list: 'listSSHKeyPairs',
-          options: {
-            page: 1,
-            pageSize: 10,
-            account: this.owner.account,
-            domainid: this.owner.domainid,
-            projectid: this.owner.projectid,
-            keyword: undefined,
-            listall: listAll
-          }
-        },
-        userDatas: {
-          list: 'listUserData',
           options: {
             page: 1,
             pageSize: 10,
@@ -1632,6 +2112,62 @@ export default {
     }
   },
   watch: {
+    groupOwnerKey () { this.form.group = null; this.fetchInstaceGroups() },
+    '$store.getters.apis.listInstanceGroups' () { this.fetchInstaceGroups() },
+    '$store.getters.project.id' (projectid) {
+      this.owner = projectid ? { projectid } : { account: this.$store.getters.userInfo.account, domainid: this.$store.getters.userInfo.domainid }
+    },
+    sourceConfiguration: { deep: true, handler () { this.sourceConfirmed = false; this.sourceAcknowledged = false } },
+    templateStrictCustomRoot (required) {
+      if (!required) return
+      this.showRootDiskSizeChanger = true
+      this.form.rootdisksizeitem = true
+      if (!(Number(this.form.rootdisksize) > 0)) this.form.rootdisksize = this.dataPreFill.minrootdisksize
+    },
+    mappedRootOfferingQueryKey: {
+      async handler (queryKey) {
+        this.mappedRootOffering = null
+        if (!this.isoRootOfferingStrict || !this.serviceOffering.diskofferingid) return
+        if (!isAdmin()) {
+          const offering = this.serviceOffering
+          this.mappedRootOffering = {
+            id: offering.diskofferingid,
+            name: offering.diskofferingname,
+            displaytext: offering.diskofferingname,
+            disksize: offering.rootdisksize,
+            iscustomized: !offering.rootdisksize,
+            iscustomizediops: offering.iscustomizediops,
+            miniops: offering.miniops,
+            maxiops: offering.maxiops,
+            encrypt: offering.encryptroot
+          }
+          if (this.isoRootOfferingStrict) { this.form.diskofferingid = offering.diskofferingid; this.diskOffering = this.mappedRootOffering; this.diskSelected = this.mappedRootOffering }
+          return
+        }
+        const query = this.storageQuery
+        if (!query.zoneid || !query.serviceofferingid || !query.templateid || !query.hypervisor) return
+        try {
+          const result = await getAPI('listDeploymentStoragePools', { ...query, rootdisk: true })
+          if (queryKey !== this.mappedRootOfferingQueryKey) return
+          this.mappedRootOffering = result.listdeploymentstoragepoolsresponse.deploymentstoragepool?.[0]?.diskoffering
+          if (this.isoRootOfferingStrict && this.mappedRootOffering) {
+            this.form.diskofferingid = this.mappedRootOffering.id
+            this.diskOffering = this.mappedRootOffering
+            this.diskSelected = this.mappedRootOffering
+            this.form.size = this.mappedRootOffering.iscustomized ? undefined : this.mappedRootOffering.disksize
+          }
+        } catch (error) { if (queryKey === this.mappedRootOfferingQueryKey) this.$notifyError(error) }
+      }
+    },
+    isoDataOperations: {
+      deep: true,
+      handler (records) { sessionStorage.setItem(this.isoOperationsKey, JSON.stringify(records.filter(record => record.status !== 'complete'))) }
+    },
+    'form.vmNumber' () {
+      if (this.form.name && this.formRef.value) {
+        this.formRef.value.validateFields(['name']).catch(() => {})
+      }
+    },
     '$route' (to, from) {
       if (to.name === 'deployVirtualMachine') {
         this.resetData()
@@ -1668,6 +2204,11 @@ export default {
         }
 
         this.serviceOffering = _.find(this.options.serviceOfferings, (option) => option.id === instanceConfig.computeofferingid)
+        if (this.imageType === 'templateid' &&
+            (this.serviceOffering?.diskofferingstrictness || this.template?.deployasis) &&
+            (this.showOverrideDiskOfferingOption || (this.showRootDiskSizeChanger && !this.templateStrictCustomRoot))) {
+          this.updateOverrideRootDiskShowParam(false)
+        }
 
         instanceConfig.overridediskofferingid = this.rootDiskSelected?.id || this.serviceOffering?.diskofferingid
         if (instanceConfig.overridediskofferingid) {
@@ -1679,15 +2220,15 @@ export default {
         if (this.iso && this.serviceOffering?.diskofferingid) {
           this.diskOffering = _.find(this.options.diskOfferings, (option) => option.id === this.serviceOffering.diskofferingid)
         } else if (!iso && this.diskSelected) {
-          this.diskOffering = _.find(this.options.diskOfferings, (option) => option.id === instanceConfig.diskofferingid)
+          this.diskOffering = this.isoRootOfferingStrict && this.mappedRootOffering ? this.mappedRootOffering : _.find(this.options.diskOfferings, (option) => option.id === instanceConfig.diskofferingid)
         }
 
         this.zone = _.find(this.options.zones, (option) => option.id === this.instanceConfig.zoneid)
-        this.affinityGroups = _.filter(this.options.affinityGroups, (option) => _.includes(instanceConfig.affinitygroupids, option.id))
+        this.affinityGroups = affinitySelectionGroups(instanceConfig.affinitygroupids, [...this.affinityGroups, ...this.options.affinityGroups])
         // this.networks = this.getSelectedNetworksWithExistingConfig(_.filter(this.options.networks, (option) => _.includes(instanceConfig.networkids, option.id)))
         this.networks = _.filter(this.options.networks, (option) => _.includes(instanceConfig.networkids, option.id))
 
-        this.diskOffering = _.find(this.options.diskOfferings, (option) => option.id === instanceConfig.diskofferingid)
+        this.diskOffering = this.isoRootOfferingStrict && this.mappedRootOffering ? this.mappedRootOffering : _.find(this.options.diskOfferings, (option) => option.id === instanceConfig.diskofferingid)
         this.sshKeyPair = _.find(this.options.sshKeyPairs, (option) => option.name === instanceConfig.keypair)
 
         if (this.zone) {
@@ -1829,6 +2370,15 @@ export default {
     this.apiParams = this.$getApiParams('deployVirtualMachine')
   },
   created () {
+    this.groupLookup = createVmGroupLookup(getAPI, state => {
+      this.groupLookupState = state
+      this.options.instanceGroups = state.opts
+      this.loading.groups = state.loading
+    })
+    try {
+      this.isoDataOperations = JSON.parse(sessionStorage.getItem(this.isoOperationsKey) || '[]')
+      this.isoDataOperations.forEach(record => { if (record.status === 'running') record.status = 'failed' })
+    } catch (error) { sessionStorage.removeItem(this.isoOperationsKey) }
     this.initForm()
     this.dataPreFill = this.preFillContent && Object.keys(this.preFillContent).length > 0 ? this.preFillContent : {}
     this.fetchData()
@@ -1851,6 +2401,7 @@ export default {
     this.updateDeployViewportHeight()
   },
   beforeUnmount () {
+    this.groupLookup.dispose()
     if (this.deployResizeObserver) this.deployResizeObserver.disconnect()
   },
   methods: {
@@ -1875,19 +2426,14 @@ export default {
       this.rules = reactive({
         zoneid: [{ required: true, message: `${this.$t('message.error.select')}` }],
         hypervisor: [{ required: true, message: `${this.$t('message.error.select')}` }],
-        name: [{
-          validator: async (rule, value) => {
-            if (value && value.includes('_')) {
-              return Promise.reject(this.$t('message.vm.name.no.underscore') || '가상머신 이름에는 언더스코어(_)를 사용할 수 없습니다.')
-            }
-            return Promise.resolve()
-          }
-        }]
+        name: [{ validator: this.validateVmName }]
       })
 
-      if (this.zoneSelected) {
-        this.form.startvm = true
-      }
+      this.form.startvm = false
+      this.form.datadiskcount = 1
+      this.rootStorageSelection = { valid: true }
+      this.dataStorageSelection = { valid: true }
+      this.isoDataDiskSelection = { count: 1 }
       this.form.vmNumber = 1
       this.form.machinecompatibility = 'standard'
 
@@ -1912,6 +2458,17 @@ export default {
             }
           }]
         }
+      }
+    },
+    async validateVmName (rule, value) {
+      if (!value) return
+      if (!/^[a-zA-Z]/.test(value) || /[^a-zA-Z0-9-]/.test(value) || value.endsWith('-')) {
+        throw new Error(this.$t('message.vm.name.invalid'))
+      }
+      const count = Number(this.form.vmNumber)
+      const suffix = Number.isInteger(count) && count > 1 ? `-${count}` : ''
+      if (value.length + suffix.length > 63) {
+        throw new Error(this.$t('message.vm.name.length', { max: 63 - suffix.length }))
       }
     },
     getImageFilters (params, forReset) {
@@ -2065,11 +2622,13 @@ export default {
         'minmemory' in serviceOffering.serviceofferingdetails
     },
     updateOverrideRootDiskShowParam (val) {
+      this.form.rootdisksizeitem = false
       if (val) {
         this.showRootDiskSizeChanger = false
       } else {
         this.rootDiskSelected = null
         this.form.overridediskofferingid = undefined
+        this.changeRootDiskSizeOverride(false)
       }
       this.showOverrideDiskOfferingOption = val
     },
@@ -2112,17 +2671,7 @@ export default {
       ]
     },
     fetchInstaceGroups () {
-      this.options.instanceGroups = []
-      getAPI('listInstanceGroups', {
-        account: this.$store.getters.project?.id ? null : this.$store.getters.userInfo.account,
-        domainid: this.$store.getters.project?.id ? null : this.$store.getters.userInfo.domainid,
-        listall: true
-      }).then(response => {
-        const groups = response.listinstancegroupsresponse.instancegroup || []
-        groups.forEach(x => {
-          this.options.instanceGroups.push({ label: x.name, value: x.name })
-        })
-      })
+      return this.groupLookup.load(this.owner, 'listInstanceGroups' in this.$store.getters.apis)
     },
     fetchNetwork () {
       const param = this.params.networks
@@ -2303,6 +2852,11 @@ export default {
         this.userdataDefaultOverridePolicy = this.snapshot.userdatapolicy
       }
     },
+    changeRootDiskSizeOverride (value) {
+      this.showRootDiskSizeChanger = value || this.templateStrictCustomRoot
+      if (this.templateStrictCustomRoot) this.form.rootdisksizeitem = true
+      if (!value) this.form.rootdisksize = this.serviceOffering?.rootdisksize || this.dataPreFill.minrootdisksize
+    },
     updateComputeOffering (id, kvdoEnable) {
       this.form.computeofferingid = id
       this.form.computeOfferingKvdoEnable = kvdoEnable
@@ -2328,7 +2882,8 @@ export default {
       this.form.multidiskoffering = value
     },
     updateAffinityGroups (ids) {
-      this.form.affinitygroupids = ids
+      this.form.affinitygroupids = affinitySelectionIds(ids)
+      this.affinityGroups = affinitySelectionGroups(ids, [...this.affinityGroups, ...this.options.affinityGroups])
     },
     updateNetworks (ids) {
       this.form.networkids = ids
@@ -2346,44 +2901,25 @@ export default {
           networks.forEach(el2 => {
             if (el.id === el2.key) {
               console.log('::값바꾼 net::>> ', el2.key)
-              this.networks[idx].linkState = el2.linkstate ? el2.linkState : false
+              this.networks[idx].enabled = el2.enabled === undefined ? true : el2.enabled
               this.networks[idx].ipAddress = el2.ipAddress ? el2.ipAddress : ''
               this.networks[idx].macAddress = el2.macAddress ? el2.macAddress : ''
             }
           })
         })
-        // this.networks[0].linkstate = true
-        // console.log(this.networks[0].linkstate)
+        // this.networks[0].enabled = true
+        // console.log(this.networks[0].enabled)
       }
     },
     updateSshKeyPairs (names) {
       this.form.keypairs = names
       this.sshKeyPairs = names.map((sshKeyPair) => { return sshKeyPair.name })
     },
-    updateUserData (id) {
-      if (id === '0') {
-        this.form.userdataid = undefined
-        return
-      }
-
-      this.form.userdataid = id
-      this.userDataParams = []
-      getAPI('listUserData', { id: id }).then(json => {
-        const resp = json?.listuserdataresponse?.userdata || []
-        if (resp[0]) {
-          const params = resp[0].params
-          const dataParams = params ? params.split(',') : []
-          dataParams.forEach((val, index) => {
-            this.userDataParams.push({
-              id: index,
-              key: val
-            })
-          })
-        }
-      })
+    updateUserData (id, item) {
+      applyUserDataSelection(this, id, item)
     },
     updateTemplateLinkedUserData (id) {
-      if (id === '0') {
+      if (!id || id === '0') {
         return
       }
       this.templateUserDataParams = []
@@ -2468,10 +3004,71 @@ export default {
       this.selectedArchitecture = arch
       this.updateImages()
     },
-    changeImageType (imageType) {
+    clearCreationSource () {
+      this.selectedCreationSource = null; this.sourceConfiguration = {}; this.sourceConfirmed = false; this.sourceConfirmVisible = false; this.sourceAcknowledged = false
+      this.template = null; this.iso = null; this.volume = null; this.snapshot = null
+      for (const key of ['templateid', 'isoid', 'volumeid', 'snapshotid', 'boottype', 'bootmode', 'rootdisksize', 'rootkmskeyid', 'datakmskeyid', 'userdata', 'userdataid', 'overridediskofferingid']) this.form[key] = undefined
+      for (const key of ['templateid', 'templatename', 'templatedisplaytext', 'isoid', 'isoname', 'isodisplaytext', 'guestosname', 'ostypeid', 'ostypename']) this.vm[key] = undefined
+      this.sshKeyPairs = []; this.userDataValues = {}; this.templateUserDataValues = {}; this.userdataDefaultOverridePolicy = 'ALLOWOVERRIDE'
+      this.rootStorageSelection = { valid: true }; this.dataStorageSelection = { valid: true }; this.diskOffering = null; this.overrideDiskOffering = null
+      this.showRootDiskSizeChanger = false; this.additionalIsoSelection = { enabled: false, ids: [], valid: true }
+    },
+    selectCreationSource (source) {
+      this.clearCreationSource()
+      if (!source?.allowed) return
+      this.selectedCreationSource = source
+      this.sourceConfiguration = {
+        mode: source.requiresconfiguration ? 'manual' : 'inherit',
+        boottype: source.bootprofile?.boottype || 'BIOS',
+        bootmode: 'LEGACY',
+        rootbus: source.bootprofile?.rootbus || 'os-default',
+        ostypeid: undefined,
+        osname: undefined
+      }
+      this.form[this.imageType] = source.id; this.form.hypervisor = 'KVM'; this.form.vmNumber = 1
+      this.form.boottype = source.bootprofile.boottype; this.form.bootmode = source.bootprofile.bootmode
+      this.vm.hypervisor = 'KVM'; this.vm.guestosname = source.bootprofile.osname; this.vm.ostypeid = source.bootprofile.ostypeid; this.vm.ostypename = source.bootprofile.osname
+      if (source.sourcekind === 'volume') {
+        this.volume = source
+        if (source.sourceusage === 'adopt-existing' && source.storage?.scope === 'CLUSTER' && source.storage.clusterid) {
+          this.form.clusterid = source.storage.clusterid; this.form.hostid = undefined; this.onSelectClusterId(source.storage.clusterid)
+        }
+      } else this.snapshot = source
+    },
+    confirmCreationSource () {
+      this.sourceConfirmed = true; this.sourceConfirmVisible = false; this.handleSubmit()
+    },
+    async validateCreationSource () {
+      if (!this.creationSourceOwnerReady) throw new Error(this.$t('message.creation.source.owner.required'))
+      if (!this.selectedCreationSource?.allowed || this.sourceLoading || this.sourceOperationPending) throw new Error(this.$t('message.creation.source.required'))
+      const args = Object.fromEntries(Object.entries({
+        ...this.creationSourceQuery,
+        ...this.creationSourceConfigurationArgs,
+        id: this.selectedCreationSource.id,
+        sourcerevision: this.selectedCreationSource.revision,
+        serviceofferingid: this.form.computeofferingid,
+        clusterid: this.form.clusterid,
+        hostid: this.form.hostid,
+        rootstorageid: this.rootStorageSelection.id
+      }).filter(([, value]) => value != null && value !== ''))
+      const response = (await getAPI('validateVirtualMachineCreation', args)).validatevirtualmachinecreationresponse
+      const result = response?.count === 1 ? response.creationsource?.[0] : null
+      if (!result?.allowed) throw new Error((result?.reasoncodes || []).map(reason => this.$t('message.creation.source.reason.' + reason)).join(' ') || this.$t('message.creation.source.required'))
+      return result
+    },
+    changeImageType (imageType, restoreSourceFocus = false) {
+      this.clearCreationSource()
+      if (['volumeid', 'snapshotid'].includes(imageType)) this.form.vmNumber = 1
       this.additionalIsoSelection = { enabled: false, ids: [], valid: true }
       this.imageType = imageType
       this.updateImages()
+      if (restoreSourceFocus) {
+        this.$nextTick(() => {
+          const selection = this.$refs.creationSourceSelection || this.$refs.imageSelection || this.$refs.legacyImageSelection
+          const input = selection?.$el.querySelector('.ant-radio-button-wrapper-checked input, .ant-tabs-tab-active [role=tab]')
+          if (input) input.focus()
+        })
+      }
     },
     handleSubmitAndStay (e) {
       this.form.stayonpage = true
@@ -2479,9 +3076,38 @@ export default {
     },
     handleSubmit (e) {
       console.log('wizard submit')
-      if (this.loading.deploy) return
+      if (this.loading.deploy || this.userDataSelectionBlocked) return
       this.formRef.value.validate().then(async () => {
         const values = toRaw(this.form)
+        const ownerKey = vmGroupOwnerKey(this.owner)
+        if (!vmGroupOwner(this.owner)) {
+          this.$message.error(this.$t('message.vm.group.lookup.unavailable'))
+          return
+        }
+        if (values.group && !this.groupLookupReady) {
+          this.$message.error(this.$t('message.vm.group.lookup.blocked'))
+          return
+        }
+        let groupName
+        if (values.group) {
+          try {
+            const existing = this.groups.opts.find(group => group.value === values.group)
+            groupName = normalizeVmGroupName(values.group, existing?.value)
+          } catch (error) { this.$message.error(this.$t(error.message)); return }
+        }
+        if (this.additionalIsoConfigDriveConflict) {
+          this.$notification.error({ message: this.$t('message.request.failed'), description: this.$t('message.additional.iso.configdrive.conflict') })
+          return
+        }
+        if (this.isCreationSource) {
+          try {
+            await this.validateCreationSource()
+            if (!this.sourceConfirmed) { this.sourceAcknowledged = false; this.sourceConfirmVisible = true; return }
+            this.sourceConfirmed = false
+          } catch (error) { this.$notification.error({ message: this.$t('message.request.failed'), description: error.message || error.response?.data?.validatevirtualmachinecreationresponse?.errortext || error.response?.data?.errorresponse?.errortext || this.$t('message.creation.source.required') }); return }
+          values.vmNumber = 1
+          values.stayonpage = true
+        }
         if (this.imageType === 'isoid' && this.additionalIsoSelection.enabled && !this.additionalIsoSelection.valid) {
           this.$notification.error({
             message: this.$t('message.request.failed'),
@@ -2517,6 +3143,37 @@ export default {
           return
         }
 
+        if (this.storageSelectionEnabled && (this.rootStorageSelection.valid === false ||
+          (this.selectedDataDiskOffering?.id && this.dataStorageSelection.valid === false))) {
+          this.$notification.error({ message: this.$t('message.vm.storage.reselect') })
+          return
+        }
+        if (this.isoDataDiskSelection.invalid) {
+          this.$notification.error({ message: this.$t('message.vm.disk.invalid') })
+          return
+        }
+        if (this.selectedDataDiskOffering?.id && (!Number.isSafeInteger(this.selectedDataDiskCount) ||
+          this.selectedDataDiskCount < 1 || this.selectedDataDiskSize <= 0)) {
+          this.$notification.error({ message: this.$t('message.vm.disk.invalid') })
+          return
+        }
+
+        if (this.selectedDataDiskOffering?.id && 'listHypervisorCapabilities' in this.$store.getters.apis) {
+          try {
+            const response = await getAPI('listHypervisorCapabilities', { hypervisor: this.form.hypervisor || this.hypervisor || this.template?.hypervisor, page: 1, pagesize: 500 })
+            const capabilities = response.listhypervisorcapabilitiesresponse.hypervisorCapabilities || []
+            const limits = capabilities.map(item => Number(item.maxdatavolumeslimit)).filter(limit => limit > 0)
+            const limit = limits.length ? Math.min(...limits) : 6
+            if (this.selectedDataDiskCount > limit) {
+              this.$notification.error({ message: this.$t('message.vm.disk.limit', { limit }) })
+              return
+            }
+          } catch (error) { this.$notifyError(error); return }
+        }
+        if (ownerKey !== vmGroupOwnerKey(this.owner) || (values.group && !this.groupLookupReady)) {
+          this.$message.error(this.$t('message.vm.group.lookup.blocked'))
+          return
+        }
         this.loading.deploy = true
 
         let networkIds = []
@@ -2549,7 +3206,7 @@ export default {
         if (this.imageType === 'templateid') {
           deployVmData.templateid = values.templateid
           values.hypervisor = null
-          if (values.templateKvdoEnable !== values.computeOfferingKvdoEnable) {
+          if (!!this.template?.kvdoenable !== !!this.serviceOffering?.kvdoenable) {
             this.$notification.error({
               message: this.$t('message.request.failed'),
               description: this.$t('message.step.3.kvdo')
@@ -2578,7 +3235,12 @@ export default {
           deployVmData.hypervisor = values.hypervisor
         }
 
-        deployVmData.startvm = values.startvm
+        deployVmData.startvm = values.startvm === true
+        if (this.isCreationSource) {
+          deployVmData.sourcerevision = this.selectedCreationSource.revision
+          Object.assign(deployVmData, this.creationSourceConfigurationArgs)
+        }
+        if (this.rootStorageSelection.id && this.storageSelectionEnabled) deployVmData.rootstorageid = this.rootStorageSelection.id
 
         // step 3: select service offering
         deployVmData.serviceofferingid = values.computeofferingid
@@ -2626,31 +3288,25 @@ export default {
             })
           }
         } else {
-          // When a KMS key is selected for data disk, we must use datadisksdetails format
-          if (values.datakmskeyid) {
-            deployVmData['datadisksdetails[0].diskofferingid'] = values.diskofferingid
-            deployVmData['datadisksdetails[0].deviceid'] = 1 // Device ID 1 for first data disk (0=root, 3=CD-ROM reserved)
-            if (values.size) {
-              deployVmData['datadisksdetails[0].size'] = values.size
-            }
-            deployVmData['datadisksdetails[0].kmskeyid'] = values.datakmskeyid
-            // Add IOPS if customized
-            if (this.isCustomizedDiskIOPS) {
-              deployVmData['datadisksdetails[0].miniops'] = this.diskIOpsMin
-              deployVmData['datadisksdetails[0].maxiops'] = this.diskIOpsMax
-            }
-          } else {
-            // Legacy format when no KMS key
+          if (this.imageType === 'isoid') {
             deployVmData.diskofferingid = values.diskofferingid
-            if (values.size) {
-              deployVmData.size = values.size
+            if (this.diskOffering?.iscustomized) deployVmData.size = values.size
+            // This existing size control and KMS selector describe ISO ROOT, never DATA.
+            if (values.datakmskeyid) deployVmData.rootdiskkmskeyid = values.datakmskeyid
+            if (this.isCustomizedDiskIOPS) {
+              deployVmData['details[0].minIops'] = this.diskIOpsMin
+              deployVmData['details[0].maxIops'] = this.diskIOpsMax
             }
+            delete deployVmData.rootdisksize
+            if (this.selectedDataDiskOffering?.id) deployVmData.startvm = false
+          } else if (this.selectedDataDiskOffering?.id) {
+            Object.assign(deployVmData, dataDiskRequest(this.diskOffering, values.size, this.selectedDataDiskCount, {
+              kmskeyid: values.datakmskeyid,
+              storageid: this.storageSelectionEnabled ? this.dataStorageSelection.id : undefined,
+              miniops: this.isCustomizedDiskIOPS ? this.diskIOpsMin : undefined,
+              maxiops: this.isCustomizedDiskIOPS ? this.diskIOpsMax : undefined
+            }))
           }
-        }
-        // IOPS for non-KMS data disks (KMS data disks IOPS handled above in datadisksdetails)
-        if (this.isCustomizedDiskIOPS && !values.datakmskeyid) {
-          deployVmData['details[0].minIopsDo'] = this.diskIOpsMin
-          deployVmData['details[0].maxIopsDo'] = this.diskIOpsMax
         }
         // step 5: select an affinity group
         deployVmData.affinitygroupids = (values.affinitygroupids || []).join(',')
@@ -2694,7 +3350,7 @@ export default {
                 if (networkConfig && networkConfig.length > 0) {
                   deployVmData['iptonetworklist[' + j + '].ip'] = networkConfig[0].ipAddress ? networkConfig[0].ipAddress : undefined
                   deployVmData['iptonetworklist[' + j + '].mac'] = networkConfig[0].macAddress ? networkConfig[0].macAddress : undefined
-                  deployVmData['iptonetworklist[' + j + '].linkstate'] = networkConfig[0].linkstate === undefined ? true : networkConfig[0].linkstate
+                  deployVmData['iptonetworklist[' + j + '].enabled'] = networkConfig[0].enabled === undefined ? true : networkConfig[0].enabled
                 }
               }
             }
@@ -2714,7 +3370,7 @@ export default {
           deployVmData.displayname = values.name
         }
         if (values.group) {
-          deployVmData.group = values.group
+          deployVmData.group = groupName
         }
         if (values.leaseduration) {
           deployVmData.leaseduration = values.leaseduration
@@ -2749,7 +3405,7 @@ export default {
           })
         }
 
-        const title = this.$t('label.launch.vm')
+        const title = this.$t(values.startvm ? 'label.launch.vm' : 'label.create.vm')
         const description = values.name || ''
         const password = this.$t('label.password')
 
@@ -2770,13 +3426,14 @@ export default {
           }
         }
 
-        const httpMethod = deployVmData.userdata ? 'POST' : 'GET'
+        if (this.isCreationSource) {
+          for (const key of ['templateid', 'additionalisoids', 'userdata', 'userdataid', 'keypairs', 'rootdisksize', 'rootdiskkmskeyid', 'overridediskofferingid', 'diskofferingid', 'size', 'bootintosetup', 'machinecompatibility', 'tpmversion', 'tpmmodel', 'extraconfig', 'details[0].rootdisksize']) delete deployVmData[key]
+          for (const key of Object.keys(deployVmData)) if (/^(userdatadetails|datadiskofferinglist|datadiskofferings|properties)|^details\[\d+\]\.(UEFI|tpm|kvm.guest.os.machine.type)/i.test(key)) delete deployVmData[key]
+        }
 
         if (values.vmNumber) {
           let anySuccess = false
           for (var num = 1; num <= Number(values.vmNumber); num++) {
-            let args = ''
-            let data = ''
             if (values.name) {
               if (values.vmNumber === 1) {
                 deployVmData.name = values.name
@@ -2794,17 +3451,62 @@ export default {
                 deployVmData.displayname = values.name + '-' + num
               }
             }
-            args = httpMethod === 'POST' ? {} : deployVmData
-            data = httpMethod === 'POST' ? deployVmData : {}
             try {
+              if (this.isCreationSource) {
+                const operation = {
+                  sourceid: this.selectedCreationSource.id,
+                  sourcekind: this.selectedCreationSource.sourcekind,
+                  name: deployVmData.name,
+                  projectid: deployVmData.projectid,
+                  status: 'submitting',
+                  startvm: deployVmData.startvm,
+                  requiredDataDisks: this.selectedDataDiskOffering?.id ? this.selectedDataDiskCount : 0,
+                  created: new Date().toISOString()
+                }
+                this.sourceOperations.push(operation); this.currentSourceOperation = this.sourceOperations[this.sourceOperations.length - 1]
+                sessionStorage.setItem(this.sourceOperationsKey, JSON.stringify(this.sourceOperations))
+              }
               let jobId
               if (values.volumeId) {
-                jobId = await this.deployVirtualMachineForVolume(args, httpMethod, data)
+                jobId = await this.deployVirtualMachineForVolume(deployVmData)
               } else {
-                jobId = await this.deployVM(args, httpMethod, data)
+                jobId = await this.deployVM(deployVmData)
+              }
+              if (this.imageType === 'isoid' && this.selectedDataDiskOffering?.id) {
+                const offering = { ...this.selectedDataDiskOffering }
+                const selection = { ...this.isoDataDiskSelection }
+                const storageId = this.storageSelectionEnabled ? this.dataStorageSelection.id : undefined
+                const count = this.selectedDataDiskCount
+                const record = {
+                  deployJobId: jobId,
+                  vmId: null,
+                  startAfterCreation: values.startvm === true,
+                  started: false,
+                  status: 'running',
+                  disks: dataDiskDeviceIds(count).map((deviceId, index) => ({ index, deviceId, status: 'pending' })),
+                  volumeNamePrefix: (deployVmData.name || 'VM-' + jobId) + '-Data-',
+                  volumeBaseParams: Object.fromEntries(Object.entries({
+                    zoneid: deployVmData.zoneid,
+                    diskofferingid: offering.id,
+                    size: offering.iscustomized ? selection.size : undefined,
+                    storageid: storageId,
+                    miniops: selection.diskIOpsMin,
+                    maxiops: selection.diskIOpsMax,
+                    kmskeyid: selection.kmskeyid,
+                    account: deployVmData.account,
+                    domainid: deployVmData.domainid,
+                    projectid: deployVmData.projectid
+                  }).filter(([, value]) => value != null))
+                }
+                this.isoDataOperations.push(record)
+                await completeIsoDiskDeployment(this.diskApi, this.isoDataOperations[this.isoDataOperations.length - 1])
+              }
+              if (this.isCreationSource && this.currentSourceOperation) {
+                this.currentSourceOperation.jobid = jobId; this.currentSourceOperation.status = 'pending'
+                sessionStorage.setItem(this.sourceOperationsKey, JSON.stringify(this.sourceOperations))
               }
               anySuccess = true
-              if (num === 1) {
+              if (num === 1 && !this.isCreationSource && !(this.imageType === 'isoid' && this.selectedDataDiskOffering?.id)) {
                 this.$pollJob({
                   jobId,
                   title,
@@ -2841,7 +3543,16 @@ export default {
                 })
               }
             } catch (error) {
-              if (error.message !== undefined) {
+              if (this.isCreationSource && this.currentSourceOperation) {
+                const response = error.response?.data
+                const failure = response?.errorresponse || response?.deployvirtualmachineresponse || response?.deployvirtualmachineforvolumeresponse
+                this.currentSourceOperation.status = failure?.errortext ? 'failed' : 'unknown'
+                this.currentSourceOperation.error = failure?.errortext || error.message
+                sessionStorage.setItem(this.sourceOperationsKey, JSON.stringify(this.sourceOperations))
+              }
+              if (this.isCreationSource && this.currentSourceOperation) {
+                this.$notification.error({ message: this.$t('message.request.failed'), description: vmCreationSourceErrorMessage(this.currentSourceOperation.error, this.$t) })
+              } else if (error.message !== undefined) {
                 await this.$notifyError(error)
               }
               this.loading.deploy = false
@@ -2855,7 +3566,7 @@ export default {
             await new Promise(resolve => setTimeout(resolve, 3000)).then(() => {
               eventBus.emit('vm-refresh-data')
             })
-            if (!values.stayonpage) {
+            if (!values.stayonpage && !this.isoDataOperations.some(operation => operation.status === 'failed')) {
               await this.$router.back()
             }
           }
@@ -2879,19 +3590,34 @@ export default {
         }
       })
     },
-    deployVM (args, httpMethod, data) {
+    async diskApi (command, params) {
+      const response = await (command.startsWith('list') || command === 'queryAsyncJobResult' ? getAPI : postAPI)(command, params)
+      return response[command.toLowerCase() + 'response']
+    },
+    async retryIsoDisks (operation) {
+      this.loading.deploy = true
+      operation.error = null
+      try {
+        await completeIsoDiskDeployment(this.diskApi, operation)
+        eventBus.emit('vm-refresh-data')
+      } catch (error) {
+        this.$notifyError(error)
+      } finally { this.loading.deploy = false }
+    },
+    deployVM (params) {
       return new Promise((resolve, reject) => {
-        postAPI('deployVirtualMachine', args, httpMethod, data).then(json => {
+        postAPI('deployVirtualMachine', params).then(json => {
           const jobId = json.deployvirtualmachineresponse.jobid
+          if (this.currentSourceOperation?.status === 'submitting') this.currentSourceOperation.vmid = json.deployvirtualmachineresponse.id
           return resolve(jobId)
         }).catch(error => {
           return reject(error)
         })
       })
     },
-    deployVirtualMachineForVolume (args, httpMethod, data) {
+    deployVirtualMachineForVolume (params) {
       return new Promise((resolve, reject) => {
-        postAPI('deployVirtualMachineForVolume', args, httpMethod, data).then(json => {
+        postAPI('deployVirtualMachineForVolume', params).then(json => {
           const jobId = json.deployvirtualmachineforvolumeresponse.jobid
           return resolve(jobId)
         }).catch(error => {
@@ -2900,13 +3626,10 @@ export default {
       })
     },
     fetchOwnerOptions (OwnerOptions) {
-      this.owner = {
-        projectid: null,
-        domainid: store.getters.userInfo.domainid,
-        account: store.getters.userInfo.account
-      }
+      this.owner = { projectid: null, domainid: null, account: null }
       if (OwnerOptions.selectedAccountType === 'Account') {
         if (!OwnerOptions.selectedAccount) {
+          if (this.isCreationSource) this.clearCreationSource()
           return
         }
         this.owner.account = OwnerOptions.selectedAccount
@@ -2914,6 +3637,7 @@ export default {
         this.owner.projectid = null
       } else if (OwnerOptions.selectedAccountType === 'Project') {
         if (!OwnerOptions.selectedProject) {
+          if (this.isCreationSource) this.clearCreationSource()
           return
         }
         this.owner.account = null
@@ -2952,6 +3676,8 @@ export default {
       })
     },
     fetchOptions (param, name, exclude) {
+      if (name === 'diskOfferings' && !exclude?.includes(name)) return fetchDeploymentDiskOfferings(this, param)
+      if (name === 'affinityGroups' && !exclude?.includes(name)) return fetchAffinityGroupOptions(this, param)
       return new Promise((resolve, reject) => {
         if (exclude && exclude.length > 0 && exclude.includes(name)) {
           return resolve(null)
@@ -3025,87 +3751,13 @@ export default {
         })
       })
     },
-    fetchUnattachedVolumes (volumeFilter, params) {
-      const args = Object.assign({}, params)
-      if (args.keyword || (args.category && args.category !== volumeFilter)) {
-        args.page = 1
-        args.pageSize = args.pageSize || 10
-      }
-      args.zoneid = _.get(this.zone, 'id')
-      if (this.isZoneSelectedMultiArch) {
-        args.arch = this.selectedArchitecture
-      }
-      args.account = store.getters.project?.id ? null : this.owner.account
-      args.domainid = store.getters.project?.id ? null : this.owner.domainid
-      args.projectid = store.getters.project?.id || this.owner.projectid
-      args.id = this.queryVolumeId
-      args.state = 'Ready'
-      const pageSize = args.pageSize ? args.pageSize : 10
-      const pageStart = (args.page ? args.page - 1 : 0) * pageSize
-      const pageEnd = pageSize * (pageStart + 1)
-
-      delete args.category
-      delete args.public
-      delete args.featured
-      delete args.page
-      delete args.pageSize
-
-      return new Promise((resolve, reject) => {
-        getAPI('listVolumes', args).then((response) => {
-          let count = 0
-          const volumes = []
-          response.listvolumesresponse.volume.forEach(volume => {
-            if (!volume.virtualmachineid) {
-              count += 1
-              volumes.push({ ...volume, displaytext: volume.name })
-            }
-          })
-          resolve({ listvolumesresponse: { count, volume: volumes.slice(pageStart, pageEnd) } })
-        }).catch((reason) => {
-          // ToDo: Handle errors
-          reject(reason)
-        })
-      })
+    async fetchUnattachedVolumes (volumeFilter, params = {}) {
+      const result = (await getAPI('listVirtualMachineCreationSources', { ...this.creationSourceQuery, sourcekind: 'volume', id: this.queryVolumeId, page: params.page || 1, pagesize: params.pageSize || 10 })).listvirtualmachinecreationsourcesresponse || {}
+      return { listvolumesresponse: { count: result.count || 0, volume: result.creationsource || [] } }
     },
-    fetchRootSnapshots (snapshotFilter, params) {
-      const args = Object.assign({}, params)
-      if (args.keyword || (args.category && args.category !== snapshotFilter)) {
-        args.page = 1
-        args.pageSize = args.pageSize || 10
-      }
-      args.zoneid = _.get(this.zone, 'id')
-      if (this.isZoneSelectedMultiArch) {
-        args.arch = this.selectedArchitecture
-      }
-      args.account = store.getters.project?.id ? null : this.owner.account
-      args.domainid = store.getters.project?.id ? null : this.owner.domainid
-      args.projectid = store.getters.project?.id || this.owner.projectid
-      const pageSize = args.pageSize ? args.pageSize : 10
-      const pageStart = (args.page ? args.page - 1 : 0) * pageSize
-      const pageEnd = pageSize * (pageStart + 1)
-
-      delete args.category
-      delete args.public
-      delete args.featured
-      delete args.page
-      delete args.pageSize
-
-      return new Promise((resolve, reject) => {
-        getAPI('listSnapshots', args).then((response) => {
-          let count = 0
-          const snapshots = []
-          response.listsnapshotsresponse.snapshot.forEach(snapshot => {
-            if (snapshot.volumetype === 'ROOT') {
-              count += 1
-              snapshots.push({ ...snapshot, displaytext: snapshot.name })
-            }
-          })
-          resolve({ listsnapshotsresponse: { count, snapshot: snapshots.slice(pageStart, pageEnd) } })
-        }).catch((reason) => {
-          // ToDo: Handle errors
-          reject(reason)
-        })
-      })
+    async fetchRootSnapshots (snapshotFilter, params = {}) {
+      const result = (await getAPI('listVirtualMachineCreationSources', { ...this.creationSourceQuery, sourcekind: 'snapshot', id: this.querySnapshotId, page: params.page || 1, pagesize: params.pageSize || 10 })).listvirtualmachinecreationsourcesresponse || {}
+      return { listsnapshotsresponse: { count: result.count || 0, snapshot: result.creationsource || [] } }
     },
     fetchTemplates (templateFilter, params) {
       const args = Object.assign({}, params)
@@ -3182,6 +3834,7 @@ export default {
       })
     },
     fetchImages (params) {
+      if (this.isCreationSource) return
       if (this.imageType === 'isoid') {
         this.fetchAllIsos(params)
         return
@@ -3358,6 +4011,7 @@ export default {
       }
     },
     onSelectZoneId (value) {
+      this.clearCreationSource()
       if (this.dataPreFill.zoneid !== value) {
         this.dataPreFill = {}
       }
@@ -3370,7 +4024,7 @@ export default {
       if (this.isZoneSelectedMultiArch) {
         this.selectedArchitecture = this.architectureTypes.opts[0].id
       }
-      this.form.startvm = true
+      this.form.startvm = false
       this.selectedZone = this.zoneId
       this.form.zoneid = this.zoneId
       this.form.clusterid = undefined
@@ -3381,7 +4035,7 @@ export default {
       this.form.isoid = undefined
       this.resetTemplatesList()
       this.resetIsosList()
-      this.imageType = this.queryIsoId ? 'isoid' : 'templateid'
+      this.imageType = this.queryVolumeId ? 'volumeid' : this.querySnapshotId ? 'snapshotid' : this.queryIsoId ? 'isoid' : 'templateid'
       this.form.backupofferingid = undefined
       this.selectedBackupOffering = null
       this.fetchZoneOptions()
@@ -3576,7 +4230,7 @@ export default {
       }
     },
     resetFromTemplateConfiguration () {
-      this.deleteFrom(this.instanceConfig, ['disksize', 'rootdisksize'])
+      this.deleteFrom(this.form, ['disksize', 'rootdisksize'])
       this.deleteFrom(this.params.serviceOfferings.options, ['templateid', 'cpuspeed', 'cpunumber', 'memory'])
       this.deleteFrom(this.dataPreFill, ['cpuspeed', 'cpunumber', 'memory'])
       this.handleSearchFilter('serviceOfferings', {
@@ -3722,7 +4376,11 @@ export default {
         this.onToggleLeaseData()
       }
 
-      this.form.rootdisksizeitem = this.showRootDiskSizeChanger && this.rootDiskSizeFixed > 0
+      if (this.templateStrictCustomRoot) {
+        this.showRootDiskSizeChanger = true
+        if (!(Number(this.form.rootdisksize) > 0)) this.form.rootdisksize = this.dataPreFill.minrootdisksize
+      }
+      this.form.rootdisksizeitem = this.templateStrictCustomRoot || this.showRootDiskSizeChanger && this.rootDiskSizeFixed > 0
       this.formModel = toRaw(this.form)
     },
     handlerError (error) {
@@ -3904,6 +4562,19 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.root-disk-configuration { padding-top: 8px; }
+.root-configuration-section { margin-bottom: 20px; }
+.root-section-heading { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; color: var(--ui-text-primary); margin: 0 0 12px; }
+.root-section-number { display: inline-flex; align-items: center; justify-content: center; width: 21px; height: 21px; flex-shrink: 0; border: 1px solid var(--ui-border); border-radius: 50%; font-size: 12px; font-weight: normal; color: var(--ui-text-secondary); }
+.root-default-value { display: flex; align-items: center; gap: 12px; padding: 10px 12px; margin-bottom: 12px; background: var(--ui-bg-elevated); border: 1px solid var(--ui-border); border-radius: 3px; }
+.root-default-value .ant-tag { margin: 0; }
+.root-offering-selection { margin-top: 12px; }
+.root-size-unit { margin-left: 8px; }
+.root-fixed-size-tag { margin-left: 8px; }
+.root-storage-section :deep(.storage-toolbar strong) { display: flex; align-items: center; gap: 8px; }
+.root-storage-section :deep(.storage-toolbar strong)::before { content: '3'; display: inline-flex; align-items: center; justify-content: center; width: 21px; height: 21px; flex-shrink: 0; border: 1px solid var(--ui-border); border-radius: 50%; font-size: 12px; font-weight: normal; color: var(--ui-text-secondary); }
+.option-help { margin: 8px 0 0; opacity: .75; font-size: 12px; line-height: 1.6; }
+
   @media (min-width: 992px) {
     .deploy-vm-layout--bounded {
       height: var(--deploy-viewport-height);

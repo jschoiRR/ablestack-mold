@@ -51,4 +51,18 @@ public class KvmBoundedStatsTest {
         } finally { KvmBoundedStats.clear(); }
         assertEquals("123", KvmBoundedStats.parse("sda rd_bytes 123\n").get("rd_bytes"));
     }
+    @Test public void memorySampleMustHaveFreshGuestTimestampAndPreservesRealZero() throws Exception {
+        Domain domain = mock(Domain.class);
+        when(domain.getUUIDString()).thenReturn("726c3e62-a867-4d4f-ae8b-ff742db97cef");
+        try (MockedStatic<KvmVmOperationGuard> guard = mockStatic(KvmVmOperationGuard.class)) {
+            guard.when(() -> KvmVmOperationGuard.probe(anyLong(), any(String[].class))).thenReturn("balloon.unused=0\nballoon.last-update=100\n");
+            assertEquals(0, KvmBoundedStats.freeMemory(domain, 20, 120000));
+            assertEquals(-1, KvmBoundedStats.freeMemory(domain, 20, 121000));
+            assertEquals(-1, KvmBoundedStats.freeMemory(domain, 20, 99000));
+            assertEquals(-1, KvmBoundedStats.freeMemory(domain, 0, 100000));
+            KvmBoundedStats.clear();
+            guard.when(() -> KvmVmOperationGuard.probe(anyLong(), any(String[].class))).thenReturn("balloon.unused=10\n");
+            assertEquals(-1, KvmBoundedStats.freeMemory(domain, 20, 100000));
+        } finally { KvmBoundedStats.clear(); }
+    }
 }

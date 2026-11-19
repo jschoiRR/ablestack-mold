@@ -1,0 +1,417 @@
+{
+  "passed": 11,
+  "total": 11,
+  "tests": [
+    {
+      "label": "ui-root-a",
+      "count": 2,
+      "rows": 2,
+      "names": [
+        "ssh1372-20261015-root-single",
+        "ssh1372-20261015-root-multi"
+      ],
+      "passed": true,
+      "route": "/vm?keypair=ssh1372-20261015-same&account=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f"
+    },
+    {
+      "label": "ui-root-a-refresh",
+      "count": 2,
+      "rows": 2,
+      "names": [
+        "ssh1372-20261015-root-single",
+        "ssh1372-20261015-root-multi"
+      ],
+      "passed": true,
+      "route": "/vm?keypair=ssh1372-20261015-same&account=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f"
+    },
+    {
+      "label": "ui-root-b",
+      "count": 2,
+      "rows": 2,
+      "names": [
+        "ssh1372-20261015-root-multi",
+        "ssh1372-20261015-root-second"
+      ],
+      "passed": true,
+      "route": "/vm?keypair=ssh1372-20261015-second&account=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f"
+    },
+    {
+      "label": "ui-unused",
+      "count": 0,
+      "rows": 0,
+      "names": [],
+      "passed": true,
+      "route": "/vm?keypair=ssh1372-20261015-unused'_%25%2B&account=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f"
+    },
+    {
+      "label": "ui-project",
+      "count": 1,
+      "rows": 1,
+      "names": [
+        "ssh1372-20261015-project-single"
+      ],
+      "passed": true,
+      "route": "/vm?keypair=ssh1372-20261015-same&domainid=7ef6b29a-b253-11f1-a895-0024814c313f"
+    },
+    {
+      "label": "ui-root-a-global-project",
+      "count": 2,
+      "rows": 2,
+      "names": [
+        "ssh1372-20261015-root-single",
+        "ssh1372-20261015-root-multi"
+      ],
+      "passed": true,
+      "route": "/vm?keypair=ssh1372-20261015-same&account=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f"
+    },
+    {
+      "label": "ui-root-a-all-projects",
+      "count": 2,
+      "rows": 2,
+      "names": [
+        "ssh1372-20261015-root-single",
+        "ssh1372-20261015-root-multi"
+      ],
+      "passed": true,
+      "route": "/vm?keypair=ssh1372-20261015-same&account=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f"
+    },
+    {
+      "label": "ui-metrics",
+      "count": 2,
+      "rows": 2,
+      "names": [
+        "ssh1372-20261015-root-single",
+        "ssh1372-20261015-root-multi"
+      ],
+      "passed": true,
+      "route": "/vm?keypair=ssh1372-20261015-same&account=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f"
+    },
+    {
+      "label": "ui-page-1-2",
+      "count": 2,
+      "rows": 1,
+      "passed": true
+    },
+    {
+      "label": "ui-multi-vm-detail",
+      "passed": true
+    },
+    {
+      "label": "ui-normal-user",
+      "count": 1,
+      "rows": 1,
+      "names": [
+        "ssh1372-20261015-user-single"
+      ],
+      "passed": true,
+      "route": "/vm?keypair=ssh1372-20261015-same&account=ssh1372-20261015-user&domainid=ca992c9c-5a01-4416-a3ea-b98ec47b0c88"
+    }
+  ],
+  "network": [
+    {
+      "command": "listVirtualMachines",
+      "params": {
+        "projectid": "-1",
+        "page": "1",
+        "pagesize": "1"
+      },
+      "status": 200,
+      "count": 129,
+      "ids": [
+        "05f940bb-5ca7-4f58-8e41-ed8440758f0b"
+      ]
+    },
+    {
+      "command": "listVirtualMachines",
+      "params": {
+        "keypair": "ssh1372-20261015-same",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "page": "1",
+        "pagesize": "20"
+      },
+      "status": 200,
+      "count": 2,
+      "ids": [
+        "7d0dfff1-b0f2-490b-990f-ae159a8ec832",
+        "370e3886-fb69-4326-9183-df8f62ce623f"
+      ]
+    },
+    {
+      "command": "listVirtualMachines",
+      "params": {
+        "keypair": "ssh1372-20261015-same",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "page": "1",
+        "pagesize": "20"
+      },
+      "status": 200,
+      "count": 2,
+      "ids": [
+        "7d0dfff1-b0f2-490b-990f-ae159a8ec832",
+        "370e3886-fb69-4326-9183-df8f62ce623f"
+      ]
+    },
+    {
+      "command": "listVirtualMachines",
+      "params": {
+        "keypair": "ssh1372-20261015-second",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "page": "1",
+        "pagesize": "20"
+      },
+      "status": 200,
+      "count": 2,
+      "ids": [
+        "370e3886-fb69-4326-9183-df8f62ce623f",
+        "e5404ead-17bd-4dee-8501-059e737c8758"
+      ]
+    },
+    {
+      "command": "listVirtualMachines",
+      "params": {
+        "keypair": "ssh1372-20261015-unused'_%+",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "page": "1",
+        "pagesize": "20"
+      },
+      "status": 200,
+      "count": 0,
+      "ids": []
+    },
+    {
+      "command": "listVirtualMachines",
+      "params": {
+        "keypair": "ssh1372-20261015-same",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "projectid": "53e55368-2992-4aab-bafd-8b7270bbb0fc",
+        "page": "1",
+        "pagesize": "20"
+      },
+      "status": 200,
+      "count": 1,
+      "ids": [
+        "70ae72c9-513a-4a07-8d27-87178e57e2f7"
+      ]
+    },
+    {
+      "command": "listVirtualMachines",
+      "params": {
+        "keypair": "ssh1372-20261015-same",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "projectid": "53e55368-2992-4aab-bafd-8b7270bbb0fc",
+        "page": "1",
+        "pagesize": "20"
+      },
+      "status": 200,
+      "count": 1,
+      "ids": [
+        "70ae72c9-513a-4a07-8d27-87178e57e2f7"
+      ]
+    },
+    {
+      "command": "listVirtualMachines",
+      "params": {
+        "keypair": "ssh1372-20261015-same",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "page": "1",
+        "pagesize": "20"
+      },
+      "status": 200,
+      "count": 2,
+      "ids": [
+        "7d0dfff1-b0f2-490b-990f-ae159a8ec832",
+        "370e3886-fb69-4326-9183-df8f62ce623f"
+      ]
+    },
+    {
+      "command": "listVirtualMachines",
+      "params": {
+        "projectid": "-1",
+        "page": "1",
+        "pagesize": "1"
+      },
+      "status": 200,
+      "count": 129,
+      "ids": [
+        "05f940bb-5ca7-4f58-8e41-ed8440758f0b"
+      ]
+    },
+    {
+      "command": "listVirtualMachines",
+      "params": {
+        "keypair": "ssh1372-20261015-same",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "page": "1",
+        "pagesize": "20"
+      },
+      "status": 200,
+      "count": 2,
+      "ids": [
+        "7d0dfff1-b0f2-490b-990f-ae159a8ec832",
+        "370e3886-fb69-4326-9183-df8f62ce623f"
+      ]
+    },
+    {
+      "command": "listVirtualMachines",
+      "params": {
+        "keypair": "ssh1372-20261015-same",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "page": "1",
+        "pagesize": "20"
+      },
+      "status": 200,
+      "count": 2,
+      "ids": [
+        "7d0dfff1-b0f2-490b-990f-ae159a8ec832",
+        "370e3886-fb69-4326-9183-df8f62ce623f"
+      ]
+    },
+    {
+      "command": "listVirtualMachines",
+      "params": {
+        "keypair": "ssh1372-20261015-same",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "page": "1",
+        "pagesize": "20"
+      },
+      "status": 200,
+      "count": 2,
+      "ids": [
+        "7d0dfff1-b0f2-490b-990f-ae159a8ec832",
+        "370e3886-fb69-4326-9183-df8f62ce623f"
+      ]
+    },
+    {
+      "command": "listVirtualMachinesMetrics",
+      "params": {
+        "keypair": "ssh1372-20261015-same",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "page": "1",
+        "pagesize": "20"
+      },
+      "status": 200,
+      "count": 2,
+      "ids": [
+        "7d0dfff1-b0f2-490b-990f-ae159a8ec832",
+        "370e3886-fb69-4326-9183-df8f62ce623f"
+      ]
+    },
+    {
+      "command": "listVirtualMachines",
+      "params": {
+        "keypair": "ssh1372-20261015-same",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "page": "1",
+        "pagesize": "20"
+      },
+      "status": 200,
+      "count": 2,
+      "ids": [
+        "7d0dfff1-b0f2-490b-990f-ae159a8ec832",
+        "370e3886-fb69-4326-9183-df8f62ce623f"
+      ]
+    },
+    {
+      "command": "listVirtualMachines",
+      "params": {
+        "keypair": "ssh1372-20261015-same",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "page": "1",
+        "pagesize": "1"
+      },
+      "status": 200,
+      "count": 2,
+      "ids": [
+        "7d0dfff1-b0f2-490b-990f-ae159a8ec832"
+      ]
+    },
+    {
+      "command": "listVirtualMachines",
+      "params": {
+        "keypair": "ssh1372-20261015-same",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "page": "2",
+        "pagesize": "1"
+      },
+      "status": 200,
+      "count": 2,
+      "ids": [
+        "370e3886-fb69-4326-9183-df8f62ce623f"
+      ]
+    },
+    {
+      "command": "listVirtualMachinesMetrics",
+      "params": {
+        "projectid": "-1",
+        "page": "1",
+        "pagesize": "1"
+      },
+      "status": 200,
+      "count": 1,
+      "ids": [
+        "370e3886-fb69-4326-9183-df8f62ce623f"
+      ]
+    },
+    {
+      "command": "listVirtualMachines",
+      "params": {
+        "page": "1",
+        "pagesize": "1"
+      },
+      "status": 200,
+      "count": 0,
+      "ids": []
+    },
+    {
+      "command": "listVirtualMachines",
+      "params": {
+        "page": "1",
+        "pagesize": "1"
+      },
+      "status": 200,
+      "count": 1,
+      "ids": [
+        "f67c1868-4455-478e-8a31-5b1ba7a94622"
+      ]
+    },
+    {
+      "command": "listVirtualMachines",
+      "params": {
+        "page": "1",
+        "pagesize": "1"
+      },
+      "status": 200,
+      "count": 1,
+      "ids": [
+        "f67c1868-4455-478e-8a31-5b1ba7a94622"
+      ]
+    },
+    {
+      "command": "listVirtualMachines",
+      "params": {
+        "keypair": "ssh1372-20261015-same",
+        "account": "ssh1372-20261015-user",
+        "domainid": "ca992c9c-5a01-4416-a3ea-b98ec47b0c88",
+        "page": "1",
+        "pagesize": "20"
+      },
+      "status": 200,
+      "count": 1,
+      "ids": [
+        "f67c1868-4455-478e-8a31-5b1ba7a94622"
+      ]
+    }
+  ]
+}

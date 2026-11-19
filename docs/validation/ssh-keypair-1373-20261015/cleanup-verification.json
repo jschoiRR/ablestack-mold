@@ -1,0 +1,73 @@
+{
+  "passed": true,
+  "actions": [
+    {
+      "command": "deleteSSHKeyPair",
+      "id": "5d5a5d8e-dd67-4794-a422-e577cd339233",
+      "scope": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f"
+      }
+    },
+    {
+      "command": "deleteSSHKeyPair",
+      "id": "52938920-03de-4a1a-8821-cfe557936545",
+      "scope": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f"
+      }
+    },
+    {
+      "command": "deleteSSHKeyPair",
+      "id": "1cb8ec43-ce94-4fed-abdc-33dcb1d6e461",
+      "scope": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f"
+      }
+    },
+    {
+      "command": "deleteSSHKeyPair",
+      "id": "312b0228-7cde-4cbb-ac46-11f29f301311",
+      "scope": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f"
+      }
+    },
+    {
+      "command": "deleteSSHKeyPair",
+      "id": "721edf57-a97b-4e04-bc33-b836ed5e54a0",
+      "scope": {
+        "account": "ssh1373-20261015-user",
+        "domainid": "879606a4-e3a8-4142-b067-40e0e39c09fa"
+      }
+    },
+    {
+      "command": "deleteSSHKeyPair",
+      "id": "0dab35bb-cf82-47fc-992a-59e3f69dc421",
+      "scope": {
+        "projectid": "2e22e242-3c14-4f38-8040-456a9827a492"
+      }
+    },
+    {
+      "command": "deleteProject",
+      "id": "2e22e242-3c14-4f38-8040-456a9827a492"
+    },
+    {
+      "command": "deleteAccount",
+      "id": "188bf25d-b524-447f-857c-efa6770edabb"
+    },
+    {
+      "command": "deleteDomain",
+      "id": "879606a4-e3a8-4142-b067-40e0e39c09fa"
+    }
+  ],
+  "checks": {
+    "keys": 0,
+    "active_domain": 0,
+    "active_account": 0,
+    "active_project": 0,
+    "existing-keys_preserved": 5,
+    "existing-vm-ssh_preserved": 350
+  },
+  "baseline_api_keys_preserved": 3
+}

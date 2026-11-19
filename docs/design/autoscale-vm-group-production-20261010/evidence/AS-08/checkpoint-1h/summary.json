@@ -1,0 +1,569 @@
+{
+  "checkpointHours": 1,
+  "actualElapsedMinutes": 78.86,
+  "startedAt": "2026-10-13T02:44:15.746277+00:00",
+  "checkedAt": "2026-10-13T04:05:36.635852+00:00",
+  "phase": "OBSERVING",
+  "fixtures": {
+    "31": {
+      "groupCount": 3,
+      "originalVmCount": 3,
+      "originalMembersPreserved": true,
+      "allGroupHttp200": true
+    },
+    "32": {
+      "groupCount": 4,
+      "originalVmCount": 4,
+      "originalMembersPreserved": true,
+      "allGroupHttp200": true
+    }
+  },
+  "statisticsRetentionSeconds": 7200,
+  "clusters": {
+    "31": {
+      "checkedAt": "2026-10-13T04:03:12.246844+00:00",
+      "http": {
+        "31-AS04": {
+          "requests": 948,
+          "ok": 948,
+          "failed": 0
+        }
+      },
+      "apiSamples": 79,
+      "apiErrors": 0,
+      "dbSamples": 16,
+      "dbErrors": 0,
+      "anomalyCount": 0,
+      "maxHttpGapSeconds": 5.0,
+      "maxApiGapSeconds": 60.053,
+      "groupHistory": {
+        "bf0f5385-ae2c-4da4-aec4-eb985dbdeba4": {
+          "samples": 79,
+          "minObserved": 1,
+          "maxObserved": 1,
+          "last": {
+            "name": "AS-PROD-31-AS04-CONCURRENCY",
+            "state": "ENABLED",
+            "members": 1,
+            "lb": 1,
+            "lastcheckedat": 1791864126000,
+            "evaluatedat": 1791864113577,
+            "memberIds": [
+              "bc00f070-797a-40b0-9785-c965dc50fc63"
+            ]
+          }
+        }
+      },
+      "latestDb": {
+        "at": "2026-10-13T03:59:15.869688+00:00",
+        "epoch": 1791863955.8697035,
+        "rows": [
+          {
+            "kind": "group",
+            "uuid": "bf0f5385-ae2c-4da4-aec4-eb985dbdeba4",
+            "state": "ENABLED",
+            "members": 1,
+            "lbMembers": 1,
+            "operation": null
+          },
+          {
+            "kind": "statistics",
+            "rows": 1107,
+            "group": "bf0f5385-ae2c-4da4-aec4-eb985dbdeba4",
+            "newest": "2026-10-13 03:59:13.000000",
+            "oldest": "2026-10-13 02:29:34.000000"
+          },
+          {
+            "kind": "cleanupConfig",
+            "name": "autoscale.stats.cleanup.delay",
+            "value": "7200"
+          },
+          {
+            "kind": "orphans",
+            "vmMaps": 0,
+            "volumeRows": 0
+          }
+        ]
+      },
+      "firstProcess": {
+        "at": "2026-10-13T02:44:16.155713+00:00",
+        "epoch": 1791859456.1557338,
+        "service": "active",
+        "pid": "628863",
+        "status": {
+          "VmSize": "10278228 kB",
+          "VmRSS": "1648164 kB",
+          "Threads": "286"
+        },
+        "fds": 75,
+        "jstatGc": {
+          "unavailable": true
+        },
+        "jvmMetrics": [
+          {
+            "sessions": 15,
+            "heapmemoryused": 567294064,
+            "heapmemorytotal": 1908932608,
+            "threadsblockedcount": 0,
+            "threadsrunnablecount": 13,
+            "threadstotalcount": 268,
+            "collectiontime": "2026-10-13T11:43:18+0900",
+            "name": "ccvm-mngt",
+            "state": "Up"
+          }
+        ],
+        "jarSha256": "036f448a93ff0c6c156a3dafebd3b26af6621203c60a6caf98b43ff10ef179ac",
+        "indexSha256": "aa31be6ec2e7a06efbe8b3413dbafd798f430e5a37b479193e906b60eef4a74f"
+      },
+      "lastProcess": {
+        "at": "2026-10-13T03:59:16.185940+00:00",
+        "epoch": 1791863956.185963,
+        "service": "active",
+        "pid": "628863",
+        "status": {
+          "VmSize": "10351728 kB",
+          "VmRSS": "1454884 kB",
+          "Threads": "291"
+        },
+        "fds": 83,
+        "jstatGc": {
+          "unavailable": true
+        },
+        "jvmMetrics": [
+          {
+            "sessions": 3,
+            "heapmemoryused": 469302784,
+            "heapmemorytotal": 1908932608,
+            "threadsblockedcount": 0,
+            "threadsrunnablecount": 13,
+            "threadstotalcount": 276,
+            "collectiontime": "2026-10-13T12:58:18+0900",
+            "name": "ccvm-mngt",
+            "state": "Up",
+            "collectionAgeSeconds": 294.26
+          }
+        ],
+        "jarSha256": "036f448a93ff0c6c156a3dafebd3b26af6621203c60a6caf98b43ff10ef179ac",
+        "indexSha256": "aa31be6ec2e7a06efbe8b3413dbafd798f430e5a37b479193e906b60eef4a74f"
+      },
+      "threadsDiagnostic": {
+        "at": "2026-10-13T03:55:00.829941+00:00",
+        "families": {
+          "java": 2,
+          "GC Thread##": 8,
+          "VM Thread": 1,
+          "Reference Handl": 1,
+          "Finalizer": 1,
+          "Signal Dispatch": 1,
+          "Service Thread": 1,
+          "Monitor Deflati": 1,
+          "C# CompilerThre": 2,
+          "Sweeper thread": 1,
+          "Common-Cleaner": 1,
+          "Notification Th": 1,
+          "VM Periodic Tas": 1,
+          "Log#j#-TcpSocke": 1,
+          "Log#j#-TF-#-Sch": 2,
+          "qtp#-#": 14,
+          "org.eclipse.jet": 1,
+          "Scheduler-#": 1,
+          "mysql-cj-abando": 1,
+          "cloud:housekeep": 1,
+          "usage:housekeep": 1,
+          "pool-#-thread-#": 11,
+          "ConnectionConci": 1,
+          "ClusteredAgentM": 1,
+          "ForkJoinPool.co": 2,
+          "Timer-#": 4,
+          "process reaper": 1,
+          "Script-#": 10,
+          "BackupCompressi": 1,
+          "HostReservation": 1,
+          "CapacityChecker": 1,
+          "BackupValidatio": 1,
+          "consoleproxy-#": 1,
+          "secstorage-#": 1,
+          "Cluster-Worker-": 7,
+          "LicenseCheck-#": 1,
+          "net.sf.ehcache.": 1,
+          "Connection evic": 1,
+          "StorageCacheMan": 1,
+          "UCS-SyncBlades-": 1,
+          "AsyncJobMgr-Hea": 1,
+          "HA-Worker-#": 5,
+          "HA-#": 5,
+          "VpcChecker-#": 1,
+          "BackupPollTask": 1,
+          "VpnCustomerGate": 1,
+          "LBHealthCheck-#": 1,
+          "Project-ExpireI": 1,
+          "UserVm-Scavenge": 1,
+          "UserVm-ipfetch-": 10,
+          "FlattenCloneIma": 1,
+          "FlattenClonePro": 1,
+          "Bucket-Usage-#": 1,
+          "SnapshotPollTas": 1,
+          "VirtualMachineS": 1,
+          "BackgroundTaskP": 6,
+          "Extension-Path-": 1,
+          "AutoScaleVmGrou": 1,
+          "VmGuestNetwork-": 3,
+          "UploadMonitor-S": 1,
+          "VMSchedulerPoll": 1,
+          "AccountChecker-": 1,
+          "Network-Scaveng": 1,
+          "ExternalNetwork": 1,
+          "StorageManager-": 1,
+          "SharedFS-Scaven": 1,
+          "SecGrp-Worker-#": 50,
+          "Upload-Monitor-": 1,
+          "RouterMonitor-#": 1,
+          "NetworkStatsUpd": 1,
+          "RouterStatusMon": 1,
+          "RedundantRouter": 10,
+          "ResourceCountCh": 1,
+          "ConsoleSession-": 1,
+          "Vm-Operations-C": 1,
+          "StatsCollector-": 6,
+          "DiskStatsUpdate": 1,
+          "AgentManager-Ni": 1,
+          "AgentMonitor-#": 1,
+          "NewAgentConnect": 1,
+          "KMSRewrapWorker": 1,
+          "Thread-#": 1,
+          "Ipv#GuestPrefix": 1,
+          "Cluster-Heartbe": 1,
+          "Cluster-Notific": 1,
+          "FtctlCloudManag": 2,
+          "FtctlRuntimeSta": 1,
+          "DrProjectionSch": 1,
+          "DrQgaScan-#": 1,
+          "DrSchedulerReco": 1,
+          "DrTestRestoreSc": 1,
+          "DrFailbackLifec": 1,
+          "DrSiteHealthChe": 1,
+          "SecurityChecker": 1,
+          "IntegrityVerifi": 1,
+          "Desktop-Cluster": 2,
+          "Kubernetes-Clus": 2,
+          "StorPoolAbandon": 2,
+          "StorPoolSnapsho": 1,
+          "Webhook-Deliver": 1,
+          "IpmiToolDriver-": 1,
+          "Cluster-Listene": 1,
+          "AgentManager-Ha": 15,
+          "InaccurateClock": 1,
+          "HttpClient-#-Se": 2,
+          "HttpClient-#-Wo": 2,
+          "AsyncJobMgr-Eve": 1,
+          "API-Job-Executo": 3,
+          "vmIpFetchThread": 10,
+          "VmGroup-Monitor": 1,
+          "SequenceFetcher": 4,
+          "Work-Job-Execut": 8
+        },
+        "total": 292
+      },
+      "poolLimits": {
+        "path": "/etc/cloudstack/management/db.properties",
+        "dbCloudMaxActive": 250,
+        "apiFixedPoolLimit": 125,
+        "workFixedPoolLimit": 166
+      },
+      "publicVmJobTargetsOutsideObservedGroups": true,
+      "otherResourceJobCount": 0
+    },
+    "32": {
+      "checkedAt": "2026-10-13T04:03:12.243187+00:00",
+      "http": {
+        "32-AS04": {
+          "requests": 948,
+          "ok": 948,
+          "failed": 0
+        },
+        "32-VPC": {
+          "requests": 948,
+          "ok": 948,
+          "failed": 0
+        }
+      },
+      "apiSamples": 79,
+      "apiErrors": 0,
+      "dbSamples": 16,
+      "dbErrors": 0,
+      "anomalyCount": 0,
+      "maxHttpGapSeconds": 5.0,
+      "maxApiGapSeconds": 60.054,
+      "groupHistory": {
+        "18bef25a-4053-4454-bc85-f6d777b9391d": {
+          "samples": 79,
+          "minObserved": 1,
+          "maxObserved": 1,
+          "last": {
+            "name": "AS-PROD-32-AS04-CONCURRENCY",
+            "state": "ENABLED",
+            "members": 1,
+            "lb": 1,
+            "lastcheckedat": 1791864133000,
+            "evaluatedat": 1791864123093,
+            "memberIds": [
+              "6f9bd71b-1745-48c5-9c88-cc0cccd9d1ff"
+            ]
+          }
+        },
+        "85fabab7-7992-4292-bad3-a43c4bd85cdc": {
+          "samples": 79,
+          "minObserved": 1,
+          "maxObserved": 1,
+          "last": {
+            "name": "AS-PROD-32-AS01-VPC",
+            "state": "ENABLED",
+            "members": 1,
+            "lb": 1,
+            "lastcheckedat": 1791864132000,
+            "evaluatedat": 1791864123093,
+            "memberIds": [
+              "14635a86-3bc8-4a4e-bd35-485afe1f30b5"
+            ]
+          }
+        }
+      },
+      "latestDb": {
+        "at": "2026-10-13T03:59:15.907773+00:00",
+        "epoch": 1791863955.9077892,
+        "rows": [
+          {
+            "kind": "group",
+            "uuid": "18bef25a-4053-4454-bc85-f6d777b9391d",
+            "state": "ENABLED",
+            "members": 1,
+            "lbMembers": 1,
+            "operation": null
+          },
+          {
+            "kind": "group",
+            "uuid": "85fabab7-7992-4292-bad3-a43c4bd85cdc",
+            "state": "ENABLED",
+            "members": 1,
+            "lbMembers": 1,
+            "operation": null
+          },
+          {
+            "kind": "statistics",
+            "rows": 1097,
+            "group": "18bef25a-4053-4454-bc85-f6d777b9391d",
+            "newest": "2026-10-13 03:59:09.000000",
+            "oldest": "2026-10-13 02:29:35.000000"
+          },
+          {
+            "kind": "statistics",
+            "rows": 337,
+            "group": "85fabab7-7992-4292-bad3-a43c4bd85cdc",
+            "newest": "2026-10-13 03:59:10.000000",
+            "oldest": "2026-10-13 02:34:26.000000"
+          },
+          {
+            "kind": "cleanupConfig",
+            "name": "autoscale.stats.cleanup.delay",
+            "value": "7200"
+          },
+          {
+            "kind": "orphans",
+            "vmMaps": 0,
+            "volumeRows": 0
+          }
+        ]
+      },
+      "firstProcess": {
+        "at": "2026-10-13T02:44:16.358608+00:00",
+        "epoch": 1791859456.358641,
+        "service": "active",
+        "pid": "938882",
+        "status": {
+          "VmSize": "8507740 kB",
+          "VmRSS": "2057272 kB",
+          "Threads": "384"
+        },
+        "fds": 69,
+        "jstatGc": {
+          "unavailable": true
+        },
+        "jvmMetrics": [
+          {
+            "sessions": 15,
+            "heapmemoryused": 725904336,
+            "heapmemorytotal": 1908932608,
+            "threadsblockedcount": 0,
+            "threadsrunnablecount": 13,
+            "threadstotalcount": 367,
+            "collectiontime": "2026-10-13T11:44:14+0900",
+            "name": "ccvm-mngt",
+            "state": "Up"
+          }
+        ],
+        "jarSha256": "dce0e50d4b0193202ee7c6522434814065d8f4c2ebd3fe74fd42d84373818e19",
+        "indexSha256": "aa31be6ec2e7a06efbe8b3413dbafd798f430e5a37b479193e906b60eef4a74f"
+      },
+      "lastProcess": {
+        "at": "2026-10-13T03:59:16.360782+00:00",
+        "epoch": 1791863956.3608038,
+        "service": "active",
+        "pid": "938882",
+        "status": {
+          "VmSize": "8613368 kB",
+          "VmRSS": "2127280 kB",
+          "Threads": "425"
+        },
+        "fds": 64,
+        "jstatGc": {
+          "unavailable": true
+        },
+        "jvmMetrics": [
+          {
+            "sessions": 4,
+            "heapmemoryused": 843671664,
+            "heapmemorytotal": 1908932608,
+            "threadsblockedcount": 0,
+            "threadsrunnablecount": 13,
+            "threadstotalcount": 407,
+            "collectiontime": "2026-10-13T12:59:14+0900",
+            "name": "ccvm-mngt",
+            "state": "Up",
+            "collectionAgeSeconds": 238.26
+          }
+        ],
+        "jarSha256": "dce0e50d4b0193202ee7c6522434814065d8f4c2ebd3fe74fd42d84373818e19",
+        "indexSha256": "aa31be6ec2e7a06efbe8b3413dbafd798f430e5a37b479193e906b60eef4a74f"
+      },
+      "threadsDiagnostic": {
+        "at": "2026-10-13T03:55:00.870613+00:00",
+        "families": {
+          "java": 2,
+          "GC Thread##": 8,
+          "VM Thread": 1,
+          "Reference Handl": 1,
+          "Finalizer": 1,
+          "Signal Dispatch": 1,
+          "Service Thread": 1,
+          "Monitor Deflati": 1,
+          "C# CompilerThre": 2,
+          "Sweeper thread": 1,
+          "Common-Cleaner": 1,
+          "Notification Th": 1,
+          "VM Periodic Tas": 1,
+          "Log#j#-TcpSocke": 1,
+          "Log#j#-TF-#-Sch": 2,
+          "qtp#-#": 10,
+          "org.eclipse.jet": 1,
+          "Scheduler-#": 1,
+          "mysql-cj-abando": 1,
+          "cloud:housekeep": 1,
+          "usage:housekeep": 1,
+          "pool-#-thread-#": 14,
+          "ConnectionConci": 1,
+          "ClusteredAgentM": 1,
+          "ForkJoinPool.co": 3,
+          "Timer-#": 5,
+          "Script-#": 10,
+          "BackupCompressi": 1,
+          "HostReservation": 1,
+          "CapacityChecker": 1,
+          "BackupValidatio": 1,
+          "secstorage-#": 1,
+          "consoleproxy-#": 1,
+          "Cluster-Worker-": 7,
+          "LicenseCheck-#": 1,
+          "net.sf.ehcache.": 1,
+          "Connection evic": 1,
+          "UCS-SyncBlades-": 1,
+          "StorageCacheMan": 1,
+          "AsyncJobMgr-Hea": 1,
+          "Network-Scaveng": 1,
+          "LBHealthCheck-#": 1,
+          "Bucket-Usage-#": 1,
+          "AutoScaleVmGrou": 1,
+          "SecGrp-Worker-#": 50,
+          "KMSRewrapWorker": 1,
+          "AgentManager-Ni": 1,
+          "AgentMonitor-#": 1,
+          "NewAgentConnect": 1,
+          "UploadMonitor-S": 1,
+          "VmGuestNetwork-": 1,
+          "BackupPollTask": 1,
+          "ConsoleSession-": 1,
+          "ExternalNetwork": 1,
+          "VpnCustomerGate": 1,
+          "RouterMonitor-#": 1,
+          "NetworkStatsUpd": 1,
+          "RouterStatusMon": 1,
+          "RedundantRouter": 10,
+          "SnapshotPollTas": 1,
+          "HA-Worker-#": 5,
+          "HA-#": 5,
+          "Upload-Monitor-": 1,
+          "AccountChecker-": 1,
+          "Extension-Path-": 1,
+          "ResourceCountCh": 1,
+          "SharedFS-Scaven": 2,
+          "VirtualMachineS": 1,
+          "StorageManager-": 1,
+          "VMSchedulerPoll": 1,
+          "UserVm-Scavenge": 1,
+          "UserVm-ipfetch-": 10,
+          "FlattenCloneIma": 1,
+          "FlattenClonePro": 1,
+          "Vm-Operations-C": 1,
+          "Project-ExpireI": 1,
+          "BackgroundTaskP": 6,
+          "VpcChecker-#": 1,
+          "StatsCollector-": 6,
+          "DiskStatsUpdate": 1,
+          "Thread-#": 1,
+          "Ipv#GuestPrefix": 1,
+          "Cluster-Heartbe": 1,
+          "Cluster-Notific": 1,
+          "FtctlCloudManag": 2,
+          "FtctlRuntimeSta": 1,
+          "DrSiteHealthChe": 1,
+          "DrProjectionSch": 1,
+          "DrFailbackLifec": 1,
+          "DrSchedulerReco": 1,
+          "DrQgaScan-#": 1,
+          "DrTestRestoreSc": 1,
+          "SecurityChecker": 1,
+          "IntegrityVerifi": 1,
+          "Desktop-Cluster": 2,
+          "Kubernetes-Clus": 2,
+          "StorPoolAbandon": 2,
+          "StorPoolSnapsho": 1,
+          "Webhook-Deliver": 1,
+          "IpmiToolDriver-": 3,
+          "Cluster-Listene": 1,
+          "AgentManager-Ha": 15,
+          "InaccurateClock": 1,
+          "pool-#-thread-": 10,
+          "HA-InnerTask-#": 3,
+          "AsyncJobMgr-Eve": 1,
+          "API-Job-Executo": 73,
+          "vmIpFetchThread": 10,
+          "Work-Job-Execut": 32,
+          "process reaper": 3,
+          "HttpClient-#-Se": 2,
+          "SequenceFetcher": 16,
+          "VmGroup-Monitor": 2,
+          "HttpClient-#-Wo": 2
+        },
+        "total": 416
+      },
+      "poolLimits": {
+        "path": "/etc/cloudstack/management/db.properties",
+        "dbCloudMaxActive": 250,
+        "apiFixedPoolLimit": 125,
+        "workFixedPoolLimit": 166
+      },
+      "publicVmJobTargetsOutsideObservedGroups": true,
+      "otherResourceJobCount": 25
+    }
+  },
+  "scopeNote": "32 has concurrent unrelated VM/volume/template operations; management-process-wide metrics cannot be attributed solely to autoscale. Bounded fixed worker pools and collection trends remain under observation."
+}

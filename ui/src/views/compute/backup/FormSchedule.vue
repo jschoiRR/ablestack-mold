@@ -16,13 +16,14 @@
 // under the License.
 
 <template>
-  <a-spin :spinning="loading">
+  <a-spin :spinning="loading" class="backup-schedule-form">
     <div class="form-layout">
       <label>
         {{ $t('label.header.backup.schedule') }}
       </label>
       <div class="form" v-ctrl-enter="handleSubmit">
-        <a-form
+        <a-alert v-if="resource.backupblockedreason" type="warning" show-icon :message="$t('message.backup.snapshot.backup.blocked')" style="margin-bottom: 16px" />
+      <a-form
           :ref="formRef"
           :model="form"
           :rules="rules"
@@ -146,10 +147,10 @@
               <a-form-item v-if="isQuiesceVmSupported" name="quiescevm" ref="quiescevm">
                 <a-switch v-model:checked="form.quiescevm"/>
                 <template #label>
-                  <tooltip-label :title="$t('label.quiescevm')" :tooltip="apiParams.quiescevm.description"/>
+                  <tooltip-label :title="$t('label.quiescevm')" :tooltip="quiesceVmTooltip"/>
                 </template>
               </a-form-item>
-              <a-form-item name="isolated" ref="isolated">
+              <a-form-item v-if="backupProvider === 'kboss'" name="isolated" ref="isolated">
                 <template #label>
                   <tooltip-label
                     :title="$t('label.isolated')"
@@ -169,6 +170,7 @@
             <a-button
               :loading="actionLoading"
               ref="submit"
+              :disabled="!!resource.backupblockedreason"
               type="primary"
               htmlType="submit">
               {{ $t('label.ok') }}
@@ -279,6 +281,11 @@ export default {
     isQuiesceVmSupported () {
       return this.$isBackupProviderSupportsQuiesceVm(this.backupProvider)
     },
+    quiesceVmTooltip () {
+      return ['ablestack-commvault', 'ablestack-netbackup', 'ablestack-veeam'].includes(this.backupProvider)
+        ? this.$t('message.backup.volume.quiesce')
+        : this.apiParams.quiescevm.description
+    },
     backupChainRetentionMessage () {
       const maxBackups = Number(this.form.maxbackups)
       if (!Number.isFinite(maxBackups) || maxBackups <= 0) {
@@ -341,7 +348,8 @@ export default {
         'day-of-month': null,
         maxbackups: null,
         timezone: null,
-        quiescevm: false
+        quiescevm: false,
+        isolated: false
       }
 
       if (this.formRef && this.formRef.value && this.formRef.value.clearValidate) {
@@ -364,7 +372,7 @@ export default {
         incrementalBackupParams.clusterid = clusterId
       }
       const backupChainSizeParams = {
-        name: 'backup.chain.size'
+        name: 'kvm.backup.chain.size'
       }
 
       Promise.all([
@@ -457,6 +465,7 @@ export default {
       return false
     },
     handleSubmit (e) {
+      if (this.resource.backupblockedreason) return
       if (this.actionLoading) return
       this.formRef.value.validate().then(() => {
         const formRaw = toRaw(this.form)
@@ -466,10 +475,12 @@ export default {
         params.intervaltype = values.intervaltype.toUpperCase()
         params.maxbackups = values.maxbackups
         params.timezone = values.timezone
-        if (values.quiescevm) {
-          params.quiescevm = values.quiescevm
+        if (this.isQuiesceVmSupported) {
+          params.quiescevm = !!values.quiescevm
         }
-        params.isolated = values.isolated
+        if (this.backupProvider === 'kboss') {
+          params.isolated = !!values.isolated
+        }
         switch (values.intervaltype) {
           case 'hourly':
             params.schedule = values.time
@@ -516,7 +527,8 @@ export default {
         'day-of-month': null,
         maxbackups: null,
         timezone: null,
-        quiescevm: false
+        quiescevm: false,
+        isolated: false
       }
       this.dayOfWeek = []
       this.dayOfMonth = []

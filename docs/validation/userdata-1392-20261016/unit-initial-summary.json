@@ -1,0 +1,1319 @@
+{
+  "success": true,
+  "numPassedTests": 306,
+  "numFailedTests": 0,
+  "numPassedTestSuites": 14,
+  "numFailedTestSuites": 0,
+  "startTime": 1792157739674,
+  "source": "67dda71261e8cfa35b827c74daddc206f86c2f49",
+  "suites": [
+    {
+      "name": "tests/unit/views/ProjectMenu.spec.js",
+      "status": "passed",
+      "tests": [
+        {
+          "title": "awaits capability completion before project commit/navigation, and locks double selection",
+          "status": "passed"
+        },
+        {
+          "title": "handles transition failure ERR_CANCELED and restores selection without committing a new owner",
+          "status": "passed"
+        },
+        {
+          "title": "handles transition failure 503 and restores selection without committing a new owner",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "tests/unit/views/compute/UserDataSelection.spec.js",
+      "status": "passed",
+      "tests": [
+        {
+          "title": "every server page is reachable with 0 records and None never inflates total",
+          "status": "passed"
+        },
+        {
+          "title": "every server page is reachable with 10 records and None never inflates total",
+          "status": "passed"
+        },
+        {
+          "title": "every server page is reachable with 11 records and None never inflates total",
+          "status": "passed"
+        },
+        {
+          "title": "every server page is reachable with 30 records and None never inflates total",
+          "status": "passed"
+        },
+        {
+          "title": "every server page is reachable with 100 records and None never inflates total",
+          "status": "passed"
+        },
+        {
+          "title": "search submits server keyword, resets page and preserves selected item outside search results",
+          "status": "passed"
+        },
+        {
+          "title": "page-size change resets to page one and sends lowercase pagesize",
+          "status": "passed"
+        },
+        {
+          "title": "a deleted last page recovers to the remaining valid server page",
+          "status": "passed"
+        },
+        {
+          "title": "inconsistent empty pages have a bounded fallback to page one",
+          "status": "passed"
+        },
+        {
+          "title": "a late old search cannot overwrite the newer result or loading state",
+          "status": "passed"
+        },
+        {
+          "title": "failure preserves successful data, pagination and selection, blocks row selection, and retry recovers",
+          "status": "passed"
+        },
+        {
+          "title": "HTTP 401 is distinguished from empty success",
+          "status": "passed"
+        },
+        {
+          "title": "HTTP 403 is distinguished from empty success",
+          "status": "passed"
+        },
+        {
+          "title": "missing list permission never issues an API request",
+          "status": "passed"
+        },
+        {
+          "title": "the installed Alert renders a retry button which actually reloads a failed query",
+          "status": "passed"
+        },
+        {
+          "title": "missing owner never issues an unscoped request",
+          "status": "passed"
+        },
+        {
+          "title": "owner change clears selection immediately and ignores old owner replies",
+          "status": "passed"
+        },
+        {
+          "title": "prefill outside page one is resolved by owner-scoped UUID once and never reselected on paging",
+          "status": "passed"
+        },
+        {
+          "title": "deleted selected UUID blocks submission until explicit None or another row is chosen",
+          "status": "passed"
+        },
+        {
+          "title": "disabled selector rejects row clicks and None",
+          "status": "passed"
+        },
+        {
+          "title": "radio change and its bubbling row click emit only one selection",
+          "status": "passed"
+        },
+        {
+          "title": "search Enter is stopped and cannot submit the enclosing form",
+          "status": "passed"
+        },
+        {
+          "title": "unmount discards an outstanding response",
+          "status": "passed"
+        },
+        {
+          "title": "consumer $name receives a verified row and clears stale variables on None",
+          "status": "passed"
+        },
+        {
+          "title": "consumer $name receives a verified row and clears stale variables on None",
+          "status": "passed"
+        },
+        {
+          "title": "consumer $name receives a verified row and clears stale variables on None",
+          "status": "passed"
+        },
+        {
+          "title": "AutoScale row selection supersedes an old parameter lookup",
+          "status": "passed"
+        },
+        {
+          "title": "stable None and mismatched row IDs cannot leak as a real userdataid",
+          "status": "passed"
+        },
+        {
+          "title": "shared submit guard applies to active library lookup, while manual/template modes remain available",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "tests/unit/views/compute/UserDataUsage.spec.js",
+      "status": "passed",
+      "tests": [
+        {
+          "title": "uses UUID server query, ACL permits cross-owner rows, checks identity before and after",
+          "status": "passed"
+        },
+        {
+          "title": "project is explicit and library project wins over ambient context",
+          "status": "passed"
+        },
+        {
+          "title": "unsupported filter never issues an unfiltered request",
+          "status": "passed"
+        },
+        {
+          "title": "malformed counts and wrong UUIDs cannot become a successful empty list",
+          "status": "passed"
+        },
+        {
+          "title": "same scope refresh retains rows and recoverable failures retain stale feedback",
+          "status": "passed"
+        },
+        {
+          "title": "empty successful result remains empty while refresh is pending",
+          "status": "passed"
+        },
+        {
+          "title": "project changes discard late responses",
+          "status": "passed"
+        },
+        {
+          "title": "tab changes discard late responses",
+          "status": "passed"
+        },
+        {
+          "title": "user changes discard late responses",
+          "status": "passed"
+        },
+        {
+          "title": "query changes discard late responses",
+          "status": "passed"
+        },
+        {
+          "title": "search/page/sort state stays in tab-specific router history",
+          "status": "passed"
+        },
+        {
+          "title": "HTTP 403 is not zero references",
+          "status": "passed"
+        },
+        {
+          "title": "HTTP 432 is not zero references",
+          "status": "passed"
+        },
+        {
+          "title": "HTTP 503 is not zero references",
+          "status": "passed"
+        },
+        {
+          "title": "invalid source never produces an unfiltered reference query",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "tests/unit/views/compute/UserDataVersions.spec.js",
+      "status": "passed",
+      "tests": [
+        {
+          "title": "owner is frozen and project clones never inherit ambient account or ignoreproject",
+          "status": "passed"
+        },
+        {
+          "title": "source id mismatch fails closed",
+          "status": "passed"
+        },
+        {
+          "title": "source name mismatch fails closed",
+          "status": "passed"
+        },
+        {
+          "title": "source account mismatch fails closed",
+          "status": "passed"
+        },
+        {
+          "title": "source domainid mismatch fails closed",
+          "status": "passed"
+        },
+        {
+          "title": "source projectid mismatch fails closed",
+          "status": "passed"
+        },
+        {
+          "title": "missing, corrupt source and denied API cannot become an empty clone",
+          "status": "passed"
+        },
+        {
+          "title": "byte comparison preserves BOM, CRLF and binary; params do not change duplicate policy",
+          "status": "passed"
+        },
+        {
+          "title": "lost registration cannot reconcile mismatching userdata",
+          "status": "passed"
+        },
+        {
+          "title": "lost registration cannot reconcile mismatching params",
+          "status": "passed"
+        },
+        {
+          "title": "lost registration cannot reconcile mismatching account",
+          "status": "passed"
+        },
+        {
+          "title": "lost registration cannot reconcile mismatching domainid",
+          "status": "passed"
+        },
+        {
+          "title": "lost registration cannot reconcile mismatching projectid",
+          "status": "passed"
+        },
+        {
+          "title": "reconciliation ignores substring names, verifies exact UUID/owner/bytes and fails on truncated lists",
+          "status": "passed"
+        },
+        {
+          "title": "source metadata excludes bodies and tolerates malformed or foreign notes without trusting them",
+          "status": "passed"
+        },
+        {
+          "title": "history traverses pages and rejects inconsistent counts instead of claiming no provenance",
+          "status": "passed"
+        },
+        {
+          "title": "source note retry reconciles an already saved or response-lost note without duplicate POST",
+          "status": "passed"
+        },
+        {
+          "title": "scope change before note mutation prevents a late POST under another session",
+          "status": "passed"
+        },
+        {
+          "title": "clone seeds exact Base64 and variables, then explicit text editing normalizes line endings",
+          "status": "passed"
+        },
+        {
+          "title": "late clone source after project change never publishes",
+          "status": "passed"
+        },
+        {
+          "title": "late clone source after user change never publishes",
+          "status": "passed"
+        },
+        {
+          "title": "late clone source after resource change never publishes",
+          "status": "passed"
+        },
+        {
+          "title": "late clone source after permission change never publishes",
+          "status": "passed"
+        },
+        {
+          "title": "late clone source after disposed change never publishes",
+          "status": "passed"
+        },
+        {
+          "title": "unchanged body or parameter-only version never posts",
+          "status": "passed"
+        },
+        {
+          "title": "registration success verifies bytes and owner, records provenance and leaves a receipt",
+          "status": "passed"
+        },
+        {
+          "title": "failed registration retains a frozen attempt; a late actual result is reconciled without a second registration",
+          "status": "passed"
+        },
+        {
+          "title": "confirmed missing attempt unlocks inputs and requires an explicit subsequent registration",
+          "status": "passed"
+        },
+        {
+          "title": "note failure retries only the note, never the already created version",
+          "status": "passed"
+        },
+        {
+          "title": "a confirmed concurrent name conflict unlocks the retained draft without posting again",
+          "status": "passed"
+        },
+        {
+          "title": "pending clone blocks close, unload and duplicate submissions; revoked capability prevents mutation",
+          "status": "passed"
+        },
+        {
+          "title": "version tab verifies current entity, deduplicates advisory records and clears them on permission errors",
+          "status": "passed"
+        },
+        {
+          "title": "version tab late records cannot cross a project scope",
+          "status": "passed"
+        },
+        {
+          "title": "reused content preview preserves exact bytes and performs no source lookup",
+          "status": "passed"
+        },
+        {
+          "title": "unnamed library detail route retains the userdata API and clone contract",
+          "status": "passed"
+        },
+        {
+          "title": "actual production component registry renders clone form on an unnamed detail route",
+          "status": "passed"
+        },
+        {
+          "title": "actual production registry renders visible empty provenance feedback",
+          "status": "passed"
+        },
+        {
+          "title": "long source name truncation never splits a Unicode surrogate pair",
+          "status": "passed"
+        },
+        {
+          "title": "completed receipt restores focus to close when the submit button was removed",
+          "status": "passed"
+        },
+        {
+          "title": "clone links close the action before navigation and are inert while pending",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "tests/unit/views/compute/ResetUserData.spec.js",
+      "status": "passed",
+      "tests": [
+        {
+          "title": "fresh Running state blocks reset",
+          "status": "passed"
+        },
+        {
+          "title": "fresh Starting state blocks reset",
+          "status": "passed"
+        },
+        {
+          "title": "fresh Stopping state blocks reset",
+          "status": "passed"
+        },
+        {
+          "title": "fresh Destroyed state blocks reset",
+          "status": "passed"
+        },
+        {
+          "title": "unsupported L2 and secondary-only ConfigDrive cannot reset; VR secondary can",
+          "status": "passed"
+        },
+        {
+          "title": "unsupported VM remains readable and keep is a no-op even if change is forced",
+          "status": "passed"
+        },
+        {
+          "title": "real command-shaped 530 response preserves the provider recovery reason",
+          "status": "passed"
+        },
+        {
+          "title": "lost transport response is an unknown outcome, not a confirmed server failure",
+          "status": "passed"
+        },
+        {
+          "title": "current keep is a no-op, not an empty reset",
+          "status": "passed"
+        },
+        {
+          "title": "only active userdataregistered input is serialized despite a hidden draft",
+          "status": "passed"
+        },
+        {
+          "title": "only active userdatatext input is serialized despite a hidden draft",
+          "status": "passed"
+        },
+        {
+          "title": "None undefined clears without sending a fake UUID or stale custom variables",
+          "status": "passed"
+        },
+        {
+          "title": "None  clears without sending a fake UUID or stale custom variables",
+          "status": "passed"
+        },
+        {
+          "title": "None 0 clears without sending a fake UUID or stale custom variables",
+          "status": "passed"
+        },
+        {
+          "title": "ALLOWOVERRIDE template default has no inactive custom payload",
+          "status": "passed"
+        },
+        {
+          "title": "APPEND template default has no inactive custom payload",
+          "status": "passed"
+        },
+        {
+          "title": "DENYOVERRIDE template default has no inactive custom payload",
+          "status": "passed"
+        },
+        {
+          "title": "ALLOW manual override excludes template and library variables",
+          "status": "passed"
+        },
+        {
+          "title": "ALLOW empty userdataregistered returns to template and preserves template variables",
+          "status": "passed"
+        },
+        {
+          "title": "ALLOW empty userdatatext returns to template and preserves template variables",
+          "status": "passed"
+        },
+        {
+          "title": "APPEND library combines only effective variable definitions and deduplicates keys",
+          "status": "passed"
+        },
+        {
+          "title": "legacy details preserve punctuation and Korean, object details are filtered",
+          "status": "passed"
+        },
+        {
+          "title": "UTF-8 and literal percent round trip, binary is not silently corrupted",
+          "status": "passed"
+        },
+        {
+          "title": "valid variable names that match object properties remain ordinary string values",
+          "status": "passed"
+        },
+        {
+          "title": "fresh current library, off-page variables and policy load before editing, keep sends no mutation",
+          "status": "passed"
+        },
+        {
+          "title": "mode round trips preserve drafts and verified selection remount preserves restored variables",
+          "status": "passed"
+        },
+        {
+          "title": "manual current content restores as text without a library ID",
+          "status": "passed"
+        },
+        {
+          "title": "APPEND current combined body is visible, never used as a new append input",
+          "status": "passed"
+        },
+        {
+          "title": "template-only variables load even without a VM library ID",
+          "status": "passed"
+        },
+        {
+          "title": "current/policy failures block submit and retry recovers",
+          "status": "passed"
+        },
+        {
+          "title": "failed mutation keeps the dialog, active mode and drafts; retry submits one input",
+          "status": "passed"
+        },
+        {
+          "title": "late current read after unmount cannot initialize a closed dialog",
+          "status": "passed"
+        },
+        {
+          "title": "AutoScale reads the actual profile rather than the parent group current values",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "tests/unit/api/request.spec.js",
+      "status": "passed",
+      "tests": [
+        {
+          "title": "request failure session handling keeps the session when route navigation cancels an Axios request",
+          "status": "passed"
+        },
+        {
+          "title": "request failure session handling retains existing network failure notification and logout behavior",
+          "status": "passed"
+        },
+        {
+          "title": "optional discovery failure isolation keeps session and route on optional failure undefined",
+          "status": "passed"
+        },
+        {
+          "title": "optional discovery failure isolation keeps session and route on optional failure 432",
+          "status": "passed"
+        },
+        {
+          "title": "optional discovery failure isolation keeps session and route on optional failure 404",
+          "status": "passed"
+        },
+        {
+          "title": "optional discovery failure isolation keeps session and route on optional failure 503",
+          "status": "passed"
+        },
+        {
+          "title": "optional discovery failure isolation does not suppress real authentication failures",
+          "status": "passed"
+        },
+        {
+          "title": "optional discovery login generation boundary tags optional requests locally without changing wire parameters",
+          "status": "passed"
+        },
+        {
+          "title": "optional discovery login generation boundary ignores a delayed 401 from previous generation 0",
+          "status": "passed"
+        },
+        {
+          "title": "optional discovery login generation boundary ignores a delayed 401 from previous generation 1",
+          "status": "passed"
+        },
+        {
+          "title": "optional discovery login generation boundary preserves current authentication failure handling, optional=true",
+          "status": "passed"
+        },
+        {
+          "title": "optional discovery login generation boundary preserves current authentication failure handling, optional=false",
+          "status": "passed"
+        },
+        {
+          "title": "optional discovery login generation boundary ignores an old 401 travelling through the actual Axios request/response chain",
+          "status": "passed"
+        },
+        {
+          "title": "snapshot read failure isolation preserves session for retry after read failure undefined",
+          "status": "passed"
+        },
+        {
+          "title": "snapshot read failure isolation preserves session for retry after read failure 503",
+          "status": "passed"
+        },
+        {
+          "title": "snapshot read failure isolation preserves session for retry after read failure 404",
+          "status": "passed"
+        },
+        {
+          "title": "snapshot read failure isolation preserves session for retry after read failure 403",
+          "status": "passed"
+        },
+        {
+          "title": "snapshot read failure isolation still handles a current authentication failure",
+          "status": "passed"
+        },
+        {
+          "title": "snapshot read failure isolation ignores an old read response after login changes",
+          "status": "passed"
+        },
+        {
+          "title": "source creation submission transport failure rejects a lost submission response to the caller without logging out or navigating away",
+          "status": "passed"
+        },
+        {
+          "title": "source creation submission transport failure still expires a current session on a real authentication failure",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "tests/unit/components/view/MoldDialog.spec.js",
+      "status": "passed",
+      "tests": [
+        {
+          "title": "shared sm preset exposes one body and an independent footer at width 480",
+          "status": "passed"
+        },
+        {
+          "title": "shared md preset exposes one body and an independent footer at width 720",
+          "status": "passed"
+        },
+        {
+          "title": "shared lg preset exposes one body and an independent footer at width 960",
+          "status": "passed"
+        },
+        {
+          "title": "shared xl preset exposes one body and an independent footer at width 1120",
+          "status": "passed"
+        },
+        {
+          "title": "legacy dialog width and custom width remain unchanged without a preset",
+          "status": "passed"
+        },
+        {
+          "title": "shared cancel event remains the closing path",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "tests/unit/views/compute/ImageUserDataDialog.spec.js",
+      "status": "passed",
+      "tests": [
+        {
+          "title": "{\n  name: 'UpdateTemplate',\n  components: [Object],\n  props: [Object],\n  data: [Function: data],\n  computed: [Object],\n  beforeCreate: [Function: beforeCreate],\n  created: [Function: created],\n  methods: [Object],\n  render: [Function: render]\n} user-data linkage waits for the link with templateid for both template and ISO, then closes",
+          "status": "passed"
+        },
+        {
+          "title": "{\n  name: 'UpdateTemplate',\n  components: [Object],\n  props: [Object],\n  data: [Function: data],\n  computed: [Object],\n  beforeCreate: [Function: beforeCreate],\n  created: [Function: created],\n  methods: [Object],\n  render: [Function: render]\n} user-data linkage partial link failure keeps draft and explains saved metadata, no false success",
+          "status": "passed"
+        },
+        {
+          "title": "{\n  name: 'UpdateTemplate',\n  components: [Object],\n  props: [Object],\n  data: [Function: data],\n  computed: [Object],\n  beforeCreate: [Function: beforeCreate],\n  created: [Function: created],\n  methods: [Object],\n  render: [Function: render]\n} user-data linkage validation and click/Enter share one lock; invalid selection never submits",
+          "status": "passed"
+        },
+        {
+          "title": "{\n  name: 'UpdateTemplate',\n  components: [Object],\n  props: [Object],\n  data: [Function: data],\n  computed: [Object],\n  beforeCreate: [Function: beforeCreate],\n  created: [Function: created],\n  methods: [Object],\n  render: [Function: render]\n} user-data linkage unchanged link and unavailable link APIs never rewrite the link",
+          "status": "passed"
+        },
+        {
+          "title": "{\n  name: 'UpdateTemplate',\n  components: [Object],\n  props: [Object],\n  data: [Function: data],\n  computed: [Object],\n  beforeCreate: [Function: beforeCreate],\n  created: [Function: created],\n  methods: [Object],\n  render: [Function: render]\n} user-data linkage explicit none omits userdataid/policy while fixing project and image UUID",
+          "status": "passed"
+        },
+        {
+          "title": "{\n  name: 'UpdateIso',\n  components: [Object],\n  props: [Object],\n  data: [Function: data],\n  computed: [Object],\n  beforeCreate: [Function: beforeCreate],\n  created: [Function: created],\n  methods: [Object],\n  render: [Function: render]\n} user-data linkage waits for the link with templateid for both template and ISO, then closes",
+          "status": "passed"
+        },
+        {
+          "title": "{\n  name: 'UpdateIso',\n  components: [Object],\n  props: [Object],\n  data: [Function: data],\n  computed: [Object],\n  beforeCreate: [Function: beforeCreate],\n  created: [Function: created],\n  methods: [Object],\n  render: [Function: render]\n} user-data linkage partial link failure keeps draft and explains saved metadata, no false success",
+          "status": "passed"
+        },
+        {
+          "title": "{\n  name: 'UpdateIso',\n  components: [Object],\n  props: [Object],\n  data: [Function: data],\n  computed: [Object],\n  beforeCreate: [Function: beforeCreate],\n  created: [Function: created],\n  methods: [Object],\n  render: [Function: render]\n} user-data linkage validation and click/Enter share one lock; invalid selection never submits",
+          "status": "passed"
+        },
+        {
+          "title": "{\n  name: 'UpdateIso',\n  components: [Object],\n  props: [Object],\n  data: [Function: data],\n  computed: [Object],\n  beforeCreate: [Function: beforeCreate],\n  created: [Function: created],\n  methods: [Object],\n  render: [Function: render]\n} user-data linkage unchanged link and unavailable link APIs never rewrite the link",
+          "status": "passed"
+        },
+        {
+          "title": "{\n  name: 'UpdateIso',\n  components: [Object],\n  props: [Object],\n  data: [Function: data],\n  computed: [Object],\n  beforeCreate: [Function: beforeCreate],\n  created: [Function: created],\n  methods: [Object],\n  render: [Function: render]\n} user-data linkage explicit none omits userdataid/policy while fixing project and image UUID",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "tests/unit/views/compute/DeleteUserData.spec.js",
+      "status": "passed",
+      "tests": [
+        {
+          "title": "immutable UUID/owner snapshot does not follow list refresh or same-name rows",
+          "status": "passed"
+        },
+        {
+          "title": "owner and project API scopes are exclusive; invalid targets fail closed",
+          "status": "passed"
+        },
+        {
+          "title": "malformed or incomplete lookup blocks deletion",
+          "status": "passed"
+        },
+        {
+          "title": "malformed or incomplete lookup blocks deletion",
+          "status": "passed"
+        },
+        {
+          "title": "malformed or incomplete lookup blocks deletion",
+          "status": "passed"
+        },
+        {
+          "title": "malformed or incomplete lookup blocks deletion",
+          "status": "passed"
+        },
+        {
+          "title": "changed identity blocks delete",
+          "status": "passed"
+        },
+        {
+          "title": "changed identity blocks delete",
+          "status": "passed"
+        },
+        {
+          "title": "changed identity blocks delete",
+          "status": "passed"
+        },
+        {
+          "title": "changed identity blocks delete",
+          "status": "passed"
+        },
+        {
+          "title": "same project identity remains valid independently of display account",
+          "status": "passed"
+        },
+        {
+          "title": "partial failure retains reason and retries only the failed original UUID",
+          "status": "passed"
+        },
+        {
+          "title": "pending request blocks duplicate submit, Escape/close and beforeunload",
+          "status": "passed"
+        },
+        {
+          "title": "lost success response confirms UUID absence and never resends deletion",
+          "status": "passed"
+        },
+        {
+          "title": "unknown response and read error remain unconfirmed until explicit read; then retry only present UUID",
+          "status": "passed"
+        },
+        {
+          "title": "already removed original does not delete a replacement with the same name",
+          "status": "passed"
+        },
+        {
+          "title": "preflight 403 failure sends no delete",
+          "status": "passed"
+        },
+        {
+          "title": "preflight 432 failure sends no delete",
+          "status": "passed"
+        },
+        {
+          "title": "preflight 531 failure sends no delete",
+          "status": "passed"
+        },
+        {
+          "title": "preflight 503 failure sends no delete",
+          "status": "passed"
+        },
+        {
+          "title": "UUID conversion 431 with failed fallback is never treated as absence",
+          "status": "passed"
+        },
+        {
+          "title": "changing session during preflight stops requests",
+          "status": "passed"
+        },
+        {
+          "title": "changing project during preflight stops requests",
+          "status": "passed"
+        },
+        {
+          "title": "changing route during preflight stops requests",
+          "status": "passed"
+        },
+        {
+          "title": "changing permission during preflight stops requests",
+          "status": "passed"
+        },
+        {
+          "title": "loss of scope during POST marks outcome unknown and does not continue the batch",
+          "status": "passed"
+        },
+        {
+          "title": "metadata exposes a named group toolbar; Autogen freezes selection before refresh",
+          "status": "passed"
+        },
+        {
+          "title": "single detail deletion returns to library; list keeps only failed selected rows",
+          "status": "passed"
+        },
+        {
+          "title": "shared dialog keeps cancel before danger delete, no auto Ctrl+Enter, busy shell disabled",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "tests/unit/views/compute/UserDataContent.spec.js",
+      "status": "passed",
+      "tests": [
+        {
+          "title": "strict UTF-8 preserves Korean emoji BOM CRLF long lines and final newlines byte for byte",
+          "status": "passed"
+        },
+        {
+          "title": "malformed Base64 @@ never becomes raw text",
+          "status": "passed"
+        },
+        {
+          "title": "malformed Base64 a never becomes raw text",
+          "status": "passed"
+        },
+        {
+          "title": "malformed Base64 abcd= never becomes raw text",
+          "status": "passed"
+        },
+        {
+          "title": "malformed Base64 Zh== never becomes raw text",
+          "status": "passed"
+        },
+        {
+          "title": "malformed Base64 YWJj\n never becomes raw text",
+          "status": "passed"
+        },
+        {
+          "title": "malformed Base64 42 never becomes raw text",
+          "status": "passed"
+        },
+        {
+          "title": "binary bytes are preserved, never replaced with Unicode replacement characters",
+          "status": "passed"
+        },
+        {
+          "title": "empty null is distinct from a read failure",
+          "status": "passed"
+        },
+        {
+          "title": "empty undefined is distinct from a read failure",
+          "status": "passed"
+        },
+        {
+          "title": "empty  is distinct from a read failure",
+          "status": "passed"
+        },
+        {
+          "title": "UUID keyword becomes exact id while owner/project scope and pagination stay intact",
+          "status": "passed"
+        },
+        {
+          "title": "content lookup is fixed to the UUID and owner; source identity is verified before publication",
+          "status": "passed"
+        },
+        {
+          "title": "changed name identity is never displayed",
+          "status": "passed"
+        },
+        {
+          "title": "changed id identity is never displayed",
+          "status": "passed"
+        },
+        {
+          "title": "changed account identity is never displayed",
+          "status": "passed"
+        },
+        {
+          "title": "changed domainid identity is never displayed",
+          "status": "passed"
+        },
+        {
+          "title": "unsupported permission and invalid source never issue unfiltered content requests",
+          "status": "passed"
+        },
+        {
+          "title": "HTTP 403 is not empty content and only recoverable failures keep stale content",
+          "status": "passed"
+        },
+        {
+          "title": "HTTP 432 is not empty content and only recoverable failures keep stale content",
+          "status": "passed"
+        },
+        {
+          "title": "HTTP 431 is not empty content and only recoverable failures keep stale content",
+          "status": "passed"
+        },
+        {
+          "title": "HTTP 503 is not empty content and only recoverable failures keep stale content",
+          "status": "passed"
+        },
+        {
+          "title": "late responses after project changes cannot publish another scope",
+          "status": "passed"
+        },
+        {
+          "title": "late responses after user changes cannot publish another scope",
+          "status": "passed"
+        },
+        {
+          "title": "late responses after tab changes cannot publish another scope",
+          "status": "passed"
+        },
+        {
+          "title": "late responses after source changes cannot publish another scope",
+          "status": "passed"
+        },
+        {
+          "title": "binary mode and malformed stored data have distinct feedback",
+          "status": "passed"
+        },
+        {
+          "title": "copy event receives exact selected text and reports real command failure",
+          "status": "passed"
+        },
+        {
+          "title": "download uses original bytes or selected Base64 and a UUID based safe filename",
+          "status": "passed"
+        },
+        {
+          "title": "modern clipboard waits for the actual write before reporting success",
+          "status": "passed"
+        },
+        {
+          "title": "rejected modern clipboard falls back to selected text and restores focus without changing exact bytes",
+          "status": "passed"
+        },
+        {
+          "title": "late clipboard completion never posts success into a different scope",
+          "status": "passed"
+        },
+        {
+          "title": "loading watchers coalesce an already pending content lookup",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "tests/unit/views/compute/RegisterUserData.spec.js",
+      "status": "passed",
+      "tests": [
+        {
+          "title": "plain text is UTF-8, never auto-detected as Base64",
+          "status": "passed"
+        },
+        {
+          "title": "normalizes permitted Base64 eA",
+          "status": "passed"
+        },
+        {
+          "title": "normalizes permitted Base64 eA==",
+          "status": "passed"
+        },
+        {
+          "title": "normalizes permitted Base64 eA%3D%3D",
+          "status": "passed"
+        },
+        {
+          "title": "normalizes permitted Base64 eA\n",
+          "status": "passed"
+        },
+        {
+          "title": "binary Base64 and literal plus with percent padding remain supported",
+          "status": "passed"
+        },
+        {
+          "title": "rejects malformed Base64 %",
+          "status": "passed"
+        },
+        {
+          "title": "rejects malformed Base64 %GG",
+          "status": "passed"
+        },
+        {
+          "title": "rejects malformed Base64 A",
+          "status": "passed"
+        },
+        {
+          "title": "rejects malformed Base64 eA=",
+          "status": "passed"
+        },
+        {
+          "title": "rejects malformed Base64 eA===",
+          "status": "passed"
+        },
+        {
+          "title": "rejects malformed Base64 eA==Yg==",
+          "status": "passed"
+        },
+        {
+          "title": "rejects malformed Base64 !!!!",
+          "status": "passed"
+        },
+        {
+          "title": "rejects empty or whitespace plain text and encoded content",
+          "status": "passed"
+        },
+        {
+          "title": "rejects empty or whitespace plain text and encoded content",
+          "status": "passed"
+        },
+        {
+          "title": "rejects empty or whitespace plain text and encoded content",
+          "status": "passed"
+        },
+        {
+          "title": "rejects empty or whitespace plain text and encoded content",
+          "status": "passed"
+        },
+        {
+          "title": "canonical byte boundaries follow the supplied server limit, including padding",
+          "status": "passed"
+        },
+        {
+          "title": "name and variable normalization and duplicate policy",
+          "status": "passed"
+        },
+        {
+          "title": "server validation failures retain the complete form and allow retry",
+          "status": "passed"
+        },
+        {
+          "title": "two queued validations submit only once",
+          "status": "passed"
+        },
+        {
+          "title": "duplicate name preserves ownership, values, focus and body scroll",
+          "status": "passed"
+        },
+        {
+          "title": "HTTP 503 preserves ownership, values, focus and body scroll",
+          "status": "passed"
+        },
+        {
+          "title": "Network Error preserves ownership, values, focus and body scroll",
+          "status": "passed"
+        },
+        {
+          "title": "validation focuses the first invalid name field without posting",
+          "status": "passed"
+        },
+        {
+          "title": "validation focuses the first invalid userdata field without posting",
+          "status": "passed"
+        },
+        {
+          "title": "validation focuses the first invalid params field without posting",
+          "status": "passed"
+        },
+        {
+          "title": "validation, requests, close and navigation share a synchronous lock",
+          "status": "passed"
+        },
+        {
+          "title": "revoked API permission blocks submission, including after validation",
+          "status": "passed"
+        },
+        {
+          "title": "late result from a disposed dialog neither refreshes nor closes another dialog",
+          "status": "passed"
+        },
+        {
+          "title": "CNI retains its API, encoding, owner and variable contract",
+          "status": "passed"
+        },
+        {
+          "title": "API response text is rendered as an inline string with a network fallback",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "tests/unit/views/compute/VmUserData.spec.js",
+      "status": "passed",
+      "tests": [
+        {
+          "title": "API schema determines access for any role, malformed metadata never grants access",
+          "status": "passed"
+        },
+        {
+          "title": "stored body read is UUID bound, checks revision before and after, compares exact bytes",
+          "status": "passed"
+        },
+        {
+          "title": "source difference is byte-level, never an execution result",
+          "status": "passed"
+        },
+        {
+          "title": "unavailable original denied does not hide the permitted VM body or claim equality",
+          "status": "passed"
+        },
+        {
+          "title": "unavailable original deleted does not hide the permitted VM body or claim equality",
+          "status": "passed"
+        },
+        {
+          "title": "unavailable original wrong-owner does not hide the permitted VM body or claim equality",
+          "status": "passed"
+        },
+        {
+          "title": "unavailable original invalid does not hide the permitted VM body or claim equality",
+          "status": "passed"
+        },
+        {
+          "title": "no library API still reads stored body; absent metadata permits UUID checked body without comparison",
+          "status": "passed"
+        },
+        {
+          "title": "wrong VM id metadata fails closed",
+          "status": "passed"
+        },
+        {
+          "title": "wrong VM account metadata fails closed",
+          "status": "passed"
+        },
+        {
+          "title": "wrong VM domainid metadata fails closed",
+          "status": "passed"
+        },
+        {
+          "title": "wrong VM projectid metadata fails closed",
+          "status": "passed"
+        },
+        {
+          "title": "revision change of userdata during fetch is rejected",
+          "status": "passed"
+        },
+        {
+          "title": "revision change of userdataid during fetch is rejected",
+          "status": "passed"
+        },
+        {
+          "title": "revision change of userdatadetails during fetch is rejected",
+          "status": "passed"
+        },
+        {
+          "title": "revision change of userdatapolicy during fetch is rejected",
+          "status": "passed"
+        },
+        {
+          "title": "revision change of account during fetch is rejected",
+          "status": "passed"
+        },
+        {
+          "title": "VM deletion during optional source comparison clears previously fetched body",
+          "status": "passed"
+        },
+        {
+          "title": "late scope invalidation discards body before any additional request",
+          "status": "passed"
+        },
+        {
+          "title": "mismatched stored response ID is never shown",
+          "status": "passed"
+        },
+        {
+          "title": "empty or binary VM body  uses the same strict viewer",
+          "status": "passed"
+        },
+        {
+          "title": "empty or binary VM body /wAB uses the same strict viewer",
+          "status": "passed"
+        },
+        {
+          "title": "project scope is explicit on each metadata read",
+          "status": "passed"
+        },
+        {
+          "title": "VM controller retains stale body only for recoverable errors and disables export",
+          "status": "passed"
+        },
+        {
+          "title": "metadata permission denial does not block independently permitted stored body access",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "tests/unit/views/DashboardRead.spec.js",
+      "status": "passed",
+      "tests": [
+        {
+          "title": "owns a navigation cancellation without publishing empty success or an error",
+          "status": "passed"
+        },
+        {
+          "title": "actual failure preserves last values and remains visible until successful retry",
+          "status": "passed"
+        },
+        {
+          "title": "late route results cannot publish",
+          "status": "passed"
+        },
+        {
+          "title": "late project results cannot publish",
+          "status": "passed"
+        },
+        {
+          "title": "late user results cannot publish",
+          "status": "passed"
+        },
+        {
+          "title": "late session results cannot publish",
+          "status": "passed"
+        },
+        {
+          "title": "late unmount results cannot publish",
+          "status": "passed"
+        },
+        {
+          "title": "latest identical request wins while parallel argument sets remain independent",
+          "status": "passed"
+        },
+        {
+          "title": "scope switch clears old owner values and old finalizers cannot stop new loading",
+          "status": "passed"
+        },
+        {
+          "title": "disposed and inactive dashboard watchers never issue a new request",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "tests/unit/components/view/ResourceView.spec.js",
+      "status": "passed",
+      "tests": [
+        {
+          "title": "ResourceView resource navigation refreshes the destination data for /customaction/2 with query {}: true",
+          "status": "passed"
+        },
+        {
+          "title": "ResourceView resource navigation refreshes the destination data for /customaction/3 with query {\"tab\":\"events\"}: true",
+          "status": "passed"
+        },
+        {
+          "title": "ResourceView resource navigation refreshes the destination data for /vm/4 with query {\"keyword\":\"action/\"}: true",
+          "status": "passed"
+        },
+        {
+          "title": "ResourceView resource navigation refreshes the destination data for /action/updateCustomAction with query {}: false",
+          "status": "passed"
+        },
+        {
+          "title": "ResourceView resource navigation refreshes the destination data for /vm/4 with query {\"tab\":\"browser\"}: false",
+          "status": "passed"
+        },
+        {
+          "title": "ResourceView resource navigation isolates general detail by path and SSH detail by its verified identity scope",
+          "status": "passed"
+        },
+        {
+          "title": "ResourceView resource navigation selects a valid tab for query {\"tab\":\"events\"} and history ",
+          "status": "passed"
+        },
+        {
+          "title": "ResourceView resource navigation selects a valid tab for query {\"tab\":\"customactions\"} and history ",
+          "status": "passed"
+        },
+        {
+          "title": "ResourceView resource navigation selects a valid tab for query {} and history events",
+          "status": "passed"
+        },
+        {
+          "title": "ResourceView resource navigation selects a valid tab for query {} and history customactions",
+          "status": "passed"
+        },
+        {
+          "title": "ResourceView resource navigation preserves a declared tab while resource-dependent visibility is loading",
+          "status": "passed"
+        },
+        {
+          "title": "ResourceView resource navigation removes the exact popstate listener on unmount",
+          "status": "passed"
+        },
+        {
+          "title": "ResourceView resource navigation repeatedly navigates between async tabs of different resources without retaining old content",
+          "status": "passed"
+        },
+        {
+          "title": "ResourceView standard tab layout uses shared vertical layout by default and preserves single-tab content without a tab bar",
+          "status": "passed"
+        },
+        {
+          "title": "ResourceView standard tab layout uses VM-standard left tabs on desktop/tablet and top tabs on mobile without losing the selected tab or input",
+          "status": "passed"
+        },
+        {
+          "title": "ResourceView standard tab layout keeps permission-hidden tabs out of the vertical navigation",
+          "status": "passed"
+        },
+        {
+          "title": "ResourceView standard tab layout shares the existing VM tab position policy for desktop",
+          "status": "passed"
+        },
+        {
+          "title": "ResourceView standard tab layout shares the existing VM tab position policy for tablet",
+          "status": "passed"
+        },
+        {
+          "title": "ResourceView standard tab layout shares the existing VM tab position policy for mobile",
+          "status": "passed"
+        },
+        {
+          "title": "userdata invalid or hidden deep links replace the URL with the visible fallback without dropping filters",
+          "status": "passed"
+        }
+      ]
+    }
+  ]
+}

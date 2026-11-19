@@ -39,7 +39,8 @@ public class CreateVMGroupCmd extends BaseCmd {
     // ////////////// API parameters /////////////////////
     // ///////////////////////////////////////////////////
 
-    @Parameter(name = ApiConstants.NAME, type = CommandType.STRING, required = true, description = "The name of the Instance group")
+    @Parameter(name = ApiConstants.NAME, type = CommandType.STRING, required = true, length = ApiConstants.INSTANCE_GROUP_NAME_INPUT_MAX_LENGTH,
+            description = "The name of the Instance group. Surrounding whitespace is trimmed; the stored name must contain 1 to 255 characters.")
     private String groupName;
 
     @Parameter(name = ApiConstants.ACCOUNT,

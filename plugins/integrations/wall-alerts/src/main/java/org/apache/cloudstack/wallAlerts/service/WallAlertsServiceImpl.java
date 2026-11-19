@@ -91,6 +91,24 @@ public class WallAlertsServiceImpl extends ManagerBase implements WallAlertsServ
     @Inject
     private WallApiClient wallApiClient;
     private ScheduledExecutorService wallAlertPollExecutor;
+    private final org.apache.cloudstack.wallAlerts.client.WallAvailability availability =
+            new org.apache.cloudstack.wallAlerts.client.WallAvailability(
+                    () -> WallConfigKeys.WALL_ALERT_ENABLED.value(), () -> WallConfigKeys.WALL_BASE_URL.value(), this::wallTokenNow,
+                    () -> WallConfigKeys.WALL_TLS_VERIFY.value());
+
+    @Override
+    public org.apache.cloudstack.api.response.WallAvailabilityResponse getAvailability() {
+        return new org.apache.cloudstack.api.response.WallAvailabilityResponse(availability.state(), availability.checkedAt());
+    }
+
+    private void requireWallAvailable() {
+        String state = availability.state();
+        if (!"Ready".equals(state)) {
+            throw new ServerApiException(org.apache.cloudstack.api.ApiErrorCode.RESOURCE_UNAVAILABLE_ERROR,
+                    "Wall service is not available: " + state);
+        }
+    }
+
 
     private static final ZoneId KST = ZoneId.of("Asia/Seoul");
     private static final DateTimeFormatter KST_YMD_HM = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
@@ -176,7 +194,18 @@ public class WallAlertsServiceImpl extends ManagerBase implements WallAlertsServ
     @Override
     public ListResponse<WallAlertRuleResponse> listWallAlertRules(final ListWallAlertRulesCmd cmd) {
 
-        // 설정 검증 (토큰 유무)
+        requireWallAvailable();
+        try {
+            return queryWallAlertRules(cmd);
+        } catch (RuntimeException e) {
+            availability.failed(e);
+            invalidateRulesCache();
+            throw new ServerApiException(org.apache.cloudstack.api.ApiErrorCode.RESOURCE_UNAVAILABLE_ERROR,
+                    "Wall alert query failed; availability checks will resume before alert queries");
+        }
+    }
+
+    private ListResponse<WallAlertRuleResponse> queryWallAlertRules(final ListWallAlertRulesCmd cmd) {
         ensureWallConfiguredForRules();
 
         // ★ UID 전용 필터
@@ -881,6 +910,17 @@ public class WallAlertsServiceImpl extends ManagerBase implements WallAlertsServ
 
     @Override
     public ListResponse<WallSilenceResponse> listWallAlertSilences(final ListWallAlertSilencesCmd cmd) {
+        requireWallAvailable();
+        try {
+            return queryWallAlertSilences(cmd);
+        } catch (RuntimeException e) {
+            availability.failed(e);
+            throw new ServerApiException(org.apache.cloudstack.api.ApiErrorCode.RESOURCE_UNAVAILABLE_ERROR,
+                    "Wall silence query failed; check Wall service availability");
+        }
+    }
+
+    private ListResponse<WallSilenceResponse> queryWallAlertSilences(final ListWallAlertSilencesCmd cmd) {
         final Map<String, String> rawLabels = cmd.getLabels();
         final Map<String, String> labels = normalizeLabels(rawLabels);
         final String stateFilter = cmd.getState();
@@ -932,18 +972,6 @@ public class WallAlertsServiceImpl extends ManagerBase implements WallAlertsServ
     public WallSilenceResponse createWallAlertSilence(final CreateWallAlertSilenceCmd cmd) {
         // 0) 파라미터 검증 + 정규화
         final Map<String, String> labels = normalizeLabels(cmd.getLabels()); // labels[] 평탄화
-        Long minutes = cmd.getDurationMinutes();
-        if (minutes == null || minutes <= 0) {
-            final Long parsed = parseDurationToMinutes(cmd.getDuration());
-            if (parsed != null && parsed > 0) {
-                minutes = parsed;
-            }
-        }
-        if (minutes == null || minutes <= 0) {
-            throw new IllegalArgumentException(
-                    "durationMinutes는 1 이상의 정수여야 하며, 또는 duration 문자열(예: 30m, 1h, 1d, 1w, 1M)을 제공해야 합니다.");
-        }
-
         // 1) 시작/종료 시각
         final java.time.OffsetDateTime now = java.time.OffsetDateTime.now();
         java.time.OffsetDateTime startsAt;
@@ -956,7 +984,30 @@ public class WallAlertsServiceImpl extends ManagerBase implements WallAlertsServ
         } else {
             startsAt = now;
         }
-        final java.time.OffsetDateTime endsAt = startsAt.plusMinutes(minutes);
+        final java.time.OffsetDateTime endsAt;
+        if (cmd.getEndsAt() != null && !cmd.getEndsAt().isBlank()) {
+            try {
+                endsAt = java.time.OffsetDateTime.parse(cmd.getEndsAt());
+            } catch (java.time.format.DateTimeParseException e) {
+                throw new IllegalArgumentException("종료 일시가 올바른 날짜 및 시간 형식이 아닙니다.");
+            }
+            if (!endsAt.isAfter(now) || !endsAt.isAfter(startsAt)) {
+                throw new IllegalArgumentException("종료 일시는 현재 시각과 시작 일시 이후여야 합니다.");
+            }
+        } else {
+            Long minutes = cmd.getDurationMinutes();
+            if (minutes == null || minutes <= 0) {
+                final Long parsed = parseDurationToMinutes(cmd.getDuration());
+                if (parsed != null && parsed > 0) {
+                    minutes = parsed;
+                }
+            }
+            if (minutes == null || minutes <= 0) {
+                throw new IllegalArgumentException(
+                        "durationMinutes는 1 이상의 정수여야 하며, 또는 duration 문자열(예: 30m, 1h, 1d, 1w, 1M)을 제공해야 합니다.");
+            }
+            endsAt = startsAt.plusMinutes(minutes);
+        }
 
         // 2) 매처 구성 (최소: UID 있으면 UID 고정, 없으면 alertname 고정; instance 있으면 인스턴스 단위로 범위 축소)
         final java.util.List<org.apache.cloudstack.wallAlerts.model.SilenceMatcherDto> matchers = new java.util.ArrayList<>();
@@ -1868,6 +1919,7 @@ public class WallAlertsServiceImpl extends ManagerBase implements WallAlertsServ
     @Override
     public List<Class<?>> getCommands() {
         final List<Class<?>> cmds = new ArrayList<>();
+        cmds.add(org.apache.cloudstack.api.command.admin.wall.alerts.GetWallAlertAvailabilityCmd.class);
         // 기능이 꺼져 있으면 어떤 API도 등록하지 않습니다.
         if (!WallConfigKeys.WALL_ALERT_ENABLED.value()) {
             return cmds;
@@ -1890,6 +1942,7 @@ public class WallAlertsServiceImpl extends ManagerBase implements WallAlertsServ
         return new ConfigKey<?>[] {
                 WallConfigKeys.WALL_ALERT_ENABLED,
                 WallConfigKeys.WALL_BASE_URL,
+                WallConfigKeys.WALL_TLS_VERIFY,
                 WallConfigKeys.WALL_API_TOKEN,
                 WallConfigKeys.CONNECT_TIMEOUT_MS,
                 WallConfigKeys.READ_TIMEOUT_MS,

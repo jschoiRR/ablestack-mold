@@ -1,0 +1,141 @@
+{
+  "at": 1791705229.9501781,
+  "results": [
+    {
+      "cluster": 31,
+      "groups": [
+        {
+          "id": "bf0f5385-ae2c-4da4-aec4-eb985dbdeba4",
+          "name": "AS-PROD-31-AS04-CONCURRENCY",
+          "state": "DISABLED",
+          "profileId": "13090328-2f59-4121-9316-bbb30da24c9b",
+          "min": 1,
+          "max": 3
+        },
+        {
+          "id": "3b532b36-1a5f-431f-976a-50caf26fb8ac",
+          "name": "AS-PROD-31-AS02-RECOVERY",
+          "state": "DISABLED",
+          "profileId": "0e9dc5a7-abb3-4652-8d5d-8c8c74d0b183",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "0ddcc917-8a80-409a-9d41-9cc81d1df7b4",
+          "name": "AS-PROD-31-AS01-PROJECT",
+          "state": "DISABLED",
+          "profileId": "4b0cde51-2b62-42b5-b2c4-7c7749234381",
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "profile": {
+        "id": "13090328-2f59-4121-9316-bbb30da24c9b",
+        "serviceofferingid": "39c3aa33-5632-4dea-bd84-ba794d292c87",
+        "expungevmgraceperiod": 60,
+        "userdataid": null
+      },
+      "originalOfferingDeployParamsAndUserDataRestored": true,
+      "sharedPolicies": [
+        {
+          "id": "36d98f38-55e0-473d-8a6b-e009f50ae757",
+          "action": "SCALEUP",
+          "duration": 60,
+          "quiettime": 10,
+          "conditions": [
+            {
+              "id": "a20fc96c-640b-4858-a9e1-d13ff10575cc",
+              "threshold": 20,
+              "operator": "GT"
+            }
+          ]
+        },
+        {
+          "id": "64cfc4bd-7665-4670-bf99-1c93b742f66a",
+          "action": "SCALEDOWN",
+          "duration": 60,
+          "quiettime": 10,
+          "conditions": [
+            {
+              "id": "f638d3ce-f6be-41b5-9b08-e36ccacf7817",
+              "threshold": 10,
+              "operator": "LT"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "cluster": 32,
+      "groups": [
+        {
+          "id": "18bef25a-4053-4454-bc85-f6d777b9391d",
+          "name": "AS-PROD-32-AS04-CONCURRENCY",
+          "state": "DISABLED",
+          "profileId": "9cf4661f-7eea-4445-b9dd-90ddd6f07f7b",
+          "min": 1,
+          "max": 3
+        },
+        {
+          "id": "7cfc210d-169a-43ac-b10f-7a0ed385272f",
+          "name": "AS-PROD-32-AS02-RECOVERY",
+          "state": "DISABLED",
+          "profileId": "2d6e4e7f-30a9-451d-af8b-0e1bc87d11ff",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "85fabab7-7992-4292-bad3-a43c4bd85cdc",
+          "name": "AS-PROD-32-AS01-VPC",
+          "state": "DISABLED",
+          "profileId": "873ecbc4-ec0a-4d96-9fe0-10bf7ddd7ce7",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "a34d28f5-d903-45d6-b546-aabc670d3abc",
+          "name": "AS-PROD-32-AS01-USER",
+          "state": "DISABLED",
+          "profileId": "96f0dc21-5c9c-48ee-9adb-e4c9bd759904",
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "profile": {
+        "id": "9cf4661f-7eea-4445-b9dd-90ddd6f07f7b",
+        "serviceofferingid": "b02ac1bf-2da7-46e1-8961-d94d76dad9ab",
+        "expungevmgraceperiod": 60,
+        "userdataid": "f985396e-7c73-4093-8901-25f97f7fb1de"
+      },
+      "originalOfferingDeployParamsAndUserDataRestored": true,
+      "sharedPolicies": [
+        {
+          "id": "37417d80-35d9-41d4-b751-5d46fc6af23a",
+          "action": "SCALEUP",
+          "duration": 60,
+          "quiettime": 10,
+          "conditions": [
+            {
+              "id": "4a8fdf72-6fee-4a24-80a0-c0544651c5ea",
+              "threshold": 5,
+              "operator": "GT"
+            }
+          ]
+        },
+        {
+          "id": "7639559c-63ad-4235-bbb4-462dfaba5261",
+          "action": "SCALEDOWN",
+          "duration": 60,
+          "quiettime": 10,
+          "conditions": [
+            {
+              "id": "2ec799ba-1c5f-4a5b-9ac5-709d10ddde48",
+              "threshold": 1,
+              "operator": "LT"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

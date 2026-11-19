@@ -1,0 +1,281 @@
+[
+  {
+    "case": "keep",
+    "truncated": false,
+    "hasMore": false,
+    "mutations": [],
+    "exceptions": []
+  },
+  {
+    "case": "manual",
+    "truncated": false,
+    "hasMore": false,
+    "mutations": [
+      {
+        "command": "resetUserDataForVirtualMachine",
+        "params": {
+          "id": "db065200-f6f0-48ed-9b4e-19415bbe6cef",
+          "userdata": "I2Nsb3VkLWNvbmZpZwojIFVEMTM4NSDtlZzquIAgJSArCg=="
+        }
+      }
+    ],
+    "exceptions": []
+  },
+  {
+    "case": "library",
+    "truncated": false,
+    "hasMore": false,
+    "mutations": [
+      {
+        "command": "resetUserDataForVirtualMachine",
+        "params": {
+          "id": "db065200-f6f0-48ed-9b4e-19415bbe6cef",
+          "userdataid": "dce976c1-3396-4ac8-bd5a-6a9a369a45a3",
+          "userdatadetails[0].VAR1": "변경 한글, 값=2"
+        }
+      }
+    ],
+    "exceptions": []
+  },
+  {
+    "case": "none",
+    "truncated": false,
+    "hasMore": false,
+    "mutations": [
+      {
+        "command": "resetUserDataForVirtualMachine",
+        "params": {
+          "id": "db065200-f6f0-48ed-9b4e-19415bbe6cef",
+          "userdata": ""
+        }
+      }
+    ],
+    "exceptions": []
+  },
+  {
+    "case": "allow-default",
+    "truncated": false,
+    "hasMore": false,
+    "mutations": [
+      {
+        "command": "resetUserDataForVirtualMachine",
+        "params": {
+          "id": "fe3c993c-6bf9-4666-afae-251b1a1dae1f",
+          "userdata": "",
+          "userdatadetails[0].T": "기본 한글 변경"
+        }
+      }
+    ],
+    "exceptions": []
+  },
+  {
+    "case": "allow-library",
+    "truncated": false,
+    "hasMore": false,
+    "mutations": [
+      {
+        "command": "resetUserDataForVirtualMachine",
+        "params": {
+          "id": "fe3c993c-6bf9-4666-afae-251b1a1dae1f",
+          "userdataid": "dce976c1-3396-4ac8-bd5a-6a9a369a45a3",
+          "userdatadetails[0].VAR1": "ALLOW 한글"
+        }
+      }
+    ],
+    "exceptions": []
+  },
+  {
+    "case": "allow-none",
+    "truncated": false,
+    "hasMore": false,
+    "mutations": [
+      {
+        "command": "resetUserDataForVirtualMachine",
+        "params": {
+          "id": "fe3c993c-6bf9-4666-afae-251b1a1dae1f",
+          "userdata": "",
+          "userdatadetails[0].T": "기본값 복원 한글"
+        }
+      }
+    ],
+    "exceptions": []
+  },
+  {
+    "case": "append-manual",
+    "truncated": false,
+    "hasMore": false,
+    "mutations": [
+      {
+        "command": "resetUserDataForVirtualMachine",
+        "params": {
+          "id": "3e56db2c-7b14-4c30-9d85-58ce88aacc7d",
+          "userdata": "I2Nsb3VkLWNvbmZpZwojIEFQUEVORCDsg4gg7ZWc6riACg==",
+          "userdatadetails[0].T": "APPEND 템플릿 한글"
+        }
+      }
+    ],
+    "exceptions": []
+  },
+  {
+    "case": "append-keep",
+    "truncated": false,
+    "hasMore": false,
+    "mutations": [],
+    "exceptions": []
+  },
+  {
+    "case": "append-default",
+    "truncated": false,
+    "hasMore": false,
+    "mutations": [
+      {
+        "command": "resetUserDataForVirtualMachine",
+        "params": {
+          "id": "3e56db2c-7b14-4c30-9d85-58ce88aacc7d",
+          "userdata": "",
+          "userdatadetails[0].T": "APPEND 템플릿 한글"
+        }
+      }
+    ],
+    "exceptions": []
+  },
+  {
+    "case": "deny",
+    "truncated": false,
+    "hasMore": false,
+    "mutations": [
+      {
+        "command": "resetUserDataForVirtualMachine",
+        "params": {
+          "id": "e5187f51-a49e-4549-98b2-0c3da9ec7dad",
+          "userdata": "",
+          "userdatadetails[0].T": "DENY 한글 변경"
+        }
+      }
+    ],
+    "exceptions": []
+  },
+  {
+    "case": "user-default-hidden",
+    "truncated": false,
+    "hasMore": false,
+    "mutations": [],
+    "exceptions": []
+  },
+  {
+    "case": "user",
+    "truncated": false,
+    "hasMore": false,
+    "mutations": [
+      {
+        "command": "resetUserDataForVirtualMachine",
+        "params": {
+          "id": "39eb32b9-7079-4725-93b2-8e127a7f1a86",
+          "userdataid": "1fb89041-d3fe-449a-9d61-9d3b0c35ebbb",
+          "userdatadetails[0].VAR1": "일반 사용자 변경 한글"
+        }
+      }
+    ],
+    "exceptions": []
+  },
+  {
+    "case": "domainadmin",
+    "truncated": false,
+    "hasMore": false,
+    "mutations": [
+      {
+        "command": "resetUserDataForVirtualMachine",
+        "params": {
+          "id": "b565108c-b3bb-4ab3-90d8-42111a9811e8",
+          "userdataid": "e27b522a-8a54-4473-a5a3-92524951c9ae",
+          "userdatadetails[0].VAR1": "도메인 관리자 변경 한글"
+        }
+      }
+    ],
+    "exceptions": []
+  },
+  {
+    "case": "project",
+    "truncated": false,
+    "hasMore": false,
+    "mutations": [
+      {
+        "command": "resetUserDataForVirtualMachine",
+        "params": {
+          "id": "711ae814-f74b-43b6-b5fd-4d0d188daf04",
+          "userdataid": "0f814785-c45b-40f8-bc75-95567a49a0cd",
+          "userdatadetails[0].VAR1": "프로젝트 변경 한글",
+          "projectid": "b7b24fd1-578f-4927-9836-2c9bd47a752b"
+        }
+      }
+    ],
+    "exceptions": []
+  },
+  {
+    "case": "current-read-retry",
+    "truncated": false,
+    "hasMore": false,
+    "mutations": [],
+    "exceptions": []
+  },
+  {
+    "case": "final-template-keep",
+    "truncated": false,
+    "hasMore": false,
+    "mutations": [],
+    "exceptions": []
+  },
+  {
+    "case": "final-post-retry",
+    "truncated": false,
+    "hasMore": false,
+    "mutations": [
+      {
+        "command": "resetUserDataForVirtualMachine",
+        "params": {
+          "id": "db065200-f6f0-48ed-9b4e-19415bbe6cef",
+          "userdata": "I2Nsb3VkLWNvbmZpZwojIOyYpOulmCDtm4Qg7LWc7KKFIO2VnOq4gCAlICsK"
+        }
+      },
+      {
+        "command": "resetUserDataForVirtualMachine",
+        "params": {
+          "id": "db065200-f6f0-48ed-9b4e-19415bbe6cef",
+          "userdata": "I2Nsb3VkLWNvbmZpZwojIOyYpOulmCDtm4Qg7LWc7KKFIO2VnOq4gCAlICsK"
+        }
+      }
+    ],
+    "exceptions": []
+  },
+  {
+    "case": "final-library",
+    "truncated": false,
+    "hasMore": false,
+    "mutations": [
+      {
+        "command": "resetUserDataForVirtualMachine",
+        "params": {
+          "id": "db065200-f6f0-48ed-9b4e-19415bbe6cef",
+          "userdataid": "dce976c1-3396-4ac8-bd5a-6a9a369a45a3",
+          "userdatadetails[0].VAR1": "최종 한글, 값=3"
+        }
+      }
+    ],
+    "exceptions": []
+  },
+  {
+    "case": "final-none",
+    "truncated": false,
+    "hasMore": false,
+    "mutations": [
+      {
+        "command": "resetUserDataForVirtualMachine",
+        "params": {
+          "id": "db065200-f6f0-48ed-9b4e-19415bbe6cef",
+          "userdata": ""
+        }
+      }
+    ],
+    "exceptions": []
+  }
+]

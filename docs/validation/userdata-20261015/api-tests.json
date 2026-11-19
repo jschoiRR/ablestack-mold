@@ -1,0 +1,146 @@
+{
+  "ui-created-roundtrip": {
+    "listuserdataresponse": {
+      "count": 1,
+      "userdata": [
+        {
+          "id": "e0733469-22eb-4a9e-982b-2681f66c7f5e",
+          "name": "UDLIB-31-20261015-한글",
+          "account": "admin",
+          "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+          "domain": "ROOT",
+          "domainpath": "ROOT",
+          "userdata": "I2Nsb3VkLWNvbmZpZwojIOyCrOyaqeyekCDrjbDsnbTthLAg6rKA7KadCndyaXRlX2ZpbGVzOgogIC0gcGF0aDogL3RtcC91ZGxpYi12YWxpZGF0aW9uLnR4dAogICAgY29udGVudDogIuyViOuFle2VmOyEuOyalCB7eyBkcy5tZXRhX2RhdGEudWRsaWJfbWVzc2FnZSB9fSIK",
+          "params": "udlib_message",
+          "hasannotations": true
+        }
+      ]
+    }
+  },
+  "duplicate-name": {
+    "registeruserdataresponse": {
+      "uuidList": [],
+      "errorcode": 431,
+      "cserrorcode": 4350,
+      "errortext": "A userdata with name UDLIB-31-20261015-한글 already exists for this account."
+    }
+  },
+  "duplicate-content": {
+    "registeruserdataresponse": {
+      "uuidList": [],
+      "errorcode": 431,
+      "cserrorcode": 4350,
+      "errortext": "Userdata UDLIB-31-20261015-한글 with same content already exists for this account."
+    }
+  },
+  "invalid-base64": {
+    "registeruserdataresponse": {
+      "uuidList": [],
+      "errorcode": 431,
+      "cserrorcode": 9999,
+      "errortext": "URLDecoder: Illegal hex characters in escape (%) pattern - Error at index 0 in: \"%%\""
+    }
+  },
+  "oversize-base64": {
+    "registeruserdataresponse": {
+      "uuidList": [],
+      "errorcode": 431,
+      "cserrorcode": 4350,
+      "errortext": "User data has exceeded configurable max length: 32768"
+    }
+  },
+  "search-name": {
+    "listuserdataresponse": {
+      "count": 1,
+      "userdata": [
+        {
+          "id": "e0733469-22eb-4a9e-982b-2681f66c7f5e",
+          "name": "UDLIB-31-20261015-한글",
+          "account": "admin",
+          "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+          "domain": "ROOT",
+          "domainpath": "ROOT",
+          "userdata": "I2Nsb3VkLWNvbmZpZwojIOyCrOyaqeyekCDrjbDsnbTthLAg6rKA7KadCndyaXRlX2ZpbGVzOgogIC0gcGF0aDogL3RtcC91ZGxpYi12YWxpZGF0aW9uLnR4dAogICAgY29udGVudDogIuyViOuFle2VmOyEuOyalCB7eyBkcy5tZXRhX2RhdGEudWRsaWJfbWVzc2FnZSB9fSIK",
+          "params": "udlib_message",
+          "hasannotations": true
+        }
+      ]
+    }
+  },
+  "search-uuid": {
+    "listuserdataresponse": {}
+  },
+  "related-empty-vms": {
+    "listvirtualmachinesresponse": {}
+  },
+  "canonical-unpadded-content": {
+    "registeruserdataresponse": {
+      "uuidList": [],
+      "errorcode": 431,
+      "cserrorcode": 4350,
+      "errortext": "Userdata UDLIB-31-20261015-한글 with same content already exists for this account."
+    }
+  },
+  "canonical-percent-content": {
+    "registeruserdataresponse": {
+      "uuidList": [],
+      "errorcode": 431,
+      "cserrorcode": 4350,
+      "errortext": "Userdata UDLIB-31-20261015-한글 with same content already exists for this account."
+    }
+  },
+  "blank-content": {
+    "registeruserdataresponse": {
+      "userdata": {
+        "id": "ebf44eef-659e-48ab-8f44-22a621c1f3c1",
+        "name": "UDLIB-31-20261015-blank",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domain": "ROOT",
+        "domainpath": "ROOT",
+        "hasannotations": false
+      }
+    }
+  },
+  "empty-name": {
+    "registeruserdataresponse": {
+      "userdata": {
+        "id": "2a0c8052-ca93-4445-8fdd-620db4d55180",
+        "name": "   ",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domain": "ROOT",
+        "domainpath": "ROOT",
+        "userdata": "VURMSUItMzEtMjAyNjEwMTUtYmxhbmstbmFtZQ==",
+        "hasannotations": false
+      }
+    }
+  },
+  "final-library": {
+    "listuserdataresponse": {
+      "count": 2,
+      "userdata": [
+        {
+          "id": "ebf44eef-659e-48ab-8f44-22a621c1f3c1",
+          "name": "UDLIB-31-20261015-blank",
+          "account": "admin",
+          "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+          "domain": "ROOT",
+          "domainpath": "ROOT",
+          "hasannotations": false
+        },
+        {
+          "id": "e0733469-22eb-4a9e-982b-2681f66c7f5e",
+          "name": "UDLIB-31-20261015-한글",
+          "account": "admin",
+          "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+          "domain": "ROOT",
+          "domainpath": "ROOT",
+          "userdata": "I2Nsb3VkLWNvbmZpZwojIOyCrOyaqeyekCDrjbDsnbTthLAg6rKA7KadCndyaXRlX2ZpbGVzOgogIC0gcGF0aDogL3RtcC91ZGxpYi12YWxpZGF0aW9uLnR4dAogICAgY29udGVudDogIuyViOuFle2VmOyEuOyalCB7eyBkcy5tZXRhX2RhdGEudWRsaWJfbWVzc2FnZSB9fSIK",
+          "params": "udlib_message",
+          "hasannotations": true
+        }
+      ]
+    }
+  }
+}

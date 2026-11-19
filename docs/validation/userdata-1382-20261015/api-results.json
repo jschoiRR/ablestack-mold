@@ -1,0 +1,471 @@
+[
+  {
+    "test": "capability-limit",
+    "passed": true,
+    "actual": 32768,
+    "expected": 32768
+  },
+  {
+    "test": "invalid-name-0",
+    "passed": true,
+    "id": null,
+    "errorcode": 431,
+    "message": "User data name must contain 1 to 255 characters after trimming whitespace."
+  },
+  {
+    "test": "invalid-name-1",
+    "passed": true,
+    "id": null,
+    "errorcode": 431,
+    "message": "Received value containing illegal ASCII non-printable characters for parameter name"
+  },
+  {
+    "test": "invalid-name-2",
+    "passed": true,
+    "id": null,
+    "errorcode": 431,
+    "message": "User data name must contain 1 to 255 characters after trimming whitespace."
+  },
+  {
+    "test": "invalid-name-3",
+    "passed": true,
+    "id": null,
+    "errorcode": 431,
+    "message": "User data name must contain 1 to 255 characters after trimming whitespace."
+  },
+  {
+    "test": "invalid-name-4",
+    "passed": true,
+    "id": null,
+    "errorcode": 431,
+    "message": "Unable to execute API command registeruserdata due to invalid value. Value greater than max allowed length 255 for param: name"
+  },
+  {
+    "test": "invalid-body-0",
+    "passed": true,
+    "id": null,
+    "errorcode": 431,
+    "message": "User data content must not be empty or whitespace only."
+  },
+  {
+    "test": "invalid-body-1",
+    "passed": true,
+    "id": null,
+    "errorcode": 431,
+    "message": "Invalid value provided for API arg: userdata"
+  },
+  {
+    "test": "invalid-body-2",
+    "passed": true,
+    "id": null,
+    "errorcode": 431,
+    "message": "User data content must not be empty or whitespace only."
+  },
+  {
+    "test": "invalid-body-3",
+    "passed": true,
+    "id": null,
+    "errorcode": 431,
+    "message": "User data content must not be empty or whitespace only."
+  },
+  {
+    "test": "invalid-body-4",
+    "passed": true,
+    "id": null,
+    "errorcode": 431,
+    "message": "User data content must not be empty or whitespace only."
+  },
+  {
+    "test": "invalid-body-5",
+    "passed": true,
+    "id": null,
+    "errorcode": 431,
+    "message": "Url decoding of user data failed."
+  },
+  {
+    "test": "invalid-body-6",
+    "passed": true,
+    "id": null,
+    "errorcode": 431,
+    "message": "Url decoding of user data failed."
+  },
+  {
+    "test": "invalid-body-7",
+    "passed": true,
+    "id": null,
+    "errorcode": 431,
+    "message": "User data is not base64 encoded."
+  },
+  {
+    "test": "invalid-body-8",
+    "passed": true,
+    "id": null,
+    "errorcode": 431,
+    "message": "User data is not base64 encoded."
+  },
+  {
+    "test": "invalid-body-9",
+    "passed": true,
+    "id": null,
+    "errorcode": 431,
+    "message": "User data is not base64 encoded."
+  },
+  {
+    "test": "invalid-body-10",
+    "passed": true,
+    "id": null,
+    "errorcode": 431,
+    "message": "User data is not base64 encoded."
+  },
+  {
+    "test": "invalid-body-11",
+    "passed": true,
+    "id": null,
+    "errorcode": 431,
+    "message": "User data is not base64 encoded."
+  },
+  {
+    "test": "canonical",
+    "passed": true,
+    "id": "d9b19c68-ac0c-4b2c-b903-9c5bbd76dd21",
+    "errorcode": null,
+    "message": null
+  },
+  {
+    "test": "trimmed-name",
+    "passed": true
+  },
+  {
+    "test": "canonical-duplicate-0",
+    "passed": true,
+    "id": null,
+    "errorcode": 431,
+    "message": "Userdata UD1382-31-20261015-trimmed with same content already exists for this account."
+  },
+  {
+    "test": "canonical-duplicate-1",
+    "passed": true,
+    "id": null,
+    "errorcode": 431,
+    "message": "Userdata UD1382-31-20261015-trimmed with same content already exists for this account."
+  },
+  {
+    "test": "canonical-duplicate-2",
+    "passed": true,
+    "id": null,
+    "errorcode": 431,
+    "message": "Userdata UD1382-31-20261015-trimmed with same content already exists for this account."
+  },
+  {
+    "test": "canonical-duplicate-3",
+    "passed": true,
+    "id": null,
+    "errorcode": 431,
+    "message": "Userdata UD1382-31-20261015-trimmed with same content already exists for this account."
+  },
+  {
+    "test": "same-name",
+    "passed": true,
+    "id": null,
+    "errorcode": 431,
+    "message": "A userdata with the same name already exists for this account."
+  },
+  {
+    "test": "trimmed-same-name",
+    "passed": true,
+    "id": null,
+    "errorcode": 431,
+    "message": "A userdata with the same name already exists for this account."
+  },
+  {
+    "test": "case-sensitive-body",
+    "passed": true,
+    "id": "fddf837b-0900-4eaa-a5d8-ab613bc601df",
+    "errorcode": null,
+    "message": null
+  },
+  {
+    "test": "case-sensitive-body-roundtrip",
+    "passed": true
+  },
+  {
+    "test": "exact-among-case-insensitive-candidates",
+    "passed": true,
+    "id": null,
+    "errorcode": 431,
+    "message": "Userdata UD1382-31-20261015-case-sensitive-body with same content already exists for this account."
+  },
+  {
+    "test": "binary",
+    "passed": true,
+    "id": "c65bfa9a-f481-4909-98c5-e62a632ef1ba",
+    "errorcode": null,
+    "message": null
+  },
+  {
+    "test": "binary-roundtrip",
+    "passed": true
+  },
+  {
+    "test": "non-utf8-whitespace-byte",
+    "passed": true,
+    "id": "24dc36ed-45fc-45db-829b-bdd845ded11a",
+    "errorcode": null,
+    "message": null
+  },
+  {
+    "test": "non-utf8-byte-preserved",
+    "passed": true
+  },
+  {
+    "test": "plus-percent",
+    "passed": true,
+    "id": "1b09788b-2c3b-4aa2-9577-2cb38c4df835",
+    "errorcode": null,
+    "message": null
+  },
+  {
+    "test": "literal-plus-preserved",
+    "passed": true
+  },
+  {
+    "test": "utf8",
+    "passed": true,
+    "id": "b884b95d-f161-4039-9fa2-b5c222098972",
+    "errorcode": null,
+    "message": null
+  },
+  {
+    "test": "utf8-newline-and-variables",
+    "passed": true
+  },
+  {
+    "test": "invalid-params-0",
+    "passed": true,
+    "id": null,
+    "errorcode": 431,
+    "message": "User data variables must be nonempty identifiers beginning with a letter or underscore, containing only letters, digits, underscore, dot or hyphen, and must not use virtual router metadata names."
+  },
+  {
+    "test": "invalid-params-1",
+    "passed": true,
+    "id": null,
+    "errorcode": 431,
+    "message": "User data variables must be nonempty identifiers beginning with a letter or underscore, containing only letters, digits, underscore, dot or hyphen, and must not use virtual router metadata names."
+  },
+  {
+    "test": "invalid-params-2",
+    "passed": true,
+    "id": null,
+    "errorcode": 431,
+    "message": "User data variables must be nonempty identifiers beginning with a letter or underscore, containing only letters, digits, underscore, dot or hyphen, and must not use virtual router metadata names."
+  },
+  {
+    "test": "invalid-params-3",
+    "passed": true,
+    "id": null,
+    "errorcode": 431,
+    "message": "User data variables must not contain duplicate keys."
+  },
+  {
+    "test": "invalid-params-4",
+    "passed": true,
+    "id": null,
+    "errorcode": 431,
+    "message": "User data variables must not contain duplicate keys."
+  },
+  {
+    "test": "invalid-params-5",
+    "passed": true,
+    "id": null,
+    "errorcode": 431,
+    "message": "User data variables must be nonempty identifiers beginning with a letter or underscore, containing only letters, digits, underscore, dot or hyphen, and must not use virtual router metadata names."
+  },
+  {
+    "test": "invalid-params-6",
+    "passed": true,
+    "id": null,
+    "errorcode": 431,
+    "message": "User data variables must be nonempty identifiers beginning with a letter or underscore, containing only letters, digits, underscore, dot or hyphen, and must not use virtual router metadata names."
+  },
+  {
+    "test": "invalid-params-7",
+    "passed": true,
+    "id": null,
+    "errorcode": 431,
+    "message": "User data variables must be nonempty identifiers beginning with a letter or underscore, containing only letters, digits, underscore, dot or hyphen, and must not use virtual router metadata names."
+  },
+  {
+    "test": "invalid-params-8",
+    "passed": true,
+    "id": null,
+    "errorcode": 431,
+    "message": "Params passed here have a few virtual router metadata file names [instance-id]"
+  },
+  {
+    "test": "invalid-params-9",
+    "passed": true,
+    "id": null,
+    "errorcode": 431,
+    "message": "User data variables must be nonempty identifiers beginning with a letter or underscore, containing only letters, digits, underscore, dot or hyphen, and must not use virtual router metadata names."
+  },
+  {
+    "test": "limit-exact",
+    "passed": true,
+    "id": "9efde88d-5958-4b8e-8828-a056b45ee648",
+    "errorcode": null,
+    "message": null
+  },
+  {
+    "test": "canonical-limit-exact",
+    "passed": true
+  },
+  {
+    "test": "limit-over",
+    "passed": true,
+    "id": null,
+    "errorcode": 431,
+    "message": "User data has exceeded configurable max length: 32768"
+  },
+  {
+    "test": "limit-over-unpadded",
+    "passed": true,
+    "id": null,
+    "errorcode": 431,
+    "message": "User data has exceeded configurable max length: 32768"
+  },
+  {
+    "test": "dynamic-limit-visible",
+    "passed": true
+  },
+  {
+    "test": "dynamic-limit-exact",
+    "passed": true,
+    "id": "3e998d06-ff75-4b15-b0e1-981b26dd4ccf",
+    "errorcode": null,
+    "message": null
+  },
+  {
+    "test": "dynamic-limit-over",
+    "passed": true,
+    "id": null,
+    "errorcode": 431,
+    "message": "User data has exceeded configurable max length: 64"
+  },
+  {
+    "test": "dynamic-limit-restored",
+    "passed": true
+  },
+  {
+    "test": "concurrent-normalized-content",
+    "passed": true,
+    "successes": 1,
+    "rejected": 7
+  },
+  {
+    "test": "user-capability-limit",
+    "passed": true
+  },
+  {
+    "test": "user-same-owner-data",
+    "passed": true,
+    "id": "9635a311-8307-41ce-8e91-541e0b9a55a1",
+    "errorcode": null,
+    "message": null
+  },
+  {
+    "test": "user-own-duplicate",
+    "passed": true,
+    "id": null,
+    "errorcode": 431,
+    "message": "Userdata UD1382-31-20261015-trimmed with same content already exists for this account."
+  },
+  {
+    "test": "user-blank",
+    "passed": true,
+    "id": null,
+    "errorcode": 431,
+    "message": "User data content must not be empty or whitespace only."
+  },
+  {
+    "test": "user-foreign-owner-hidden",
+    "passed": true
+  },
+  {
+    "test": "domainadmin-capability-limit",
+    "passed": true
+  },
+  {
+    "test": "domainadmin-same-owner-data",
+    "passed": true,
+    "id": "c9f54af2-471d-4ed5-904a-d6ba4e20c892",
+    "errorcode": null,
+    "message": null
+  },
+  {
+    "test": "domainadmin-own-duplicate",
+    "passed": true,
+    "id": null,
+    "errorcode": 431,
+    "message": "Userdata UD1382-31-20261015-trimmed with same content already exists for this account."
+  },
+  {
+    "test": "domainadmin-blank",
+    "passed": true,
+    "id": null,
+    "errorcode": 431,
+    "message": "User data content must not be empty or whitespace only."
+  },
+  {
+    "test": "domainadmin-foreign-owner-hidden",
+    "passed": true
+  },
+  {
+    "test": "project-same-name-and-content",
+    "passed": true,
+    "id": "3339076d-aac7-40c4-bb6f-ff7c393342ca",
+    "errorcode": null,
+    "message": null
+  },
+  {
+    "test": "project-own-duplicate",
+    "passed": true,
+    "id": null,
+    "errorcode": 431,
+    "message": "Userdata UD1382-31-20261015-trimmed with same content already exists for this account."
+  },
+  {
+    "test": "project-blank",
+    "passed": true,
+    "id": null,
+    "errorcode": 431,
+    "message": "User data content must not be empty or whitespace only."
+  },
+  {
+    "test": "project-filter-scope",
+    "passed": true
+  },
+  {
+    "test": "original-library-exact-equality",
+    "passed": true
+  },
+  {
+    "test": "original-config-restored",
+    "passed": true
+  },
+  {
+    "test": "http-get-4096-boundary",
+    "passed": true,
+    "id": "9d7fc7ad-995a-4632-86d9-88c42261d515"
+  },
+  {
+    "test": "http-get-over-canonical-boundary",
+    "passed": true,
+    "errorcode": 431,
+    "message": "User data is too long for http GET request"
+  },
+  {
+    "test": "get-test-resources-cleaned",
+    "passed": true
+  }
+]

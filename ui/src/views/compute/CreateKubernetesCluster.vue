@@ -17,31 +17,34 @@
 
 <template>
   <div class="form-layout" v-ctrl-enter="handleSubmit">
-    <a-spin :spinning="loading">
+    <ExternalKubernetesCluster v-if="clusterType === 'ExternalManaged'" @close-action="closeAction"><template #management-type><a-radio-group v-model:value="clusterType"><a-radio-button value="CloudManaged">{{ $t('label.cloud.managed') }}</a-radio-button><a-radio-button value="ExternalManaged">{{ $t('label.external.managed') }}</a-radio-button></a-radio-group></template></ExternalKubernetesCluster>
+    <a-spin v-else :spinning="loading">
       <a-form
         :ref="formRef"
         :model="form"
         :rules="rules"
         @finish="handleSubmit"
-        layout="vertical">
-        <a-form-item name="name" ref="name">
+        layout="vertical"
+class="mold-form-dialog kubernetes-create-dialog">
+      <a-steps class="kubernetes-wizard-steps" size="small" :current="wizardStep"><a-step v-for="title in ['basic','nodes','network','options','review']" :key="title" :title="$t('label.kubernetes.ui.step.' + title)" /></a-steps><div class="mold-form-content kubernetes-wizard-body"><div class="mold-form-grid kubernetes-wizard-main"><a-form-item v-show="wizardStep === 0" class="mold-form-full" :label="$t('label.clustertype')"><a-radio-group v-model:value="clusterType" :disabled="loading"><a-radio-button value="CloudManaged">{{ $t('label.cloud.managed') }}</a-radio-button><a-radio-button value="ExternalManaged">{{ $t('label.external.managed') }}</a-radio-button></a-radio-group></a-form-item>
+<div v-show="wizardStep === 0"><a-form-item name="name" ref="name">
           <template #label>
             <tooltip-label :title="$t('label.name')" :tooltip="apiParams.name.description"/>
           </template>
           <a-input
             v-model:value="form.name"
-            :placeholder="apiParams.name.description"
+            :placeholder="$t('label.name')"
             v-focus="true" />
-        </a-form-item>
-        <a-form-item name="description" ref="description">
+        </a-form-item></div>
+<div v-show="wizardStep === 0"><a-form-item name="description" ref="description">
           <template #label>
             <tooltip-label :title="$t('label.description')" :tooltip="apiParams.description.description"/>
           </template>
           <a-input
             v-model:value="form.description"
-            :placeholder="apiParams.description.description"/>
-        </a-form-item>
-        <a-form-item name="zoneid" ref="zoneid">
+            :placeholder="$t('label.description')"/>
+        </a-form-item></div>
+<div v-show="wizardStep === 0"><a-form-item name="zoneid" ref="zoneid">
           <template #label>
             <tooltip-label :title="$t('label.zoneid')" :tooltip="apiParams.zoneid.description"/>
           </template>
@@ -54,7 +57,7 @@
               return option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0
             }"
             :loading="zoneLoading"
-            :placeholder="apiParams.zoneid.description"
+            :placeholder="$t('label.zoneid')"
             @change="val => { handleZoneChange(this.zones[val]) }">
             <a-select-option v-for="(opt, optIndex) in zones" :key="optIndex" :label="opt.name || opt.description">
               <span>
@@ -64,28 +67,28 @@
               </span>
             </a-select-option>
           </a-select>
-        </a-form-item>
-        <ownership-selection v-if="isAdmin()" @fetch-owner="fetchOwnerOptions"/>
-        <a-form-item ref="hypervisor" name="hypervisor">
+        </a-form-item></div>
+<div v-show="wizardStep === 0" class="mold-form-full"><ownership-selection class="mold-form-full" v-if="isAdmin()" @fetch-owner="fetchOwnerOptions"/></div>
+<div v-show="wizardStep === 0"><a-form-item ref="hypervisor" name="hypervisor">
           <template #label>
             <tooltip-label :title="$t('label.hypervisor')" :tooltip="apiParams.hypervisor.description"/>
           </template>
           <a-select
             v-model:value="form.hypervisor"
             :loading="hypervisorLoading"
-            :placeholder="apiParams.hypervisor.description"
+            :placeholder="$t('label.hypervisor')"
             showSearch
             optionFilterProp="label"
-            @change="val => { handleZoneHypervisorChange(val) }">
             :filterOption="(input, option) => {
               return option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0
-            }" >
+            }"
+            @change="val => { handleZoneHypervisorChange(val) }">
             <a-select-option v-for="(opt, optIndex) in selectedZoneHypervisors" :key="optIndex" :label="opt.name || opt.description">
               {{ opt.name || opt.description }}
             </a-select-option>
           </a-select>
-        </a-form-item>
-        <a-form-item name="kubernetesversionid" ref="kubernetesversionid">
+        </a-form-item></div>
+<div v-show="wizardStep === 0"><a-form-item name="kubernetesversionid" ref="kubernetesversionid">
           <template #label>
             <tooltip-label :title="$t('label.kubernetesversionid')" :tooltip="apiParams.kubernetesversionid.description"/>
           </template>
@@ -98,14 +101,14 @@
               return option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0
             }"
             :loading="kubernetesVersionLoading"
-            :placeholder="apiParams.kubernetesversionid.description"
+            :placeholder="$t('label.kubernetesversionid')"
             @change="val => { handleKubernetesVersionChange(kubernetesVersions[val]) }">
             <a-select-option v-for="(opt, optIndex) in kubernetesVersions" :key="optIndex" :label="opt.name || opt.description">
               {{ opt.name || opt.description }}
             </a-select-option>
           </a-select>
-        </a-form-item>
-        <a-form-item name="serviceofferingid" ref="serviceofferingid">
+        </a-form-item></div>
+<div v-show="wizardStep === 1"><a-form-item name="serviceofferingid" ref="serviceofferingid">
           <template #label>
             <tooltip-label :title="$t('label.serviceofferingid')" :tooltip="apiParams.serviceofferingid.description"/>
           </template>
@@ -118,21 +121,25 @@
               return option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0
             }"
             :loading="serviceOfferingLoading"
-            :placeholder="apiParams.serviceofferingid.description">
+            :placeholder="$t('label.serviceofferingid')">
             <a-select-option v-for="(opt, optIndex) in serviceOfferings" :key="optIndex" :label="opt.name || opt.description">
               {{ opt.name || opt.description }}
             </a-select-option>
           </a-select>
-        </a-form-item>
-        <a-form-item name="noderootdisksize" ref="noderootdisksize">
+        </a-form-item></div>
+<div v-show="wizardStep === 1"><a-form-item name="noderootdisksize" ref="noderootdisksize">
           <template #label>
             <tooltip-label :title="$t('label.noderootdisksize')" :tooltip="apiParams.noderootdisksize.description"/>
           </template>
           <a-input
             v-model:value="form.noderootdisksize"
-            :placeholder="apiParams.noderootdisksize.description"/>
-        </a-form-item>
-        <a-form-item name="networkid" ref="networkid">
+            :placeholder="$t('label.noderootdisksize')"/>
+        </a-form-item></div>
+<div v-show="wizardStep === 1" class="mold-form-full"><div class="mold-form-full"><KubernetesStoragePreflight
+          :offerings="storageNodeOfferings"
+          :network="networks[form.networkid] || null"
+          :defaultNetworkOffering="cksNetworkOffering" /></div></div>
+<div v-show="wizardStep === 2"><a-form-item name="networkid" ref="networkid">
           <template #label>
             <tooltip-label :title="$t('label.networkid')" :tooltip="apiParams.networkid.description"/>
           </template>
@@ -145,43 +152,43 @@
               return option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0
             }"
             :loading="networkLoading"
-            :placeholder="apiParams.networkid.description">
-            <a-select-option v-for="(opt, optIndex) in networks" :key="optIndex" :label="opt.name || opt.description">
+            :placeholder="$t('label.networkid')">
+            <a-select-option v-for="(opt, optIndex) in networks" :key="optIndex" :label="opt.name || opt.description || ''">
               {{ opt.name || opt.description }}
             </a-select-option>
           </a-select>
-        </a-form-item>
-        <a-form-item name="haenable" ref="haenable" v-if="selectedKubernetesVersion != null && selectedKubernetesVersion !== undefined && selectedKubernetesVersion.supportsha === true">
+        </a-form-item></div>
+<div v-show="wizardStep === 2"><a-form-item name="haenable" ref="haenable" v-if="selectedKubernetesVersion != null && selectedKubernetesVersion !== undefined && selectedKubernetesVersion.supportsha === true">
           <template #label>
             <tooltip-label :title="$t('label.haenable')" :tooltip="apiParams.haenable?.description || ''"/>
           </template>
           <a-switch v-model:checked="form.haenable" />
-        </a-form-item>
-        <a-form-item v-if="form.haenable" name="controlnodes" ref="controlnodes">
+        </a-form-item></div>
+<div v-show="wizardStep === 1"><a-form-item v-if="form.haenable" name="controlnodes" ref="controlnodes">
           <template #label>
             <tooltip-label :title="$t('label.controlnodes')" :tooltip="apiParams.controlnodes.description"/>
           </template>
           <a-input
             v-model:value="form.controlnodes"
-            :placeholder="apiParams.controlnodes.description"/>
-        </a-form-item>
-        <a-form-item v-if="form.haenable && !selectedZone.isnsxenabled" name="externalloadbalanceripaddress" ref="externalloadbalanceripaddress">
+            :placeholder="$t('label.controlnodes')"/>
+        </a-form-item></div>
+<div v-show="wizardStep === 2"><a-form-item v-if="form.haenable && !selectedZone.isnsxenabled" name="externalloadbalanceripaddress" ref="externalloadbalanceripaddress">
           <template #label>
             <tooltip-label :title="$t('label.externalloadbalanceripaddress')" :tooltip="apiParams.externalloadbalanceripaddress.description"/>
           </template>
           <a-input
             v-model:value="form.externalloadbalanceripaddress"
-            :placeholder="apiParams.externalloadbalanceripaddress.description"/>
-        </a-form-item>
-        <a-form-item name="size" ref="size">
+            :placeholder="$t('label.externalloadbalanceripaddress')"/>
+        </a-form-item></div>
+<div v-show="wizardStep === 1"><a-form-item name="size" ref="size">
           <template #label>
             <tooltip-label :title="$t('label.cks.cluster.size')" :tooltip="apiParams.size.description"/>
           </template>
           <a-input
             v-model:value="form.size"
-            :placeholder="apiParams.size.description"/>
-        </a-form-item>
-        <a-form-item name="keypair" ref="keypair">
+            :placeholder="$t('label.cks.cluster.size')"/>
+        </a-form-item></div>
+<div v-show="wizardStep === 2"><a-form-item name="keypair" ref="keypair">
           <template #label>
             <tooltip-label :title="$t('label.keypair')" :tooltip="apiParams.keypair.description"/>
           </template>
@@ -194,27 +201,25 @@
               return option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0
             }"
             :loading="keyPairLoading"
-            :placeholder="apiParams.keypair.description">
-            <a-select-option v-for="(opt, optIndex) in keyPairs" :key="optIndex" :label="opt.name || opt.description">
+            :placeholder="$t('label.keypair')">
+            <a-select-option v-for="(opt, optIndex) in keyPairs" :key="optIndex" :label="opt.name || opt.description || ''">
               {{ opt.name || opt.description }}
             </a-select-option>
           </a-select>
-        </a-form-item>
-
-        <!-- Advanced configurations -->
-        <a-form-item name="advancedmode" ref="advancedmode">
+        </a-form-item></div>
+<div v-show="wizardStep === 1"><a-form-item name="advancedmode" ref="advancedmode">
           <template #label>
             <tooltip-label :title="$t('label.isadvanced')" />
           </template>
           <a-switch v-model:checked="form.advancedmode" />
-        </a-form-item>
-        <a-form-item v-if="form.advancedmode" name="enablecsi" ref="enablecsi" :label="$t('label.enable.csi')">
+        </a-form-item></div>
+<div v-show="wizardStep === 3"><a-form-item v-if="form.advancedmode" name="enablecsi" ref="enablecsi" :label="$t('label.enable.csi')">
             <template #label>
               <tooltip-label :title="$t('label.enable.csi')" :tooltip="apiParams.enablecsi.description"/>
             </template>
             <a-switch v-model:checked="form.enablecsi" />
-          </a-form-item>
-        <a-form-item v-if="form.advancedmode" name="controlofferingid" ref="controlofferingid">
+          </a-form-item></div>
+<div v-show="wizardStep === 1"><a-form-item v-if="form.advancedmode" name="controlofferingid" ref="controlofferingid">
           <template #label>
             <tooltip-label :title="$t('label.cks.cluster.control.nodes.offeringid')" :tooltip="$t('label.cks.cluster.control.nodes.offeringid')"/>
           </template>
@@ -232,8 +237,8 @@
               {{ opt.name || opt.description }}
             </a-select-option>
           </a-select>
-        </a-form-item>
-        <a-form-item v-if="form.advancedmode" name="controltemplateid" ref="controltemplateid">
+        </a-form-item></div>
+<div v-show="wizardStep === 1"><a-form-item v-if="form.advancedmode" name="controltemplateid" ref="controltemplateid">
           <template #label>
             <tooltip-label :title="$t('label.cks.cluster.control.nodes.templateid')" :tooltip="$t('label.cks.cluster.control.nodes.templateid')"/>
           </template>
@@ -251,8 +256,8 @@
               {{ opt.name || opt.description }}
             </a-select-option>
           </a-select>
-        </a-form-item>
-        <a-form-item v-if="form.advancedmode" name="workerofferingid" ref="workerofferingid">
+        </a-form-item></div>
+<div v-show="wizardStep === 1"><a-form-item v-if="form.advancedmode" name="workerofferingid" ref="workerofferingid">
           <template #label>
             <tooltip-label :title="$t('label.cks.cluster.worker.nodes.offeringid')" :tooltip="$t('label.cks.cluster.worker.nodes.offeringid')"/>
           </template>
@@ -270,8 +275,8 @@
               {{ opt.name || opt.description }}
             </a-select-option>
           </a-select>
-        </a-form-item>
-        <a-form-item v-if="form.advancedmode" name="workertemplateid" ref="workertemplateid">
+        </a-form-item></div>
+<div v-show="wizardStep === 1"><a-form-item v-if="form.advancedmode" name="workertemplateid" ref="workertemplateid">
           <template #label>
             <tooltip-label :title="$t('label.cks.cluster.worker.nodes.templateid')" :tooltip="$t('label.cks.cluster.worker.nodes.templateid')"/>
           </template>
@@ -289,16 +294,16 @@
               {{ opt.name || opt.description }}
             </a-select-option>
           </a-select>
-        </a-form-item>
-        <a-form-item v-if="form.advancedmode" name="etcdnodes" ref="etcdnodes">
+        </a-form-item></div>
+<div v-show="wizardStep === 1"><a-form-item v-if="form.advancedmode" name="etcdnodes" ref="etcdnodes">
           <template #label>
             <tooltip-label :title="$t('label.cks.cluster.etcd.nodes')" :tooltip="apiParams.etcdnodes.description"/>
           </template>
           <a-input
             v-model:value="form.etcdnodes"
-            :placeholder="apiParams.etcdnodes.description"/>
-        </a-form-item>
-        <a-form-item v-if="form.advancedmode && form.etcdnodes && form.etcdnodes > 0" name="etcdofferingid" ref="etcdofferingid">
+            :placeholder="$t('label.cks.cluster.etcd.nodes')"/>
+        </a-form-item></div>
+<div v-show="wizardStep === 1"><a-form-item v-if="form.advancedmode && form.etcdnodes && form.etcdnodes > 0" name="etcdofferingid" ref="etcdofferingid">
           <template #label>
             <tooltip-label :title="$t('label.cks.cluster.etcd.nodes.offeringid')" :tooltip="$t('label.cks.cluster.etcd.nodes.offeringid')"/>
           </template>
@@ -316,8 +321,8 @@
               {{ opt.name || opt.description }}
             </a-select-option>
           </a-select>
-        </a-form-item>
-        <a-form-item v-if="form.advancedmode && form.etcdnodes && form.etcdnodes > 0" name="etcdtemplateid" ref="etcdtemplateid">
+        </a-form-item></div>
+<div v-show="wizardStep === 1"><a-form-item v-if="form.advancedmode && form.etcdnodes && form.etcdnodes > 0" name="etcdtemplateid" ref="etcdtemplateid">
           <template #label>
             <tooltip-label :title="$t('label.cks.cluster.etcd.nodes.templateid')" :tooltip="$t('label.cks.cluster.etcd.nodes.templateid')"/>
           </template>
@@ -335,8 +340,8 @@
               {{ opt.name || opt.description }}
             </a-select-option>
           </a-select>
-        </a-form-item>
-        <a-form-item v-if="form.advancedmode" name="controlaffinitygroupids" ref="controlaffinitygroupids">
+        </a-form-item></div>
+<div v-show="wizardStep === 2"><a-form-item v-if="form.advancedmode" name="controlaffinitygroupids" ref="controlaffinitygroupids">
           <template #label>
             <tooltip-label :title="$t('label.cks.cluster.control.nodes.affinitygroupid')" :tooltip="$t('label.cks.cluster.control.nodes.affinitygroupid')"/>
           </template>
@@ -352,8 +357,8 @@
               {{ opt.name }}
             </a-select-option>
           </a-select>
-        </a-form-item>
-        <a-form-item v-if="form.advancedmode" name="workeraffinitygroupids" ref="workeraffinitygroupids">
+        </a-form-item></div>
+<div v-show="wizardStep === 2"><a-form-item v-if="form.advancedmode" name="workeraffinitygroupids" ref="workeraffinitygroupids">
           <template #label>
             <tooltip-label :title="$t('label.cks.cluster.worker.nodes.affinitygroupid')" :tooltip="$t('label.cks.cluster.worker.nodes.affinitygroupid')"/>
           </template>
@@ -369,8 +374,8 @@
               {{ opt.name }}
             </a-select-option>
           </a-select>
-        </a-form-item>
-        <a-form-item v-if="form.advancedmode && form.etcdnodes && form.etcdnodes > 0" name="etcdaffinitygroupids" ref="etcdaffinitygroupids">
+        </a-form-item></div>
+<div v-show="wizardStep === 2"><a-form-item v-if="form.advancedmode && form.etcdnodes && form.etcdnodes > 0" name="etcdaffinitygroupids" ref="etcdaffinitygroupids">
           <template #label>
             <tooltip-label :title="$t('label.cks.cluster.etcd.nodes.affinitygroupid')" :tooltip="$t('label.cks.cluster.etcd.nodes.affinitygroupid')"/>
           </template>
@@ -386,8 +391,8 @@
               {{ opt.name }}
             </a-select-option>
           </a-select>
-        </a-form-item>
-        <a-form-item v-if="form.advancedmode && isASNumberRequired() && !form.networkid" name="asnumber" ref="asnumber">
+        </a-form-item></div>
+<div v-show="wizardStep === 2"><a-form-item v-if="form.advancedmode && isASNumberRequired() && !form.networkid" name="asnumber" ref="asnumber">
           <template #label>
               <tooltip-label :title="$t('label.asnumber')" :tooltip="apiParams.asnumber.description"/>
             </template>
@@ -399,26 +404,26 @@
                 return option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0
               }"
               :loading="asNumberLoading"
-              :placeholder="apiParams.asnumber.description"
+              :placeholder="$t('label.asnumber')"
               @change="val => { handleASNumberChange(val) }">
               <a-select-option v-for="(opt, optIndex) in asNumbersZone" :key="optIndex" :label="opt.asnumber">
                 {{ opt.asnumber }}
               </a-select-option>
             </a-select>
-        </a-form-item>
-        <a-form-item  v-if="form.advancedmode" name="cniconfigurationid" ref="cniconfigurationid">
+        </a-form-item></div>
+<div v-show="wizardStep === 3" class="mold-form-full"><a-form-item  v-if="form.advancedmode" name="cniconfigurationid" ref="cniconfigurationid" class="mold-form-full">
           <template #label>
             <tooltip-label :title="$t('label.cniconfiguration')" :tooltip="$t('label.cniconfiguration')"/>
           </template>
             <user-data-selection
-              :items="cniConfigurationData"
-              :row-count="cniConfigurationData.length"
-              :zoneId="zoneId"
-              :loading="cniConfigLoading"
-              :preFillContent="dataPreFill"
+              resource-kind="cni"
+              :scope="cniOwner"
+              :value="form.cniconfigurationid || '0'"
+              :zoneId="selectedZone.id || ''"
+              :disabled="loading"
               :showSearch="false"
-              @select-user-data-item="($event) => updateCniConfig($event)"
-              @handle-search-filter="($event) => handleSearchFilter('userData', $event)"
+              @ready="cniSelectionReady = $event"
+              @select-user-data-item="updateCniConfig"
             />
             <div v-if="cniConfigParams.length > 0">
               <a-input-group>
@@ -432,21 +437,20 @@
                   <template #bodyCell="{ column, record }">
                     <template v-if="column.key === 'value'">
                       <div v-if="record.key === 'AS_NUMBER'">
-                        <a-input style="width: 100%;text-wrap: wrap;" :disabled="true" value="Value is obtained from the network or is automatically obtained at the time of cluster creation" />
+                        <a-input style="width: 100%;text-wrap: wrap;" :disabled="true" :value="$t('label.automatic')" />
                       </div>
-                      <a-input v-else v-model:value="cniConfigValues[record.key]" />
+                      <a-textarea v-else v-model:value="cniConfigValues[record.key]" :auto-size="{ minRows: 1, maxRows: 4 }" :status="cniVariableErrors && cniConfigValues[record.key] === undefined ? 'error' : undefined" />
                     </template>
                   </template>
                 </a-table>
               </a-input-group>
             </div>
-        </a-form-item>
-
-        <!-- Experimentation Features -->
-        <div v-if="$store.getters.features.kubernetesclusterexperimentalfeaturesenabled">
+            <div v-if="selectedCni" class="detail-tab-toolbar"><CniVariableTools :resource="selectedCni" :values="cniConfigValues" :scope="cniScopeKey" :network-id="networks[form.networkid]?.id || ''" :as-number="form.asnumber" :disabled="loading || !cniSelectionReady" /></div>
+        </a-form-item></div>
+<div v-show="wizardStep === 3" class="mold-form-full"><div class="mold-form-full" v-if="$store.getters.features.kubernetesclusterexperimentalfeaturesenabled">
           <a-form-item name="privateregistry" ref="privateregistry" :label="$t('label.private.registry')">
             <template #label>
-              <tooltip-label :title="$t('label.private.registry')" :tooltip="apiParams.keprivateregistryypair.description"/>
+              <tooltip-label :title="$t('label.private.registry')" :tooltip="apiParams.dockerregistryurl?.description || ''"/>
             </template>
             <a-switch v-model:checked="form.privateregistry" />
           </a-form-item>
@@ -457,7 +461,7 @@
               </template>
               <a-input
                 v-model:value="form.dockerregistryusername"
-                :placeholder="apiParams.dockerregistryusername.description"/>
+                :placeholder="$t('label.username')"/>
             </a-form-item>
             <a-form-item name="dockerregistrypassword" ref="dockerregistrypassword">
               <template #label>
@@ -465,7 +469,7 @@
               </template>
               <a-input-password
                 v-model:value="form.dockerregistrypassword"
-                :placeholder="apiParams.dockerregistrypassword.description"/>
+                :placeholder="$t('label.password')"/>
             </a-form-item>
             <a-form-item name="dockerregistryurl" ref="dockerregistryurl">
               <template #label>
@@ -473,13 +477,13 @@
               </template>
               <a-input
                 v-model:value="form.dockerregistryurl"
-                :placeholder="apiParams.dockerregistryurl.description"/>
+                :placeholder="$t('label.url')"/>
             </a-form-item>
           </div>
-        </div>
-        <div :span="24" class="action-button">
+        </div></div><KubernetesCreateReview v-if="wizardStep === 4" class="mold-form-full" :items="createSummary" /> <a-alert v-if="wizardStep === 3 && !form.advancedmode" class="mold-form-full" type="info" show-icon :message="$t('message.kubernetes.ui.options')" /></div><KubernetesCreateSummary :name="form.name" :items="createSummary" /></div><details class="kubernetes-summary-mobile"><summary>{{ $t('label.kubernetes.ui.summary') }}</summary><KubernetesCreateSummary :name="form.name" :items="createSummary" /></details>
+      <div :span="24" class="action-button">
           <a-button @click="closeAction">{{ $t('label.cancel') }}</a-button>
-          <a-button :loading="loading" ref="submit" type="primary" @click="handleSubmit">{{ $t('label.ok') }}</a-button>
+          <a-button v-if="wizardStep > 0" :disabled="loading" @click="wizardStep--">{{ $t('label.previous') }}</a-button><a-button :loading="loading" :disabled="wizardStep >= 3 && cniSelectionBlocked" ref="submit" type="primary" @click="handleSubmit">{{ $t(wizardStep === 4 ? 'label.kubernetes.ui.create' : 'label.next') }}</a-button>
         </div>
       </a-form>
     </a-spin>
@@ -487,26 +491,39 @@
 </template>
 
 <script>
+import KubernetesCreateSummary from '@/components/view/KubernetesCreateSummary'
+import KubernetesCreateReview from '@/components/view/KubernetesCreateReview'
 import { ref, reactive, toRaw } from 'vue'
 import { getAPI, postAPI } from '@/api'
 import { mixinForm } from '@/utils/mixin'
 import ResourceIcon from '@/components/view/ResourceIcon'
 import TooltipLabel from '@/components/widgets/TooltipLabel'
 import UserDataSelection from '@views/compute/wizard/UserDataSelection'
+import CniVariableTools from './CniVariableTools'
 import OwnershipSelection from '@/views/compute/wizard/OwnershipSelection'
+import ExternalKubernetesCluster from '@/views/compute/ExternalKubernetesCluster'
+import KubernetesStoragePreflight from '@/views/compute/KubernetesStoragePreflight'
 
 export default {
   name: 'CreateKubernetesCluster',
   mixins: [mixinForm],
   components: {
+    KubernetesCreateSummary,
+    KubernetesCreateReview,
+    KubernetesStoragePreflight,
+    ExternalKubernetesCluster,
     TooltipLabel,
     ResourceIcon,
     UserDataSelection,
+    CniVariableTools,
     OwnershipSelection
   },
   props: {},
   data () {
     return {
+      form: {},
+      clusterType: 'CloudManaged',
+      wizardStep: 0,
       zones: [],
       zoneLoading: false,
       selectedZone: {},
@@ -525,10 +542,11 @@ export default {
       selectedZoneHypervisors: [],
       hypervisorLoading: false,
       configLoading: false,
-      cniConfigurationData: [],
-      cniConfigLoading: false,
+      cniSelectionReady: false,
+      selectedCni: null,
       cniConfigParams: [],
       cniConfigValues: {},
+      cniVariableErrors: false,
       userDataParamCols: [
         {
           title: this.$t('label.key'),
@@ -565,6 +583,52 @@ export default {
     this.keyPairs = [this.emptyEntry]
     this.initForm()
     this.fetchData()
+  },
+  computed: {
+    cniOwner () {
+      return this.isAdmin() ? this.owner : { ...this.$store.getters.userInfo, projectid: this.$store.getters.project?.id }
+    },
+    cniScopeKey () {
+      const owner = this.cniOwner
+      return JSON.stringify([owner.account, owner.domainid, owner.projectid, this.selectedZone?.id, Boolean(this.form.advancedmode)])
+    },
+    cniMissingValues () { return this.cniConfigParams.filter(row => row.key !== 'AS_NUMBER' && this.cniConfigValues[row.key] === undefined).map(row => row.key) },
+    cniSelectionBlocked () {
+      return Boolean(this.form.advancedmode && this.form.cniconfigurationid &&
+        (!this.cniSelectionReady || !this.$store.getters.apis?.listCniConfiguration))
+    },
+    createSummary () {
+      const f = this.form
+      const base = this.serviceOfferings[f.serviceofferingid]
+      const counts = { control: f.haenable ? Number(f.controlnodes || 3) : 1, worker: Number(f.size || 1), etcd: f.advancedmode ? Number(f.etcdnodes || 0) : 0 }
+      let cpu = 0; let memory = 0
+      for (const [role, count] of Object.entries(counts)) { const offering = f.advancedmode ? this.serviceOfferings[f[role + 'offeringid']] || base : base; cpu += Number(offering?.cpunumber || 0) * count; memory += Number(offering?.memory || 0) * count }
+      return [
+        { label: 'label.kubernetesversionid', value: this.selectedKubernetesVersion?.name },
+        { label: 'label.zoneid', value: this.selectedZone?.name },
+        { label: 'label.clustertype', value: this.$t('label.cloud.managed') },
+        { label: 'label.serviceofferingid', value: base?.name },
+        { label: 'label.size', value: this.$t('label.kubernetes.node.control') + ': ' + counts.control + ' / ' + this.$t('label.kubernetes.node.worker') + ': ' + counts.worker + ' / etcd: ' + counts.etcd },
+        { label: 'label.cks.cluster.total.allocated.resources', value: cpu + ' vCPU · ' + memory.toLocaleString() + ' MB' },
+        { label: 'label.noderootdisksize', value: (f.noderootdisksize || 8) + ' GiB × ' + (counts.control + counts.worker + counts.etcd) },
+        { label: 'label.networkid', value: this.networks[f.networkid]?.name || this.$t('label.automatic') },
+        { label: 'label.enable.csi', value: this.$t(f.enablecsi ? 'label.enabled' : 'label.disabled') },
+        { label: 'label.cniconfiguration', value: f.advancedmode && this.selectedCni ? this.selectedCni.name : this.$t('label.noselect') }
+      ]
+    },
+    storageNodeOfferings () {
+      const base = this.serviceOfferings[this.form.serviceofferingid]
+      const roles = this.form.advancedmode
+        ? [['control', 'controlofferingid'], ['worker', 'workerofferingid'], ...(this.form.etcdnodes > 0 ? [['etcd', 'etcdofferingid']] : [])]
+        : [['control/worker', 'serviceofferingid']]
+      return roles.map(([role, field]) => ({ role, offering: this.serviceOfferings[this.form[field]] || base })).filter(item => item.offering)
+    }
+  },
+  watch: {
+    cniScopeKey () {
+      this.cniSelectionReady = false
+      this.updateCniConfig('0')
+    }
   },
   methods: {
     initForm () {
@@ -620,7 +684,6 @@ export default {
       }
       this.fetchCksTemplates()
       this.fetchCKSNetworkOfferingName()
-      this.fetchCniConfigurations()
     },
     fetchAffinityGroups () {
       this.affinityGroups = []
@@ -660,7 +723,6 @@ export default {
       return !(obj !== null && obj !== undefined && Object.keys(obj).length > 0 && obj.constructor === Object)
     },
     isUserAllowedToListCniConfig () {
-      console.log(Boolean('listCniConfiguration' in this.$store.getters.apis))
       return Boolean('listCniConfiguration' in this.$store.getters.apis)
     },
     fetchZoneData () {
@@ -785,22 +847,25 @@ export default {
       } else {
         filters = ['self', 'featured', 'community']
       }
-      var ckstemplates = []
-      for (const filtername of filters) {
-        const params = {
-          templatefilter: filtername,
-          forcks: true,
-          isready: true
-        }
-        this.templateLoading = true
-        getAPI('listTemplates', params).then(json => {
-          var templates = json?.listtemplatesresponse?.template || []
-          ckstemplates.push(...templates)
-        }).finally(() => {
-          this.templateLoading = false
-        })
-      }
-      this.templates = ckstemplates
+      this.templateLoading = true
+      this.templates = []
+      return Promise.all(filters.map(templatefilter => getAPI('listTemplates', {
+        templatefilter,
+        forcks: true,
+        isready: true
+      }))).then(responses => {
+        const seen = new Set()
+        this.templates = responses.flatMap(json => json?.listtemplatesresponse?.template || [])
+          .filter(template => {
+            if (seen.has(template.id)) return false
+            seen.add(template.id)
+            return true
+          })
+      }).catch(() => {
+        this.templates = []
+      }).finally(() => {
+        this.templateLoading = false
+      })
     },
     fetchNetworkData () {
       const params = {}
@@ -863,9 +928,10 @@ export default {
       }
       this.hypervisorLoading = true
 
-      getAPI('listHypervisors', params).then(json => {
+      return getAPI('listHypervisors', params).then(json => {
         const listResponse = json.listhypervisorsresponse.hypervisor || []
         this.selectedZoneHypervisors = listResponse.filter(hypervisor => hypervisor.name !== 'External')
+        if (this.form.hypervisor == null && this.selectedZoneHypervisors.length === 1) this.form.hypervisor = 0
       }).finally(() => {
         this.hypervisorLoading = false
       })
@@ -914,46 +980,37 @@ export default {
         this.asNumbersZone = json.listasnumbersresponse.asnumber
       })
     },
-    fetchCniConfigurations () {
-      this.cniConfigLoading = true
-      getAPI('listCniConfiguration', {}).then(
-        response => {
-          const listResponse = response.listcniconfigurationresponse.cniconfig || []
-          if (listResponse) {
-            this.cniConfigurationData = listResponse
-          }
-        }).finally(() => {
-        this.cniConfigLoading = false
-      })
-    },
-    updateCniConfig (id) {
-      if (id === '0') {
-        this.form.cniconfigurationid = undefined
-        return
-      }
-      this.form.cniconfigurationid = id
+    updateCniConfig (id, item) {
+      this.form.cniconfigurationid = id && id !== '0' && item?.id === id ? id : undefined
+      this.selectedCni = this.form.cniconfigurationid ? item : null
       this.cniConfigParams = []
-      getAPI('listCniConfiguration', { id: id }).then(json => {
-        const resp = json?.listcniconfigurationresponse?.cniconfig || []
-        if (resp) {
-          var params = resp[0].params
-          if (params) {
-            var dataParams = params.split(',')
-          }
-          var that = this
-          dataParams.forEach(function (val, index) {
-            that.cniConfigParams.push({
-              id: index,
-              key: val
-            })
-          })
-        }
-      })
+      this.cniVariableErrors = false
+      this.cniConfigValues = Object.create(null)
+      const keys = typeof this.selectedCni?.params === 'string'
+        ? [...new Set(this.selectedCni.params.split(',').map(key => key.trim()).filter(Boolean))] : []
+      this.cniConfigParams = keys.map((key, index) => ({ id: index, key }))
+    },
+    validateCniValues () {
+      if (!this.form.advancedmode || !this.form.cniconfigurationid || !this.cniMissingValues.length) return true
+      this.cniVariableErrors = true; this.$message.error(this.$t('message.cni.variables.missing', { names: this.cniMissingValues.join(', ') })); return false
+    },
+    async nextWizardStep () {
+      if (this.wizardStep === 3 && (this.cniSelectionBlocked || !this.validateCniValues())) return
+      const fields = [['name', 'zoneid', 'hypervisor', 'kubernetesversionid'], ['serviceofferingid', 'size', 'noderootdisksize', 'controlofferingid', 'workerofferingid', 'etcdnodes', 'etcdofferingid'], ['networkid', 'controlnodes', 'externalloadbalanceripaddress', 'asnumber'], ['cniconfigurationid']][this.wizardStep]
+      try { await this.formRef.value.validateFields(fields); this.wizardStep++ } catch (error) { if (error.errorFields?.length) this.formRef.value.scrollToField(error.errorFields[0].name) }
     },
     handleSubmit (e) {
-      e.preventDefault()
+      if (e && e.preventDefault) e.preventDefault()
+      if (this.wizardStep < 4) { this.nextWizardStep(); return }
       if (this.loading) return
-      this.formRef.value.validate().then(() => {
+      if (this.cniSelectionBlocked || !this.validateCniValues()) return
+      const selectionScope = this.cniScopeKey
+      const selectedId = this.form.cniconfigurationid
+      this.loading = true
+      return this.formRef.value.validate().then(() => {
+        if (selectionScope !== this.cniScopeKey || selectedId !== this.form.cniconfigurationid || this.cniSelectionBlocked) {
+          throw new Error(this.$t('message.userdata.selection.missing'))
+        }
         const formRaw = toRaw(this.form)
         const values = this.handleRemoveFields(formRaw)
         this.loading = true
@@ -1051,7 +1108,7 @@ export default {
           params.dockerregistryurl = values.dockerregistryurl
         }
 
-        if (values.cniconfigurationid) {
+        if (values.advancedmode && values.cniconfigurationid) {
           params.cniconfigurationid = values.cniconfigurationid
         }
 
@@ -1060,8 +1117,10 @@ export default {
         }
 
         var idx = 0
-        if (this.cniConfigValues) {
-          for (const [key, value] of Object.entries(this.cniConfigValues)) {
+        if (values.advancedmode && values.cniconfigurationid) {
+          for (const { key } of this.cniConfigParams) {
+            const value = this.cniConfigValues[key]
+            if (value === undefined || key === 'AS_NUMBER') continue
             params['cniconfigdetails[' + idx + '].' + `${key}`] = value
             idx++
           }
@@ -1070,7 +1129,7 @@ export default {
           params.asnumber = values.asnumber
         }
 
-        postAPI('createKubernetesCluster', params).then(json => {
+        return postAPI('createKubernetesCluster', params).then(json => {
           const jobId = json.createkubernetesclusterresponse.jobid
           this.$pollJob({
             jobId,
@@ -1087,7 +1146,9 @@ export default {
           this.loading = false
         })
       }).catch(error => {
-        this.formRef.value.scrollToField(error.errorFields[0].name)
+        this.loading = false
+        if (error.errorFields?.length) this.formRef.value.scrollToField(error.errorFields[0].name)
+        else this.$notifyError(error)
       })
     },
     closeAction () {
@@ -1104,11 +1165,5 @@ export default {
 </script>
 
 <style scoped lang="less">
-  .form-layout {
-    width: 80vw;
-
-    @media (min-width: 700px) {
-      width: 550px;
-    }
-  }
+.form-layout { width: 100%; }
 </style>

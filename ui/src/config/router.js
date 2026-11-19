@@ -84,8 +84,11 @@ function generateRouterMap (section) {
           permission: child.permission,
           resourceType: child.resourceType,
           filters: child.filters,
+          defaultFilter: child.defaultFilter,
+          filterLabels: child.filterLabels,
           params: child.params ? child.params : {},
           columns: child.columns,
+          optionalColumns: child.optionalColumns,
           advisories: !vueProps.$config.advisoriesDisabled ? child.advisories : undefined,
           details: child.details,
           searchFilters: child.searchFilters,
@@ -149,6 +152,8 @@ function generateRouterMap (section) {
     map.meta.details = section.details
     map.meta.actions = section.actions
     map.meta.filters = section.filters
+    map.meta.defaultFilter = section.defaultFilter
+    map.meta.filterLabels = section.filterLabels
     map.meta.treeView = section.treeView ? section.treeView : false
     map.meta.tabs = section.tabs
 

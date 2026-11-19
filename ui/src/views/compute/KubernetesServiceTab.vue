@@ -18,20 +18,31 @@
 <template>
   <a-spin :spinning="networkLoading">
     <a-tabs
+      :tabPosition="resourceTabPosition"
       :activeKey="currentTab"
-      :tabPosition="device === 'mobile' ? 'top' : 'left'"
       :animated="false"
       @change="handleChangeTab">
       <a-tab-pane :tab="$t('label.details')" key="details">
+        <a-alert v-if="resource.cleanupstatus" type="warning" show-icon :message="$t('label.kubernetes.cleanup.status') + ': ' + resource.cleanupstatus">
+          <template #description>
+            <p>{{ $t('message.kubernetes.cleanup.retry') }}</p>
+            <p>{{ $t('label.kubernetes.cleanup.phase') }}: {{ resource.cleanupphase }}</p>
+            <p v-if="resource.cleanupremaining">{{ $t('label.kubernetes.cleanup.remaining') }}: {{ resource.cleanupremaining }}</p>
+          </template>
+        </a-alert>
         <DetailsTab :resource="resource" :loading="loading" />
       </a-tab-pane>
-      <a-tab-pane v-if="resource.clustertype === 'CloudManaged'" :tab="$t('label.access')" key="access">
+      <a-tab-pane v-if="resource.clustertype === 'CloudManaged'" :tab="$t('label.access')" key="access"><div class="kubernetes-access-content">
+        <div class="detail-tab-toolbar">
+          <a-button type="primary" :disabled="!clusterConfig || clusterConfigLoading" @click="downloadKubernetesClusterConfig"><template #icon><download-outlined /></template>{{ $t('label.download.kubernetes.cluster.config') }}</a-button>
+          <a-button :loading="clusterConfigLoading" @click="fetchKubernetesClusterConfig"><template #icon><reload-outlined /></template>{{ $t('label.refresh') }}</a-button>
+        </div>
         <a-card :title="$t('label.kubeconfig.cluster')" :loading="versionLoading">
+          <p>{{ $t('message.kubernetes.config.sensitive') }}</p>
           <div v-if="clusterConfig !== ''">
-            <a-textarea :value="clusterConfig" :rows="5" readonly />
-            <div :span="24" class="action-button">
-              <a-button @click="downloadKubernetesClusterConfig" type="primary">{{ $t('label.download.kubernetes.cluster.config') }}</a-button>
-            </div>
+            <a-button @click="configVisible = !configVisible">{{ $t(configVisible ? 'label.kubernetes.config.hide' : 'label.kubernetes.config.show') }}</a-button>
+            <a-textarea v-if="configVisible" :value="clusterConfig" :rows="5" readonly style="margin-top: 12px" />
+
           </div>
           <div v-else>
             <p>{{ $t('message.kubeconfig.cluster.not.available') }}</p>
@@ -66,77 +77,68 @@
           </a-timeline>
         </a-card>
         <a-card :title="$t('label.kubernetes.dashboard')">
-          <p><strong>Note:</strong> CloudStack Kubernetes clusters use <strong>Headlamp</strong> dashboard (deployed in <code>kube-system</code> namespace). For backward compatibility with older clusters using Kubernetes Dashboard, please check your cluster configuration.</p>
+          <p>{{ $t('message.kubernetes.headlamp.intro') }}</p>
           <a-timeline>
             <a-timeline-item>
-              <p>
-                <strong>Access Headlamp Dashboard (new clusters)</strong><br><br>
-                <strong>Step 1:</strong> Run port-forward command:<br>
-                <code><b>kubectl --kubeconfig /custom/path/kube.conf port-forward -n kube-system service/headlamp 8080:80</b></code><br><br>
-                <strong>Step 2:</strong> Open in your browser:<br>
-                <a href="http://localhost:8080"><code>http://localhost:8080</code></a>
-              </p>
+              <strong>{{ $t('label.kubernetes.headlamp.access') }}</strong>
+              <p>{{ $t('message.kubernetes.headlamp.forward') }}</p>
+              <code>kubectl --kubeconfig /custom/path/kube.conf port-forward -n kube-system service/headlamp 8080:80</code>
+              <p><a :href="headlampDashboardUrl">{{ headlampDashboardUrl }}</a></p>
+              <p>{{ $t('label.kubernetes.headlamp.locale') }}</p>
             </a-timeline-item>
             <a-timeline-item>
-              <p>
-                <strong>Access Kubernetes Dashboard (legacy clusters)</strong><br><br>
-                <strong>Step 1:</strong> {{ $t('label.run.proxy.locally') }}<br>
-                <code><b>kubectl --kubeconfig /custom/path/kube.conf proxy</b></code><br><br>
-                <strong>Step 2:</strong> {{ $t('label.open.url') }}<br>
-                <a href="http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/"><code>http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/</code></a>
-              </p>
+              <strong>{{ $t('label.kubernetes.headlamp.readonly') }}</strong>
+              <p>{{ $t('message.kubernetes.headlamp.permissions') }}</p>
+              <a-textarea :value="dashboardAccessCommands('kube-system', 'mold-headlamp-view')" :rows="5" readonly />
+              <p>{{ $t('message.kubernetes.headlamp.expiry') }}</p>
+              <p>{{ $t('label.kubernetes.headlamp.token.required') }}</p>
             </a-timeline-item>
             <a-timeline-item>
-              <p>
-                <strong>Create Access Token for Headlamp (new clusters)</strong>
-              </p>
-              <p v-html="$t('label.kubernetes.dashboard.create.token')"></p>
-              <p v-html="$t('label.kubernetes.dashboard.create.token.desc')"></p>
-              <a-textarea :value="'kubectl --kubeconfig /custom/path/kube.conf apply -f - <<EOF\napiVersion: v1\nkind: ServiceAccount\nmetadata:\n  name: headlamp-admin\n  namespace: kube-system\n---\napiVersion: rbac.authorization.k8s.io/v1\nkind: ClusterRoleBinding\nmetadata:\n  name: headlamp-admin\nroleRef:\n  apiGroup: rbac.authorization.k8s.io\n  kind: ClusterRole\n  name: cluster-admin\nsubjects:\n- kind: ServiceAccount\n  name: headlamp-admin\n  namespace: kube-system\n---\napiVersion: v1\nkind: Secret\ntype: kubernetes.io/service-account-token\nmetadata:\n  name: headlamp-admin-token\n  namespace: kube-system\n  annotations:\n    kubernetes.io/service-account.name: headlamp-admin\nEOF'" :rows="12" readonly />
-              <br><br>
-              <p>{{ $t('label.token.for.dashboard.login') }}:</p>
-              <code><b>kubectl --kubeconfig /custom/path/kube.conf describe secret headlamp-admin-token -n kube-system</b></code>
+              <strong>{{ $t('label.kubernetes.dashboard.legacy') }}</strong>
+              <p>{{ $t('message.kubernetes.dashboard.legacy') }}</p>
+              <code>kubectl --kubeconfig /custom/path/kube.conf proxy</code>
+              <p><a href="http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/">http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/</a></p>
+              <a-textarea :value="dashboardAccessCommands('kubernetes-dashboard', 'mold-dashboard-view')" :rows="5" readonly />
             </a-timeline-item>
             <a-timeline-item>
-              <p>
-                <strong>Create Access Token for Kubernetes Dashboard (legacy clusters)</strong>
-              </p>
-              <p v-html="$t('label.kubernetes.dashboard.create.token.desc')"></p>
-              <a-textarea :value="'kubectl --kubeconfig /custom/path/kube.conf apply -f - <<EOF\napiVersion: v1\nkind: ServiceAccount\nmetadata:\n  name: kubernetes-dashboard-admin-user\n  namespace: kubernetes-dashboard\n---\napiVersion: rbac.authorization.k8s.io/v1\nkind: ClusterRoleBinding\nmetadata:\n  name: kubernetes-dashboard-admin-user\nroleRef:\n  apiGroup: rbac.authorization.k8s.io\n  kind: ClusterRole\n  name: cluster-admin\nsubjects:\n- kind: ServiceAccount\n  name: kubernetes-dashboard-admin-user\n  namespace: kubernetes-dashboard\n---\napiVersion: v1\nkind: Secret\ntype: kubernetes.io/service-account-token\nmetadata:\n  name: kubernetes-dashboard-token\n  namespace: kubernetes-dashboard\n  annotations:\n    kubernetes.io/service-account.name: kubernetes-dashboard-admin-user\nEOF'" :rows="12" readonly />
-              <br><br>
-              <p>{{ $t('label.token.for.dashboard.login') }}:</p>
-              <code><b>kubectl --kubeconfig /custom/path/kube.conf describe secret kubernetes-dashboard-token -n kubernetes-dashboard</b></code>
-            </a-timeline-item>
-            <a-timeline-item>
-              <p>
-                <strong>Important Notes:</strong><br>
-                • <strong>Port-forwarding is recommended for Headlamp</strong> - simpler and more reliable than kubectl proxy<br>
-                • Token is only needed if accessing Headlamp via NodePort or LoadBalancer with external access<br>
-                • For Kubernetes 1.24+, service account tokens are no longer auto-generated - use the Secret resource shown above or <code>kubectl create token</code> command<br>
-                • <strong>Cluster-admin role grants full control</strong> - use with caution and only for trusted administrators<br>
-                • Keep the port-forward command running while using the dashboard (press Ctrl+C to stop)
-              </p>
+              <strong>{{ $t('label.kubernetes.headlamp.cleanup') }}</strong>
+              <p>{{ $t('message.kubernetes.headlamp.cleanup') }}</p>
+              <a-textarea :value="dashboardCleanupCommands" :rows="4" readonly />
             </a-timeline-item>
           </a-timeline>
           <p>{{ $t('label.more.access.dashboard.ui') }}:
-            <a href="https://headlamp.dev/docs/latest/">Headlamp Documentation</a> |
-            <a href="https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/#accessing-the-dashboard-ui">Kubernetes Dashboard (Legacy)</a>
+            <a href="https://headlamp.dev/docs/latest/">Headlamp</a> |
+            <a href="https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/">Kubernetes Dashboard</a>
           </p>
         </a-card>
         <a-card :title="$t('label.access.kubernetes.nodes')">
           <p v-html="$t('label.kubernetes.access.details')"></p>
-        </a-card>
+        </a-card></div>
       </a-tab-pane>
       <a-tab-pane :tab="$t('label.instances')" key="instances">
+        <div class="detail-tab-toolbar">
+          <a-button type="primary" :disabled="!nodeActions.canPrimary || loading" @click="executeNodeAction(nodeActions.primary)">
+            <template #icon><plus-outlined /></template>
+            {{ $t(resource.clustertype === 'ExternalManaged' ? 'label.kubernetes.external.nodes.add' : 'label.kubernetes.cluster.scale') }}
+          </a-button>
+          <a-button v-if="resource.clustertype === 'CloudManaged'" :disabled="!nodeActions.canAdd || loading" @click="executeNodeAction('addNodesToKubernetesCluster')">
+            <template #icon><plus-outlined /></template>{{ $t('label.kubernetes.external.nodes.add') }}
+          </a-button>
+          <a-button v-if="nodeActions.canRemove" @click="executeNodeAction('removeVirtualMachinesFromKubernetesCluster')">
+            <template #icon><disconnect-outlined /></template>{{ $t('label.kubernetes.external.nodes.remove') }}
+          </a-button>
+          <a-button :loading="loading" @click="parentFetchData"><template #icon><reload-outlined /></template>{{ $t('label.refresh') }}</a-button>
+        </div>
+        <a-alert v-if="resource.clustertype === 'ExternalManaged'" type="info" show-icon class="mold-dialog-summary" :message="$t('message.kubernetes.external.mapping')" />
         <a-table
           class="table"
           size="small"
           :columns="vmColumns"
-          :dataSource="virtualmachines"
+          :dataSource="pagedVirtualmachines"
           :rowKey="item => item.id"
           :pagination="false"
         >
-          <template #bodyCell="{ column, text, record, index }">
+          <template #bodyCell="{ column, text, record }">
             <template v-if="column.key === 'name'" :name="text">
               <router-link :to="{ path: '/vm/' + record.id }">{{ record.name }}</router-link>
             </template>
@@ -144,15 +146,7 @@
               <status :text="text ? text : ''" displayText />
             </template>
             <template v-if="column.key === 'port'" :name="text" :record="record">
-              <div v-if="network.type === 'Shared' || network.ip4routing">
-                {{ cksSshPortSharedNetwork }}
-              </div>
-              <div v-else-if="record.isexternalnode || (!record.isexternalnode && !record.isetcdnode)">
-                {{ cksSshStartingPort + index }}
-              </div>
-              <div v-else>
-                {{ parseInt(etcdSshPort) + parseInt(getEtcdIndex(record.name)) - 1 }}
-              </div>
+              {{ sshPortLabel(record) }}
             </template>
             <template v-if="column.key === 'kubernetesnodeversion'">
               <span> {{ text ? text : '' }} </span>
@@ -167,12 +161,12 @@
                   @confirm="deleteNode(record)"
                   :okText="$t('label.yes')"
                   :cancelText="$t('label.no')"
-                  :disabled="!['Created', 'Running'].includes(resource.state) || resource.autoscalingenabled"
+                  :disabled="!canDeleteNode(record)"
                 >
                   <a-button
                     type="danger"
                     shape="circle"
-                    :disabled="!['Created', 'Running'].includes(resource.state) || resource.autoscalingenabled">
+                    :disabled="!canDeleteNode(record)">
                     <template #icon><delete-outlined /></template>
                   </a-button>
                 </a-popconfirm>
@@ -180,12 +174,27 @@
             </template>
           </template>
         </a-table>
+      <div class="detail-tab-pagination">
+          <a-pagination
+size="small"
+:current="vmPage"
+:page-size="vmPageSize"
+:total="virtualmachines.length"
+show-size-changer
+            :page-size-options="['10', '20', '40', '80', '100']"
+:show-total="total => `${$t('label.total')} ${total} ${$t('label.items')}`"
+            @change="(page, size) => { vmPage = page; vmPageSize = size }" />
+        </div>
       </a-tab-pane>
-      <a-tab-pane :tab="$t('label.firewall')" key="firewall" v-if="publicIpAddress">
+      <a-tab-pane :tab="$t('label.firewall')" key="firewall" v-if="network">
+        <AclRulesTab v-if="network.vpcid && network.aclid" :resource="{ ...network, id: network.aclid }" :loading="networkLoading" />
+        <RoutingFirewallRulesTab v-else-if="network.ip4routing" :resource="network" :loading="networkLoading" />
         <FirewallRules
+v-else-if="publicIpAddress && network.type !== 'Shared'"
           :resource="publicIpAddress"
           :loading="networkLoading"
           :protected-management-ports="kubernetesManagementPorts" />
+        <a-alert v-else type="info" show-icon :message="$t('message.kubernetes.network.unavailable')" />
       </a-tab-pane>
       <a-tab-pane :tab="$t('label.portforwarding')" key="portforwarding" v-if="publicIpAddress">
         <PortForwarding
@@ -193,8 +202,8 @@
           :loading="networkLoading"
           :protected-management-ports="kubernetesManagementPorts" />
       </a-tab-pane>
-      <a-tab-pane :tab="$t('label.loadbalancing')" key="loadbalancing" v-if="publicIpAddress">
-        <LoadBalancing :resource="publicIpAddress" :loading="networkLoading" />
+      <a-tab-pane :tab="$t('label.loadbalancing')" key="loadbalancing" v-if="resource.networkid">
+        <KubernetesLoadBalancers :resource="resource" />
       </a-tab-pane>
       <a-tab-pane :tab="$t('label.events')" key="events" v-if="'listEvents' in $store.getters.apis">
         <events-tab :resource="resource" resourceType="KubernetesCluster" :loading="loading" />
@@ -210,13 +219,18 @@
 </template>
 
 <script>
+import { kubernetesNodeActions } from '@/utils/kubernetesClusterActions'
 import { getAPI, postAPI } from '@/api'
 import { isAdmin } from '@/role'
+import { nodeSshPorts, clusterManagementPorts, listAllKubernetesPortRules } from '@/utils/kubernetesPorts'
 import { mixinDevice } from '@/utils/mixin.js'
 import DetailsTab from '@/components/view/DetailsTab'
+import AclRulesTab from '@/views/network/AclRulesTab'
+import RoutingFirewallRulesTab from '@/views/network/RoutingFirewallRulesTab'
 import FirewallRules from '@/views/network/FirewallRules'
 import PortForwarding from '@/views/network/PortForwarding'
-import LoadBalancing from '@/views/network/LoadBalancing'
+import KubernetesLoadBalancers from '@/views/compute/KubernetesLoadBalancers'
+import { clusterApiAddress } from '@/utils/kubernetesLoadBalancers'
 import Status from '@/components/widgets/Status'
 import AnnotationsTab from '@/components/view/AnnotationsTab'
 import EventsTab from '@/components/view/EventsTab'
@@ -225,15 +239,17 @@ export default {
   name: 'KubernetesServiceTab',
   components: {
     DetailsTab,
+    AclRulesTab,
+    RoutingFirewallRulesTab,
     FirewallRules,
     PortForwarding,
-    LoadBalancing,
+    KubernetesLoadBalancers,
     Status,
     AnnotationsTab,
     EventsTab
   },
   mixins: [mixinDevice],
-  inject: ['parentFetchData'],
+  inject: { parentFetchData: { default: () => {} }, parentExecuteAction: { default: null } },
   props: {
     resource: {
       type: Object,
@@ -246,6 +262,7 @@ export default {
   },
   data () {
     return {
+      configVisible: false,
       clusterConfigLoading: false,
       clusterConfig: '',
       versionLoading: false,
@@ -254,15 +271,16 @@ export default {
       kubectlMacLink: 'https://storage.googleapis.com/kubernetes-release/release/v1.16.0/bin/darwin/amd64/kubectl',
       kubectlWindowsLink: 'https://storage.googleapis.com/kubernetes-release/release/v1.16.0/bin/windows/amd64/kubectl.exe',
       instanceLoading: false,
+      vmPage: 1,
+      vmPageSize: 10,
       virtualmachines: [],
       vmColumns: [],
       networkLoading: false,
       network: null,
       publicIpAddress: null,
       currentTab: 'details',
-      cksSshStartingPort: 2222,
-      etcdSshPort: 50000,
-      cksSshPortSharedNetwork: 22,
+      nodePortRules: [],
+      nodePortRequest: 0,
       annotations: []
     }
   },
@@ -278,6 +296,7 @@ export default {
         title: this.$t('label.state'),
         dataIndex: 'state'
       },
+      { key: 'role', title: this.$t('label.kubernetes.node.role.short'), dataIndex: 'role' },
       {
         title: this.$t('label.instancename'),
         dataIndex: 'instancename'
@@ -308,10 +327,11 @@ export default {
       this.vmColumns = this.vmColumns.filter(x => x.dataIndex !== 'port')
     }
     this.handleFetchData()
-    const self = this
-    window.addEventListener('popstate', function () {
-      self.setCurrentTab()
-    })
+    window.addEventListener('popstate', this.setCurrentTab)
+  },
+  beforeUnmount () {
+    this.nodePortRequest++
+    window.removeEventListener('popstate', this.setCurrentTab)
   },
   watch: {
     resource: {
@@ -319,11 +339,6 @@ export default {
       handler (newData, oldData) {
         if (newData && newData !== oldData) {
           this.handleFetchData()
-          if (this.resource.ipaddress) {
-            this.vmColumns = this.vmColumns.filter(x => x.dataIndex !== 'ipaddress')
-          } else {
-            this.vmColumns = this.vmColumns.filter(x => x.dataIndex !== 'port')
-          }
         }
       }
     },
@@ -332,10 +347,20 @@ export default {
     }
   },
   computed: {
+    nodeActions () { return kubernetesNodeActions(this.resource, this.$store.getters.apis) },
+    pagedVirtualmachines () { return this.virtualmachines.slice((this.vmPage - 1) * this.vmPageSize, this.vmPage * this.vmPageSize) },
+    dashboardCleanupCommands () {
+      return ['kubectl --kubeconfig /custom/path/kube.conf delete clusterrolebinding mold-headlamp-view mold-dashboard-view --ignore-not-found',
+        'kubectl --kubeconfig /custom/path/kube.conf delete serviceaccount mold-headlamp-view -n kube-system --ignore-not-found',
+        'kubectl --kubeconfig /custom/path/kube.conf delete serviceaccount mold-dashboard-view -n kubernetes-dashboard --ignore-not-found'].join('\n')
+    },
+    headlampDashboardUrl () {
+      const locale = String(this.$i18n.locale || 'en').replace('_', '-').split('-')[0].toLowerCase()
+      const supportedLocales = ['en', 'es', 'fr', 'pt', 'de', 'it', 'zh', 'ko', 'ja', 'hi', 'ta']
+      return `http://localhost:8080/?lng=${supportedLocales.includes(locale) ? locale : 'en'}`
+    },
     kubernetesManagementPorts () {
-      const sshPorts = this.virtualmachines
-        .map((vm, index) => this.cksSshStartingPort + index)
-      return [...new Set([6443, ...sshPorts])]
+      return clusterManagementPorts([{ virtualmachines: this.virtualmachines }], this.nodePortRules)
     }
   },
   mounted () {
@@ -346,13 +371,25 @@ export default {
         dataIndex: 'actions'
       })
     }
-    this.fetchEtcdSshPort()
-    this.handleFetchData()
     this.setCurrentTab()
   },
   methods: {
+    executeNodeAction (api) {
+      const action = (this.$route.meta.actions || []).find(action => action.api === api)
+      if (!action || !this.$store.getters.apis[api] || (action.show && !action.show(this.resource, this.$store.getters))) return
+      if (this.parentExecuteAction) this.parentExecuteAction({ ...action, resource: this.resource })
+    },
+    dashboardAccessCommands (namespace, name) {
+      const kubectl = 'kubectl --kubeconfig /custom/path/kube.conf'
+      return [`${kubectl} create serviceaccount ${name} -n ${namespace} --dry-run=client -o yaml | ${kubectl} apply -f -`,
+        `${kubectl} create clusterrolebinding ${name} --clusterrole=view --serviceaccount=${namespace}:${name} --dry-run=client -o yaml | ${kubectl} apply -f -`,
+        `${kubectl} create token ${name} -n ${namespace} --duration=15m`].join('\n')
+    },
     setCurrentTab () {
-      this.currentTab = this.$route.query.tab ? this.$route.query.tab : 'details'
+      const hash = window.location.hash.slice(1)
+      const [path, query = ''] = hash.split('?')
+      const tab = path === this.$route.path ? new URLSearchParams(query).get('tab') : null
+      this.currentTab = tab || this.$route.query.tab || 'details'
     },
     handleChangeTab (e) {
       this.currentTab = e
@@ -385,23 +422,22 @@ export default {
       this.fetchComments()
     },
     fetchComments () {
-      this.clusterConfigLoading = true
       getAPI('listAnnotations', { entityid: this.resource.id, entitytype: 'KUBERNETES_CLUSTER', annotationfilter: 'all' }).then(json => {
         if (json.listannotationsresponse?.annotation) {
           this.annotations = json.listannotationsresponse.annotation
         }
       }).catch(error => {
         this.$notifyError(error)
-      }).finally(() => {
-        this.clusterConfigLoading = false
       })
     },
     fetchKubernetesClusterConfig () {
       this.clusterConfigLoading = true
       this.clusterConfig = ''
+      if (this.resource.clustertype !== 'CloudManaged' || !['Running', 'Stopped'].includes(this.resource.state)) { this.clusterConfigLoading = false; return }
       if (!this.isObjectEmpty(this.resource)) {
         var params = {}
         params.id = this.resource.id
+        params.refresh = this.resource.clustertype === 'CloudManaged' && this.resource.state === 'Running'
         getAPI('getKubernetesClusterConfig', params).then(json => {
           const config = json.getkubernetesclusterconfigresponse.clusterconfig
           if (!this.isObjectEmpty(config) &&
@@ -414,6 +450,8 @@ export default {
               description: this.$t('message.error.retrieve.kubeconfig')
             })
           }
+        }).catch(error => {
+          this.$notifyError(error)
         }).finally(() => {
           this.clusterConfigLoading = false
           if (!this.isObjectEmpty(this.kubernetesVersion) && this.isValidValueForKey(this.kubernetesVersion, 'semanticversion')) {
@@ -449,71 +487,48 @@ export default {
     },
     fetchInstances () {
       this.instanceLoading = true
-      var defaultNodes = this.resource.virtualmachines.filter(x => !x.isexternalnode && !x.isetcdnode)
-      var externalNodes = this.resource.virtualmachines.filter(x => x.isexternalnode)
-      var etcdNodes = this.resource.virtualmachines.filter(x => x.isetcdnode)
-      this.virtualmachines = defaultNodes.concat(externalNodes).concat(etcdNodes)
-      this.virtualmachines.map(x => { x.ipaddress = x.nic[0].ipaddress })
+      const nodes = Array.isArray(this.resource.virtualmachines) ? this.resource.virtualmachines : []
+      const defaultNodes = nodes.filter(x => !x.isexternalnode && !x.isetcdnode)
+      const externalNodes = nodes.filter(x => x.isexternalnode)
+      const etcdNodes = nodes.filter(x => x.isetcdnode)
+      this.virtualmachines = defaultNodes.concat(externalNodes).concat(etcdNodes).map(node => {
+        const nics = Array.isArray(node.nic) ? node.nic : []
+        const nic = nics.find(nic => nic && nic.isdefault) || nics[0]
+        return { ...node, ipaddress: nic?.ipaddress || '', role: this.$t(node.isetcdnode ? 'label.kubernetes.node.etcd' : node.iscontrolnode ? 'label.kubernetes.node.control' : 'label.kubernetes.node.worker') }
+      })
       this.instanceLoading = false
     },
-    fetchNetwork () {
-      this.networkLoading = true
-      return new Promise((resolve, reject) => {
-        getAPI('listNetworks', {
-          listAll: true,
-          id: this.resource.networkid
-        }).then(json => {
-          const networks = json.listnetworksresponse.network
-          if (this.arrayHasItems(networks)) {
-            this.network = networks[0]
-          }
-          resolve(this.network)
-        })
-        this.networkLoading = false
-      })
+    sshPortLabel (vm) {
+      const ports = nodeSshPorts(vm, this.network, this.nodePortRules)
+      return ports.length ? ports.join(', ') : this.$t('label.unknown')
     },
     async fetchPublicIpAddress () {
-      await this.fetchNetwork()
-      if (this.network && (this.network.type === 'Shared' || this.network.ip4routing)) {
-        this.publicIpAddress = null
-        return
+      const resource = { ...this.resource }
+      const request = ++this.nodePortRequest
+      const current = () => request === this.nodePortRequest && resource.id === this.resource.id
+      const retained = this.network?.id === resource.networkid && this.publicIpAddress?.associatednetworkid === resource.networkid
+      this.networkLoading = !retained
+      if (!retained) { this.network = null; this.publicIpAddress = null; this.nodePortRules = [] }
+      try {
+        if (!resource.networkid) return
+        const response = await getAPI('listNetworks', { listAll: true, id: resource.networkid })
+        if (!current()) return
+        this.network = response.listnetworksresponse?.network?.[0] || null
+        if (!this.network || this.network.type === 'Shared' || this.network.ip4routing) { this.publicIpAddress = null; return }
+        const params = { listAll: true, forvirtualnetwork: true, associatednetworkid: resource.networkid }
+        if (resource.projectid) params.projectid = resource.projectid
+        if (resource.ipaddressid) params.id = resource.ipaddressid
+        const ips = await getAPI('listPublicIpAddresses', params)
+        if (!current()) return
+        this.publicIpAddress = ips.listpublicipaddressesresponse?.publicipaddress?.find(ip => resource.ipaddressid ? ip.id === resource.ipaddressid : ip.ipaddress === clusterApiAddress(resource)) || ips.listpublicipaddressesresponse?.publicipaddress?.find(ip => ip.issourcenat) || null
+        if (!this.publicIpAddress || !this.$store.getters.apis.listPortForwardingRules) return
+        const rules = await listAllKubernetesPortRules(getAPI, this.publicIpAddress.id)
+        if (current()) this.nodePortRules = rules
+      } catch (error) {
+        if (current()) this.$notifyError(error)
+      } finally {
+        if (current()) this.networkLoading = false
       }
-      this.networkLoading = true
-      var params = {
-        listAll: true,
-        forvirtualnetwork: true
-      }
-      if (!this.isObjectEmpty(this.resource)) {
-        if (this.isValidValueForKey(this.resource, 'projectid') &&
-          this.resource.projectid !== '') {
-          params.projectid = this.resource.projectid
-        }
-        if (this.isValidValueForKey(this.resource, 'networkid')) {
-          params.associatednetworkid = this.resource.networkid
-        }
-      }
-      if (this.resource.networkid !== undefined) {
-        getAPI('listPublicIpAddresses', params).then(json => {
-          let ips = json.listpublicipaddressesresponse.publicipaddress
-          if (this.arrayHasItems(ips)) {
-            ips = ips.filter(x => x.issourcenat)
-            this.publicIpAddress = ips.length > 0 ? ips[0] : null
-          }
-        }).catch(error => {
-          this.$notifyError(error)
-        }).finally(() => {
-          this.networkLoading = false
-        })
-      }
-    },
-    fetchEtcdSshPort () {
-      const params = {}
-      params.name = 'cloud.kubernetes.etcd.node.start.port'
-      var apiName = 'listConfigurations'
-      getAPI(apiName, params).then(json => {
-        const configResponse = json.listconfigurationsresponse.configuration
-        this.etcdSshPort = configResponse[0]?.value
-      })
     },
     downloadKubernetesClusterConfig () {
       var blob = new Blob([this.clusterConfig], { type: 'text/plain' })
@@ -529,7 +544,13 @@ export default {
         document.body.removeChild(elem)
       }
     },
+    canDeleteNode (node) {
+      if (this.loading || this.resource.clustertype !== 'CloudManaged' || !this.$store.getters.apis.scaleKubernetesCluster || !['Created', 'Running'].includes(this.resource.state) || this.resource.autoscalingenabled || node.isexternalnode) return false
+      const nodes = this.virtualmachines.filter(vm => !vm.isexternalnode && Boolean(vm.iscontrolnode) === Boolean(node.iscontrolnode))
+      return nodes.length > 1
+    },
     deleteNode (node) {
+      if (!this.canDeleteNode(node)) return
       const params = {
         id: this.resource.id,
         nodeids: node.id
@@ -557,14 +578,6 @@ export default {
       }).finally(() => {
         this.parentFetchData()
       })
-    },
-    getEtcdIndex (name) {
-      const lastIndex = name.lastIndexOf('-')
-      if (lastIndex > 0) {
-        return name.charAt(lastIndex - 1)
-      } else {
-        return null
-      }
     }
   }
 }

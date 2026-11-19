@@ -1,0 +1,57 @@
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+
+[INFO] Exclude: systemvm/agent/conf/agent.properties
+[INFO] Exclude: systemvm/agent/conf/uefi.properties
+[INFO] Exclude: systemvm/agent/conf/environment.properties
+[INFO] Exclude: systemvm/agent/js/jquery.js
+[INFO] Exclude: systemvm/agent/js/jquery.flot.navigate.js
+[INFO] Exclude: systemvm/agent/noVNC/**
+[INFO] Exclude: systemvm/agent/packages/**
+[INFO] Exclude: systemvm/debian/**
+[INFO] Exclude: test/integration/component/test_host_ha.sh
+[INFO] Exclude: tools/appliance/*/template.json
+[INFO] Exclude: tools/cli/cloudmonkey.egg-info/*
+[INFO] Exclude: tools/devcloud/basebuild/puppet-devcloudinitial/files/network.conf
+[INFO] Exclude: tools/docker/Dockerfile
+[INFO] Exclude: tools/docker/supervisord.conf
+[INFO] Exclude: tools/logo/apache_cloudstack.png
+[INFO] Exclude: tools/marvin/Marvin.egg-info/*
+[INFO] Exclude: tools/marvin/marvin/sandbox/advanced/sandbox.cfg
+[INFO] Exclude: tools/ngui/static/bootstrap/*
+[INFO] Exclude: tools/ngui/static/js/lib/*
+[INFO] Exclude: tools/transifex/.tx/config
+[INFO] Exclude: ui/.*
+[INFO] Exclude: ui/.*/**
+[INFO] Exclude: ui/docs/full-test-plan.template.md
+[INFO] Exclude: ui/docs/smoke-test-plan.template.md
+[INFO] Exclude: ui/src/assets/**
+[INFO] Exclude: ui/public/**
+[INFO] Exclude: ui/legacy/**
+[INFO] Exclude: utils/testsmallfileinactive
+[INFO] Exclude: **/src/test/resources/mockito-extensions/org.mockito.plugins.MockMaker
+[INFO] Exclude: .github/workflows/dependabot.yaml
+[INFO] Exclude: .gitattributes
+[INFO] Exclude: .github/workflows/*.md
+[INFO] Exclude: .github/workflows/*.lock.ya?ml
+[INFO] Exclude: .github/aw/**
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  5.049 s
+[INFO] Finished at: 2026-10-12T01:45:21+09:00
+[INFO] ------------------------------------------------------------------------

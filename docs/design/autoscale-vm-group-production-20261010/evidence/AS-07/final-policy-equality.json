@@ -1,0 +1,68 @@
+{
+  "equalsAS06Baseline": {
+    "31": true,
+    "32": true
+  },
+  "policies": {
+    "31": {
+      "scaleuppolicies": [
+        {
+          "id": "36d98f38-55e0-473d-8a6b-e009f50ae757",
+          "duration": 60,
+          "quiettime": 10,
+          "conditions": [
+            {
+              "id": "a20fc96c-640b-4858-a9e1-d13ff10575cc",
+              "operator": "GT",
+              "threshold": 20
+            }
+          ]
+        }
+      ],
+      "scaledownpolicies": [
+        {
+          "id": "64cfc4bd-7665-4670-bf99-1c93b742f66a",
+          "duration": 60,
+          "quiettime": 10,
+          "conditions": [
+            {
+              "id": "f638d3ce-f6be-41b5-9b08-e36ccacf7817",
+              "operator": "LT",
+              "threshold": 10
+            }
+          ]
+        }
+      ]
+    },
+    "32": {
+      "scaleuppolicies": [
+        {
+          "id": "37417d80-35d9-41d4-b751-5d46fc6af23a",
+          "duration": 60,
+          "quiettime": 10,
+          "conditions": [
+            {
+              "id": "4a8fdf72-6fee-4a24-80a0-c0544651c5ea",
+              "operator": "GT",
+              "threshold": 5
+            }
+          ]
+        }
+      ],
+      "scaledownpolicies": [
+        {
+          "id": "7639559c-63ad-4235-bbb4-462dfaba5261",
+          "duration": 60,
+          "quiettime": 10,
+          "conditions": [
+            {
+              "id": "2ec799ba-1c5f-4a5b-9ac5-709d10ddde48",
+              "operator": "LT",
+              "threshold": 1
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

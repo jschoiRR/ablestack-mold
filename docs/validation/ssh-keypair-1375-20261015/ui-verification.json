@@ -1,0 +1,1824 @@
+{
+  "passed": 44,
+  "total": 44,
+  "tests": [
+    {
+      "label": "ui-layout-create-light-desktop",
+      "passed": true,
+      "before": {
+        "header": {
+          "x": 281,
+          "y": 174,
+          "width": 718,
+          "height": 55,
+          "top": 174,
+          "right": 999,
+          "bottom": 229,
+          "left": 281
+        },
+        "footer": {
+          "x": 281,
+          "y": 471,
+          "width": 718,
+          "height": 75,
+          "top": 471,
+          "right": 999,
+          "bottom": 546,
+          "left": 281
+        },
+        "frame": {
+          "x": 280,
+          "y": 173,
+          "width": 720,
+          "height": 374,
+          "top": 173,
+          "right": 1000,
+          "bottom": 547,
+          "left": 280
+        },
+        "body": {
+          "x": 281,
+          "y": 229,
+          "width": 718,
+          "height": 242,
+          "top": 229,
+          "right": 999,
+          "bottom": 471,
+          "left": 281
+        },
+        "scrollHeight": 242,
+        "scrollTop": 0,
+        "body_overflow": "auto",
+        "viewport": {
+          "width": 1280,
+          "height": 720,
+          "dpr": 1
+        },
+        "visible_modals": 1,
+        "body_document_width": 1270,
+        "modal_scroll_width": 718,
+        "modal_client_width": 718,
+        "aria_modal": "true",
+        "footer_buttons": [
+          {
+            "text": "취소",
+            "height": 42,
+            "bottom": 530
+          },
+          {
+            "text": "생성",
+            "height": 42,
+            "bottom": 530
+          }
+        ]
+      },
+      "after": {
+        "header": 174,
+        "footer": 471,
+        "scrollTop": 0
+      }
+    },
+    {
+      "label": "ui-layout-create-light-mobile",
+      "passed": true,
+      "before": {
+        "header": {
+          "x": 13,
+          "y": 233,
+          "width": 364,
+          "height": 55,
+          "top": 233,
+          "right": 377,
+          "bottom": 288,
+          "left": 13
+        },
+        "footer": {
+          "x": 13,
+          "y": 536,
+          "width": 364,
+          "height": 75,
+          "top": 536,
+          "right": 377,
+          "bottom": 611,
+          "left": 13
+        },
+        "frame": {
+          "x": 12,
+          "y": 232,
+          "width": 366,
+          "height": 380,
+          "top": 232,
+          "right": 378,
+          "bottom": 612,
+          "left": 12
+        },
+        "body": {
+          "x": 13,
+          "y": 288,
+          "width": 364,
+          "height": 248,
+          "top": 288,
+          "right": 377,
+          "bottom": 536,
+          "left": 13
+        },
+        "scrollHeight": 248,
+        "scrollTop": 0,
+        "body_overflow": "auto",
+        "viewport": {
+          "width": 390,
+          "height": 844,
+          "dpr": 1
+        },
+        "visible_modals": 1,
+        "body_document_width": 380,
+        "modal_scroll_width": 364,
+        "modal_client_width": 364,
+        "aria_modal": "true",
+        "footer_buttons": [
+          {
+            "text": "취소",
+            "height": 42,
+            "bottom": 595
+          },
+          {
+            "text": "생성",
+            "height": 42,
+            "bottom": 595
+          }
+        ]
+      },
+      "after": {
+        "header": 233,
+        "footer": 536,
+        "scrollTop": 0
+      }
+    },
+    {
+      "label": "ui-layout-create-light-short",
+      "passed": true,
+      "before": {
+        "header": {
+          "x": 13,
+          "y": 51,
+          "width": 364,
+          "height": 55,
+          "top": 51,
+          "right": 377,
+          "bottom": 106,
+          "left": 13
+        },
+        "footer": {
+          "x": 13,
+          "y": 354,
+          "width": 364,
+          "height": 75,
+          "top": 354,
+          "right": 377,
+          "bottom": 429,
+          "left": 13
+        },
+        "frame": {
+          "x": 12,
+          "y": 50,
+          "width": 366,
+          "height": 380,
+          "top": 50,
+          "right": 378,
+          "bottom": 430,
+          "left": 12
+        },
+        "body": {
+          "x": 13,
+          "y": 106,
+          "width": 364,
+          "height": 248,
+          "top": 106,
+          "right": 377,
+          "bottom": 354,
+          "left": 13
+        },
+        "scrollHeight": 248,
+        "scrollTop": 0,
+        "body_overflow": "auto",
+        "viewport": {
+          "width": 390,
+          "height": 480,
+          "dpr": 1
+        },
+        "visible_modals": 1,
+        "body_document_width": 380,
+        "modal_scroll_width": 364,
+        "modal_client_width": 364,
+        "aria_modal": "true",
+        "footer_buttons": [
+          {
+            "text": "취소",
+            "height": 42,
+            "bottom": 413
+          },
+          {
+            "text": "생성",
+            "height": 42,
+            "bottom": 413
+          }
+        ]
+      },
+      "after": {
+        "header": 51,
+        "footer": 354,
+        "scrollTop": 0
+      }
+    },
+    {
+      "label": "ui-layout-create-light-zoom-equivalent",
+      "passed": true,
+      "before": {
+        "header": {
+          "x": 25,
+          "y": 33,
+          "width": 590,
+          "height": 55,
+          "top": 33,
+          "right": 615,
+          "bottom": 88,
+          "left": 25
+        },
+        "footer": {
+          "x": 25,
+          "y": 252,
+          "width": 590,
+          "height": 75,
+          "top": 252,
+          "right": 615,
+          "bottom": 327,
+          "left": 25
+        },
+        "frame": {
+          "x": 24,
+          "y": 32,
+          "width": 592,
+          "height": 296,
+          "top": 32,
+          "right": 616,
+          "bottom": 328,
+          "left": 24
+        },
+        "body": {
+          "x": 25,
+          "y": 88,
+          "width": 590,
+          "height": 164,
+          "top": 88,
+          "right": 615,
+          "bottom": 252,
+          "left": 25
+        },
+        "scrollHeight": 242,
+        "scrollTop": 0,
+        "body_overflow": "auto",
+        "viewport": {
+          "width": 640,
+          "height": 360,
+          "dpr": 2
+        },
+        "visible_modals": 1,
+        "body_document_width": 630,
+        "modal_scroll_width": 590,
+        "modal_client_width": 590,
+        "aria_modal": "true",
+        "footer_buttons": [
+          {
+            "text": "취소",
+            "height": 42,
+            "bottom": 311
+          },
+          {
+            "text": "생성",
+            "height": 42,
+            "bottom": 311
+          }
+        ]
+      },
+      "after": {
+        "header": 33,
+        "footer": 252,
+        "scrollTop": 78
+      }
+    },
+    {
+      "label": "ui-layout-create-dark-desktop",
+      "passed": true,
+      "before": {
+        "header": {
+          "x": 281,
+          "y": 174,
+          "width": 718,
+          "height": 55,
+          "top": 174,
+          "right": 999,
+          "bottom": 229,
+          "left": 281
+        },
+        "footer": {
+          "x": 281,
+          "y": 471,
+          "width": 718,
+          "height": 75,
+          "top": 471,
+          "right": 999,
+          "bottom": 546,
+          "left": 281
+        },
+        "frame": {
+          "x": 280,
+          "y": 173,
+          "width": 720,
+          "height": 374,
+          "top": 173,
+          "right": 1000,
+          "bottom": 547,
+          "left": 280
+        },
+        "body": {
+          "x": 281,
+          "y": 229,
+          "width": 718,
+          "height": 242,
+          "top": 229,
+          "right": 999,
+          "bottom": 471,
+          "left": 281
+        },
+        "scrollHeight": 242,
+        "scrollTop": 0,
+        "body_overflow": "auto",
+        "viewport": {
+          "width": 1280,
+          "height": 720,
+          "dpr": 1
+        },
+        "visible_modals": 1,
+        "body_document_width": 1270,
+        "modal_scroll_width": 718,
+        "modal_client_width": 718,
+        "aria_modal": "true",
+        "footer_buttons": [
+          {
+            "text": "취소",
+            "height": 42,
+            "bottom": 530
+          },
+          {
+            "text": "생성",
+            "height": 42,
+            "bottom": 530
+          }
+        ]
+      },
+      "after": {
+        "header": 174,
+        "footer": 471,
+        "scrollTop": 0
+      }
+    },
+    {
+      "label": "ui-layout-create-dark-mobile",
+      "passed": true,
+      "before": {
+        "header": {
+          "x": 13,
+          "y": 233,
+          "width": 364,
+          "height": 55,
+          "top": 233,
+          "right": 377,
+          "bottom": 288,
+          "left": 13
+        },
+        "footer": {
+          "x": 13,
+          "y": 536,
+          "width": 364,
+          "height": 75,
+          "top": 536,
+          "right": 377,
+          "bottom": 611,
+          "left": 13
+        },
+        "frame": {
+          "x": 12,
+          "y": 232,
+          "width": 366,
+          "height": 380,
+          "top": 232,
+          "right": 378,
+          "bottom": 612,
+          "left": 12
+        },
+        "body": {
+          "x": 13,
+          "y": 288,
+          "width": 364,
+          "height": 248,
+          "top": 288,
+          "right": 377,
+          "bottom": 536,
+          "left": 13
+        },
+        "scrollHeight": 248,
+        "scrollTop": 0,
+        "body_overflow": "auto",
+        "viewport": {
+          "width": 390,
+          "height": 844,
+          "dpr": 1
+        },
+        "visible_modals": 1,
+        "body_document_width": 380,
+        "modal_scroll_width": 364,
+        "modal_client_width": 364,
+        "aria_modal": "true",
+        "footer_buttons": [
+          {
+            "text": "취소",
+            "height": 42,
+            "bottom": 595
+          },
+          {
+            "text": "생성",
+            "height": 42,
+            "bottom": 595
+          }
+        ]
+      },
+      "after": {
+        "header": 233,
+        "footer": 536,
+        "scrollTop": 0
+      }
+    },
+    {
+      "label": "ui-layout-create-dark-short",
+      "passed": true,
+      "before": {
+        "header": {
+          "x": 13,
+          "y": 51,
+          "width": 364,
+          "height": 55,
+          "top": 51,
+          "right": 377,
+          "bottom": 106,
+          "left": 13
+        },
+        "footer": {
+          "x": 13,
+          "y": 354,
+          "width": 364,
+          "height": 75,
+          "top": 354,
+          "right": 377,
+          "bottom": 429,
+          "left": 13
+        },
+        "frame": {
+          "x": 12,
+          "y": 50,
+          "width": 366,
+          "height": 380,
+          "top": 50,
+          "right": 378,
+          "bottom": 430,
+          "left": 12
+        },
+        "body": {
+          "x": 13,
+          "y": 106,
+          "width": 364,
+          "height": 248,
+          "top": 106,
+          "right": 377,
+          "bottom": 354,
+          "left": 13
+        },
+        "scrollHeight": 248,
+        "scrollTop": 0,
+        "body_overflow": "auto",
+        "viewport": {
+          "width": 390,
+          "height": 480,
+          "dpr": 1
+        },
+        "visible_modals": 1,
+        "body_document_width": 380,
+        "modal_scroll_width": 364,
+        "modal_client_width": 364,
+        "aria_modal": "true",
+        "footer_buttons": [
+          {
+            "text": "취소",
+            "height": 42,
+            "bottom": 413
+          },
+          {
+            "text": "생성",
+            "height": 42,
+            "bottom": 413
+          }
+        ]
+      },
+      "after": {
+        "header": 51,
+        "footer": 354,
+        "scrollTop": 0
+      }
+    },
+    {
+      "label": "ui-layout-create-dark-zoom-equivalent",
+      "passed": true,
+      "before": {
+        "header": {
+          "x": 25,
+          "y": 33,
+          "width": 590,
+          "height": 55,
+          "top": 33,
+          "right": 615,
+          "bottom": 88,
+          "left": 25
+        },
+        "footer": {
+          "x": 25,
+          "y": 252,
+          "width": 590,
+          "height": 75,
+          "top": 252,
+          "right": 615,
+          "bottom": 327,
+          "left": 25
+        },
+        "frame": {
+          "x": 24,
+          "y": 32,
+          "width": 592,
+          "height": 296,
+          "top": 32,
+          "right": 616,
+          "bottom": 328,
+          "left": 24
+        },
+        "body": {
+          "x": 25,
+          "y": 88,
+          "width": 590,
+          "height": 164,
+          "top": 88,
+          "right": 615,
+          "bottom": 252,
+          "left": 25
+        },
+        "scrollHeight": 242,
+        "scrollTop": 0,
+        "body_overflow": "auto",
+        "viewport": {
+          "width": 640,
+          "height": 360,
+          "dpr": 2
+        },
+        "visible_modals": 1,
+        "body_document_width": 630,
+        "modal_scroll_width": 590,
+        "modal_client_width": 590,
+        "aria_modal": "true",
+        "footer_buttons": [
+          {
+            "text": "취소",
+            "height": 42,
+            "bottom": 311
+          },
+          {
+            "text": "생성",
+            "height": 42,
+            "bottom": 311
+          }
+        ]
+      },
+      "after": {
+        "header": 33,
+        "footer": 252,
+        "scrollTop": 78
+      }
+    },
+    {
+      "label": "ui-layout-register-light-desktop",
+      "passed": true,
+      "before": {
+        "header": {
+          "x": 281,
+          "y": 151,
+          "width": 718,
+          "height": 55,
+          "top": 151,
+          "right": 999,
+          "bottom": 206,
+          "left": 281
+        },
+        "footer": {
+          "x": 281,
+          "y": 494,
+          "width": 718,
+          "height": 75,
+          "top": 494,
+          "right": 999,
+          "bottom": 569,
+          "left": 281
+        },
+        "frame": {
+          "x": 280,
+          "y": 150,
+          "width": 720,
+          "height": 420,
+          "top": 150,
+          "right": 1000,
+          "bottom": 570,
+          "left": 280
+        },
+        "body": {
+          "x": 281,
+          "y": 206,
+          "width": 718,
+          "height": 288,
+          "top": 206,
+          "right": 999,
+          "bottom": 494,
+          "left": 281
+        },
+        "scrollHeight": 288,
+        "scrollTop": 0,
+        "body_overflow": "auto",
+        "viewport": {
+          "width": 1280,
+          "height": 720,
+          "dpr": 1
+        },
+        "visible_modals": 1,
+        "body_document_width": 1270,
+        "modal_scroll_width": 718,
+        "modal_client_width": 718,
+        "aria_modal": "true",
+        "footer_buttons": [
+          {
+            "text": "취소",
+            "height": 42,
+            "bottom": 553
+          },
+          {
+            "text": "등록",
+            "height": 42,
+            "bottom": 553
+          }
+        ]
+      },
+      "after": {
+        "header": 151,
+        "footer": 494,
+        "scrollTop": 0
+      }
+    },
+    {
+      "label": "ui-layout-register-light-mobile",
+      "passed": true,
+      "before": {
+        "header": {
+          "x": 13,
+          "y": 210,
+          "width": 364,
+          "height": 55,
+          "top": 210,
+          "right": 377,
+          "bottom": 265,
+          "left": 13
+        },
+        "footer": {
+          "x": 13,
+          "y": 559,
+          "width": 364,
+          "height": 75,
+          "top": 559,
+          "right": 377,
+          "bottom": 634,
+          "left": 13
+        },
+        "frame": {
+          "x": 12,
+          "y": 209,
+          "width": 366,
+          "height": 426,
+          "top": 209,
+          "right": 378,
+          "bottom": 635,
+          "left": 12
+        },
+        "body": {
+          "x": 13,
+          "y": 265,
+          "width": 364,
+          "height": 294,
+          "top": 265,
+          "right": 377,
+          "bottom": 559,
+          "left": 13
+        },
+        "scrollHeight": 294,
+        "scrollTop": 0,
+        "body_overflow": "auto",
+        "viewport": {
+          "width": 390,
+          "height": 844,
+          "dpr": 1
+        },
+        "visible_modals": 1,
+        "body_document_width": 380,
+        "modal_scroll_width": 364,
+        "modal_client_width": 364,
+        "aria_modal": "true",
+        "footer_buttons": [
+          {
+            "text": "취소",
+            "height": 42,
+            "bottom": 618
+          },
+          {
+            "text": "등록",
+            "height": 42,
+            "bottom": 618
+          }
+        ]
+      },
+      "after": {
+        "header": 210,
+        "footer": 559,
+        "scrollTop": 0
+      }
+    },
+    {
+      "label": "ui-layout-register-light-short",
+      "passed": true,
+      "before": {
+        "header": {
+          "x": 13,
+          "y": 28,
+          "width": 364,
+          "height": 55,
+          "top": 28,
+          "right": 377,
+          "bottom": 83,
+          "left": 13
+        },
+        "footer": {
+          "x": 13,
+          "y": 377,
+          "width": 364,
+          "height": 75,
+          "top": 377,
+          "right": 377,
+          "bottom": 452,
+          "left": 13
+        },
+        "frame": {
+          "x": 12,
+          "y": 27,
+          "width": 366,
+          "height": 426,
+          "top": 27,
+          "right": 378,
+          "bottom": 453,
+          "left": 12
+        },
+        "body": {
+          "x": 13,
+          "y": 83,
+          "width": 364,
+          "height": 294,
+          "top": 83,
+          "right": 377,
+          "bottom": 377,
+          "left": 13
+        },
+        "scrollHeight": 294,
+        "scrollTop": 0,
+        "body_overflow": "auto",
+        "viewport": {
+          "width": 390,
+          "height": 480,
+          "dpr": 1
+        },
+        "visible_modals": 1,
+        "body_document_width": 380,
+        "modal_scroll_width": 364,
+        "modal_client_width": 364,
+        "aria_modal": "true",
+        "footer_buttons": [
+          {
+            "text": "취소",
+            "height": 42,
+            "bottom": 436
+          },
+          {
+            "text": "등록",
+            "height": 42,
+            "bottom": 436
+          }
+        ]
+      },
+      "after": {
+        "header": 28,
+        "footer": 377,
+        "scrollTop": 0
+      }
+    },
+    {
+      "label": "ui-layout-register-light-zoom-equivalent",
+      "passed": true,
+      "before": {
+        "header": {
+          "x": 25,
+          "y": 33,
+          "width": 590,
+          "height": 55,
+          "top": 33,
+          "right": 615,
+          "bottom": 88,
+          "left": 25
+        },
+        "footer": {
+          "x": 25,
+          "y": 252,
+          "width": 590,
+          "height": 75,
+          "top": 252,
+          "right": 615,
+          "bottom": 327,
+          "left": 25
+        },
+        "frame": {
+          "x": 24,
+          "y": 32,
+          "width": 592,
+          "height": 296,
+          "top": 32,
+          "right": 616,
+          "bottom": 328,
+          "left": 24
+        },
+        "body": {
+          "x": 25,
+          "y": 88,
+          "width": 590,
+          "height": 164,
+          "top": 88,
+          "right": 615,
+          "bottom": 252,
+          "left": 25
+        },
+        "scrollHeight": 310,
+        "scrollTop": 0,
+        "body_overflow": "auto",
+        "viewport": {
+          "width": 640,
+          "height": 360,
+          "dpr": 2
+        },
+        "visible_modals": 1,
+        "body_document_width": 630,
+        "modal_scroll_width": 590,
+        "modal_client_width": 590,
+        "aria_modal": "true",
+        "footer_buttons": [
+          {
+            "text": "취소",
+            "height": 42,
+            "bottom": 311
+          },
+          {
+            "text": "등록",
+            "height": 42,
+            "bottom": 311
+          }
+        ]
+      },
+      "after": {
+        "header": 33,
+        "footer": 252,
+        "scrollTop": 146
+      }
+    },
+    {
+      "label": "ui-layout-register-dark-desktop",
+      "passed": true,
+      "before": {
+        "header": {
+          "x": 281,
+          "y": 151,
+          "width": 718,
+          "height": 55,
+          "top": 151,
+          "right": 999,
+          "bottom": 206,
+          "left": 281
+        },
+        "footer": {
+          "x": 281,
+          "y": 494,
+          "width": 718,
+          "height": 75,
+          "top": 494,
+          "right": 999,
+          "bottom": 569,
+          "left": 281
+        },
+        "frame": {
+          "x": 280,
+          "y": 150,
+          "width": 720,
+          "height": 420,
+          "top": 150,
+          "right": 1000,
+          "bottom": 570,
+          "left": 280
+        },
+        "body": {
+          "x": 281,
+          "y": 206,
+          "width": 718,
+          "height": 288,
+          "top": 206,
+          "right": 999,
+          "bottom": 494,
+          "left": 281
+        },
+        "scrollHeight": 288,
+        "scrollTop": 0,
+        "body_overflow": "auto",
+        "viewport": {
+          "width": 1280,
+          "height": 720,
+          "dpr": 1
+        },
+        "visible_modals": 1,
+        "body_document_width": 1270,
+        "modal_scroll_width": 718,
+        "modal_client_width": 718,
+        "aria_modal": "true",
+        "footer_buttons": [
+          {
+            "text": "취소",
+            "height": 42,
+            "bottom": 553
+          },
+          {
+            "text": "등록",
+            "height": 42,
+            "bottom": 553
+          }
+        ]
+      },
+      "after": {
+        "header": 151,
+        "footer": 494,
+        "scrollTop": 0
+      }
+    },
+    {
+      "label": "ui-layout-register-dark-mobile",
+      "passed": true,
+      "before": {
+        "header": {
+          "x": 13,
+          "y": 210,
+          "width": 364,
+          "height": 55,
+          "top": 210,
+          "right": 377,
+          "bottom": 265,
+          "left": 13
+        },
+        "footer": {
+          "x": 13,
+          "y": 559,
+          "width": 364,
+          "height": 75,
+          "top": 559,
+          "right": 377,
+          "bottom": 634,
+          "left": 13
+        },
+        "frame": {
+          "x": 12,
+          "y": 209,
+          "width": 366,
+          "height": 426,
+          "top": 209,
+          "right": 378,
+          "bottom": 635,
+          "left": 12
+        },
+        "body": {
+          "x": 13,
+          "y": 265,
+          "width": 364,
+          "height": 294,
+          "top": 265,
+          "right": 377,
+          "bottom": 559,
+          "left": 13
+        },
+        "scrollHeight": 294,
+        "scrollTop": 0,
+        "body_overflow": "auto",
+        "viewport": {
+          "width": 390,
+          "height": 844,
+          "dpr": 1
+        },
+        "visible_modals": 1,
+        "body_document_width": 380,
+        "modal_scroll_width": 364,
+        "modal_client_width": 364,
+        "aria_modal": "true",
+        "footer_buttons": [
+          {
+            "text": "취소",
+            "height": 42,
+            "bottom": 618
+          },
+          {
+            "text": "등록",
+            "height": 42,
+            "bottom": 618
+          }
+        ]
+      },
+      "after": {
+        "header": 210,
+        "footer": 559,
+        "scrollTop": 0
+      }
+    },
+    {
+      "label": "ui-layout-register-dark-short",
+      "passed": true,
+      "before": {
+        "header": {
+          "x": 13,
+          "y": 28,
+          "width": 364,
+          "height": 55,
+          "top": 28,
+          "right": 377,
+          "bottom": 83,
+          "left": 13
+        },
+        "footer": {
+          "x": 13,
+          "y": 377,
+          "width": 364,
+          "height": 75,
+          "top": 377,
+          "right": 377,
+          "bottom": 452,
+          "left": 13
+        },
+        "frame": {
+          "x": 12,
+          "y": 27,
+          "width": 366,
+          "height": 426,
+          "top": 27,
+          "right": 378,
+          "bottom": 453,
+          "left": 12
+        },
+        "body": {
+          "x": 13,
+          "y": 83,
+          "width": 364,
+          "height": 294,
+          "top": 83,
+          "right": 377,
+          "bottom": 377,
+          "left": 13
+        },
+        "scrollHeight": 294,
+        "scrollTop": 0,
+        "body_overflow": "auto",
+        "viewport": {
+          "width": 390,
+          "height": 480,
+          "dpr": 1
+        },
+        "visible_modals": 1,
+        "body_document_width": 380,
+        "modal_scroll_width": 364,
+        "modal_client_width": 364,
+        "aria_modal": "true",
+        "footer_buttons": [
+          {
+            "text": "취소",
+            "height": 42,
+            "bottom": 436
+          },
+          {
+            "text": "등록",
+            "height": 42,
+            "bottom": 436
+          }
+        ]
+      },
+      "after": {
+        "header": 28,
+        "footer": 377,
+        "scrollTop": 0
+      }
+    },
+    {
+      "label": "ui-layout-register-dark-zoom-equivalent",
+      "passed": true,
+      "before": {
+        "header": {
+          "x": 25,
+          "y": 33,
+          "width": 590,
+          "height": 55,
+          "top": 33,
+          "right": 615,
+          "bottom": 88,
+          "left": 25
+        },
+        "footer": {
+          "x": 25,
+          "y": 252,
+          "width": 590,
+          "height": 75,
+          "top": 252,
+          "right": 615,
+          "bottom": 327,
+          "left": 25
+        },
+        "frame": {
+          "x": 24,
+          "y": 32,
+          "width": 592,
+          "height": 296,
+          "top": 32,
+          "right": 616,
+          "bottom": 328,
+          "left": 24
+        },
+        "body": {
+          "x": 25,
+          "y": 88,
+          "width": 590,
+          "height": 164,
+          "top": 88,
+          "right": 615,
+          "bottom": 252,
+          "left": 25
+        },
+        "scrollHeight": 310,
+        "scrollTop": 0,
+        "body_overflow": "auto",
+        "viewport": {
+          "width": 640,
+          "height": 360,
+          "dpr": 2
+        },
+        "visible_modals": 1,
+        "body_document_width": 630,
+        "modal_scroll_width": 590,
+        "modal_client_width": 590,
+        "aria_modal": "true",
+        "footer_buttons": [
+          {
+            "text": "취소",
+            "height": 42,
+            "bottom": 311
+          },
+          {
+            "text": "등록",
+            "height": 42,
+            "bottom": 311
+          }
+        ]
+      },
+      "after": {
+        "header": 33,
+        "footer": 252,
+        "scrollTop": 146
+      }
+    },
+    {
+      "label": "ui-required-fields-no-api",
+      "passed": true
+    },
+    {
+      "label": "ui-invalid-input-retained",
+      "passed": true,
+      "status": 431,
+      "focus_preserved": true,
+      "scroll_preserved": true
+    },
+    {
+      "label": "ui-corrected-register-success",
+      "passed": true
+    },
+    {
+      "label": "ui-duplicate-name-retained",
+      "passed": true,
+      "status": 431,
+      "focus_preserved": true,
+      "scroll_preserved": true
+    },
+    {
+      "label": "ui-service-error-retained",
+      "passed": true,
+      "status": 503,
+      "focus_preserved": true,
+      "scroll_preserved": true
+    },
+    {
+      "label": "ui-duplicate-submit-and-loading-close-block",
+      "passed": true,
+      "requests": 1
+    },
+    {
+      "label": "ui-private-key-storage-control-contrast",
+      "passed": true,
+      "samples": [
+        {
+          "theme": "light",
+          "checked": true,
+          "colors": {
+            "border": "rgb(9, 105, 218)",
+            "bg": "rgb(9, 105, 218)",
+            "body": "rgb(255, 255, 255)",
+            "mark": "rgb(255, 255, 255)",
+            "outline": "rgb(9, 105, 218)",
+            "outline_width": "2px"
+          }
+        },
+        {
+          "theme": "light",
+          "checked": false,
+          "colors": {
+            "border": "rgb(102, 112, 133)",
+            "bg": "rgb(255, 255, 255)",
+            "body": "rgb(255, 255, 255)",
+            "mark": "rgba(0, 0, 0, 0.65)",
+            "outline": "rgb(9, 105, 218)",
+            "outline_width": "2px"
+          }
+        },
+        {
+          "theme": "dark",
+          "checked": true,
+          "colors": {
+            "border": "rgb(105, 177, 255)",
+            "bg": "rgb(9, 105, 218)",
+            "body": "rgb(34, 40, 47)",
+            "mark": "rgb(255, 255, 255)",
+            "outline": "rgb(105, 177, 255)",
+            "outline_width": "2px"
+          }
+        },
+        {
+          "theme": "dark",
+          "checked": false,
+          "colors": {
+            "border": "rgb(154, 164, 175)",
+            "bg": "rgb(27, 33, 40)",
+            "body": "rgb(34, 40, 47)",
+            "mark": "rgba(255, 255, 255, 0.65)",
+            "outline": "rgb(105, 177, 255)",
+            "outline_width": "2px"
+          }
+        }
+      ]
+    },
+    {
+      "label": "ui-private-key-copy-download",
+      "passed": true,
+      "name": "ssh1375-20261015-generated",
+      "bytes": 1675,
+      "response_hash": "1d3c05ee49ca4c48ac85e122d6eeb7730b45af8e770d4fa5a92e4dca262232fc",
+      "copy_hash": "1d3c05ee49ca4c48ac85e122d6eeb7730b45af8e770d4fa5a92e4dca262232fc",
+      "download_hash": "1d3c05ee49ca4c48ac85e122d6eeb7730b45af8e770d4fa5a92e4dca262232fc",
+      "matching": true
+    },
+    {
+      "label": "ui-layout-result-light-desktop",
+      "passed": true,
+      "before": {
+        "header": {
+          "x": 281,
+          "y": 75.921875,
+          "width": 718,
+          "height": 55,
+          "top": 75.921875,
+          "right": 999,
+          "bottom": 130.921875,
+          "left": 281
+        },
+        "footer": {
+          "x": 281,
+          "y": 569.0625,
+          "width": 718,
+          "height": 75,
+          "top": 569.0625,
+          "right": 999,
+          "bottom": 644.0625,
+          "left": 281
+        },
+        "frame": {
+          "x": 280,
+          "y": 74.921875,
+          "width": 720,
+          "height": 570.140625,
+          "top": 74.921875,
+          "right": 1000,
+          "bottom": 645.0625,
+          "left": 280
+        },
+        "body": {
+          "x": 281,
+          "y": 130.921875,
+          "width": 718,
+          "height": 438.140625,
+          "top": 130.921875,
+          "right": 999,
+          "bottom": 569.0625,
+          "left": 281
+        },
+        "scrollHeight": 438,
+        "scrollTop": 0,
+        "body_overflow": "auto",
+        "viewport": {
+          "width": 1280,
+          "height": 720,
+          "dpr": 1
+        },
+        "visible_modals": 1,
+        "body_document_width": 1270,
+        "modal_scroll_width": 718,
+        "modal_client_width": 718,
+        "aria_modal": "true",
+        "footer_buttons": [
+          {
+            "text": "닫기",
+            "height": 42,
+            "bottom": 628.0625
+          },
+          {
+            "text": "클립보드에 복사",
+            "height": 42,
+            "bottom": 628.0625
+          },
+          {
+            "text": "다운로드",
+            "height": 42,
+            "bottom": 628.0625
+          }
+        ]
+      },
+      "after": {
+        "header": 75.921875,
+        "footer": 569.0625,
+        "scrollTop": 0
+      }
+    },
+    {
+      "label": "ui-layout-result-light-short",
+      "passed": true,
+      "before": {
+        "header": {
+          "x": 13,
+          "y": 13,
+          "width": 364,
+          "height": 55,
+          "top": 13,
+          "right": 377,
+          "bottom": 68,
+          "left": 13
+        },
+        "footer": {
+          "x": 13,
+          "y": 392,
+          "width": 364,
+          "height": 75,
+          "top": 392,
+          "right": 377,
+          "bottom": 467,
+          "left": 13
+        },
+        "frame": {
+          "x": 12,
+          "y": 12,
+          "width": 366,
+          "height": 456,
+          "top": 12,
+          "right": 378,
+          "bottom": 468,
+          "left": 12
+        },
+        "body": {
+          "x": 13,
+          "y": 68,
+          "width": 364,
+          "height": 324,
+          "top": 68,
+          "right": 377,
+          "bottom": 392,
+          "left": 13
+        },
+        "scrollHeight": 557,
+        "scrollTop": 0,
+        "body_overflow": "auto",
+        "viewport": {
+          "width": 390,
+          "height": 480,
+          "dpr": 1
+        },
+        "visible_modals": 1,
+        "body_document_width": 380,
+        "modal_scroll_width": 364,
+        "modal_client_width": 364,
+        "aria_modal": "true",
+        "footer_buttons": [
+          {
+            "text": "닫기",
+            "height": 42,
+            "bottom": 451
+          },
+          {
+            "text": "클립보드에 복사",
+            "height": 42,
+            "bottom": 451
+          },
+          {
+            "text": "다운로드",
+            "height": 42,
+            "bottom": 451
+          }
+        ]
+      },
+      "after": {
+        "header": 13,
+        "footer": 392,
+        "scrollTop": 233
+      }
+    },
+    {
+      "label": "ui-layout-result-dark-desktop",
+      "passed": true,
+      "before": {
+        "header": {
+          "x": 281,
+          "y": 75.921875,
+          "width": 718,
+          "height": 55,
+          "top": 75.921875,
+          "right": 999,
+          "bottom": 130.921875,
+          "left": 281
+        },
+        "footer": {
+          "x": 281,
+          "y": 569.0625,
+          "width": 718,
+          "height": 75,
+          "top": 569.0625,
+          "right": 999,
+          "bottom": 644.0625,
+          "left": 281
+        },
+        "frame": {
+          "x": 280,
+          "y": 74.921875,
+          "width": 720,
+          "height": 570.140625,
+          "top": 74.921875,
+          "right": 1000,
+          "bottom": 645.0625,
+          "left": 280
+        },
+        "body": {
+          "x": 281,
+          "y": 130.921875,
+          "width": 718,
+          "height": 438.140625,
+          "top": 130.921875,
+          "right": 999,
+          "bottom": 569.0625,
+          "left": 281
+        },
+        "scrollHeight": 438,
+        "scrollTop": 0,
+        "body_overflow": "auto",
+        "viewport": {
+          "width": 1280,
+          "height": 720,
+          "dpr": 1
+        },
+        "visible_modals": 1,
+        "body_document_width": 1270,
+        "modal_scroll_width": 718,
+        "modal_client_width": 718,
+        "aria_modal": "true",
+        "footer_buttons": [
+          {
+            "text": "닫기",
+            "height": 42,
+            "bottom": 628.0625
+          },
+          {
+            "text": "클립보드에 복사",
+            "height": 42,
+            "bottom": 628.0625
+          },
+          {
+            "text": "다운로드",
+            "height": 42,
+            "bottom": 628.0625
+          }
+        ]
+      },
+      "after": {
+        "header": 75.921875,
+        "footer": 569.0625,
+        "scrollTop": 0
+      }
+    },
+    {
+      "label": "ui-layout-result-dark-short",
+      "passed": true,
+      "before": {
+        "header": {
+          "x": 13,
+          "y": 13,
+          "width": 364,
+          "height": 55,
+          "top": 13,
+          "right": 377,
+          "bottom": 68,
+          "left": 13
+        },
+        "footer": {
+          "x": 13,
+          "y": 392,
+          "width": 364,
+          "height": 75,
+          "top": 392,
+          "right": 377,
+          "bottom": 467,
+          "left": 13
+        },
+        "frame": {
+          "x": 12,
+          "y": 12,
+          "width": 366,
+          "height": 456,
+          "top": 12,
+          "right": 378,
+          "bottom": 468,
+          "left": 12
+        },
+        "body": {
+          "x": 13,
+          "y": 68,
+          "width": 364,
+          "height": 324,
+          "top": 68,
+          "right": 377,
+          "bottom": 392,
+          "left": 13
+        },
+        "scrollHeight": 557,
+        "scrollTop": 0,
+        "body_overflow": "auto",
+        "viewport": {
+          "width": 390,
+          "height": 480,
+          "dpr": 1
+        },
+        "visible_modals": 1,
+        "body_document_width": 380,
+        "modal_scroll_width": 364,
+        "modal_client_width": 364,
+        "aria_modal": "true",
+        "footer_buttons": [
+          {
+            "text": "닫기",
+            "height": 42,
+            "bottom": 451
+          },
+          {
+            "text": "클립보드에 복사",
+            "height": 42,
+            "bottom": 451
+          },
+          {
+            "text": "다운로드",
+            "height": 42,
+            "bottom": 451
+          }
+        ]
+      },
+      "after": {
+        "header": 13,
+        "footer": 392,
+        "scrollTop": 233
+      }
+    },
+    {
+      "label": "ui-saved-close-list-refresh",
+      "passed": true
+    },
+    {
+      "label": "ui-unsaved-reload-confirmation",
+      "passed": true
+    },
+    {
+      "label": "ui-unsaved-escape-continue-same-dialog",
+      "passed": true
+    },
+    {
+      "label": "ui-unsaved-discard-keeps-created-key",
+      "passed": true
+    },
+    {
+      "label": "ui-root-domain-account-scope",
+      "passed": true
+    },
+    {
+      "label": "ui-register-project",
+      "passed": true,
+      "name": "ssh1375-20261015-RootMiXeD"
+    },
+    {
+      "label": "ui-project-result-summary",
+      "passed": true
+    },
+    {
+      "label": "ui-project-generation-close",
+      "passed": true
+    },
+    {
+      "label": "ui-permission-entry-domainAdmin",
+      "passed": true,
+      "create": 1,
+      "register": 1
+    },
+    {
+      "label": "ui-register-domainAdmin",
+      "passed": true,
+      "name": "ssh1375-20261015-domainAdmin"
+    },
+    {
+      "label": "ui-permission-entry-user",
+      "passed": true,
+      "create": 1,
+      "register": 1
+    },
+    {
+      "label": "ui-register-user",
+      "passed": true,
+      "name": "ssh1375-20261015-RootMiXeD"
+    },
+    {
+      "label": "ui-permission-entry-createOnly",
+      "passed": true,
+      "create": 1,
+      "register": 0
+    },
+    {
+      "label": "ui-create-only-request",
+      "passed": true
+    },
+    {
+      "label": "ui-permission-entry-registerOnly",
+      "passed": true,
+      "create": 0,
+      "register": 1
+    },
+    {
+      "label": "ui-register-registerOnly",
+      "passed": true,
+      "name": "ssh1375-20261015-registerOnly"
+    }
+  ],
+  "network": [
+    {
+      "command": "registerSSHKeyPair",
+      "params": {
+        "name": "ssh1375-20261015-RootMiXeD"
+      },
+      "status": 431
+    },
+    {
+      "command": "registerSSHKeyPair",
+      "params": {
+        "name": "ssh1375-20261015-RootMiXeD"
+      },
+      "status": 200
+    },
+    {
+      "command": "registerSSHKeyPair",
+      "params": {
+        "name": "ssh1375-20261015-RootMiXeD"
+      },
+      "status": 431
+    },
+    {
+      "command": "registerSSHKeyPair",
+      "params": {
+        "name": "ssh1375-20261015-service"
+      },
+      "status": 503
+    },
+    {
+      "command": "registerSSHKeyPair",
+      "params": {
+        "name": "ssh1375-20261015-double"
+      },
+      "status": 200
+    },
+    {
+      "command": "createSSHKeyPair",
+      "params": {
+        "name": "ssh1375-20261015-generated"
+      },
+      "status": 200
+    },
+    {
+      "command": "createSSHKeyPair",
+      "params": {
+        "name": "ssh1375-20261015-discard"
+      },
+      "status": 200
+    },
+    {
+      "command": "registerSSHKeyPair",
+      "params": {
+        "name": "ssh1375-20261015-owner",
+        "account": "ssh1375-20261015-user",
+        "domainid": "199c3343-3b1c-4175-85d5-06ea9cd2d74a"
+      },
+      "status": 200
+    },
+    {
+      "command": "registerSSHKeyPair",
+      "params": {
+        "name": "ssh1375-20261015-RootMiXeD",
+        "projectid": "ca8ca714-cf93-4d72-aece-532357d04389"
+      },
+      "status": 200
+    },
+    {
+      "command": "createSSHKeyPair",
+      "params": {
+        "name": "ssh1375-20261015-project-generated",
+        "projectid": "ca8ca714-cf93-4d72-aece-532357d04389"
+      },
+      "status": 200
+    },
+    {
+      "command": "registerSSHKeyPair",
+      "params": {
+        "name": "ssh1375-20261015-domainAdmin"
+      },
+      "status": 200
+    },
+    {
+      "command": "registerSSHKeyPair",
+      "params": {
+        "name": "ssh1375-20261015-RootMiXeD"
+      },
+      "status": 200
+    },
+    {
+      "command": "createSSHKeyPair",
+      "params": {
+        "name": "ssh1375-20261015-createOnly"
+      },
+      "status": 200
+    },
+    {
+      "command": "registerSSHKeyPair",
+      "params": {
+        "name": "ssh1375-20261015-registerOnly"
+      },
+      "status": 200
+    }
+  ]
+}

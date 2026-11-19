@@ -17,12 +17,15 @@
 package com.cloud.network.as.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import com.cloud.network.as.AutoScaleVmGroupVmMapVO;
 import com.cloud.utils.db.GenericDao;
 
 public interface AutoScaleVmGroupVmMapDao extends GenericDao<AutoScaleVmGroupVmMapVO, Long> {
     int countAvailableVmsByGroup(long vmGroupId);
+
+    Map<String, Integer> countMemberStates(long vmGroupId);
 
     public Integer countByGroup(long vmGroupId);
 

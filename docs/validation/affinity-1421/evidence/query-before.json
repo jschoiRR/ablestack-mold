@@ -1,0 +1,1556 @@
+{
+  "root-all": {
+    "actor": "admin",
+    "args": {
+      "projectid": "-1"
+    },
+    "count": 30,
+    "rows": [
+      {
+        "id": "880b5855-d129-4f8d-8a6a-7b32e366f6d5",
+        "name": "qa-ag07-user-a",
+        "type": "host affinity",
+        "account": "qa-ag07-user-a",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": [
+          "5967795b-10e1-40ac-8535-8d20f83bf56f",
+          "5e5b0e53-fb34-4775-b456-ab859dd74932"
+        ]
+      },
+      {
+        "id": "709aaeed-122d-4e0c-80cc-6013578c8051",
+        "name": "qa-ag07-user-b",
+        "type": "host affinity",
+        "account": "qa-ag07-user-b",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "b79b9a82-6925-452f-b03b-74e3d69df79b",
+        "name": "qa-ag07-domainadmin",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "ada0808c-1039-465f-b0c7-389808c110cf",
+        "name": "qa-ag07-shared",
+        "type": "ExplicitDedication",
+        "account": "system",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": [
+          "c0f255cf-5f0c-476d-b48e-4953010b2852",
+          "5967795b-10e1-40ac-8535-8d20f83bf56f",
+          "5e5b0e53-fb34-4775-b456-ab859dd74932"
+        ]
+      },
+      {
+        "id": "4fbacc33-d386-438c-8d49-b7f9c54e4b81",
+        "name": "qa-ag07-child",
+        "type": "host affinity",
+        "account": "qa-ag07-child",
+        "domainid": "b20bca7f-5723-4449-9091-6b6cf959c5c3",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "6059e56e-7dd6-40cb-9c25-dc1fe9d6ec85",
+        "name": "qa-ag07-peer",
+        "type": "host affinity",
+        "account": "qa-ag07-peer",
+        "domainid": "31183bff-0c26-4748-90ee-87817e377757",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "b2f43d25-4852-4499-888b-9a8b316e4377",
+        "name": "qa-ag07-peer-shared",
+        "type": "ExplicitDedication",
+        "account": "system",
+        "domainid": "31183bff-0c26-4748-90ee-87817e377757",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "13b59359-2a34-415d-9c01-8f3638cab5b2",
+        "name": "qa-ag07-page-01",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "9c7e5394-4b92-4e12-ae18-bebd2f52cfab",
+        "name": "qa-ag07-page-02",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "d9c12b5e-9bf6-41b8-a0dc-3b1324cedc42",
+        "name": "qa-ag07-page-03",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "f84fd92e-8718-4478-b3fa-e711fb72d8ec",
+        "name": "qa-ag07-page-04",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "d0342e94-72c6-49d1-b32a-6f2ba915f621",
+        "name": "qa-ag07-page-05",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "40b5dae1-f95b-43c8-a586-e8b6aa7446e6",
+        "name": "qa-ag07-page-06",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "55f1ab83-ac96-4378-8c8f-5bb80d73973e",
+        "name": "qa-ag07-page-07",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "9cb6286d-7d05-4c2c-9fdf-6b8ff00e88b1",
+        "name": "qa-ag07-page-08",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "2a03323a-d434-4010-adf7-cb2cf1d8bdc6",
+        "name": "qa-ag07-page-09",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "a992af0e-22a1-432f-b7da-dca85728226d",
+        "name": "qa-ag07-page-10",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "866d26eb-36d2-4786-a177-5046dd4b2623",
+        "name": "qa-ag07-page-11",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "8e133995-1b12-4ad5-a62c-e6c1543219d1",
+        "name": "qa-ag07-page-12",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "9253f433-45b7-4ce8-aa48-ee7ccd4b3558",
+        "name": "qa-ag07-page-13",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "949245cf-bb39-46ea-8fbb-3696e5a0f6f9",
+        "name": "qa-ag07-page-14",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "59b2b9e6-d669-4c5b-806c-1d74d0345e6f",
+        "name": "qa-ag07-page-15",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "2915bb88-0acf-40b3-8925-421e22a77590",
+        "name": "qa-ag07-page-16",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "714b84b7-3b51-4146-a8c5-00b051870141",
+        "name": "qa-ag07-page-17",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "b9725385-4956-4585-8793-63db5e986542",
+        "name": "qa-ag07-page-18",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "4a7287a2-a248-406d-9de5-fd81d769ccdd",
+        "name": "qa-ag07-restricted",
+        "type": "host affinity",
+        "account": "qa-ag07-restricted",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "43bc8088-dbe2-4831-8858-d689a504dba2",
+        "name": "qa-ag07-project",
+        "type": "host affinity",
+        "account": null,
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": "6cea6359-8b60-46c9-a22e-e5e74f33e88e",
+        "virtualmachineIds": [
+          "c0f255cf-5f0c-476d-b48e-4953010b2852"
+        ]
+      },
+      {
+        "id": "5f7ddf6b-e244-4e04-8683-c7d77087ab3c",
+        "name": "qa-ag07-strict-anti",
+        "type": "host anti-affinity",
+        "account": "qa-ag07-user-a",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "e3642020-9c1d-4900-ba1d-8e2e644d337e",
+        "name": "qa-ag07-prefer-aff",
+        "type": "non-strict host affinity",
+        "account": "qa-ag07-user-a",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "b7462c0e-f2d2-4a44-8690-94d029971892",
+        "name": "qa-ag07-prefer-anti",
+        "type": "non-strict host anti-affinity",
+        "account": "qa-ag07-user-a",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      }
+    ]
+  },
+  "root-parent": {
+    "actor": "admin",
+    "args": {
+      "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+      "isrecursive": true
+    },
+    "count": 28,
+    "rows": [
+      {
+        "id": "880b5855-d129-4f8d-8a6a-7b32e366f6d5",
+        "name": "qa-ag07-user-a",
+        "type": "host affinity",
+        "account": "qa-ag07-user-a",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": [
+          "5967795b-10e1-40ac-8535-8d20f83bf56f",
+          "5e5b0e53-fb34-4775-b456-ab859dd74932"
+        ]
+      },
+      {
+        "id": "709aaeed-122d-4e0c-80cc-6013578c8051",
+        "name": "qa-ag07-user-b",
+        "type": "host affinity",
+        "account": "qa-ag07-user-b",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "b79b9a82-6925-452f-b03b-74e3d69df79b",
+        "name": "qa-ag07-domainadmin",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "ada0808c-1039-465f-b0c7-389808c110cf",
+        "name": "qa-ag07-shared",
+        "type": "ExplicitDedication",
+        "account": "system",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": [
+          "c0f255cf-5f0c-476d-b48e-4953010b2852",
+          "5967795b-10e1-40ac-8535-8d20f83bf56f",
+          "5e5b0e53-fb34-4775-b456-ab859dd74932",
+          "5e5b0e53-fb34-4775-b456-ab859dd74932",
+          "5967795b-10e1-40ac-8535-8d20f83bf56f",
+          "c0f255cf-5f0c-476d-b48e-4953010b2852"
+        ]
+      },
+      {
+        "id": "4fbacc33-d386-438c-8d49-b7f9c54e4b81",
+        "name": "qa-ag07-child",
+        "type": "host affinity",
+        "account": "qa-ag07-child",
+        "domainid": "b20bca7f-5723-4449-9091-6b6cf959c5c3",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "13b59359-2a34-415d-9c01-8f3638cab5b2",
+        "name": "qa-ag07-page-01",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "9c7e5394-4b92-4e12-ae18-bebd2f52cfab",
+        "name": "qa-ag07-page-02",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "d9c12b5e-9bf6-41b8-a0dc-3b1324cedc42",
+        "name": "qa-ag07-page-03",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "f84fd92e-8718-4478-b3fa-e711fb72d8ec",
+        "name": "qa-ag07-page-04",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "d0342e94-72c6-49d1-b32a-6f2ba915f621",
+        "name": "qa-ag07-page-05",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "40b5dae1-f95b-43c8-a586-e8b6aa7446e6",
+        "name": "qa-ag07-page-06",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "55f1ab83-ac96-4378-8c8f-5bb80d73973e",
+        "name": "qa-ag07-page-07",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "9cb6286d-7d05-4c2c-9fdf-6b8ff00e88b1",
+        "name": "qa-ag07-page-08",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "2a03323a-d434-4010-adf7-cb2cf1d8bdc6",
+        "name": "qa-ag07-page-09",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "a992af0e-22a1-432f-b7da-dca85728226d",
+        "name": "qa-ag07-page-10",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "866d26eb-36d2-4786-a177-5046dd4b2623",
+        "name": "qa-ag07-page-11",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "8e133995-1b12-4ad5-a62c-e6c1543219d1",
+        "name": "qa-ag07-page-12",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "9253f433-45b7-4ce8-aa48-ee7ccd4b3558",
+        "name": "qa-ag07-page-13",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "949245cf-bb39-46ea-8fbb-3696e5a0f6f9",
+        "name": "qa-ag07-page-14",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "59b2b9e6-d669-4c5b-806c-1d74d0345e6f",
+        "name": "qa-ag07-page-15",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "2915bb88-0acf-40b3-8925-421e22a77590",
+        "name": "qa-ag07-page-16",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "714b84b7-3b51-4146-a8c5-00b051870141",
+        "name": "qa-ag07-page-17",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "b9725385-4956-4585-8793-63db5e986542",
+        "name": "qa-ag07-page-18",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "4a7287a2-a248-406d-9de5-fd81d769ccdd",
+        "name": "qa-ag07-restricted",
+        "type": "host affinity",
+        "account": "qa-ag07-restricted",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "5f7ddf6b-e244-4e04-8683-c7d77087ab3c",
+        "name": "qa-ag07-strict-anti",
+        "type": "host anti-affinity",
+        "account": "qa-ag07-user-a",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "e3642020-9c1d-4900-ba1d-8e2e644d337e",
+        "name": "qa-ag07-prefer-aff",
+        "type": "non-strict host affinity",
+        "account": "qa-ag07-user-a",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "b7462c0e-f2d2-4a44-8690-94d029971892",
+        "name": "qa-ag07-prefer-anti",
+        "type": "non-strict host anti-affinity",
+        "account": "qa-ag07-user-a",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      }
+    ]
+  },
+  "root-owner": {
+    "actor": "admin",
+    "args": {
+      "account": "qa-ag07-user-a",
+      "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5"
+    },
+    "count": 5,
+    "rows": [
+      {
+        "id": "880b5855-d129-4f8d-8a6a-7b32e366f6d5",
+        "name": "qa-ag07-user-a",
+        "type": "host affinity",
+        "account": "qa-ag07-user-a",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": [
+          "5967795b-10e1-40ac-8535-8d20f83bf56f",
+          "5e5b0e53-fb34-4775-b456-ab859dd74932"
+        ]
+      },
+      {
+        "id": "5f7ddf6b-e244-4e04-8683-c7d77087ab3c",
+        "name": "qa-ag07-strict-anti",
+        "type": "host anti-affinity",
+        "account": "qa-ag07-user-a",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "e3642020-9c1d-4900-ba1d-8e2e644d337e",
+        "name": "qa-ag07-prefer-aff",
+        "type": "non-strict host affinity",
+        "account": "qa-ag07-user-a",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "b7462c0e-f2d2-4a44-8690-94d029971892",
+        "name": "qa-ag07-prefer-anti",
+        "type": "non-strict host anti-affinity",
+        "account": "qa-ag07-user-a",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "ada0808c-1039-465f-b0c7-389808c110cf",
+        "name": "qa-ag07-shared",
+        "type": "ExplicitDedication",
+        "account": "system",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": [
+          "5e5b0e53-fb34-4775-b456-ab859dd74932",
+          "5967795b-10e1-40ac-8535-8d20f83bf56f",
+          "c0f255cf-5f0c-476d-b48e-4953010b2852"
+        ]
+      }
+    ]
+  },
+  "root-project": {
+    "actor": "admin",
+    "args": {
+      "projectid": "6cea6359-8b60-46c9-a22e-e5e74f33e88e"
+    },
+    "count": 2,
+    "rows": [
+      {
+        "id": "43bc8088-dbe2-4831-8858-d689a504dba2",
+        "name": "qa-ag07-project",
+        "type": "host affinity",
+        "account": null,
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": "6cea6359-8b60-46c9-a22e-e5e74f33e88e",
+        "virtualmachineIds": [
+          "c0f255cf-5f0c-476d-b48e-4953010b2852"
+        ]
+      },
+      {
+        "id": "ada0808c-1039-465f-b0c7-389808c110cf",
+        "name": "qa-ag07-shared",
+        "type": "ExplicitDedication",
+        "account": "system",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": [
+          "5e5b0e53-fb34-4775-b456-ab859dd74932",
+          "5967795b-10e1-40ac-8535-8d20f83bf56f",
+          "c0f255cf-5f0c-476d-b48e-4953010b2852"
+        ]
+      }
+    ]
+  },
+  "domainadmin": {
+    "actor": "domainadmin",
+    "args": {},
+    "count": 28,
+    "rows": [
+      {
+        "id": "880b5855-d129-4f8d-8a6a-7b32e366f6d5",
+        "name": "qa-ag07-user-a",
+        "type": "host affinity",
+        "account": "qa-ag07-user-a",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": [
+          "5967795b-10e1-40ac-8535-8d20f83bf56f",
+          "5e5b0e53-fb34-4775-b456-ab859dd74932"
+        ]
+      },
+      {
+        "id": "709aaeed-122d-4e0c-80cc-6013578c8051",
+        "name": "qa-ag07-user-b",
+        "type": "host affinity",
+        "account": "qa-ag07-user-b",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "b79b9a82-6925-452f-b03b-74e3d69df79b",
+        "name": "qa-ag07-domainadmin",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "ada0808c-1039-465f-b0c7-389808c110cf",
+        "name": "qa-ag07-shared",
+        "type": "ExplicitDedication",
+        "account": "system",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": [
+          "c0f255cf-5f0c-476d-b48e-4953010b2852",
+          "5967795b-10e1-40ac-8535-8d20f83bf56f",
+          "5e5b0e53-fb34-4775-b456-ab859dd74932",
+          "5e5b0e53-fb34-4775-b456-ab859dd74932",
+          "5967795b-10e1-40ac-8535-8d20f83bf56f",
+          "c0f255cf-5f0c-476d-b48e-4953010b2852"
+        ]
+      },
+      {
+        "id": "4fbacc33-d386-438c-8d49-b7f9c54e4b81",
+        "name": "qa-ag07-child",
+        "type": "host affinity",
+        "account": "qa-ag07-child",
+        "domainid": "b20bca7f-5723-4449-9091-6b6cf959c5c3",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "13b59359-2a34-415d-9c01-8f3638cab5b2",
+        "name": "qa-ag07-page-01",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "9c7e5394-4b92-4e12-ae18-bebd2f52cfab",
+        "name": "qa-ag07-page-02",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "d9c12b5e-9bf6-41b8-a0dc-3b1324cedc42",
+        "name": "qa-ag07-page-03",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "f84fd92e-8718-4478-b3fa-e711fb72d8ec",
+        "name": "qa-ag07-page-04",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "d0342e94-72c6-49d1-b32a-6f2ba915f621",
+        "name": "qa-ag07-page-05",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "40b5dae1-f95b-43c8-a586-e8b6aa7446e6",
+        "name": "qa-ag07-page-06",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "55f1ab83-ac96-4378-8c8f-5bb80d73973e",
+        "name": "qa-ag07-page-07",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "9cb6286d-7d05-4c2c-9fdf-6b8ff00e88b1",
+        "name": "qa-ag07-page-08",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "2a03323a-d434-4010-adf7-cb2cf1d8bdc6",
+        "name": "qa-ag07-page-09",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "a992af0e-22a1-432f-b7da-dca85728226d",
+        "name": "qa-ag07-page-10",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "866d26eb-36d2-4786-a177-5046dd4b2623",
+        "name": "qa-ag07-page-11",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "8e133995-1b12-4ad5-a62c-e6c1543219d1",
+        "name": "qa-ag07-page-12",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "9253f433-45b7-4ce8-aa48-ee7ccd4b3558",
+        "name": "qa-ag07-page-13",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "949245cf-bb39-46ea-8fbb-3696e5a0f6f9",
+        "name": "qa-ag07-page-14",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "59b2b9e6-d669-4c5b-806c-1d74d0345e6f",
+        "name": "qa-ag07-page-15",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "2915bb88-0acf-40b3-8925-421e22a77590",
+        "name": "qa-ag07-page-16",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "714b84b7-3b51-4146-a8c5-00b051870141",
+        "name": "qa-ag07-page-17",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "b9725385-4956-4585-8793-63db5e986542",
+        "name": "qa-ag07-page-18",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "4a7287a2-a248-406d-9de5-fd81d769ccdd",
+        "name": "qa-ag07-restricted",
+        "type": "host affinity",
+        "account": "qa-ag07-restricted",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "5f7ddf6b-e244-4e04-8683-c7d77087ab3c",
+        "name": "qa-ag07-strict-anti",
+        "type": "host anti-affinity",
+        "account": "qa-ag07-user-a",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "e3642020-9c1d-4900-ba1d-8e2e644d337e",
+        "name": "qa-ag07-prefer-aff",
+        "type": "non-strict host affinity",
+        "account": "qa-ag07-user-a",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "b7462c0e-f2d2-4a44-8690-94d029971892",
+        "name": "qa-ag07-prefer-anti",
+        "type": "non-strict host anti-affinity",
+        "account": "qa-ag07-user-a",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      }
+    ]
+  },
+  "domainadmin-projects": {
+    "actor": "domainadmin",
+    "args": {
+      "projectid": "-1"
+    },
+    "count": 20,
+    "rows": [
+      {
+        "id": "b79b9a82-6925-452f-b03b-74e3d69df79b",
+        "name": "qa-ag07-domainadmin",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "13b59359-2a34-415d-9c01-8f3638cab5b2",
+        "name": "qa-ag07-page-01",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "9c7e5394-4b92-4e12-ae18-bebd2f52cfab",
+        "name": "qa-ag07-page-02",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "d9c12b5e-9bf6-41b8-a0dc-3b1324cedc42",
+        "name": "qa-ag07-page-03",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "f84fd92e-8718-4478-b3fa-e711fb72d8ec",
+        "name": "qa-ag07-page-04",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "d0342e94-72c6-49d1-b32a-6f2ba915f621",
+        "name": "qa-ag07-page-05",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "40b5dae1-f95b-43c8-a586-e8b6aa7446e6",
+        "name": "qa-ag07-page-06",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "55f1ab83-ac96-4378-8c8f-5bb80d73973e",
+        "name": "qa-ag07-page-07",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "9cb6286d-7d05-4c2c-9fdf-6b8ff00e88b1",
+        "name": "qa-ag07-page-08",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "2a03323a-d434-4010-adf7-cb2cf1d8bdc6",
+        "name": "qa-ag07-page-09",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "a992af0e-22a1-432f-b7da-dca85728226d",
+        "name": "qa-ag07-page-10",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "866d26eb-36d2-4786-a177-5046dd4b2623",
+        "name": "qa-ag07-page-11",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "8e133995-1b12-4ad5-a62c-e6c1543219d1",
+        "name": "qa-ag07-page-12",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "9253f433-45b7-4ce8-aa48-ee7ccd4b3558",
+        "name": "qa-ag07-page-13",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "949245cf-bb39-46ea-8fbb-3696e5a0f6f9",
+        "name": "qa-ag07-page-14",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "59b2b9e6-d669-4c5b-806c-1d74d0345e6f",
+        "name": "qa-ag07-page-15",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "2915bb88-0acf-40b3-8925-421e22a77590",
+        "name": "qa-ag07-page-16",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "714b84b7-3b51-4146-a8c5-00b051870141",
+        "name": "qa-ag07-page-17",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "b9725385-4956-4585-8793-63db5e986542",
+        "name": "qa-ag07-page-18",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "ada0808c-1039-465f-b0c7-389808c110cf",
+        "name": "qa-ag07-shared",
+        "type": "ExplicitDedication",
+        "account": "system",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": [
+          "5e5b0e53-fb34-4775-b456-ab859dd74932",
+          "5967795b-10e1-40ac-8535-8d20f83bf56f",
+          "c0f255cf-5f0c-476d-b48e-4953010b2852"
+        ]
+      }
+    ]
+  },
+  "domainadmin-nonrecursive": {
+    "actor": "domainadmin",
+    "args": {
+      "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+      "isrecursive": false
+    },
+    "count": 26,
+    "rows": [
+      {
+        "id": "880b5855-d129-4f8d-8a6a-7b32e366f6d5",
+        "name": "qa-ag07-user-a",
+        "type": "host affinity",
+        "account": "qa-ag07-user-a",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": [
+          "5967795b-10e1-40ac-8535-8d20f83bf56f",
+          "5e5b0e53-fb34-4775-b456-ab859dd74932"
+        ]
+      },
+      {
+        "id": "709aaeed-122d-4e0c-80cc-6013578c8051",
+        "name": "qa-ag07-user-b",
+        "type": "host affinity",
+        "account": "qa-ag07-user-b",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "b79b9a82-6925-452f-b03b-74e3d69df79b",
+        "name": "qa-ag07-domainadmin",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "ada0808c-1039-465f-b0c7-389808c110cf",
+        "name": "qa-ag07-shared",
+        "type": "ExplicitDedication",
+        "account": "system",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": [
+          "c0f255cf-5f0c-476d-b48e-4953010b2852",
+          "5967795b-10e1-40ac-8535-8d20f83bf56f",
+          "5e5b0e53-fb34-4775-b456-ab859dd74932"
+        ]
+      },
+      {
+        "id": "13b59359-2a34-415d-9c01-8f3638cab5b2",
+        "name": "qa-ag07-page-01",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "9c7e5394-4b92-4e12-ae18-bebd2f52cfab",
+        "name": "qa-ag07-page-02",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "d9c12b5e-9bf6-41b8-a0dc-3b1324cedc42",
+        "name": "qa-ag07-page-03",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "f84fd92e-8718-4478-b3fa-e711fb72d8ec",
+        "name": "qa-ag07-page-04",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "d0342e94-72c6-49d1-b32a-6f2ba915f621",
+        "name": "qa-ag07-page-05",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "40b5dae1-f95b-43c8-a586-e8b6aa7446e6",
+        "name": "qa-ag07-page-06",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "55f1ab83-ac96-4378-8c8f-5bb80d73973e",
+        "name": "qa-ag07-page-07",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "9cb6286d-7d05-4c2c-9fdf-6b8ff00e88b1",
+        "name": "qa-ag07-page-08",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "2a03323a-d434-4010-adf7-cb2cf1d8bdc6",
+        "name": "qa-ag07-page-09",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "a992af0e-22a1-432f-b7da-dca85728226d",
+        "name": "qa-ag07-page-10",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "866d26eb-36d2-4786-a177-5046dd4b2623",
+        "name": "qa-ag07-page-11",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "8e133995-1b12-4ad5-a62c-e6c1543219d1",
+        "name": "qa-ag07-page-12",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "9253f433-45b7-4ce8-aa48-ee7ccd4b3558",
+        "name": "qa-ag07-page-13",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "949245cf-bb39-46ea-8fbb-3696e5a0f6f9",
+        "name": "qa-ag07-page-14",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "59b2b9e6-d669-4c5b-806c-1d74d0345e6f",
+        "name": "qa-ag07-page-15",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "2915bb88-0acf-40b3-8925-421e22a77590",
+        "name": "qa-ag07-page-16",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "714b84b7-3b51-4146-a8c5-00b051870141",
+        "name": "qa-ag07-page-17",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "b9725385-4956-4585-8793-63db5e986542",
+        "name": "qa-ag07-page-18",
+        "type": "host affinity",
+        "account": "qa-ag07-domainadmin",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "4a7287a2-a248-406d-9de5-fd81d769ccdd",
+        "name": "qa-ag07-restricted",
+        "type": "host affinity",
+        "account": "qa-ag07-restricted",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "5f7ddf6b-e244-4e04-8683-c7d77087ab3c",
+        "name": "qa-ag07-strict-anti",
+        "type": "host anti-affinity",
+        "account": "qa-ag07-user-a",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "e3642020-9c1d-4900-ba1d-8e2e644d337e",
+        "name": "qa-ag07-prefer-aff",
+        "type": "non-strict host affinity",
+        "account": "qa-ag07-user-a",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "b7462c0e-f2d2-4a44-8690-94d029971892",
+        "name": "qa-ag07-prefer-anti",
+        "type": "non-strict host anti-affinity",
+        "account": "qa-ag07-user-a",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      }
+    ]
+  },
+  "normal": {
+    "actor": "user-a",
+    "args": {},
+    "count": 5,
+    "rows": [
+      {
+        "id": "880b5855-d129-4f8d-8a6a-7b32e366f6d5",
+        "name": "qa-ag07-user-a",
+        "type": "host affinity",
+        "account": "qa-ag07-user-a",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": [
+          "5967795b-10e1-40ac-8535-8d20f83bf56f",
+          "5e5b0e53-fb34-4775-b456-ab859dd74932"
+        ]
+      },
+      {
+        "id": "5f7ddf6b-e244-4e04-8683-c7d77087ab3c",
+        "name": "qa-ag07-strict-anti",
+        "type": "host anti-affinity",
+        "account": "qa-ag07-user-a",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "e3642020-9c1d-4900-ba1d-8e2e644d337e",
+        "name": "qa-ag07-prefer-aff",
+        "type": "non-strict host affinity",
+        "account": "qa-ag07-user-a",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "b7462c0e-f2d2-4a44-8690-94d029971892",
+        "name": "qa-ag07-prefer-anti",
+        "type": "non-strict host anti-affinity",
+        "account": "qa-ag07-user-a",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "ada0808c-1039-465f-b0c7-389808c110cf",
+        "name": "qa-ag07-shared",
+        "type": "ExplicitDedication",
+        "account": "system",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": [
+          "5e5b0e53-fb34-4775-b456-ab859dd74932",
+          "5967795b-10e1-40ac-8535-8d20f83bf56f",
+          "c0f255cf-5f0c-476d-b48e-4953010b2852"
+        ]
+      }
+    ]
+  },
+  "normal-project": {
+    "actor": "user-a",
+    "args": {
+      "projectid": "6cea6359-8b60-46c9-a22e-e5e74f33e88e"
+    },
+    "count": 2,
+    "rows": [
+      {
+        "id": "43bc8088-dbe2-4831-8858-d689a504dba2",
+        "name": "qa-ag07-project",
+        "type": "host affinity",
+        "account": null,
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": "6cea6359-8b60-46c9-a22e-e5e74f33e88e",
+        "virtualmachineIds": [
+          "c0f255cf-5f0c-476d-b48e-4953010b2852"
+        ]
+      },
+      {
+        "id": "ada0808c-1039-465f-b0c7-389808c110cf",
+        "name": "qa-ag07-shared",
+        "type": "ExplicitDedication",
+        "account": "system",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": [
+          "5e5b0e53-fb34-4775-b456-ab859dd74932",
+          "5967795b-10e1-40ac-8535-8d20f83bf56f",
+          "c0f255cf-5f0c-476d-b48e-4953010b2852"
+        ]
+      }
+    ]
+  },
+  "other-owner": {
+    "actor": "user-b",
+    "args": {},
+    "count": 2,
+    "rows": [
+      {
+        "id": "709aaeed-122d-4e0c-80cc-6013578c8051",
+        "name": "qa-ag07-user-b",
+        "type": "host affinity",
+        "account": "qa-ag07-user-b",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "ada0808c-1039-465f-b0c7-389808c110cf",
+        "name": "qa-ag07-shared",
+        "type": "ExplicitDedication",
+        "account": "system",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": [
+          "5e5b0e53-fb34-4775-b456-ab859dd74932",
+          "5967795b-10e1-40ac-8535-8d20f83bf56f",
+          "c0f255cf-5f0c-476d-b48e-4953010b2852"
+        ]
+      }
+    ]
+  },
+  "child": {
+    "actor": "child",
+    "args": {},
+    "count": 2,
+    "rows": [
+      {
+        "id": "4fbacc33-d386-438c-8d49-b7f9c54e4b81",
+        "name": "qa-ag07-child",
+        "type": "host affinity",
+        "account": "qa-ag07-child",
+        "domainid": "b20bca7f-5723-4449-9091-6b6cf959c5c3",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "ada0808c-1039-465f-b0c7-389808c110cf",
+        "name": "qa-ag07-shared",
+        "type": "ExplicitDedication",
+        "account": "system",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": [
+          "5e5b0e53-fb34-4775-b456-ab859dd74932",
+          "5967795b-10e1-40ac-8535-8d20f83bf56f",
+          "c0f255cf-5f0c-476d-b48e-4953010b2852"
+        ]
+      }
+    ]
+  },
+  "restricted": {
+    "actor": "restricted",
+    "args": {},
+    "count": 2,
+    "rows": [
+      {
+        "id": "4a7287a2-a248-406d-9de5-fd81d769ccdd",
+        "name": "qa-ag07-restricted",
+        "type": "host affinity",
+        "account": "qa-ag07-restricted",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "ada0808c-1039-465f-b0c7-389808c110cf",
+        "name": "qa-ag07-shared",
+        "type": "ExplicitDedication",
+        "account": "system",
+        "domainid": "33966e55-de22-4c43-adaa-6c949f24a5e5",
+        "projectid": null,
+        "virtualmachineIds": [
+          "5e5b0e53-fb34-4775-b456-ab859dd74932",
+          "5967795b-10e1-40ac-8535-8d20f83bf56f",
+          "c0f255cf-5f0c-476d-b48e-4953010b2852"
+        ]
+      }
+    ]
+  },
+  "peer": {
+    "actor": "peer",
+    "args": {},
+    "count": 2,
+    "rows": [
+      {
+        "id": "6059e56e-7dd6-40cb-9c25-dc1fe9d6ec85",
+        "name": "qa-ag07-peer",
+        "type": "host affinity",
+        "account": "qa-ag07-peer",
+        "domainid": "31183bff-0c26-4748-90ee-87817e377757",
+        "projectid": null,
+        "virtualmachineIds": null
+      },
+      {
+        "id": "b2f43d25-4852-4499-888b-9a8b316e4377",
+        "name": "qa-ag07-peer-shared",
+        "type": "ExplicitDedication",
+        "account": "system",
+        "domainid": "31183bff-0c26-4748-90ee-87817e377757",
+        "projectid": null,
+        "virtualmachineIds": null
+      }
+    ]
+  }
+}

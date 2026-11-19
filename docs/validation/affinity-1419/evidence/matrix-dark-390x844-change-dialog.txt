@@ -1,0 +1,363 @@
+- generic: 페이지 스타일 설정
+- button "닫기":
+  - img "close":
+- heading "페이지 스타일 설정" [level=3]
+- radio
+- radio [checked]
+- img "check":
+- heading "테마 색상" [level=3]
+- radio
+- img "check"
+- radio
+- radio
+- radio
+- radio
+- radio
+- radio
+- radio
+- separator
+- heading "네비게이션 설정" [level=3]
+- generic: 배경색
+- textbox [disabled]: "#ffffff"
+- generic: 텍스트 색상
+- textbox [disabled]: "#000000"
+- separator
+- alert:
+  - img "exclamation-circle":
+  - generic: "설정은 현재 브라우저에서만 볼 수 있습니다. 설정을 적용하려면 JSON 파일을 다운로드하고 경로 `/public/config.json` 아래의 `config.json` 파일의 `theme` 섹션에서 해당 콘텐츠를 교체하세요."
+- button "download 세팅값 다운로드(json)":
+  - img "download":
+  - generic: 세팅값 다운로드(json)
+- button "undo 기본값으로 재설정":
+  - img "undo":
+  - generic: 기본값으로 재설정
+- img "menu-unfold":
+- combobox
+- img "project":
+- text: 기본 보기
+- img "translation":
+- img "bell":
+- generic: AC
+- generic: admin cloud
+- main:
+  - link "home":
+    - /url: "#/"
+    - img "home":
+  - text: /
+  - link "가상머신":
+    - /url: "#/vm"
+  - text: /
+  - generic: qa-ag06-vm-02
+  - link "question-circle":
+    - /url: http://docs.ablecloud.io/latest/adminguide/virtual_machines.html
+    - img "question-circle":
+  - button "reload 업데이트":
+    - img "reload":
+    - generic: 업데이트
+  - button "down 작업":
+    - img "down":
+    - generic: 작업
+  - img "edit":
+  - heading "qa-ag06-vm-02" [level=4]
+  - generic: i-2-672-VM
+  - generic: x86_64
+  - generic: KVM
+  - generic: 동적으로 확장 가능
+  - button "code" [disabled]:
+    - img "code":
+  - separator
+  - generic: 상태
+  - generic: 정지된 상태
+  - generic: 아이디
+  - button "barcode":
+    - img "barcode":
+  - link "49dc24b7-abc3-4779-8d11-508da9d52f46":
+    - /url: javascript:;
+  - generic: CPU
+  - text: 2 CPU x 2.00 GHz
+  - img "question-circle":
+  - generic: x86_64
+  - generic: 메모리
+  - text: 2048 MB 메모리
+  - generic: 네트워크
+  - img "wifi":
+  - generic: 1 NIC(s)
+  - strong: eth0
+  - link:
+    - /url: javascript:;
+  - generic: 기본
+  - img "apartment":
+  - link "E1335-VM-Origin-L2":
+    - /url: "#/guestnetwork/ae274fff-3d8e-4285-ac73-26a767c1fea7"
+  - generic: Affinity 그룹
+  - img "swap":
+  - link "qa-ag06-prefer-anti":
+    - /url: "#/affinitygroup/15610aff-43d1-425b-838b-535c7b5f3f04"
+  - text: ","
+  - link "qa-ag06-ui-recovered":
+    - /url: "#/affinitygroup/4e33c710-abc0-4f9b-9323-e41baadee3a1"
+  - generic: 템플릿
+  - img "save":
+  - link "rocky-9-4-minimal.qcow22":
+    - /url: "#/template/e3d8677e-70f0-44bd-917e-6068636b97a8"
+  - generic: 컴퓨트 오퍼링
+  - img "cloud":
+  - link "AS-PROD-31-AS01-2C2G-Sparse":
+    - /url: "#/computeoffering/39c3aa33-5632-4dea-bd84-ba794d292c87"
+  - generic: Zone
+  - img "global":
+  - link "Zone":
+    - /url: "#/zone/7013f5a1-de59-4cea-a596-f4f58815f31c"
+  - generic: 계정
+  - img "user":
+  - link "admin":
+    - /url: "#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f"
+  - generic: 도메인
+  - img "block":
+  - link "ROOT":
+    - /url: "#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details"
+  - generic: 생성일
+  - img "calendar":
+  - text: 2026. 10. 19. 오후 3:35:08
+  - generic: 마지막 업데이트
+  - img "calendar":
+  - text: 2026. 10. 19. 오후 3:59:07
+  - separator
+  - generic: 태그
+  - img "plus":
+  - text: 새 태그
+  - tablist:
+    - tab "상세" [selected]
+    - tab "IP 구성"
+    - tab "메트릭"
+    - tab "프로세스"
+    - tab "스케줄"
+    - tab "ISO"
+    - tab "볼륨"
+    - tab "NIC"
+    - tab "설정"
+    - tab "호스트 장치"
+    - tab "VM 스냅샷"
+    - tab "이벤트"
+    - tab "코멘트"
+    - button:
+  - tabpanel "상세":
+    - list:
+      - strong: VM 호스트 명
+      - generic: qa-ag06-vm-02
+      - strong: VM 표시 명
+      - generic: qa-ag06-vm-02
+      - strong: 에이전트 버전
+      - generic: 8.2.0
+      - strong: 아이디
+      - generic: 49dc24b7-abc3-4779-8d11-508da9d52f46
+      - strong: 상태
+      - generic: Stopped
+      - strong: 템플릿
+      - generic: rocky-9-4-minimal.qcow22
+      - strong: 템플릿 형식
+      - generic: USER
+      - strong: 컴퓨트 오퍼링
+      - generic: AS-PROD-31-AS01-2C2G-Sparse
+      - strong: 동적으로 확장 가능
+      - generic: "true"
+      - strong: HA 활성화
+      - generic: "false"
+      - strong: 하이퍼바이저
+      - generic: KVM
+      - strong: CPU 아키텍처
+      - generic: x86_64
+      - strong: 계정
+      - generic: admin
+      - strong: 도메인
+      - generic: ROOT
+      - strong: Zone
+      - generic: Zone
+      - strong: VBMC 포트
+      - generic: 미할당
+      - strong: 삭제 보호
+      - generic: "false"
+- alert:
+  - img "info-circle":
+  - generic: Wall 모니터링을 사용할 수 없습니다. 기존 알림은 최신 정보가 아닐 수 있으며 Mold는 계속 사용할 수 있습니다. 비활성
+- menu:
+  - generic: 액세스
+  - list:
+    - menuitem "콘솔 보기" [disabled]:
+      - generic: 콘솔 보기
+    - menuitem "콘솔 URL 복사" [disabled]:
+      - generic: 콘솔 URL 복사
+    - menuitem "실시간 모니터링":
+      - generic: 실시간 모니터링
+    - menuitem "SSH 키 쌍 재설정":
+      - generic: SSH 키 쌍 재설정
+    - menuitem "VM 저장 사용자 데이터 조회":
+      - generic: VM 저장 사용자 데이터 조회
+    - menuitem "VM에서 사용자 데이터 재설정":
+      - generic: VM에서 사용자 데이터 재설정
+    - menuitem "다른 계정에 가상머신 할당":
+      - generic: 다른 계정에 가상머신 할당
+  - generic: 컴퓨트
+  - list:
+    - menuitem "편집":
+      - generic: 편집
+    - menuitem "시작":
+      - generic: 시작
+    - menuitem "복제":
+      - generic: 복제
+    - menuitem "Affinity 변경" [active]:
+      - generic: Affinity 변경
+    - menuitem "확장":
+      - generic: 확장
+    - menuitem "다른 스토리지로 마이그레이션":
+      - generic: 다른 스토리지로 마이그레이션
+    - menuitem "가상 BMC(IPMI) 관리":
+      - generic: 가상 BMC(IPMI) 관리
+  - generic: 스토리지
+  - list:
+    - menuitem "VM 스냅샷 생성":
+      - generic: VM 스냅샷 생성
+    - menuitem "VM 볼륨 스냅샷 생성":
+      - generic: VM 볼륨 스냅샷 생성
+    - menuitem "ISO 연결":
+      - generic: ISO 연결
+  - generic: 백업
+  - list:
+    - menuitem "재설치":
+      - generic: 재설치
+  - generic: 삭제
+  - list:
+    - menuitem "관리 해제":
+      - generic: 관리 해제
+    - menuitem "가상머신 삭제":
+      - generic: 가상머신 삭제
+- dialog "Affinity 변경":
+  - document:
+    - button "Close":
+      - img "close":
+    - generic: Affinity 변경
+    - strong: qa-ag06-vm-02
+    - text: admin / ROOT
+    - paragraph: 이 VM이 속할 Affinity 그룹을 선택하십시오.
+    - alert:
+      - img "info-circle":
+      - generic: "VM 소유 범위: admin / ROOT"
+    - region "전체 선택":
+      - strong: "전체 선택: 2"
+      - button "모든 페이지 선택 해제":
+        - generic: 모든 페이지 선택 해제
+      - paragraph: 표 머리글의 체크박스는 현재 페이지에만 적용됩니다. 검색·페이지를 바꿔도 전체 선택은 유지되며, 아래 항목에서 개별 해제할 수 있습니다.
+      - list:
+        - 'button "선택 해제: qa-ag06-prefer-anti"':
+          - generic: qa-ag06-prefer-anti ×
+        - 'button "선택 해제: qa-ag06-ui-recovered"':
+          - generic: qa-ag06-ui-recovered ×
+    - textbox "검색"
+    - button "search":
+      - img "search":
+    - status: 전체 18 개 항목 · 1 쪽
+    - table:
+      - rowgroup:
+        - row "이름 caret-up caret-down 유형 caret-up caret-down 설명 caret-up caret-down":
+          - columnheader:
+            - checkbox
+          - columnheader "이름 caret-up caret-down":
+            - generic: 이름
+            - img "caret-up":
+            - img "caret-down":
+          - columnheader "유형 caret-up caret-down":
+            - generic: 유형
+            - img "caret-up":
+            - img "caret-down":
+          - columnheader "설명 caret-up caret-down":
+            - generic: 설명
+            - img "caret-up":
+            - img "caret-down":
+      - rowgroup:
+        - row "qa-ag06-strict-aff 같은 호스트 배치 · 엄격 AG06 disposable integrated qualification":
+          - cell:
+            - checkbox
+          - cell "qa-ag06-strict-aff"
+          - cell "같은 호스트 배치 · 엄격":
+            - generic "host affinity": 같은 호스트 배치 · 엄격
+          - cell "AG06 disposable integrated qualification"
+        - row "qa-ag06-strict-anti 다른 호스트 분산 · 엄격 AG06 disposable integrated qualification":
+          - cell:
+            - checkbox
+          - cell "qa-ag06-strict-anti"
+          - cell "다른 호스트 분산 · 엄격":
+            - generic "host anti-affinity": 다른 호스트 분산 · 엄격
+          - cell "AG06 disposable integrated qualification"
+        - row "qa-ag06-prefer-aff 같은 호스트 우선 · 선호 AG06 disposable integrated qualification":
+          - cell:
+            - checkbox
+          - cell "qa-ag06-prefer-aff"
+          - cell "같은 호스트 우선 · 선호":
+            - generic "non-strict host affinity": 같은 호스트 우선 · 선호
+          - cell "AG06 disposable integrated qualification"
+        - row "qa-ag06-prefer-anti 다른 호스트 분산 우선 · 선호 AG06 disposable integrated qualification":
+          - cell:
+            - checkbox [checked]
+          - cell "qa-ag06-prefer-anti"
+          - cell "다른 호스트 분산 우선 · 선호":
+            - generic "non-strict host anti-affinity": 다른 호스트 분산 우선 · 선호
+          - cell "AG06 disposable integrated qualification"
+        - row "qa-ag06-page-01 같은 호스트 배치 · 엄격 AG06 disposable integrated qualification":
+          - cell:
+            - checkbox
+          - cell "qa-ag06-page-01"
+          - cell "같은 호스트 배치 · 엄격":
+            - generic "host affinity": 같은 호스트 배치 · 엄격
+          - cell "AG06 disposable integrated qualification"
+        - row "qa-ag06-page-02 같은 호스트 배치 · 엄격 AG06 disposable integrated qualification":
+          - cell:
+            - checkbox
+          - cell "qa-ag06-page-02"
+          - cell "같은 호스트 배치 · 엄격":
+            - generic "host affinity": 같은 호스트 배치 · 엄격
+          - cell "AG06 disposable integrated qualification"
+        - row "qa-ag06-page-03 같은 호스트 배치 · 엄격 AG06 disposable integrated qualification":
+          - cell:
+            - checkbox
+          - cell "qa-ag06-page-03"
+          - cell "같은 호스트 배치 · 엄격":
+            - generic "host affinity": 같은 호스트 배치 · 엄격
+          - cell "AG06 disposable integrated qualification"
+        - row "qa-ag06-page-04 같은 호스트 배치 · 엄격 AG06 disposable integrated qualification":
+          - cell:
+            - checkbox
+          - cell "qa-ag06-page-04"
+          - cell "같은 호스트 배치 · 엄격":
+            - generic "host affinity": 같은 호스트 배치 · 엄격
+          - cell "AG06 disposable integrated qualification"
+        - row "qa-ag06-page-05 같은 호스트 배치 · 엄격 AG06 disposable integrated qualification":
+          - cell:
+            - checkbox
+          - cell "qa-ag06-page-05"
+          - cell "같은 호스트 배치 · 엄격":
+            - generic "host affinity": 같은 호스트 배치 · 엄격
+          - cell "AG06 disposable integrated qualification"
+        - row "qa-ag06-page-06 같은 호스트 배치 · 엄격 AG06 disposable integrated qualification":
+          - cell:
+            - checkbox
+          - cell "qa-ag06-page-06"
+          - cell "같은 호스트 배치 · 엄격":
+            - generic "host affinity": 같은 호스트 배치 · 엄격
+          - cell "AG06 disposable integrated qualification"
+    - list:
+      - listitem "이전 페이지":
+        - button "left" [disabled]:
+          - img "left":
+      - listitem "1":
+        - generic: "1"
+      - listitem "2":
+        - generic: "2"
+      - listitem "다음 페이지":
+        - button "right":
+          - img "right":
+      - combobox
+      - generic: 10 / 쪽
+    - button "취소":
+      - generic: 취소
+    - button "확인":
+      - generic: 확인

@@ -115,6 +115,7 @@ export default {
     ResourceIcon
   },
   props: {
+    localizeAutoScaleSupport: { type: Boolean, default: false },
     items: {
       type: Array,
       default: () => []
@@ -239,7 +240,7 @@ export default {
         return {
           ...network,
           ...{
-            supportsvmautoscaling: network.supportsvmautoscaling ? 'Yes' : 'No',
+            supportsvmautoscaling: this.localizeAutoScaleSupport ? this.$t(network.supportsvmautoscaling ? 'label.yes' : 'label.no') : network.supportsvmautoscaling ? 'Yes' : 'No',
             vpcName: _.get(vpc, 'displaytext')
           }
         }
@@ -325,9 +326,7 @@ export default {
     if (projectId) {
       params.projectid = projectId
     }
-    getAPI('listVPCs', {
-      params
-    }).then((response) => {
+    getAPI('listVPCs', this.localizeAutoScaleSupport ? params : { params }).then((response) => {
       this.vpcs = _.get(response, 'listvpcsresponse.vpc')
     })
   },

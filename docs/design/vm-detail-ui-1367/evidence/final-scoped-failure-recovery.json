@@ -1,0 +1,155 @@
+{
+  "volume": {
+    "before": {
+      "alerts": [],
+      "blur": 0,
+      "globalBlur": 0,
+      "label": "before",
+      "rows": 1,
+      "spins": 0,
+      "time": 1791973541581,
+      "top": 328
+    },
+    "failed": {
+      "alerts": [
+        "목록을 갱신하지 못했습니다. 마지막 정상 데이터를 표시하며 자동으로 다시 시도합니다."
+      ],
+      "blur": 0,
+      "globalBlur": 0,
+      "label": "failed",
+      "rows": 1,
+      "spins": 0,
+      "time": 1791973542124,
+      "top": 402
+    },
+    "sameTable": true,
+    "remainsLoggedIn": true,
+    "recovered": {
+      "alerts": [],
+      "blur": 0,
+      "globalBlur": 0,
+      "label": "recovered",
+      "rows": 1,
+      "spins": 0,
+      "time": 1791973647557,
+      "top": 328
+    }
+  },
+  "schedule": {
+    "before": {
+      "alerts": [],
+      "blur": 0,
+      "globalBlur": 0,
+      "label": "before",
+      "rows": 1,
+      "spins": 0,
+      "time": 1791973652697,
+      "top": 248
+    },
+    "command": "listResourceSchedule",
+    "failedRequests": 1,
+    "failed": {
+      "alerts": [
+        "목록을 갱신하지 못했습니다. 마지막 정상 데이터를 표시하며 자동으로 다시 시도합니다."
+      ],
+      "blur": 0,
+      "globalBlur": 0,
+      "label": "failed",
+      "rows": 1,
+      "spins": 0,
+      "time": 1791973653117,
+      "top": 406
+    },
+    "sameTable": true,
+    "remainsLoggedIn": true,
+    "primaryDisabled": false,
+    "recovered": {
+      "alerts": [],
+      "blur": 0,
+      "globalBlur": 0,
+      "label": "recovered",
+      "rows": 1,
+      "spins": 0,
+      "time": 1791973653561,
+      "top": 328
+    }
+  },
+  "devices": {
+    "before": {
+      "alerts": [],
+      "blur": 0,
+      "globalBlur": 0,
+      "label": "before",
+      "rows": 0,
+      "spins": 0,
+      "time": 1791973653971,
+      "top": -22
+    },
+    "command": "listVmDeviceAssignments",
+    "failedRequests": 1,
+    "failed": {
+      "alerts": [
+        "정보를 조회하지 못했습니다. 이전 기록을 유지하며 변경 작업을 차단합니다."
+      ],
+      "blur": 0,
+      "globalBlur": 0,
+      "label": "failed",
+      "rows": 0,
+      "spins": 0,
+      "time": 1791973654399,
+      "top": 380
+    },
+    "sameTable": true,
+    "remainsLoggedIn": true,
+    "primaryDisabled": true,
+    "recovered": {
+      "alerts": [],
+      "blur": 0,
+      "globalBlur": 0,
+      "label": "recovered",
+      "rows": 0,
+      "spins": 0,
+      "time": 1791973654833,
+      "top": 328
+    }
+  },
+  "snapshot": {
+    "before": {
+      "alerts": [],
+      "blur": 0,
+      "globalBlur": 0,
+      "label": "before",
+      "rows": 1,
+      "spins": 0,
+      "time": 1791973655222,
+      "top": 140
+    },
+    "command": "listVMSnapshot",
+    "failedRequests": 1,
+    "failed": {
+      "alerts": [
+        "VM 스냅샷 상태를 확인할 수 없어 볼륨 생성 및 연결·기존 볼륨 연결·분리를 사용할 수 없습니다. 권한을 확인하거나 새로고침해 주세요."
+      ],
+      "blur": 0,
+      "globalBlur": 0,
+      "label": "failed",
+      "rows": 1,
+      "spins": 0,
+      "time": 1791973655671,
+      "top": 402
+    },
+    "sameTable": true,
+    "remainsLoggedIn": true,
+    "primaryDisabled": true,
+    "recovered": {
+      "alerts": [],
+      "blur": 0,
+      "globalBlur": 0,
+      "label": "recovered",
+      "rows": 1,
+      "spins": 0,
+      "time": 1791973656082,
+      "top": 328
+    }
+  }
+}

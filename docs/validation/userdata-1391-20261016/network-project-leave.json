@@ -1,0 +1,372 @@
+{
+  "start": 24391,
+  "cursor": 24516,
+  "truncated": false,
+  "hasMore": false,
+  "events": [
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 24395,
+      "requestId": "25396.4233",
+      "api": "listUserData",
+      "id": "5083bf2a-d30f-40e2-81e1-01ba3fd72f7c",
+      "entityid": null,
+      "projectid": "448e5ea1-8632-4701-8388-7b98c22adaf5",
+      "path": "/client/api/"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 24409,
+      "requestId": "25396.4234",
+      "api": "listUserData",
+      "id": "5083bf2a-d30f-40e2-81e1-01ba3fd72f7c",
+      "entityid": null,
+      "projectid": "448e5ea1-8632-4701-8388-7b98c22adaf5",
+      "path": "/client/api/"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 24410,
+      "requestId": "25396.4235",
+      "api": "listResourceIcon",
+      "id": null,
+      "entityid": null,
+      "projectid": null,
+      "path": "/client/api/"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 24411,
+      "requestId": "25396.4236",
+      "api": "listResourceIcon",
+      "id": null,
+      "entityid": null,
+      "projectid": null,
+      "path": "/client/api/"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 24412,
+      "requestId": "25396.4237",
+      "api": "listAccounts",
+      "id": "261aa7fb-f824-42de-a1a4-901fbd9b87a7",
+      "entityid": null,
+      "projectid": null,
+      "path": "/client/api/"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 24413,
+      "requestId": "25396.4238",
+      "api": "listVirtualMachines",
+      "id": null,
+      "entityid": null,
+      "projectid": null,
+      "path": "/client/api/"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 24414,
+      "requestId": "25396.4239",
+      "api": "listVirtualMachines",
+      "id": null,
+      "entityid": null,
+      "projectid": null,
+      "path": "/client/api/"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 24415,
+      "requestId": "25396.4240",
+      "api": "listVirtualMachines",
+      "id": null,
+      "entityid": null,
+      "projectid": null,
+      "path": "/client/api/"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 24416,
+      "requestId": "25396.4241",
+      "api": "listEvents",
+      "id": null,
+      "entityid": null,
+      "projectid": null,
+      "path": "/client/api/"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 24417,
+      "requestId": "25396.4242",
+      "api": "listKubernetesClusters",
+      "id": null,
+      "entityid": null,
+      "projectid": null,
+      "path": "/client/api/"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 24418,
+      "requestId": "25396.4243",
+      "api": "listVolumes",
+      "id": null,
+      "entityid": null,
+      "projectid": null,
+      "path": "/client/api/"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 24419,
+      "requestId": "25396.4244",
+      "api": "listSnapshots",
+      "id": null,
+      "entityid": null,
+      "projectid": null,
+      "path": "/client/api/"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 24420,
+      "requestId": "25396.4245",
+      "api": "listNetworks",
+      "id": null,
+      "entityid": null,
+      "projectid": null,
+      "path": "/client/api/"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 24421,
+      "requestId": "25396.4246",
+      "api": "listVPCs",
+      "id": null,
+      "entityid": null,
+      "projectid": null,
+      "path": "/client/api/"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 24422,
+      "requestId": "25396.4247",
+      "api": "listPublicIpAddresses",
+      "id": null,
+      "entityid": null,
+      "projectid": null,
+      "path": "/client/api/"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 24423,
+      "requestId": "25396.4248",
+      "api": "listTemplates",
+      "id": null,
+      "entityid": null,
+      "projectid": null,
+      "path": "/client/api/"
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 24434,
+      "requestId": "25396.4233",
+      "api": "listUserData",
+      "status": 200
+    },
+    {
+      "method": "Runtime.exceptionThrown",
+      "sequence": 24438,
+      "exceptionDetails": {
+        "columnNumber": 308779,
+        "exception": {
+          "className": "i",
+          "description": "i",
+          "objectId": "8139532253641184318.19.34",
+          "preview": {
+            "description": "i",
+            "overflow": false,
+            "properties": [
+              {
+                "name": "message",
+                "type": "string",
+                "value": "canceled"
+              },
+              {
+                "name": "name",
+                "type": "string",
+                "value": "CanceledError"
+              },
+              {
+                "name": "code",
+                "type": "string",
+                "value": "ERR_CANCELED"
+              },
+              {
+                "name": "stack",
+                "type": "string",
+                "value": "CanceledError: canceled\n    at Object.cancel (http…31.10:8080/client/js/vendors.3ea5c3f6.js:82:22618"
+              }
+            ],
+            "type": "object"
+          },
+          "type": "object"
+        },
+        "exceptionId": 109,
+        "executionContextId": 19,
+        "lineNumber": 154,
+        "scriptId": "10",
+        "stackTrace": {
+          "callFrames": [
+            {
+              "columnNumber": 308779,
+              "functionName": "",
+              "lineNumber": 154,
+              "scriptId": "10",
+              "url": "http://10.10.31.10:8080/client/js/vendors.3ea5c3f6.js"
+            },
+            {
+              "columnNumber": 687870,
+              "functionName": "cancel",
+              "lineNumber": 0,
+              "scriptId": "1335",
+              "url": "http://10.10.31.10:8080/client/js/app.c9e3887d.js"
+            },
+            {
+              "columnNumber": 555711,
+              "functionName": "beforeRouteLeave",
+              "lineNumber": 0,
+              "scriptId": "1335",
+              "url": "http://10.10.31.10:8080/client/js/app.c9e3887d.js"
+            },
+            {
+              "columnNumber": 13574,
+              "functionName": "",
+              "lineNumber": 81,
+              "scriptId": "10",
+              "url": "http://10.10.31.10:8080/client/js/vendors.3ea5c3f6.js"
+            },
+            {
+              "columnNumber": 13388,
+              "functionName": "",
+              "lineNumber": 81,
+              "scriptId": "10",
+              "url": "http://10.10.31.10:8080/client/js/vendors.3ea5c3f6.js"
+            },
+            {
+              "columnNumber": 22617,
+              "functionName": "",
+              "lineNumber": 81,
+              "scriptId": "10",
+              "url": "http://10.10.31.10:8080/client/js/vendors.3ea5c3f6.js"
+            }
+          ]
+        },
+        "text": "Uncaught (in promise)",
+        "url": "http://10.10.31.10:8080/client/js/vendors.3ea5c3f6.js"
+      }
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 24440,
+      "requestId": "25396.4235",
+      "api": "listResourceIcon",
+      "status": 200
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 24449,
+      "requestId": "25396.4236",
+      "api": "listResourceIcon",
+      "status": 200
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 24454,
+      "requestId": "25396.4234",
+      "api": "listUserData",
+      "status": 200
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 24468,
+      "requestId": "25396.4242",
+      "api": "listKubernetesClusters",
+      "status": 200
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 24472,
+      "requestId": "25396.4241",
+      "api": "listEvents",
+      "status": 200
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 24476,
+      "requestId": "25396.4237",
+      "api": "listAccounts",
+      "status": 200
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 24480,
+      "requestId": "25396.4239",
+      "api": "listVirtualMachines",
+      "status": 200
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 24484,
+      "requestId": "25396.4238",
+      "api": "listVirtualMachines",
+      "status": 200
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 24488,
+      "requestId": "25396.4240",
+      "api": "listVirtualMachines",
+      "status": 200
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 24492,
+      "requestId": "25396.4243",
+      "api": "listVolumes",
+      "status": 200
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 24496,
+      "requestId": "25396.4246",
+      "api": "listVPCs",
+      "status": 200
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 24500,
+      "requestId": "25396.4244",
+      "api": "listSnapshots",
+      "status": 200
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 24504,
+      "requestId": "25396.4247",
+      "api": "listPublicIpAddresses",
+      "status": 200
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 24508,
+      "requestId": "25396.4245",
+      "api": "listNetworks",
+      "status": 200
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 24513,
+      "requestId": "25396.4248",
+      "api": "listTemplates",
+      "status": 200
+    }
+  ]
+}

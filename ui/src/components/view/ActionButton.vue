@@ -21,6 +21,7 @@
       v-if="dataView"
       :entries="dataViewMenuEntries"
       :title="displayTitle"
+      :title-suffix="titleSuffix"
       :show-resource-title="showResourceTitle"
       @execute="executeDataViewEntry" />
     <template v-else>
@@ -50,6 +51,7 @@
         :disabled="isActionDisabled(action)" >
         <a-button
           :disabled="isActionDisabled(action)"
+          :aria-label="$t(action.label)"
           :type="dataView ? 'text' : (primaryIconList.includes(action.icon) ? 'primary' : 'default')"
           :shape="dataView ? null : (['PlusOutlined', 'plus-outlined'].includes(action.icon) ? 'round' : 'circle')"
           :danger="dangerIconList.includes(action.icon)"
@@ -74,9 +76,10 @@
             (dataView && action.dataView && ('show' in action ? action.show(resource, $store.getters) : true))
           )"
         :disabled="isActionDisabled(action)"
+        :aria-label="$t(action.label)"
         :type="dataView ? 'text' : (primaryIconList.includes(action.icon) ? 'primary' : 'default')"
         :danger="dangerIconList.includes(action.icon)"
-        :shape="dataView ? null : (['PlusOutlined', 'plus-outlined', 'UserAddOutlined', 'user-add-outlined'].includes(action.icon) ? 'round' : 'circle')"
+        :shape="dataView ? null : (action.toolbarLabel || ['PlusOutlined', 'plus-outlined', 'UserAddOutlined', 'user-add-outlined'].includes(action.icon) ? 'round' : 'circle')"
         :style="dataView ? {} : { marginLeft: '5px' }"
         :class="['action-button-item', { 'action-button-item--dataview': dataView }]"
         :size="size"
@@ -86,8 +89,8 @@
         <span v-if="dataView" class="action-button-item__label">
           {{ $t(action.label) }}
         </span>
-        <span v-else-if="['PlusOutlined', 'plus-outlined', 'UserAddOutlined', 'user-add-outlined'].includes(action.icon)">
-          {{ $t(action.label) }}
+        <span v-else-if="action.toolbarLabel || ['PlusOutlined', 'plus-outlined', 'UserAddOutlined', 'user-add-outlined'].includes(action.icon)">
+          {{ $t(action.toolbarLabel || action.label) }}
         </span>
       </a-button>
     </a-tooltip>
@@ -102,10 +105,13 @@ import { isDangerAction, resolveActionMenuGroup } from '@/utils/actionMenu'
 
 export default {
   name: 'ActionButton',
+  inject: { resourceActionReady: { default: () => () => true } },
   components: { ResourceActionMenu },
   data () {
     return {
       actionBadge: {},
+      cubePortalPort: '9090',
+      cubePortalPortLoaded: false,
       wallLinkUrl: '',
       wallLinkReady: false
     }
@@ -157,6 +163,10 @@ export default {
     titleOverride: {
       type: String,
       default: ''
+    },
+    titleSuffix: {
+      type: String,
+      default: ''
     }
   },
   watch: {
@@ -168,6 +178,7 @@ export default {
     },
     routeName () {
       this.updateWallLinkUrl()
+      this.updateCubePortalPort()
     }
   },
   computed: {
@@ -305,7 +316,7 @@ export default {
       if (!this.showCubeButton) {
         return ''
       }
-      return `https://${this.resource.ipaddress}:9090`
+      return `https://${this.resource.ipaddress}:${this.cubePortalPort}`
     }
   },
   methods: {
@@ -357,6 +368,7 @@ export default {
       }
       this.handleShowBadge()
       this.updateWallLinkUrl()
+      this.updateCubePortalPort()
     },
     execAction (action) {
       if (this.isActionDisabled(action)) {
@@ -369,6 +381,7 @@ export default {
       this.$emit('exec-action', action)
     },
     isActionDisabled (action) {
+      if ((this.dataView || action.groupAction) && this.resourceActionReady?.() === false) return true
       return 'disabled' in action ? action.disabled(this.resource, this.$store.getters, this.selectedItems) : false
     },
     getActionTooltip (action) {
@@ -451,6 +464,21 @@ export default {
         this.wallLinkReady = !!finalUrl
       }).catch(() => {
         this.wallLinkReady = false
+      })
+    },
+    updateCubePortalPort () {
+      if (!this.showCubeButton || this.cubePortalPortLoaded) {
+        return
+      }
+      this.cubePortalPortLoaded = true
+      postAPI('listConfigurations', { name: 'cube.portal.port' }).then(json => {
+        const value = json?.listconfigurationsresponse?.configuration?.[0]?.value
+        const port = Number(value)
+        if (Number.isInteger(port) && port >= 1 && port <= 65535) {
+          this.cubePortalPort = String(port)
+        }
+      }).catch(() => {
+        this.cubePortalPort = '9090'
       })
     },
     handleShowBadge () {

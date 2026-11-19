@@ -1,0 +1,21 @@
+[
+  {
+    "action": "comments",
+    "url": "http://10.10.31.10:8080/client/#/userdata/e0733469-22eb-4a9e-982b-2681f66c7f5e?tab=comments",
+    "text": "보내기\n업데이트\n관리자만 표시\n코멘트 (0)\n전체 0 개 항목 중 0-0 표시\n1"
+  },
+  {
+    "action": "back-details",
+    "url": "http://10.10.31.10:8080/client/#/userdata/e0733469-22eb-4a9e-982b-2681f66c7f5e",
+    "text": "아이디\n\ne0733469-22eb-4a9e-982b-2681f66c7f5e\n이름\n\nUDLIB-31-20261015-한글\nUserdata\n\n#cloud-config\n# 사용자 데이터 검증\nwrite_files:\n  - path: /tmp/udlib-validation.txt\n    content: \"안녕하세요 {{ ds.meta_data.udlib_message }}\"\n\n계정\n\nadmin\n도메인\n\nROOT\n파라미터\n\nudlib_message"
+  },
+  {
+    "action": "forward-comments",
+    "url": "http://10.10.31.10:8080/client/#/userdata/e0733469-22eb-4a9e-982b-2681f66c7f5e?tab=comments"
+  },
+  {
+    "action": "reload-comments",
+    "url": "http://10.10.31.10:8080/client/#/userdata/e0733469-22eb-4a9e-982b-2681f66c7f5e?tab=comments",
+    "text": "보내기\n업데이트\n관리자만 표시\n코멘트 (0)\n전체 0 개 항목 중 0-0 표시\n1"
+  }
+]

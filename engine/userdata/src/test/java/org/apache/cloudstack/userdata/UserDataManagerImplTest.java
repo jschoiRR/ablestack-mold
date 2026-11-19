@@ -75,6 +75,27 @@ public class UserDataManagerImplTest {
     }
 
     @Test
+    public void testCanonicalValidationBoundariesAndMalformedUrl() {
+        assertNull(userDataManager.validateUserData(" ", BaseCmd.HTTPMethod.POST)); // VM clearing remains supported.
+        for (String value : new String[] {"%", "%GG", "A", "eA=", "eA===", "eA==Yg==", "!!!!"}) {
+            org.junit.Assert.assertThrows(com.cloud.exception.InvalidParameterValueException.class,
+                    () -> userDataManager.validateUserData(value, BaseCmd.HTTPMethod.POST));
+        }
+        assertEquals("Zm+8/w8=", userDataManager.validateUserData("Zm+8/w8%3D", BaseCmd.HTTPMethod.POST));
+        assertEquals("/wAB", userDataManager.validateUserData("_wAB", BaseCmd.HTTPMethod.POST));
+        assertEquals("eA==", userDataManager.validateUserData(" eA\n", BaseCmd.HTTPMethod.POST));
+        String limit = Base64.getEncoder().encodeToString(new byte[24576]);
+        assertEquals(32768, userDataManager.validateUserData(limit, BaseCmd.HTTPMethod.POST).length());
+        String over = Base64.getEncoder().encodeToString(new byte[24577]).replace("=", "");
+        org.junit.Assert.assertThrows(com.cloud.exception.InvalidParameterValueException.class,
+                () -> userDataManager.validateUserData(over, BaseCmd.HTTPMethod.POST));
+        String getLimit = Base64.getEncoder().encodeToString(new byte[3072]);
+        assertEquals(getLimit, userDataManager.validateUserData(getLimit, BaseCmd.HTTPMethod.GET));
+        org.junit.Assert.assertThrows(com.cloud.exception.InvalidParameterValueException.class,
+                () -> userDataManager.validateUserData(getLimit + "AAAA", BaseCmd.HTTPMethod.GET));
+    }
+
+    @Test
     public void testValidateAndGetUserDataForSystemVMWithBlankUuid() throws IOException {
         // Test with blank UUID should return null
         assertNull("null UUID should return null", userDataManager.validateAndGetUserDataForSystemVM(null));

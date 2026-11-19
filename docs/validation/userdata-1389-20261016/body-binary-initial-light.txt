@@ -1,0 +1,55 @@
+Browser tab: 4, Title: "사용자 데이터 라이브러리 - ABLESTACK-Mold", URL: "http://10.10.31.10:8080/client/#/userdata/cd2544db-5b1f-4af1-a9bc-6b541553a956?tab=userdata.content".
+The following is a diff from the previous accessibility tree with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+Removed element IDs: 253-255, 267-304, 306-314
+~0 AXWebArea 사용자 데이터 라이브러리 - ABLESTACK-Mold, URL: 10.10.31.10:8080/client/#/userdata/cd2544db-5b1f-4af1-a9bc-6b541553a956?tab=userdata.content
+~					245 text / UD1389-31-20261016-binary
++						253 image reload
++			254 container
++				255 image solution
++				256 heading UD1389-31-20261016-binary, Value: 4
++					257 text UD1389-31-20261016-binary
++				258 text 아이디
++				259 button barcode
++					260 image barcode
++				261 link Description: cd2544db-5b1f-4af1-a9bc-6b541553a956 , Value: javascript:;
++				262 text 계정
++				263 image user
++				264 link Description: admin, Value: 10.10.31.10:8080/client/#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f
++				265 text 도메인
++				266 image block
++				267 link Description: ROOT, Value: 10.10.31.10:8080/client/#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details
++				268 link Description: cloud-server 가상머신 보기, Value: 10.10.31.10:8080/client/#/vm?userdataid=cd2544db-5b1f-4af1-a9bc-6b541553a956
++			269 container
++				270 tab group
++					271 container
++						272 tab (selectable, settable, boolean) 상세, Value: 0, ID: rc-tabs-22-tab-details
++						273 tab (selected, settable, boolean) 사용자 데이터 본문, Value: 1, ID: rc-tabs-22-tab-userdata.content
++						274 tab (selectable, settable, boolean) 사용 가상머신, Value: 0, ID: rc-tabs-22-tab-userdata.usage.vms
++						275 tab (selectable, settable, boolean) 연결 템플릿, Value: 0, ID: rc-tabs-22-tab-userdata.usage.templates
++						276 tab (selectable, settable, boolean) 연결 ISO, Value: 0, ID: rc-tabs-22-tab-userdata.usage.isos
++						277 tab (selectable, settable, boolean) 코멘트, Value: 0, ID: rc-tabs-22-tab-comments
++				278 container Description: 사용자 데이터 본문, ID: rc-tabs-22-panel-userdata.content
++					279 container 사용자 데이터 본문
++						280 button copy 클립보드에 복사
++							281 image copy
++							282 text 클립보드에 복사
++						283 button download 다운로드
++							284 image download
++							285 text 다운로드
++						286 container 본문 표시 형식
++							287 container
++								288 radio button (disabled, settable, integer) Description: 원문 (UTF-8), Value: 0
++								289 text 원문 (UTF-8)
++							290 container
++								291 radio button (settable, integer) Description: Base64, Value: 1
++								292 text Base64
++						293 button 업데이트
++							294 image reload
++						295 text 등록된 라이브러리의 본문입니다. 실행 결과를 의미하지 않습니다. 선택한 표시 형식으로 복사·다운로드합니다. 원문 다운로드는 BOM·줄바꿈을 포함한 저장 바이트를 보존합니다.
++						296 text 표시: Base64 · 원문 크기: 5 바이트
++						297 container
++							298 image exclamation-circle
++							299 text UTF-8 텍스트로 해석할 수 없는 본문입니다. Base64로 확인하고 내려받으세요.
++						300 container Base64
++							301 text /wABAv4=
+The focused UI element is 0 AXWebArea 사용자 데이터 라이브러리 - ABLESTACK-Mold, URL: 10.10.31.10:8080/client/#/userdata/cd2544db-5b1f-4af1-a9bc-6b541553a956?tab=userdata.content

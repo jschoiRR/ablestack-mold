@@ -1,0 +1,554 @@
+[
+  {
+    "cluster": 31,
+    "sourceCommit": "9b1363af4f2815e87a920f1191c3925f6c85c277",
+    "activePath": "/usr/share/cloudstack-management/lib/cloudstack-4.23.0.0-Mold.Europa-202609222315.jar",
+    "baseSha256": "fb8a982dabec39fbf300b235a4bf5ea5e4ecb91bb372544c9b578de8e7d9714e",
+    "patchedSha256": "db71b5e055b60ff28b95bc620038cc6757432b66fe9f82a73bc0c850d7fb9b1d",
+    "stageFile": "management-as07-31.jar",
+    "classes": [
+      {
+        "file": "com/cloud/api/ApiDBUtils.class",
+        "sha256": "909f5ceb73e5bbf88a9ac2e6b67452e0ca134fc6188d5697f6e09321a5edd072"
+      },
+      {
+        "file": "com/cloud/api/ApiResponseHelper$1.class",
+        "sha256": "f08d38246d218d513315629bdfd0e7f9fa7dc4da551e95ab153eb6fff79b6737"
+      },
+      {
+        "file": "com/cloud/api/ApiResponseHelper.class",
+        "sha256": "b25738584f1902b9585aabfe35994767571b93f4eed2536df4404d5c6dc5074f"
+      },
+      {
+        "file": "com/cloud/network/as/AutoScaleManagerImpl$1.class",
+        "sha256": "38de3bd9c693095f95a8d7b5be4e733ea1115907cfaff233184cb7d86b0c559f"
+      },
+      {
+        "file": "com/cloud/network/as/AutoScaleManagerImpl$2.class",
+        "sha256": "d2ea52e64d92719d38ad877c720789c644585a2612073ffda18f75f3076442db"
+      },
+      {
+        "file": "com/cloud/network/as/AutoScaleManagerImpl$3.class",
+        "sha256": "0cfb030ba0a23c47c258c575d93d1cca2f941643cc02c57144952da20b3f4f14"
+      },
+      {
+        "file": "com/cloud/network/as/AutoScaleManagerImpl$4.class",
+        "sha256": "0b1af663aa440466f9e0605257d4567a0ecf32e6aa09052cf15d59332d7c9f0e"
+      },
+      {
+        "file": "com/cloud/network/as/AutoScaleManagerImpl$CheckAutoScaleVmGroupAsync.class",
+        "sha256": "9342f27cb01d6d0b1c1d398f6ac42b20be793d93fb60494905c7f7990418ae69"
+      },
+      {
+        "file": "com/cloud/network/as/AutoScaleManagerImpl$MonitorTask.class",
+        "sha256": "0c97a18f18f41cccc4ae93fb155e392f5965cde08d6c76162adc0a26bfa19816"
+      },
+      {
+        "file": "com/cloud/network/as/AutoScaleManagerImpl$SearchWrapper.class",
+        "sha256": "e275918fc3e80b91721aa1cfbdec18bfcd5190451202efc6171f8a713f495879"
+      },
+      {
+        "file": "com/cloud/network/as/AutoScaleManagerImpl.class",
+        "sha256": "4b82828a2bedf5870b60a4b039a60fb7f820f21e25d4393146e4517d66f3ba12"
+      },
+      {
+        "file": "com/cloud/network/as/AutoScaleVmGroup$State.class",
+        "sha256": "c61231f421928bbbc2f03c2cdaf1b40fc7c8962b4f1e80858e62f06d97f612dc"
+      },
+      {
+        "file": "com/cloud/network/as/AutoScaleVmGroup.class",
+        "sha256": "52fd2fd027f13af20e23ae1b865358f3e49f7cb1bffccee29dcfebbda12848a6"
+      },
+      {
+        "file": "com/cloud/network/as/dao/AutoScaleVmGroupDao.class",
+        "sha256": "0f104764461fb6bc3cc430ffb1a156b73ac54710fc97fc928fcf6fbc260a3bac"
+      },
+      {
+        "file": "com/cloud/network/as/dao/AutoScaleVmGroupDaoImpl.class",
+        "sha256": "0c8c7f6e77aaee2a4d96a23745b14815cd72f19ba0d5d8cf359039c16740107f"
+      },
+      {
+        "file": "com/cloud/network/as/dao/AutoScaleVmGroupVmMapDao.class",
+        "sha256": "d9141df72d9c7955040c72b359f1f6ab902f3b1a39321c740fef1321528434c1"
+      },
+      {
+        "file": "com/cloud/network/as/dao/AutoScaleVmGroupVmMapDaoImpl.class",
+        "sha256": "d6630660d073dd494155affcc2c9b7f532a9bc8fce2c327a09c70de531fa9b8d"
+      },
+      {
+        "file": "com/cloud/network/lb/LoadBalancingRulesManagerImpl$1.class",
+        "sha256": "4e61df9b19e3b8d2e90b4839e0d55e5d3765ab42c469abc25ab9c412a975711b"
+      },
+      {
+        "file": "com/cloud/network/lb/LoadBalancingRulesManagerImpl$2.class",
+        "sha256": "16c0dff62d4c02a9ee1d4fd0d04a3afe6620baee95cc1774151ec801f49fd308"
+      },
+      {
+        "file": "com/cloud/network/lb/LoadBalancingRulesManagerImpl$3.class",
+        "sha256": "b8176e9591880cdd3c62410ead5f925d7a544b7ee73e78ca5a8bf27e3b333bd6"
+      },
+      {
+        "file": "com/cloud/network/lb/LoadBalancingRulesManagerImpl$4.class",
+        "sha256": "a88c830f1ffe1c608de43b2ca3cf493f4f086c35a999049caa86066cd4f0cf64"
+      },
+      {
+        "file": "com/cloud/network/lb/LoadBalancingRulesManagerImpl$5.class",
+        "sha256": "38cb6289ab27598cc8814064c2697bec9df53c40a88bd2dceb3c20739aff357e"
+      },
+      {
+        "file": "com/cloud/network/lb/LoadBalancingRulesManagerImpl$6.class",
+        "sha256": "2b6d21a547c961d2cadabf308441df418fc4e29144687a2a0145dc2985a43d11"
+      },
+      {
+        "file": "com/cloud/network/lb/LoadBalancingRulesManagerImpl$7.class",
+        "sha256": "bd17fa3ac25ffa1d48f3e6b942e2d15b60311201881a689debfbc730401a91ff"
+      },
+      {
+        "file": "com/cloud/network/lb/LoadBalancingRulesManagerImpl$8.class",
+        "sha256": "8ba565ee060328aa056b19254d4dfbd4bc570e6514a1509139290dba8a26656e"
+      },
+      {
+        "file": "com/cloud/network/lb/LoadBalancingRulesManagerImpl.class",
+        "sha256": "a43f3b99a4b8ac1ea945a9bf7e0572991cac1d0087a382b12fe4c1cda26cd503"
+      },
+      {
+        "file": "com/cloud/vm/UserVmManagerImpl$1.class",
+        "sha256": "d5df45a13f960b2068f2045b7958c78b8af66be6a80a594f82c93e14f5d29ef9"
+      },
+      {
+        "file": "com/cloud/vm/UserVmManagerImpl$10.class",
+        "sha256": "6fae562c0560111140d496eefe05a062812609a4917f1b787577d69813631ba9"
+      },
+      {
+        "file": "com/cloud/vm/UserVmManagerImpl$11.class",
+        "sha256": "737a71cf4d67732e4851ef503c8292066774208f73fe404f7e44d2676f1dfa56"
+      },
+      {
+        "file": "com/cloud/vm/UserVmManagerImpl$12.class",
+        "sha256": "b130d679bb5c9307291f59f96bee75bb6d6dcb0a39d09e027176fd3b7ddb99d2"
+      },
+      {
+        "file": "com/cloud/vm/UserVmManagerImpl$13.class",
+        "sha256": "fab816dc19ca683f8d81e456354654b17c6505fe61d1e1785e61cbba68678596"
+      },
+      {
+        "file": "com/cloud/vm/UserVmManagerImpl$14.class",
+        "sha256": "c3e32cb22a37a5762c0646628bff214e9a6e1b6a29693d93a8d6d9618432a108"
+      },
+      {
+        "file": "com/cloud/vm/UserVmManagerImpl$15.class",
+        "sha256": "3304b047af4ea08fd8db4320d961a4489fa490c52f4002d565765301bcc02c5b"
+      },
+      {
+        "file": "com/cloud/vm/UserVmManagerImpl$16.class",
+        "sha256": "d4fdb2e57f6441c398028ee26cea181134ee1f98d003316df239d053a99ec860"
+      },
+      {
+        "file": "com/cloud/vm/UserVmManagerImpl$17.class",
+        "sha256": "509ab78a5dbbedca8c9e0c17b83d21be75041e16a028b1af8eb880b7ff9a19a6"
+      },
+      {
+        "file": "com/cloud/vm/UserVmManagerImpl$18.class",
+        "sha256": "7a6779cf615be3c2a72d28d72f2f08f0922492bb53362201186069e24ef143e1"
+      },
+      {
+        "file": "com/cloud/vm/UserVmManagerImpl$2.class",
+        "sha256": "efe268a73a1d85dedc7fd111b1288a77bc60f4d6b3ca88ee67f93c2fb65e0b6d"
+      },
+      {
+        "file": "com/cloud/vm/UserVmManagerImpl$3.class",
+        "sha256": "afe0c66d375c68a2010c8738f4fe3ddc828c1c9eaffb6ca16f7a068a277f6179"
+      },
+      {
+        "file": "com/cloud/vm/UserVmManagerImpl$4.class",
+        "sha256": "951eb22abf3679dd1818b2a398f61f0a78fdc8f06db3ac631f41f80e0a26ec43"
+      },
+      {
+        "file": "com/cloud/vm/UserVmManagerImpl$5.class",
+        "sha256": "b57425402c07f51f2f3114526519f54e91c8d54b720e8bd5970d4199d336dc24"
+      },
+      {
+        "file": "com/cloud/vm/UserVmManagerImpl$6.class",
+        "sha256": "cab6b559f3d11c278f10fce45b43bcdf2ea5720249a0d5298f44b6deba4d4683"
+      },
+      {
+        "file": "com/cloud/vm/UserVmManagerImpl$7.class",
+        "sha256": "2762bd6201093fec7530f25083a11f3678aca2297c60181b7676c2218d3da162"
+      },
+      {
+        "file": "com/cloud/vm/UserVmManagerImpl$8.class",
+        "sha256": "cf5ee6d9f186577e27b894c85854091a8beda3d808ec251a2f2b6866ac952fca"
+      },
+      {
+        "file": "com/cloud/vm/UserVmManagerImpl$9.class",
+        "sha256": "dc6a9a0a130dd5e545841970372eec4f52e32db23b42124043590b65bdd4998c"
+      },
+      {
+        "file": "com/cloud/vm/UserVmManagerImpl$DeployIsoSelection.class",
+        "sha256": "650c59a57aa8abe1816f3185da517e8c66dd68afe2dd32342f86127dfdafed27"
+      },
+      {
+        "file": "com/cloud/vm/UserVmManagerImpl$ExpungeTask.class",
+        "sha256": "32361e560ae181418bfaee0ce53851a00a2178c1c75f8a502d8d77b9eaaa0259"
+      },
+      {
+        "file": "com/cloud/vm/UserVmManagerImpl$FastCloneRecoveryCheck.class",
+        "sha256": "f57fb94b0548258c7707ee5c8ddc307587e1d72543b0544f4ff09a756c06fc51"
+      },
+      {
+        "file": "com/cloud/vm/UserVmManagerImpl$FastCloneRecoveryPaths.class",
+        "sha256": "42885062f9949154df977d2c7136e3e631af945080923fd22eddfd779041d3aa"
+      },
+      {
+        "file": "com/cloud/vm/UserVmManagerImpl$FlattenProgressTask.class",
+        "sha256": "26fe100688ba2940599c945ac7cdad756b42e00f7474b59db7d5cf5ba3d0b8e8"
+      },
+      {
+        "file": "com/cloud/vm/UserVmManagerImpl$FlattenTask.class",
+        "sha256": "52b45b87ae693a0fd69b7e12c787c4a29aea129f44a1cb0272664f5646ffe916"
+      },
+      {
+        "file": "com/cloud/vm/UserVmManagerImpl$VmAndCountDetails.class",
+        "sha256": "e83a45829f98a6bb8a48c164ee4a457fc9c89fd08774d2d893efebd1bb4b150e"
+      },
+      {
+        "file": "com/cloud/vm/UserVmManagerImpl$VmIpAddrFetchThread.class",
+        "sha256": "082377be519172fb5748828b632ded3fc5647bb7a4f53d657cd7d2b5d1ce6f8f"
+      },
+      {
+        "file": "com/cloud/vm/UserVmManagerImpl$VmIpFetchTask.class",
+        "sha256": "91deccc7fbe81b1b05a5a7705691dc1aef361d4424622d2df15bebc09303fb56"
+      },
+      {
+        "file": "com/cloud/vm/UserVmManagerImpl.class",
+        "sha256": "8399b3a0edbecfcb4b646c77a3a950a5df27306a8aeb512604621ab19f4a0d13"
+      },
+      {
+        "file": "org/apache/cloudstack/api/command/user/autoscale/UpdateAutoScaleVmProfileCmd.class",
+        "sha256": "56aeff8ac5e83d63ef2e54a62e1d42af182a7a62b5ee3d97ace82cab8edf5e62"
+      },
+      {
+        "file": "org/apache/cloudstack/api/command/user/schedule/UpdateResourceScheduleCmd.class",
+        "sha256": "4b48749cf5391958a18e7e3bd6084db9dd674534ee44dfa9539ebdd4272fc36d"
+      },
+      {
+        "file": "org/apache/cloudstack/api/response/AutoScaleVmGroupResponse.class",
+        "sha256": "2a6961aa8c0dd50519af0da8dadb7eb206d332666a095a7d0ccc0b85b2e9745c"
+      },
+      {
+        "file": "org/apache/cloudstack/schedule/BaseScheduleWorker$1.class",
+        "sha256": "6d84e338aaf77b2e21293ad28dce2c39861c297d2f49ffb2aebbe5f5bde3334a"
+      },
+      {
+        "file": "org/apache/cloudstack/schedule/BaseScheduleWorker.class",
+        "sha256": "c684dc11518ab2f5a5a42a03a20cec36dd9272bc7e5e415adf453396caf0f9da"
+      },
+      {
+        "file": "org/apache/cloudstack/schedule/ResourceScheduleManager.class",
+        "sha256": "1117a1d40bee38bdb056814efa6f8b9549b0bac3bbdcba20251aba242f4bcdeb"
+      },
+      {
+        "file": "org/apache/cloudstack/schedule/ResourceScheduleManagerImpl.class",
+        "sha256": "799e28478d94772e37ab508ee8321c5dd93b8ed11023803439c23cf5e1836045"
+      },
+      {
+        "file": "org/apache/cloudstack/schedule/autoscale/AutoScaleScheduleWorker.class",
+        "sha256": "84e8775aebdd9847134a407c361ac7ada1e1e01a0b8d21ece7c5bc60c655c7e9"
+      },
+      {
+        "file": "org/apache/cloudstack/schedule/dao/ResourceScheduledJobDaoImpl.class",
+        "sha256": "098ed734cf8059a718413ac93e492e7e37a324c1480cae72f09bb3f370982bd2"
+      }
+    ],
+    "modules": [
+      {
+        "module": "api",
+        "sha256": "0cfacaa0f282c7f8817866bfd499c30206d2468acbf08ae643b7f553ab9231d0"
+      },
+      {
+        "module": "engine/schema",
+        "sha256": "8aa5770b13d7bc1a488f4b96711497f089d58412d760904cdb7b1d9358133c34"
+      },
+      {
+        "module": "server",
+        "sha256": "5959b0fd7052314f7157c1383dc207084e630fe1d75ff3fc0d51064e70d62656"
+      }
+    ]
+  },
+  {
+    "cluster": 32,
+    "sourceCommit": "9b1363af4f2815e87a920f1191c3925f6c85c277",
+    "activePath": "/usr/share/cloudstack-management/lib/cloudstack-4.23.0.0.jar",
+    "baseSha256": "c20c8d80b6f2e5f8a4ee4ad104e85737e2a2aebc2821033cca754cec6f28ab58",
+    "patchedSha256": "ee0c69e97ce0d7918eaec03ed381703ff18a7974a50b2e242eac3ef71156bba5",
+    "stageFile": "management-as07-32.jar",
+    "classes": [
+      {
+        "file": "com/cloud/api/ApiDBUtils.class",
+        "sha256": "909f5ceb73e5bbf88a9ac2e6b67452e0ca134fc6188d5697f6e09321a5edd072"
+      },
+      {
+        "file": "com/cloud/api/ApiResponseHelper$1.class",
+        "sha256": "f08d38246d218d513315629bdfd0e7f9fa7dc4da551e95ab153eb6fff79b6737"
+      },
+      {
+        "file": "com/cloud/api/ApiResponseHelper.class",
+        "sha256": "b25738584f1902b9585aabfe35994767571b93f4eed2536df4404d5c6dc5074f"
+      },
+      {
+        "file": "com/cloud/network/as/AutoScaleManagerImpl$1.class",
+        "sha256": "38de3bd9c693095f95a8d7b5be4e733ea1115907cfaff233184cb7d86b0c559f"
+      },
+      {
+        "file": "com/cloud/network/as/AutoScaleManagerImpl$2.class",
+        "sha256": "d2ea52e64d92719d38ad877c720789c644585a2612073ffda18f75f3076442db"
+      },
+      {
+        "file": "com/cloud/network/as/AutoScaleManagerImpl$3.class",
+        "sha256": "0cfb030ba0a23c47c258c575d93d1cca2f941643cc02c57144952da20b3f4f14"
+      },
+      {
+        "file": "com/cloud/network/as/AutoScaleManagerImpl$4.class",
+        "sha256": "0b1af663aa440466f9e0605257d4567a0ecf32e6aa09052cf15d59332d7c9f0e"
+      },
+      {
+        "file": "com/cloud/network/as/AutoScaleManagerImpl$CheckAutoScaleVmGroupAsync.class",
+        "sha256": "9342f27cb01d6d0b1c1d398f6ac42b20be793d93fb60494905c7f7990418ae69"
+      },
+      {
+        "file": "com/cloud/network/as/AutoScaleManagerImpl$MonitorTask.class",
+        "sha256": "0c97a18f18f41cccc4ae93fb155e392f5965cde08d6c76162adc0a26bfa19816"
+      },
+      {
+        "file": "com/cloud/network/as/AutoScaleManagerImpl$SearchWrapper.class",
+        "sha256": "e275918fc3e80b91721aa1cfbdec18bfcd5190451202efc6171f8a713f495879"
+      },
+      {
+        "file": "com/cloud/network/as/AutoScaleManagerImpl.class",
+        "sha256": "4b82828a2bedf5870b60a4b039a60fb7f820f21e25d4393146e4517d66f3ba12"
+      },
+      {
+        "file": "com/cloud/network/as/AutoScaleVmGroup$State.class",
+        "sha256": "c61231f421928bbbc2f03c2cdaf1b40fc7c8962b4f1e80858e62f06d97f612dc"
+      },
+      {
+        "file": "com/cloud/network/as/AutoScaleVmGroup.class",
+        "sha256": "52fd2fd027f13af20e23ae1b865358f3e49f7cb1bffccee29dcfebbda12848a6"
+      },
+      {
+        "file": "com/cloud/network/as/dao/AutoScaleVmGroupDao.class",
+        "sha256": "0f104764461fb6bc3cc430ffb1a156b73ac54710fc97fc928fcf6fbc260a3bac"
+      },
+      {
+        "file": "com/cloud/network/as/dao/AutoScaleVmGroupDaoImpl.class",
+        "sha256": "0c8c7f6e77aaee2a4d96a23745b14815cd72f19ba0d5d8cf359039c16740107f"
+      },
+      {
+        "file": "com/cloud/network/as/dao/AutoScaleVmGroupVmMapDao.class",
+        "sha256": "d9141df72d9c7955040c72b359f1f6ab902f3b1a39321c740fef1321528434c1"
+      },
+      {
+        "file": "com/cloud/network/as/dao/AutoScaleVmGroupVmMapDaoImpl.class",
+        "sha256": "d6630660d073dd494155affcc2c9b7f532a9bc8fce2c327a09c70de531fa9b8d"
+      },
+      {
+        "file": "com/cloud/network/lb/LoadBalancingRulesManagerImpl$1.class",
+        "sha256": "4e61df9b19e3b8d2e90b4839e0d55e5d3765ab42c469abc25ab9c412a975711b"
+      },
+      {
+        "file": "com/cloud/network/lb/LoadBalancingRulesManagerImpl$2.class",
+        "sha256": "16c0dff62d4c02a9ee1d4fd0d04a3afe6620baee95cc1774151ec801f49fd308"
+      },
+      {
+        "file": "com/cloud/network/lb/LoadBalancingRulesManagerImpl$3.class",
+        "sha256": "b8176e9591880cdd3c62410ead5f925d7a544b7ee73e78ca5a8bf27e3b333bd6"
+      },
+      {
+        "file": "com/cloud/network/lb/LoadBalancingRulesManagerImpl$4.class",
+        "sha256": "a88c830f1ffe1c608de43b2ca3cf493f4f086c35a999049caa86066cd4f0cf64"
+      },
+      {
+        "file": "com/cloud/network/lb/LoadBalancingRulesManagerImpl$5.class",
+        "sha256": "38cb6289ab27598cc8814064c2697bec9df53c40a88bd2dceb3c20739aff357e"
+      },
+      {
+        "file": "com/cloud/network/lb/LoadBalancingRulesManagerImpl$6.class",
+        "sha256": "2b6d21a547c961d2cadabf308441df418fc4e29144687a2a0145dc2985a43d11"
+      },
+      {
+        "file": "com/cloud/network/lb/LoadBalancingRulesManagerImpl$7.class",
+        "sha256": "bd17fa3ac25ffa1d48f3e6b942e2d15b60311201881a689debfbc730401a91ff"
+      },
+      {
+        "file": "com/cloud/network/lb/LoadBalancingRulesManagerImpl$8.class",
+        "sha256": "8ba565ee060328aa056b19254d4dfbd4bc570e6514a1509139290dba8a26656e"
+      },
+      {
+        "file": "com/cloud/network/lb/LoadBalancingRulesManagerImpl.class",
+        "sha256": "a43f3b99a4b8ac1ea945a9bf7e0572991cac1d0087a382b12fe4c1cda26cd503"
+      },
+      {
+        "file": "com/cloud/vm/UserVmManagerImpl$1.class",
+        "sha256": "d5df45a13f960b2068f2045b7958c78b8af66be6a80a594f82c93e14f5d29ef9"
+      },
+      {
+        "file": "com/cloud/vm/UserVmManagerImpl$10.class",
+        "sha256": "6fae562c0560111140d496eefe05a062812609a4917f1b787577d69813631ba9"
+      },
+      {
+        "file": "com/cloud/vm/UserVmManagerImpl$11.class",
+        "sha256": "737a71cf4d67732e4851ef503c8292066774208f73fe404f7e44d2676f1dfa56"
+      },
+      {
+        "file": "com/cloud/vm/UserVmManagerImpl$12.class",
+        "sha256": "b130d679bb5c9307291f59f96bee75bb6d6dcb0a39d09e027176fd3b7ddb99d2"
+      },
+      {
+        "file": "com/cloud/vm/UserVmManagerImpl$13.class",
+        "sha256": "fab816dc19ca683f8d81e456354654b17c6505fe61d1e1785e61cbba68678596"
+      },
+      {
+        "file": "com/cloud/vm/UserVmManagerImpl$14.class",
+        "sha256": "c3e32cb22a37a5762c0646628bff214e9a6e1b6a29693d93a8d6d9618432a108"
+      },
+      {
+        "file": "com/cloud/vm/UserVmManagerImpl$15.class",
+        "sha256": "3304b047af4ea08fd8db4320d961a4489fa490c52f4002d565765301bcc02c5b"
+      },
+      {
+        "file": "com/cloud/vm/UserVmManagerImpl$16.class",
+        "sha256": "d4fdb2e57f6441c398028ee26cea181134ee1f98d003316df239d053a99ec860"
+      },
+      {
+        "file": "com/cloud/vm/UserVmManagerImpl$17.class",
+        "sha256": "509ab78a5dbbedca8c9e0c17b83d21be75041e16a028b1af8eb880b7ff9a19a6"
+      },
+      {
+        "file": "com/cloud/vm/UserVmManagerImpl$18.class",
+        "sha256": "7a6779cf615be3c2a72d28d72f2f08f0922492bb53362201186069e24ef143e1"
+      },
+      {
+        "file": "com/cloud/vm/UserVmManagerImpl$2.class",
+        "sha256": "efe268a73a1d85dedc7fd111b1288a77bc60f4d6b3ca88ee67f93c2fb65e0b6d"
+      },
+      {
+        "file": "com/cloud/vm/UserVmManagerImpl$3.class",
+        "sha256": "afe0c66d375c68a2010c8738f4fe3ddc828c1c9eaffb6ca16f7a068a277f6179"
+      },
+      {
+        "file": "com/cloud/vm/UserVmManagerImpl$4.class",
+        "sha256": "951eb22abf3679dd1818b2a398f61f0a78fdc8f06db3ac631f41f80e0a26ec43"
+      },
+      {
+        "file": "com/cloud/vm/UserVmManagerImpl$5.class",
+        "sha256": "b57425402c07f51f2f3114526519f54e91c8d54b720e8bd5970d4199d336dc24"
+      },
+      {
+        "file": "com/cloud/vm/UserVmManagerImpl$6.class",
+        "sha256": "cab6b559f3d11c278f10fce45b43bcdf2ea5720249a0d5298f44b6deba4d4683"
+      },
+      {
+        "file": "com/cloud/vm/UserVmManagerImpl$7.class",
+        "sha256": "2762bd6201093fec7530f25083a11f3678aca2297c60181b7676c2218d3da162"
+      },
+      {
+        "file": "com/cloud/vm/UserVmManagerImpl$8.class",
+        "sha256": "cf5ee6d9f186577e27b894c85854091a8beda3d808ec251a2f2b6866ac952fca"
+      },
+      {
+        "file": "com/cloud/vm/UserVmManagerImpl$9.class",
+        "sha256": "dc6a9a0a130dd5e545841970372eec4f52e32db23b42124043590b65bdd4998c"
+      },
+      {
+        "file": "com/cloud/vm/UserVmManagerImpl$DeployIsoSelection.class",
+        "sha256": "650c59a57aa8abe1816f3185da517e8c66dd68afe2dd32342f86127dfdafed27"
+      },
+      {
+        "file": "com/cloud/vm/UserVmManagerImpl$ExpungeTask.class",
+        "sha256": "32361e560ae181418bfaee0ce53851a00a2178c1c75f8a502d8d77b9eaaa0259"
+      },
+      {
+        "file": "com/cloud/vm/UserVmManagerImpl$FastCloneRecoveryCheck.class",
+        "sha256": "f57fb94b0548258c7707ee5c8ddc307587e1d72543b0544f4ff09a756c06fc51"
+      },
+      {
+        "file": "com/cloud/vm/UserVmManagerImpl$FastCloneRecoveryPaths.class",
+        "sha256": "42885062f9949154df977d2c7136e3e631af945080923fd22eddfd779041d3aa"
+      },
+      {
+        "file": "com/cloud/vm/UserVmManagerImpl$FlattenProgressTask.class",
+        "sha256": "26fe100688ba2940599c945ac7cdad756b42e00f7474b59db7d5cf5ba3d0b8e8"
+      },
+      {
+        "file": "com/cloud/vm/UserVmManagerImpl$FlattenTask.class",
+        "sha256": "52b45b87ae693a0fd69b7e12c787c4a29aea129f44a1cb0272664f5646ffe916"
+      },
+      {
+        "file": "com/cloud/vm/UserVmManagerImpl$VmAndCountDetails.class",
+        "sha256": "e83a45829f98a6bb8a48c164ee4a457fc9c89fd08774d2d893efebd1bb4b150e"
+      },
+      {
+        "file": "com/cloud/vm/UserVmManagerImpl$VmIpAddrFetchThread.class",
+        "sha256": "082377be519172fb5748828b632ded3fc5647bb7a4f53d657cd7d2b5d1ce6f8f"
+      },
+      {
+        "file": "com/cloud/vm/UserVmManagerImpl$VmIpFetchTask.class",
+        "sha256": "91deccc7fbe81b1b05a5a7705691dc1aef361d4424622d2df15bebc09303fb56"
+      },
+      {
+        "file": "com/cloud/vm/UserVmManagerImpl.class",
+        "sha256": "8399b3a0edbecfcb4b646c77a3a950a5df27306a8aeb512604621ab19f4a0d13"
+      },
+      {
+        "file": "org/apache/cloudstack/api/command/user/autoscale/UpdateAutoScaleVmProfileCmd.class",
+        "sha256": "56aeff8ac5e83d63ef2e54a62e1d42af182a7a62b5ee3d97ace82cab8edf5e62"
+      },
+      {
+        "file": "org/apache/cloudstack/api/command/user/schedule/UpdateResourceScheduleCmd.class",
+        "sha256": "4b48749cf5391958a18e7e3bd6084db9dd674534ee44dfa9539ebdd4272fc36d"
+      },
+      {
+        "file": "org/apache/cloudstack/api/response/AutoScaleVmGroupResponse.class",
+        "sha256": "2a6961aa8c0dd50519af0da8dadb7eb206d332666a095a7d0ccc0b85b2e9745c"
+      },
+      {
+        "file": "org/apache/cloudstack/schedule/BaseScheduleWorker$1.class",
+        "sha256": "6d84e338aaf77b2e21293ad28dce2c39861c297d2f49ffb2aebbe5f5bde3334a"
+      },
+      {
+        "file": "org/apache/cloudstack/schedule/BaseScheduleWorker.class",
+        "sha256": "c684dc11518ab2f5a5a42a03a20cec36dd9272bc7e5e415adf453396caf0f9da"
+      },
+      {
+        "file": "org/apache/cloudstack/schedule/ResourceScheduleManager.class",
+        "sha256": "1117a1d40bee38bdb056814efa6f8b9549b0bac3bbdcba20251aba242f4bcdeb"
+      },
+      {
+        "file": "org/apache/cloudstack/schedule/ResourceScheduleManagerImpl.class",
+        "sha256": "799e28478d94772e37ab508ee8321c5dd93b8ed11023803439c23cf5e1836045"
+      },
+      {
+        "file": "org/apache/cloudstack/schedule/autoscale/AutoScaleScheduleWorker.class",
+        "sha256": "84e8775aebdd9847134a407c361ac7ada1e1e01a0b8d21ece7c5bc60c655c7e9"
+      },
+      {
+        "file": "org/apache/cloudstack/schedule/dao/ResourceScheduledJobDaoImpl.class",
+        "sha256": "098ed734cf8059a718413ac93e492e7e37a324c1480cae72f09bb3f370982bd2"
+      }
+    ],
+    "modules": [
+      {
+        "module": "api",
+        "sha256": "0cfacaa0f282c7f8817866bfd499c30206d2468acbf08ae643b7f553ab9231d0"
+      },
+      {
+        "module": "engine/schema",
+        "sha256": "8aa5770b13d7bc1a488f4b96711497f089d58412d760904cdb7b1d9358133c34"
+      },
+      {
+        "module": "server",
+        "sha256": "5959b0fd7052314f7157c1383dc207084e630fe1d75ff3fc0d51064e70d62656"
+      }
+    ]
+  }
+]

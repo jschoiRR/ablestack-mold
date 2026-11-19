@@ -328,7 +328,20 @@ public class VMScheduleWorkerTest {
         ResourceScheduledJobVO job1 = Mockito.mock(ResourceScheduledJobVO.class);
         ResourceScheduledJobVO job2 = Mockito.mock(ResourceScheduledJobVO.class);
 
-        Mockito.doReturn(null).when(vmScheduleWorker).processJob(job2);
+        Mockito.doReturn(null).when(vmScheduleWorker).processJob(Mockito.any());
+        Mockito.when(job1.getId()).thenReturn(91L);
+        Mockito.when(job2.getId()).thenReturn(92L);
+        ResourceScheduleVO schedule = Mockito.mock(ResourceScheduleVO.class);
+        Mockito.when(schedule.getEnabled()).thenReturn(true);
+        Mockito.when(schedule.getResourceType()).thenReturn(org.apache.cloudstack.api.ApiCommandResourceType.VirtualMachine);
+        Mockito.when(schedule.getActionName()).thenReturn("START");
+        Mockito.when(schedule.getStartDate()).thenReturn(DateUtils.addDays(new Date(), -1));
+        Mockito.when(resourceScheduleDao.findById(Mockito.anyLong())).thenReturn(schedule);
+        for (ResourceScheduledJobVO job : java.util.Arrays.asList(job1, job2)) {
+            Mockito.when(job.getAsyncJobId()).thenReturn(null);
+            Mockito.when(job.getActionName()).thenReturn("START");
+            Mockito.when(job.getScheduledTime()).thenReturn(new Date());
+        }
 
         Mockito.when(resourceScheduledJobDao.acquireInLockTable(job1.getId())).thenReturn(job1);
         Mockito.when(resourceScheduledJobDao.acquireInLockTable(job2.getId())).thenReturn(job2);

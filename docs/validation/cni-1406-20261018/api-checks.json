@@ -1,0 +1,243 @@
+[
+  {
+    "name": "ordinary owner CNI read preserves bytes and variables",
+    "pass_check": true
+  },
+  {
+    "name": "project member source CNI read has explicit project owner",
+    "pass_check": true
+  },
+  {
+    "name": "ordinary owner metadata permission allowed within owner scope",
+    "pass_check": true
+  },
+  {
+    "name": "foreign CNI source ACL filtered",
+    "pass_check": true
+  },
+  {
+    "name": "ordinary UserData cannot be read as a CNI source",
+    "pass_check": true
+  },
+  {
+    "name": "server duplicate CNI name rejected without new resource",
+    "pass_check": true
+  },
+  {
+    "name": "foreign account cannot record metadata on another owner CNI",
+    "pass_check": true,
+    "code": 531
+  },
+  {
+    "name": "cni1406-account-clone new UUID and exact name",
+    "pass_check": true
+  },
+  {
+    "name": "cni1406-account-clone exact owner and project isolation",
+    "pass_check": true
+  },
+  {
+    "name": "cni1406-account-clone exact bytes and declaration values",
+    "pass_check": true
+  },
+  {
+    "name": "cni1406-account-clone one complete type-specific relation with exact provenance",
+    "pass_check": true
+  },
+  {
+    "name": "cni1406-lost-response new UUID and exact name",
+    "pass_check": true
+  },
+  {
+    "name": "cni1406-lost-response exact owner and project isolation",
+    "pass_check": true
+  },
+  {
+    "name": "cni1406-lost-response exact bytes and declaration values",
+    "pass_check": true
+  },
+  {
+    "name": "cni1406-lost-response one complete type-specific relation with exact provenance",
+    "pass_check": true
+  },
+  {
+    "name": "cni1406-partial-relation new UUID and exact name",
+    "pass_check": true
+  },
+  {
+    "name": "cni1406-partial-relation exact owner and project isolation",
+    "pass_check": true
+  },
+  {
+    "name": "cni1406-partial-relation exact bytes and declaration values",
+    "pass_check": true
+  },
+  {
+    "name": "cni1406-partial-relation one complete type-specific relation with exact provenance",
+    "pass_check": true
+  },
+  {
+    "name": "cni1406-permission-retry new UUID and exact name",
+    "pass_check": true
+  },
+  {
+    "name": "cni1406-permission-retry exact owner and project isolation",
+    "pass_check": true
+  },
+  {
+    "name": "cni1406-permission-retry exact bytes and declaration values",
+    "pass_check": true
+  },
+  {
+    "name": "cni1406-permission-retry one complete type-specific relation with exact provenance",
+    "pass_check": true
+  },
+  {
+    "name": "cni1406-relation-403 new UUID and exact name",
+    "pass_check": true
+  },
+  {
+    "name": "cni1406-relation-403 exact owner and project isolation",
+    "pass_check": true
+  },
+  {
+    "name": "cni1406-relation-403 exact bytes and declaration values",
+    "pass_check": true
+  },
+  {
+    "name": "cni1406-relation-403 one complete type-specific relation with exact provenance",
+    "pass_check": true
+  },
+  {
+    "name": "cni1406-owner-binary new UUID and exact name",
+    "pass_check": true
+  },
+  {
+    "name": "cni1406-owner-binary exact owner and project isolation",
+    "pass_check": true
+  },
+  {
+    "name": "cni1406-owner-binary exact bytes and declaration values",
+    "pass_check": true
+  },
+  {
+    "name": "cni1406-owner-binary one complete type-specific relation with exact provenance",
+    "pass_check": true
+  },
+  {
+    "name": "cni1406-project-clone new UUID and exact name",
+    "pass_check": true
+  },
+  {
+    "name": "cni1406-project-clone exact owner and project isolation",
+    "pass_check": true
+  },
+  {
+    "name": "cni1406-project-clone exact bytes and declaration values",
+    "pass_check": true
+  },
+  {
+    "name": "cni1406-project-clone one complete type-specific relation with exact provenance",
+    "pass_check": true
+  },
+  {
+    "name": "cni1406-in-use-clone new UUID and exact name",
+    "pass_check": true
+  },
+  {
+    "name": "cni1406-in-use-clone exact owner and project isolation",
+    "pass_check": true
+  },
+  {
+    "name": "cni1406-in-use-clone exact bytes and declaration values",
+    "pass_check": true
+  },
+  {
+    "name": "cni1406-in-use-clone one complete type-specific relation with exact provenance",
+    "pass_check": true
+  },
+  {
+    "name": "cni1406-normal-clone new UUID and exact name",
+    "pass_check": true
+  },
+  {
+    "name": "cni1406-normal-clone exact owner and project isolation",
+    "pass_check": true
+  },
+  {
+    "name": "cni1406-normal-clone exact bytes and declaration values",
+    "pass_check": true
+  },
+  {
+    "name": "cni1406-normal-clone one complete type-specific relation with exact provenance",
+    "pass_check": true
+  },
+  {
+    "name": "source cni1406-in-use stored bytes scope and variables unchanged",
+    "pass_check": true
+  },
+  {
+    "name": "source cni1406-long-한글😀긴이름-긴이름-긴이름-긴이름-긴이름-긴이름-긴이름-긴이름-긴이름-긴이름-긴이름-긴이름-긴이름-긴이름-긴이름-긴이름-긴이름-긴이름-긴이름-긴이름-긴이름-긴이름-긴이름-긴이름-긴이름-긴이름-긴이름-긴이름-긴이름-긴이름-긴이름-긴이름-긴이름-긴이름-긴이름-긴이름-긴이름-긴이름-긴이름-긴이름-긴이름-긴이름-긴이름- stored bytes scope and variables unchanged",
+    "pass_check": true
+  },
+  {
+    "name": "source cni1406-binary stored bytes scope and variables unchanged",
+    "pass_check": true
+  },
+  {
+    "name": "source cni1406-project stored bytes scope and variables unchanged",
+    "pass_check": true
+  },
+  {
+    "name": "source cni1406-account stored bytes scope and variables unchanged",
+    "pass_check": true
+  },
+  {
+    "name": "in-use source cluster reference and identity unchanged",
+    "pass_check": true
+  },
+  {
+    "name": "in-use source cluster retains both exact running node UUIDs",
+    "pass_check": true
+  },
+  {
+    "name": "real source guest nodes and custom CNI remain identical after cloning",
+    "pass_check": true
+  },
+  {
+    "name": "cni1406-final-confirmed new UUID and exact name",
+    "pass_check": true
+  },
+  {
+    "name": "cni1406-final-confirmed exact owner and project isolation",
+    "pass_check": true
+  },
+  {
+    "name": "cni1406-final-confirmed exact bytes and declaration values",
+    "pass_check": true
+  },
+  {
+    "name": "cni1406-final-confirmed one complete type-specific relation with exact provenance",
+    "pass_check": true
+  },
+  {
+    "name": "general UserData clone source exact original bytes name scope and parameters unchanged",
+    "pass_check": true
+  },
+  {
+    "name": "cni1406-final-deployed new UUID and exact name",
+    "pass_check": true
+  },
+  {
+    "name": "cni1406-final-deployed exact owner and project isolation",
+    "pass_check": true
+  },
+  {
+    "name": "cni1406-final-deployed exact bytes and declaration values",
+    "pass_check": true
+  },
+  {
+    "name": "cni1406-final-deployed one complete type-specific relation with exact provenance",
+    "pass_check": true
+  }
+]

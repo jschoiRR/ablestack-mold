@@ -43,7 +43,7 @@ import com.cloud.network.as.AutoScaleVmProfile;
 import com.cloud.user.Account;
 
 @APICommand(name = "updateAutoScaleVmProfile", description = "Updates an existing autoscale Instance profile.", responseObject = AutoScaleVmProfileResponse.class, entityType = {AutoScaleVmProfile.class},
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+        requestHasSensitiveInfo = true, responseHasSensitiveInfo = true)
 public class UpdateAutoScaleVmProfileCmd extends BaseAsyncCustomIdCmd {
 
 
@@ -85,10 +85,18 @@ public class UpdateAutoScaleVmProfileCmd extends BaseAsyncCustomIdCmd {
     @Parameter(name = ApiConstants.OTHER_DEPLOY_PARAMS,
             type = CommandType.MAP,
             description = "Parameters other than zoneId/serviceOfferringId/templateId of the auto deployed  Instance. \n"
-                    + "Example: otherdeployparams[0].name=serviceofferingid&otherdeployparams[0].value=a7fb50f6-01d9-11ed-8bc1-77f8f0228926&otherdeployparams[1].name=rootdisksize&otherdeployparams[1].value=10 .\n"
-                    + "Possible parameters are \"rootdisksize\", \"diskofferingid\",\"size\", \"securitygroupids\", \"overridediskofferingid\", \"keypairs\", \"affinitygroupids'\" and \"networkids\".",
+                    + "Example: otherdeployparams[0].name=overridediskofferingid&otherdeployparams[0].value=a7fb50f6-01d9-11ed-8bc1-77f8f0228926&otherdeployparams[1].name=rootdisksize&otherdeployparams[1].value=10 .\n"
+                    + "Possible parameters are \"rootdisksize\", \"diskofferingid\",\"disksize\", \"securitygroupids\", \"overridediskofferingid\", \"keypairs\", \"affinitygroupids\" and \"networkids\".",
             since = "4.18.0")
     private Map<String, HashMap<String, String>> otherDeployParams;
+
+    @Parameter(name = "clearotherdeployparams", type = CommandType.BOOLEAN,
+            description = "Explicitly remove all other deploy parameters. Omitted parameters otherwise remain unchanged.")
+    private Boolean clearOtherDeployParams;
+
+    @Parameter(name = "clearcounterparams", type = CommandType.BOOLEAN,
+            description = "Explicitly remove all counter parameters. Omitted parameters otherwise remain unchanged.")
+    private Boolean clearCounterParams;
 
     @Parameter(name = ApiConstants.USER_DATA,
             type = CommandType.STRING,
@@ -154,6 +162,14 @@ public class UpdateAutoScaleVmProfileCmd extends BaseAsyncCustomIdCmd {
 
     public Map<String, HashMap<String, String>> getOtherDeployParams() {
         return otherDeployParams;
+    }
+
+    public boolean isClearOtherDeployParams() {
+        return Boolean.TRUE.equals(clearOtherDeployParams);
+    }
+
+    public boolean isClearCounterParams() {
+        return Boolean.TRUE.equals(clearCounterParams);
     }
 
     public Map getCounterParamList() {

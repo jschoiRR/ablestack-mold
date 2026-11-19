@@ -1,0 +1,167 @@
+[
+  {
+    "instance": "i-35-397-VM",
+    "domainState": "running",
+    "disks": [
+      {
+        "device": "sda",
+        "source": {
+          "file": "/mnt/glue-gfs/7d97eaef-5619-494b-92a4-ddddb13cfa11",
+          "index": "3"
+        },
+        "driver": {
+          "name": "qemu",
+          "type": "qcow2",
+          "cache": "none",
+          "io": "io_uring",
+          "discard": "unmap"
+        },
+        "virtualSize": 107374182400,
+        "format": "qcow2",
+        "allocatedBytes": 3599446016,
+        "backingFile": null,
+        "exists": true
+      }
+    ],
+    "cluster": 31,
+    "vmUuid": "bc00f070-797a-40b0-9785-c965dc50fc63",
+    "host": "10.10.31.1"
+  },
+  {
+    "instance": "i-35-473-VM",
+    "domainState": "running",
+    "disks": [
+      {
+        "device": "sda",
+        "source": {
+          "file": "/mnt/glue-gfs/1883ab57-6f62-4937-a642-977095d3a10e",
+          "index": "3"
+        },
+        "driver": {
+          "name": "qemu",
+          "type": "qcow2",
+          "cache": "none",
+          "io": "io_uring",
+          "discard": "unmap"
+        },
+        "virtualSize": 107374182400,
+        "format": "qcow2",
+        "allocatedBytes": 3568529408,
+        "backingFile": null,
+        "exists": true
+      }
+    ],
+    "cluster": 31,
+    "vmUuid": "d4ee7060-5394-4e67-8388-dff8e57d360a",
+    "host": "10.10.31.1"
+  },
+  {
+    "instance": "i-35-474-VM",
+    "domainState": "running",
+    "disks": [
+      {
+        "device": "sda",
+        "source": {
+          "file": "/mnt/glue-gfs/cdb00b62-51d4-47ed-b089-626dde44eb6b",
+          "index": "3"
+        },
+        "driver": {
+          "name": "qemu",
+          "type": "qcow2",
+          "cache": "none",
+          "io": "io_uring",
+          "discard": "unmap"
+        },
+        "virtualSize": 107374182400,
+        "format": "qcow2",
+        "allocatedBytes": 3567960064,
+        "backingFile": null,
+        "exists": true
+      }
+    ],
+    "cluster": 31,
+    "vmUuid": "0779b6d2-415a-4274-bf21-6e9215337037",
+    "host": "10.10.31.3"
+  },
+  {
+    "instance": "i-6-73-VM",
+    "domainState": "running",
+    "disks": [
+      {
+        "device": "sda",
+        "source": {
+          "dev": "/dev/rbd/rbd/d38a9172-aa7f-4ab5-80c8-cff68a74ab28",
+          "index": "3"
+        },
+        "driver": {
+          "name": "qemu",
+          "type": "raw",
+          "cache": "none",
+          "discard": "unmap"
+        },
+        "virtualSize": 107374182400,
+        "format": "raw",
+        "allocatedBytes": 0,
+        "backingFile": null,
+        "exists": true
+      }
+    ],
+    "cluster": 32,
+    "vmUuid": "6f9bd71b-1745-48c5-9c88-cc0cccd9d1ff",
+    "host": "10.10.32.2"
+  },
+  {
+    "instance": "i-6-149-VM",
+    "domainState": "running",
+    "disks": [
+      {
+        "device": "sda",
+        "source": {
+          "dev": "/dev/rbd/rbd/4e8347ae-0bd2-4fb8-91ed-b78332725380",
+          "index": "3"
+        },
+        "driver": {
+          "name": "qemu",
+          "type": "raw",
+          "cache": "none",
+          "discard": "unmap"
+        },
+        "virtualSize": 107374182400,
+        "format": "raw",
+        "allocatedBytes": 0,
+        "backingFile": null,
+        "exists": true
+      }
+    ],
+    "cluster": 32,
+    "vmUuid": "724804b7-0388-4d25-8198-47ab49a37395",
+    "host": "10.10.32.1"
+  },
+  {
+    "instance": "i-6-150-VM",
+    "domainState": "running",
+    "disks": [
+      {
+        "device": "sda",
+        "source": {
+          "dev": "/dev/rbd/rbd/271d4b96-c025-48ba-8c98-f0b24cdd9bd1",
+          "index": "3"
+        },
+        "driver": {
+          "name": "qemu",
+          "type": "raw",
+          "cache": "none",
+          "discard": "unmap"
+        },
+        "virtualSize": 107374182400,
+        "format": "raw",
+        "allocatedBytes": 0,
+        "backingFile": null,
+        "exists": true
+      }
+    ],
+    "cluster": 32,
+    "vmUuid": "42c2cf45-ccc0-457b-8b00-d58c8f0a6d80",
+    "host": "10.10.32.1"
+  }
+]

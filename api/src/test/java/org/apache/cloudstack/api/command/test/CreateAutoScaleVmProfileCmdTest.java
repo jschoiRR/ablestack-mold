@@ -129,8 +129,9 @@ public class CreateAutoScaleVmProfileCmdTest {
     @Test
     public void verifyCreateAutoScaleVmProfileCmdParams() {
         HashMap<String, String> deployParamMap = createAutoScaleVmProfileCmd.getDeployParamMap();
-        Assert.assertEquals(otherDeployParams.size() + 4, deployParamMap.size());
+        Assert.assertEquals(otherDeployParams.size() + 5, deployParamMap.size());
         Assert.assertEquals("deployVirtualMachine", deployParamMap.get("command"));
+        Assert.assertEquals(projectId.toString(), deployParamMap.get("projectid"));
         Assert.assertEquals(zoneId.toString(), deployParamMap.get("zoneId"));
         Assert.assertEquals(serviceOfferingId.toString(), deployParamMap.get("serviceOfferingId"));
         Assert.assertEquals(templateId.toString(), deployParamMap.get("templateId"));
@@ -173,4 +174,21 @@ public class CreateAutoScaleVmProfileCmdTest {
             Assert.fail("Got exception: " + ex.getMessage());
         }
     }
+    @Test
+    public void projectValidationCannotBeRedirectedByDeployParameters() {
+        otherDeployParams.put("3", new HashMap<>(Map.of("name", "projectid", "value", "999")));
+        otherDeployParams.put("4", new HashMap<>(Map.of("name", "account", "value", "other-owner")));
+        otherDeployParams.put("5", new HashMap<>(Map.of("name", "domainid", "value", "999")));
+        HashMap<String, String> params = createAutoScaleVmProfileCmd.getDeployParamMap();
+        Assert.assertEquals(projectId.toString(), params.get("projectid"));
+        Assert.assertFalse(params.containsKey("account"));
+        Assert.assertFalse(params.containsKey("domainid"));
+    }
+
+    @Test
+    public void personalProfileValidationDoesNotInjectProjectScope() {
+        ReflectionTestUtils.setField(createAutoScaleVmProfileCmd, "projectId", null);
+        Assert.assertFalse(createAutoScaleVmProfileCmd.getDeployParamMap().containsKey("projectid"));
+    }
+
 }

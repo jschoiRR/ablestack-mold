@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1540" viewBox="0 0 1800 1540">
+<rect width="100%" height="100%" fill="white"/>
+<text x="72" y="56" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="52" font-weight="700" fill="#172B45">VM 시작 요청과 비동기 처리 흐름</text>
+<text x="72" y="135" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="31" font-weight="400" fill="#506378">요청 접수 → 백그라운드 실행 → 같은 Job을 조회하여 결과 확인</text>
+<rect x="72" y="232" width="1096" height="284" rx="20" fill="#F0F7FF" stroke="none" stroke-width="2"/>
+<rect x="100" y="257" width="48" height="48" rx="24" fill="#146CBA" stroke="none" stroke-width="2"/>
+<text x="114" y="267" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="29" font-weight="700" fill="white">1</text>
+<text x="168" y="266" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="37" font-weight="700" fill="#172B45">UI 요청 접수</text>
+<text x="100" y="337" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="32" font-weight="400" fill="#506378">POST /client/api · command=startVirtualMachine</text>
+<text x="100" y="395" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="31" font-weight="400" fill="#506378">인증·권한·입력 검사 → Async Job 등록</text>
+<text x="100" y="457" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="32" font-weight="700" fill="#146CBA">수락 응답: jobid = Job UUID</text>
+<rect x="1230" y="232" width="498" height="284" rx="20" fill="#F0F7FF" stroke="none" stroke-width="2"/>
+<text x="1258" y="269" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="33" font-weight="700" fill="#172B45">UI는 같은 Job을 조회</text>
+<text x="1258" y="343" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="29" font-weight="400" fill="#506378">queryAsyncJobResult</text>
+<text x="1258" y="405" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="29" font-weight="400" fill="#506378">jobid = 같은 Job UUID</text>
+<text x="1258" y="461" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="28" font-weight="700" fill="#146CBA">Job 결과를 반복해서 확인</text>
+<polyline points="1172,452 1226,452" fill="none" stroke="#146CBA" stroke-width="4"/>
+<polygon points="1226,452 1210.0,444.0 1210.0,460.0" fill="#146CBA"/>
+<text x="72" y="572" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="37" font-weight="700" fill="#172B45">백그라운드 실행</text>
+<text x="72" y="627" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="27" font-weight="400" fill="#506378">Starting 전환과 수락 응답의 관찰 순서는 실행 시점에 따라 달라질 수 있습니다.</text>
+<rect x="72" y="686" width="328" height="253" rx="16" fill="#F5F2FF" stroke="none" stroke-width="2"/>
+<text x="94" y="711" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="26" font-weight="700" fill="#172B45">1  서비스와 호스트 배치</text>
+<text x="94" y="778" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="25" font-weight="400" fill="#506378">VM 상태·조건 확인</text>
+<text x="94" y="828" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="25" font-weight="400" fill="#506378">시작 작업과 상태 전환</text>
+<text x="94" y="878" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="25" font-weight="400" fill="#506378">대상 호스트 선정</text>
+<rect x="456" y="686" width="328" height="253" rx="16" fill="#F5F2FF" stroke="none" stroke-width="2"/>
+<text x="478" y="711" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="26" font-weight="700" fill="#172B45">2  네트워크·볼륨 준비</text>
+<text x="478" y="778" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="25" font-weight="400" fill="#506378">NIC·네트워크 준비</text>
+<text x="478" y="828" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="25" font-weight="400" fill="#506378">필요한 제공자 구현</text>
+<text x="478" y="878" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="25" font-weight="400" fill="#506378">볼륨 준비</text>
+<rect x="840" y="686" width="328" height="253" rx="16" fill="#F5F2FF" stroke="none" stroke-width="2"/>
+<text x="862" y="711" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="26" font-weight="700" fill="#172B45">3  호스트에서 VM 실행</text>
+<text x="862" y="778" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="25" font-weight="400" fill="#506378">StartCommand → Agent</text>
+<text x="862" y="828" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="25" font-weight="400" fill="#506378">KVM wrapper → libvirt</text>
+<text x="862" y="878" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="25" font-weight="400" fill="#506378">domainCreateXML</text>
+<polyline points="404,820 452,820" fill="none" stroke="#6554B7" stroke-width="4"/>
+<polygon points="452,820 436.0,812.0 436.0,828.0" fill="#6554B7"/>
+<polyline points="788,820 836,820" fill="none" stroke="#6554B7" stroke-width="4"/>
+<polygon points="836,820 820.0,812.0 820.0,828.0" fill="#6554B7"/>
+<polyline points="1004,942 1004,999" fill="none" stroke="#6554B7" stroke-width="4"/>
+<polygon points="1004,999 1012.0,983.0 996.0,983.0" fill="#6554B7"/>
+<rect x="72" y="1004" width="1096" height="218" rx="18" fill="#EFF9F6" stroke="none" stroke-width="2"/>
+<text x="100" y="1030" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="35" font-weight="700" fill="#172B45">4  실행 결과를 관리 서버에 반영</text>
+<text x="100" y="1095" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="30" font-weight="400" fill="#506378">Agent의 StartAnswer → VM 상태와 Job 결과 갱신</text>
+<text x="100" y="1155" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="30" font-weight="400" fill="#506378">실패한 단계와 정리·재시도 여부는 로그로 확인</text>
+<rect x="1230" y="686" width="498" height="536" rx="18" fill="#F3F7FA" stroke="none" stroke-width="2"/>
+<text x="1258" y="712" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="32" font-weight="700" fill="#172B45">jobstatus로 결과 판단</text>
+<rect x="1258" y="785" width="442" height="78" rx="12" fill="#E0EEFF" stroke="none" stroke-width="2"/>
+<text x="1285" y="808" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="31" font-weight="700" fill="#146CBA">0</text>
+<text x="1340" y="808" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="31" font-weight="700" fill="#172B45">진행 중</text>
+<rect x="1258" y="884" width="442" height="78" rx="12" fill="#D6F0E9" stroke="none" stroke-width="2"/>
+<text x="1285" y="907" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="31" font-weight="700" fill="#008878">1</text>
+<text x="1340" y="907" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="31" font-weight="700" fill="#172B45">성공</text>
+<rect x="1258" y="983" width="442" height="78" rx="12" fill="#FBE7E7" stroke="none" stroke-width="2"/>
+<text x="1285" y="1006" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="31" font-weight="700" fill="#B63D46">2</text>
+<text x="1340" y="1006" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="31" font-weight="700" fill="#172B45">실패</text>
+<text x="1258" y="1102" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="29" font-weight="400" fill="#506378">최종 Job 결과와</text>
+<text x="1258" y="1151" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="29" font-weight="400" fill="#506378">VM 상태를 함께 확인</text>
+<polyline points="1172,1130 1226,1130" fill="none" stroke="#008878" stroke-width="4"/>
+<polygon points="1226,1130 1210.0,1122.0 1210.0,1138.0" fill="#008878"/>
+<text x="72" y="1305" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="31" font-weight="700" fill="#172B45">jobid는 작업 접수 확인입니다. 성공 여부는 최종 Job 결과로 판단합니다.</text>
+<text x="72" y="1370" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="28" font-weight="400" fill="#506378">폴링 통신 오류 ≠ 작업 실패  ·  Running ≠ 게스트 OS와 애플리케이션 준비 완료</text>
+<text x="72" y="1430" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="27" font-weight="400" fill="#506378">Job UUID와 내부 숫자 ID는 async_job.uuid / id로 연결합니다.</text>
+<text x="72" y="1480" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="24" font-weight="400" fill="#506378">근거: ApiServer · VirtualMachineManagerImpl · LibvirtStartCommandWrapper</text>
+</svg>

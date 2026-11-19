@@ -1,0 +1,362 @@
+// Licensed to the Apache Software Foundation (ASF) under one
+// or more contributor license agreements. See the NOTICE file
+// distributed with this work for additional information
+// regarding copyright ownership. The ASF licenses this file
+// to you under the Apache License, Version 2.0 (the
+// "License"); you may not use this file except in compliance
+// with the License. You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing,
+// software distributed under the License is distributed on an
+// "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+// KIND, either express or implied. See the License for the
+// specific language governing permissions and limitations
+// under the License.
+.mold-dialog {
+  top: 0;
+  padding-bottom: 0;
+  max-width: calc(100vw - 32px);
+  .ant-modal-content {
+    display: flex;
+    flex-direction: column;
+    max-height: calc(100vh - 48px);
+    max-height: calc(100dvh - 48px);
+    overflow: hidden;
+  }
+  .ant-modal-header, .ant-modal-footer { flex: 0 0 auto; }
+  .ant-modal-body { flex: 1 1 auto; min-height: 0; overflow-y: auto; overscroll-behavior: contain; }
+  .ant-descriptions-item-label { min-width: 120px; }
+  .ant-descriptions-item-content { overflow-wrap: anywhere; }
+}
+.mold-dialog-section { margin-top: 16px; }
+.mold-dialog-summary { margin-bottom: 24px; }
+.mold-dialog-toolbar { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0; }
+@media (max-width: 576px) {
+  .mold-dialog { max-width: calc(100vw - 16px); margin: 0 auto; }
+  .mold-dialog .ant-modal-content { max-height: calc(100dvh - 24px); }
+}
+
+.dark-mode .mold-dialog .ant-btn-primary:not(:disabled) {
+  background-color: var(--ui-action-primary-bg) !important;
+  border-color: var(--ui-action-primary-bg) !important;
+  color: var(--ui-action-primary-text) !important;
+  &:hover, &:focus { background-color: var(--ui-action-primary-hover) !important; border-color: var(--ui-action-primary-hover) !important; }
+  &.ant-btn-dangerous { background-color: var(--ui-action-danger-bg) !important; border-color: var(--ui-action-danger-bg) !important; }
+}
+.kubernetes-icon path { fill: currentColor !important; }
+
+// Tree labels and status tags retain separate space in every dialog and theme.
+.mold-dialog {
+  .ant-tree-node-content-wrapper { min-width: 0; white-space: normal; }
+  .mold-dialog-tree-node { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 8px; max-width: 100%; }
+  .mold-dialog-tree-label { min-width: 0; overflow-wrap: anywhere; }
+  .mold-dialog-tree-node .ant-tag { flex: 0 0 auto; margin: 0; }
+}
+
+/* Shared dialog guidance uses theme tokens, including teleported modal content. */
+.mold-dialog .ant-form-item-explain,
+.mold-dialog .ant-form-item-extra,
+.mold-dialog .ant-steps-item-description,
+.mold-dialog .ant-upload p {
+  color: var(--ui-text-secondary);
+}
+.mold-dialog .ant-form-item-explain-error {
+  color: var(--ui-error-text);
+}
+.mold-dialog .ant-form-item-explain-success {
+  color: var(--ui-success-text);
+}
+.mold-dialog .ant-form-item-explain-warning {
+  color: var(--ui-warning-text);
+}
+/* Shared dialog controls must keep one theme in normal, selected and disabled states. */
+.dark-mode .mold-dialog .ant-radio-button-wrapper {
+  color: var(--ui-text-primary);
+  background: var(--ui-bg-input);
+  border-color: var(--ui-border-strong);
+}
+.dark-mode .mold-dialog .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled) {
+  color: var(--ui-link);
+  background: var(--ui-bg-selected);
+  border-color: var(--ui-focus);
+}
+.dark-mode .mold-dialog .ant-select-multiple .ant-select-selection-item {
+  color: var(--ui-text-primary);
+  background: var(--ui-bg-input);
+  border-color: var(--ui-border-strong);
+}
+.dark-mode .mold-dialog .ant-select-multiple .ant-select-selection-item-remove {
+  color: var(--ui-text-secondary);
+}
+.dark-mode .mold-dialog .ant-select-disabled.ant-select:not(.ant-select-customize-input) .ant-select-selector {
+  color: var(--ui-text-muted);
+  background: var(--ui-bg-disabled);
+  border-color: var(--ui-border);
+}
+.dark-mode .mold-dialog .ant-select-disabled .ant-select-selection-item {
+  color: var(--ui-text-muted);
+  background: var(--ui-bg-disabled);
+  border-color: var(--ui-border);
+}
+.dark-mode .mold-dialog .ant-table-tbody > tr > td {
+  color: var(--ui-text-primary);
+  background: var(--ui-bg-surface) !important;
+}
+.dark-mode .mold-dialog .ant-table-tbody > tr.ant-table-row-selected > td {
+  background: var(--ui-bg-selected) !important;
+}
+.dark-mode .mold-dialog .ant-table-tbody > tr:hover:not(.ant-table-row-selected) > td {
+  background: var(--ui-bg-hover) !important;
+}
+
+/* Group labels match the 14px form text; weight and a rule convey hierarchy. */
+.network-form-group-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 16px 0 12px;
+  font-size: 14px;
+  line-height: 22px;
+  font-weight: 600;
+  color: var(--ui-text-primary);
+}
+.network-form-group-label::after {
+  content: '';
+  flex: 1;
+  border-top: 1px solid var(--ui-border);
+}
+
+.mold-form-dialog { display: flex; flex-direction: column; max-height: calc(100dvh - 180px); min-width: 0; }
+.mold-form-content { overflow-y: auto; min-height: 0; flex: 1; padding: 0 4px; }
+.mold-form-dialog > .action-button { flex: 0 0 auto; margin: 16px 0 0; padding: 16px 0 0; border-top: 1px solid var(--ui-border); }
+.mold-form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 24px; }
+.mold-form-full { grid-column: ~"1 / -1"; }
+/* Keep vertical grid fields stacked when AntD applies mobile column flex-basis. */
+.mold-form-dialog.ant-form-vertical .mold-form-grid > .ant-form-item {
+  flex-wrap: nowrap;
+  > .ant-form-item-label,
+  > .ant-form-item-control { flex: 0 0 auto; width: 100%; min-width: 0; }
+}
+body .mold-dialog.network-rule-dialog .form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px 24px; margin: 0 0 20px; padding: 0; }
+body .mold-dialog.network-rule-dialog .form__item { width: 100%; min-width: 0; margin: 0; }
+body .mold-dialog.network-rule-dialog .form__label { font-size: 14px; font-weight: 600; color: var(--ui-text-primary); margin-bottom: 8px; }
+body .mold-dialog.network-rule-dialog .form__item__input-container { width: 100%; }
+body .mold-dialog.network-rule-dialog .form__item__input-container .ant-input { width: calc((100% - 30px) / 2) !important; }
+body .mold-dialog.network-rule-dialog .form__item__input-container .tag-disabled-input { width: 30px !important; }
+body .mold-dialog.network-rule-dialog .form__required { color: var(--ui-error-icon); }
+body .mold-dialog.network-rule-dialog .input-search { width: ~"min(100%, 320px)"; margin: 16px 0; }
+body .mold-dialog.network-rule-dialog .form__item .ant-select { width: 100%; }
+body .mold-dialog.network-rule-dialog .form__item--full { grid-column: ~"1 / -1"; }
+@media (max-width: 576px) {
+  .mold-form-grid, body .mold-dialog.network-rule-dialog .form { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  body .mold-dialog.network-rule-dialog .form { gap: 16px; }
+  .mold-form-dialog { max-height: calc(100dvh - 160px); }
+  .mold-dialog .ant-modal-body { padding: 16px; }
+}
+
+.mold-dialog .ant-modal-body:has(.mold-form-dialog) { overflow: hidden; }
+.mold-dialog .form-layout:has(> .mold-dialog-toolbar) .mold-form-dialog { max-height: calc(100dvh - 270px); }
+
+.network-rules-search { max-width: 320px; margin-left: auto; }
+
+.kubernetes-wizard-steps { flex: 0 0 auto; margin-bottom: 24px; }
+.kubernetes-wizard-body { display: grid; grid-template-columns: minmax(0, 1fr) 270px; gap: 24px; align-items: start; }
+.kubernetes-wizard-main { min-width: 0; }
+.kubernetes-create-summary { border-left: 1px solid var(--ui-border); padding-left: 22px; color: var(--ui-text-primary); }
+.kubernetes-create-summary .network-form-group-label { margin-top: 0; }
+.kubernetes-summary-name { display: flex; gap: 12px; align-items: center; font-weight: 600; overflow-wrap: anywhere; }
+.kubernetes-summary-name .anticon { font-size: 28px; }
+.kubernetes-summary-item { margin-bottom: 18px; overflow-wrap: anywhere; }
+.kubernetes-summary-item strong { display: block; margin-bottom: 6px; }
+.kubernetes-summary-mobile { display: none; }
+.kubernetes-scale-summary { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 16px 0; }
+.kubernetes-scale-summary .ant-card-body { padding: 12px; color: var(--ui-text-primary); }
+.kubernetes-scale-summary strong { display: block; margin: 6px 0; font-size: 14px; }
+.kubernetes-summary-label { color: var(--ui-text-secondary); }
+@media (max-width: 765px) {
+  .kubernetes-wizard-body { display: block; }
+  .kubernetes-wizard-body > .kubernetes-create-summary { display: none; }
+  .kubernetes-summary-mobile { display: block; flex: 0 0 auto; padding-top: 12px; }
+  .kubernetes-summary-mobile .kubernetes-create-summary { padding: 12px 0 0; border-left: 0; max-height: 180px; overflow: auto; }
+  .kubernetes-wizard-steps { max-height: 100px; overflow: auto; }
+  .kubernetes-scale-summary { grid-template-columns: 1fr; }
+}
+
+.mold-dialog .action-button { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 8px; }
+.mold-dialog .action-button > .ant-btn { margin-left: 0; }
+.detail-tab-toolbar .ant-input-search { width: ~"min(100%, 320px)"; }
+
+/* Actions and context keep distinct space across all shared detail tabs. */
+body .detail-tab-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 20px; }
+body .detail-tab-toolbar > .ant-btn { margin: 0; }
+.detail-tab-toolbar-context { display: flex; align-items: center; gap: 8px; margin-left: auto; min-width: 0; }
+.detail-tab-toolbar-context .ant-select { width: 240px; max-width: 100%; }
+.kubernetes-access-content { display: flex; flex-direction: column; gap: 16px; }
+.kubernetes-access-content .detail-tab-toolbar { margin-bottom: 4px; }
+.kubernetes-access-content .ant-card { background: var(--ui-bg-surface); border-color: var(--ui-border); }
+.kubernetes-access-content .ant-card-head { color: var(--ui-text-primary); font-size: 14px; font-weight: 600; }
+.kubernetes-access-content .ant-card-body { color: var(--ui-text-primary); padding: 20px 24px; }
+.kubernetes-access-content p { color: var(--ui-text-secondary); margin-bottom: 12px; }
+.kubernetes-access-content a { color: var(--ui-link); }
+.kubernetes-access-content code { display: inline-block; max-width: 100%; padding: 8px 12px; margin: 6px 0; background: var(--ui-bg-input); color: var(--ui-text-primary); border: 1px solid var(--ui-border); border-radius: 4px; white-space: normal; overflow-wrap: anywhere; }
+.kubernetes-access-content .ant-timeline-item:last-child { padding-bottom: 0; }
+.kubernetes-access-content .ant-timeline { margin-bottom: 0; }
+.kubernetes-access-content .ant-timeline-item-content { color: var(--ui-text-primary); }
+.kubernetes-access-content .ant-timeline-item-head { background: var(--ui-bg-surface); }
+.kubernetes-access-content .ant-timeline-item-tail { border-left-color: var(--ui-border); }
+.network-rule-actions { display: flex; gap: 8px; align-items: center; flex-wrap: nowrap; }
+.network-rule-targets { display: flex; flex-direction: column; gap: 4px; }
+.network-rule-primary { margin-bottom: 4px; }
+.network-rule-secondary { color: var(--ui-text-secondary); font-size: 14px; }
+.network-rules-guidance { margin-bottom: 16px; }
+.network-rules-guidance + .list-view { margin-top: 0; }
+@media (max-width: 576px) {
+  .detail-tab-toolbar-context { width: 100%; margin-left: 0; }
+  .kubernetes-access-content .ant-card-body { padding: 16px; }
+}
+
+/* Opt-in MOLD-DIALOG-1.0 presets share the existing MoldDialog shell.
+ * Legacy dialogs retain their width, spacing and body contracts. */
+.mold-dialog-standard-wrap { width: 100vw; scrollbar-gutter: auto; overflow: hidden; }
+.mold-dialog-standard {
+  --dialog-chrome: var(--ui-bg-navigation);
+  --ui-text-placeholder: var(--ui-text-muted);
+  --ui-border-strong: var(--ui-text-muted);
+  --ui-focus: var(--ui-link);
+  max-width: calc(100vw - 48px);
+  .ant-modal-content {
+    max-height: ~"min(832px, calc(100vh - 64px))";
+    max-height: ~"min(832px, calc(100dvh - 64px))";
+    border: 1px solid var(--ui-border);
+    background: var(--ui-bg-surface);
+    color: var(--ui-text-primary);
+  }
+  .ant-modal-header, .ant-modal-footer { background: var(--dialog-chrome); }
+  .ant-modal-header { padding: 16px 24px; border-bottom: 1px solid var(--ui-border); }
+  .ant-modal-title { padding: 0; font-size: 16px; line-height: 22px; font-weight: 500; color: var(--ui-text-secondary); overflow-wrap: anywhere; }
+  .ant-modal-close-x { width: 48px; height: 48px; line-height: 48px; }
+  .ant-modal-close { width: 48px; min-height: 48px; color: var(--ui-text-secondary); }
+  .ant-modal-body { padding: 24px 28px; color: var(--ui-text-primary); background: var(--ui-bg-surface); }
+  .ant-modal-footer { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; padding: 16px 28px; border-top: 1px solid var(--ui-border); }
+  /* Inherit the same default button dimensions as VM dialogs. */
+  .ant-modal-footer > .ant-btn { margin: 0; }
+  .ant-btn-primary:not(:disabled) { color: var(--ui-action-primary-text); background: var(--ui-action-primary-bg); border-color: var(--ui-action-primary-bg); }
+  .ant-btn-primary:not(:disabled):hover, .ant-btn-primary:not(:disabled):focus { background: var(--ui-action-primary-hover); border-color: var(--ui-action-primary-hover); }
+  .ant-btn-primary.ant-btn-dangerous:not(:disabled) { background: var(--ui-action-danger-bg); border-color: var(--ui-action-danger-bg); }
+
+  .ant-input::placeholder, .ant-select-selection-placeholder { color: var(--ui-text-muted); }
+  .ant-input:not(:disabled), .ant-select:not(.ant-select-disabled) .ant-select-selector { border-color: var(--ui-border-strong); }
+  .ant-input:focus, .ant-select-focused:not(.ant-select-disabled) .ant-select-selector { border-color: var(--ui-focus); }
+}
+.dark-mode .mold-dialog-standard { --dialog-chrome: var(--ui-bg-elevated); }
+@media (max-width: 600px) {
+  .mold-dialog-standard {
+    max-width: calc(100vw - 24px);
+    .ant-modal-content { max-height: calc(100vh - 24px); max-height: calc(100dvh - 24px); }
+    .ant-modal-body, .ant-modal-footer { padding: 16px; }
+  }
+}
+
+/* Standard presets must win over legacy dark input selectors in every state. */
+body .mold-dialog-standard {
+  .ant-input:not(:disabled), .ant-select:not(.ant-select-disabled) .ant-select-selector {
+    color: var(--ui-text-primary);
+    background: var(--ui-bg-input);
+    border-color: var(--ui-border-strong);
+  }
+  .ant-input:not(:disabled):hover, .ant-input:not(:disabled):focus,
+  .ant-select-focused:not(.ant-select-disabled) .ant-select-selector { border-color: var(--ui-focus); }
+  .ant-input::placeholder, .ant-select-selection-placeholder { color: var(--ui-text-muted); opacity: 1; }
+  .ant-input:disabled { color: var(--ui-text-secondary); background: var(--ui-bg-disabled); }
+  .ant-form-item-has-error .ant-input:not(:disabled),
+  .ant-form-item-has-error .ant-select:not(.ant-select-disabled) .ant-select-selector {
+    color: var(--ui-text-primary) !important;
+    background: var(--ui-bg-input) !important;
+    border-color: var(--ui-error-icon) !important;
+  }
+}
+
+/* Form actions keep their component/event ownership while the common shell
+ * owns the single fixed footer. Internal row actions stay in the body. */
+.mold-dialog-form-actions { width: 100%; min-width: 0; }
+.mold-dialog-standard .mold-dialog-form-actions .mold-dialog-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+  .ant-btn { margin: 0; }
+}
+.storage-standard-dialog {
+  .form-layout, .volume-attach-dialog, .take-snapshot, .snapshot-layout { width: 100% !important; min-width: 0 !important; max-width: 100%; }
+  .ant-modal-body:has(.mold-form-dialog) { overflow-y: auto; }
+  .volume-attach-content { overflow: visible; }
+}
+.storage-query-error { margin-bottom: 16px; }
+
+body .mold-dialog-standard {
+  .ant-checkbox .ant-checkbox-inner { background: var(--ui-bg-input); border-color: var(--ui-border-strong); }
+  .ant-checkbox-checked .ant-checkbox-inner { background: var(--ui-action-primary-bg); border-color: var(--ui-link); }
+  .ant-checkbox-checked .ant-checkbox-inner::after { border-color: var(--ui-action-primary-text); }
+  .ant-checkbox-input:focus-visible + .ant-checkbox-inner,
+  .ant-modal-footer .ant-btn:focus-visible, .ant-modal-close:focus-visible { outline: 2px solid var(--ui-link); outline-offset: 2px; }
+}
+
+/* Snapshot forms use the VM dialog chrome and explicit theme text colors,
+ * including legacy Ant form descendants and disabled controls. */
+body .snapshot-standard-dialog {
+  .ant-modal-body, .ant-form, .ant-checkbox-wrapper, .ant-collapse-content-box,
+  .ant-input-number-input, .ant-select-selection-item { color: var(--ui-text-primary); }
+  .ant-form-item-label > label, .ant-collapse-header { color: var(--ui-text-secondary); }
+  .ant-form-item-extra, .ant-form-item-explain, .ant-input::placeholder,
+  .ant-input-number-input::placeholder, .ant-select-selection-placeholder { color: var(--ui-text-muted); }
+  .ant-form-item-explain-error { color: var(--ui-error-text); }
+  .ant-alert-message, .ant-alert-description { overflow-wrap: anywhere; }
+  .ant-checkbox-wrapper > span:last-child { color: inherit; }
+  .ant-input-number { background: var(--ui-bg-input); border-color: var(--ui-border-strong); }
+  .ant-btn:not(.ant-btn-primary):not(.ant-btn-link) { color: var(--ui-text-secondary); }
+  .ant-btn:disabled, .ant-input:disabled, .ant-input-number-disabled .ant-input-number-input,
+  .ant-select-disabled .ant-select-selection-item { color: var(--ui-text-secondary); opacity: 1; }
+  .ant-btn:disabled { color: var(--ui-text-primary); background: var(--ui-bg-disabled); border-color: var(--ui-border); }
+  .ant-btn-link { color: var(--ui-link); }
+  .ant-form-item, .ant-alert, .ant-checkbox-wrapper { min-width: 0; }
+}
+
+/* TimePicker portals live outside MoldDialog; scope the recurring-policy popup explicitly. */
+body .snapshot-policy-time-dropdown {
+  color: var(--ui-text-primary);
+  .ant-picker-panel-container { color: var(--ui-text-primary); background: var(--ui-bg-surface); }
+  .ant-picker-panel, .ant-picker-footer, .ant-picker-time-panel-column:not(:first-child) { border-color: var(--ui-border); }
+  .ant-picker-time-panel-column > li.ant-picker-time-panel-cell .ant-picker-time-panel-cell-inner { color: var(--ui-text-primary); }
+  .ant-picker-time-panel-column > li.ant-picker-time-panel-cell:not(.ant-picker-time-panel-cell-disabled) .ant-picker-time-panel-cell-inner:hover { background: var(--ui-bg-hover); }
+  .ant-picker-time-panel-column > li.ant-picker-time-panel-cell-selected .ant-picker-time-panel-cell-inner { color: var(--ui-text-primary); background: var(--ui-bg-selected); }
+  .ant-picker-time-panel-column > li.ant-picker-time-panel-cell-disabled .ant-picker-time-panel-cell-inner { color: var(--ui-text-disabled); }
+  .ant-picker-now-btn { color: var(--ui-link); }
+}
+
+/* Snapshot forms follow the VM MoldDialog presets; body controls stay clear of the fixed footer. */
+body .snapshot-standard-dialog {
+  .snapshot-dialog-content, .snapshot-transfer-content { min-width: 0; width: 100%; }
+  .snapshot-dialog-form, .take-snapshot .form { width: 100%; min-width: 0; margin: 0; }
+  .snapshot-dialog-form .ant-form-item { margin: 0 0 24px; }
+  .snapshot-dialog-form .ant-form-item-label { padding-bottom: 8px; }
+  .snapshot-dialog-form .ant-select { width: 100%; }
+  .snapshot-dialog-content > .ant-spin-nested-loading > .ant-spin-container > .ant-alert,
+  .snapshot-dialog-notice { margin-bottom: 24px; }
+  .snapshot-dialog-tag-input { display: flex; flex-wrap: wrap; gap: 8px; min-width: 0; }
+  .snapshot-dialog-tag-input > .ant-input { flex: 1 1 100px; min-width: 0; }
+  .snapshot-dialog-targets .ant-descriptions-view,
+  .snapshot-dialog-targets .ant-descriptions-item-label,
+  .snapshot-dialog-targets .ant-descriptions-item-content { border-color: var(--ui-border); }
+  .snapshot-dialog-targets .ant-descriptions-item-label { color: var(--ui-text-secondary); background: var(--ui-bg-elevated); }
+  .snapshot-dialog-targets .ant-descriptions-item-content { color: var(--ui-text-primary); }
+  .snapshot-dialog-targets .ant-table-thead > tr > th { color: var(--ui-text-secondary); background: var(--ui-bg-elevated); }
+  .snapshot-dialog-targets .ant-table-tbody > tr > td { color: var(--ui-text-primary); background: var(--ui-bg-surface); }
+}

@@ -1,0 +1,216 @@
+- complementary:
+  - menu:
+    - menuitem "dashboard 대시보드":
+      - link "dashboard 대시보드":
+        - /url: "#/dashboard"
+        - img "dashboard":
+        - text: 대시보드
+    - img "cloud":
+    - text: 컴퓨트
+    - list:
+      - menuitem "cloud-server 가상머신":
+        - link "cloud-server 가상머신":
+          - /url: "#/vm"
+          - img "cloud-server":
+          - text: 가상머신
+      - menuitem "camera VM 스냅샷":
+        - link "camera VM 스냅샷":
+          - /url: "#/vmsnapshot"
+          - img "camera":
+          - text: VM 스냅샷
+      - menuitem "쿠버네티스":
+        - link "쿠버네티스":
+          - /url: "#/kubernetes"
+          - text: 쿠버네티스
+      - menuitem "fullscreen 오토스케일 VM 그룹":
+        - link "fullscreen 오토스케일 VM 그룹":
+          - /url: "#/autoscalevmgroup"
+          - img "fullscreen":
+          - text: 오토스케일 VM 그룹
+      - menuitem "gold 가상머신 그룹":
+        - link "gold 가상머신 그룹":
+          - /url: "#/vmgroup"
+          - img "gold":
+          - text: 가상머신 그룹
+      - menuitem "key SSH 키 쌍":
+        - link "key SSH 키 쌍":
+          - /url: "#/ssh"
+          - img "key":
+          - text: SSH 키 쌍
+      - menuitem "solution 사용자 데이터 라이브러리":
+        - link "solution 사용자 데이터 라이브러리":
+          - /url: "#/userdata"
+          - img "solution":
+          - text: 사용자 데이터 라이브러리
+      - menuitem "solution CNI 구성":
+        - link "solution CNI 구성":
+          - /url: "#/cniconfiguration"
+          - img "solution":
+          - text: CNI 구성
+      - menuitem "swap Affinity 그룹":
+        - link "swap Affinity 그룹":
+          - /url: "#/affinitygroup"
+          - img "swap":
+          - text: Affinity 그룹
+    - img "hdd":
+    - text: 스토리지
+    - img "wifi":
+    - text: 네트워크
+    - img "picture":
+    - text: 이미지
+    - menuitem "schedule 이벤트":
+      - link "schedule 이벤트":
+        - /url: "#/event"
+        - img "schedule":
+        - text: 이벤트
+    - menuitem "project 프로젝트":
+      - link "project 프로젝트":
+        - /url: "#/project"
+        - img "project":
+        - text: 프로젝트
+    - menuitem "team 계정":
+      - link "team 계정":
+        - /url: "#/account"
+        - img "team":
+        - text: 계정
+    - menuitem "global Zone":
+      - link "global Zone":
+        - /url: "#/zones"
+        - img "global":
+        - text: Zone
+    - img "shopping":
+    - text: 서비스 오퍼링
+    - img "tool":
+    - text: 도구
+    - menuitem "read API 문서":
+      - link "read API 문서":
+        - /url: "#/apidocs/"
+        - img "read":
+        - text: API 문서
+- img "menu-fold":
+- combobox
+- img "project":
+- text: 기본 보기
+- button "생성 down":
+  - generic: 생성
+  - img "down":
+- img "translation":
+- img "bell":
+- generic: UQ
+- generic: UD1387 QA
+- main:
+  - link "home":
+    - /url: "#/"
+    - img "home":
+  - text: /
+  - link "사용자 데이터 라이브러리":
+    - /url: "#/userdata"
+  - link "question-circle":
+    - /url: http://docs.ablecloud.io/latest/adminguide/virtual_machines.html#user-data-and-meta-data
+    - img "question-circle":
+  - button "reload 업데이트":
+    - img "reload":
+    - generic: 업데이트
+  - switch "프로젝트":
+    - generic: 프로젝트
+  - button "사용자 데이터 등록":
+    - img "plus":
+    - generic: 사용자 데이터 등록
+  - button "사용자 데이터 제거":
+    - img "delete":
+    - generic: 사용자 데이터 제거
+  - textbox "검색"
+  - button "search":
+    - img "search":
+  - table:
+    - rowgroup:
+      - row "이름 caret-up caret-down 아이디 caret-up caret-down":
+        - columnheader:
+          - checkbox [checked]
+        - columnheader "이름 caret-up caret-down":
+          - generic: 이름
+          - img "caret-up":
+          - img "caret-down":
+        - columnheader "아이디 caret-up caret-down":
+          - generic: 아이디
+          - img "caret-up":
+          - img "caret-down":
+    - rowgroup:
+      - row "UD1387-31-20261016-user-bulk-B 78f50c2f-776a-4d24-913d-cd6e4ff66f88":
+        - cell:
+          - checkbox [checked]
+        - cell "UD1387-31-20261016-user-bulk-B":
+          - link "UD1387-31-20261016-user-bulk-B":
+            - /url: "#/userdata/78f50c2f-776a-4d24-913d-cd6e4ff66f88"
+        - cell "78f50c2f-776a-4d24-913d-cd6e4ff66f88"
+      - row "UD1387-31-20261016-user-bulk-A 7278b2e9-837e-4698-a821-ebc394701133":
+        - cell:
+          - checkbox [checked]
+        - cell "UD1387-31-20261016-user-bulk-A":
+          - link "UD1387-31-20261016-user-bulk-A":
+            - /url: "#/userdata/7278b2e9-837e-4698-a821-ebc394701133"
+        - cell "7278b2e9-837e-4698-a821-ebc394701133"
+  - generic: 2개 선택
+  - list:
+    - listitem: 전체 2 개 항목 중 1-2 표시
+    - listitem "이전 페이지":
+      - button "left" [disabled]:
+        - img "left":
+    - listitem "1":
+      - generic: "1"
+    - listitem "다음 페이지":
+      - button "right" [disabled]:
+        - img "right":
+    - combobox
+    - generic: 20 / 쪽
+- dialog "사용자 데이터 제거":
+  - document:
+    - button "Close":
+      - img "close":
+    - generic: 사용자 데이터 제거
+    - alert:
+      - img "exclamation-circle":
+      - generic: 선택한 사용자 데이터 라이브러리 항목을 삭제합니다. 사용 중인 항목은 서버가 삭제를 거절합니다. 항목별 결과를 확인하세요.
+    - paragraph:
+      - strong: 삭제 대상 2개
+    - status: 완료 2개 · 실패/차단 0개 · 결과 미확인 0개 · 진행/대기 0개
+    - table:
+      - rowgroup:
+        - row "이름 계정 작업 상태 사유":
+          - columnheader "이름"
+          - columnheader "계정"
+          - columnheader "작업 상태"
+          - columnheader "사유"
+      - rowgroup:
+        - row "UD1387-31-20261016-user-bulk-B 78f50c2f-776a-4d24-913d-cd6e4ff66f88 ud1387-31-20261016-user ud1387-31-20261016 삭제 완료":
+          - cell "UD1387-31-20261016-user-bulk-B 78f50c2f-776a-4d24-913d-cd6e4ff66f88":
+            - strong: UD1387-31-20261016-user-bulk-B
+            - generic: 78f50c2f-776a-4d24-913d-cd6e4ff66f88
+          - cell "ud1387-31-20261016-user ud1387-31-20261016":
+            - text: ud1387-31-20261016-user
+            - generic: ud1387-31-20261016
+          - cell "삭제 완료":
+            - generic: 삭제 완료
+          - cell
+        - row "UD1387-31-20261016-user-bulk-A 7278b2e9-837e-4698-a821-ebc394701133 ud1387-31-20261016-user ud1387-31-20261016 삭제 완료":
+          - cell "UD1387-31-20261016-user-bulk-A 7278b2e9-837e-4698-a821-ebc394701133":
+            - strong: UD1387-31-20261016-user-bulk-A
+            - generic: 7278b2e9-837e-4698-a821-ebc394701133
+          - cell "ud1387-31-20261016-user ud1387-31-20261016":
+            - text: ud1387-31-20261016-user
+            - generic: ud1387-31-20261016
+          - cell "삭제 완료":
+            - generic: 삭제 완료
+          - cell
+    - list:
+      - listitem "이전 페이지":
+        - button "left" [disabled]:
+          - img "left":
+      - listitem "1":
+        - generic: "1"
+      - listitem "다음 페이지":
+        - button "right" [disabled]:
+          - img "right":
+    - paragraph: 삭제가 확인된 항목만 목록에서 제거됩니다. 실패한 항목은 남으며, 재시도는 실패한 대상만 처리합니다. 결과 미확인은 현재 상태 확인 후 재시도하세요.
+    - button "닫기":
+      - generic: 닫기

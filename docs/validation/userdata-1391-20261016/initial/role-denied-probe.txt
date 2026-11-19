@@ -1,0 +1,140 @@
+Browser tab: 6, Title: "사용자 데이터 라이브러리 - ABLESTACK-Mold", URL: "http://10.10.31.10:8080/client/#/userdata/f9212ba3-0e7c-4e00-9713-b83f16fc490e?tab=userdata.versions".
+1 AXWebArea 사용자 데이터 라이브러리 - ABLESTACK-Mold, URL: 10.10.31.10:8080/client/#/userdata/f9212ba3-0e7c-4e00-9713-b83f16fc490e?tab=userdata.versions
+	2 container
+		3 container
+			4 image
+			5 menu
+				6 dashboard 대시보드
+					7 link Description: dashboard 대시보드, Value: 10.10.31.10:8080/client/#/dashboard
+				8 container
+					9 image cloud
+					10 text 컴퓨트
+				11 content list sub_menu_97_$$_/compute-popup
+					12 cloud-server 가상머신
+						13 link Description: cloud-server 가상머신, Value: 10.10.31.10:8080/client/#/vm
+					14 camera VM 스냅샷
+						15 link Description: camera VM 스냅샷, Value: 10.10.31.10:8080/client/#/vmsnapshot
+					16 쿠버네티스
+						17 link Description: 쿠버네티스, Value: 10.10.31.10:8080/client/#/kubernetes
+					18 fullscreen 오토스케일 VM 그룹
+						19 link Description: fullscreen 오토스케일 VM 그룹, Value: 10.10.31.10:8080/client/#/autoscalevmgroup
+					20 gold 가상머신 그룹
+						21 link Description: gold 가상머신 그룹, Value: 10.10.31.10:8080/client/#/vmgroup
+					22 key SSH 키 쌍
+						23 link Description: key SSH 키 쌍, Value: 10.10.31.10:8080/client/#/ssh
+					24 solution 사용자 데이터 라이브러리
+						25 link Description: solution 사용자 데이터 라이브러리, Value: 10.10.31.10:8080/client/#/userdata
+					26 solution CNI 구성
+						27 link Description: solution CNI 구성, Value: 10.10.31.10:8080/client/#/cniconfiguration
+					28 swap Affinity 그룹
+						29 link Description: swap Affinity 그룹, Value: 10.10.31.10:8080/client/#/affinitygroup
+				30 container
+					31 image hdd
+					32 text 스토리지
+				33 container
+					34 image wifi
+					35 text 네트워크
+				36 container
+					37 image picture
+					38 text 이미지
+				39 schedule 이벤트
+					40 link Description: schedule 이벤트, Value: 10.10.31.10:8080/client/#/event
+				41 project 프로젝트
+					42 link Description: project 프로젝트, Value: 10.10.31.10:8080/client/#/project
+				43 idcard 역할
+					44 link Description: idcard 역할, Value: 10.10.31.10:8080/client/#/role
+				45 team 계정
+					46 link Description: team 계정, Value: 10.10.31.10:8080/client/#/account
+				47 block 도메인
+					48 link Description: block 도메인, Value: 10.10.31.10:8080/client/#/domain
+				49 container
+					50 image bank
+					51 text 인프라스트럭쳐
+				52 global Zone
+					53 link Description: global Zone, Value: 10.10.31.10:8080/client/#/zones
+				54 container
+					55 image shopping
+					56 text 서비스 오퍼링
+				57 container
+					58 image setting
+					59 text 구성
+				60 appstore-add 확장
+					61 link Description: appstore-add 확장, Value: 10.10.31.10:8080/client/#/extension
+				62 container
+					63 image tool
+					64 text 도구
+				65 read API 문서
+					66 link Description: read API 문서, Value: 10.10.31.10:8080/client/#/apidocs/
+		67 container
+			68 image menu-fold
+			69 container
+				70 combo box (settable) rc_select_9
+				71 image project
+				72 text 기본 보기
+			73 button 생성 down
+				74 text 생성
+				75 image down
+			76 image translation
+			77 image bell
+			78 container
+				79 text UO UD1391 outsider
+		80 container
+			81 container
+				82 link Description: home, Value: 10.10.31.10:8080/client/#/
+				83 text /
+				84 link Description: 사용자 데이터 라이브러리, Value: 10.10.31.10:8080/client/#/userdata
+				85 text / UD1391-31-20261016-outsider
+				86 link Description: question-circle, Value: docs.ablecloud.io/latest/adminguide/virtual_machines.html#user-data-and-meta-data
+				87 button reload 업데이트
+					88 image reload
+					89 text 업데이트
+			90 button down 작업
+				91 image down
+				92 text 작업
+			93 container
+				94 image solution
+				95 heading UD1391-31-20261016-outsider, Value: 4
+					96 text UD1391-31-20261016-outsider
+				97 text 아이디
+				98 button barcode
+					99 image barcode
+				100 link Description: f9212ba3-0e7c-4e00-9713-b83f16fc490e , Value: javascript:;
+				101 text 계정
+				102 image user
+				103 text ud1391-31-20261016-outsider 도메인
+				104 image block
+				105 text ud1391-31-20261016
+				106 link Description: cloud-server 가상머신 보기, Value: 10.10.31.10:8080/client/#/vm?userdataid=f9212ba3-0e7c-4e00-9713-b83f16fc490e
+			107 container
+				108 tab group
+					109 container
+						110 tab (selectable, settable, boolean) 상세, Value: 0, ID: rc-tabs-9-tab-details
+						111 tab (selectable, settable, boolean) 사용자 데이터 본문, Value: 0, ID: rc-tabs-9-tab-userdata.content
+						112 tab (selected, settable, boolean) 버전·변경 정책, Value: 1, ID: rc-tabs-9-tab-userdata.versions
+						113 tab (selectable, settable, boolean) 사용 가상머신, Value: 0, ID: rc-tabs-9-tab-userdata.usage.vms
+						114 tab (selectable, settable, boolean) 연결 템플릿, Value: 0, ID: rc-tabs-9-tab-userdata.usage.templates
+						115 tab (selectable, settable, boolean) 연결 ISO, Value: 0, ID: rc-tabs-9-tab-userdata.usage.isos
+						116 tab (selectable, settable, boolean) 코멘트, Value: 0, ID: rc-tabs-9-tab-comments
+				117 container Description: 버전·변경 정책, ID: rc-tabs-9-panel-userdata.versions
+					118 container
+						119 button (disabled) reload 업데이트
+							120 image reload
+							121 text 업데이트
+						122 text 출처는 새 데이터의 댓글에 기록하며 이 탭에서 표시합니다. 댓글은 권한에 따라 삭제·공개 범위를 변경할 수 있으므로 변경 불가능한 감사 기록이나 자동 적용 이력이 아닙니다. 외부 API 등록 또는 출처 메모가 없는 항목의 부모·버전 순서는 추정하지 않습니다. 출처 메모는 댓글 API의 255자 제한에 맞춰 UUID·바이트 수만 기록합니다. 이름·변수는 각 버전의 상세와 복제 미리보기에서 확인하세요.
+						123 image close-circle
+						124 text 금지
+						125 button (collapsed) 적용 범위·참조 전환·되돌리기 안내, Secondary Actions: Expand
+							126 text 적용 범위·참조 전환·되돌리기 안내
+	127 container
+		128 image check-circle
+		129 text 사용 가능한 모든 기능을 발견했습니다!
+	130 container
+		131 image info-circle
+		132 text Wall 모니터링을 사용할 수 없습니다. 기존 알림은 최신 정보가 아닐 수 있으며 Mold는 계속 사용할 수 있습니다. 비활성
+	133 menu
+		134 text 삭제
+		135 content list
+			136 사용자 데이터 제거
+				137 text 사용자 데이터 제거
+
+The focused UI element is 90 button down 작업

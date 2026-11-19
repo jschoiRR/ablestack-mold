@@ -1,0 +1,104 @@
+{
+  "start": 6513,
+  "cursor": 6556,
+  "truncated": false,
+  "events": [
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 6514,
+      "requestId": "27600.1567",
+      "api": "listVirtualMachines",
+      "id": "6560a188-1383-4618-93ed-0525a3354068",
+      "virtualmachineid": null,
+      "projectid": null
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 6517,
+      "requestId": "27600.1567",
+      "api": "listVirtualMachines",
+      "status": 200
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 6519,
+      "requestId": "27600.1568",
+      "api": "getVirtualMachineUserData",
+      "id": null,
+      "virtualmachineid": "6560a188-1383-4618-93ed-0525a3354068",
+      "projectid": null
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 6525,
+      "requestId": "27600.1569",
+      "api": "readyForShutdown",
+      "id": null,
+      "virtualmachineid": null,
+      "projectid": null
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 6528,
+      "requestId": "27600.1569",
+      "api": "readyForShutdown",
+      "status": 200
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 6532,
+      "requestId": "27600.1570",
+      "api": "readyForShutdown",
+      "id": null,
+      "virtualmachineid": null,
+      "projectid": null
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 6535,
+      "requestId": "27600.1570",
+      "api": "readyForShutdown",
+      "status": 200
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 6539,
+      "requestId": "27600.1571",
+      "api": "readyForShutdown",
+      "id": null,
+      "virtualmachineid": null,
+      "projectid": null
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 6542,
+      "requestId": "27600.1571",
+      "api": "readyForShutdown",
+      "status": 200
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 6546,
+      "requestId": "27600.1568",
+      "api": "getVirtualMachineUserData",
+      "status": 200
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 6548,
+      "requestId": "27600.1572",
+      "api": "listVirtualMachines",
+      "id": "6560a188-1383-4618-93ed-0525a3354068",
+      "virtualmachineid": null,
+      "projectid": null
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 6553,
+      "requestId": "27600.1572",
+      "api": "listVirtualMachines",
+      "status": 200
+    }
+  ],
+  "exceptions": 0
+}

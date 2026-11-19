@@ -17,6 +17,7 @@
 package org.apache.cloudstack.api.response;
 
 import java.util.Date;
+import java.util.Map;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -66,6 +67,23 @@ public class InstanceGroupResponse extends BaseResponseWithAnnotations implement
     @SerializedName(ApiConstants.DOMAIN_PATH)
     @Param(description = "path of the Domain the instance group belongs to", since = "4.19.2.0")
     private String domainPath;
+
+    @SerializedName("virtualmachinecount")
+    @Param(description = "Number of visible member VMs, excluding Destroyed and Expunging VMs", since = "4.23.0")
+    private Long virtualMachineCount;
+
+    @SerializedName("virtualmachinestates")
+    @Param(description = "State counts of visible member VMs, excluding Destroyed and Expunging VMs", since = "4.23.0")
+    private Map<String, Long> virtualMachineStates;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setVirtualMachineStates(Map<String, Long> states) {
+        virtualMachineStates = states;
+        virtualMachineCount = states.values().stream().mapToLong(Long::longValue).sum();
+    }
 
     public void setId(String id) {
         this.id = id;

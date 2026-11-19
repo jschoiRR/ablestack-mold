@@ -1,0 +1,3249 @@
+[
+  {
+    "time": "2026-10-19T06:01:40+0900",
+    "command": "createAffinityGroup",
+    "params": {
+      "name": "qa-ag02-20261019-01",
+      "type": "host anti-affinity",
+      "description": "AG02 disposable selection fixture",
+      "account": "admin",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f"
+    },
+    "response": {
+      "createaffinitygroupresponse": {
+        "id": "d57c65c9-6d27-4bfe-817d-a08ea8d08ce1",
+        "jobid": "d45d18eb-1104-415f-b622-e01f77e0adf2"
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:01:40+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "d45d18eb-1104-415f-b622-e01f77e0adf2"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.CreateAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "affinitygroup": {
+            "id": "d57c65c9-6d27-4bfe-817d-a08ea8d08ce1",
+            "name": "qa-ag02-20261019-01",
+            "description": "AG02 disposable selection fixture",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          }
+        },
+        "jobinstancetype": "AffinityGroup",
+        "created": "2026-10-19T06:01:45+0900",
+        "completed": "2026-10-19T06:01:45+0900",
+        "jobid": "d45d18eb-1104-415f-b622-e01f77e0adf2",
+        "jobstatus": 1
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:01:40+0900",
+    "command": "createAffinityGroup",
+    "params": {
+      "name": "qa-ag02-20261019-02",
+      "type": "host anti-affinity",
+      "description": "AG02 disposable selection fixture",
+      "account": "admin",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f"
+    },
+    "response": {
+      "createaffinitygroupresponse": {
+        "id": "aa5d1372-8974-4e86-bb73-d4e7c9ae0362",
+        "jobid": "30f6358d-4ae6-49e6-9ac3-8eb92a24f04f"
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:01:40+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "30f6358d-4ae6-49e6-9ac3-8eb92a24f04f"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.CreateAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "affinitygroup": {
+            "id": "aa5d1372-8974-4e86-bb73-d4e7c9ae0362",
+            "name": "qa-ag02-20261019-02",
+            "description": "AG02 disposable selection fixture",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          }
+        },
+        "jobinstancetype": "AffinityGroup",
+        "created": "2026-10-19T06:01:45+0900",
+        "completed": "2026-10-19T06:01:45+0900",
+        "jobid": "30f6358d-4ae6-49e6-9ac3-8eb92a24f04f",
+        "jobstatus": 1
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:01:40+0900",
+    "command": "createAffinityGroup",
+    "params": {
+      "name": "qa-ag02-20261019-03",
+      "type": "host anti-affinity",
+      "description": "AG02 disposable selection fixture",
+      "account": "admin",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f"
+    },
+    "response": {
+      "createaffinitygroupresponse": {
+        "id": "9151bf9f-7f94-4c06-a6d8-2563d014622a",
+        "jobid": "1877fb26-1fbb-4a2d-bef7-9c1617b231a1"
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:01:40+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "1877fb26-1fbb-4a2d-bef7-9c1617b231a1"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.CreateAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "affinitygroup": {
+            "id": "9151bf9f-7f94-4c06-a6d8-2563d014622a",
+            "name": "qa-ag02-20261019-03",
+            "description": "AG02 disposable selection fixture",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          }
+        },
+        "jobinstancetype": "AffinityGroup",
+        "created": "2026-10-19T06:01:45+0900",
+        "completed": "2026-10-19T06:01:45+0900",
+        "jobid": "1877fb26-1fbb-4a2d-bef7-9c1617b231a1",
+        "jobstatus": 1
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:01:40+0900",
+    "command": "createAffinityGroup",
+    "params": {
+      "name": "qa-ag02-20261019-04",
+      "type": "host anti-affinity",
+      "description": "AG02 disposable selection fixture",
+      "account": "admin",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f"
+    },
+    "response": {
+      "createaffinitygroupresponse": {
+        "id": "936bf93a-dacc-47b3-a471-a3076a2fdbb3",
+        "jobid": "1f6e85c3-c1cf-4b1c-a8e4-ec6bbc4beabd"
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:01:40+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "1f6e85c3-c1cf-4b1c-a8e4-ec6bbc4beabd"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.CreateAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "affinitygroup": {
+            "id": "936bf93a-dacc-47b3-a471-a3076a2fdbb3",
+            "name": "qa-ag02-20261019-04",
+            "description": "AG02 disposable selection fixture",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          }
+        },
+        "jobinstancetype": "AffinityGroup",
+        "created": "2026-10-19T06:01:45+0900",
+        "completed": "2026-10-19T06:01:45+0900",
+        "jobid": "1f6e85c3-c1cf-4b1c-a8e4-ec6bbc4beabd",
+        "jobstatus": 1
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:01:40+0900",
+    "command": "createAffinityGroup",
+    "params": {
+      "name": "qa-ag02-20261019-05",
+      "type": "host anti-affinity",
+      "description": "AG02 disposable selection fixture",
+      "account": "admin",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f"
+    },
+    "response": {
+      "createaffinitygroupresponse": {
+        "id": "b6f438ac-c7cb-477c-af10-d02a375a1a7e",
+        "jobid": "f32bf4e4-91da-4240-9b37-1f59c3ea1735"
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:01:40+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "f32bf4e4-91da-4240-9b37-1f59c3ea1735"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.CreateAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "affinitygroup": {
+            "id": "b6f438ac-c7cb-477c-af10-d02a375a1a7e",
+            "name": "qa-ag02-20261019-05",
+            "description": "AG02 disposable selection fixture",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          }
+        },
+        "jobinstancetype": "AffinityGroup",
+        "created": "2026-10-19T06:01:45+0900",
+        "completed": "2026-10-19T06:01:45+0900",
+        "jobid": "f32bf4e4-91da-4240-9b37-1f59c3ea1735",
+        "jobstatus": 1
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:01:40+0900",
+    "command": "createAffinityGroup",
+    "params": {
+      "name": "qa-ag02-20261019-06",
+      "type": "host anti-affinity",
+      "description": "AG02 disposable selection fixture",
+      "account": "admin",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f"
+    },
+    "response": {
+      "createaffinitygroupresponse": {
+        "id": "bd0f1f15-9be6-44f6-920d-3a205295b6ec",
+        "jobid": "1a32bf0b-bde2-4d9e-a04e-e7f2383ff10e"
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:01:40+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "1a32bf0b-bde2-4d9e-a04e-e7f2383ff10e"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.CreateAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "affinitygroup": {
+            "id": "bd0f1f15-9be6-44f6-920d-3a205295b6ec",
+            "name": "qa-ag02-20261019-06",
+            "description": "AG02 disposable selection fixture",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          }
+        },
+        "jobinstancetype": "AffinityGroup",
+        "created": "2026-10-19T06:01:45+0900",
+        "completed": "2026-10-19T06:01:45+0900",
+        "jobid": "1a32bf0b-bde2-4d9e-a04e-e7f2383ff10e",
+        "jobstatus": 1
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:01:40+0900",
+    "command": "createAffinityGroup",
+    "params": {
+      "name": "qa-ag02-20261019-07",
+      "type": "host anti-affinity",
+      "description": "AG02 disposable selection fixture",
+      "account": "admin",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f"
+    },
+    "response": {
+      "createaffinitygroupresponse": {
+        "id": "d67e6414-d403-4a48-912f-321e52cbbfc6",
+        "jobid": "d49040db-eca0-4a1b-a3c5-1fae6536195a"
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:01:40+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "d49040db-eca0-4a1b-a3c5-1fae6536195a"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.CreateAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "affinitygroup": {
+            "id": "d67e6414-d403-4a48-912f-321e52cbbfc6",
+            "name": "qa-ag02-20261019-07",
+            "description": "AG02 disposable selection fixture",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          }
+        },
+        "jobinstancetype": "AffinityGroup",
+        "created": "2026-10-19T06:01:45+0900",
+        "completed": "2026-10-19T06:01:45+0900",
+        "jobid": "d49040db-eca0-4a1b-a3c5-1fae6536195a",
+        "jobstatus": 1
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:01:40+0900",
+    "command": "createAffinityGroup",
+    "params": {
+      "name": "qa-ag02-20261019-08",
+      "type": "host anti-affinity",
+      "description": "AG02 disposable selection fixture",
+      "account": "admin",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f"
+    },
+    "response": {
+      "createaffinitygroupresponse": {
+        "id": "bb2b8db2-f453-4215-9079-585135729f10",
+        "jobid": "33bc4b4c-fab7-4415-8256-fb13ffc45932"
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:01:40+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "33bc4b4c-fab7-4415-8256-fb13ffc45932"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.CreateAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "affinitygroup": {
+            "id": "bb2b8db2-f453-4215-9079-585135729f10",
+            "name": "qa-ag02-20261019-08",
+            "description": "AG02 disposable selection fixture",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          }
+        },
+        "jobinstancetype": "AffinityGroup",
+        "created": "2026-10-19T06:01:45+0900",
+        "completed": "2026-10-19T06:01:45+0900",
+        "jobid": "33bc4b4c-fab7-4415-8256-fb13ffc45932",
+        "jobstatus": 1
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:01:40+0900",
+    "command": "createAffinityGroup",
+    "params": {
+      "name": "qa-ag02-20261019-09",
+      "type": "host anti-affinity",
+      "description": "AG02 disposable selection fixture",
+      "account": "admin",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f"
+    },
+    "response": {
+      "createaffinitygroupresponse": {
+        "id": "84f28680-0d67-48dd-bdc3-13b4a094a355",
+        "jobid": "08f9f41b-5a8d-40d5-9f2f-3aa7e3a901c5"
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:01:40+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "08f9f41b-5a8d-40d5-9f2f-3aa7e3a901c5"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.CreateAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "affinitygroup": {
+            "id": "84f28680-0d67-48dd-bdc3-13b4a094a355",
+            "name": "qa-ag02-20261019-09",
+            "description": "AG02 disposable selection fixture",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          }
+        },
+        "jobinstancetype": "AffinityGroup",
+        "created": "2026-10-19T06:01:45+0900",
+        "completed": "2026-10-19T06:01:45+0900",
+        "jobid": "08f9f41b-5a8d-40d5-9f2f-3aa7e3a901c5",
+        "jobstatus": 1
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:01:40+0900",
+    "command": "createAffinityGroup",
+    "params": {
+      "name": "qa-ag02-20261019-10",
+      "type": "host anti-affinity",
+      "description": "AG02 disposable selection fixture",
+      "account": "admin",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f"
+    },
+    "response": {
+      "createaffinitygroupresponse": {
+        "id": "b78c75fc-abe9-4db3-9fbe-5dd02f714595",
+        "jobid": "683ef27d-301d-4a7e-93c1-efb7e60584db"
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:01:40+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "683ef27d-301d-4a7e-93c1-efb7e60584db"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.CreateAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "affinitygroup": {
+            "id": "b78c75fc-abe9-4db3-9fbe-5dd02f714595",
+            "name": "qa-ag02-20261019-10",
+            "description": "AG02 disposable selection fixture",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          }
+        },
+        "jobinstancetype": "AffinityGroup",
+        "created": "2026-10-19T06:01:45+0900",
+        "completed": "2026-10-19T06:01:45+0900",
+        "jobid": "683ef27d-301d-4a7e-93c1-efb7e60584db",
+        "jobstatus": 1
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:01:40+0900",
+    "command": "createAffinityGroup",
+    "params": {
+      "name": "qa-ag02-20261019-11",
+      "type": "host anti-affinity",
+      "description": "AG02 disposable selection fixture",
+      "account": "admin",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f"
+    },
+    "response": {
+      "createaffinitygroupresponse": {
+        "id": "7a68f766-421e-4b03-b854-c0fd366852df",
+        "jobid": "912bd12f-001c-4213-b85a-5d60e7d7e015"
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:01:40+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "912bd12f-001c-4213-b85a-5d60e7d7e015"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.CreateAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "affinitygroup": {
+            "id": "7a68f766-421e-4b03-b854-c0fd366852df",
+            "name": "qa-ag02-20261019-11",
+            "description": "AG02 disposable selection fixture",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          }
+        },
+        "jobinstancetype": "AffinityGroup",
+        "created": "2026-10-19T06:01:45+0900",
+        "completed": "2026-10-19T06:01:45+0900",
+        "jobid": "912bd12f-001c-4213-b85a-5d60e7d7e015",
+        "jobstatus": 1
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:01:40+0900",
+    "command": "createAffinityGroup",
+    "params": {
+      "name": "qa-ag02-20261019-12",
+      "type": "host anti-affinity",
+      "description": "AG02 disposable selection fixture",
+      "account": "admin",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f"
+    },
+    "response": {
+      "createaffinitygroupresponse": {
+        "id": "d232e085-d19a-4ec3-82c8-08f442c17a26",
+        "jobid": "e618e7cd-a9c0-4cd2-8437-142a7b5c22ac"
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:01:40+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "e618e7cd-a9c0-4cd2-8437-142a7b5c22ac"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.CreateAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "affinitygroup": {
+            "id": "d232e085-d19a-4ec3-82c8-08f442c17a26",
+            "name": "qa-ag02-20261019-12",
+            "description": "AG02 disposable selection fixture",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          }
+        },
+        "jobinstancetype": "AffinityGroup",
+        "created": "2026-10-19T06:01:45+0900",
+        "completed": "2026-10-19T06:01:45+0900",
+        "jobid": "e618e7cd-a9c0-4cd2-8437-142a7b5c22ac",
+        "jobstatus": 1
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:01:40+0900",
+    "command": "createAffinityGroup",
+    "params": {
+      "name": "qa-ag02-20261019-13",
+      "type": "host anti-affinity",
+      "description": "AG02 disposable selection fixture",
+      "account": "admin",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f"
+    },
+    "response": {
+      "createaffinitygroupresponse": {
+        "id": "90571baa-0f3f-44c6-a0d3-6fe688a4dc4e",
+        "jobid": "1cc03faa-5c67-4e06-9a0c-286105e9637c"
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:01:40+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "1cc03faa-5c67-4e06-9a0c-286105e9637c"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.CreateAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "affinitygroup": {
+            "id": "90571baa-0f3f-44c6-a0d3-6fe688a4dc4e",
+            "name": "qa-ag02-20261019-13",
+            "description": "AG02 disposable selection fixture",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          }
+        },
+        "jobinstancetype": "AffinityGroup",
+        "created": "2026-10-19T06:01:45+0900",
+        "completed": "2026-10-19T06:01:45+0900",
+        "jobid": "1cc03faa-5c67-4e06-9a0c-286105e9637c",
+        "jobstatus": 1
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:01:40+0900",
+    "command": "createAffinityGroup",
+    "params": {
+      "name": "qa-ag02-20261019-14",
+      "type": "host anti-affinity",
+      "description": "AG02 disposable selection fixture",
+      "account": "admin",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f"
+    },
+    "response": {
+      "createaffinitygroupresponse": {
+        "id": "38cea24d-b9d0-480b-87bd-4d00248419d8",
+        "jobid": "56a1f9ba-c3ac-428b-97cb-5b599f18020c"
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:01:40+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "56a1f9ba-c3ac-428b-97cb-5b599f18020c"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.CreateAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "affinitygroup": {
+            "id": "38cea24d-b9d0-480b-87bd-4d00248419d8",
+            "name": "qa-ag02-20261019-14",
+            "description": "AG02 disposable selection fixture",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          }
+        },
+        "jobinstancetype": "AffinityGroup",
+        "created": "2026-10-19T06:01:45+0900",
+        "completed": "2026-10-19T06:01:45+0900",
+        "jobid": "56a1f9ba-c3ac-428b-97cb-5b599f18020c",
+        "jobstatus": 1
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:01:40+0900",
+    "command": "deployVirtualMachine",
+    "params": {
+      "name": "qa-ag02-20261019-vm",
+      "displayname": "qa-ag02-20261019-vm",
+      "zoneid": "7013f5a1-de59-4cea-a596-f4f58815f31c",
+      "templateid": "e3d8677e-70f0-44bd-917e-6068636b97a8",
+      "serviceofferingid": "39c3aa33-5632-4dea-bd84-ba794d292c87",
+      "networkids": "ae274fff-3d8e-4285-ac73-26a767c1fea7",
+      "startvm": false,
+      "account": "admin",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f"
+    },
+    "response": {
+      "deployvirtualmachineresponse": {
+        "id": "d3e43a02-2204-433a-9c69-ecf774731389",
+        "jobid": "c9e50abe-bd5b-4b98-9b83-2ab3d7dac322"
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:01:40+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "c9e50abe-bd5b-4b98-9b83-2ab3d7dac322"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.admin.vm.DeployVMCmdByAdmin",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobinstancetype": "VirtualMachine",
+        "jobinstanceid": "d3e43a02-2204-433a-9c69-ecf774731389",
+        "managementserverid": "716fb21e-86f3-4f8c-b34d-11c8d0220230",
+        "managementservername": "ccvm-mngt",
+        "created": "2026-10-19T06:01:45+0900",
+        "jobid": "c9e50abe-bd5b-4b98-9b83-2ab3d7dac322",
+        "jobstatus": 0
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:01:41+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "c9e50abe-bd5b-4b98-9b83-2ab3d7dac322"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.admin.vm.DeployVMCmdByAdmin",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "virtualmachine": {
+            "id": "d3e43a02-2204-433a-9c69-ecf774731389",
+            "name": "qa-ag02-20261019-vm",
+            "displayname": "qa-ag02-20261019-vm",
+            "account": "admin",
+            "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+            "username": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "created": "2026-10-19T06:01:45+0900",
+            "state": "Stopped",
+            "haenable": false,
+            "zoneid": "7013f5a1-de59-4cea-a596-f4f58815f31c",
+            "zonename": "Zone",
+            "templateid": "e3d8677e-70f0-44bd-917e-6068636b97a8",
+            "templatename": "rocky-9-4-minimal.qcow22",
+            "templatetype": "USER",
+            "templateformat": "QCOW2",
+            "templatedisplaytext": "rocky-9-4-minimal.qcow22",
+            "passwordenabled": false,
+            "isos": [],
+            "isomaxcount": 2,
+            "serviceofferingid": "39c3aa33-5632-4dea-bd84-ba794d292c87",
+            "serviceofferingname": "AS-PROD-31-AS01-2C2G-Sparse",
+            "volumemutationblockedreason": "",
+            "cpunumber": 2,
+            "cpuspeed": 2000,
+            "memory": 2048,
+            "guestosid": "9708b6ac-b253-11f1-a895-0024814c313f",
+            "rootdeviceid": 0,
+            "rootdevicetype": "ROOT",
+            "securitygroup": [],
+            "nic": [
+              {
+                "id": "9a8f3248-9571-4453-95d1-30a67100b957",
+                "networkid": "ae274fff-3d8e-4285-ac73-26a767c1fea7",
+                "networkname": "E1335-VM-Origin-L2",
+                "isolationuri": "vlan://3135",
+                "broadcasturi": "vlan://3135",
+                "traffictype": "Guest",
+                "type": "L2",
+                "isdefault": true,
+                "macaddress": "02:1f:01:04:00:25",
+                "secondaryip": [],
+                "extradhcpoption": [],
+                "deviceid": "0",
+                "enabled": true
+              }
+            ],
+            "hypervisor": "KVM",
+            "instancename": "i-2-650-VM",
+            "details": {
+              "deployvm": "true",
+              "tpmversion": "NONE",
+              "rootDiskController": "osdefault"
+            },
+            "clonefastsourcepowerallowed": false,
+            "clonefastpowerallowed": false,
+            "affinitygroup": [],
+            "displayvm": true,
+            "isdynamicallyscalable": true,
+            "deleteprotection": false,
+            "ostypeid": "9708b6ac-b253-11f1-a895-0024814c313f",
+            "osdisplayname": "Rocky Linux 9",
+            "receivedbytes": 0,
+            "sentbytes": 0,
+            "vbmcport": "None",
+            "kvdoenable": false,
+            "kvdoinuse": false,
+            "arch": "x86_64",
+            "vbmcstatus": "Unallocated",
+            "tags": [],
+            "hasannotations": false,
+            "jobid": "c9e50abe-bd5b-4b98-9b83-2ab3d7dac322",
+            "jobstatus": 0
+          }
+        },
+        "jobinstancetype": "VirtualMachine",
+        "jobinstanceid": "d3e43a02-2204-433a-9c69-ecf774731389",
+        "created": "2026-10-19T06:01:45+0900",
+        "completed": "2026-10-19T06:01:45+0900",
+        "jobid": "c9e50abe-bd5b-4b98-9b83-2ab3d7dac322",
+        "jobstatus": 1
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:07:22+0900",
+    "command": "updateVMAffinityGroup",
+    "params": {
+      "id": "d3e43a02-2204-433a-9c69-ecf774731389",
+      "affinitygroupids": "38cea24d-b9d0-480b-87bd-4d00248419d8"
+    },
+    "response": {
+      "updatevirtualmachineresponse": {
+        "jobid": "064cd312-4ff4-45a8-8a3f-30a1f7d5c21a"
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:07:22+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "064cd312-4ff4-45a8-8a3f-30a1f7d5c21a"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.admin.affinitygroup.UpdateVMAffinityGroupCmdByAdmin",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "managementserverid": "716fb21e-86f3-4f8c-b34d-11c8d0220230",
+        "managementservername": "ccvm-mngt",
+        "created": "2026-10-19T06:07:26+0900",
+        "jobid": "064cd312-4ff4-45a8-8a3f-30a1f7d5c21a",
+        "jobstatus": 0
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:07:23+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "064cd312-4ff4-45a8-8a3f-30a1f7d5c21a"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.admin.affinitygroup.UpdateVMAffinityGroupCmdByAdmin",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "virtualmachine": {
+            "id": "d3e43a02-2204-433a-9c69-ecf774731389",
+            "name": "qa-ag02-20261019-vm",
+            "displayname": "qa-ag02-20261019-vm",
+            "account": "admin",
+            "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+            "username": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "created": "2026-10-19T06:01:45+0900",
+            "state": "Stopped",
+            "haenable": false,
+            "zoneid": "7013f5a1-de59-4cea-a596-f4f58815f31c",
+            "zonename": "Zone",
+            "volumemutationblockedreason": "",
+            "guestosid": "9708b6ac-b253-11f1-a895-0024814c313f",
+            "securitygroup": [],
+            "nic": [],
+            "hypervisor": "KVM",
+            "instancename": "i-2-650-VM",
+            "details": {
+              "deployvm": "true",
+              "tpmversion": "NONE",
+              "rootDiskController": "osdefault"
+            },
+            "clonefastsourcepowerallowed": false,
+            "clonefastpowerallowed": false,
+            "affinitygroup": [
+              {
+                "id": "38cea24d-b9d0-480b-87bd-4d00248419d8",
+                "name": "qa-ag02-20261019-14",
+                "description": "AG02 disposable selection fixture",
+                "account": "admin"
+              }
+            ],
+            "displayvm": true,
+            "isdynamicallyscalable": true,
+            "deleteprotection": false,
+            "ostypeid": "9708b6ac-b253-11f1-a895-0024814c313f",
+            "osdisplayname": "Rocky Linux 9",
+            "receivedbytes": 0,
+            "sentbytes": 0,
+            "vbmcport": "None",
+            "kvdoenable": false,
+            "kvdoinuse": false,
+            "arch": "x86_64",
+            "vbmcstatus": "Unallocated",
+            "tags": [],
+            "hasannotations": false
+          }
+        },
+        "created": "2026-10-19T06:07:26+0900",
+        "completed": "2026-10-19T06:07:26+0900",
+        "jobid": "064cd312-4ff4-45a8-8a3f-30a1f7d5c21a",
+        "jobstatus": 1
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:07:23+0900",
+    "command": "listVirtualMachines",
+    "params": {
+      "id": "d3e43a02-2204-433a-9c69-ecf774731389",
+      "details": "min,affgrp"
+    },
+    "response": {
+      "listvirtualmachinesresponse": {
+        "count": 1,
+        "virtualmachine": [
+          {
+            "id": "d3e43a02-2204-433a-9c69-ecf774731389",
+            "name": "qa-ag02-20261019-vm",
+            "displayname": "qa-ag02-20261019-vm",
+            "account": "admin",
+            "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+            "username": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "created": "2026-10-19T06:01:45+0900",
+            "state": "Stopped",
+            "haenable": false,
+            "zoneid": "7013f5a1-de59-4cea-a596-f4f58815f31c",
+            "zonename": "Zone",
+            "volumemutationblockedreason": "",
+            "guestosid": "9708b6ac-b253-11f1-a895-0024814c313f",
+            "securitygroup": [],
+            "nic": [],
+            "hypervisor": "KVM",
+            "instancename": "i-2-650-VM",
+            "details": {
+              "deployvm": "true",
+              "tpmversion": "NONE",
+              "rootDiskController": "osdefault"
+            },
+            "clonefastsourcepowerallowed": false,
+            "clonefastpowerallowed": false,
+            "affinitygroup": [
+              {
+                "id": "38cea24d-b9d0-480b-87bd-4d00248419d8",
+                "name": "qa-ag02-20261019-14",
+                "description": "AG02 disposable selection fixture",
+                "account": "admin"
+              }
+            ],
+            "displayvm": true,
+            "isdynamicallyscalable": true,
+            "deleteprotection": false,
+            "ostypeid": "9708b6ac-b253-11f1-a895-0024814c313f",
+            "osdisplayname": "Rocky Linux 9",
+            "receivedbytes": 0,
+            "sentbytes": 0,
+            "vbmcport": "None",
+            "kvdoenable": false,
+            "kvdoinuse": false,
+            "arch": "x86_64",
+            "vbmcstatus": "Unallocated",
+            "tags": [],
+            "hasannotations": false
+          }
+        ]
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:08:34+0900",
+    "command": "listVirtualMachines",
+    "params": {
+      "id": "d3e43a02-2204-433a-9c69-ecf774731389",
+      "details": "min,affgrp"
+    },
+    "response": {
+      "listvirtualmachinesresponse": {
+        "count": 1,
+        "virtualmachine": [
+          {
+            "id": "d3e43a02-2204-433a-9c69-ecf774731389",
+            "name": "qa-ag02-20261019-vm",
+            "displayname": "qa-ag02-20261019-vm",
+            "account": "admin",
+            "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+            "username": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "created": "2026-10-19T06:01:45+0900",
+            "state": "Stopped",
+            "haenable": false,
+            "zoneid": "7013f5a1-de59-4cea-a596-f4f58815f31c",
+            "zonename": "Zone",
+            "volumemutationblockedreason": "",
+            "guestosid": "9708b6ac-b253-11f1-a895-0024814c313f",
+            "securitygroup": [],
+            "nic": [],
+            "hypervisor": "KVM",
+            "instancename": "i-2-650-VM",
+            "details": {
+              "deployvm": "true",
+              "tpmversion": "NONE",
+              "rootDiskController": "osdefault"
+            },
+            "clonefastsourcepowerallowed": false,
+            "clonefastpowerallowed": false,
+            "affinitygroup": [
+              {
+                "id": "38cea24d-b9d0-480b-87bd-4d00248419d8",
+                "name": "qa-ag02-20261019-14",
+                "description": "AG02 disposable selection fixture",
+                "account": "admin"
+              }
+            ],
+            "displayvm": true,
+            "isdynamicallyscalable": true,
+            "deleteprotection": false,
+            "ostypeid": "9708b6ac-b253-11f1-a895-0024814c313f",
+            "osdisplayname": "Rocky Linux 9",
+            "receivedbytes": 0,
+            "sentbytes": 0,
+            "vbmcport": "None",
+            "kvdoenable": false,
+            "kvdoinuse": false,
+            "arch": "x86_64",
+            "vbmcstatus": "Unallocated",
+            "tags": [],
+            "hasannotations": false
+          }
+        ]
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:12:38+0900",
+    "command": "listAffinityGroups",
+    "params": {
+      "account": "admin",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "page": 1,
+      "pageSize": 10
+    },
+    "response": {
+      "listaffinitygroupsresponse": {
+        "count": 14,
+        "affinitygroup": [
+          {
+            "id": "d57c65c9-6d27-4bfe-817d-a08ea8d08ce1",
+            "name": "qa-ag02-20261019-01",
+            "description": "AG02 disposable selection fixture",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "aa5d1372-8974-4e86-bb73-d4e7c9ae0362",
+            "name": "qa-ag02-20261019-02",
+            "description": "AG02 disposable selection fixture",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "9151bf9f-7f94-4c06-a6d8-2563d014622a",
+            "name": "qa-ag02-20261019-03",
+            "description": "AG02 disposable selection fixture",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "936bf93a-dacc-47b3-a471-a3076a2fdbb3",
+            "name": "qa-ag02-20261019-04",
+            "description": "AG02 disposable selection fixture",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "b6f438ac-c7cb-477c-af10-d02a375a1a7e",
+            "name": "qa-ag02-20261019-05",
+            "description": "AG02 disposable selection fixture",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "bd0f1f15-9be6-44f6-920d-3a205295b6ec",
+            "name": "qa-ag02-20261019-06",
+            "description": "AG02 disposable selection fixture",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "d67e6414-d403-4a48-912f-321e52cbbfc6",
+            "name": "qa-ag02-20261019-07",
+            "description": "AG02 disposable selection fixture",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "bb2b8db2-f453-4215-9079-585135729f10",
+            "name": "qa-ag02-20261019-08",
+            "description": "AG02 disposable selection fixture",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "84f28680-0d67-48dd-bdc3-13b4a094a355",
+            "name": "qa-ag02-20261019-09",
+            "description": "AG02 disposable selection fixture",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "b78c75fc-abe9-4db3-9fbe-5dd02f714595",
+            "name": "qa-ag02-20261019-10",
+            "description": "AG02 disposable selection fixture",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:12:38+0900",
+    "command": "listAffinityGroups",
+    "params": {
+      "account": "admin",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "page": 2,
+      "pageSize": 10
+    },
+    "response": {
+      "listaffinitygroupsresponse": {
+        "count": 14,
+        "affinitygroup": [
+          {
+            "id": "7a68f766-421e-4b03-b854-c0fd366852df",
+            "name": "qa-ag02-20261019-11",
+            "description": "AG02 disposable selection fixture",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "d232e085-d19a-4ec3-82c8-08f442c17a26",
+            "name": "qa-ag02-20261019-12",
+            "description": "AG02 disposable selection fixture",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "90571baa-0f3f-44c6-a0d3-6fe688a4dc4e",
+            "name": "qa-ag02-20261019-13",
+            "description": "AG02 disposable selection fixture",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "38cea24d-b9d0-480b-87bd-4d00248419d8",
+            "name": "qa-ag02-20261019-14",
+            "description": "AG02 disposable selection fixture",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity",
+            "virtualmachineIds": [
+              "d3e43a02-2204-433a-9c69-ecf774731389"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:12:38+0900",
+    "command": "listAffinityGroups",
+    "params": {
+      "account": "admin",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "page": 1,
+      "pageSize": 10,
+      "keyword": "qa-ag02-20261019-14"
+    },
+    "response": {
+      "listaffinitygroupsresponse": {
+        "count": 1,
+        "affinitygroup": [
+          {
+            "id": "38cea24d-b9d0-480b-87bd-4d00248419d8",
+            "name": "qa-ag02-20261019-14",
+            "description": "AG02 disposable selection fixture",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity",
+            "virtualmachineIds": [
+              "d3e43a02-2204-433a-9c69-ecf774731389"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:12:38+0900",
+    "command": "listAffinityGroups",
+    "params": {
+      "account": "admin",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "page": 1,
+      "pageSize": 10,
+      "keyword": "qa-ag02-20261019-no-match"
+    },
+    "response": {
+      "listaffinitygroupsresponse": {}
+    }
+  },
+  {
+    "time": "2026-10-19T06:12:38+0900",
+    "command": "listAffinityGroups",
+    "params": {
+      "account": "admin",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "page": 1,
+      "pageSize": 20
+    },
+    "response": {
+      "listaffinitygroupsresponse": {
+        "count": 14,
+        "affinitygroup": [
+          {
+            "id": "d57c65c9-6d27-4bfe-817d-a08ea8d08ce1",
+            "name": "qa-ag02-20261019-01",
+            "description": "AG02 disposable selection fixture",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "aa5d1372-8974-4e86-bb73-d4e7c9ae0362",
+            "name": "qa-ag02-20261019-02",
+            "description": "AG02 disposable selection fixture",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "9151bf9f-7f94-4c06-a6d8-2563d014622a",
+            "name": "qa-ag02-20261019-03",
+            "description": "AG02 disposable selection fixture",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "936bf93a-dacc-47b3-a471-a3076a2fdbb3",
+            "name": "qa-ag02-20261019-04",
+            "description": "AG02 disposable selection fixture",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "b6f438ac-c7cb-477c-af10-d02a375a1a7e",
+            "name": "qa-ag02-20261019-05",
+            "description": "AG02 disposable selection fixture",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "bd0f1f15-9be6-44f6-920d-3a205295b6ec",
+            "name": "qa-ag02-20261019-06",
+            "description": "AG02 disposable selection fixture",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "d67e6414-d403-4a48-912f-321e52cbbfc6",
+            "name": "qa-ag02-20261019-07",
+            "description": "AG02 disposable selection fixture",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "bb2b8db2-f453-4215-9079-585135729f10",
+            "name": "qa-ag02-20261019-08",
+            "description": "AG02 disposable selection fixture",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "84f28680-0d67-48dd-bdc3-13b4a094a355",
+            "name": "qa-ag02-20261019-09",
+            "description": "AG02 disposable selection fixture",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "b78c75fc-abe9-4db3-9fbe-5dd02f714595",
+            "name": "qa-ag02-20261019-10",
+            "description": "AG02 disposable selection fixture",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "7a68f766-421e-4b03-b854-c0fd366852df",
+            "name": "qa-ag02-20261019-11",
+            "description": "AG02 disposable selection fixture",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "d232e085-d19a-4ec3-82c8-08f442c17a26",
+            "name": "qa-ag02-20261019-12",
+            "description": "AG02 disposable selection fixture",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "90571baa-0f3f-44c6-a0d3-6fe688a4dc4e",
+            "name": "qa-ag02-20261019-13",
+            "description": "AG02 disposable selection fixture",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "38cea24d-b9d0-480b-87bd-4d00248419d8",
+            "name": "qa-ag02-20261019-14",
+            "description": "AG02 disposable selection fixture",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity",
+            "virtualmachineIds": [
+              "d3e43a02-2204-433a-9c69-ecf774731389"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:21:28+0900",
+    "command": "listVirtualMachines",
+    "params": {
+      "id": "d3e43a02-2204-433a-9c69-ecf774731389",
+      "details": "min,affgrp"
+    },
+    "response": {
+      "listvirtualmachinesresponse": {
+        "count": 1,
+        "virtualmachine": [
+          {
+            "id": "d3e43a02-2204-433a-9c69-ecf774731389",
+            "name": "qa-ag02-20261019-vm",
+            "displayname": "qa-ag02-20261019-vm",
+            "account": "admin",
+            "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+            "username": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "created": "2026-10-19T06:01:45+0900",
+            "state": "Stopped",
+            "haenable": false,
+            "zoneid": "7013f5a1-de59-4cea-a596-f4f58815f31c",
+            "zonename": "Zone",
+            "volumemutationblockedreason": "",
+            "guestosid": "9708b6ac-b253-11f1-a895-0024814c313f",
+            "securitygroup": [],
+            "nic": [
+              {
+                "id": "9a8f3248-9571-4453-95d1-30a67100b957",
+                "networkid": "ae274fff-3d8e-4285-ac73-26a767c1fea7",
+                "networkname": "E1335-VM-Origin-L2",
+                "isolationuri": "vlan://3135",
+                "broadcasturi": "vlan://3135",
+                "traffictype": "Guest",
+                "type": "L2",
+                "isdefault": true,
+                "macaddress": "02:1f:01:04:00:25",
+                "secondaryip": [],
+                "extradhcpoption": [],
+                "deviceid": "0",
+                "enabled": true
+              }
+            ],
+            "hypervisor": "KVM",
+            "instancename": "i-2-650-VM",
+            "details": {
+              "deployvm": "true",
+              "tpmversion": "NONE",
+              "rootDiskController": "osdefault"
+            },
+            "clonefastsourcepowerallowed": false,
+            "clonefastpowerallowed": false,
+            "affinitygroup": [
+              {
+                "id": "38cea24d-b9d0-480b-87bd-4d00248419d8",
+                "name": "qa-ag02-20261019-14",
+                "description": "AG02 disposable selection fixture",
+                "account": "admin"
+              },
+              {
+                "id": "d57c65c9-6d27-4bfe-817d-a08ea8d08ce1",
+                "name": "qa-ag02-20261019-01",
+                "description": "AG02 disposable selection fixture",
+                "account": "admin"
+              },
+              {
+                "id": "7a68f766-421e-4b03-b854-c0fd366852df",
+                "name": "qa-ag02-20261019-11",
+                "description": "AG02 disposable selection fixture",
+                "account": "admin"
+              }
+            ],
+            "displayvm": true,
+            "isdynamicallyscalable": true,
+            "deleteprotection": false,
+            "ostypeid": "9708b6ac-b253-11f1-a895-0024814c313f",
+            "osdisplayname": "Rocky Linux 9",
+            "receivedbytes": 0,
+            "sentbytes": 0,
+            "vbmcport": "None",
+            "kvdoenable": false,
+            "kvdoinuse": false,
+            "arch": "x86_64",
+            "vbmcstatus": "Unallocated",
+            "tags": [],
+            "hasannotations": false
+          }
+        ]
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:32:29+0900",
+    "command": "listVirtualMachines",
+    "params": {
+      "id": "d3e43a02-2204-433a-9c69-ecf774731389",
+      "details": "min,affgrp"
+    },
+    "response": {
+      "listvirtualmachinesresponse": {
+        "uuidList": [],
+        "errorcode": 401,
+        "errortext": "unable to verify user credentials and/or request signature"
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:32:41+0900",
+    "command": "listVirtualMachines",
+    "params": {
+      "id": "d3e43a02-2204-433a-9c69-ecf774731389",
+      "details": "min,affgrp"
+    },
+    "response": {
+      "listvirtualmachinesresponse": {
+        "count": 1,
+        "virtualmachine": [
+          {
+            "id": "d3e43a02-2204-433a-9c69-ecf774731389",
+            "name": "qa-ag02-20261019-vm",
+            "displayname": "qa-ag02-20261019-vm",
+            "account": "admin",
+            "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+            "username": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "created": "2026-10-19T06:01:45+0900",
+            "state": "Stopped",
+            "haenable": false,
+            "zoneid": "7013f5a1-de59-4cea-a596-f4f58815f31c",
+            "zonename": "Zone",
+            "volumemutationblockedreason": "",
+            "guestosid": "9708b6ac-b253-11f1-a895-0024814c313f",
+            "securitygroup": [],
+            "nic": [
+              {
+                "id": "9a8f3248-9571-4453-95d1-30a67100b957",
+                "networkid": "ae274fff-3d8e-4285-ac73-26a767c1fea7",
+                "networkname": "E1335-VM-Origin-L2",
+                "isolationuri": "vlan://3135",
+                "broadcasturi": "vlan://3135",
+                "traffictype": "Guest",
+                "type": "L2",
+                "isdefault": true,
+                "macaddress": "02:1f:01:04:00:25",
+                "secondaryip": [],
+                "extradhcpoption": [],
+                "deviceid": "0",
+                "enabled": true
+              }
+            ],
+            "hypervisor": "KVM",
+            "instancename": "i-2-650-VM",
+            "details": {
+              "deployvm": "true",
+              "tpmversion": "NONE",
+              "rootDiskController": "osdefault"
+            },
+            "clonefastsourcepowerallowed": false,
+            "clonefastpowerallowed": false,
+            "affinitygroup": [
+              {
+                "id": "90571baa-0f3f-44c6-a0d3-6fe688a4dc4e",
+                "name": "qa-ag02-20261019-13",
+                "description": "AG02 disposable selection fixture",
+                "account": "admin"
+              },
+              {
+                "id": "d232e085-d19a-4ec3-82c8-08f442c17a26",
+                "name": "qa-ag02-20261019-12",
+                "description": "AG02 disposable selection fixture",
+                "account": "admin"
+              },
+              {
+                "id": "b78c75fc-abe9-4db3-9fbe-5dd02f714595",
+                "name": "qa-ag02-20261019-10",
+                "description": "AG02 disposable selection fixture",
+                "account": "admin"
+              },
+              {
+                "id": "84f28680-0d67-48dd-bdc3-13b4a094a355",
+                "name": "qa-ag02-20261019-09",
+                "description": "AG02 disposable selection fixture",
+                "account": "admin"
+              },
+              {
+                "id": "bb2b8db2-f453-4215-9079-585135729f10",
+                "name": "qa-ag02-20261019-08",
+                "description": "AG02 disposable selection fixture",
+                "account": "admin"
+              },
+              {
+                "id": "d67e6414-d403-4a48-912f-321e52cbbfc6",
+                "name": "qa-ag02-20261019-07",
+                "description": "AG02 disposable selection fixture",
+                "account": "admin"
+              },
+              {
+                "id": "bd0f1f15-9be6-44f6-920d-3a205295b6ec",
+                "name": "qa-ag02-20261019-06",
+                "description": "AG02 disposable selection fixture",
+                "account": "admin"
+              },
+              {
+                "id": "b6f438ac-c7cb-477c-af10-d02a375a1a7e",
+                "name": "qa-ag02-20261019-05",
+                "description": "AG02 disposable selection fixture",
+                "account": "admin"
+              },
+              {
+                "id": "936bf93a-dacc-47b3-a471-a3076a2fdbb3",
+                "name": "qa-ag02-20261019-04",
+                "description": "AG02 disposable selection fixture",
+                "account": "admin"
+              },
+              {
+                "id": "9151bf9f-7f94-4c06-a6d8-2563d014622a",
+                "name": "qa-ag02-20261019-03",
+                "description": "AG02 disposable selection fixture",
+                "account": "admin"
+              },
+              {
+                "id": "aa5d1372-8974-4e86-bb73-d4e7c9ae0362",
+                "name": "qa-ag02-20261019-02",
+                "description": "AG02 disposable selection fixture",
+                "account": "admin"
+              },
+              {
+                "id": "7a68f766-421e-4b03-b854-c0fd366852df",
+                "name": "qa-ag02-20261019-11",
+                "description": "AG02 disposable selection fixture",
+                "account": "admin"
+              },
+              {
+                "id": "38cea24d-b9d0-480b-87bd-4d00248419d8",
+                "name": "qa-ag02-20261019-14",
+                "description": "AG02 disposable selection fixture",
+                "account": "admin"
+              }
+            ],
+            "displayvm": true,
+            "isdynamicallyscalable": true,
+            "deleteprotection": false,
+            "ostypeid": "9708b6ac-b253-11f1-a895-0024814c313f",
+            "osdisplayname": "Rocky Linux 9",
+            "receivedbytes": 0,
+            "sentbytes": 0,
+            "vbmcport": "None",
+            "kvdoenable": false,
+            "kvdoinuse": false,
+            "arch": "x86_64",
+            "vbmcstatus": "Unallocated",
+            "tags": [],
+            "hasannotations": false
+          }
+        ]
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:42:14+0900",
+    "command": "listVirtualMachines",
+    "params": {
+      "id": "d3e43a02-2204-433a-9c69-ecf774731389",
+      "details": "min,affgrp"
+    },
+    "response": {
+      "listvirtualmachinesresponse": {
+        "count": 1,
+        "virtualmachine": [
+          {
+            "id": "d3e43a02-2204-433a-9c69-ecf774731389",
+            "name": "qa-ag02-20261019-vm",
+            "displayname": "qa-ag02-20261019-vm",
+            "account": "admin",
+            "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+            "username": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "created": "2026-10-19T06:01:45+0900",
+            "state": "Stopped",
+            "haenable": false,
+            "zoneid": "7013f5a1-de59-4cea-a596-f4f58815f31c",
+            "zonename": "Zone",
+            "volumemutationblockedreason": "",
+            "guestosid": "9708b6ac-b253-11f1-a895-0024814c313f",
+            "securitygroup": [],
+            "nic": [
+              {
+                "id": "9a8f3248-9571-4453-95d1-30a67100b957",
+                "networkid": "ae274fff-3d8e-4285-ac73-26a767c1fea7",
+                "networkname": "E1335-VM-Origin-L2",
+                "isolationuri": "vlan://3135",
+                "broadcasturi": "vlan://3135",
+                "traffictype": "Guest",
+                "type": "L2",
+                "isdefault": true,
+                "macaddress": "02:1f:01:04:00:25",
+                "secondaryip": [],
+                "extradhcpoption": [],
+                "deviceid": "0",
+                "enabled": true
+              }
+            ],
+            "hypervisor": "KVM",
+            "instancename": "i-2-650-VM",
+            "details": {
+              "deployvm": "true",
+              "tpmversion": "NONE",
+              "rootDiskController": "osdefault"
+            },
+            "clonefastsourcepowerallowed": false,
+            "clonefastpowerallowed": false,
+            "affinitygroup": [
+              {
+                "id": "d57c65c9-6d27-4bfe-817d-a08ea8d08ce1",
+                "name": "qa-ag02-20261019-01",
+                "description": "AG02 disposable selection fixture",
+                "account": "admin"
+              },
+              {
+                "id": "7a68f766-421e-4b03-b854-c0fd366852df",
+                "name": "qa-ag02-20261019-11",
+                "description": "AG02 disposable selection fixture",
+                "account": "admin"
+              },
+              {
+                "id": "38cea24d-b9d0-480b-87bd-4d00248419d8",
+                "name": "qa-ag02-20261019-14",
+                "description": "AG02 disposable selection fixture",
+                "account": "admin"
+              }
+            ],
+            "displayvm": true,
+            "isdynamicallyscalable": true,
+            "deleteprotection": false,
+            "ostypeid": "9708b6ac-b253-11f1-a895-0024814c313f",
+            "osdisplayname": "Rocky Linux 9",
+            "receivedbytes": 0,
+            "sentbytes": 0,
+            "vbmcport": "None",
+            "kvdoenable": false,
+            "kvdoinuse": false,
+            "arch": "x86_64",
+            "vbmcstatus": "Unallocated",
+            "tags": [],
+            "hasannotations": false
+          }
+        ]
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:42:36+0900",
+    "command": "listVirtualMachines",
+    "params": {
+      "id": "d3e43a02-2204-433a-9c69-ecf774731389",
+      "details": "min,affgrp"
+    },
+    "response": {
+      "listvirtualmachinesresponse": {
+        "count": 1,
+        "virtualmachine": [
+          {
+            "id": "d3e43a02-2204-433a-9c69-ecf774731389",
+            "name": "qa-ag02-20261019-vm",
+            "displayname": "qa-ag02-20261019-vm",
+            "account": "admin",
+            "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+            "username": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "created": "2026-10-19T06:01:45+0900",
+            "state": "Stopped",
+            "haenable": false,
+            "zoneid": "7013f5a1-de59-4cea-a596-f4f58815f31c",
+            "zonename": "Zone",
+            "volumemutationblockedreason": "",
+            "guestosid": "9708b6ac-b253-11f1-a895-0024814c313f",
+            "securitygroup": [],
+            "nic": [
+              {
+                "id": "9a8f3248-9571-4453-95d1-30a67100b957",
+                "networkid": "ae274fff-3d8e-4285-ac73-26a767c1fea7",
+                "networkname": "E1335-VM-Origin-L2",
+                "isolationuri": "vlan://3135",
+                "broadcasturi": "vlan://3135",
+                "traffictype": "Guest",
+                "type": "L2",
+                "isdefault": true,
+                "macaddress": "02:1f:01:04:00:25",
+                "secondaryip": [],
+                "extradhcpoption": [],
+                "deviceid": "0",
+                "enabled": true
+              }
+            ],
+            "hypervisor": "KVM",
+            "instancename": "i-2-650-VM",
+            "details": {
+              "deployvm": "true",
+              "tpmversion": "NONE",
+              "rootDiskController": "osdefault"
+            },
+            "clonefastsourcepowerallowed": false,
+            "clonefastpowerallowed": false,
+            "affinitygroup": [
+              {
+                "id": "90571baa-0f3f-44c6-a0d3-6fe688a4dc4e",
+                "name": "qa-ag02-20261019-13",
+                "description": "AG02 disposable selection fixture",
+                "account": "admin"
+              },
+              {
+                "id": "d232e085-d19a-4ec3-82c8-08f442c17a26",
+                "name": "qa-ag02-20261019-12",
+                "description": "AG02 disposable selection fixture",
+                "account": "admin"
+              },
+              {
+                "id": "b78c75fc-abe9-4db3-9fbe-5dd02f714595",
+                "name": "qa-ag02-20261019-10",
+                "description": "AG02 disposable selection fixture",
+                "account": "admin"
+              },
+              {
+                "id": "84f28680-0d67-48dd-bdc3-13b4a094a355",
+                "name": "qa-ag02-20261019-09",
+                "description": "AG02 disposable selection fixture",
+                "account": "admin"
+              },
+              {
+                "id": "bb2b8db2-f453-4215-9079-585135729f10",
+                "name": "qa-ag02-20261019-08",
+                "description": "AG02 disposable selection fixture",
+                "account": "admin"
+              },
+              {
+                "id": "d67e6414-d403-4a48-912f-321e52cbbfc6",
+                "name": "qa-ag02-20261019-07",
+                "description": "AG02 disposable selection fixture",
+                "account": "admin"
+              },
+              {
+                "id": "bd0f1f15-9be6-44f6-920d-3a205295b6ec",
+                "name": "qa-ag02-20261019-06",
+                "description": "AG02 disposable selection fixture",
+                "account": "admin"
+              },
+              {
+                "id": "b6f438ac-c7cb-477c-af10-d02a375a1a7e",
+                "name": "qa-ag02-20261019-05",
+                "description": "AG02 disposable selection fixture",
+                "account": "admin"
+              },
+              {
+                "id": "936bf93a-dacc-47b3-a471-a3076a2fdbb3",
+                "name": "qa-ag02-20261019-04",
+                "description": "AG02 disposable selection fixture",
+                "account": "admin"
+              },
+              {
+                "id": "9151bf9f-7f94-4c06-a6d8-2563d014622a",
+                "name": "qa-ag02-20261019-03",
+                "description": "AG02 disposable selection fixture",
+                "account": "admin"
+              },
+              {
+                "id": "aa5d1372-8974-4e86-bb73-d4e7c9ae0362",
+                "name": "qa-ag02-20261019-02",
+                "description": "AG02 disposable selection fixture",
+                "account": "admin"
+              },
+              {
+                "id": "38cea24d-b9d0-480b-87bd-4d00248419d8",
+                "name": "qa-ag02-20261019-14",
+                "description": "AG02 disposable selection fixture",
+                "account": "admin"
+              },
+              {
+                "id": "7a68f766-421e-4b03-b854-c0fd366852df",
+                "name": "qa-ag02-20261019-11",
+                "description": "AG02 disposable selection fixture",
+                "account": "admin"
+              }
+            ],
+            "displayvm": true,
+            "isdynamicallyscalable": true,
+            "deleteprotection": false,
+            "ostypeid": "9708b6ac-b253-11f1-a895-0024814c313f",
+            "osdisplayname": "Rocky Linux 9",
+            "receivedbytes": 0,
+            "sentbytes": 0,
+            "vbmcport": "None",
+            "kvdoenable": false,
+            "kvdoinuse": false,
+            "arch": "x86_64",
+            "vbmcstatus": "Unallocated",
+            "tags": [],
+            "hasannotations": false
+          }
+        ]
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:42:50+0900",
+    "command": "listVirtualMachines",
+    "params": {
+      "id": "d3e43a02-2204-433a-9c69-ecf774731389",
+      "details": "min,affgrp"
+    },
+    "response": {
+      "listvirtualmachinesresponse": {
+        "count": 1,
+        "virtualmachine": [
+          {
+            "id": "d3e43a02-2204-433a-9c69-ecf774731389",
+            "name": "qa-ag02-20261019-vm",
+            "displayname": "qa-ag02-20261019-vm",
+            "account": "admin",
+            "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+            "username": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "created": "2026-10-19T06:01:45+0900",
+            "state": "Stopped",
+            "haenable": false,
+            "zoneid": "7013f5a1-de59-4cea-a596-f4f58815f31c",
+            "zonename": "Zone",
+            "volumemutationblockedreason": "",
+            "guestosid": "9708b6ac-b253-11f1-a895-0024814c313f",
+            "securitygroup": [],
+            "nic": [],
+            "hypervisor": "KVM",
+            "instancename": "i-2-650-VM",
+            "details": {
+              "deployvm": "true",
+              "tpmversion": "NONE",
+              "rootDiskController": "osdefault"
+            },
+            "clonefastsourcepowerallowed": false,
+            "clonefastpowerallowed": false,
+            "affinitygroup": [],
+            "displayvm": true,
+            "isdynamicallyscalable": true,
+            "deleteprotection": false,
+            "ostypeid": "9708b6ac-b253-11f1-a895-0024814c313f",
+            "osdisplayname": "Rocky Linux 9",
+            "receivedbytes": 0,
+            "sentbytes": 0,
+            "vbmcport": "None",
+            "kvdoenable": false,
+            "kvdoinuse": false,
+            "arch": "x86_64",
+            "vbmcstatus": "Unallocated",
+            "tags": [],
+            "hasannotations": false
+          }
+        ]
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:43:58+0900",
+    "command": "destroyVirtualMachine",
+    "params": {
+      "id": "d3e43a02-2204-433a-9c69-ecf774731389",
+      "expunge": true
+    },
+    "response": {
+      "destroyvirtualmachineresponse": {
+        "jobid": "4ddfd089-1b54-4b3c-b109-40c497d339e6"
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:43:58+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "4ddfd089-1b54-4b3c-b109-40c497d339e6"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.admin.vm.DestroyVMCmdByAdmin",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobinstancetype": "VirtualMachine",
+        "jobinstanceid": "d3e43a02-2204-433a-9c69-ecf774731389",
+        "managementserverid": "716fb21e-86f3-4f8c-b34d-11c8d0220230",
+        "managementservername": "ccvm-mngt",
+        "created": "2026-10-19T06:44:03+0900",
+        "jobid": "4ddfd089-1b54-4b3c-b109-40c497d339e6",
+        "jobstatus": 0
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:44:00+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "4ddfd089-1b54-4b3c-b109-40c497d339e6"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.admin.vm.DestroyVMCmdByAdmin",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobinstancetype": "VirtualMachine",
+        "jobinstanceid": "d3e43a02-2204-433a-9c69-ecf774731389",
+        "managementserverid": "716fb21e-86f3-4f8c-b34d-11c8d0220230",
+        "managementservername": "ccvm-mngt",
+        "created": "2026-10-19T06:44:03+0900",
+        "jobid": "4ddfd089-1b54-4b3c-b109-40c497d339e6",
+        "jobstatus": 0
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:44:01+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "4ddfd089-1b54-4b3c-b109-40c497d339e6"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.admin.vm.DestroyVMCmdByAdmin",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobinstancetype": "VirtualMachine",
+        "jobinstanceid": "d3e43a02-2204-433a-9c69-ecf774731389",
+        "managementserverid": "716fb21e-86f3-4f8c-b34d-11c8d0220230",
+        "managementservername": "ccvm-mngt",
+        "created": "2026-10-19T06:44:03+0900",
+        "jobid": "4ddfd089-1b54-4b3c-b109-40c497d339e6",
+        "jobstatus": 0
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:44:02+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "4ddfd089-1b54-4b3c-b109-40c497d339e6"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.admin.vm.DestroyVMCmdByAdmin",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobinstancetype": "VirtualMachine",
+        "jobinstanceid": "d3e43a02-2204-433a-9c69-ecf774731389",
+        "managementserverid": "716fb21e-86f3-4f8c-b34d-11c8d0220230",
+        "managementservername": "ccvm-mngt",
+        "created": "2026-10-19T06:44:03+0900",
+        "jobid": "4ddfd089-1b54-4b3c-b109-40c497d339e6",
+        "jobstatus": 0
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:44:03+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "4ddfd089-1b54-4b3c-b109-40c497d339e6"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.admin.vm.DestroyVMCmdByAdmin",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobinstancetype": "VirtualMachine",
+        "jobinstanceid": "d3e43a02-2204-433a-9c69-ecf774731389",
+        "managementserverid": "716fb21e-86f3-4f8c-b34d-11c8d0220230",
+        "managementservername": "ccvm-mngt",
+        "created": "2026-10-19T06:44:03+0900",
+        "jobid": "4ddfd089-1b54-4b3c-b109-40c497d339e6",
+        "jobstatus": 0
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:44:04+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "4ddfd089-1b54-4b3c-b109-40c497d339e6"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.admin.vm.DestroyVMCmdByAdmin",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobinstancetype": "VirtualMachine",
+        "jobinstanceid": "d3e43a02-2204-433a-9c69-ecf774731389",
+        "managementserverid": "716fb21e-86f3-4f8c-b34d-11c8d0220230",
+        "managementservername": "ccvm-mngt",
+        "created": "2026-10-19T06:44:03+0900",
+        "jobid": "4ddfd089-1b54-4b3c-b109-40c497d339e6",
+        "jobstatus": 0
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:44:05+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "4ddfd089-1b54-4b3c-b109-40c497d339e6"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.admin.vm.DestroyVMCmdByAdmin",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobinstancetype": "VirtualMachine",
+        "jobinstanceid": "d3e43a02-2204-433a-9c69-ecf774731389",
+        "managementserverid": "716fb21e-86f3-4f8c-b34d-11c8d0220230",
+        "managementservername": "ccvm-mngt",
+        "created": "2026-10-19T06:44:03+0900",
+        "jobid": "4ddfd089-1b54-4b3c-b109-40c497d339e6",
+        "jobstatus": 0
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:44:06+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "4ddfd089-1b54-4b3c-b109-40c497d339e6"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.admin.vm.DestroyVMCmdByAdmin",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "virtualmachine": {
+            "volumemutationblockedreason": "",
+            "securitygroup": [],
+            "nic": [],
+            "affinitygroup": [],
+            "deleteprotection": false,
+            "tags": []
+          }
+        },
+        "jobinstancetype": "VirtualMachine",
+        "jobinstanceid": "d3e43a02-2204-433a-9c69-ecf774731389",
+        "created": "2026-10-19T06:44:03+0900",
+        "completed": "2026-10-19T06:44:10+0900",
+        "jobid": "4ddfd089-1b54-4b3c-b109-40c497d339e6",
+        "jobstatus": 1
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:44:06+0900",
+    "command": "deleteAffinityGroup",
+    "params": {
+      "id": "d57c65c9-6d27-4bfe-817d-a08ea8d08ce1"
+    },
+    "response": {
+      "deleteaffinitygroupresponse": {
+        "jobid": "5b3fb390-e3e5-4673-b59b-9c34aaafe356"
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:44:06+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "5b3fb390-e3e5-4673-b59b-9c34aaafe356"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.DeleteAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobinstancetype": "AffinityGroup",
+        "managementserverid": "716fb21e-86f3-4f8c-b34d-11c8d0220230",
+        "managementservername": "ccvm-mngt",
+        "created": "2026-10-19T06:44:11+0900",
+        "jobid": "5b3fb390-e3e5-4673-b59b-9c34aaafe356",
+        "jobstatus": 0
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:44:07+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "5b3fb390-e3e5-4673-b59b-9c34aaafe356"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.DeleteAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "success": true
+        },
+        "jobinstancetype": "AffinityGroup",
+        "created": "2026-10-19T06:44:11+0900",
+        "completed": "2026-10-19T06:44:11+0900",
+        "jobid": "5b3fb390-e3e5-4673-b59b-9c34aaafe356",
+        "jobstatus": 1
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:44:07+0900",
+    "command": "deleteAffinityGroup",
+    "params": {
+      "id": "aa5d1372-8974-4e86-bb73-d4e7c9ae0362"
+    },
+    "response": {
+      "deleteaffinitygroupresponse": {
+        "jobid": "1a8d847d-1d8c-40e8-9f39-67686448d338"
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:44:07+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "1a8d847d-1d8c-40e8-9f39-67686448d338"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.DeleteAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobinstancetype": "AffinityGroup",
+        "managementserverid": "716fb21e-86f3-4f8c-b34d-11c8d0220230",
+        "managementservername": "ccvm-mngt",
+        "created": "2026-10-19T06:44:12+0900",
+        "jobid": "1a8d847d-1d8c-40e8-9f39-67686448d338",
+        "jobstatus": 0
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:44:08+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "1a8d847d-1d8c-40e8-9f39-67686448d338"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.DeleteAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "success": true
+        },
+        "jobinstancetype": "AffinityGroup",
+        "created": "2026-10-19T06:44:12+0900",
+        "completed": "2026-10-19T06:44:12+0900",
+        "jobid": "1a8d847d-1d8c-40e8-9f39-67686448d338",
+        "jobstatus": 1
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:44:08+0900",
+    "command": "deleteAffinityGroup",
+    "params": {
+      "id": "9151bf9f-7f94-4c06-a6d8-2563d014622a"
+    },
+    "response": {
+      "deleteaffinitygroupresponse": {
+        "jobid": "f8be2250-d36f-462b-a003-83f3b50c0eb8"
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:44:08+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "f8be2250-d36f-462b-a003-83f3b50c0eb8"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.DeleteAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobinstancetype": "AffinityGroup",
+        "managementserverid": "716fb21e-86f3-4f8c-b34d-11c8d0220230",
+        "managementservername": "ccvm-mngt",
+        "created": "2026-10-19T06:44:13+0900",
+        "jobid": "f8be2250-d36f-462b-a003-83f3b50c0eb8",
+        "jobstatus": 0
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:44:09+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "f8be2250-d36f-462b-a003-83f3b50c0eb8"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.DeleteAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "success": true
+        },
+        "jobinstancetype": "AffinityGroup",
+        "created": "2026-10-19T06:44:13+0900",
+        "completed": "2026-10-19T06:44:13+0900",
+        "jobid": "f8be2250-d36f-462b-a003-83f3b50c0eb8",
+        "jobstatus": 1
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:44:09+0900",
+    "command": "deleteAffinityGroup",
+    "params": {
+      "id": "936bf93a-dacc-47b3-a471-a3076a2fdbb3"
+    },
+    "response": {
+      "deleteaffinitygroupresponse": {
+        "jobid": "d56167cf-b9c1-4fc7-b05d-3cc98d46a159"
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:44:09+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "d56167cf-b9c1-4fc7-b05d-3cc98d46a159"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.DeleteAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobinstancetype": "AffinityGroup",
+        "managementserverid": "716fb21e-86f3-4f8c-b34d-11c8d0220230",
+        "managementservername": "ccvm-mngt",
+        "created": "2026-10-19T06:44:14+0900",
+        "jobid": "d56167cf-b9c1-4fc7-b05d-3cc98d46a159",
+        "jobstatus": 0
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:44:10+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "d56167cf-b9c1-4fc7-b05d-3cc98d46a159"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.DeleteAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "success": true
+        },
+        "jobinstancetype": "AffinityGroup",
+        "created": "2026-10-19T06:44:14+0900",
+        "completed": "2026-10-19T06:44:14+0900",
+        "jobid": "d56167cf-b9c1-4fc7-b05d-3cc98d46a159",
+        "jobstatus": 1
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:44:10+0900",
+    "command": "deleteAffinityGroup",
+    "params": {
+      "id": "b6f438ac-c7cb-477c-af10-d02a375a1a7e"
+    },
+    "response": {
+      "deleteaffinitygroupresponse": {
+        "jobid": "39f8f94e-ea99-4afb-ba89-a4b5ac884038"
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:44:10+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "39f8f94e-ea99-4afb-ba89-a4b5ac884038"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.DeleteAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobinstancetype": "AffinityGroup",
+        "managementserverid": "716fb21e-86f3-4f8c-b34d-11c8d0220230",
+        "managementservername": "ccvm-mngt",
+        "created": "2026-10-19T06:44:15+0900",
+        "jobid": "39f8f94e-ea99-4afb-ba89-a4b5ac884038",
+        "jobstatus": 0
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:44:11+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "39f8f94e-ea99-4afb-ba89-a4b5ac884038"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.DeleteAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "success": true
+        },
+        "jobinstancetype": "AffinityGroup",
+        "created": "2026-10-19T06:44:15+0900",
+        "completed": "2026-10-19T06:44:15+0900",
+        "jobid": "39f8f94e-ea99-4afb-ba89-a4b5ac884038",
+        "jobstatus": 1
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:44:11+0900",
+    "command": "deleteAffinityGroup",
+    "params": {
+      "id": "bd0f1f15-9be6-44f6-920d-3a205295b6ec"
+    },
+    "response": {
+      "deleteaffinitygroupresponse": {
+        "jobid": "bb3145e0-b733-4568-bdd1-08a68ab1440c"
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:44:11+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "bb3145e0-b733-4568-bdd1-08a68ab1440c"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.DeleteAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobinstancetype": "AffinityGroup",
+        "managementserverid": "716fb21e-86f3-4f8c-b34d-11c8d0220230",
+        "managementservername": "ccvm-mngt",
+        "created": "2026-10-19T06:44:16+0900",
+        "jobid": "bb3145e0-b733-4568-bdd1-08a68ab1440c",
+        "jobstatus": 0
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:44:12+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "bb3145e0-b733-4568-bdd1-08a68ab1440c"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.DeleteAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "success": true
+        },
+        "jobinstancetype": "AffinityGroup",
+        "created": "2026-10-19T06:44:16+0900",
+        "completed": "2026-10-19T06:44:16+0900",
+        "jobid": "bb3145e0-b733-4568-bdd1-08a68ab1440c",
+        "jobstatus": 1
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:44:12+0900",
+    "command": "deleteAffinityGroup",
+    "params": {
+      "id": "d67e6414-d403-4a48-912f-321e52cbbfc6"
+    },
+    "response": {
+      "deleteaffinitygroupresponse": {
+        "jobid": "a5b098ad-59ff-4a3f-acd8-075451c2ea7d"
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:44:12+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "a5b098ad-59ff-4a3f-acd8-075451c2ea7d"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.DeleteAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobinstancetype": "AffinityGroup",
+        "managementserverid": "716fb21e-86f3-4f8c-b34d-11c8d0220230",
+        "managementservername": "ccvm-mngt",
+        "created": "2026-10-19T06:44:17+0900",
+        "jobid": "a5b098ad-59ff-4a3f-acd8-075451c2ea7d",
+        "jobstatus": 0
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:44:13+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "a5b098ad-59ff-4a3f-acd8-075451c2ea7d"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.DeleteAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "success": true
+        },
+        "jobinstancetype": "AffinityGroup",
+        "created": "2026-10-19T06:44:17+0900",
+        "completed": "2026-10-19T06:44:17+0900",
+        "jobid": "a5b098ad-59ff-4a3f-acd8-075451c2ea7d",
+        "jobstatus": 1
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:44:13+0900",
+    "command": "deleteAffinityGroup",
+    "params": {
+      "id": "bb2b8db2-f453-4215-9079-585135729f10"
+    },
+    "response": {
+      "deleteaffinitygroupresponse": {
+        "jobid": "959931d4-11e1-42e0-9ad4-998c698a2a51"
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:44:13+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "959931d4-11e1-42e0-9ad4-998c698a2a51"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.DeleteAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobinstancetype": "AffinityGroup",
+        "managementserverid": "716fb21e-86f3-4f8c-b34d-11c8d0220230",
+        "managementservername": "ccvm-mngt",
+        "created": "2026-10-19T06:44:18+0900",
+        "jobid": "959931d4-11e1-42e0-9ad4-998c698a2a51",
+        "jobstatus": 0
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:44:14+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "959931d4-11e1-42e0-9ad4-998c698a2a51"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.DeleteAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "success": true
+        },
+        "jobinstancetype": "AffinityGroup",
+        "created": "2026-10-19T06:44:18+0900",
+        "completed": "2026-10-19T06:44:18+0900",
+        "jobid": "959931d4-11e1-42e0-9ad4-998c698a2a51",
+        "jobstatus": 1
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:44:14+0900",
+    "command": "deleteAffinityGroup",
+    "params": {
+      "id": "84f28680-0d67-48dd-bdc3-13b4a094a355"
+    },
+    "response": {
+      "deleteaffinitygroupresponse": {
+        "jobid": "f2fdfad6-2bdf-4894-ab98-a3064305c90c"
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:44:14+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "f2fdfad6-2bdf-4894-ab98-a3064305c90c"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.DeleteAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobinstancetype": "AffinityGroup",
+        "managementserverid": "716fb21e-86f3-4f8c-b34d-11c8d0220230",
+        "managementservername": "ccvm-mngt",
+        "created": "2026-10-19T06:44:19+0900",
+        "jobid": "f2fdfad6-2bdf-4894-ab98-a3064305c90c",
+        "jobstatus": 0
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:44:15+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "f2fdfad6-2bdf-4894-ab98-a3064305c90c"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.DeleteAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "success": true
+        },
+        "jobinstancetype": "AffinityGroup",
+        "created": "2026-10-19T06:44:19+0900",
+        "completed": "2026-10-19T06:44:19+0900",
+        "jobid": "f2fdfad6-2bdf-4894-ab98-a3064305c90c",
+        "jobstatus": 1
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:44:15+0900",
+    "command": "deleteAffinityGroup",
+    "params": {
+      "id": "b78c75fc-abe9-4db3-9fbe-5dd02f714595"
+    },
+    "response": {
+      "deleteaffinitygroupresponse": {
+        "jobid": "6fec02c7-92c2-4202-98c2-3807ce827b3d"
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:44:15+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "6fec02c7-92c2-4202-98c2-3807ce827b3d"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.DeleteAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobinstancetype": "AffinityGroup",
+        "managementserverid": "716fb21e-86f3-4f8c-b34d-11c8d0220230",
+        "managementservername": "ccvm-mngt",
+        "created": "2026-10-19T06:44:20+0900",
+        "jobid": "6fec02c7-92c2-4202-98c2-3807ce827b3d",
+        "jobstatus": 0
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:44:16+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "6fec02c7-92c2-4202-98c2-3807ce827b3d"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.DeleteAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "success": true
+        },
+        "jobinstancetype": "AffinityGroup",
+        "created": "2026-10-19T06:44:20+0900",
+        "completed": "2026-10-19T06:44:20+0900",
+        "jobid": "6fec02c7-92c2-4202-98c2-3807ce827b3d",
+        "jobstatus": 1
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:44:16+0900",
+    "command": "deleteAffinityGroup",
+    "params": {
+      "id": "7a68f766-421e-4b03-b854-c0fd366852df"
+    },
+    "response": {
+      "deleteaffinitygroupresponse": {
+        "jobid": "fcff6072-6b36-4e72-8877-8a8a08140115"
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:44:16+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "fcff6072-6b36-4e72-8877-8a8a08140115"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.DeleteAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobinstancetype": "AffinityGroup",
+        "managementserverid": "716fb21e-86f3-4f8c-b34d-11c8d0220230",
+        "managementservername": "ccvm-mngt",
+        "created": "2026-10-19T06:44:21+0900",
+        "jobid": "fcff6072-6b36-4e72-8877-8a8a08140115",
+        "jobstatus": 0
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:44:17+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "fcff6072-6b36-4e72-8877-8a8a08140115"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.DeleteAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "success": true
+        },
+        "jobinstancetype": "AffinityGroup",
+        "created": "2026-10-19T06:44:21+0900",
+        "completed": "2026-10-19T06:44:21+0900",
+        "jobid": "fcff6072-6b36-4e72-8877-8a8a08140115",
+        "jobstatus": 1
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:44:17+0900",
+    "command": "deleteAffinityGroup",
+    "params": {
+      "id": "d232e085-d19a-4ec3-82c8-08f442c17a26"
+    },
+    "response": {
+      "deleteaffinitygroupresponse": {
+        "jobid": "7772071d-98e2-4511-88e2-01244e515b99"
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:44:17+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "7772071d-98e2-4511-88e2-01244e515b99"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.DeleteAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobinstancetype": "AffinityGroup",
+        "managementserverid": "716fb21e-86f3-4f8c-b34d-11c8d0220230",
+        "managementservername": "ccvm-mngt",
+        "created": "2026-10-19T06:44:22+0900",
+        "jobid": "7772071d-98e2-4511-88e2-01244e515b99",
+        "jobstatus": 0
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:44:18+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "7772071d-98e2-4511-88e2-01244e515b99"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.DeleteAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "success": true
+        },
+        "jobinstancetype": "AffinityGroup",
+        "created": "2026-10-19T06:44:22+0900",
+        "completed": "2026-10-19T06:44:22+0900",
+        "jobid": "7772071d-98e2-4511-88e2-01244e515b99",
+        "jobstatus": 1
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:44:18+0900",
+    "command": "deleteAffinityGroup",
+    "params": {
+      "id": "90571baa-0f3f-44c6-a0d3-6fe688a4dc4e"
+    },
+    "response": {
+      "deleteaffinitygroupresponse": {
+        "jobid": "11ee1793-d817-47a5-a815-e7c99bfb8ea0"
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:44:18+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "11ee1793-d817-47a5-a815-e7c99bfb8ea0"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.DeleteAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobinstancetype": "AffinityGroup",
+        "managementserverid": "716fb21e-86f3-4f8c-b34d-11c8d0220230",
+        "managementservername": "ccvm-mngt",
+        "created": "2026-10-19T06:44:23+0900",
+        "jobid": "11ee1793-d817-47a5-a815-e7c99bfb8ea0",
+        "jobstatus": 0
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:44:19+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "11ee1793-d817-47a5-a815-e7c99bfb8ea0"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.DeleteAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "success": true
+        },
+        "jobinstancetype": "AffinityGroup",
+        "created": "2026-10-19T06:44:23+0900",
+        "completed": "2026-10-19T06:44:23+0900",
+        "jobid": "11ee1793-d817-47a5-a815-e7c99bfb8ea0",
+        "jobstatus": 1
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:44:19+0900",
+    "command": "deleteAffinityGroup",
+    "params": {
+      "id": "38cea24d-b9d0-480b-87bd-4d00248419d8"
+    },
+    "response": {
+      "deleteaffinitygroupresponse": {
+        "jobid": "8beac272-1c5b-4259-85e3-c56b63061c8c"
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:44:19+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "8beac272-1c5b-4259-85e3-c56b63061c8c"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.DeleteAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobinstancetype": "AffinityGroup",
+        "managementserverid": "716fb21e-86f3-4f8c-b34d-11c8d0220230",
+        "managementservername": "ccvm-mngt",
+        "created": "2026-10-19T06:44:24+0900",
+        "jobid": "8beac272-1c5b-4259-85e3-c56b63061c8c",
+        "jobstatus": 0
+      }
+    }
+  },
+  {
+    "time": "2026-10-19T06:44:20+0900",
+    "command": "queryAsyncJobResult",
+    "params": {
+      "jobid": "8beac272-1c5b-4259-85e3-c56b63061c8c"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.DeleteAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "success": true
+        },
+        "jobinstancetype": "AffinityGroup",
+        "created": "2026-10-19T06:44:24+0900",
+        "completed": "2026-10-19T06:44:24+0900",
+        "jobid": "8beac272-1c5b-4259-85e3-c56b63061c8c",
+        "jobstatus": 1
+      }
+    }
+  }
+]

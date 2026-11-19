@@ -1,0 +1,205 @@
+Browser tab: 6, Title: "가상머신 - ABLESTACK-Mold", URL: "http://10.10.31.10:8080/client/#/vm/579b1439-136d-4280-b2bb-b10613496d20?tab=details".
+1 AXWebArea 가상머신 - ABLESTACK-Mold, URL: 10.10.31.10:8080/client/#/vm/579b1439-136d-4280-b2bb-b10613496d20?tab=details
+	2 container
+		3 container
+			4 text 페이지 스타일 설정
+			5 button 닫기
+				6 image close
+			766 container
+				767 heading 페이지 스타일 설정, Value: 3
+					768 text 페이지 스타일 설정
+				769 container
+					770 image
+					771 container
+						772 radio button (settable, integer) Description:  , Value: 0
+				773 container
+					774 image
+					775 container
+						776 radio button (settable, integer) Description:  , Value: 1
+					777 image check
+				778 heading 테마 색상, Value: 3
+					779 text 테마 색상
+				780 container
+					781 radio button (settable, integer) Description:  , Value: 0
+					782 image check
+				783 container
+					784 radio button (settable, integer) Description:  , Value: 0
+				785 container
+					786 radio button (settable, integer) Description:  , Value: 0
+				787 container
+					788 radio button (settable, integer) Description:  , Value: 0
+				789 container
+					790 radio button (settable, integer) Description:  , Value: 0
+				791 container
+					792 radio button (settable, integer) Description:  , Value: 0
+				793 container
+					794 radio button (settable, integer) Description:  , Value: 0
+				795 container
+					796 radio button (settable, integer) Description:  , Value: 0
+				797 heading 네비게이션 설정, Value: 3
+					798 text 네비게이션 설정
+				799 container
+					800 container
+						801 text 배경색
+						802 color well (disabled, settable) #ffffff
+					803 container
+						804 text 텍스트 색상
+						805 color well (disabled, settable) #000000
+				806 image exclamation-circle
+				807 text 설정은 현재 브라우저에서만 볼 수 있습니다. 설정을 적용하려면 JSON 파일을 다운로드하고 경로 `/public/config.json` 아래의 `config.json` 파일의 `theme` 섹션에서 해당 콘텐츠를 교체하세요.
+				808 button download 세팅값 다운로드(json)
+					809 image download
+					810 text 세팅값 다운로드(json)
+				811 button undo 기본값으로 재설정
+					812 image undo
+					813 text 기본값으로 재설정
+		55 container
+			765 image menu-unfold
+			57 container
+				58 combo box (settable) rc_select_0
+				59 image project
+				60 text 기본 보기
+			61 image translation
+			62 image bell
+			63 container
+				64 text AC admin cloud
+		814 button 알림 제거
+		65 container
+			752 container
+				753 link Description: home, Value: 10.10.31.10:8080/client/#/
+				754 text /
+				755 link Description: 가상머신, Value: 10.10.31.10:8080/client/#/vm
+				756 text / qa-ag05-vm-01
+				757 link Description: question-circle, Value: docs.ablecloud.io/latest/adminguide/virtual_machines.html
+				758 button reload 업데이트
+					759 image reload
+					760 text 업데이트
+			761 button down 작업
+				762 image down
+				763 text 작업
+			404 container
+				405 image edit
+				406 heading qa-ag05-vm-01, Value: 4
+					407 text qa-ag05-vm-01
+				408 text i-2-664-VM x86_64 KVM 동적으로 확장 가능
+				409 link code
+					410 button (disabled) code
+						411 image code
+				412 text 상태 정지된 상태 아이디
+				413 button barcode
+					414 image barcode
+				415 link Description: 579b1439-136d-4280-b2bb-b10613496d20 , Value: javascript:;
+				416 text CPU 2 CPU x 2.00 GHz
+				417 image question-circle
+				418 text x86_64 메모리 2048 MB 메모리 네트워크
+				419 image wifi
+				420 text 1 NIC(s)
+				421 text eth0
+				422 link Description:  , Value: javascript:;
+				423 text 기본
+				424 image apartment
+				425 link Description: E1335-VM-Origin-L2, Value: 10.10.31.10:8080/client/#/guestnetwork/ae274fff-3d8e-4285-ac73-26a767c1fea7
+				426 text Affinity 그룹
+				427 image swap
+				430 link Description: qa-ag05-other, Value: 10.10.31.10:8080/client/#/affinitygroup/92d3963c-f878-48a5-a830-cbfd902acaf2
+				431 text ,
+				432 link Description: qa-ag05-target, Value: 10.10.31.10:8080/client/#/affinitygroup/b2425532-f2bb-4511-86f5-917f6a4f1869
+				433 text 템플릿
+				434 image save
+				435 link Description: rocky-9-4-minimal.qcow22, Value: 10.10.31.10:8080/client/#/template/e3d8677e-70f0-44bd-917e-6068636b97a8
+				436 text 컴퓨트 오퍼링
+				437 image cloud
+				438 link Description: AS-PROD-31-AS01-2C2G-Sparse, Value: 10.10.31.10:8080/client/#/computeoffering/39c3aa33-5632-4dea-bd84-ba794d292c87
+				439 text Zone
+				440 image global
+				441 link Description: Zone, Value: 10.10.31.10:8080/client/#/zone/7013f5a1-de59-4cea-a596-f4f58815f31c
+				442 text 계정
+				443 image user
+				444 link Description: admin, Value: 10.10.31.10:8080/client/#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f
+				445 text 도메인
+				446 image block
+				447 link Description: ROOT, Value: 10.10.31.10:8080/client/#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details
+				448 text 생성일
+				449 image calendar
+				450 text 2026. 10. 19. 오후 1:23:45
+				451 container
+					452 text 태그
+					453 container
+						454 image plus
+						455 text  새 태그
+			456 container
+				457 tab group
+					458 container
+						459 tab (selected, settable, boolean) 상세, Value: 1, ID: rc-tabs-2-tab-details
+						460 tab (selectable, settable, boolean) IP 구성, Value: 0, ID: rc-tabs-2-tab-guestnetwork
+						461 tab (selectable, settable, boolean) 메트릭, Value: 0, ID: rc-tabs-2-tab-stats
+						462 tab (selectable, settable, boolean) 프로세스, Value: 0, ID: rc-tabs-2-tab-processes
+						463 tab (selectable, settable, boolean) 스케줄, Value: 0, ID: rc-tabs-2-tab-schedules
+						464 tab (selectable, settable, boolean) ISO, Value: 0, ID: rc-tabs-2-tab-cdrom
+						465 tab (selectable, settable, boolean) 볼륨, Value: 0, ID: rc-tabs-2-tab-volumes
+						466 tab (selectable, settable, boolean) NIC, Value: 0, ID: rc-tabs-2-tab-nics
+						467 tab (selectable, settable, boolean) 설정, Value: 0, ID: rc-tabs-2-tab-settings
+						468 tab (selectable, settable, boolean) 호스트 장치, Value: 0, ID: rc-tabs-2-tab-hostdevices
+						469 tab (selectable, settable, boolean) VM 스냅샷, Value: 0, ID: rc-tabs-2-tab-vmsnapshots
+						470 tab (selectable, settable, boolean) 이벤트, Value: 0, ID: rc-tabs-2-tab-events
+						471 tab (selectable, settable, boolean) 코멘트, Value: 0, ID: rc-tabs-2-tab-comments
+				472 container Description: 상세, ID: rc-tabs-2-panel-details
+					473 content list
+						474 container
+							475 text VM 호스트 명
+							476 text qa-ag05-vm-01
+						477 container
+							478 text VM 표시 명
+							479 text qa-ag05-vm-01
+						480 container
+							481 text 아이디
+							482 text 579b1439-136d-4280-b2bb-b10613496d20
+						483 container
+							484 text 상태
+							485 text Stopped
+						486 container
+							487 text 템플릿
+							488 text rocky-9-4-minimal.qcow22
+						489 container
+							490 text 템플릿 형식
+							491 text USER
+						492 container
+							493 text 컴퓨트 오퍼링
+							494 text AS-PROD-31-AS01-2C2G-Sparse
+						495 container
+							496 text 동적으로 확장 가능
+							497 text true
+						498 container
+							499 text HA 활성화
+							500 text false
+						501 container
+							502 text 하이퍼바이저
+							503 text KVM
+						504 container
+							505 text CPU 아키텍처
+							506 text x86_64
+						507 container
+							508 text 계정
+							509 text admin
+						510 container
+							511 text 도메인
+							512 text ROOT
+						513 container
+							514 text Zone
+							515 text Zone
+						516 container
+							517 text VBMC 포트
+							518 text 미할당
+						519 container
+							520 text 삭제 보호
+							521 text false
+	212 container
+		213 image info-circle
+		214 text Wall 모니터링을 사용할 수 없습니다. 기존 알림은 최신 정보가 아닐 수 있으며 Mold는 계속 사용할 수 있습니다. 비활성
+	815 container
+		816 image check-circle
+		817 text Affinity 그룹을 변경했습니다.
+		818 link close
+			819 image close
+
+The focused UI element is 761 button down 작업

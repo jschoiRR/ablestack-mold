@@ -1,0 +1,145 @@
+Browser tab: 4, Title: "사용자 데이터 라이브러리 - ABLESTACK-Mold", URL: "http://10.10.31.10:8080/client/#/userdata".
+0 AXWebArea 사용자 데이터 라이브러리 - ABLESTACK-Mold, URL: 10.10.31.10:8080/client/#/userdata
+	1 container
+		2 container
+			3 image
+			4 menu
+				5 dashboard 대시보드
+					6 link Description: dashboard 대시보드, Value: 10.10.31.10:8080/client/#/dashboard
+				7 container
+					8 image cloud
+					9 text 컴퓨트
+				51 content list sub_menu_31_$$_/compute-popup
+					52 cloud-server 가상머신
+						53 link Description: cloud-server 가상머신, Value: 10.10.31.10:8080/client/#/vm
+					54 camera VM 스냅샷
+						55 link Description: camera VM 스냅샷, Value: 10.10.31.10:8080/client/#/vmsnapshot
+					56 쿠버네티스
+						57 link Description: 쿠버네티스, Value: 10.10.31.10:8080/client/#/kubernetes
+					58 fullscreen 오토스케일 VM 그룹
+						59 link Description: fullscreen 오토스케일 VM 그룹, Value: 10.10.31.10:8080/client/#/autoscalevmgroup
+					60 gold 가상머신 그룹
+						61 link Description: gold 가상머신 그룹, Value: 10.10.31.10:8080/client/#/vmgroup
+					62 key SSH 키 쌍
+						63 link Description: key SSH 키 쌍, Value: 10.10.31.10:8080/client/#/ssh
+					64 solution 사용자 데이터 라이브러리
+						65 link Description: solution 사용자 데이터 라이브러리, Value: 10.10.31.10:8080/client/#/userdata
+					66 solution CNI 구성
+						67 link Description: solution CNI 구성, Value: 10.10.31.10:8080/client/#/cniconfiguration
+					68 swap Affinity 그룹
+						69 link Description: swap Affinity 그룹, Value: 10.10.31.10:8080/client/#/affinitygroup
+				10 container
+					11 image hdd
+					12 text 스토리지
+				13 container
+					14 image wifi
+					15 text 네트워크
+				16 container
+					17 image picture
+					18 text 이미지
+				19 schedule 이벤트
+					20 link Description: schedule 이벤트, Value: 10.10.31.10:8080/client/#/event
+				21 project 프로젝트
+					22 link Description: project 프로젝트, Value: 10.10.31.10:8080/client/#/project
+				23 team 계정
+					24 link Description: team 계정, Value: 10.10.31.10:8080/client/#/account
+				25 block 도메인
+					26 link Description: block 도메인, Value: 10.10.31.10:8080/client/#/domain
+				27 global Zone
+					28 link Description: global Zone, Value: 10.10.31.10:8080/client/#/zones
+				29 container
+					30 image shopping
+					31 text 서비스 오퍼링
+				32 container
+					33 image tool
+					34 text 도구
+				35 read API 문서
+					36 link Description: read API 문서, Value: 10.10.31.10:8080/client/#/apidocs/
+		37 container
+			38 image menu-fold
+			39 container
+				40 combo box (settable) rc_select_12
+				41 image project
+				42 text 기본 보기
+			43 button 생성 down
+				44 text 생성
+				45 image down
+			46 image translation
+			47 image bell
+			48 container
+				49 text UD UD1389 domainadmin
+		50 container
+			70 container
+				71 container
+					72 link Description: home, Value: 10.10.31.10:8080/client/#/
+					73 text /
+					74 link Description: 사용자 데이터 라이브러리, Value: 10.10.31.10:8080/client/#/userdata
+					75 link Description: question-circle, Value: docs.ablecloud.io/latest/adminguide/virtual_machines.html#user-data-and-meta-data
+					76 button reload 업데이트
+						77 image reload
+						78 text 업데이트
+					79 switch 프로젝트, Value: 0
+						80 text 프로젝트
+				81 button 사용자 데이터 등록
+					82 image plus
+					83 text 사용자 데이터 등록
+				84 container
+					85 button filter
+						86 image filter
+					87 text field (settable)
+					88 button search
+						89 image search
+			90 table
+				91 row
+					92 cell
+						93 container
+							94 checkbox (settable, integer) Description:  , Value: 0
+					95 cell
+						96 container
+							97 text 이름
+							98 image caret-up
+							99 image caret-down
+					100 cell
+						101 container
+							102 text 아이디
+							103 image caret-up
+							104 image caret-down
+					105 cell
+						106 container
+							107 text 계정
+							108 image caret-up
+							109 image caret-down
+					110 cell
+						111 container
+							112 text 도메인
+							113 image caret-up
+							114 image caret-down
+				115 row
+					116 cell
+						117 container
+							118 checkbox (settable, integer) Description:  , Value: 0
+					119 cell
+						120 link Description: UD1389-31-20261016-user, Value: 10.10.31.10:8080/client/#/userdata/b234e5ec-6ccf-4a27-9ad8-05081d7a78a9
+					121 cell
+						122 text b234e5ec-6ccf-4a27-9ad8-05081d7a78a9
+					123 cell
+						124 link Description: ud1389-31-20261016-user, Value: 10.10.31.10:8080/client/#/account?name=ud1389-31-20261016-user&domainid=6cb61eee-eff1-4007-b6ea-bcb7f4d94be7&dataView=true
+					125 cell
+						126 link Description: ud1389-31-20261016, Value: 10.10.31.10:8080/client/#/domain/6cb61eee-eff1-4007-b6ea-bcb7f4d94be7?tab=details
+			127 content list
+				128 text 전체 1 개 항목 중 1-1 표시
+				129 container 이전 페이지
+					130 button (disabled) left
+						131 image left
+				132 text 1
+				133 container 다음 페이지
+					134 button (disabled) right
+						135 image right
+				136 container
+					137 combo box (settable) rc_select_13
+					138 text 20 / 쪽
+	139 container
+		140 image check-circle
+		141 text 사용 가능한 모든 기능을 발견했습니다!
+
+The focused UI element is 0 AXWebArea 사용자 데이터 라이브러리 - ABLESTACK-Mold, URL: 10.10.31.10:8080/client/#/userdata

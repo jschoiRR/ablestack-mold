@@ -1,0 +1,350 @@
+Browser tab: 6, Title: "사용자 데이터 라이브러리 - ABLESTACK-Mold", URL: "http://10.10.31.10:8080/client/#/userdata?keyword=UD1391-31-20261016".
+1 AXWebArea 사용자 데이터 라이브러리 - ABLESTACK-Mold, URL: 10.10.31.10:8080/client/#/userdata?keyword=UD1391-31-20261016
+	2 container
+		3 container
+			4 image
+			5 menu
+				6 dashboard 대시보드
+					7 link Description: dashboard 대시보드, Value: 10.10.31.10:8080/client/#/dashboard
+				8 container
+					9 image cloud
+					10 text 컴퓨트
+				11 content list sub_menu_131_$$_/compute-popup
+					12 cloud-server 가상머신
+						13 link Description: cloud-server 가상머신, Value: 10.10.31.10:8080/client/#/vm
+					14 camera VM 스냅샷
+						15 link Description: camera VM 스냅샷, Value: 10.10.31.10:8080/client/#/vmsnapshot
+					16 쿠버네티스
+						17 link Description: 쿠버네티스, Value: 10.10.31.10:8080/client/#/kubernetes
+					18 fullscreen 오토스케일 VM 그룹
+						19 link Description: fullscreen 오토스케일 VM 그룹, Value: 10.10.31.10:8080/client/#/autoscalevmgroup
+					20 gold 가상머신 그룹
+						21 link Description: gold 가상머신 그룹, Value: 10.10.31.10:8080/client/#/vmgroup
+					22 key SSH 키 쌍
+						23 link Description: key SSH 키 쌍, Value: 10.10.31.10:8080/client/#/ssh
+					24 solution 사용자 데이터 라이브러리
+						25 link Description: solution 사용자 데이터 라이브러리, Value: 10.10.31.10:8080/client/#/userdata
+					26 solution CNI 구성
+						27 link Description: solution CNI 구성, Value: 10.10.31.10:8080/client/#/cniconfiguration
+					28 swap Affinity 그룹
+						29 link Description: swap Affinity 그룹, Value: 10.10.31.10:8080/client/#/affinitygroup
+				30 container
+					31 image hdd
+					32 text 스토리지
+				33 container
+					34 image wifi
+					35 text 네트워크
+				36 container
+					37 image picture
+					38 text 이미지
+				39 container
+					40 image lock
+					41 text 키 관리
+				42 schedule 이벤트
+					43 link Description: schedule 이벤트, Value: 10.10.31.10:8080/client/#/event
+				44 project 프로젝트
+					45 link Description: project 프로젝트, Value: 10.10.31.10:8080/client/#/project
+				46 idcard 역할
+					47 link Description: idcard 역할, Value: 10.10.31.10:8080/client/#/role
+				48 team 계정
+					49 link Description: team 계정, Value: 10.10.31.10:8080/client/#/account
+				50 block 도메인
+					51 link Description: block 도메인, Value: 10.10.31.10:8080/client/#/domain
+				52 container
+					53 image bank
+					54 text 인프라스트럭쳐
+				55 container
+					56 image shopping
+					57 text 서비스 오퍼링
+				58 container
+					59 image setting
+					60 text 구성
+				61 appstore-add 확장
+					62 link Description: appstore-add 확장, Value: 10.10.31.10:8080/client/#/extension
+				63 container
+					64 image tool
+					65 text 도구
+				66 read API 문서
+					67 link Description: read API 문서, Value: 10.10.31.10:8080/client/#/apidocs/
+		68 container
+			69 text 페이지 스타일 설정
+			70 button 닫기
+				71 image close
+			72 heading 페이지 스타일 설정, Value: 3
+				73 text 페이지 스타일 설정
+			74 container
+				75 container
+					76 image
+					77 container
+						78 radio button (settable, integer) Description:  , Value: 0
+				79 container
+					80 image
+					81 container
+						82 radio button (settable, integer) Description:  , Value: 1
+					83 image check
+			84 heading 테마 색상, Value: 3
+				85 text 테마 색상
+			86 container
+				87 container
+					88 radio button (settable, integer) Description:  , Value: 0
+					89 image check
+				90 container
+					91 radio button (settable, integer) Description:  , Value: 0
+				92 container
+					93 radio button (settable, integer) Description:  , Value: 0
+				94 container
+					95 radio button (settable, integer) Description:  , Value: 0
+				96 container
+					97 radio button (settable, integer) Description:  , Value: 0
+				98 container
+					99 radio button (settable, integer) Description:  , Value: 0
+				100 container
+					101 radio button (settable, integer) Description:  , Value: 0
+				102 container
+					103 radio button (settable, integer) Description:  , Value: 0
+			104 heading 네비게이션 설정, Value: 3
+				105 text 네비게이션 설정
+			106 container
+				107 container
+					108 text 배경색
+					109 color well (disabled, settable) #ffffff
+				110 container
+					111 text 텍스트 색상
+					112 color well (disabled, settable) #000000
+			113 container
+				114 image exclamation-circle
+				115 text 설정은 현재 브라우저에서만 볼 수 있습니다. 설정을 적용하려면 JSON 파일을 다운로드하고 경로 `/public/config.json` 아래의 `config.json` 파일의 `theme` 섹션에서 해당 콘텐츠를 교체하세요.
+			116 button download 세팅값 다운로드(json)
+				117 image download
+				118 text 세팅값 다운로드(json)
+			119 button undo 기본값으로 재설정
+				120 image undo
+				121 text 기본값으로 재설정
+		122 container
+			123 image menu-fold
+			124 container
+				125 combo box (settable) rc_select_18
+				126 image project
+				127 text 기본 보기
+			128 button 생성 down
+				129 text 생성
+				130 image down
+			131 image translation
+			132 image bell
+			133 container
+				134 text AC admin cloud
+		135 container
+			136 container
+				137 link Description: home, Value: 10.10.31.10:8080/client/#/
+				138 text /
+				139 link Description: 사용자 데이터 라이브러리, Value: 10.10.31.10:8080/client/#/userdata
+				277 link Description: question-circle, Value: docs.ablecloud.io/latest/adminguide/virtual_machines.html#user-data-and-meta-data
+				278 button reload 업데이트
+					279 image reload
+					280 text 업데이트
+				281 switch 프로젝트, Value: 0
+					282 text 프로젝트
+			283 container
+				284 button 사용자 데이터 등록
+					285 image plus
+					286 text 사용자 데이터 등록
+				287 button filter
+					288 image filter
+				289 text field (settable)
+				290 button search
+					291 image search
+			292 text 검색창: 이름 포함 검색 또는 정확한 UUID. 필터: UUID·정확한 이름·도메인·소유 계정. 프로젝트는 상단 공통 보기를 선택하세요. 열 정렬은 현재 페이지에만 적용됩니다.
+			293 table
+				294 row
+					295 cell
+						296 container
+							297 checkbox (settable, integer) Description:  , Value: 0
+					298 cell
+						299 container
+							300 text 이름
+							301 image caret-up
+							302 image caret-down
+					303 cell
+						304 container
+							305 text 아이디
+							306 image caret-up
+							307 image caret-down
+					308 cell
+						309 container
+							310 text 계정
+							311 image caret-up
+							312 image caret-down
+					313 cell
+						314 container
+							315 text 도메인
+							316 image caret-up
+							317 image caret-down
+					318 cell
+						319 button filter
+							320 image filter
+				321 row
+					322 cell
+						323 container
+							324 checkbox (settable, integer) Description:  , Value: 0
+					325 cell
+						326 link Description: UD1391-31-20261016-domainadmin-v2, Value: 10.10.31.10:8080/client/#/userdata/b94d63dd-8e89-47f1-9a8b-b205c037747b
+						327 link Description: message, Value: 10.10.31.10:8080/client/#/userdata/b94d63dd-8e89-47f1-9a8b-b205c037747b?tab=comments
+					328 cell
+						329 text b94d63dd-8e89-47f1-9a8b-b205c037747b
+					330 cell
+						331 link Description: ud1391-31-20261016-domainadmin, Value: 10.10.31.10:8080/client/#/account?name=ud1391-31-20261016-domainadmin&domainid=66676f32-af20-40ba-bfb0-1d3eb50a9b91&dataView=true
+					332 cell
+						333 link Description: ud1391-31-20261016, Value: 10.10.31.10:8080/client/#/domain/66676f32-af20-40ba-bfb0-1d3eb50a9b91?tab=details
+				334 row
+					335 cell
+						336 container
+							337 checkbox (settable, integer) Description:  , Value: 0
+					338 cell
+						339 link Description: UD1391-31-20261016-user-v2, Value: 10.10.31.10:8080/client/#/userdata/dd0beeb4-f8f7-4f45-8330-6dedcd3c5330
+						340 link Description: message, Value: 10.10.31.10:8080/client/#/userdata/dd0beeb4-f8f7-4f45-8330-6dedcd3c5330?tab=comments
+					341 cell
+						342 text dd0beeb4-f8f7-4f45-8330-6dedcd3c5330
+					343 cell
+						344 link Description: ud1391-31-20261016-user, Value: 10.10.31.10:8080/client/#/account?name=ud1391-31-20261016-user&domainid=66676f32-af20-40ba-bfb0-1d3eb50a9b91&dataView=true
+					345 cell
+						346 link Description: ud1391-31-20261016, Value: 10.10.31.10:8080/client/#/domain/66676f32-af20-40ba-bfb0-1d3eb50a9b91?tab=details
+				347 row
+					348 cell
+						349 container
+							350 checkbox (settable, integer) Description:  , Value: 0
+					351 cell
+						352 link Description: UD1391-31-20261016-binary-v2, Value: 10.10.31.10:8080/client/#/userdata/8398ea01-6ce4-43bf-8367-7c8d5f63c899
+						353 link Description: message, Value: 10.10.31.10:8080/client/#/userdata/8398ea01-6ce4-43bf-8367-7c8d5f63c899?tab=comments
+					354 cell
+						355 text 8398ea01-6ce4-43bf-8367-7c8d5f63c899
+					356 cell
+						357 link Description: admin, Value: 10.10.31.10:8080/client/#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&dataView=true
+					358 cell
+						359 link Description: ROOT, Value: 10.10.31.10:8080/client/#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details
+				360 row
+					361 cell
+						362 container
+							363 checkbox (settable, integer) Description:  , Value: 0
+					364 cell
+						365 link Description: UD1391-31-20261016-admin-v3, Value: 10.10.31.10:8080/client/#/userdata/cfca8ea1-4d4a-4915-b656-06494fc0fc33
+						366 link Description: message, Value: 10.10.31.10:8080/client/#/userdata/cfca8ea1-4d4a-4915-b656-06494fc0fc33?tab=comments
+					367 cell
+						368 text cfca8ea1-4d4a-4915-b656-06494fc0fc33
+					369 cell
+						370 link Description: admin, Value: 10.10.31.10:8080/client/#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&dataView=true
+					371 cell
+						372 link Description: ROOT, Value: 10.10.31.10:8080/client/#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details
+				373 row
+					374 cell
+						375 container
+							376 checkbox (settable, integer) Description:  , Value: 0
+					377 cell
+						378 link Description: UD1391-31-20261016-admin-v2, Value: 10.10.31.10:8080/client/#/userdata/7930cd8f-768f-4811-b2b5-8c8c12cbea36
+						379 link Description: message, Value: 10.10.31.10:8080/client/#/userdata/7930cd8f-768f-4811-b2b5-8c8c12cbea36?tab=comments
+					380 cell
+						381 text 7930cd8f-768f-4811-b2b5-8c8c12cbea36
+					382 cell
+						383 link Description: admin, Value: 10.10.31.10:8080/client/#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&dataView=true
+					384 cell
+						385 link Description: ROOT, Value: 10.10.31.10:8080/client/#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details
+				386 row
+					387 cell
+						388 container
+							389 checkbox (settable, integer) Description:  , Value: 0
+					390 cell
+						391 link Description: UD1391-31-20261016-race, Value: 10.10.31.10:8080/client/#/userdata/1e688af2-c205-40eb-8e26-fc3103dbfd84
+					392 cell
+						393 text 1e688af2-c205-40eb-8e26-fc3103dbfd84
+					394 cell
+						395 link Description: admin, Value: 10.10.31.10:8080/client/#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&dataView=true
+					396 cell
+						397 link Description: ROOT, Value: 10.10.31.10:8080/client/#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details
+				398 row
+					399 cell
+						400 container
+							401 checkbox (settable, integer) Description:  , Value: 0
+					402 cell
+						403 link Description: UD1391-31-20261016-user-vars, Value: 10.10.31.10:8080/client/#/userdata/8157b6fd-ac4a-4c65-b98d-25e660548763
+					404 cell
+						405 text 8157b6fd-ac4a-4c65-b98d-25e660548763
+					406 cell
+						407 link Description: ud1391-31-20261016-user, Value: 10.10.31.10:8080/client/#/account?name=ud1391-31-20261016-user&domainid=66676f32-af20-40ba-bfb0-1d3eb50a9b91&dataView=true
+					408 cell
+						409 link Description: ud1391-31-20261016, Value: 10.10.31.10:8080/client/#/domain/66676f32-af20-40ba-bfb0-1d3eb50a9b91?tab=details
+				410 row
+					411 cell
+						412 container
+							413 checkbox (settable, integer) Description:  , Value: 0
+					414 cell
+						415 link Description: UD1391-31-20261016-binary, Value: 10.10.31.10:8080/client/#/userdata/c0be9be6-7c13-41a9-8e7b-7e1fca043b47
+					416 cell
+						417 text c0be9be6-7c13-41a9-8e7b-7e1fca043b47
+					418 cell
+						419 link Description: admin, Value: 10.10.31.10:8080/client/#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&dataView=true
+					420 cell
+						421 link Description: ROOT, Value: 10.10.31.10:8080/client/#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details
+				422 row
+					423 cell
+						424 container
+							425 checkbox (settable, integer) Description:  , Value: 0
+					426 cell
+						427 link Description: UD1391-31-20261016-outsider, Value: 10.10.31.10:8080/client/#/userdata/f9212ba3-0e7c-4e00-9713-b83f16fc490e
+					428 cell
+						429 text f9212ba3-0e7c-4e00-9713-b83f16fc490e
+					430 cell
+						431 link Description: ud1391-31-20261016-outsider, Value: 10.10.31.10:8080/client/#/account?name=ud1391-31-20261016-outsider&domainid=66676f32-af20-40ba-bfb0-1d3eb50a9b91&dataView=true
+					432 cell
+						433 link Description: ud1391-31-20261016, Value: 10.10.31.10:8080/client/#/domain/66676f32-af20-40ba-bfb0-1d3eb50a9b91?tab=details
+				434 row
+					435 cell
+						436 container
+							437 checkbox (settable, integer) Description:  , Value: 0
+					438 cell
+						439 link Description: UD1391-31-20261016-domainadmin, Value: 10.10.31.10:8080/client/#/userdata/a51e3cb0-a780-4b97-8fd6-9c0e3a47597c
+					440 cell
+						441 text a51e3cb0-a780-4b97-8fd6-9c0e3a47597c
+					442 cell
+						443 link Description: ud1391-31-20261016-domainadmin, Value: 10.10.31.10:8080/client/#/account?name=ud1391-31-20261016-domainadmin&domainid=66676f32-af20-40ba-bfb0-1d3eb50a9b91&dataView=true
+					444 cell
+						445 link Description: ud1391-31-20261016, Value: 10.10.31.10:8080/client/#/domain/66676f32-af20-40ba-bfb0-1d3eb50a9b91?tab=details
+				446 row
+					447 cell
+						448 container
+							449 checkbox (settable, integer) Description:  , Value: 0
+					450 cell
+						451 link Description: UD1391-31-20261016-user, Value: 10.10.31.10:8080/client/#/userdata/754dcfba-b382-4504-9a58-f08b5a1dbb37
+					452 cell
+						453 text 754dcfba-b382-4504-9a58-f08b5a1dbb37
+					454 cell
+						455 link Description: ud1391-31-20261016-user, Value: …
+					456 cell
+						457 link Description: ud1391-31-20261016, Value: 10.10.31.10:8080/client/#/domain/66676f32-af20-40ba-bfb0-1d3eb50a9b91?tab=details
+				458 row
+					459 cell
+						460 container
+							461 checkbox (settable, integer) Description:  , Value: 0
+					462 cell
+						463 link Description: UD1391-31-20261016-admin, Value: …
+					464 cell
+						465 text 4cb11aab-bf01-4c0f-a6a1-e3c66c015dfa
+					466 cell
+						467 link Description: admin, Value: …
+					468 cell
+						469 link Description: ROOT, Value: …
+			470 content list
+				471 text 전체 12 개 항목 중 1-12 표시
+				472 container 이전 페이지
+					473 button (disabled) left
+						474 image left
+				475 text 1
+				476 container 다음 페이지
+					477 button (disabled) right
+						478 image right
+				479 container
+					480 combo box (settable) rc_select_20
+					481 text 20 / 쪽
+	274 container
+		275 image info-circle
+		276 text Wall 모니터링을 사용할 수 없습니다. 기존 알림은 최신 정보가 아닐 수 있으며 Mold는 계속 사용할 수 있습니다. 비활성
+
+The focused UI element is 1 AXWebArea 사용자 데이터 라이브러리 - ABLESTACK-Mold, URL: 10.10.31.10:8080/client/#/userdata?keyword=UD1391-31-20261016

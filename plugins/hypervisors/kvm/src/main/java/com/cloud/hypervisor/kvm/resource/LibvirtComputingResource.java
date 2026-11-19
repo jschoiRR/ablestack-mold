@@ -604,8 +604,6 @@ public class LibvirtComputingResource extends ServerResourceBase implements Serv
     protected List<String> localStoragePaths = new ArrayList<>();
     protected List<String> localStorageUUIDs = new ArrayList<>();
 
-    private static final String CONFIG_DRIVE_ISO_DISK_LABEL = "hdd";
-    private static final int CONFIG_DRIVE_ISO_DEVICE_ID = 4;
 
     protected File qemuSocketsPath;
     private final String qemuGuestAgentSocketName = "org.qemu.guest_agent.0";
@@ -830,6 +828,49 @@ public class LibvirtComputingResource extends ServerResourceBase implements Serv
 
     public KVMStoragePoolManager getStoragePoolMgr() {
         return storagePoolManager;
+    }
+
+    public boolean configureForDetachedBackupJob() throws ConfigurationException {
+        configureAblestackBackupScripts(AgentPropertiesFileHandler.getPropertyValue(AgentProperties.KVM_SCRIPTS_DIR));
+        cmdsTimeout = AgentPropertiesFileHandler.getPropertyValue(AgentProperties.CMDS_TIMEOUT) * 1000;
+        final String cpuArchOverride = AgentPropertiesFileHandler.getPropertyValue(AgentProperties.GUEST_CPU_ARCH);
+        if (StringUtils.isNotEmpty(cpuArchOverride)) {
+            guestCpuArch = cpuArchOverride;
+        }
+        try {
+            hypervisorPath = getHypervisorPath(LibvirtConnection.getConnection());
+        } catch (LibvirtException e) {
+            final ConfigurationException configurationException =
+                    new ConfigurationException("Unable to resolve the KVM emulator for detached backup job");
+            configurationException.initCause(e);
+            throw configurationException;
+        }
+        storageLayer = new JavaStorageLayer();
+        if (!storageLayer.configure("StorageLayer", new HashMap<>())) {
+            return false;
+        }
+        kvmhaMonitor = new KVMHAMonitor(null, null, null, null, null, null);
+        storagePoolManager = new KVMStoragePoolManager(storageLayer, kvmhaMonitor);
+        return true;
+    }
+
+    private void configureAblestackBackupScripts(final String kvmScriptsDir) throws ConfigurationException {
+        ableNasBackupPath = Script.findScript(kvmScriptsDir, "ablestack_nasbackup.sh");
+        if (ableNasBackupPath == null) {
+            throw new ConfigurationException("Unable to find ablestack_nasbackup.sh");
+        }
+        ableCvtBackupPath = Script.findScript(kvmScriptsDir, "ablestack_cvtbackup.sh");
+        if (ableCvtBackupPath == null) {
+            throw new ConfigurationException("Unable to find ablestack_cvtbackup.sh");
+        }
+        ableNetBackupPath = Script.findScript(kvmScriptsDir, "ablestack_netbackup.sh");
+        if (ableNetBackupPath == null) {
+            throw new ConfigurationException("Unable to find ablestack_netbackup.sh");
+        }
+        ableVeeamPath = Script.findScript(kvmScriptsDir, "ablestack_veeam.sh");
+        if (ableVeeamPath == null) {
+            throw new ConfigurationException("Unable to find ablestack_veeam.sh");
+        }
     }
 
     @Override
@@ -1480,30 +1521,12 @@ public class LibvirtComputingResource extends ServerResourceBase implements Serv
             throw new ConfigurationException("Unable to find nasbackup.sh");
         }
 
-        ableNasBackupPath = Script.findScript(kvmScriptsDir, "ablestack_nasbackup.sh");
-        if (ableNasBackupPath == null) {
-            throw new ConfigurationException("Unable to find ablestack_nasbackup.sh");
-        }
-
-        ableCvtBackupPath = Script.findScript(kvmScriptsDir, "ablestack_cvtbackup.sh");
-        if (ableCvtBackupPath == null) {
-            throw new ConfigurationException("Unable to find ablestack_cvtbackup.sh");
-        }
-
-        ableNetBackupPath = Script.findScript(kvmScriptsDir, "ablestack_netbackup.sh");
-        if (ableNetBackupPath == null) {
-            throw new ConfigurationException("Unable to find ablestack_netbackup.sh");
-        }
+        configureAblestackBackupScripts(kvmScriptsDir);
         String imageServerMain = Script.findScript(kvmScriptsDir, "imageserver/__main__.py");
         if (imageServerMain == null) {
             throw new ConfigurationException("Unable to find imageserver package");
         }
         imageServerPath = new File(imageServerMain).getParent();
-
-        ableVeeamPath = Script.findScript(kvmScriptsDir, "ablestack_veeam.sh");
-        if (ableVeeamPath == null) {
-            throw new ConfigurationException("Unable to find ablestack_veeam.sh");
-        }
 
         createTmplPath = Script.findScript(storageScriptsDir, "createtmplt.sh");
         if (createTmplPath == null) {
@@ -2566,22 +2589,23 @@ public class LibvirtComputingResource extends ServerResourceBase implements Serv
         return "0".equals(command.execute(null));
     }
 
-    public boolean ablestackVbmcCmdLine(final String action, final String domid, final String port) throws InternalErrorException {
-        if (action == null || domid == null || port == null) {
-            return false;
+    public boolean ablestackVbmcCmdLine(final com.cloud.agent.api.VbmcCommand request) throws InternalErrorException {
+        if (request.getToken() == null || request.getAddress() == null || request.getAllowedCidr() == null) {
+            return false; // Fail closed with an older management server.
         }
-
-        final Script command = new Script("/bin/sh", timeout);
+        final Script command = new Script("/bin/bash", timeout);
         command.add(ablestackVbmcPath);
-        command.add(action);
-        command.add(domid);
-        command.add(port);
-        LOGGER.info(command);
-        String result = command.execute();
-        if (result != null) {
-            return false;
+        command.add(request.getAction());
+        command.add(request.getVmName());
+        command.add(request.getPort());
+        command.add(request.getToken());
+        command.add(request.getAddress());
+        command.add(request.getAllowedCidr());
+        final java.util.Map<String, String> environment = new java.util.HashMap<>();
+        if (request.getPassword() != null) {
+            environment.put("CLOUD_VBMC_PASSWORD", request.getPassword());
         }
-        return true;
+        return command.execute(new com.cloud.utils.script.OutputInterpreter.AllLinesParser(), environment) == null;
     }
 
     public boolean createKvdoCmdLine(final String poolName, final String poolUsername, final String imageName, final String imageSize) throws InternalErrorException {
@@ -4217,8 +4241,11 @@ public class LibvirtComputingResource extends ServerResourceBase implements Serv
                         continue;
                     }
 
-                    // 디바이스 관련 XML인지 확인 (hostdev, disk 등)
-                    if (isDeviceSnippet(snippet)) {
+                    String trimmed = snippet.trim();
+                    if (trimmed.startsWith("<devices>") && trimmed.endsWith("</devices>")) {
+                        // Older device allocations persisted an entire devices wrapper.
+                        deviceConfigBuilder.append(trimmed, "<devices>".length(), trimmed.length() - "</devices>".length()).append("\n");
+                    } else if (isDeviceSnippet(snippet)) {
                         deviceConfigBuilder.append(snippet).append("\n");
                     } else {
                         otherConfigBuilder.append(snippet);
@@ -4226,11 +4253,14 @@ public class LibvirtComputingResource extends ServerResourceBase implements Serv
                 }
             }
 
-            // 디바이스 XML이 있으면 하나의 <devices> 블록으로 감싸서 추가
             String deviceConfig = deviceConfigBuilder.toString().trim();
             if (StringUtils.isNotBlank(deviceConfig)) {
-                String wrappedDeviceConfig = "<devices>\n" + deviceConfig + "\n</devices>";
-                vm.addComp(wrappedDeviceConfig);
+                DevicesDef devices = vm.getDevices();
+                if (devices == null) {
+                    devices = new DevicesDef();
+                    vm.addComp(devices);
+                }
+                devices.addDevice(deviceConfig);
             }
 
             // 기타 설정은 그대로 추가
@@ -4617,6 +4647,7 @@ public class LibvirtComputingResource extends ServerResourceBase implements Serv
                     disk.setLibvirtDiskEncryptDetails(encryptDetails);
                 }
             }
+            com.cloud.hypervisor.kvm.storage.Gfs2VolumeAllocation.configureFileDisk(disk, physicalDisk, data);
             setQcow2FullMetadataCache(disk, physicalDisk);
             if (vm.getDevices() == null) {
                 LOGGER.error("There is no devices for" + vm);
@@ -4887,105 +4918,61 @@ public class LibvirtComputingResource extends ServerResourceBase implements Serv
         return storagePoolManager;
     }
 
-    public void detachAndAttachConfigDriveISO(final Connect conn, final String vmName, VirtualMachineTO to) {
-        // detach and re-attach configdrive ISO
-        List<DiskDef> disks = getDisks(conn, vmName);
-        DiskDef configdrive = null;
-        for (DiskDef disk : disks) {
-            if (disk.getDeviceType() == DiskDef.DeviceType.CDROM && CONFIG_DRIVE_ISO_DISK_LABEL.equals(disk.getDiskLabel())) {
-                configdrive = disk;
-            }
+    public void detachAndAttachConfigDriveISO(final Connect conn, final String vmName, VirtualMachineTO to)
+            throws LibvirtException, InternalErrorException {
+        DiskTO configDrive = ConfigDriveDiskUtil.findDisk(to, vmName);
+        Element media = getConfigDriveMedia(conn, vmName);
+        if ((configDrive == null) != (media == null)) {
+            throw new InternalErrorException("ConfigDrive profile and attached media disagree for " + vmName);
         }
+        refreshConfigDriveMedia(conn, vmName, media);
+    }
 
-        if (configdrive != null) {
-            try {
-                LOGGER.debug(String.format("Detaching ConfigDrive ISO of the VM %s, at path %s", vmName, configdrive.getDiskPath()));
-                String result = attachOrDetachConfigDriveISO(conn, vmName, to, configdrive.getDiskPath(),  false, CONFIG_DRIVE_ISO_DEVICE_ID);
-                if (result != null) {
-                    LOGGER.warn(String.format("Detach ConfigDrive ISO of the VM %s, at path %s with %s: ", vmName, configdrive.getDiskPath(), result));
-                }
-                LOGGER.debug(String.format("Attaching ConfigDrive ISO of the VM %s, at path %s", vmName, configdrive.getDiskPath()));
-                result = attachOrDetachConfigDriveISO(conn, vmName, to, configdrive.getDiskPath(), true, CONFIG_DRIVE_ISO_DEVICE_ID);
-                if (result != null) {
-                    LOGGER.warn(String.format("Attach ConfigDrive ISO of the VM %s, at path %s with %s: ", vmName, configdrive.getDiskPath(), result));
-                }
-            } catch (final LibvirtException | InternalErrorException | URISyntaxException e) {
-                final String msg = "Detach and attach ConfigDrive ISO failed due to " + e.toString();
-                LOGGER.warn(msg, e);
-            }
+    public void detachAndAttachConfigDriveISO(final Connect conn, final String vmName)
+            throws LibvirtException, InternalErrorException {
+        refreshConfigDriveMedia(conn, vmName, getConfigDriveMedia(conn, vmName));
+    }
+
+    public String getConfigDrivePath(Connect conn, String vmName) throws LibvirtException, InternalErrorException {
+        Element media = getConfigDriveMedia(conn, vmName);
+        return media == null ? null : ((Element) media.getElementsByTagName("source").item(0)).getAttribute("file");
+    }
+
+    private Element getConfigDriveMedia(Connect conn, String vmName) throws LibvirtException, InternalErrorException {
+        Domain domain = getDomain(conn, vmName);
+        try {
+            return ConfigDriveDiskUtil.findMedia(domain.getXMLDesc(0), vmName, conn);
+        } finally {
+            domain.free();
         }
     }
 
-    public synchronized String attachOrDetachConfigDriveISO(final Connect conn, final String vmName, VirtualMachineTO to, String cdPath, final boolean isAttach, final Integer diskSeq) throws LibvirtException, URISyntaxException,
-            InternalErrorException {
-        DiskTO configDriveDisk = null;
-        for (DiskTO disk : to.getDisks()) {
-            if (disk.getPath() != null && disk.getPath().contains("configdrive")) {
-                configDriveDisk = disk;
-                break;
-            }
+    void refreshConfigDriveMedia(Connect conn, String vmName, Element media) throws LibvirtException, InternalErrorException {
+        if (media == null) {
+            return;
         }
-        String isoPath = getVolumePath(conn, configDriveDisk, to.isConfigDriveOnHostCache());
-        DiskDef iso = new DiskDef();
-        if (isAttach && StringUtils.isNotBlank(isoPath) && configDriveDisk !=null && isoPath.lastIndexOf("/") > 0) {
-            if (isoPath.startsWith(getConfigPath() + "/" + ConfigDrive.CONFIGDRIVEDIR) && isoPath.contains(vmName)) {
-                iso.defISODisk(isoPath, diskSeq, DiskDef.DiskType.FILE);
-            } else {
-                final DataTO diskData = configDriveDisk.getData();
-                final String dataName = configDriveDisk.getPath();
-                final DataStoreTO store = diskData.getDataStore();
-                isoPath = store.getUrl().split("\\?")[0] + File.separator + dataName;
-
-                final int index = isoPath.lastIndexOf("/");
-                final String path = isoPath.substring(0, index);
-                final String name = isoPath.substring(index + 1);
-                final KVMStoragePool storagePool = storagePoolManager.getStoragePoolByURI(path);
-                final KVMPhysicalDisk isoVol = storagePool.getPhysicalDisk(name);
-                final DiskDef.DiskType diskType = getDiskType(isoVol);
-                isoPath = isoVol.getPath();
-                iso.defISODisk(isoPath, diskSeq, diskType);
+        // Reopen the source media without changing its target, bus, address or backing path.
+        // The migration XML separately carries the destination storage path.
+        String original = ConfigDriveDiskUtil.mediaXml(media, false);
+        String empty = ConfigDriveDiskUtil.mediaXml(media, true);
+        try {
+            updateConfigDriveMedia(conn, vmName, empty);
+            updateConfigDriveMedia(conn, vmName, original);
+        } catch (LibvirtException | InternalErrorException e) {
+            try {
+                updateConfigDriveMedia(conn, vmName, original);
+            } catch (LibvirtException | InternalErrorException restoreError) {
+                e.addSuppressed(restoreError);
+                LOGGER.error("Unable to restore ConfigDrive media for " + vmName, restoreError);
             }
-        } else {
-            iso.defISODisk(null, diskSeq, DiskDef.DiskType.FILE);
+            throw e;
         }
-        final String result = attachOrDetachDevice(conn, true, vmName, iso.toString());
-        if (result == null && !isAttach) {
-            final List<DiskDef> disks = getDisks(conn, vmName);
-            for (final DiskDef disk : disks) {
-                if (disk.getDeviceType() == DiskDef.DeviceType.CDROM
-                        && (diskSeq == null || disk.getDiskLabel().equals(iso.getDiskLabel()))) {
-                    cleanupDisk(disk);
-                }
-            }
-        }
-        return result;
     }
 
-    public void detachAndAttachConfigDriveISO(final Connect conn, final String vmName) {
-        // detach and re-attach configdrive ISO
-        List<DiskDef> disks = getDisks(conn, vmName);
-        DiskDef configdrive = null;
-        for (DiskDef disk : disks) {
-            if (disk.getDeviceType() == DiskDef.DeviceType.CDROM && CONFIG_DRIVE_ISO_DISK_LABEL.equals(disk.getDiskLabel())) {
-                configdrive = disk;
-            }
-        }
-        if (configdrive != null) {
-            try {
-                LOGGER.debug(String.format("Detaching ConfigDrive ISO of the VM %s, at path %s", vmName, configdrive.getDiskPath()));
-                String result = attachOrDetachISO(conn, vmName, configdrive.getDiskPath(), false, CONFIG_DRIVE_ISO_DEVICE_ID);
-                if (result != null) {
-                    LOGGER.warn(String.format("Detach ConfigDrive ISO of the VM %s, at path %s with %s: ", vmName, configdrive.getDiskPath(), result));
-                }
-                LOGGER.debug(String.format("Attaching ConfigDrive ISO of the VM %s, at path %s", vmName, configdrive.getDiskPath()));
-                result = attachOrDetachISO(conn, vmName, configdrive.getDiskPath(), true, CONFIG_DRIVE_ISO_DEVICE_ID);
-                if (result != null) {
-                    LOGGER.warn(String.format("Attach ConfigDrive ISO of the VM %s, at path %s with %s: ", vmName, configdrive.getDiskPath(), result));
-                }
-            } catch (final LibvirtException | InternalErrorException | URISyntaxException e) {
-                final String msg = "Detach and attach ConfigDrive ISO failed due to " + e.toString();
-                LOGGER.warn(msg, e);
-            }
+    private void updateConfigDriveMedia(Connect conn, String vmName, String xml) throws LibvirtException, InternalErrorException {
+        String error = attachOrDetachDevice(conn, true, vmName, xml);
+        if (error != null) {
+            throw new InternalErrorException("ConfigDrive media update failed for " + vmName + ": " + error);
         }
     }
 
@@ -5310,7 +5297,18 @@ public class LibvirtComputingResource extends ServerResourceBase implements Serv
             startupCommandsArray[i] = startupCommand;
             i++;
         }
-        return startupCommandsArray;
+        return advertiseAllocation(startupCommandsArray);
+    }
+
+    private static StartupCommand[] advertiseAllocation(StartupCommand[] commands) {
+        if (commands != null) {
+            for (StartupCommand command : commands) {
+                if (command instanceof StartupRoutingCommand) {
+                    ((StartupRoutingCommand) command).getHostDetails().put(com.cloud.storage.VolumeAllocationPolicy.AGENT_VERSION, "1");
+                }
+            }
+        }
+        return commands;
     }
 
     private void addBackupJobDetails(Map<String, String> details) {
@@ -6355,7 +6353,7 @@ public class LibvirtComputingResource extends ServerResourceBase implements Serv
         metrics.setMemoryKBs(info.maxMem);
         metrics.setTargetMemoryKBs(info.memory);
         LOGGER.trace("Trying to get free memory for VM [{}].", vmAsString);
-        metrics.setIntFreeMemoryKBs(KvmBoundedStats.freeMemory(dm));
+        metrics.setIntFreeMemoryKBs(KvmBoundedStats.freeMemory(dm, 2L * getCurrentVmBalloonStatsPeriod(), System.currentTimeMillis()));
 
         if (oldStats != null) {
             LOGGER.debug("Old stats exist for VM [{}]; therefore, the utilization will be calculated.", vmAsString);

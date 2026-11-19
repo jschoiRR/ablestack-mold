@@ -1,0 +1,1359 @@
+{
+  "active": {
+    "role": "switch",
+    "tag": "BUTTON",
+    "text": ""
+  },
+  "app": "http://10.10.31.10:8080/client/js/app.f05171a7.js",
+  "body": {
+    "height": 710,
+    "width": 718,
+    "x": 361,
+    "y": 140
+  },
+  "bodyScroll": {
+    "client": 710,
+    "scroll": 832,
+    "scrollTop": 0
+  },
+  "buttons": [
+    {
+      "disabled": false,
+      "rect": {
+        "height": 32,
+        "width": 57.765625,
+        "x": 919.46875,
+        "y": 867
+      },
+      "text": "취소"
+    },
+    {
+      "disabled": false,
+      "rect": {
+        "height": 32,
+        "width": 57.765625,
+        "x": 993.234375,
+        "y": 867
+      },
+      "text": "확인"
+    }
+  ],
+  "controls": [
+    {
+      "class": "ant-switch-checked ant-switch",
+      "disabled": false,
+      "ratio": 2.3076257789486427,
+      "rect": {
+        "height": 22,
+        "width": 44,
+        "x": 512.765625,
+        "y": 337.75
+      }
+    },
+    {
+      "class": "ant-radio-inner",
+      "disabled": false,
+      "ratio": 6.4128150629431655,
+      "rect": {
+        "height": 16,
+        "width": 16,
+        "x": 414,
+        "y": 550.9375
+      }
+    },
+    {
+      "class": "ant-input",
+      "disabled": false,
+      "ratio": 6.4128150629431655,
+      "rect": {
+        "height": 32,
+        "width": 288,
+        "x": 696,
+        "y": 543.140625
+      }
+    },
+    {
+      "class": "ant-radio-inner",
+      "disabled": false,
+      "ratio": 6.4128150629431655,
+      "rect": {
+        "height": 16,
+        "width": 16,
+        "x": 422,
+        "y": 695.9375
+      }
+    },
+    {
+      "class": "ant-radio-inner",
+      "disabled": false,
+      "ratio": 7.20853776337105,
+      "rect": {
+        "height": 16,
+        "width": 16,
+        "x": 422,
+        "y": 764.9375
+      }
+    },
+    {
+      "class": "ant-radio-inner",
+      "disabled": false,
+      "ratio": 6.4128150629431655,
+      "rect": {
+        "height": 16,
+        "width": 16,
+        "x": 422,
+        "y": 822.9375
+      }
+    },
+    {
+      "class": "ant-select-selector",
+      "disabled": false,
+      "ratio": 6.4128150629431655,
+      "rect": {
+        "height": 24,
+        "width": 78.109375,
+        "x": 937.890625,
+        "y": 871.140625
+      }
+    }
+  ],
+  "dpr": 1,
+  "footer": {
+    "height": 65,
+    "width": 718,
+    "x": 361,
+    "y": 850
+  },
+  "header": {
+    "height": 55,
+    "width": 718,
+    "x": 361,
+    "y": 85
+  },
+  "height": 1000,
+  "modal": {
+    "height": 832,
+    "width": 720,
+    "x": 360,
+    "y": 84
+  },
+  "modalOverflow": 0,
+  "pageOverflow": -10,
+  "panel": "rc-tabs-4-tab-userdataregistered",
+  "spacing": [
+    {
+      "class": "ant-row ant-form-item",
+      "gap": "0px normal",
+      "marginBottom": "24px",
+      "marginTop": "0px",
+      "rect": {
+        "height": 32,
+        "width": 652,
+        "x": 389,
+        "y": 332
+      }
+    }
+  ],
+  "tabs": [
+    {
+      "name": "저장된 User Data",
+      "selected": "true"
+    },
+    {
+      "name": "수동 User Data 입력",
+      "selected": "false"
+    }
+  ],
+  "text": [
+    {
+      "background": [
+        34,
+        40,
+        47,
+        1
+      ],
+      "class": "ant-modal-title",
+      "color": [
+        255,
+        255,
+        255,
+        0.65
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 7.128935659391724,
+      "rect": {
+        "height": 22,
+        "width": 670,
+        "x": 385,
+        "y": 101
+      },
+      "tag": "DIV",
+      "text": "VM에서 사용자 데이터 재설정"
+    },
+    {
+      "background": [
+        32.6,
+        54.56,
+        76.12,
+        1
+      ],
+      "class": "ant-alert-message",
+      "color": [
+        214,
+        235,
+        255,
+        1
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 10.072997510420503,
+      "rect": {
+        "height": 44,
+        "width": 598,
+        "x": 427,
+        "y": 173
+      },
+      "tag": "DIV",
+      "text": "지금은 Cloud에 설정을 저장합니다. ConfigDrive는 다음 시작 시 다시 생성되며, 게스트의 수신·실행 완료를 의미하지 않습니다."
+    },
+    {
+      "background": [
+        34,
+        40,
+        47,
+        1
+      ],
+      "class": "userdata-current-summary",
+      "color": [
+        240,
+        243,
+        246,
+        1
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 13.348661188320586,
+      "rect": {
+        "height": 22,
+        "width": 652,
+        "x": 389,
+        "y": 238
+      },
+      "tag": "P",
+      "text": "현재 사용자 데이터: UD1392-31-20261016-final-comments"
+    },
+    {
+      "background": [
+        22,
+        27,
+        34,
+        1
+      ],
+      "class": "ant-collapse-header",
+      "color": [
+        255,
+        255,
+        255,
+        0.65
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 7.887039278328169,
+      "rect": {
+        "height": 46,
+        "width": 650,
+        "x": 390,
+        "y": 273
+      },
+      "tag": "DIV",
+      "text": "현재 저장된 본문(템플릿 포함)"
+    },
+    {
+      "background": [
+        34,
+        40,
+        47,
+        1
+      ],
+      "class": "",
+      "color": [
+        255,
+        255,
+        255,
+        0.65
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 7.128935659391724,
+      "rect": {
+        "height": 32,
+        "width": 123.765625,
+        "x": 389,
+        "y": 332
+      },
+      "tag": "LABEL",
+      "text": "사용자 데이터 변경"
+    },
+    {
+      "background": [
+        34,
+        40,
+        47,
+        1
+      ],
+      "class": "ant-tabs-tab-btn",
+      "color": [
+        105,
+        177,
+        255,
+        1
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 6.607418085557632,
+      "rect": {
+        "height": 25.140625,
+        "width": 117.5625,
+        "x": 430,
+        "y": 405
+      },
+      "tag": "DIV",
+      "text": "저장된 User Data"
+    },
+    {
+      "background": [
+        34,
+        40,
+        47,
+        1
+      ],
+      "class": "ant-tabs-tab-btn",
+      "color": [
+        197,
+        204,
+        212,
+        1
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 9.176047597421212,
+      "rect": {
+        "height": 25.140625,
+        "width": 136.671875,
+        "x": 611.5625,
+        "y": 405
+      },
+      "tag": "DIV",
+      "text": "수동 User Data 입력"
+    },
+    {
+      "background": [
+        32.6,
+        54.56,
+        76.12,
+        1
+      ],
+      "class": "ant-alert-message",
+      "color": [
+        214,
+        235,
+        255,
+        1
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 10.072997510420503,
+      "rect": {
+        "height": 44,
+        "width": 548,
+        "x": 452,
+        "y": 478.140625
+      },
+      "tag": "DIV",
+      "text": "설정 안함은 라이브러리 연결과 사용자 지정 본문·변수값을 지웁니다. 취소하면 현재 설정을 유지합니다."
+    },
+    {
+      "background": [
+        34,
+        40,
+        47,
+        1
+      ],
+      "class": "",
+      "color": [
+        255,
+        255,
+        255,
+        0.65
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 7.128935659391724,
+      "rect": {
+        "height": 22,
+        "width": 71.359375,
+        "x": 430,
+        "y": 548.140625
+      },
+      "tag": "SPAN",
+      "text": "설정 안함"
+    },
+    {
+      "background": [
+        27,
+        33,
+        40,
+        1
+      ],
+      "class": "ant-input",
+      "color": [
+        154,
+        164,
+        175,
+        1
+      ],
+      "disabled": false,
+      "placeholder": true,
+      "ratio": 6.4128150629431655,
+      "rect": {
+        "height": 32,
+        "width": 288,
+        "x": 696,
+        "y": 543.140625
+      },
+      "tag": "INPUT",
+      "text": "검색"
+    },
+    {
+      "background": [
+        34,
+        40,
+        47,
+        1
+      ],
+      "class": "",
+      "color": [
+        255,
+        255,
+        255,
+        0.65
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 7.128935659391724,
+      "rect": {
+        "height": 22,
+        "width": 602,
+        "x": 414,
+        "y": 587.140625
+      },
+      "tag": "P",
+      "text": "선택한 사용자 데이터: UD1392-31-20261016-final-comments"
+    },
+    {
+      "background": [
+        34,
+        40,
+        47,
+        1
+      ],
+      "class": "ant-table-cell",
+      "color": [
+        255,
+        255,
+        255,
+        0.85
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 11.117067846548215,
+      "rect": {
+        "height": 47,
+        "width": 224.734375,
+        "x": 446.09375,
+        "y": 623.140625
+      },
+      "tag": "TH",
+      "text": "사용자 데이터"
+    },
+    {
+      "background": [
+        34,
+        40,
+        47,
+        1
+      ],
+      "class": "ant-table-cell",
+      "color": [
+        255,
+        255,
+        255,
+        0.85
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 11.117067846548215,
+      "rect": {
+        "height": 47,
+        "width": 168.546875,
+        "x": 670.828125,
+        "y": 623.140625
+      },
+      "tag": "TH",
+      "text": "계정"
+    },
+    {
+      "background": [
+        34,
+        40,
+        47,
+        1
+      ],
+      "class": "ant-table-cell",
+      "color": [
+        255,
+        255,
+        255,
+        0.85
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 11.117067846548215,
+      "rect": {
+        "height": 47,
+        "width": 168.546875,
+        "x": 839.375,
+        "y": 623.140625
+      },
+      "tag": "TH",
+      "text": "도메인"
+    },
+    {
+      "background": [
+        34,
+        40,
+        47,
+        1
+      ],
+      "class": "ant-table-cell",
+      "color": [
+        240,
+        243,
+        246,
+        1
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 13.348661188320586,
+      "rect": {
+        "height": 69,
+        "width": 224,
+        "x": 446,
+        "y": 670.140625
+      },
+      "tag": "TD",
+      "text": "UD1392-31-20261016-standard-second"
+    },
+    {
+      "background": [
+        34,
+        40,
+        47,
+        1
+      ],
+      "class": "ant-table-cell",
+      "color": [
+        240,
+        243,
+        246,
+        1
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 13.348661188320586,
+      "rect": {
+        "height": 69,
+        "width": 167.984375,
+        "x": 670,
+        "y": 670.140625
+      },
+      "tag": "TD",
+      "text": "admin"
+    },
+    {
+      "background": [
+        34,
+        40,
+        47,
+        1
+      ],
+      "class": "ant-table-cell",
+      "color": [
+        240,
+        243,
+        246,
+        1
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 13.348661188320586,
+      "rect": {
+        "height": 69,
+        "width": 168.015625,
+        "x": 837.984375,
+        "y": 670.140625
+      },
+      "tag": "TD",
+      "text": "ROOT"
+    },
+    {
+      "background": [
+        23,
+        55,
+        90,
+        1
+      ],
+      "class": "ant-table-cell",
+      "color": [
+        240,
+        243,
+        246,
+        1
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 10.896026523763805,
+      "rect": {
+        "height": 69,
+        "width": 224,
+        "x": 446,
+        "y": 739.140625
+      },
+      "tag": "TD",
+      "text": "UD1392-31-20261016-final-comments"
+    },
+    {
+      "background": [
+        23,
+        55,
+        90,
+        1
+      ],
+      "class": "ant-table-cell",
+      "color": [
+        240,
+        243,
+        246,
+        1
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 10.896026523763805,
+      "rect": {
+        "height": 69,
+        "width": 167.984375,
+        "x": 670,
+        "y": 739.140625
+      },
+      "tag": "TD",
+      "text": "admin"
+    },
+    {
+      "background": [
+        23,
+        55,
+        90,
+        1
+      ],
+      "class": "ant-table-cell",
+      "color": [
+        240,
+        243,
+        246,
+        1
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 10.896026523763805,
+      "rect": {
+        "height": 69,
+        "width": 168.015625,
+        "x": 837.984375,
+        "y": 739.140625
+      },
+      "tag": "TD",
+      "text": "ROOT"
+    },
+    {
+      "background": [
+        34,
+        40,
+        47,
+        1
+      ],
+      "class": "ant-table-cell",
+      "color": [
+        240,
+        243,
+        246,
+        1
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 13.348661188320586,
+      "rect": {
+        "height": 47,
+        "width": 224,
+        "x": 446,
+        "y": 808.140625
+      },
+      "tag": "TD",
+      "text": "AS-PROD-31-AS01-HTTP"
+    },
+    {
+      "background": [
+        34,
+        40,
+        47,
+        1
+      ],
+      "class": "ant-table-cell",
+      "color": [
+        240,
+        243,
+        246,
+        1
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 13.348661188320586,
+      "rect": {
+        "height": 47,
+        "width": 167.984375,
+        "x": 670,
+        "y": 808.140625
+      },
+      "tag": "TD",
+      "text": "admin"
+    },
+    {
+      "background": [
+        34,
+        40,
+        47,
+        1
+      ],
+      "class": "ant-table-cell",
+      "color": [
+        240,
+        243,
+        246,
+        1
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 13.348661188320586,
+      "rect": {
+        "height": 47,
+        "width": 168.015625,
+        "x": 837.984375,
+        "y": 808.140625
+      },
+      "tag": "TD",
+      "text": "ROOT"
+    },
+    {
+      "background": [
+        34,
+        40,
+        47,
+        1
+      ],
+      "class": "ant-pagination-total-text",
+      "color": [
+        255,
+        255,
+        255,
+        0.65
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 7.128935659391724,
+      "rect": {
+        "height": 24,
+        "width": 40.1875,
+        "x": 815.703125,
+        "y": 871.140625
+      },
+      "tag": "LI",
+      "text": "전체: 3"
+    },
+    {
+      "background": [
+        34,
+        40,
+        47,
+        1
+      ],
+      "class": "",
+      "color": [
+        105,
+        177,
+        255,
+        1
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 6.607418085557632,
+      "rect": {
+        "height": 22,
+        "width": 22,
+        "x": 888.890625,
+        "y": 872.140625
+      },
+      "tag": "A",
+      "text": "1"
+    },
+    {
+      "background": [
+        27,
+        33,
+        40,
+        1
+      ],
+      "class": "ant-select-selection-item",
+      "color": [
+        240,
+        243,
+        246,
+        1
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 14.56307547372849,
+      "rect": {
+        "height": 22,
+        "width": 62.109375,
+        "x": 945.890625,
+        "y": 872.140625
+      },
+      "tag": "SPAN",
+      "text": "10 / 쪽"
+    },
+    {
+      "background": [
+        39,
+        46,
+        54,
+        1
+      ],
+      "class": "",
+      "color": [
+        197,
+        204,
+        212,
+        1
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 8.469986394935841,
+      "rect": {
+        "height": 22,
+        "width": 25.765625,
+        "x": 935.46875,
+        "y": 872
+      },
+      "tag": "SPAN",
+      "text": "취소"
+    },
+    {
+      "background": [
+        9,
+        105,
+        218,
+        1
+      ],
+      "class": "",
+      "color": [
+        255,
+        255,
+        255,
+        1
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 5.192060987927794,
+      "rect": {
+        "height": 22,
+        "width": 25.765625,
+        "x": 1009.234375,
+        "y": 872
+      },
+      "tag": "SPAN",
+      "text": "확인"
+    }
+  ],
+  "theme": "dark",
+  "url": "http://10.10.31.10:8080/client/#/vm/5c8a8acb-40e2-4b4f-8de3-b43d6fabb9b1",
+  "width": 1440,
+  "essentialPaint": [
+    {
+      "after": {
+        "bg": "rgba(0, 0, 0, 0)",
+        "border": "rgba(0, 0, 0, 0.65)",
+        "color": "rgba(0, 0, 0, 0.65)"
+      },
+      "bg": "rgb(9, 105, 218)",
+      "border": "rgb(105, 177, 255)",
+      "borderWidth": "0px",
+      "class": "ant-switch-checked ant-switch",
+      "color": "rgba(0, 0, 0, 0.65)",
+      "opacity": "1",
+      "outline": "rgba(0, 0, 0, 0.65)",
+      "outlineWidth": "0px",
+      "parents": [
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgb(34, 40, 47)",
+        "rgb(34, 40, 47)",
+        "rgb(34, 40, 47)",
+        "rgb(34, 40, 47)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgb(22, 27, 34)",
+        "rgb(22, 27, 34)"
+      ],
+      "rect": {
+        "height": 22,
+        "width": 44,
+        "x": 512.765625,
+        "y": 337.75
+      },
+      "shadow": "rgb(230, 247, 255) 0px 0px 0px 2px",
+      "tag": "BUTTON",
+      "text": "",
+      "textContrast": 2.9505910580151733,
+      "borderOutside": 6.607418085557632,
+      "borderInside": 2.3076257789486427,
+      "fillOutside": 2.8632970500823496,
+      "outlineContrast": 1.3006489283533058,
+      "afterContrast": 2.9505910580151733
+    },
+    {
+      "after": {
+        "bg": "rgb(105, 177, 255)",
+        "border": "rgba(255, 255, 255, 0.65)",
+        "color": "rgba(255, 255, 255, 0.65)"
+      },
+      "bg": "rgb(27, 33, 40)",
+      "border": "rgb(154, 164, 175)",
+      "borderWidth": "1px",
+      "class": "ant-radio-inner",
+      "color": "rgba(255, 255, 255, 0.65)",
+      "opacity": "1",
+      "outline": "rgba(255, 255, 255, 0.65)",
+      "outlineWidth": "3px",
+      "parents": [
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgb(34, 40, 47)",
+        "rgb(34, 40, 47)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgb(34, 40, 47)",
+        "rgb(34, 40, 47)",
+        "rgb(34, 40, 47)",
+        "rgb(34, 40, 47)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgb(22, 27, 34)",
+        "rgb(22, 27, 34)"
+      ],
+      "rect": {
+        "height": 16,
+        "width": 16,
+        "x": 414,
+        "y": 550.9375
+      },
+      "shadow": "none",
+      "tag": "SPAN",
+      "text": "",
+      "textContrast": 7.566530394874558,
+      "borderOutside": 5.8780506695177355,
+      "borderInside": 6.4128150629431655,
+      "fillOutside": 1.0909764858269424,
+      "outlineContrast": 7.128935659391724,
+      "afterContrast": 7.566530394874558
+    },
+    {
+      "after": {
+        "bg": "rgba(0, 0, 0, 0)",
+        "border": "rgb(240, 243, 246)",
+        "color": "rgb(240, 243, 246)"
+      },
+      "bg": "rgb(27, 33, 40)",
+      "border": "rgb(154, 164, 175)",
+      "borderWidth": "1px",
+      "class": "ant-input",
+      "color": "rgb(240, 243, 246)",
+      "opacity": "1",
+      "outline": "rgb(240, 243, 246)",
+      "outlineWidth": "3px",
+      "parents": [
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgb(34, 40, 47)",
+        "rgb(34, 40, 47)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgb(34, 40, 47)",
+        "rgb(34, 40, 47)",
+        "rgb(34, 40, 47)",
+        "rgb(34, 40, 47)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgb(22, 27, 34)",
+        "rgb(22, 27, 34)"
+      ],
+      "rect": {
+        "height": 32,
+        "width": 288,
+        "x": 696,
+        "y": 543.140625
+      },
+      "shadow": "none",
+      "tag": "INPUT",
+      "text": "",
+      "textContrast": 14.56307547372849,
+      "borderOutside": 5.8780506695177355,
+      "borderInside": 6.4128150629431655,
+      "fillOutside": 1.0909764858269424,
+      "outlineContrast": 13.348661188320586,
+      "afterContrast": 14.56307547372849
+    },
+    {
+      "after": {
+        "bg": "rgb(105, 177, 255)",
+        "border": "rgba(255, 255, 255, 0.65)",
+        "color": "rgba(255, 255, 255, 0.65)"
+      },
+      "bg": "rgb(27, 33, 40)",
+      "border": "rgb(154, 164, 175)",
+      "borderWidth": "1px",
+      "class": "ant-radio-inner",
+      "color": "rgba(255, 255, 255, 0.65)",
+      "opacity": "1",
+      "outline": "rgba(255, 255, 255, 0.65)",
+      "outlineWidth": "3px",
+      "parents": [
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgb(34, 40, 47)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgb(34, 40, 47)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgb(34, 40, 47)",
+        "rgb(34, 40, 47)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgb(34, 40, 47)",
+        "rgb(34, 40, 47)",
+        "rgb(34, 40, 47)",
+        "rgb(34, 40, 47)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgb(22, 27, 34)",
+        "rgb(22, 27, 34)"
+      ],
+      "rect": {
+        "height": 16,
+        "width": 16,
+        "x": 422,
+        "y": 695.9375
+      },
+      "shadow": "none",
+      "tag": "SPAN",
+      "text": "",
+      "textContrast": 7.566530394874558,
+      "borderOutside": 5.8780506695177355,
+      "borderInside": 6.4128150629431655,
+      "fillOutside": 1.0909764858269424,
+      "outlineContrast": 7.128935659391724,
+      "afterContrast": 7.566530394874558
+    },
+    {
+      "after": {
+        "bg": "rgb(105, 177, 255)",
+        "border": "rgba(255, 255, 255, 0.65)",
+        "color": "rgba(255, 255, 255, 0.65)"
+      },
+      "bg": "rgb(27, 33, 40)",
+      "border": "rgb(105, 177, 255)",
+      "borderWidth": "1px",
+      "class": "ant-radio-inner",
+      "color": "rgba(255, 255, 255, 0.65)",
+      "opacity": "1",
+      "outline": "rgba(255, 255, 255, 0.65)",
+      "outlineWidth": "3px",
+      "parents": [
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgb(23, 55, 90)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgb(34, 40, 47)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgb(34, 40, 47)",
+        "rgb(34, 40, 47)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgb(34, 40, 47)",
+        "rgb(34, 40, 47)",
+        "rgb(34, 40, 47)",
+        "rgb(34, 40, 47)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgb(22, 27, 34)",
+        "rgb(22, 27, 34)"
+      ],
+      "rect": {
+        "height": 16,
+        "width": 16,
+        "x": 422,
+        "y": 764.9375
+      },
+      "shadow": "none",
+      "tag": "SPAN",
+      "text": "",
+      "textContrast": 7.566530394874558,
+      "borderOutside": 5.3933950152862,
+      "borderInside": 7.20853776337105,
+      "fillOutside": 1.3365491945129722,
+      "outlineContrast": 6.092457192014494,
+      "afterContrast": 7.566530394874558
+    },
+    {
+      "after": {
+        "bg": "rgb(105, 177, 255)",
+        "border": "rgba(255, 255, 255, 0.65)",
+        "color": "rgba(255, 255, 255, 0.65)"
+      },
+      "bg": "rgb(27, 33, 40)",
+      "border": "rgb(154, 164, 175)",
+      "borderWidth": "1px",
+      "class": "ant-radio-inner",
+      "color": "rgba(255, 255, 255, 0.65)",
+      "opacity": "1",
+      "outline": "rgba(255, 255, 255, 0.65)",
+      "outlineWidth": "3px",
+      "parents": [
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgb(34, 40, 47)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgb(34, 40, 47)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgb(34, 40, 47)",
+        "rgb(34, 40, 47)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgb(34, 40, 47)",
+        "rgb(34, 40, 47)",
+        "rgb(34, 40, 47)",
+        "rgb(34, 40, 47)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgb(22, 27, 34)",
+        "rgb(22, 27, 34)"
+      ],
+      "rect": {
+        "height": 16,
+        "width": 16,
+        "x": 422,
+        "y": 822.9375
+      },
+      "shadow": "none",
+      "tag": "SPAN",
+      "text": "",
+      "textContrast": 7.566530394874558,
+      "borderOutside": 5.8780506695177355,
+      "borderInside": 6.4128150629431655,
+      "fillOutside": 1.0909764858269424,
+      "outlineContrast": 7.128935659391724,
+      "afterContrast": 7.566530394874558
+    },
+    {
+      "after": {
+        "bg": "rgba(0, 0, 0, 0)",
+        "border": "rgb(240, 243, 246)",
+        "color": "rgb(240, 243, 246)"
+      },
+      "bg": "rgb(27, 33, 40)",
+      "border": "rgb(154, 164, 175)",
+      "borderWidth": "1px",
+      "class": "ant-select-selector",
+      "color": "rgb(240, 243, 246)",
+      "opacity": "1",
+      "outline": "rgb(240, 243, 246)",
+      "outlineWidth": "3px",
+      "parents": [
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgb(34, 40, 47)",
+        "rgb(34, 40, 47)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgb(34, 40, 47)",
+        "rgb(34, 40, 47)",
+        "rgb(34, 40, 47)",
+        "rgb(34, 40, 47)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgb(22, 27, 34)",
+        "rgb(22, 27, 34)"
+      ],
+      "rect": {
+        "height": 24,
+        "width": 78.109375,
+        "x": 937.890625,
+        "y": 871.140625
+      },
+      "shadow": "none",
+      "tag": "DIV",
+      "text": "10 / 쪽",
+      "textContrast": 14.56307547372849,
+      "borderOutside": 5.8780506695177355,
+      "borderInside": 6.4128150629431655,
+      "fillOutside": 1.0909764858269424,
+      "outlineContrast": 13.348661188320586,
+      "afterContrast": 14.56307547372849
+    }
+  ],
+  "mainOverflow": 12,
+  "styles": [
+    "http://10.10.31.10:8080/client/css/vendors.eb47fec1.css",
+    "http://10.10.31.10:8080/client/css/app.d8084667.css",
+    "http://10.10.31.10:8080/client/css/chunk-b6f1c0ca.bf4fcaad.css",
+    "http://10.10.31.10:8080/client/css/chunk-26c4d084.5b0407e4.css",
+    "http://10.10.31.10:8080/client/css/chunk-1be648b4.f16722ba.css",
+    "http://10.10.31.10:8080/client/css/chunk-7b4658eb.49f46107.css",
+    "http://10.10.31.10:8080/client/css/chunk-2ba46c8a.45eee0b9.css",
+    "http://10.10.31.10:8080/client/css/chunk-fb0c6ee4.65ce41d6.css",
+    "http://10.10.31.10:8080/client/css/chunk-2e4d3950.d234a2f8.css",
+    "http://10.10.31.10:8080/client/css/chunk-a106f6f0.37b6aed6.css",
+    "http://10.10.31.10:8080/client/css/chunk-33b385b7.0f1c1c04.css",
+    "http://10.10.31.10:8080/client/css/chunk-371f99b0.ea78ccb5.css"
+  ]
+}

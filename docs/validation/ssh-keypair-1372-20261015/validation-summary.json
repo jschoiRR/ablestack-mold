@@ -1,0 +1,34 @@
+{
+  "issue": 1372,
+  "epic": 1369,
+  "pr": 1378,
+  "source_commit": "ce167ee7fe527dd0a6c25222ea55bb5bb3f67f49",
+  "java_tests": 47,
+  "ui_unit_tests": 264,
+  "ui_suites": 11,
+  "mysql_cases": 18,
+  "live_api_cases": 31,
+  "live_key_lifecycle_cases": 3,
+  "live_db_relation_cases": 5,
+  "live_ui_cases": 13,
+  "static_files_sha256_match": 849,
+  "cleanup": {
+    "passed": true,
+    "checks": {
+      "active_vms": 0,
+      "active_volumes": 0,
+      "active_nics": 0,
+      "active_vm_ssh_details": 0,
+      "active_networks": 0,
+      "keys": 0,
+      "active_accounts": 0,
+      "active_domain": 0,
+      "active_project": 0,
+      "existing-keys-snapshot_preserved": 5,
+      "existing-vm-ssh-snapshot_preserved": 340,
+      "removed_vm_ssh_details_retained": 10
+    }
+  },
+  "full_cloud_rpm_build_or_actions_started": false,
+  "pr_merged": false
+}

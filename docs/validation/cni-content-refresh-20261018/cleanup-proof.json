@@ -1,0 +1,27 @@
+{
+  "fixture_id": "4c0c829b-b732-4e0a-90fd-0e5a9e3b9fbc",
+  "fixture_bytes": 17258,
+  "fixture_body_sha256": "dbd26ad3f8845034f73f00825b1b10f723b86266a5df02df54e7e431f28e2d0d",
+  "fixture_exact_before_delete": true,
+  "normal_api_delete_success": true,
+  "existing_cni_exact_equal": 3,
+  "existing_kubernetes_stable_equal": 7,
+  "kubernetes_compared_fields": [
+    "id",
+    "name",
+    "state",
+    "account",
+    "domainid",
+    "projectid",
+    "cniconfigurationid",
+    "cniconfigurationname",
+    "networkid",
+    "kubernetesversionid",
+    "node UUIDs"
+  ],
+  "db_exact_before_after_equal": true,
+  "db_rows": 36,
+  "db_sha256": "2d61f159980ac4fa490f62c74e16ce6024ac1f8bb9210c2c6caaa366c74357f7",
+  "active_cni_residual": 0,
+  "active_annotation_residual": 0
+}

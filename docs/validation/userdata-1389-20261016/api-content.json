@@ -1,0 +1,66 @@
+{
+  "checks": [
+    {
+      "key": "main",
+      "id": "1fc463a9-c04b-4a1d-b1d3-75a9ac8c0e3c",
+      "bytes": 12012,
+      "sha256": "679125bcb621db778e1bfc27e72374a370a255725d5a6d44902b124b6598500f",
+      "scope": {
+        "ignoreproject": "true",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f"
+      }
+    },
+    {
+      "key": "binary",
+      "id": "cd2544db-5b1f-4af1-a9bc-6b541553a956",
+      "bytes": 5,
+      "sha256": "fff4eb36b691a22de3821c2287af114825a7e2356264c351249e4a760bb77ce4",
+      "scope": {
+        "ignoreproject": "true",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f"
+      }
+    },
+    {
+      "key": "user",
+      "id": "b234e5ec-6ccf-4a27-9ad8-05081d7a78a9",
+      "bytes": 28,
+      "sha256": "0471e356c20775c38694421681443d31d3c0df0b5d875b304f42f05806846255",
+      "scope": {
+        "ignoreproject": "true",
+        "account": "ud1389-31-20261016-user",
+        "domainid": "6cb61eee-eff1-4007-b6ea-bcb7f4d94be7"
+      }
+    },
+    {
+      "key": "project",
+      "id": "9f5810e1-4356-49fd-a9fd-efd9636a580d",
+      "bytes": 36,
+      "sha256": "1c2d65320c1a4f72ac86306d113de02a232a67bacde6072b5912a1aec17f3290",
+      "scope": {
+        "projectid": "4bac1248-9871-4e0b-ba78-8d3073b8bfe6"
+      }
+    }
+  ],
+  "references": {
+    "listVirtualMachines": {
+      "count": 1,
+      "ids": [
+        "f7912d0f-d093-4677-9df4-ded9de010e85"
+      ]
+    },
+    "listTemplates": {
+      "count": 1,
+      "ids": [
+        "467c63f5-7a20-4a93-b706-784a78532266"
+      ]
+    },
+    "listIsos": {
+      "count": 1,
+      "ids": [
+        "63a65451-f02c-40fe-b422-6b82cf8423dc"
+      ]
+    }
+  }
+}

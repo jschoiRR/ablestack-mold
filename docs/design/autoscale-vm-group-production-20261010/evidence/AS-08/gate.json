@@ -1,0 +1,16 @@
+{
+  "passed": true,
+  "at": "2026-10-13T02:44:05.459611+00:00",
+  "issue": 1354,
+  "source": "d7a99d2b3fc899015c706a6b86554ab422eefb27",
+  "uiGate": "14 real UI observations: restored 31 current tabs, 31 project list/context/light/dark/update dialog, 32 normal-user convergence/profile/LB and VPC",
+  "scope": "representative final E2E plus prior AS01-07/09 functional evidence; not a new 60-case full rerun",
+  "artifacts": [
+    "post-e2e-gate.json",
+    "post-e2e-physical-cleanup.json",
+    "expanded-storage.json",
+    "deployment-preflight.json",
+    "autoscale-runtime-parity.json",
+    "smoke-status.json"
+  ]
+}

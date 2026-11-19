@@ -1,0 +1,41 @@
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+
+[INFO] Exclude: ui/src/assets/**
+[INFO] Exclude: ui/public/**
+[INFO] Exclude: ui/legacy/**
+[INFO] Exclude: utils/testsmallfileinactive
+[INFO] Exclude: **/src/test/resources/mockito-extensions/org.mockito.plugins.MockMaker
+[INFO] Exclude: .github/workflows/dependabot.yaml
+[INFO] Exclude: .gitattributes
+[INFO] Exclude: .github/workflows/*.md
+[INFO] Exclude: .github/workflows/*.lock.ya?ml
+[INFO] Exclude: .github/aw/**
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary for Apache CloudStack API 4.23.0.0:
+[INFO]
+[INFO] Apache CloudStack API .............................. SUCCESS [  2.733 s]
+[INFO] Apache CloudStack Cloud Engine Schema Component .... SUCCESS [  0.975 s]
+[INFO] Apache CloudStack Server ........................... SUCCESS [  1.493 s]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  8.051 s
+[INFO] Finished at: 2026-10-11T22:51:55+09:00
+[INFO] ------------------------------------------------------------------------

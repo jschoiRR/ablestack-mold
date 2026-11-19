@@ -1,0 +1,170 @@
+{
+  "create-account": {
+    "createaccountresponse": {
+      "account": {
+        "id": "9fee401b-654b-453d-b403-77cb1d56abc3",
+        "name": "udlib-31-20261015-user",
+        "accounttype": 0,
+        "roleid": "9270b33d-b253-11f1-a895-0024814c313f",
+        "roletype": "User",
+        "rolename": "User",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domain": "ROOT",
+        "domainpath": "ROOT",
+        "vmlimit": "20",
+        "vmtotal": 0,
+        "vmavailable": "20",
+        "iplimit": "20",
+        "iptotal": 0,
+        "ipavailable": "20",
+        "volumelimit": "20",
+        "volumetotal": 0,
+        "volumeavailable": "20",
+        "snapshotlimit": "20",
+        "snapshottotal": 0,
+        "snapshotavailable": "20",
+        "backuplimit": "20",
+        "backuptotal": 0,
+        "backupavailable": "20",
+        "backupstoragelimit": "400",
+        "backupstoragetotal": 0,
+        "backupstorageavailable": "400",
+        "templatelimit": "20",
+        "templatetotal": 0,
+        "templateavailable": "20",
+        "vmstopped": 0,
+        "vmrunning": 0,
+        "projectlimit": "10",
+        "projecttotal": 0,
+        "projectavailable": "10",
+        "networklimit": "20",
+        "networktotal": 0,
+        "networkavailable": "20",
+        "vpclimit": "20",
+        "vpctotal": 0,
+        "vpcavailable": "20",
+        "cpulimit": "40",
+        "cputotal": 0,
+        "cpuavailable": "40",
+        "memorylimit": "40960",
+        "memorytotal": 0,
+        "memoryavailable": "40960",
+        "gpulimit": "20",
+        "gputotal": 0,
+        "gpuavailable": "20",
+        "primarystoragelimit": "200",
+        "primarystoragetotal": 0,
+        "primarystorageavailable": "200",
+        "secondarystoragelimit": "400",
+        "secondarystoragetotal": 0.0,
+        "secondarystorageavailable": "400.0",
+        "bucketlimit": "20",
+        "buckettotal": 0,
+        "bucketavailable": "20",
+        "objectstoragelimit": "400",
+        "objectstoragetotal": 0,
+        "objectstorageavailable": "400",
+        "state": "enabled",
+        "created": "2026-10-15T16:27:07+0900",
+        "user": [
+          {
+            "id": "e1521e95-aac6-47cb-8fda-675357a5060b",
+            "username": "udlib-31-20261015-user",
+            "firstname": "UDLIB",
+            "lastname": "Validation",
+            "email": "userdata-validation@example.invalid",
+            "created": "2026-10-15T16:27:07+0900",
+            "state": "enabled",
+            "account": "udlib-31-20261015-user",
+            "accounttype": 0,
+            "usersource": "native",
+            "roleid": "9270b33d-b253-11f1-a895-0024814c313f",
+            "roletype": "User",
+            "rolename": "User",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "accountid": "9fee401b-654b-453d-b403-77cb1d56abc3",
+            "iscallerchilddomain": false,
+            "isdefault": false,
+            "is2faenabled": false,
+            "is2famandated": false
+          }
+        ],
+        "accountdetails": {
+          "mold.external-iam.provisioning": "local-only-v1"
+        },
+        "isdefault": false,
+        "groups": [],
+        "apikeyaccess": "INHERIT"
+      }
+    }
+  },
+  "user-api-names": [
+    "listUserData",
+    "getVirtualMachineUserData",
+    "registerUserData",
+    "deleteUserData",
+    "linkUserDataToTemplate"
+  ],
+  "user-foreign-read": {
+    "listuserdataresponse": {}
+  },
+  "user-register": {
+    "registeruserdataresponse": {
+      "userdata": {
+        "id": "5cd45f9e-4e0b-454b-b582-3372bc0be12d",
+        "name": "UDLIB-31-20261015-user",
+        "account": "udlib-31-20261015-user",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domain": "ROOT",
+        "domainpath": "ROOT",
+        "userdata": "I2Nsb3VkLWNvbmZpZwojIFVETElCIHJlZ3VsYXIgdXNlcgo=",
+        "hasannotations": false
+      }
+    }
+  },
+  "user-own-read": {
+    "listuserdataresponse": {
+      "count": 1,
+      "userdata": [
+        {
+          "id": "5cd45f9e-4e0b-454b-b582-3372bc0be12d",
+          "name": "UDLIB-31-20261015-user",
+          "account": "udlib-31-20261015-user",
+          "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+          "domain": "ROOT",
+          "domainpath": "ROOT",
+          "userdata": "I2Nsb3VkLWNvbmZpZwojIFVETElCIHJlZ3VsYXIgdXNlcgo=",
+          "hasannotations": false
+        }
+      ]
+    }
+  },
+  "admin-owner-filter": {
+    "listuserdataresponse": {
+      "count": 1,
+      "userdata": [
+        {
+          "id": "5cd45f9e-4e0b-454b-b582-3372bc0be12d",
+          "name": "UDLIB-31-20261015-user",
+          "account": "udlib-31-20261015-user",
+          "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+          "domain": "ROOT",
+          "domainpath": "ROOT",
+          "userdata": "I2Nsb3VkLWNvbmZpZwojIFVETElCIHJlZ3VsYXIgdXNlcgo=",
+          "hasannotations": false
+        }
+      ]
+    }
+  },
+  "user-delete": {
+    "deleteuserdataresponse": {
+      "success": true
+    }
+  },
+  "delete-account": {
+    "deleteaccountresponse": {
+      "jobid": "e4c24b95-c083-4b43-9d35-8cd3e05e77d7"
+    }
+  }
+}

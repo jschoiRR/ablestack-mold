@@ -1,0 +1,45 @@
+Browser tab: 4, Title: "사용자 데이터 라이브러리 - ABLESTACK-Mold", URL: "http://10.10.31.10:8080/client/#/userdata?page=1&pagesize=20&keyword=UD1389-no-match&q=UD1389-no-match".
+The following is a diff from the previous accessibility tree with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+Removed element IDs: 326, 619-622, 634-902
+~0 AXWebArea 사용자 데이터 라이브러리 - ABLESTACK-Mold, URL: 10.10.31.10:8080/client/#/userdata?page=1&pagesize=20&keyword=UD1389-no-match&q=UD1389-no-match
++				626 container
++					627 text field (settable) UD1389-no-match
++					628 button close-circle
+~			629 table
+~				630 row
+~					631 cell
+~						632 container
+~							633 checkbox (disabled, settable, integer) Description:  , Value: 0
++					634 cell
++						635 container
++							636 text 이름
++							637 image caret-up
++							638 image caret-down
++					639 cell
++						640 container
++							641 text 아이디
++							642 image caret-up
++							643 image caret-down
++					644 cell
++						645 container
++							646 text 계정
++							647 image caret-up
++							648 image caret-down
++					649 cell
++						650 container
++							651 text 도메인
++							652 image caret-up
++							653 image caret-down
++					654 cell
++						655 button filter
++							656 image filter
++				657 row
++					658 cell
++						659 text 데이터 없음
+~				514 text 전체 0 개 항목 중 0-0 표시
++				660 text 1
+~					520 button (disabled) right
++				661 container
++					662 combo box (collapsed, settable) ID: rc_select_20, Secondary Actions: Expand
++					663 text 20 / 쪽
+The focused UI element is 627 text field (settable) UD1389-no-match

@@ -1,0 +1,13 @@
+{
+  "runtimeMethods": 150,
+  "compiledMethods": 150,
+  "differentMethods": [
+    "private com.cloud.utils.Pair<java.util.List<com.cloud.api.query.vo.AffinityGroupJoinVO>, java.lang.Integer> listDomainLevelAffinityGroups(com.cloud.utils.db.SearchCriteria<com.cloud.api.query.vo.AffinityGroupJoinVO>, com.cloud.utils.db.Filter, long);",
+    "private java.util.Set<java.lang.Long> listDomainLevelAffinityGroupIds(long);",
+    "public com.cloud.utils.Pair<java.util.List<com.cloud.api.query.vo.AffinityGroupJoinVO>, java.lang.Integer> searchForAffinityGroupsInternal(org.apache.cloudstack.api.command.user.affinitygroup.ListAffinityGroupsCmd);"
+  ],
+  "otherMethodBytecodeIdenticalAfterConstantPoolIndexNormalization": true,
+  "enumInnerClassBytecodeIdentical": true,
+  "originalEnumClassWillBeRetained": true,
+  "compiledClassSha256": "b766f483a8dac0c305021cdbb60415bbf037adac560b46b049be2f62672ea9e4"
+}

@@ -1,0 +1,78 @@
+{
+  "site": "31",
+  "phase": "user-moved",
+  "vms": [
+    {
+      "id": "e17b70bb-0949-41b8-9599-3c736efdf210",
+      "state": "Stopped",
+      "groupid": "fd801f8b-7689-4828-8308-8f07cf728810",
+      "properties_unchanged": true,
+      "volumes_unchanged": true
+    },
+    {
+      "id": "35bbac51-1958-417f-9843-b3e6c440b280",
+      "state": "Stopped",
+      "groupid": "fd801f8b-7689-4828-8308-8f07cf728810",
+      "properties_unchanged": true,
+      "volumes_unchanged": true
+    },
+    {
+      "id": "d7c30c33-0c3c-48d0-a2e0-86e1cdeee010",
+      "state": "Stopped",
+      "groupid": "c232e534-f50e-4c56-be15-15e1324de8f7",
+      "properties_unchanged": true,
+      "volumes_unchanged": true
+    },
+    {
+      "id": "c488d1e9-0ed5-4b04-bdea-60c7e2597688",
+      "state": "Stopped",
+      "groupid": null,
+      "properties_unchanged": true,
+      "volumes_unchanged": true
+    }
+  ],
+  "groups": [
+    {
+      "id": "fd801f8b-7689-4828-8308-8f07cf728810",
+      "count": 2,
+      "states": {
+        "Stopped": 2
+      }
+    },
+    {
+      "id": "306a6703-589c-42e4-ad7a-b04c31015c88",
+      "count": 0,
+      "states": {}
+    },
+    {
+      "id": "b714a46e-b01f-48b1-964e-594e9c08cd68",
+      "count": 0,
+      "states": {}
+    },
+    {
+      "id": "c232e534-f50e-4c56-be15-15e1324de8f7",
+      "count": 1,
+      "states": {
+        "Stopped": 1
+      }
+    },
+    {
+      "id": "32723d88-237a-44b5-be80-38897fca9889",
+      "count": 0,
+      "states": {}
+    },
+    {
+      "id": "30c1f3a1-5e37-4932-8532-535d831d4e78",
+      "count": 0,
+      "states": {}
+    }
+  ],
+  "db_map_counts": {
+    "35bbac51-1958-417f-9843-b3e6c440b280": 1,
+    "c488d1e9-0ed5-4b04-bdea-60c7e2597688": 0,
+    "d7c30c33-0c3c-48d0-a2e0-86e1cdeee010": 1,
+    "e17b70bb-0949-41b8-9599-3c736efdf210": 1
+  },
+  "one_vm_zero_or_one_group": true,
+  "summary_member_api_match": true
+}

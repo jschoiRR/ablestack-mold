@@ -18,13 +18,25 @@
 <template>
   <div>
     <p v-if="listRefreshFailed" role="status">{{ $t('message.list.refresh.stale') }}</p>
-    <div>
-      <div class="form" v-ctrl-enter="addRule">
-        <div class="form__item">
+    <network-rules-toolbar :can-add="'createFirewallRule' in $store.getters.apis" :loading="loading" @add="openRuleDialog()" @refresh="fetchData" />
+    <a-modal
+centered
+class="mold-dialog network-rule-dialog"
+:visible="createModalVisible"
+:title="$t(replacingRule ? 'label.network.rule.replace' : 'label.network.rule.add')"
+:width="760"
+:footer="null"
+:mask-closable="false"
+@cancel="createModalVisible = false">
+      <div class="mold-form-dialog">
+        <div class="mold-form-content"><NetworkRuleContext :resource="resource" />
+          <a-alert v-if="replacingRule" class="mold-dialog-summary" type="warning" show-icon :message="$t('message.network.rule.replace')" />
+<div class="form" v-ctrl-enter="addRule">
+        <div class="form__item form__item--full">
           <div class="form__label">{{ $t('label.sourcecidr') }}</div>
           <a-input v-focus="true" v-model:value="newRule.cidrlist"></a-input>
         </div>
-        <div class="form__item">
+        <div class="form__item form__item--full">
           <div class="form__label">{{ $t('label.protocol') }}</div>
           <a-select
             v-model:value="newRule.protocol"
@@ -77,11 +89,12 @@
             </a-select-option>
           </a-select>
         </div>
-        <div class="form__item" style="margin-left: auto;">
-          <a-button :disabled="!('createFirewallRule' in $store.getters.apis)" type="primary" ref="submit" @click="addRule">{{ $t('label.add') }}</a-button>
-        </div>
+
       </div>
-    </div>
+        </div>
+        <div class="action-button"><a-button :disabled="loading" @click="createModalVisible = false">{{ $t('label.cancel') }}</a-button><a-button type="primary" :loading="loading" @click="addRule">{{ $t('label.ok') }}</a-button></div>
+      </div>
+    </a-modal>
 
     <a-divider/>
     <a-button
@@ -114,11 +127,13 @@
         </template>
         <template v-if="column.key === 'actions'">
           <div class="actions">
+            <tooltip-button :tooltip="$t('label.network.rule.replace')" icon="edit-outlined" :disabled="isProtectedManagementRule(record) || !('deleteFirewallRule' in $store.getters.apis) || !('createFirewallRule' in $store.getters.apis)" @onClick="openRuleDialog(record)" />
             <tooltip-button
               :tooltip="$t('label.edit.tags')"
               icon="tag-outlined"
               buttonClass="rule-action"
               @onClick="() => openTagsModal(record.id)" />
+            <a-popconfirm :title="$t('label.delete') + '?'" @confirm="deleteRule(record)" :disabled="isProtectedManagementRule(record)">
             <tooltip-button
               :tooltip="isProtectedManagementRule(record) ? $t('message.kubernetes.management.rule.delete.disabled') : $t('label.delete')"
               type="primary"
@@ -126,13 +141,14 @@
               icon="delete-outlined"
               buttonClass="rule-action"
               :disabled="!('deleteFirewallRule' in $store.getters.apis) || isProtectedManagementRule(record)"
-              @onClick="deleteRule(record)" />
+               />
+            </a-popconfirm>
           </div>
         </template>
       </template>
     </a-table>
     <a-pagination
-      class="pagination"
+      class="detail-tab-pagination"
       size="small"
       :current="page"
       :pageSize="pageSize"
@@ -148,6 +164,8 @@
     </a-pagination>
 
     <a-modal
+centered
+class="mold-dialog network-rule-dialog"
       :title="$t('label.edit.tags')"
       :visible="tagsModalVisible"
       :footer="null"
@@ -220,10 +238,14 @@
 </template>
 
 <script>
+import { validPortRange } from '@/utils/networkRuleForm'
 import { listRefreshMixin } from '@/utils/listRefreshMixin'
 
 import { reactive, ref, toRaw } from 'vue'
+import NetworkRuleContext from '@/components/view/NetworkRuleContext'
+import NetworkRulesToolbar from '@/components/view/NetworkRulesToolbar'
 import { getAPI, postAPI } from '@/api'
+import { clusterManagementPorts, listAllKubernetesPortRules, listKubernetesClustersForIp } from '@/utils/kubernetesPorts'
 import Status from '@/components/widgets/Status'
 import TooltipButton from '@/components/widgets/TooltipButton'
 import BulkActionView from '@/components/view/BulkActionView'
@@ -232,6 +254,8 @@ import eventBus from '@/config/eventBus'
 export default {
   mixins: [listRefreshMixin(['fetchData'])],
   components: {
+    NetworkRuleContext,
+    NetworkRulesToolbar,
     Status,
     TooltipButton,
     BulkActionView
@@ -249,6 +273,9 @@ export default {
   inject: ['parentFetchData', 'parentToggleLoading'],
   data () {
     return {
+      createModalVisible: false,
+      replacingRule: null,
+      replacementDeleted: false,
       selectedRowKeys: [],
       showGroupActionModal: false,
       selectedItems: [],
@@ -263,6 +290,8 @@ export default {
       addTagLoading: false,
       firewallRules: [],
       kubernetesManagementPorts: [],
+      kubernetesPortsRequest: 0,
+      kubernetesPortsUnavailable: false,
       newRule: {
         protocol: 'tcp',
         cidrlist: null,
@@ -333,31 +362,30 @@ export default {
     }
   },
   methods: {
-    fetchKubernetesManagementPorts () {
+    async fetchKubernetesManagementPorts () {
+      const ipId = this.resource?.id
+      const request = ++this.kubernetesPortsRequest
+      const current = () => request === this.kubernetesPortsRequest && ipId === this.resource?.id
       this.kubernetesManagementPorts = []
-      if (!('listKubernetesClusters' in this.$store.getters.apis) || !this.resource?.id) {
-        return
-      }
-      getAPI('listKubernetesClusters', {
-        listAll: true
-      }).then(response => {
-        const clusters = response.listkubernetesclustersresponse?.kubernetescluster || []
-        const cluster = clusters.find(cluster => {
-          return cluster.ipaddressid === this.resource.id ||
-            cluster.networkid === this.resource.associatednetworkid
-        })
-        if (!cluster) {
+      this.kubernetesPortsUnavailable = Boolean(this.$store.getters.apis.listKubernetesClusters && ipId)
+      if (!this.kubernetesPortsUnavailable) return
+      let clusters = []
+      try {
+        clusters = await listKubernetesClustersForIp(getAPI, ipId)
+        if (!current()) return
+        if (!clusters.length) {
+          this.kubernetesPortsUnavailable = false
           return
         }
-        const virtualMachines = cluster.virtualmachines || []
-        const nodeCount = virtualMachines.length || (Number(cluster.controlnodes || 1) + Number(cluster.size || 0))
-        const sshPorts = Array.from({ length: nodeCount }, (item, index) => {
-          return 2222 + index
-        }).filter(port => Number.isInteger(port))
-        this.kubernetesManagementPorts = [...new Set([6443, ...sshPorts])]
-      }).catch(() => {
-        this.kubernetesManagementPorts = []
-      })
+        this.kubernetesPortsUnavailable = true
+        if (!this.$store.getters.apis.listPortForwardingRules) return
+        const rules = await listAllKubernetesPortRules(getAPI, ipId)
+        if (!current()) return
+        this.kubernetesManagementPorts = clusterManagementPorts(clusters, rules)
+        this.kubernetesPortsUnavailable = false
+      } catch (error) {
+        if (current()) this.kubernetesPortsUnavailable = true
+      }
     },
     initForm () {
       this.formRef = ref()
@@ -464,7 +492,7 @@ export default {
       if (!rule || String(rule.protocol || '').toLowerCase() !== 'tcp') {
         return false
       }
-      return this.rangeIncludesProtectedPort(rule.startport, rule.endport)
+      return this.kubernetesPortsUnavailable || this.rangeIncludesProtectedPort(rule.startport, rule.endport)
     },
     resetSelection () {
       this.setSelection([])
@@ -546,9 +574,25 @@ export default {
         this.fetchData()
       })
     },
-    addRule () {
+    openRuleDialog (rule) {
+      this.replacingRule = rule || null
+      this.replacementDeleted = false
+      this.resetAllRules()
+      if (rule) this.newRule = { ipaddressid: this.resource.id, protocol: rule.protocol, cidrlist: rule.cidrlist, startport: rule.startport, endport: rule.endport, icmptype: rule.icmptype, icmpcode: rule.icmpcode }
+      this.createModalVisible = true
+    },
+    async addRule () {
       if (this.loading) return
+      if (['tcp', 'udp'].includes(this.newRule.protocol) && !validPortRange(this.newRule.startport, this.newRule.endport)) { this.$notification.error({ message: this.$t('label.required'), description: this.$t('message.network.ports.invalid') }); return }
+      if (!this.$store.getters.apis.createFirewallRule || (this.replacingRule && this.isProtectedManagementRule(this.replacingRule))) return
       this.loading = true
+      if (this.replacingRule && !this.replacementDeleted) {
+        try {
+          const response = await postAPI('deleteFirewallRule', { id: this.replacingRule.id })
+          await new Promise((resolve, reject) => this.$pollJob({ jobId: response.deletefirewallruleresponse.jobid, successMethod: resolve, errorMethod: reject, catchMethod: reject }))
+          this.replacementDeleted = true
+        } catch (error) { this.$notifyError(error); this.loading = false; return }
+      }
       if (this.newRule.cidrlist == null || this.newRule.cidrlist.trim?.() === '') {
         delete this.newRule.cidrlist
       }
@@ -557,24 +601,21 @@ export default {
           jobId: response.createfirewallruleresponse.jobid,
           successMessage: this.$t('message.success.add.firewall.rule'),
           successMethod: () => {
-            this.resetAllRules()
+            this.createModalVisible = false
             this.fetchData()
           },
           errorMessage: this.$t('message.add.firewall.rule.failed'),
           errorMethod: () => {
-            this.resetAllRules()
             this.fetchData()
           },
           loadingMessage: this.$t('message.add.firewall.rule.processing'),
           catchMessage: this.$t('error.fetching.async.job.result'),
           catchMethod: () => {
-            this.resetAllRules()
             this.fetchData()
           }
         })
       }).catch(error => {
         this.$notifyError(error)
-        this.resetAllRules()
         this.fetchData()
       })
     },

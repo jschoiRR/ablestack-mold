@@ -151,7 +151,7 @@ public abstract class BaseScheduleWorker extends ManagerBase {
     // -------------------------------------------------------------------------
 
     public void poll(Date timestamp) {
-        currentTimestamp = DateUtils.round(timestamp, Calendar.MINUTE);
+        currentTimestamp = DateUtils.truncate(timestamp, Calendar.MINUTE);
         String displayTime = DateUtil.displayDateInTimezone(DateUtil.GMT_TIMEZONE, currentTimestamp);
         logger.debug("{} scheduler poll at {}", getResourceTypeName(), displayTime);
 
@@ -232,7 +232,7 @@ public abstract class BaseScheduleWorker extends ManagerBase {
             return null;
         }
 
-        ZonedDateTime ts = zonedStart.isAfter(now) ? cron.next(zonedStart) : cron.next(now);
+        ZonedDateTime ts = !zonedStart.isBefore(now) ? cron.next(zonedStart.minusNanos(1)) : cron.next(now);
         if (ts == null) {
             logger.info("No next schedule time found. Disabling schedule {}.", schedule);
             disableSchedule(schedule, "schedule has no further occurrences");
@@ -314,7 +314,20 @@ public abstract class BaseScheduleWorker extends ManagerBase {
             ResourceScheduledJobVO locked = null;
             try {
                 locked = resourceScheduledJobDao.acquireInLockTable(job.getId());
-                Long jobId = processJob(job);
+                if (locked == null || locked.getAsyncJobId() != null) {
+                    continue;
+                }
+                ResourceScheduleVO schedule = resourceScheduleDao.findById(locked.getScheduleId());
+                if (schedule == null || !schedule.getEnabled()
+                        || schedule.getResourceType() != getApiResourceType()
+                        || schedule.getResourceId() != locked.getResourceId()
+                        || !schedule.getActionName().equals(locked.getActionName())
+                        || locked.getScheduledTime().before(schedule.getStartDate())
+                        || (schedule.getEndDate() != null && locked.getScheduledTime().after(schedule.getEndDate()))) {
+                    logger.info("Skipping stale, disabled or deleted resource schedule job {}", locked);
+                    continue;
+                }
+                Long jobId = processJob(locked);
                 if (jobId != null) {
                     locked.setAsyncJobId(jobId);
                     resourceScheduledJobDao.update(job.getId(), locked);

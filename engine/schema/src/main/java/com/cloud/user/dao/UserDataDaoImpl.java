@@ -51,7 +51,9 @@ public class UserDataDaoImpl extends GenericDaoBase<UserDataVO, Long> implements
         sc.setParameters("domainId", domainId);
         sc.setParameters("userData", userData);
 
-        return findOneBy(sc);
+        // Base64 is case-sensitive even when user_data uses a case-insensitive DB collation.
+        // Check every SQL candidate: a different-cased row can precede the exact match.
+        return listBy(sc).stream().filter(row -> userData.equals(row.getUserData())).findFirst().orElse(null);
     }
 
     @Override

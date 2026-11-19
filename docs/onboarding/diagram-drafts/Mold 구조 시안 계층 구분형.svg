@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1650" viewBox="0 0 1800 1650">
+<rect width="100%" height="100%" fill="white"/>
+<text x="72" y="56" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="54" font-weight="700" fill="#172B45">Mold 개발 위치와 실행 구조</text>
+<text x="72" y="134" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="32" font-weight="400" fill="#506378">계층 구분형  ·  개발하는 곳과 관리하는 곳, 실제로 실행하는 곳을 구분</text>
+<rect x="72" y="230" width="1656" height="216" rx="20" fill="#F0F7FF" stroke="none" stroke-width="2"/>
+<rect x="100" y="266" width="54" height="35" rx="5" fill="white" stroke="#146CBA" stroke-width="3"/>
+<polyline points="127,302 127,314" fill="none" stroke="#146CBA" stroke-width="3"/>
+<polyline points="111,314 143,314" fill="none" stroke="#146CBA" stroke-width="3"/>
+<text x="174" y="271" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="40" font-weight="700" fill="#172B45">개발 PC</text>
+<text x="104" y="346" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="29" font-weight="700" fill="#146CBA">macOS · 로컬 UI</text>
+<polyline points="424,260 424,416" fill="none" stroke="#D4DFE9" stroke-width="2"/>
+<rect x="72" y="490" width="1656" height="216" rx="20" fill="#F5F2FF" stroke="none" stroke-width="2"/>
+<rect x="100" y="526" width="54" height="20" rx="4" fill="white" stroke="#6554B7" stroke-width="3"/>
+<rect x="108" y="533" width="5" height="5" rx="2" fill="#6554B7" stroke="none" stroke-width="2"/>
+<rect x="100" y="551" width="54" height="20" rx="4" fill="white" stroke="#6554B7" stroke-width="3"/>
+<rect x="108" y="558" width="5" height="5" rx="2" fill="#6554B7" stroke="none" stroke-width="2"/>
+<text x="174" y="531" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="40" font-weight="700" fill="#172B45">CCVM</text>
+<text x="104" y="606" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="29" font-weight="700" fill="#6554B7">Mold 관리 서버</text>
+<polyline points="424,520 424,676" fill="none" stroke="#D4DFE9" stroke-width="2"/>
+<rect x="72" y="750" width="1656" height="350" rx="20" fill="#EFF9F6" stroke="none" stroke-width="2"/>
+<rect x="100" y="786" width="54" height="20" rx="4" fill="white" stroke="#008878" stroke-width="3"/>
+<rect x="108" y="793" width="5" height="5" rx="2" fill="#008878" stroke="none" stroke-width="2"/>
+<rect x="100" y="811" width="54" height="20" rx="4" fill="white" stroke="#008878" stroke-width="3"/>
+<rect x="108" y="818" width="5" height="5" rx="2" fill="#008878" stroke="none" stroke-width="2"/>
+<text x="174" y="791" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="40" font-weight="700" fill="#172B45">KVM 호스트</text>
+<text x="104" y="866" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="29" font-weight="700" fill="#008878">물리 호스트</text>
+<polyline points="424,780 424,1070" fill="none" stroke="#D4DFE9" stroke-width="2"/>
+<text x="461" y="261" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="38" font-weight="700" fill="#172B45">소스를 수정하고 화면에서 요청합니다</text>
+<text x="463" y="326" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="31" font-weight="400" fill="#506378">UI 테스트: localhost:5050  ·  /client → CS_URL 프록시</text>
+<text x="463" y="381" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="31" font-weight="400" fill="#506378">로그인과 API 결과를 브라우저 화면에 표시</text>
+<polyline points="589,449 589,487" fill="none" stroke="#146CBA" stroke-width="4"/>
+<polygon points="589,487 597.0,471.0 581.0,471.0" fill="#146CBA"/>
+<text x="621" y="453" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="27" font-weight="700" fill="#146CBA">HTTP 8080 · API 요청</text>
+<text x="461" y="521" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="38" font-weight="700" fill="#172B45">인증·권한을 확인하고 작업을 관리합니다</text>
+<text x="463" y="586" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="30" font-weight="400" fill="#506378">mold.service  ·  Async Job  ·  호스트 배치 · 네트워크·볼륨 준비</text>
+<text x="463" y="641" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="31" font-weight="400" fill="#506378">cloud DB에 상태와 결과를 저장하고 UI에 응답</text>
+<polyline points="589,709 589,746" fill="none" stroke="#6554B7" stroke-width="4"/>
+<polygon points="589,746 597.0,730.0 581.0,730.0" fill="#6554B7"/>
+<text x="621" y="713" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="27" font-weight="700" fill="#6554B7">Command 전달 ↔ Answer 반환</text>
+<rect x="461" y="780" width="577" height="285" rx="14" fill="white" stroke="none" stroke-width="2"/>
+<text x="487" y="808" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="35" font-weight="700" fill="#172B45">Mold Agent</text>
+<text x="487" y="866" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="30" font-weight="400" fill="#506378">mold-agent.service</text>
+<text x="487" y="916" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="30" font-weight="400" fill="#506378">관리 서버의 Command를 수신</text>
+<text x="487" y="966" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="28" font-weight="400" fill="#506378">KVM wrapper → libvirt Java API</text>
+<text x="487" y="1017" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="28" font-weight="400" fill="#506378">실행 결과를 Answer로 반환</text>
+<polyline points="1044,921 1132,921" fill="none" stroke="#008878" stroke-width="4"/>
+<polygon points="1132,921 1116.0,913.0 1116.0,929.0" fill="#008878"/>
+<rect x="1138" y="780" width="558" height="285" rx="14" fill="white" stroke="none" stroke-width="2"/>
+<text x="1164" y="808" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="35" font-weight="700" fill="#172B45">libvirt · QEMU/KVM</text>
+<text x="1164" y="866" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="30" font-weight="400" fill="#506378">domainCreateXML로 VM 실행</text>
+<text x="1164" y="916" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="30" font-weight="400" fill="#506378">실제 도메인과 QEMU 프로세스</text>
+<text x="1164" y="966" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="30" font-weight="400" fill="#506378">virsh로 VM 상태 조회·진단</text>
+<text x="462" y="1131" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="28" font-weight="400" fill="#506378">Agent가 CCVM의 TCP 8250에 먼저 연결하고, 이 연결로 명령과 결과를 주고받습니다.</text>
+<text x="72" y="1220" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="36" font-weight="700" fill="#172B45">스토리지와 네트워크  ·  VM 실행을 지원하는 기반</text>
+<rect x="72" y="1284" width="398" height="216" rx="12" fill="#F3F7FA" stroke="none" stroke-width="2"/>
+<text x="94" y="1306" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="32" font-weight="700" fill="#172B45">Glue · Ceph</text>
+<text x="94" y="1359" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="27" font-weight="400" fill="#506378">Ceph 기반 분산 스토리지</text>
+<text x="94" y="1400" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="27" font-weight="400" fill="#506378">실제 풀과 연결은 교육 환경에서</text>
+<text x="94" y="1441" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="27" font-weight="400" fill="#506378">확인</text>
+<rect x="490" y="1284" width="398" height="216" rx="12" fill="#F3F7FA" stroke="none" stroke-width="2"/>
+<text x="512" y="1306" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="32" font-weight="700" fill="#172B45">스토리지</text>
+<text x="512" y="1359" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="27" font-weight="400" fill="#506378">Primary: VM 볼륨</text>
+<text x="512" y="1400" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="27" font-weight="400" fill="#506378">Secondary:</text>
+<text x="512" y="1441" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="27" font-weight="400" fill="#506378">템플릿·ISO·스냅샷</text>
+<rect x="908" y="1284" width="398" height="216" rx="12" fill="#F3F7FA" stroke="none" stroke-width="2"/>
+<text x="930" y="1306" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="32" font-weight="700" fill="#172B45">시스템 VM</text>
+<text x="930" y="1359" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="27" font-weight="400" fill="#506378">SSVM: 보조 스토리지 작업</text>
+<text x="930" y="1400" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="27" font-weight="400" fill="#506378">CPVM: 콘솔 중계</text>
+<rect x="1326" y="1284" width="398" height="216" rx="12" fill="#F3F7FA" stroke="none" stroke-width="2"/>
+<text x="1348" y="1306" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="32" font-weight="700" fill="#172B45">VR · 가상 라우터</text>
+<text x="1348" y="1359" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="27" font-weight="400" fill="#506378">네트워크 기능 제공</text>
+<text x="1348" y="1400" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="27" font-weight="400" fill="#506378">제공자·Offering 구성에 따라</text>
+<text x="1348" y="1441" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="27" font-weight="400" fill="#506378">사용</text>
+<text x="72" y="1544" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="29" font-weight="700" fill="#172B45">Mold는 Apache CloudStack을 기반으로 자체 기능과 연동을 확장한 제품입니다.</text>
+<text x="72" y="1593" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="28" font-weight="400" fill="#506378">명령과 로그를 확인할 때는 개발 PC · CCVM · KVM 호스트 중 실행 위치를 먼저 구분합니다.</text>
+</svg>

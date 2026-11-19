@@ -1,0 +1,115 @@
+[
+  {
+    "user": "user",
+    "groups": [
+      {
+        "id": "f020c858-f8c5-4ccc-aa67-161272106965",
+        "name": "qa-ag06-user-target",
+        "type": "host affinity"
+      },
+      {
+        "id": "ee0488c6-dd89-4467-ae64-cde4da755fdc",
+        "name": "qa-ag06-domain-shared",
+        "type": "ExplicitDedication"
+      }
+    ],
+    "sharedAttach": {
+      "virtualmachine": {
+        "id": "972b6f1f-924d-41ff-b1f2-af12020eb6b2",
+        "name": "qa-ag06-user-vm",
+        "displayname": "qa-ag06-user-vm",
+        "account": "qa-ag06-user",
+        "userid": "0919b474-07f8-49dc-8e16-2897d57fea6c",
+        "username": "qa-ag06-user",
+        "domainid": "681fd899-ca4d-4bc6-87f1-8cbd2254e962",
+        "domain": "qa-ag06-domain",
+        "domainpath": "ROOT/qa-ag06-domain",
+        "created": "2026-10-19T15:38:19+0900",
+        "state": "Stopped",
+        "haenable": false,
+        "zoneid": "7013f5a1-de59-4cea-a596-f4f58815f31c",
+        "zonename": "Zone",
+        "volumemutationblockedreason": "",
+        "guestosid": "9708b6ac-b253-11f1-a895-0024814c313f",
+        "securitygroup": [],
+        "nic": [
+          {
+            "id": "32a51144-d6b6-47ae-9562-110f9a83bd35",
+            "networkid": "2e92a24c-87ae-489f-87d4-d17c7ba5ad49",
+            "networkname": "qa-ag06-user-L2",
+            "isolationuri": "vlan://3195",
+            "broadcasturi": "vlan://3195",
+            "traffictype": "Guest",
+            "type": "L2",
+            "isdefault": true,
+            "macaddress": "02:1f:01:4d:00:01",
+            "secondaryip": [],
+            "extradhcpoption": [],
+            "deviceid": "0",
+            "enabled": true
+          }
+        ],
+        "hypervisor": "KVM",
+        "details": {
+          "deployvm": "true",
+          "tpmversion": "NONE",
+          "rootDiskController": "osdefault"
+        },
+        "clonefastsourcepowerallowed": false,
+        "clonefastpowerallowed": false,
+        "readonlydetails": "dataDiskController, rootDiskController, backupValidationCommandTimeout, backupValidationScreenshotWait, backupValidationBootTimeout",
+        "affinitygroup": [
+          {
+            "id": "f020c858-f8c5-4ccc-aa67-161272106965",
+            "name": "qa-ag06-user-target",
+            "account": "qa-ag06-user"
+          },
+          {
+            "id": "ee0488c6-dd89-4467-ae64-cde4da755fdc",
+            "name": "qa-ag06-domain-shared",
+            "account": "qa-ag06-user"
+          }
+        ],
+        "isdynamicallyscalable": true,
+        "deleteprotection": false,
+        "ostypeid": "9708b6ac-b253-11f1-a895-0024814c313f",
+        "osdisplayname": "Rocky Linux 9",
+        "receivedbytes": 0,
+        "sentbytes": 0,
+        "vbmcport": "None",
+        "kvdoenable": false,
+        "kvdoinuse": false,
+        "vbmcstatus": "Unallocated",
+        "tags": [],
+        "hasannotations": false
+      }
+    },
+    "foreignDenied": "{'uuidList': [], 'errorcode': 531, 'cserrorcode': 4365, 'errortext': 'Account [{\"accountName\":\"qa-ag06-user\",\"id\":198,\"uuid\":\"a70108ca-08b3-430e-8500-08dbeb9d28f7\"}] does not have permission to operate with resource AffinityGroup {\"id\":106,\"name\":\"qa-ag06-strict-aff\",\"uuid\":\"e8b8552f-dd8c-485d-82d2-eabb945719de\"}'}"
+  },
+  {
+    "user": "domainadmin",
+    "groups": [
+      {
+        "id": "f020c858-f8c5-4ccc-aa67-161272106965",
+        "name": "qa-ag06-user-target",
+        "type": "host affinity"
+      },
+      {
+        "id": "ee0488c6-dd89-4467-ae64-cde4da755fdc",
+        "name": "qa-ag06-domain-shared",
+        "type": "ExplicitDedication"
+      }
+    ]
+  },
+  {
+    "user": "restricted",
+    "groups": [
+      {
+        "id": "ee0488c6-dd89-4467-ae64-cde4da755fdc",
+        "name": "qa-ag06-domain-shared",
+        "type": "ExplicitDedication"
+      }
+    ],
+    "createDenied": "{'uuidList': [], 'errorcode': 432, 'cserrorcode': 9999, 'errortext': 'The API [createAffinityGroup] does not exist or is not available for the account qa-ag06-restricted.'}"
+  }
+]

@@ -1,0 +1,59 @@
+{
+  "java": [
+    {
+      "module": "api",
+      "suite": "org.apache.cloudstack.api.command.user.userdata.RegisterUserDataCmdTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "module": "server",
+      "suite": "com.cloud.server.UserDataRegistrationTest",
+      "tests": 8,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "module": "server",
+      "suite": "com.cloud.server.ManagementServerImplTest",
+      "tests": 44,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "module": "engine/userdata",
+      "suite": "org.apache.cloudstack.userdata.UserDataManagerImplTest",
+      "tests": 8,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "module": "engine/schema",
+      "suite": "com.cloud.user.dao.UserDataDaoImplTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "java_tests": 64,
+  "java_passed": true,
+  "ui_tests": 21,
+  "ui_lint": "passed",
+  "ui_build": "passed",
+  "maven_modules": [
+    "api",
+    "engine/schema",
+    "engine/userdata",
+    "server"
+  ],
+  "full_cloud_build": false,
+  "server_final_registration_tests": 8,
+  "server_final_registration_passed": true,
+  "github_actions_manually_started": false
+}

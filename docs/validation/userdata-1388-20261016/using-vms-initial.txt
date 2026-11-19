@@ -1,0 +1,365 @@
+Browser tab: 3, Title: "사용자 데이터 라이브러리 - ABLESTACK-Mold", URL: "http://10.10.31.10:8080/client/#/userdata/0609f5b0-b1f0-4c66-b17c-1dff58d0c2f7?tab=userdata.usage.vms".
+1 AXWebArea 사용자 데이터 라이브러리 - ABLESTACK-Mold, URL: 10.10.31.10:8080/client/#/userdata/0609f5b0-b1f0-4c66-b17c-1dff58d0c2f7?tab=userdata.usage.vms
+	2 container
+		3 container
+			4 image
+			5 menu
+				6 dashboard 대시보드
+					7 link Description: dashboard 대시보드, Value: 10.10.31.10:8080/client/#/dashboard
+				8 container
+					9 image cloud
+					10 text 컴퓨트
+				234 content list sub_menu_1_$$_/compute-popup
+					235 cloud-server 가상머신
+						236 link Description: cloud-server 가상머신, Value: 10.10.31.10:8080/client/#/vm
+					237 camera VM 스냅샷
+						238 link Description: camera VM 스냅샷, Value: 10.10.31.10:8080/client/#/vmsnapshot
+					239 쿠버네티스
+						240 link Description: 쿠버네티스, Value: 10.10.31.10:8080/client/#/kubernetes
+					241 fullscreen 오토스케일 VM 그룹
+						242 link Description: fullscreen 오토스케일 VM 그룹, Value: 10.10.31.10:8080/client/#/autoscalevmgroup
+					243 gold 가상머신 그룹
+						244 link Description: gold 가상머신 그룹, Value: 10.10.31.10:8080/client/#/vmgroup
+					245 key SSH 키 쌍
+						246 link Description: key SSH 키 쌍, Value: 10.10.31.10:8080/client/#/ssh
+					247 solution 사용자 데이터 라이브러리
+						248 link Description: solution 사용자 데이터 라이브러리, Value: 10.10.31.10:8080/client/#/userdata
+					249 solution CNI 구성
+						250 link Description: solution CNI 구성, Value: 10.10.31.10:8080/client/#/cniconfiguration
+					251 swap Affinity 그룹
+						252 link Description: swap Affinity 그룹, Value: 10.10.31.10:8080/client/#/affinitygroup
+				11 container
+					12 image hdd
+					13 text 스토리지
+				14 container
+					15 image wifi
+					16 text 네트워크
+				17 container
+					18 image picture
+					19 text 이미지
+				27 container
+					28 image lock
+					29 text 키 관리
+				30 schedule 이벤트
+					31 link Description: schedule 이벤트, Value: 10.10.31.10:8080/client/#/event
+				32 project 프로젝트
+					33 link Description: project 프로젝트, Value: 10.10.31.10:8080/client/#/project
+				34 idcard 역할
+					35 link Description: idcard 역할, Value: 10.10.31.10:8080/client/#/role
+				36 team 계정
+					37 link Description: team 계정, Value: 10.10.31.10:8080/client/#/account
+				38 block 도메인
+					39 link Description: block 도메인, Value: 10.10.31.10:8080/client/#/domain
+				40 container
+					41 image bank
+					42 text 인프라스트럭쳐
+				43 container
+					44 image shopping
+					45 text 서비스 오퍼링
+				46 container
+					47 image setting
+					48 text 구성
+				49 appstore-add 확장
+					50 link Description: appstore-add 확장, Value: 10.10.31.10:8080/client/#/extension
+				51 container
+					52 image tool
+					53 text 도구
+				54 read API 문서
+					55 link Description: read API 문서, Value: 10.10.31.10:8080/client/#/apidocs/
+		56 container
+			57 text 페이지 스타일 설정
+			58 button 닫기
+				59 image close
+			60 container
+				61 heading 페이지 스타일 설정, Value: 3
+					62 text 페이지 스타일 설정
+				63 container
+					64 image
+					65 container
+						66 radio button (settable, integer) Description:  , Value: 0
+				67 container
+					68 image
+					69 container
+						70 radio button (settable, integer) Description:  , Value: 1
+					71 image check
+				72 heading 테마 색상, Value: 3
+					73 text 테마 색상
+				74 container
+					75 radio button (settable, integer) Description:  , Value: 0
+					76 image check
+				77 container
+					78 radio button (settable, integer) Description:  , Value: 0
+				79 container
+					80 radio button (settable, integer) Description:  , Value: 0
+				81 container
+					82 radio button (settable, integer) Description:  , Value: 0
+				83 container
+					84 radio button (settable, integer) Description:  , Value: 0
+				85 container
+					86 radio button (settable, integer) Description:  , Value: 0
+				87 container
+					88 radio button (settable, integer) Description:  , Value: 0
+				89 container
+					90 radio button (settable, integer) Description:  , Value: 0
+				91 heading 네비게이션 설정, Value: 3
+					92 text 네비게이션 설정
+				93 container
+					94 container
+						95 text 배경색
+						96 color well (disabled, settable) #ffffff
+					97 container
+						98 text 텍스트 색상
+						99 color well (disabled, settable) #000000
+				100 image exclamation-circle
+				101 text 설정은 현재 브라우저에서만 볼 수 있습니다. 설정을 적용하려면 JSON 파일을 다운로드하고 경로 `/public/config.json` 아래의 `config.json` 파일의 `theme` 섹션에서 해당 콘텐츠를 교체하세요.
+				102 button download 세팅값 다운로드(json)
+					103 image download
+					104 text 세팅값 다운로드(json)
+				105 button undo 기본값으로 재설정
+					106 image undo
+					107 text 기본값으로 재설정
+		108 container
+			109 image menu-fold
+			110 container
+				111 combo box (settable) rc_select_0
+				112 image project
+				113 text 기본 보기
+			114 button 생성 down
+				115 text 생성
+				116 image down
+			117 image translation
+			118 image bell
+			119 container
+				120 text AC admin cloud
+		121 container
+			122 container
+				123 container
+					124 link Description: home, Value: 10.10.31.10:8080/client/#/
+					125 text /
+					126 link Description: 사용자 데이터 라이브러리, Value: 10.10.31.10:8080/client/#/userdata
+					127 text / UD1388-31-20261016-A
+					128 link Description: question-circle, Value: docs.ablecloud.io/latest/adminguide/virtual_machines.html#user-data-and-meta-data
+					129 button reload 업데이트
+						253 image reload
+						131 text 업데이트
+				132 button down 작업
+					133 image down
+					163 text 작업
+			254 container
+				255 image solution
+				256 heading UD1388-31-20261016-A, Value: 4
+					257 text UD1388-31-20261016-A
+				258 text 아이디
+				259 button barcode
+					260 image barcode
+				261 link Description: 0609f5b0-b1f0-4c66-b17c-1dff58d0c2f7 , Value: javascript:;
+				262 text 계정
+				263 image user
+				264 link Description: admin, Value: 10.10.31.10:8080/client/#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f
+				265 text 도메인
+				266 image block
+				267 link Description: ROOT, Value: 10.10.31.10:8080/client/#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details
+				268 link Description: cloud-server 가상머신 보기, Value: 10.10.31.10:8080/client/#/vm?userdataid=0609f5b0-b1f0-4c66-b17c-1dff58d0c2f7
+			269 container
+				270 tab group
+					271 container
+						272 tab (selectable, settable, boolean) 상세, Value: 0, ID: rc-tabs-1-tab-details
+						273 tab (selected, settable, boolean) 사용 가상머신, Value: 1, ID: rc-tabs-1-tab-userdata.usage.vms
+						274 tab (selectable, settable, boolean) 연결 템플릿, Value: 0, ID: rc-tabs-1-tab-userdata.usage.templates
+						275 tab (selectable, settable, boolean) 연결 ISO, Value: 0, ID: rc-tabs-1-tab-userdata.usage.isos
+						276 tab (selectable, settable, boolean) 코멘트, Value: 0, ID: rc-tabs-1-tab-comments
+				277 container Description: 사용 가상머신, ID: rc-tabs-1-panel-userdata.usage.vms
+					278 container 참조 정보
+						279 button reload 업데이트
+							280 image reload
+							281 text 업데이트
+						282 container
+							283 text field (settable) 검색
+							284 button search
+								285 image search
+						286 text 저장된 사용자 데이터 UUID의 연결 관계입니다. 본문 복사·템플릿 상속 본문·게스트 실행 여부는 포함하지 않습니다.
+						287 text 검색·페이지 이동은 서버에서 처리합니다. 열 정렬과 상태 집계는 현재 페이지에만 적용됩니다.
+						288 text 조회 프로젝트: - (없으면 기본 보기). 접근 가능한 참조만 표시합니다. 다른 프로젝트는 보기를 전환하여 확인하세요.
+						408 container
+							409 text 현재 페이지 상태:   정지된 VM 12
+						289 table
+							290 row
+								291 cell
+									292 container
+										293 text VM 표시 명
+										294 image caret-up
+										295 image caret-down
+								296 cell
+									297 container
+										298 text 아이디
+										299 image caret-up
+										300 image caret-down
+								301 cell
+									302 container
+										303 text 상태
+										304 image caret-up
+										305 image caret-down
+								306 cell
+									307 container
+										308 text 계정
+										309 image caret-up
+										310 image caret-down
+								311 cell
+									312 container
+										313 text 프로젝트
+										314 image caret-up
+										315 image caret-down
+								316 cell
+									317 container
+										318 text 도메인
+										319 image caret-up
+										320 image caret-down
+							321 row
+								322 cell
+									323 link Description: UD1388-31-20261016-A-vm-01, Value: 10.10.31.10:8080/client/#/vm/9fec78b2-39ef-40b5-896a-b428cad2876b
+								410 cell
+									411 text 9fec78b2-39ef-40b5-896a-b428cad2876b
+								412 cell
+									413 text 정지된 상태
+								324 cell
+									325 link Description: admin, Value: 10.10.31.10:8080/client/#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&dataView=true
+								326 cell
+									327 link Description: ROOT, Value: 10.10.31.10:8080/client/#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details
+							328 row
+								329 cell
+									330 link Description: UD1388-31-20261016-A-vm-02, Value: 10.10.31.10:8080/client/#/vm/01b2ceac-f707-49d1-a524-6aeaf0287ee3
+								414 cell
+									415 text 01b2ceac-f707-49d1-a524-6aeaf0287ee3
+								416 cell
+									417 text 정지된 상태
+								331 cell
+									332 link Description: admin, Value: 10.10.31.10:8080/client/#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&dataView=true
+								333 cell
+									334 link Description: ROOT, Value: 10.10.31.10:8080/client/#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details
+							335 row
+								336 cell
+									337 link Description: UD1388-31-20261016-A-vm-03, Value: 10.10.31.10:8080/client/#/vm/7378556c-dbd6-4f4e-a139-18471c66ab28
+								418 cell
+									419 text 7378556c-dbd6-4f4e-a139-18471c66ab28
+								420 cell
+									421 text 정지된 상태
+								338 cell
+									339 link Description: admin, Value: 10.10.31.10:8080/client/#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&dataView=true
+								340 cell
+									341 link Description: ROOT, Value: 10.10.31.10:8080/client/#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details
+							342 row
+								343 cell
+									344 link Description: UD1388-31-20261016-A-vm-04, Value: 10.10.31.10:8080/client/#/vm/bbdc5bff-23e7-4101-abae-6633a96461a2
+								422 cell
+									423 text bbdc5bff-23e7-4101-abae-6633a96461a2
+								424 cell
+									425 text 정지된 상태
+								345 cell
+									346 link Description: admin, Value: 10.10.31.10:8080/client/#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&dataView=true
+								347 cell
+									348 link Description: ROOT, Value: 10.10.31.10:8080/client/#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details
+							349 row
+								350 cell
+									351 link Description: UD1388-31-20261016-A-vm-05, Value: 10.10.31.10:8080/client/#/vm/e59a0c2b-4346-41a5-9c61-c6ff281bed07
+								426 cell
+									427 text e59a0c2b-4346-41a5-9c61-c6ff281bed07
+								428 cell
+									429 text 정지된 상태
+								352 cell
+									353 link Description: admin, Value: 10.10.31.10:8080/client/#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&dataView=true
+								354 cell
+									355 link Description: ROOT, Value: 10.10.31.10:8080/client/#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details
+							356 row
+								357 cell
+									358 link Description: UD1388-31-20261016-A-vm-06, Value: 10.10.31.10:8080/client/#/vm/43c03270-81a6-4df8-862c-20e58c9b45a2
+								430 cell
+									431 text 43c03270-81a6-4df8-862c-20e58c9b45a2
+								432 cell
+									433 text 정지된 상태
+								359 cell
+									360 link Description: admin, Value: 10.10.31.10:8080/client/#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&dataView=true
+								361 cell
+									362 link Description: ROOT, Value: 10.10.31.10:8080/client/#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details
+							363 row
+								364 cell
+									365 link Description: UD1388-31-20261016-A-vm-07, Value: 10.10.31.10:8080/client/#/vm/e9eb90cb-6bc0-417a-90ef-193193b5c9ae
+								434 cell
+									435 text e9eb90cb-6bc0-417a-90ef-193193b5c9ae
+								436 cell
+									437 text 정지된 상태
+								366 cell
+									367 link Description: admin, Value: 10.10.31.10:8080/client/#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&dataView=true
+								368 cell
+									369 link Description: ROOT, Value: 10.10.31.10:8080/client/#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details
+							370 row
+								371 cell
+									372 link Description: UD1388-31-20261016-A-vm-08, Value: 10.10.31.10:8080/client/#/vm/d0ebc642-0e7c-42ae-8cfc-0114705b6230
+								438 cell
+									439 text d0ebc642-0e7c-42ae-8cfc-0114705b6230
+								440 cell
+									441 text 정지된 상태
+								373 cell
+									374 link Description: admin, Value: 10.10.31.10:8080/client/#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&dataView=true
+								375 cell
+									376 link Description: ROOT, Value: 10.10.31.10:8080/client/#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details
+							377 row
+								378 cell
+									379 link Description: UD1388-31-20261016-A-vm-09, Value: 10.10.31.10:8080/client/#/vm/5669685e-2a13-4364-9b46-aa3dca1bf3a6
+								442 cell
+									443 text 5669685e-2a13-4364-9b46-aa3dca1bf3a6
+								444 cell
+									445 text 정지된 상태
+								380 cell
+									381 link Description: admin, Value: 10.10.31.10:8080/client/#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&dataView=true
+								382 cell
+									383 link Description: ROOT, Value: 10.10.31.10:8080/client/#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details
+							384 row
+								385 cell
+									386 link Description: UD1388-31-20261016-A-vm-10, Value: 10.10.31.10:8080/client/#/vm/c7b5411f-d46e-4a4f-baba-7696c6d43e66
+								446 cell
+									447 text c7b5411f-d46e-4a4f-baba-7696c6d43e66
+								448 cell
+									449 text 정지된 상태
+								387 cell
+									388 link Description: admin, Value: 10.10.31.10:8080/client/#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&dataView=true
+								389 cell
+									390 link Description: ROOT, Value: 10.10.31.10:8080/client/#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details
+							391 row
+								392 cell
+									393 link Description: UD1388-31-20261016-A-vm-11, Value: 10.10.31.10:8080/client/#/vm/6e89d25c-4d57-4313-acbe-b38447f0f324
+								450 cell
+									451 text 6e89d25c-4d57-4313-acbe-b38447f0f324
+								452 cell
+									453 text 정지된 상태
+								394 cell
+									395 link Description: admin, Value: 10.10.31.10:8080/client/#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&dataView=true
+								396 cell
+									397 link Description: ROOT, Value: 10.10.31.10:8080/client/#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details
+							398 row
+								399 cell
+									400 link Description: UD1388-31-20261016-ui-created, Value: 10.10.31.10:8080/client/#/vm/fe75feb7-256b-48bc-9131-fc9f94fe46b6
+								454 cell
+									455 text fe75feb7-256b-48bc-9131-fc9f94fe46b6
+								456 cell
+									457 text 정지된 상태
+								401 cell
+									402 link Description: admin, Value: 10.10.31.10:8080/client/#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&dataView=true
+								403 cell
+									404 link Description: ROOT, Value: 10.10.31.10:8080/client/#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details
+						405 content list
+							458 text 총 12개
+							459 container 이전 페이지
+								460 button (disabled) left
+									461 image left
+							462 text 1
+							463 container 다음 페이지
+								464 button (disabled) right
+									465 image right
+							406 container
+								407 combo box (settable) rc_select_1
+								466 text 20 / 쪽
+	231 container
+		232 image info-circle
+		233 text Wall 모니터링을 사용할 수 없습니다. 기존 알림은 최신 정보가 아닐 수 있으며 Mold는 계속 사용할 수 있습니다. 비활성
+
+The focused UI element is 1 AXWebArea 사용자 데이터 라이브러리 - ABLESTACK-Mold, URL: 10.10.31.10:8080/client/#/userdata/0609f5b0-b1f0-4c66-b17c-1dff58d0c2f7?tab=userdata.usage.vms

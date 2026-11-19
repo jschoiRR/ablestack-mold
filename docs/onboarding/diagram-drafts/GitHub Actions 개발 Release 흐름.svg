@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1286" viewBox="0 0 1800 1286">
+<rect width="100%" height="100%" fill="white"/>
+<text x="72" y="48" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="52" font-weight="700" fill="#172B45">GitHub Actions의 개발 Release 흐름</text>
+<text x="72" y="127" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="36" font-weight="400" fill="#506378">연구소 빌드서버 작업과 구분되는 자동화 빌드의 내부 실행 순서</text>
+<rect x="72" y="208" width="1656" height="142" rx="20" fill="#F0F7FF" stroke="none" stroke-width="2"/>
+<rect x="96" y="238" width="48" height="48" rx="24" fill="#146CBA" stroke="none" stroke-width="2"/>
+<text x="110" y="248" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="29" font-weight="700" fill="white">1</text>
+<text x="170" y="238" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="42" font-weight="700" fill="#172B45">metadata</text>
+<polyline points="610,232 610,326" fill="none" stroke="#D7E1EB" stroke-width="2"/>
+<text x="646" y="236" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="40" font-weight="400" fill="#506378">소스 SHA와 제품·Release 메타데이터 준비</text>
+<polyline points="900,355 900,390" fill="none" stroke="#146CBA" stroke-width="4"/>
+<polygon points="900,390 908.0,374.0 892.0,374.0" fill="#146CBA"/>
+<rect x="72" y="396" width="1656" height="142" rx="20" fill="#F5F2FF" stroke="none" stroke-width="2"/>
+<rect x="96" y="426" width="48" height="48" rx="24" fill="#6554B7" stroke="none" stroke-width="2"/>
+<text x="110" y="436" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="29" font-weight="700" fill="white">2</text>
+<text x="170" y="426" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="36" font-weight="700" fill="#172B45">build-systemvm-kvm</text>
+<polyline points="610,420 610,514" fill="none" stroke="#D7E1EB" stroke-width="2"/>
+<text x="646" y="424" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="40" font-weight="400" fill="#506378">KVM SystemVM 이미지 빌드</text>
+<polyline points="900,543 900,578" fill="none" stroke="#6554B7" stroke-width="4"/>
+<polygon points="900,578 908.0,562.0 892.0,562.0" fill="#6554B7"/>
+<rect x="72" y="584" width="1656" height="142" rx="20" fill="#EFF9F6" stroke="none" stroke-width="2"/>
+<rect x="96" y="614" width="48" height="48" rx="24" fill="#008878" stroke="none" stroke-width="2"/>
+<text x="110" y="624" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="29" font-weight="700" fill="white">3</text>
+<text x="170" y="614" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="42" font-weight="700" fill="#172B45">build-rpm</text>
+<polyline points="610,608 610,702" fill="none" stroke="#D7E1EB" stroke-width="2"/>
+<text x="646" y="612" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="40" font-weight="400" fill="#506378">Maven·UI 패키징과 RPM 생성</text>
+<polyline points="900,731 900,766" fill="none" stroke="#008878" stroke-width="4"/>
+<polygon points="900,766 908.0,750.0 892.0,750.0" fill="#008878"/>
+<rect x="72" y="772" width="1656" height="142" rx="20" fill="#F0F7FF" stroke="none" stroke-width="2"/>
+<rect x="96" y="802" width="48" height="48" rx="24" fill="#146CBA" stroke="none" stroke-width="2"/>
+<text x="110" y="812" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="29" font-weight="700" fill="white">4</text>
+<text x="170" y="802" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="42" font-weight="700" fill="#172B45">publish-release</text>
+<polyline points="610,796 610,890" fill="none" stroke="#D7E1EB" stroke-width="2"/>
+<text x="646" y="800" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="40" font-weight="400" fill="#506378">개발 Release와 결과 파일 게시</text>
+<polyline points="900,919 900,954" fill="none" stroke="#146CBA" stroke-width="4"/>
+<polygon points="900,954 908.0,938.0 892.0,938.0" fill="#146CBA"/>
+<rect x="72" y="960" width="1656" height="164" rx="20" fill="#F5F2FF" stroke="none" stroke-width="2"/>
+<rect x="96" y="990" width="48" height="48" rx="24" fill="#6554B7" stroke="none" stroke-width="2"/>
+<text x="110" y="1000" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="29" font-weight="700" fill="white">5</text>
+<text x="170" y="990" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="42" font-weight="700" fill="#172B45">Release 결과 확인</text>
+<polyline points="610,984 610,1100" fill="none" stroke="#D7E1EB" stroke-width="2"/>
+<text x="646" y="988" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="40" font-weight="400" fill="#506378">필수 작업 성공과 DEV-RELEASE.txt 소스 SHA</text>
+<text x="646" y="1050" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="40" font-weight="400" fill="#506378">대상 서버용 RPM과 이미지 파일 확인</text>
+<text x="72" y="1155" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="36" font-weight="700" fill="#172B45">RPM 작업 하나의 성공만으로 전체 Release 완료를 판단하지 않습니다.</text>
+</svg>

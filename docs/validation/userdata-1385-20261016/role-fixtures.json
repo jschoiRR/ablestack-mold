@@ -1,0 +1,108 @@
+[
+  {
+    "id": "3f76c30f-43f1-48db-bb41-7019e1f95796",
+    "name": "UD1385-31-20261016-User-reset",
+    "type": "User",
+    "permissions": {
+      "count": 6,
+      "rolepermission": [
+        {
+          "id": "1e9efc85-3757-4d14-84cd-f47947ef32c0",
+          "roleid": "3f76c30f-43f1-48db-bb41-7019e1f95796",
+          "rolename": "UD1385-31-20261016-User-reset",
+          "rule": "list*",
+          "permission": "allow"
+        },
+        {
+          "id": "04daeb75-e1fa-48ab-9e62-4064566ec031",
+          "roleid": "3f76c30f-43f1-48db-bb41-7019e1f95796",
+          "rolename": "UD1385-31-20261016-User-reset",
+          "rule": "get*",
+          "permission": "allow"
+        },
+        {
+          "id": "c892932f-0f94-47ff-9a41-7a0b214de9d5",
+          "roleid": "3f76c30f-43f1-48db-bb41-7019e1f95796",
+          "rolename": "UD1385-31-20261016-User-reset",
+          "rule": "query*",
+          "permission": "allow"
+        },
+        {
+          "id": "ec6519ea-830f-43df-98ff-18e9accac473",
+          "roleid": "3f76c30f-43f1-48db-bb41-7019e1f95796",
+          "rolename": "UD1385-31-20261016-User-reset",
+          "rule": "resetUserDataForVirtualMachine",
+          "permission": "allow"
+        },
+        {
+          "id": "97c0e6e1-06d4-45be-84f5-8f1d53c35a0c",
+          "roleid": "3f76c30f-43f1-48db-bb41-7019e1f95796",
+          "rolename": "UD1385-31-20261016-User-reset",
+          "rule": "logout",
+          "permission": "allow"
+        },
+        {
+          "id": "da0bf843-bcf4-4389-9c46-b7bd26494393",
+          "roleid": "3f76c30f-43f1-48db-bb41-7019e1f95796",
+          "rolename": "UD1385-31-20261016-User-reset",
+          "rule": "*",
+          "permission": "deny"
+        }
+      ]
+    },
+    "default_denied_errorcode": 432
+  },
+  {
+    "id": "208d5061-3481-4836-a846-7fcfcec7f741",
+    "name": "UD1385-31-20261016-DomainAdmin-reset",
+    "type": "DomainAdmin",
+    "permissions": {
+      "count": 6,
+      "rolepermission": [
+        {
+          "id": "9c5ce678-70d9-4506-914d-5d3a2a9b1a20",
+          "roleid": "208d5061-3481-4836-a846-7fcfcec7f741",
+          "rolename": "UD1385-31-20261016-DomainAdmin-reset",
+          "rule": "list*",
+          "permission": "allow"
+        },
+        {
+          "id": "304a7643-bdec-4026-bea0-bbf82438aecb",
+          "roleid": "208d5061-3481-4836-a846-7fcfcec7f741",
+          "rolename": "UD1385-31-20261016-DomainAdmin-reset",
+          "rule": "get*",
+          "permission": "allow"
+        },
+        {
+          "id": "8c62619c-fa92-4757-92b6-eefa52b6ef13",
+          "roleid": "208d5061-3481-4836-a846-7fcfcec7f741",
+          "rolename": "UD1385-31-20261016-DomainAdmin-reset",
+          "rule": "query*",
+          "permission": "allow"
+        },
+        {
+          "id": "0c6e222f-7808-48e8-9775-bd156a4cfa6e",
+          "roleid": "208d5061-3481-4836-a846-7fcfcec7f741",
+          "rolename": "UD1385-31-20261016-DomainAdmin-reset",
+          "rule": "resetUserDataForVirtualMachine",
+          "permission": "allow"
+        },
+        {
+          "id": "e756d073-1c27-4f68-b7e3-a7efcdd1d6bb",
+          "roleid": "208d5061-3481-4836-a846-7fcfcec7f741",
+          "rolename": "UD1385-31-20261016-DomainAdmin-reset",
+          "rule": "logout",
+          "permission": "allow"
+        },
+        {
+          "id": "82e72eba-8820-4a30-aaad-65bce66d1cbf",
+          "roleid": "208d5061-3481-4836-a846-7fcfcec7f741",
+          "rolename": "UD1385-31-20261016-DomainAdmin-reset",
+          "rule": "*",
+          "permission": "deny"
+        }
+      ]
+    },
+    "default_denied_errorcode": 432
+  }
+]

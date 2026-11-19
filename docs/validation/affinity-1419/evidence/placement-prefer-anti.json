@@ -1,0 +1,96 @@
+{
+  "phase": "prefer-anti",
+  "time": "2026-10-19T15:53:36+0900",
+  "api": [
+    {
+      "id": "cccf1866-e607-4053-bbc7-481deb376d86",
+      "name": "qa-ag06-ui-vm-01",
+      "instancename": "i-2-675-VM",
+      "state": "Running",
+      "hostid": "159baf9a-89ad-4a94-91dc-e7395a670bf4",
+      "hostname": "ablecube31-1",
+      "affinitygroup": [
+        {
+          "id": "15610aff-43d1-425b-838b-535c7b5f3f04",
+          "name": "qa-ag06-prefer-anti",
+          "description": "AG06 disposable integrated qualification",
+          "account": "admin"
+        }
+      ]
+    },
+    {
+      "id": "49dc24b7-abc3-4779-8d11-508da9d52f46",
+      "name": "qa-ag06-vm-02",
+      "instancename": "i-2-672-VM",
+      "state": "Running",
+      "hostid": "159baf9a-89ad-4a94-91dc-e7395a670bf4",
+      "hostname": "ablecube31-1",
+      "affinitygroup": [
+        {
+          "id": "15610aff-43d1-425b-838b-535c7b5f3f04",
+          "name": "qa-ag06-prefer-anti",
+          "description": "AG06 disposable integrated qualification",
+          "account": "admin"
+        }
+      ]
+    },
+    {
+      "id": "50fa357f-c6dc-4bdf-a6ee-fd2a66e51d74",
+      "name": "qa-ag06-vm-03",
+      "instancename": "i-2-673-VM",
+      "state": "Running",
+      "hostid": "3fb147f3-aea4-4f65-b8c6-e7192ea26138",
+      "hostname": "ablecube31-2",
+      "affinitygroup": [
+        {
+          "id": "15610aff-43d1-425b-838b-535c7b5f3f04",
+          "name": "qa-ag06-prefer-anti",
+          "description": "AG06 disposable integrated qualification",
+          "account": "admin"
+        }
+      ]
+    },
+    {
+      "id": "bcdc6a91-6ee1-4d96-8931-7e46a3ddfc82",
+      "name": "qa-ag06-vm-04",
+      "instancename": "i-2-674-VM",
+      "state": "Running",
+      "hostid": "384871b9-7c75-4717-a673-e96a76abeb71",
+      "hostname": "ablecube31-3",
+      "affinitygroup": [
+        {
+          "id": "15610aff-43d1-425b-838b-535c7b5f3f04",
+          "name": "qa-ag06-prefer-anti",
+          "description": "AG06 disposable integrated qualification",
+          "account": "admin"
+        }
+      ]
+    }
+  ],
+  "db": "49dc24b7-abc3-4779-8d11-508da9d52f46\ti-2-672-VM\tRunning\t159baf9a-89ad-4a94-91dc-e7395a670bf4\tablecube31-1\t15610aff-43d1-425b-838b-535c7b5f3f04\n50fa357f-c6dc-4bdf-a6ee-fd2a66e51d74\ti-2-673-VM\tRunning\t3fb147f3-aea4-4f65-b8c6-e7192ea26138\tablecube31-2\t15610aff-43d1-425b-838b-535c7b5f3f04\nbcdc6a91-6ee1-4d96-8931-7e46a3ddfc82\ti-2-674-VM\tRunning\t384871b9-7c75-4717-a673-e96a76abeb71\tablecube31-3\t15610aff-43d1-425b-838b-535c7b5f3f04\ncccf1866-e607-4053-bbc7-481deb376d86\ti-2-675-VM\tRunning\t159baf9a-89ad-4a94-91dc-e7395a670bf4\tablecube31-1\t15610aff-43d1-425b-838b-535c7b5f3f04\n",
+  "hypervisor": {
+    "159baf9a-89ad-4a94-91dc-e7395a670bf4": {
+      "name": "ablecube31-1",
+      "address": "10.10.31.1",
+      "running": [
+        "i-2-672-VM",
+        "i-2-675-VM"
+      ]
+    },
+    "3fb147f3-aea4-4f65-b8c6-e7192ea26138": {
+      "name": "ablecube31-2",
+      "address": "10.10.31.2",
+      "running": [
+        "i-2-673-VM"
+      ]
+    },
+    "384871b9-7c75-4717-a673-e96a76abeb71": {
+      "name": "ablecube31-3",
+      "address": "10.10.31.3",
+      "running": [
+        "i-2-674-VM"
+      ]
+    }
+  },
+  "apiDbHostAgreement": true
+}

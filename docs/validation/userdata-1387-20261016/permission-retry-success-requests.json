@@ -1,0 +1,39 @@
+{
+  "label": "permission-retry-success",
+  "requests": [
+    {
+      "id": "34440.1570",
+      "command": "listUserData",
+      "params": {
+        "id": "80849a84-71f9-4e1a-b600-bc5b266a6854",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "page": "1",
+        "pagesize": "2"
+      }
+    },
+    {
+      "id": "34440.1571",
+      "command": "deleteUserData",
+      "params": {
+        "id": "80849a84-71f9-4e1a-b600-bc5b266a6854",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f"
+      }
+    }
+  ],
+  "responses": [
+    {
+      "id": "34440.1570",
+      "status": 200
+    },
+    {
+      "id": "34440.1571",
+      "status": 200
+    }
+  ],
+  "exceptions": [],
+  "truncated": false,
+  "hasMore": false,
+  "cursor": 6147
+}

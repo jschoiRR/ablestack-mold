@@ -1,0 +1,74 @@
+[
+  {
+    "cluster": 31,
+    "case": "root-zero",
+    "rejected": true,
+    "message": "{'errorcode': 431, 'errortext': 'rootdisksize must be a positive integer in GiB'}"
+  },
+  {
+    "cluster": 31,
+    "case": "unknown-param",
+    "rejected": true,
+    "message": "{'errorcode': 431, 'errortext': 'Unsupported otherdeployparams key: unsupported. Supported values are [rootdisksize, diskofferingid, disksize, securitygroupids, overridediskofferingid, keypairs, affinitygroupids, networkids]'}"
+  },
+  {
+    "cluster": 31,
+    "case": "duplicate-param",
+    "rejected": true,
+    "message": "{'errorcode': 431, 'errortext': 'Duplicate AutoScale deploy parameter: rootdisksize'}"
+  },
+  {
+    "cluster": 31,
+    "case": "unknown-key",
+    "rejected": true,
+    "message": "{'errorcode': 431, 'errortext': 'AutoScale SSH keypair must belong to the profile owner'}"
+  },
+  {
+    "cluster": 31,
+    "case": "missing-data-size",
+    "rejected": true,
+    "message": "{'errorcode': 431, 'errortext': 'AutoScale custom data disk offering requires disksize'}"
+  },
+  {
+    "cluster": 31,
+    "case": "clear-replace-conflict",
+    "rejected": true,
+    "message": "{'errorcode': 431, 'errortext': 'Cannot clear and replace the same profile parameters in one request'}"
+  },
+  {
+    "cluster": 32,
+    "case": "root-zero",
+    "rejected": true,
+    "message": "{'errorcode': 431, 'errortext': 'rootdisksize must be a positive integer in GiB'}"
+  },
+  {
+    "cluster": 32,
+    "case": "unknown-param",
+    "rejected": true,
+    "message": "{'errorcode': 431, 'errortext': 'Unsupported otherdeployparams key: unsupported. Supported values are [rootdisksize, diskofferingid, disksize, securitygroupids, overridediskofferingid, keypairs, affinitygroupids, networkids]'}"
+  },
+  {
+    "cluster": 32,
+    "case": "duplicate-param",
+    "rejected": true,
+    "message": "{'errorcode': 431, 'errortext': 'Duplicate AutoScale deploy parameter: rootdisksize'}"
+  },
+  {
+    "cluster": 32,
+    "case": "unknown-key",
+    "rejected": true,
+    "message": "{'errorcode': 431, 'errortext': 'AutoScale SSH keypair must belong to the profile owner'}"
+  },
+  {
+    "cluster": 32,
+    "case": "missing-data-size",
+    "rejected": true,
+    "message": "{'errorcode': 431, 'errortext': 'AutoScale custom data disk offering requires disksize'}"
+  },
+  {
+    "cluster": 32,
+    "case": "clear-replace-conflict",
+    "rejected": true,
+    "message": "{'errorcode': 431, 'errortext': 'Cannot clear and replace the same profile parameters in one request'}"
+  }
+]

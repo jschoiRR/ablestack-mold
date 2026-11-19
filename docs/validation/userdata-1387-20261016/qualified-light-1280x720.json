@@ -1,0 +1,132 @@
+{
+  "issue": 1387,
+  "source": "1a9553261a7d45a3acf079f21d0ba7db360492f6",
+  "dialog": {
+    "bodyHeight": 418,
+    "bodyOverflow": "auto",
+    "bodyRect": {
+      "bottom": 564,
+      "height": 418,
+      "left": 161,
+      "right": 1119,
+      "top": 146,
+      "width": 958,
+      "x": 161,
+      "y": 146
+    },
+    "bodyScrollHeight": 418,
+    "buttons": [
+      {
+        "disabled": false,
+        "padding": "4px 15px",
+        "rect": {
+          "bottom": 613,
+          "height": 32,
+          "left": 887.390625,
+          "right": 945.15625,
+          "top": 581,
+          "width": 57.765625,
+          "x": 887.390625,
+          "y": 581
+        },
+        "text": "닫기"
+      },
+      {
+        "disabled": false,
+        "padding": "4px 15px",
+        "rect": {
+          "bottom": 613,
+          "height": 32,
+          "left": 961.15625,
+          "right": 1091,
+          "top": 581,
+          "width": 129.84375,
+          "x": 961.15625,
+          "y": 581
+        },
+        "text": "실패 항목 재시도"
+      }
+    ],
+    "rect": {
+      "bottom": 630,
+      "height": 540,
+      "left": 160,
+      "right": 1120,
+      "top": 90,
+      "width": 960,
+      "x": 160,
+      "y": 90
+    },
+    "states": [
+      "failed"
+    ],
+    "styles": [
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(75, 85, 99)",
+        "text": "사용자 데이터 제거"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(92, 59, 0)",
+        "text": "선택한 사용자 데이터 라이브러리 항목을 삭제합니다. 사용 중인 항목은 서버가 삭제를 거절합니다. 항목별 결과를 확인하세요."
+      },
+      {
+        "background": "rgb(250, 250, 250)",
+        "color": "rgb(75, 85, 99)",
+        "text": "이름"
+      },
+      {
+        "background": "rgb(250, 250, 250)",
+        "color": "rgb(75, 85, 99)",
+        "text": "계정"
+      },
+      {
+        "background": "rgb(250, 250, 250)",
+        "color": "rgb(75, 85, 99)",
+        "text": "작업 상태"
+      },
+      {
+        "background": "rgb(250, 250, 250)",
+        "color": "rgb(75, 85, 99)",
+        "text": "사유"
+      },
+      {
+        "background": "rgb(255, 255, 255)",
+        "color": "rgb(75, 85, 99)",
+        "text": "UD1387-31-20261016-root-mixed-usedc394d8c6-9d91-437c-891f-b8ae99fb789f"
+      },
+      {
+        "background": "rgb(255, 255, 255)",
+        "color": "rgb(75, 85, 99)",
+        "text": "adminROOT"
+      },
+      {
+        "background": "rgb(255, 255, 255)",
+        "color": "rgb(75, 85, 99)",
+        "text": "실패"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgba(0, 0, 0, 0.65)",
+        "text": "실패"
+      },
+      {
+        "background": "rgb(255, 255, 255)",
+        "color": "rgb(75, 85, 99)",
+        "text": "Userdata UD1387-31-20261016-root-mixed-used cannot be removed as it is being used by some instances "
+      }
+    ]
+  },
+  "scripts": [
+    "http://10.10.31.10:8080/client/js/chunk-3c753768.8c400be1.js",
+    "http://10.10.31.10:8080/client/js/less.min.js",
+    "http://10.10.31.10:8080/client/js/vendors.3ea5c3f6.js",
+    "http://10.10.31.10:8080/client/js/app.028b9b59.js"
+  ],
+  "theme": "ant-scrolling-effect",
+  "viewport": {
+    "height": 720,
+    "width": 1280
+  }
+}

@@ -1,0 +1,258 @@
+- generic: 페이지 스타일 설정
+- button "닫기":
+  - img "close":
+- heading "페이지 스타일 설정" [level=3]
+- radio
+- radio [checked]
+- img "check":
+- heading "테마 색상" [level=3]
+- radio
+- img "check"
+- radio
+- radio
+- radio
+- radio
+- radio
+- radio
+- radio
+- separator
+- heading "네비게이션 설정" [level=3]
+- generic: 배경색
+- textbox [disabled]: "#ffffff"
+- generic: 텍스트 색상
+- textbox [disabled]: "#000000"
+- separator
+- alert:
+  - img "exclamation-circle":
+  - generic: "설정은 현재 브라우저에서만 볼 수 있습니다. 설정을 적용하려면 JSON 파일을 다운로드하고 경로 `/public/config.json` 아래의 `config.json` 파일의 `theme` 섹션에서 해당 콘텐츠를 교체하세요."
+- button "download 세팅값 다운로드(json)":
+  - img "download":
+  - generic: 세팅값 다운로드(json)
+- button "undo 기본값으로 재설정":
+  - img "undo":
+  - generic: 기본값으로 재설정
+- img "menu-unfold":
+- combobox
+- img "project":
+- text: 기본 보기
+- img "translation":
+- img "bell":
+- generic: AC
+- generic: admin cloud
+- main:
+  - link "home":
+    - /url: "#/"
+    - img "home":
+  - text: /
+  - link "가상머신":
+    - /url: "#/vm"
+  - text: /
+  - generic: UD1392-31-20261016-standard-vm
+  - link "question-circle":
+    - /url: http://docs.ablecloud.io/latest/adminguide/virtual_machines.html
+    - img "question-circle":
+  - button "reload 업데이트":
+    - img "reload":
+    - generic: 업데이트
+  - button "down 작업":
+    - img "down":
+    - generic: 작업
+  - img "edit":
+  - heading "UD1392-31-20261016-standard-vm" [level=4]
+  - generic: i-2-605-VM
+  - generic: x86_64
+  - generic: KVM
+  - generic: HA 활성화
+  - generic: 동적으로 확장 가능
+  - button "code" [disabled]:
+    - img "code":
+  - separator
+  - generic: 상태
+  - generic: 정지된 상태
+  - generic: 아이디
+  - button "barcode":
+    - img "barcode":
+  - link "5c8a8acb-40e2-4b4f-8de3-b43d6fabb9b1":
+    - /url: javascript:;
+  - generic: CPU
+  - text: 2 CPU x 2.00 GHz
+  - img "question-circle":
+  - generic: x86_64
+  - generic: 메모리
+  - text: 2048 MB 메모리
+  - generic: 네트워크
+  - img "wifi":
+  - generic: 1 NIC(s)
+  - strong: eth0
+  - link:
+    - /url: javascript:;
+  - generic: 기본
+  - img "apartment":
+  - link "UD1392-31-20261016-standard-cd":
+    - /url: "#/guestnetwork/7c2634c0-db42-420a-9cf4-684a4b46b5a0"
+  - generic: 템플릿
+  - img "save":
+  - link "Rocky-Linux-9-5-x86-64-Server-Cloud-Image.qcow2":
+    - /url: "#/template/8d692729-7565-4e92-965b-ebaadc1efcb0"
+  - generic: 컴퓨트 오퍼링
+  - img "cloud":
+  - link "2Core 2GB":
+    - /url: "#/computeoffering/cd928fb0-6e2b-4ec8-b02b-023aed55b2b1"
+  - generic: Zone
+  - img "global":
+  - link "Zone":
+    - /url: "#/zone/7013f5a1-de59-4cea-a596-f4f58815f31c"
+  - generic: 사용자 데이터
+  - img "solution":
+  - link "UD1392-31-20261016-final-comments":
+    - /url: "#/userdata/18be0a2b-f539-4fdf-a709-b184c90101b1"
+  - generic: 계정
+  - img "user":
+  - link "admin":
+    - /url: "#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f"
+  - generic: 도메인
+  - img "block":
+  - link "ROOT":
+    - /url: "#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details"
+  - generic: 생성일
+  - img "calendar":
+  - text: 2026. 10. 17. 오전 12:47:12
+  - separator
+  - generic: 태그
+  - img "plus":
+  - text: 새 태그
+  - tablist:
+    - tab "상세" [selected]
+    - tab "IP 구성"
+    - tab "메트릭"
+    - tab "프로세스"
+    - tab "스케줄"
+    - tab "ISO"
+    - tab "볼륨"
+    - tab "NIC"
+    - tab "설정"
+    - tab "호스트 장치"
+    - tab "VM 스냅샷"
+    - tab "이벤트"
+    - tab "코멘트"
+    - button:
+  - tabpanel "상세":
+    - list:
+      - strong: VM 호스트 명
+      - generic: UD1392-31-20261016-standard-vm
+      - strong: VM 표시 명
+      - generic: UD1392-31-20261016-standard-vm
+      - strong: 아이디
+      - generic: 5c8a8acb-40e2-4b4f-8de3-b43d6fabb9b1
+      - strong: 상태
+      - generic: Stopped
+      - strong: 템플릿
+      - generic: Rocky-Linux-9-5-x86-64-Server-Cloud-Image.qcow2
+      - strong: 템플릿 형식
+      - generic: USER
+      - strong: 컴퓨트 오퍼링
+      - generic: 2Core 2GB
+      - strong: 동적으로 확장 가능
+      - generic: "true"
+      - strong: HA 활성화
+      - generic: "true"
+      - strong: 하이퍼바이저
+      - generic: KVM
+      - strong: CPU 아키텍처
+      - generic: x86_64
+      - strong: 계정
+      - generic: admin
+      - strong: 도메인
+      - generic: ROOT
+      - strong: Zone
+      - generic: Zone
+      - strong: 사용자 데이터 ID
+      - generic: 18be0a2b-f539-4fdf-a709-b184c90101b1
+      - strong: 사용자 데이터 이름
+      - generic: UD1392-31-20261016-final-comments
+      - strong: VBMC 포트
+      - generic: 미할당
+      - strong: 삭제 보호
+      - generic: "false"
+- alert:
+  - img "info-circle":
+  - generic: Wall 모니터링을 사용할 수 없습니다. 기존 알림은 최신 정보가 아닐 수 있으며 Mold는 계속 사용할 수 있습니다. 비활성
+- dialog "VM에서 사용자 데이터 재설정":
+  - document:
+    - button "Close":
+      - img "close":
+    - generic: VM에서 사용자 데이터 재설정
+    - status:
+      - img "info-circle":
+      - generic: 지금은 Cloud에 설정을 저장합니다. ConfigDrive는 다음 시작 시 다시 생성되며, 게스트의 수신·실행 완료를 의미하지 않습니다.
+    - paragraph: "현재 사용자 데이터: UD1392-31-20261016-final-comments"
+    - button "right 현재 저장된 본문(템플릿 포함)":
+      - img "right":
+      - text: 현재 저장된 본문(템플릿 포함)
+    - generic "사용자 데이터 변경": "사용자 데이터 변경 :"
+    - switch "사용자 데이터 변경" [checked] [active]
+    - tablist:
+      - tab "저장된 User Data" [selected]
+      - tab "수동 User Data 입력"
+      - button:
+    - tabpanel "저장된 User Data"
+    - alert:
+      - img "info-circle":
+      - generic: 설정 안함은 라이브러리 연결과 사용자 지정 본문·변수값을 지웁니다. 취소하면 현재 설정을 유지합니다.
+    - radio "설정 안함"
+    - generic: 설정 안함
+    - textbox "사용자 데이터 검색":
+      - /placeholder: 검색
+    - button "search":
+      - img "search":
+    - status: "선택한 사용자 데이터: UD1392-31-20261016-final-comments"
+    - table:
+      - rowgroup:
+        - row "solution 사용자 데이터 user 계정 block 도메인":
+          - columnheader
+          - columnheader "solution 사용자 데이터":
+            - img "solution":
+            - text: 사용자 데이터
+          - columnheader "user 계정":
+            - img "user":
+            - text: 계정
+          - columnheader "block 도메인":
+            - img "block":
+            - text: 도메인
+          - columnheader
+    - table:
+      - rowgroup:
+        - row "UD1392-31-20261016-standard-second admin ROOT":
+          - cell:
+            - radio
+          - cell "UD1392-31-20261016-standard-second"
+          - cell "admin"
+          - cell "ROOT"
+        - row "UD1392-31-20261016-final-comments admin ROOT":
+          - cell:
+            - radio [checked]
+          - cell "UD1392-31-20261016-final-comments"
+          - cell "admin"
+          - cell "ROOT"
+        - row "AS-PROD-31-AS01-HTTP admin ROOT":
+          - cell:
+            - radio
+          - cell "AS-PROD-31-AS01-HTTP"
+          - cell "admin"
+          - cell "ROOT"
+    - list:
+      - listitem: "전체: 3"
+      - listitem "이전 페이지":
+        - button "left" [disabled]:
+          - img "left":
+      - listitem "1":
+        - generic: "1"
+      - listitem "다음 페이지":
+        - button "right" [disabled]:
+          - img "right":
+      - combobox
+      - generic: 10 / 쪽
+    - button "취소":
+      - generic: 취소
+    - button "확인":
+      - generic: 확인

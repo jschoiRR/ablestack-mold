@@ -1,0 +1,174 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1180" viewBox="0 0 1800 1180">
+<rect width="100%" height="100%" fill="white"/>
+<text x="72" y="56" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="50" font-weight="700" fill="#172B45">ABLESTACK 제품 구성과 Mold 실행 구조</text>
+<text x="72" y="136" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="31" font-weight="400" fill="#506378">계층 구분형  ·  개발 PC → CCVM → KVM 호스트  /  두 제품의 공통 실행 구조</text>
+<rect x="72" y="230" width="1656" height="216" rx="20" fill="#F0F7FF" stroke="none" stroke-width="2"/>
+<rect x="100" y="266" width="54" height="35" rx="5" fill="white" stroke="#146CBA" stroke-width="3"/>
+<polyline points="127,302 127,314" fill="none" stroke="#146CBA" stroke-width="3"/>
+<polyline points="111,314 143,314" fill="none" stroke="#146CBA" stroke-width="3"/>
+<text x="174" y="271" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="40" font-weight="700" fill="#172B45">개발 PC</text>
+<text x="104" y="346" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="29" font-weight="700" fill="#146CBA">macOS · 로컬 UI</text>
+<polyline points="424,260 424,416" fill="none" stroke="#D4DFE9" stroke-width="2"/>
+<rect x="72" y="490" width="1656" height="216" rx="20" fill="#F5F2FF" stroke="none" stroke-width="2"/>
+<rect x="100" y="526" width="54" height="20" rx="4" fill="white" stroke="#6554B7" stroke-width="3"/>
+<rect x="108" y="533" width="5" height="5" rx="2" fill="#6554B7" stroke="none" stroke-width="2"/>
+<rect x="100" y="551" width="54" height="20" rx="4" fill="white" stroke="#6554B7" stroke-width="3"/>
+<rect x="108" y="558" width="5" height="5" rx="2" fill="#6554B7" stroke="none" stroke-width="2"/>
+<text x="174" y="531" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="40" font-weight="700" fill="#172B45">CCVM</text>
+<text x="104" y="606" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="29" font-weight="700" fill="#6554B7">Mold 관리 서버</text>
+<polyline points="424,520 424,676" fill="none" stroke="#D4DFE9" stroke-width="2"/>
+<rect x="72" y="750" width="1656" height="350" rx="20" fill="#EFF9F6" stroke="none" stroke-width="2"/>
+<rect x="100" y="786" width="54" height="20" rx="4" fill="white" stroke="#008878" stroke-width="3"/>
+<rect x="108" y="793" width="5" height="5" rx="2" fill="#008878" stroke="none" stroke-width="2"/>
+<rect x="100" y="811" width="54" height="20" rx="4" fill="white" stroke="#008878" stroke-width="3"/>
+<rect x="108" y="818" width="5" height="5" rx="2" fill="#008878" stroke="none" stroke-width="2"/>
+<text x="174" y="791" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="40" font-weight="700" fill="#172B45">KVM 호스트</text>
+<text x="104" y="866" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="29" font-weight="700" fill="#008878">물리 호스트</text>
+<polyline points="424,780 424,1070" fill="none" stroke="#D4DFE9" stroke-width="2"/>
+<text x="461" y="261" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="38" font-weight="700" fill="#172B45">소스를 수정하고 화면에서 요청합니다</text>
+<text x="463" y="326" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="31" font-weight="400" fill="#506378">UI 테스트: localhost:5050  ·  /client → CS_URL 프록시</text>
+<text x="463" y="381" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="31" font-weight="400" fill="#506378">로그인과 API 결과를 브라우저 화면에 표시</text>
+<polyline points="589,449 589,487" fill="none" stroke="#146CBA" stroke-width="4"/>
+<polygon points="589,487 597.0,471.0 581.0,471.0" fill="#146CBA"/>
+<text x="621" y="453" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="27" font-weight="700" fill="#146CBA">HTTP 8080 · API 요청</text>
+<text x="461" y="521" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="38" font-weight="700" fill="#172B45">인증·권한을 확인하고 작업을 관리합니다</text>
+<text x="463" y="586" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="30" font-weight="400" fill="#506378">mold.service  ·  Async Job  ·  호스트 배치 · 네트워크·볼륨 준비</text>
+<text x="463" y="641" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="31" font-weight="400" fill="#506378">cloud DB에 상태와 결과를 저장하고 UI에 응답</text>
+<polyline points="589,709 589,746" fill="none" stroke="#6554B7" stroke-width="4"/>
+<polygon points="589,746 597.0,730.0 581.0,730.0" fill="#6554B7"/>
+<text x="621" y="713" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="27" font-weight="700" fill="#6554B7">Command 전달 ↔ Answer 반환</text>
+<rect x="461" y="780" width="577" height="285" rx="14" fill="white" stroke="none" stroke-width="2"/>
+<text x="487" y="808" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="35" font-weight="700" fill="#172B45">Mold Agent</text>
+<text x="487" y="866" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="30" font-weight="400" fill="#506378">mold-agent.service</text>
+<text x="487" y="916" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="30" font-weight="400" fill="#506378">관리 서버의 Command를 수신</text>
+<text x="487" y="966" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="28" font-weight="400" fill="#506378">KVM wrapper → libvirt Java API</text>
+<text x="487" y="1017" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="28" font-weight="400" fill="#506378">실행 결과를 Answer로 반환</text>
+<polyline points="1044,921 1132,921" fill="none" stroke="#008878" stroke-width="4"/>
+<polygon points="1132,921 1116.0,913.0 1116.0,929.0" fill="#008878"/>
+<rect x="1138" y="780" width="558" height="94" rx="14" fill="white" stroke="none" stroke-width="2"/>
+<text x="1164" y="798" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="32" font-weight="700" fill="#172B45">가상 머신</text>
+<text x="1164" y="843" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="26" font-weight="400" fill="#506378">사용자 VM · SCVM(HCI)</text>
+<polyline points="1417,902 1417,878" fill="none" stroke="#008878" stroke-width="4"/>
+<polygon points="1417,878 1409.0,894.0 1425.0,894.0" fill="#008878"/>
+<rect x="1138" y="906" width="558" height="159" rx="14" fill="white" stroke="none" stroke-width="2"/>
+<text x="1164" y="925" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="30" font-weight="700" fill="#172B45">QEMU/KVM 하이퍼바이저</text>
+<text x="1164" y="978" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="26" font-weight="400" fill="#506378">libvirt API · domainCreateXML</text>
+<text x="1164" y="1022" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="26" font-weight="400" fill="#506378">virsh: VM 상태 조회·진단</text>
+<text x="462" y="1131" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="28" font-weight="400" fill="#506378">Agent가 CCVM의 TCP 8250에 먼저 연결하고, 이 연결로 명령과 결과를 주고받습니다.</text>
+<text x="72" y="1220" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="36" font-weight="700" fill="#172B45">두 제품은 VM 디스크를 제공하는 스토리지 구성으로 구분합니다</text>
+<rect x="72" y="1285" width="804" height="917" rx="20" fill="#EFF9F6" stroke="none" stroke-width="2"/>
+<text x="100" y="1313" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="43" font-weight="700" fill="#008878">ABLESTACK-HCI</text>
+<text x="100" y="1378" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="30" font-weight="700" fill="#172B45">HCI · 컴퓨팅과 분산 스토리지를 함께 구성</text>
+<rect x="100" y="1446" width="246" height="322" rx="12" fill="white" stroke="none" stroke-width="2"/>
+<rect x="118" y="1468" width="54" height="20" rx="4" fill="white" stroke="#008878" stroke-width="3"/>
+<rect x="126" y="1475" width="5" height="5" rx="2" fill="#008878" stroke="none" stroke-width="2"/>
+<rect x="118" y="1493" width="54" height="20" rx="4" fill="white" stroke="#008878" stroke-width="3"/>
+<rect x="126" y="1500" width="5" height="5" rx="2" fill="#008878" stroke="none" stroke-width="2"/>
+<text x="182" y="1474" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="28" font-weight="700" fill="#172B45">호스트 1</text>
+<rect x="118" y="1536" width="103" height="97" rx="9" fill="#E2EBF2" stroke="none" stroke-width="2"/>
+<text x="134" y="1552" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="24" font-weight="700" fill="#172B45">사용자</text>
+<text x="149" y="1592" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="26" font-weight="700" fill="#172B45">VM</text>
+<rect x="230" y="1536" width="98" height="97" rx="9" fill="#D6F0E9" stroke="none" stroke-width="2"/>
+<text x="241" y="1554" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="24" font-weight="700" fill="#008878">SCVM</text>
+<text x="239" y="1598" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="18" font-weight="400" fill="#008878">Glue·Ceph</text>
+<rect x="118" y="1653" width="210" height="58" rx="8" fill="#008878" stroke="none" stroke-width="2"/>
+<text x="129" y="1672" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="23" font-weight="700" fill="white">KVM 하이퍼바이저</text>
+<text x="128" y="1732" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="25" font-weight="400" fill="#506378">호스트 디스크</text>
+<polyline points="223,1772 223,1827" fill="none" stroke="#008878" stroke-width="3"/>
+<rect x="351" y="1446" width="246" height="322" rx="12" fill="white" stroke="none" stroke-width="2"/>
+<rect x="369" y="1468" width="54" height="20" rx="4" fill="white" stroke="#008878" stroke-width="3"/>
+<rect x="377" y="1475" width="5" height="5" rx="2" fill="#008878" stroke="none" stroke-width="2"/>
+<rect x="369" y="1493" width="54" height="20" rx="4" fill="white" stroke="#008878" stroke-width="3"/>
+<rect x="377" y="1500" width="5" height="5" rx="2" fill="#008878" stroke="none" stroke-width="2"/>
+<text x="433" y="1474" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="28" font-weight="700" fill="#172B45">호스트 2</text>
+<rect x="369" y="1536" width="103" height="97" rx="9" fill="#E2EBF2" stroke="none" stroke-width="2"/>
+<text x="385" y="1552" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="24" font-weight="700" fill="#172B45">사용자</text>
+<text x="400" y="1592" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="26" font-weight="700" fill="#172B45">VM</text>
+<rect x="481" y="1536" width="98" height="97" rx="9" fill="#D6F0E9" stroke="none" stroke-width="2"/>
+<text x="492" y="1554" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="24" font-weight="700" fill="#008878">SCVM</text>
+<text x="490" y="1598" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="18" font-weight="400" fill="#008878">Glue·Ceph</text>
+<rect x="369" y="1653" width="210" height="58" rx="8" fill="#008878" stroke="none" stroke-width="2"/>
+<text x="380" y="1672" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="23" font-weight="700" fill="white">KVM 하이퍼바이저</text>
+<text x="379" y="1732" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="25" font-weight="400" fill="#506378">호스트 디스크</text>
+<polyline points="474,1772 474,1827" fill="none" stroke="#008878" stroke-width="3"/>
+<rect x="602" y="1446" width="246" height="322" rx="12" fill="white" stroke="none" stroke-width="2"/>
+<rect x="620" y="1468" width="54" height="20" rx="4" fill="white" stroke="#008878" stroke-width="3"/>
+<rect x="628" y="1475" width="5" height="5" rx="2" fill="#008878" stroke="none" stroke-width="2"/>
+<rect x="620" y="1493" width="54" height="20" rx="4" fill="white" stroke="#008878" stroke-width="3"/>
+<rect x="628" y="1500" width="5" height="5" rx="2" fill="#008878" stroke="none" stroke-width="2"/>
+<text x="684" y="1474" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="28" font-weight="700" fill="#172B45">호스트 3</text>
+<rect x="620" y="1536" width="103" height="97" rx="9" fill="#E2EBF2" stroke="none" stroke-width="2"/>
+<text x="636" y="1552" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="24" font-weight="700" fill="#172B45">사용자</text>
+<text x="651" y="1592" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="26" font-weight="700" fill="#172B45">VM</text>
+<rect x="732" y="1536" width="98" height="97" rx="9" fill="#D6F0E9" stroke="none" stroke-width="2"/>
+<text x="743" y="1554" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="24" font-weight="700" fill="#008878">SCVM</text>
+<text x="741" y="1598" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="18" font-weight="400" fill="#008878">Glue·Ceph</text>
+<rect x="620" y="1653" width="210" height="58" rx="8" fill="#008878" stroke="none" stroke-width="2"/>
+<text x="631" y="1672" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="23" font-weight="700" fill="white">KVM 하이퍼바이저</text>
+<text x="630" y="1732" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="25" font-weight="400" fill="#506378">호스트 디스크</text>
+<polyline points="725,1772 725,1827" fill="none" stroke="#008878" stroke-width="3"/>
+<polyline points="223,1827 725,1827" fill="none" stroke="#008878" stroke-width="3"/>
+<polyline points="474,1827 474,1863" fill="none" stroke="#008878" stroke-width="4"/>
+<polygon points="474,1863 482.0,1847.0 466.0,1847.0" fill="#008878"/>
+<rect x="100" y="1866" width="748" height="138" rx="12" fill="white" stroke="none" stroke-width="2"/>
+<text x="124" y="1891" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="35" font-weight="700" fill="#008878">Glue · Ceph 클러스터</text>
+<text x="124" y="1948" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="31" font-weight="700" fill="#172B45">VM 디스크: RBD 블록 볼륨</text>
+<text x="100" y="2039" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="30" font-weight="400" fill="#506378">각 호스트의 SCVM(스토리지 컨트롤러 VM)이 Ceph</text>
+<text x="100" y="2083" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="30" font-weight="400" fill="#506378">클러스터를 구성하여 VM에 RBD 볼륨을 제공합니다.</text>
+<text x="100" y="2248" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="27" font-weight="400" fill="#008878">Mold 스토리지 유형: RBD</text>
+<rect x="924" y="1285" width="804" height="917" rx="20" fill="#F0F7FF" stroke="none" stroke-width="2"/>
+<text x="952" y="1313" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="43" font-weight="700" fill="#146CBA">ABLESTACK-VM</text>
+<text x="952" y="1378" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="30" font-weight="700" fill="#172B45">일반 가상화 · 모든 호스트가 스토리지를 공유</text>
+<rect x="952" y="1446" width="246" height="322" rx="12" fill="white" stroke="none" stroke-width="2"/>
+<rect x="970" y="1468" width="54" height="20" rx="4" fill="white" stroke="#146CBA" stroke-width="3"/>
+<rect x="978" y="1475" width="5" height="5" rx="2" fill="#146CBA" stroke="none" stroke-width="2"/>
+<rect x="970" y="1493" width="54" height="20" rx="4" fill="white" stroke="#146CBA" stroke-width="3"/>
+<rect x="978" y="1500" width="5" height="5" rx="2" fill="#146CBA" stroke="none" stroke-width="2"/>
+<text x="1034" y="1474" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="28" font-weight="700" fill="#172B45">호스트 1</text>
+<rect x="970" y="1536" width="210" height="97" rx="9" fill="#E2EBF2" stroke="none" stroke-width="2"/>
+<text x="1006" y="1560" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="29" font-weight="700" fill="#172B45">사용자 VM</text>
+<text x="995" y="1602" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="22" font-weight="400" fill="#506378">게스트 운영체제</text>
+<rect x="970" y="1653" width="210" height="58" rx="8" fill="#146CBA" stroke="none" stroke-width="2"/>
+<text x="981" y="1672" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="23" font-weight="700" fill="white">KVM 하이퍼바이저</text>
+<text x="980" y="1732" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="25" font-weight="400" fill="#506378">GFS 공유 경로</text>
+<polyline points="1075,1772 1075,1827" fill="none" stroke="#146CBA" stroke-width="3"/>
+<rect x="1203" y="1446" width="246" height="322" rx="12" fill="white" stroke="none" stroke-width="2"/>
+<rect x="1221" y="1468" width="54" height="20" rx="4" fill="white" stroke="#146CBA" stroke-width="3"/>
+<rect x="1229" y="1475" width="5" height="5" rx="2" fill="#146CBA" stroke="none" stroke-width="2"/>
+<rect x="1221" y="1493" width="54" height="20" rx="4" fill="white" stroke="#146CBA" stroke-width="3"/>
+<rect x="1229" y="1500" width="5" height="5" rx="2" fill="#146CBA" stroke="none" stroke-width="2"/>
+<text x="1285" y="1474" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="28" font-weight="700" fill="#172B45">호스트 2</text>
+<rect x="1221" y="1536" width="210" height="97" rx="9" fill="#E2EBF2" stroke="none" stroke-width="2"/>
+<text x="1257" y="1560" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="29" font-weight="700" fill="#172B45">사용자 VM</text>
+<text x="1246" y="1602" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="22" font-weight="400" fill="#506378">게스트 운영체제</text>
+<rect x="1221" y="1653" width="210" height="58" rx="8" fill="#146CBA" stroke="none" stroke-width="2"/>
+<text x="1232" y="1672" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="23" font-weight="700" fill="white">KVM 하이퍼바이저</text>
+<text x="1231" y="1732" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="25" font-weight="400" fill="#506378">GFS 공유 경로</text>
+<polyline points="1326,1772 1326,1827" fill="none" stroke="#146CBA" stroke-width="3"/>
+<rect x="1454" y="1446" width="246" height="322" rx="12" fill="white" stroke="none" stroke-width="2"/>
+<rect x="1472" y="1468" width="54" height="20" rx="4" fill="white" stroke="#146CBA" stroke-width="3"/>
+<rect x="1480" y="1475" width="5" height="5" rx="2" fill="#146CBA" stroke="none" stroke-width="2"/>
+<rect x="1472" y="1493" width="54" height="20" rx="4" fill="white" stroke="#146CBA" stroke-width="3"/>
+<rect x="1480" y="1500" width="5" height="5" rx="2" fill="#146CBA" stroke="none" stroke-width="2"/>
+<text x="1536" y="1474" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="28" font-weight="700" fill="#172B45">호스트 3</text>
+<rect x="1472" y="1536" width="210" height="97" rx="9" fill="#E2EBF2" stroke="none" stroke-width="2"/>
+<text x="1508" y="1560" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="29" font-weight="700" fill="#172B45">사용자 VM</text>
+<text x="1497" y="1602" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="22" font-weight="400" fill="#506378">게스트 운영체제</text>
+<rect x="1472" y="1653" width="210" height="58" rx="8" fill="#146CBA" stroke="none" stroke-width="2"/>
+<text x="1483" y="1672" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="23" font-weight="700" fill="white">KVM 하이퍼바이저</text>
+<text x="1482" y="1732" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="25" font-weight="400" fill="#506378">GFS 공유 경로</text>
+<polyline points="1577,1772 1577,1827" fill="none" stroke="#146CBA" stroke-width="3"/>
+<polyline points="1075,1827 1577,1827" fill="none" stroke="#146CBA" stroke-width="3"/>
+<polyline points="1326,1827 1326,1863" fill="none" stroke="#146CBA" stroke-width="4"/>
+<polygon points="1326,1863 1334.0,1847.0 1318.0,1847.0" fill="#146CBA"/>
+<rect x="952" y="1866" width="748" height="138" rx="12" fill="white" stroke="none" stroke-width="2"/>
+<text x="976" y="1891" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="35" font-weight="700" fill="#146CBA">공유 블록 스토리지 · GFS</text>
+<text x="976" y="1948" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="31" font-weight="700" fill="#172B45">VM 디스크: 공유 경로의 파일</text>
+<text x="952" y="2039" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="30" font-weight="400" fill="#506378">같은 클러스터의 모든 호스트가 GFS를 함께 마운트하여 VM</text>
+<text x="952" y="2083" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="30" font-weight="400" fill="#506378">디스크 파일에 접근합니다.</text>
+<text x="952" y="2248" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="27" font-weight="400" fill="#146CBA">Mold 스토리지 유형: SharedMountPoint</text>
+<text x="72" y="2330" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="35" font-weight="700" fill="#172B45">공통 기능  ·  Mold 관리 · 네트워크 · 보조 스토리지 · 시스템 VM</text>
+<text x="72" y="2393" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="28" font-weight="400" fill="#506378">Secondary Storage: 템플릿·ISO·스냅샷  /  SSVM: 보조 스토리지 작업  /  CPVM: 콘솔 중계</text>
+<text x="72" y="2440" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="28" font-weight="400" fill="#506378">VR: 네트워크 제공자와 Offering 구성에 따라 사용</text>
+<text x="72" y="2512" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="28" font-weight="700" fill="#172B45">Mold는 Apache CloudStack을 기반으로 자체 기능과 연동을 확장한 공통 관리 플랫폼입니다.</text>
+</svg>

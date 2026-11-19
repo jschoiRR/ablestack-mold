@@ -1,0 +1,333 @@
+{
+  "vms": [
+    {
+      "id": "49dc24b7-abc3-4779-8d11-508da9d52f46",
+      "name": "qa-ag06-vm-02",
+      "instancename": "i-2-672-VM",
+      "account": "admin",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "projectid": null
+    },
+    {
+      "id": "50fa357f-c6dc-4bdf-a6ee-fd2a66e51d74",
+      "name": "qa-ag06-vm-03",
+      "instancename": "i-2-673-VM",
+      "account": "admin",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "projectid": null
+    },
+    {
+      "id": "bcdc6a91-6ee1-4d96-8931-7e46a3ddfc82",
+      "name": "qa-ag06-vm-04",
+      "instancename": "i-2-674-VM",
+      "account": "admin",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "projectid": null
+    },
+    {
+      "id": "612124f9-66e0-4a3a-8a01-dadee3c0d45b",
+      "name": "qa-ag06-cold-vm-01",
+      "instancename": "i-2-679-VM",
+      "account": "admin",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "projectid": null
+    },
+    {
+      "id": "0ab52c7b-6099-4aff-ae76-6bfbe81908d0",
+      "name": "qa-ag06-cold-vm-02",
+      "instancename": "i-2-680-VM",
+      "account": "admin",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "projectid": null
+    },
+    {
+      "id": "cccf1866-e607-4053-bbc7-481deb376d86",
+      "name": "qa-ag06-ui-vm-01",
+      "instancename": "i-2-675-VM",
+      "account": "admin",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "projectid": null
+    },
+    {
+      "id": "972b6f1f-924d-41ff-b1f2-af12020eb6b2",
+      "name": "qa-ag06-user-vm",
+      "instancename": "i-198-676-VM",
+      "account": "qa-ag06-user",
+      "domainid": "681fd899-ca4d-4bc6-87f1-8cbd2254e962",
+      "projectid": null
+    },
+    {
+      "id": "459a97a6-3a30-42a9-a4db-94a8a843a12b",
+      "name": "qa-ag06-project-vm",
+      "instancename": "i-201-677-VM",
+      "account": null,
+      "domainid": "681fd899-ca4d-4bc6-87f1-8cbd2254e962",
+      "projectid": "5a4cdab0-8eb7-43d8-b6b8-39b34780ca14"
+    },
+    {
+      "id": "816a9d43-fcc8-451f-9a77-b4d2a60fb155",
+      "name": "qa-ag06-domainadmin-vm",
+      "instancename": "i-199-678-VM",
+      "account": "qa-ag06-domainadmin",
+      "domainid": "681fd899-ca4d-4bc6-87f1-8cbd2254e962",
+      "projectid": null
+    }
+  ],
+  "groups": [
+    {
+      "id": "e8b8552f-dd8c-485d-82d2-eabb945719de",
+      "name": "qa-ag06-strict-aff",
+      "type": "host affinity",
+      "account": "admin",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "projectid": null
+    },
+    {
+      "id": "f8768ee0-79b6-4b12-8a3f-58787e58a30e",
+      "name": "qa-ag06-strict-anti",
+      "type": "host anti-affinity",
+      "account": "admin",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "projectid": null
+    },
+    {
+      "id": "56416dbe-2ed3-449f-bc8a-53fc0659bb8e",
+      "name": "qa-ag06-prefer-aff",
+      "type": "non-strict host affinity",
+      "account": "admin",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "projectid": null
+    },
+    {
+      "id": "15610aff-43d1-425b-838b-535c7b5f3f04",
+      "name": "qa-ag06-prefer-anti",
+      "type": "non-strict host anti-affinity",
+      "account": "admin",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "projectid": null
+    },
+    {
+      "id": "e4ccd65c-08fa-453a-8302-84079631dff1",
+      "name": "qa-ag06-page-01",
+      "type": "host affinity",
+      "account": "admin",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "projectid": null
+    },
+    {
+      "id": "ccf2a5a2-81f3-479b-8108-254335c5d55f",
+      "name": "qa-ag06-page-02",
+      "type": "host affinity",
+      "account": "admin",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "projectid": null
+    },
+    {
+      "id": "68051d71-53e0-4410-ac92-4536bd2dcad8",
+      "name": "qa-ag06-page-03",
+      "type": "host affinity",
+      "account": "admin",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "projectid": null
+    },
+    {
+      "id": "40ccd2c1-1981-400f-b95e-7016df6d7312",
+      "name": "qa-ag06-page-04",
+      "type": "host affinity",
+      "account": "admin",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "projectid": null
+    },
+    {
+      "id": "a2e89f79-b8d7-4a10-a202-035aeb9b10b8",
+      "name": "qa-ag06-page-05",
+      "type": "host affinity",
+      "account": "admin",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "projectid": null
+    },
+    {
+      "id": "5ed559f6-b3af-40f1-8f61-04566cf71a66",
+      "name": "qa-ag06-page-06",
+      "type": "host affinity",
+      "account": "admin",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "projectid": null
+    },
+    {
+      "id": "dddaedd3-cf36-45cd-b389-bc4364890ec4",
+      "name": "qa-ag06-page-07",
+      "type": "host affinity",
+      "account": "admin",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "projectid": null
+    },
+    {
+      "id": "862042ff-376d-47c3-b859-91b2b151821d",
+      "name": "qa-ag06-page-08",
+      "type": "host affinity",
+      "account": "admin",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "projectid": null
+    },
+    {
+      "id": "0f5970d0-a069-41e8-b227-1d1a14053ded",
+      "name": "qa-ag06-page-09",
+      "type": "host affinity",
+      "account": "admin",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "projectid": null
+    },
+    {
+      "id": "d00f42b4-65b0-4e9d-b30c-9cb3ee85201c",
+      "name": "qa-ag06-page-10",
+      "type": "host affinity",
+      "account": "admin",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "projectid": null
+    },
+    {
+      "id": "1d38eea9-657a-4cf2-b54f-c6455d7bb1d6",
+      "name": "qa-ag06-page-11",
+      "type": "host affinity",
+      "account": "admin",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "projectid": null
+    },
+    {
+      "id": "bdffa157-6213-497e-bf6a-8cd03dc9d117",
+      "name": "qa-ag06-page-12",
+      "type": "host affinity",
+      "account": "admin",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "projectid": null
+    },
+    {
+      "id": "f020c858-f8c5-4ccc-aa67-161272106965",
+      "name": "qa-ag06-user-target",
+      "type": "host affinity",
+      "account": "qa-ag06-user",
+      "domainid": "681fd899-ca4d-4bc6-87f1-8cbd2254e962",
+      "projectid": null
+    },
+    {
+      "id": "4a8237a3-f8c7-4851-932e-4d037d388eb1",
+      "name": "qa-ag06-project-target",
+      "type": "host affinity",
+      "account": null,
+      "domainid": "681fd899-ca4d-4bc6-87f1-8cbd2254e962",
+      "projectid": "5a4cdab0-8eb7-43d8-b6b8-39b34780ca14"
+    },
+    {
+      "id": "ee0488c6-dd89-4467-ae64-cde4da755fdc",
+      "name": "qa-ag06-domain-shared",
+      "type": "ExplicitDedication",
+      "account": "system",
+      "domainid": "681fd899-ca4d-4bc6-87f1-8cbd2254e962",
+      "projectid": null
+    },
+    {
+      "id": "2f4a37bd-5c67-4026-9c5c-60689ba2f9ea",
+      "name": "qa-ag06-ui-group",
+      "type": "host affinity",
+      "account": "admin",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "projectid": null
+    },
+    {
+      "id": "d5052258-63c0-447a-a6aa-7bb90caf049c",
+      "name": "qa-ag06-restricted-target",
+      "type": "host affinity",
+      "account": "qa-ag06-restricted",
+      "domainid": "681fd899-ca4d-4bc6-87f1-8cbd2254e962",
+      "projectid": null
+    },
+    {
+      "id": "d26506c1-bd02-4665-8542-58f9bcc35f6e",
+      "name": "qa-ag06-cold-prefer-anti",
+      "type": "non-strict host anti-affinity",
+      "account": "admin",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "projectid": null
+    },
+    {
+      "id": "3688467e-3515-4747-8a7c-9db395356359",
+      "name": "qa-ag06-domainadmin-own",
+      "type": "host affinity",
+      "account": "qa-ag06-domainadmin",
+      "domainid": "681fd899-ca4d-4bc6-87f1-8cbd2254e962",
+      "projectid": null
+    },
+    {
+      "id": "4e33c710-abc0-4f9b-9323-e41baadee3a1",
+      "name": "qa-ag06-ui-recovered",
+      "type": "host affinity",
+      "account": "admin",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "projectid": null
+    }
+  ],
+  "domain": {
+    "id": "681fd899-ca4d-4bc6-87f1-8cbd2254e962",
+    "name": "qa-ag06-domain"
+  },
+  "accounts": [
+    {
+      "id": "a70108ca-08b3-430e-8500-08dbeb9d28f7",
+      "name": "qa-ag06-user",
+      "domainid": "681fd899-ca4d-4bc6-87f1-8cbd2254e962",
+      "roleid": "9270b33d-b253-11f1-a895-0024814c313f",
+      "roletype": "User"
+    },
+    {
+      "id": "7236be00-dfae-4d33-ad42-6243729cd083",
+      "name": "qa-ag06-domainadmin",
+      "domainid": "681fd899-ca4d-4bc6-87f1-8cbd2254e962",
+      "roleid": "9270aeb9-b253-11f1-a895-0024814c313f",
+      "roletype": "DomainAdmin"
+    },
+    {
+      "id": "b18a6a99-9bb6-44d2-a8c4-81416b43bcac",
+      "name": "qa-ag06-restricted",
+      "domainid": "681fd899-ca4d-4bc6-87f1-8cbd2254e962",
+      "roleid": "a7dd5692-41b1-4aa7-8fb7-12426d9d7582",
+      "roletype": "User"
+    }
+  ],
+  "project": {
+    "id": "5a4cdab0-8eb7-43d8-b6b8-39b34780ca14",
+    "name": "qa-ag06-project",
+    "domainid": "681fd899-ca4d-4bc6-87f1-8cbd2254e962"
+  },
+  "networks": [
+    {
+      "id": "2e92a24c-87ae-489f-87d4-d17c7ba5ad49",
+      "name": "qa-ag06-user-L2",
+      "vlan": "3195",
+      "account": "qa-ag06-user",
+      "projectid": null,
+      "domainid": "681fd899-ca4d-4bc6-87f1-8cbd2254e962"
+    },
+    {
+      "id": "b035e24d-bee9-48b4-8e86-f915251fe52e",
+      "name": "qa-ag06-project-L2",
+      "vlan": "3196",
+      "account": null,
+      "projectid": "5a4cdab0-8eb7-43d8-b6b8-39b34780ca14",
+      "domainid": "681fd899-ca4d-4bc6-87f1-8cbd2254e962"
+    },
+    {
+      "id": "7ca6ddea-5966-41a1-b939-e93d03bbdd7c",
+      "name": "qa-ag06-domainadmin-L2",
+      "vlan": "3197",
+      "account": "qa-ag06-domainadmin",
+      "projectid": null,
+      "domainid": "681fd899-ca4d-4bc6-87f1-8cbd2254e962"
+    }
+  ],
+  "role": {
+    "id": "a7dd5692-41b1-4aa7-8fb7-12426d9d7582",
+    "name": "qa-ag06-readonly",
+    "type": "User"
+  }
+}

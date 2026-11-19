@@ -1,0 +1,26 @@
+{
+  "passed": 3,
+  "total": 3,
+  "tests": [
+    {
+      "label": "recreated_name_different_material",
+      "count": 0,
+      "ids": [],
+      "passed": true
+    },
+    {
+      "label": "multi_vm_other_key_retained",
+      "count": 2,
+      "ids": [
+        "7d0dfff1-b0f2-490b-990f-ae159a8ec832",
+        "370e3886-fb69-4326-9183-df8f62ce623f"
+      ],
+      "passed": true
+    },
+    {
+      "label": "original_vm_key_metadata_preserved_after_recreation",
+      "vms": 2,
+      "passed": true
+    }
+  ]
+}

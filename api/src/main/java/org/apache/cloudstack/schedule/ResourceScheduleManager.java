@@ -38,6 +38,9 @@ public interface ResourceScheduleManager {
     ResourceScheduleResponse updateSchedule(Long id, String description, String schedule, String timeZone,
                                             Date startDate, Date endDate, Boolean enabled, Map<String, String> details);
 
+    ResourceScheduleResponse updateSchedule(Long id, String description, String schedule, String timeZone,
+                                            Date startDate, Date endDate, Boolean enabled, Map<String, String> details, boolean clearEndDate);
+
     ListResponse<ResourceScheduleResponse> listSchedule(Long id, List<Long> ids, ApiCommandResourceType resourceType,
                                                         String resourceUuid, String action, Boolean enabled,
                                                         Long startIndex, Long pageSize);

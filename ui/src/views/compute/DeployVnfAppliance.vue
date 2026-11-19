@@ -622,19 +622,17 @@
                                   @tabChange="key => onUserdataTabChange(key, 'userdataTabKey')">
                                   <div v-if="userdataTabKey === 'userdataregistered'">
                                     <a-step
-                                      v-if="isUserAllowedToListUserDatas"
                                       :status="zoneSelected ? 'process' : 'wait'">
                                       <template #description>
                                         <div v-if="zoneSelected">
                                           <user-data-selection
-                                            :items="options.userDatas"
-                                            :row-count="rowCount.userDatas"
+                                            :scope="userDataOwner"
+                                            :value="form.userdataid"
                                             :zoneId="zoneId"
                                             :disabled="template.userdatapolicy === 'DENYOVERRIDE'"
-                                            :loading="loading.userDatas"
                                             :preFillContent="dataPreFill"
-                                            @select-user-data-item="($event) => updateUserData($event)"
-                                            @handle-search-filter="($event) => handleSearchFilter('userData', $event)"
+                                            @select-user-data-item="updateUserData"
+                                            @ready="userDataSelectionReady = $event"
                                           />
                                           <div v-if="userDataParams.length > 0">
                                             <a-input-group>
@@ -698,6 +696,8 @@
                         :zoneId="zoneId"
                         :value="affinityGroupIds"
                         :loading="loading.affinityGroups"
+                        :error="affinityGroupsError"
+                        :owner="params.affinityGroups.options"
                         :preFillContent="dataPreFill"
                         @select-affinity-group-item="($event) => updateAffinityGroups($event)"
                         @handle-search-filter="($event) => handleSearchFilter('affinityGroups', $event)"/>
@@ -808,6 +808,7 @@
             <div class="card-footer" v-if="isMobile()">
               <deploy-buttons
                 :loading="loading.deploy"
+                :disabled="userDataSelectionBlocked"
                 :deployButtonText="$t('label.launch.vnf.appliance')"
                 :deployButtonMenuOptions="deployMenuOptions"
                 @handle-cancel="() => $router.back()"
@@ -823,6 +824,7 @@
             <template #footer-content>
               <deploy-buttons
                 :loading="loading.deploy"
+                :disabled="userDataSelectionBlocked"
                 :deployButtonText="$t('label.launch.vnf.appliance')"
                 :deployButtonMenuOptions="deployMenuOptions"
                 @handle-cancel="() => $router.back()"
@@ -838,6 +840,7 @@
 
 <script>
 import { ref, reactive, toRaw, nextTick } from 'vue'
+import { affinitySelectionIds, affinitySelectionGroups, fetchAffinityGroupOptions } from '@/utils/affinityGroupSelection'
 import { getAPI, postAPI } from '@/api'
 import _ from 'lodash'
 import { mixin, mixinDevice } from '@/utils/mixin.js'
@@ -861,6 +864,7 @@ import NetworkSelection from '@views/compute/wizard/NetworkSelection'
 import NetworkConfiguration from '@views/compute/wizard/NetworkConfiguration'
 import SshKeyPairSelection from '@views/compute/wizard/SshKeyPairSelection'
 import UserDataSelection from '@views/compute/wizard/UserDataSelection'
+import { applyUserDataSelection, userDataSelectionConsumer } from '@/utils/userDataSelection'
 import SecurityGroupSelection from '@views/compute/wizard/SecurityGroupSelection'
 import VnfNicsSelection from '@views/compute/wizard/VnfNicsSelection.vue'
 import TooltipLabel from '@/components/widgets/TooltipLabel'
@@ -900,7 +904,7 @@ export default {
       default: () => {}
     }
   },
-  mixins: [mixin, mixinDevice],
+  mixins: [mixin, mixinDevice, userDataSelectionConsumer],
   data () {
     return {
       zoneId: '',
@@ -968,7 +972,6 @@ export default {
         affinityGroups: false,
         networks: false,
         sshKeyPairs: false,
-        userDatas: false,
         zones: false,
         pods: false,
         clusters: false,
@@ -990,6 +993,7 @@ export default {
       hypervisor: '',
       serviceOffering: {},
       diskOffering: {},
+      affinityGroupsError: '',
       affinityGroups: [],
       networks: [],
       networksAdd: [],
@@ -1073,7 +1077,7 @@ export default {
       return size.join(' | ')
     },
     affinityGroupIds () {
-      return _.map(this.affinityGroups, 'id')
+      return affinitySelectionIds(this.form.affinitygroupids)
     },
     params () {
       return {
@@ -1119,15 +1123,6 @@ export default {
         },
         sshKeyPairs: {
           list: 'listSSHKeyPairs',
-          options: {
-            page: 1,
-            pageSize: 10,
-            keyword: undefined,
-            listall: false
-          }
-        },
-        userDatas: {
-          list: 'listUserData',
           options: {
             page: 1,
             pageSize: 10,
@@ -1433,7 +1428,7 @@ export default {
           this.overrideDiskOffering = null
         }
         this.zone = _.find(this.options.zones, (option) => option.id === vnfAppConfig.zoneid)
-        this.affinityGroups = _.filter(this.options.affinityGroups, (option) => _.includes(vnfAppConfig.affinitygroupids, option.id))
+        this.affinityGroups = affinitySelectionGroups(vnfAppConfig.affinitygroupids, [...this.affinityGroups, ...this.options.affinityGroups])
         this.networks = this.getSelectedNetworksWithExistingConfig(_.filter(this.options.networks, (option) => _.includes(vnfAppConfig.networkids, option.id)))
 
         this.diskOffering = _.find(this.options.diskOfferings, (option) => option.id === vnfAppConfig.diskofferingid)
@@ -1925,7 +1920,8 @@ export default {
       this.form.multidiskoffering = value
     },
     updateAffinityGroups (ids) {
-      this.form.affinitygroupids = ids
+      this.form.affinitygroupids = affinitySelectionIds(ids)
+      this.affinityGroups = affinitySelectionGroups(ids, [...this.affinityGroups, ...this.options.affinityGroups])
     },
     updateNetworks (ids) {
       this.form.networkids = ids
@@ -1948,32 +1944,11 @@ export default {
       this.form.keypairs = names
       this.sshKeyPairs = names.map((sshKeyPair) => { return sshKeyPair.name })
     },
-    updateUserData (id) {
-      if (id === '0') {
-        this.form.userdataid = undefined
-        return
-      }
-      this.form.userdataid = id
-      this.userDataParams = []
-      getAPI('listUserData', { id: id }).then(json => {
-        const resp = json.listuserdataresponse?.userdata || []
-        if (resp.length > 0) {
-          var params = resp[0]?.params || null
-          if (params) {
-            var dataParams = params.split(',')
-          }
-          var that = this
-          dataParams.forEach(function (val, index) {
-            that.userDataParams.push({
-              id: index,
-              key: val
-            })
-          })
-        }
-      })
+    updateUserData (id, item) {
+      applyUserDataSelection(this, id, item)
     },
     updateTemplateLinkedUserData (id) {
-      if (id === '0') {
+      if (!id || id === '0') {
         return
       }
       this.templateUserDataParams = []
@@ -2068,7 +2043,7 @@ export default {
     handleSubmit (e) {
       console.log('wizard submit')
       e.preventDefault()
-      if (this.loading.deploy) return
+      if (this.loading.deploy || this.userDataSelectionBlocked) return
       this.formRef.value.validate().then(async () => {
         const values = toRaw(this.form)
 
@@ -2482,6 +2457,7 @@ export default {
       })
     },
     fetchOptions (param, name, exclude) {
+      if (name === 'affinityGroups' && !exclude?.includes(name)) return fetchAffinityGroupOptions(this, param)
       return new Promise((resolve, reject) => {
         if (exclude && exclude.length > 0 && exclude.includes(name)) {
           return resolve(null)

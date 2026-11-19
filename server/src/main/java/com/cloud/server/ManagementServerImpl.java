@@ -617,7 +617,6 @@ import org.apache.cloudstack.api.command.user.vm.UpdateVMCmd;
 import org.apache.cloudstack.api.command.user.vm.UpdateVmCloneFlattenBandwidthCmd;
 import org.apache.cloudstack.api.command.user.vm.UpdateVmNicCmd;
 import org.apache.cloudstack.api.command.user.vm.UpdateVmNicIpCmd;
-import org.apache.cloudstack.api.command.user.vm.UpdateVmNicLinkStateCmd;
 import org.apache.cloudstack.api.command.user.vm.UpgradeVMCmd;
 import org.apache.cloudstack.api.command.user.vmgroup.CreateVMGroupCmd;
 import org.apache.cloudstack.api.command.user.vmgroup.DeleteVMGroupCmd;
@@ -736,6 +735,9 @@ import org.apache.cloudstack.storage.datastore.db.TemplateDataStoreDao;
 import org.apache.cloudstack.storage.datastore.db.TemplateDataStoreVO;
 import org.apache.cloudstack.storage.datastore.db.VolumeDataStoreDao;
 import org.apache.cloudstack.storage.datastore.db.VolumeDataStoreVO;
+import org.apache.cloudstack.userdata.CniConfigurationReferenceChecker;
+import com.cloud.user.CniConfigurationReferences;
+import com.cloud.utils.component.ComponentContext;
 import org.apache.cloudstack.userdata.UserDataManager;
 import org.apache.cloudstack.utils.CloudStackVersion;
 import org.apache.cloudstack.utils.identity.ManagementServerNode;
@@ -950,11 +952,14 @@ import com.cloud.utils.crypt.DBEncryptionUtil;
 import com.cloud.utils.db.DB;
 import com.cloud.utils.db.Filter;
 import com.cloud.utils.db.GlobalLock;
+import com.cloud.vm.snapshot.dao.VMSnapshotDao;
+import com.cloud.host.Status;
 import com.cloud.utils.db.JoinBuilder;
 import com.cloud.utils.db.JoinBuilder.JoinType;
 import com.cloud.utils.db.SearchBuilder;
 import com.cloud.utils.db.SearchCriteria;
 import com.cloud.utils.db.Transaction;
+import com.cloud.utils.db.TransactionCallback;
 import com.cloud.utils.db.TransactionCallbackNoReturn;
 import com.cloud.utils.db.TransactionStatus;
 import com.cloud.utils.db.UUIDManager;
@@ -980,6 +985,7 @@ import com.cloud.vm.VirtualMachine.State;
 import com.cloud.vm.VirtualMachineManager;
 import com.cloud.vm.VirtualMachineProfile;
 import com.cloud.vm.VirtualMachineProfileImpl;
+import com.cloud.vm.VmInstanceGroupNames;
 import com.cloud.vm.dao.ConsoleProxyDao;
 import com.cloud.vm.dao.DomainRouterDao;
 import com.cloud.vm.dao.InstanceGroupDao;
@@ -2540,6 +2546,8 @@ public class ManagementServerImpl extends MutualExclusiveIdsManagerBase implemen
 
     private ListHostLunDevicesResponse createResponse(ListHostLunDeviceAnswer lunAnswer, Long hostId) {
         ListHostLunDevicesResponse response = new ListHostLunDevicesResponse();
+        response.setDeviceUsageStatus(lunAnswer.getDeviceUsageStatus());
+        response.setDeviceSafetyDetails(lunAnswer.getDeviceSafetyDetails());
 
         List<String> deviceNames = lunAnswer.getHostDevicesNames();
         List<String> deviceDescriptions = lunAnswer.getHostDevicesTexts();
@@ -2651,6 +2659,8 @@ public class ManagementServerImpl extends MutualExclusiveIdsManagerBase implemen
 
     private ListHostScsiDevicesResponse createResponse(ListHostScsiDeviceAnswer scsiAnswer, Long hostId) {
         ListHostScsiDevicesResponse response = new ListHostScsiDevicesResponse();
+        response.setDeviceUsageStatus(scsiAnswer.getDeviceUsageStatus());
+        response.setDeviceSafetyDetails(scsiAnswer.getDeviceSafetyDetails());
 
         List<String> deviceNames = scsiAnswer.getHostDevicesNames();
         List<String> deviceDescriptions = scsiAnswer.getHostDevicesTexts();
@@ -2987,8 +2997,88 @@ public class ManagementServerImpl extends MutualExclusiveIdsManagerBase implemen
         return listResponse;
     }
 
+    @Inject
+    private VMSnapshotDao deviceVmSnapshotDao;
+
+    /** Validate before either guest operations or persistent device settings are changed. */
+    String validateVmDeviceMutation(Long hostId, String deviceName, Long vmId, String currentVmId, boolean pci) {
+        List<DetailVO> allocations = findDeviceAllocationDetails(deviceName).stream()
+                .filter(d -> Objects.equals(d.getHostId(), hostId)
+                        && matchesStoredDeviceName(d.getName(), deviceName) && StringUtils.isNotBlank(d.getValue()))
+                .collect(Collectors.toList());
+        VMInstanceVO vm;
+        if (vmId != null) {
+            if (!allocations.isEmpty()) {
+                throw new CloudRuntimeException("Device is already allocated; release its existing allocation first");
+            }
+            vm = _vmInstanceDao.findById(vmId);
+        } else {
+            if (StringUtils.isBlank(currentVmId)) {
+                if (allocations.size() != 1) {
+                    throw new CloudRuntimeException("An unambiguous current VM is required to release a device");
+                }
+                currentVmId = allocations.get(0).getValue();
+            }
+            vm = _vmInstanceDao.findByUuid(currentVmId);
+            if (vm == null && currentVmId.matches("[0-9]+")) {
+                vm = _vmInstanceDao.findById(Long.valueOf(currentVmId));
+            }
+            if (vm == null) {
+                throw new CloudRuntimeException("Current VM cannot be verified; device settings were not removed");
+            }
+            final String id = String.valueOf(vm.getId());
+            final String uuid = vm.getUuid();
+            if (allocations.stream().noneMatch(d -> id.equals(d.getValue()) || uuid.equals(d.getValue()))) {
+                throw new CloudRuntimeException("Device allocation does not belong to the selected VM");
+            }
+        }
+        if (vm == null || vm.getRemoved() != null || vm.getHypervisorType() != HypervisorType.KVM) {
+            throw new CloudRuntimeException("A valid KVM VM is required for device operations");
+        }
+        _accountMgr.checkAccess(CallContext.current().getCallingAccount(), null, true, vm);
+        Long vmHostId = vm.getHostId() != null ? vm.getHostId() : vm.getLastHostId();
+        if (!Objects.equals(hostId, vmHostId)) {
+            throw new CloudRuntimeException("Device host does not match the VM host");
+        }
+        HostVO host = _hostDao.findById(hostId);
+        if (host == null || host.getStatus() != Status.Up) {
+            throw new CloudRuntimeException("Device host is unavailable");
+        }
+        boolean validState = pci
+                ? vm.getState() == State.Stopped || (vmId != null && vm.getState() == State.Running)
+                : vm.getState() == State.Running;
+        if (!validState) {
+            throw new CloudRuntimeException(pci
+                    ? (vmId != null ? "VM must be Running or Stopped to save PCI allocation settings"
+                            : "Stop the VM before releasing PCI allocation settings")
+                    : "VM must be Running for this device operation");
+        }
+        if (!deviceVmSnapshotDao.findByVm(vm.getId()).isEmpty()) {
+            throw new CloudRuntimeException("Remove VM snapshots before changing device topology");
+        }
+        return String.valueOf(vm.getId());
+    }
+
    @Override
     public ListResponse<UpdateHostDevicesResponse> updateHostDevices(UpdateHostDevicesCmd cmd) {
+        GlobalLock lock = GlobalLock.getInternLock("vm-host-devices-" + cmd.getHostId());
+        try {
+            if (!lock.lock(10)) {
+                throw new CloudRuntimeException("Another device operation is in progress on this host");
+            }
+            try {
+                cmd.setCurrentVmId(validateVmDeviceMutation(cmd.getHostId(), cmd.getHostDeviceName(),
+                        cmd.getVirtualMachineId(), cmd.getCurrentVmId(), true));
+                return updateHostDevicesInternal(cmd);
+            } finally {
+                lock.unlock();
+            }
+        } finally {
+            lock.releaseRef();
+        }
+    }
+
+    private ListResponse<UpdateHostDevicesResponse> updateHostDevicesInternal(UpdateHostDevicesCmd cmd) {
         Long hostId = cmd.getHostId();
         String hostDeviceName = cmd.getHostDeviceName();
         Long vmId = cmd.getVirtualMachineId();
@@ -3459,6 +3549,24 @@ public class ManagementServerImpl extends MutualExclusiveIdsManagerBase implemen
 
     @Override
         public ListResponse<UpdateHostUsbDevicesResponse> updateHostUsbDevices(UpdateHostUsbDevicesCmd cmd) {
+        GlobalLock lock = GlobalLock.getInternLock("vm-host-devices-" + cmd.getHostId());
+        try {
+            if (!lock.lock(10)) {
+                throw new CloudRuntimeException("Another device operation is in progress on this host");
+            }
+            try {
+                cmd.setCurrentVmId(validateVmDeviceMutation(cmd.getHostId(), cmd.getHostDeviceName(),
+                        cmd.getVirtualMachineId(), cmd.getCurrentVmId(), false));
+                return updateHostUsbDevicesInternal(cmd);
+            } finally {
+                lock.unlock();
+            }
+        } finally {
+            lock.releaseRef();
+        }
+    }
+
+    private ListResponse<UpdateHostUsbDevicesResponse> updateHostUsbDevicesInternal(UpdateHostUsbDevicesCmd cmd) {
             Long hostId = cmd.getHostId();
             String hostDeviceName = cmd.getHostDeviceName();
             Long vmId = cmd.getVirtualMachineId();
@@ -3633,6 +3741,24 @@ public class ManagementServerImpl extends MutualExclusiveIdsManagerBase implemen
 
     @Override
     public ListResponse<UpdateHostLunDevicesResponse> updateHostLunDevices(UpdateHostLunDevicesCmd cmd) {
+        GlobalLock lock = GlobalLock.getInternLock("vm-host-devices-" + cmd.getHostId());
+        try {
+            if (!lock.lock(10)) {
+                throw new CloudRuntimeException("Another device operation is in progress on this host");
+            }
+            try {
+                cmd.setCurrentVmId(validateVmDeviceMutation(cmd.getHostId(), cmd.getHostDeviceName(),
+                        cmd.getVirtualMachineId(), cmd.getCurrentVmId(), false));
+                return updateHostLunDevicesInternal(cmd);
+            } finally {
+                lock.unlock();
+            }
+        } finally {
+            lock.releaseRef();
+        }
+    }
+
+    private ListResponse<UpdateHostLunDevicesResponse> updateHostLunDevicesInternal(UpdateHostLunDevicesCmd cmd) {
         Long hostId = cmd.getHostId();
         String hostDeviceName = cmd.getHostDeviceName();
         Long vmId = cmd.getVirtualMachineId();
@@ -3712,6 +3838,7 @@ public class ManagementServerImpl extends MutualExclusiveIdsManagerBase implemen
             }
 
             UpdateHostLunDeviceCommand lunCmd = new UpdateHostLunDeviceCommand(vmInternalName, xmlConfig, isAttach, hostDeviceName);
+            lunCmd.setAcknowledgePartitionRisk(cmd.isPartitionRiskAcknowledged());
                 Answer answer;
                 try {
                     answer = _agentMgr.send(hostVO.getId(), lunCmd);
@@ -3799,12 +3926,6 @@ public class ManagementServerImpl extends MutualExclusiveIdsManagerBase implemen
                 }
 
                 String xmlToStore = lunAnswer.getXmlConfig() != null ? lunAnswer.getXmlConfig() : xmlConfig;
-                boolean invalidLunTarget = xmlToStore != null && xmlToStore.contains("device='lun'")
-                    && (xmlToStore.contains("dev='mapper/") || xmlToStore.contains("dev=\"mapper/")
-                        || (xmlToStore.contains("mpath") && xmlToStore.contains("<target")));
-                if (invalidLunTarget) {
-                    xmlToStore = null;
-                }
                 if (xmlToStore != null) {
                     addDeviceToVmExtraConfig(vmId, hostDeviceName, xmlToStore);
                 }
@@ -3843,6 +3964,24 @@ public class ManagementServerImpl extends MutualExclusiveIdsManagerBase implemen
 
     @Override
     public ListResponse<UpdateHostScsiDevicesResponse> updateHostScsiDevices(UpdateHostScsiDevicesCmd cmd) {
+        GlobalLock lock = GlobalLock.getInternLock("vm-host-devices-" + cmd.getHostId());
+        try {
+            if (!lock.lock(10)) {
+                throw new CloudRuntimeException("Another device operation is in progress on this host");
+            }
+            try {
+                cmd.setCurrentVmId(validateVmDeviceMutation(cmd.getHostId(), cmd.getHostDeviceName(),
+                        cmd.getVirtualMachineId(), cmd.getCurrentVmId(), false));
+                return updateHostScsiDevicesInternal(cmd);
+            } finally {
+                lock.unlock();
+            }
+        } finally {
+            lock.releaseRef();
+        }
+    }
+
+    private ListResponse<UpdateHostScsiDevicesResponse> updateHostScsiDevicesInternal(UpdateHostScsiDevicesCmd cmd) {
         Long hostId = cmd.getHostId();
         String hostDeviceName = cmd.getHostDeviceName();
         Long vmId = cmd.getVirtualMachineId();
@@ -3928,6 +4067,7 @@ public class ManagementServerImpl extends MutualExclusiveIdsManagerBase implemen
             }
 
             UpdateHostScsiDeviceCommand scsiCmd = new UpdateHostScsiDeviceCommand(vmInternalName, xmlConfig, isAttach);
+            scsiCmd.setAcknowledgePartitionRisk(cmd.isPartitionRiskAcknowledged());
             Answer answer;
             try {
                 answer = _agentMgr.send(hostVO.getId(), scsiCmd);
@@ -4052,6 +4192,24 @@ public class ManagementServerImpl extends MutualExclusiveIdsManagerBase implemen
 
     @Override
     public ListResponse<UpdateHostHbaDevicesResponse> updateHostHbaDevices(UpdateHostHbaDevicesCmd cmd) {
+        GlobalLock lock = GlobalLock.getInternLock("vm-host-devices-" + cmd.getHostId());
+        try {
+            if (!lock.lock(10)) {
+                throw new CloudRuntimeException("Another device operation is in progress on this host");
+            }
+            try {
+                cmd.setCurrentVmId(validateVmDeviceMutation(cmd.getHostId(), cmd.getHostDeviceName(),
+                        cmd.getVirtualMachineId(), cmd.getCurrentVmId(), false));
+                return updateHostHbaDevicesInternal(cmd);
+            } finally {
+                lock.unlock();
+            }
+        } finally {
+            lock.releaseRef();
+        }
+    }
+
+    private ListResponse<UpdateHostHbaDevicesResponse> updateHostHbaDevicesInternal(UpdateHostHbaDevicesCmd cmd) {
         Long hostId = cmd.getHostId();
         String hostDeviceName = cmd.getHostDeviceName();
         Long vmId = cmd.getVirtualMachineId();
@@ -4137,6 +4295,7 @@ public class ManagementServerImpl extends MutualExclusiveIdsManagerBase implemen
             String compactXml = xmlConfig != null ? xmlConfig.replaceAll("\\s+", " ") : "";
 
            UpdateHostHbaDeviceCommand hbaCmd = new UpdateHostHbaDeviceCommand(vmInternalName, xmlConfig, isAttach);
+            hbaCmd.setAcknowledgePartitionRisk(cmd.isPartitionRiskAcknowledged());
             Answer answer;
             try {
                 answer = _agentMgr.send(hostVO.getId(), hbaCmd);
@@ -4340,6 +4499,24 @@ public class ManagementServerImpl extends MutualExclusiveIdsManagerBase implemen
 
         @Override
     public ListResponse<UpdateHostVhbaDevicesResponse> updateHostVhbaDevices(UpdateHostVhbaDevicesCmd cmd) {
+        GlobalLock lock = GlobalLock.getInternLock("vm-host-devices-" + cmd.getHostId());
+        try {
+            if (!lock.lock(10)) {
+                throw new CloudRuntimeException("Another device operation is in progress on this host");
+            }
+            try {
+                cmd.setCurrentVmId(validateVmDeviceMutation(cmd.getHostId(), cmd.getHostDeviceName(),
+                        cmd.getVirtualMachineId(), cmd.getCurrentVmId(), false));
+                return updateHostVhbaDevicesInternal(cmd);
+            } finally {
+                lock.unlock();
+            }
+        } finally {
+            lock.releaseRef();
+        }
+    }
+
+    private ListResponse<UpdateHostVhbaDevicesResponse> updateHostVhbaDevicesInternal(UpdateHostVhbaDevicesCmd cmd) {
         Long hostId = cmd.getHostId();
         String hostDeviceName = cmd.getHostDeviceName();
         Long vmId = cmd.getVirtualMachineId();
@@ -4404,6 +4581,7 @@ public class ManagementServerImpl extends MutualExclusiveIdsManagerBase implemen
 
         // 호스트에 명령 전송
         UpdateHostVhbaDeviceCommand vhbaCmd = new UpdateHostVhbaDeviceCommand(hostId, hostDeviceName, vmInternalName, xmlConfig, isAttach);
+            vhbaCmd.setAcknowledgePartitionRisk(cmd.isPartitionRiskAcknowledged());
         Answer answer;
         try {
             answer = _agentMgr.send(hostVO.getId(), vhbaCmd);
@@ -4596,6 +4774,7 @@ public class ManagementServerImpl extends MutualExclusiveIdsManagerBase implemen
                 HostVO host = _hostDao.findById(hostId);
                 if (host != null) {
                     responseItem.setHostName(host.getName());
+                    responseItem.setHostUuid(host.getUuid());
                 }
 
                 responses.add(responseItem);
@@ -4825,6 +5004,22 @@ public class ManagementServerImpl extends MutualExclusiveIdsManagerBase implemen
 
     @Override
     public ListResponse<DeleteVhbaDeviceResponse> deleteVhbaDevice(DeleteVhbaDeviceCmd cmd) {
+        GlobalLock lock = GlobalLock.getInternLock("vm-host-devices-" + cmd.getHostId());
+        try {
+            if (!lock.lock(10)) {
+                throw new CloudRuntimeException("Another device operation is in progress on this host");
+            }
+            try {
+                return deleteVhbaDeviceInternal(cmd);
+            } finally {
+                lock.unlock();
+            }
+        } finally {
+            lock.releaseRef();
+        }
+    }
+
+    private ListResponse<DeleteVhbaDeviceResponse> deleteVhbaDeviceInternal(DeleteVhbaDeviceCmd cmd) {
         Long hostId = cmd.getHostId();
         String hostDeviceName = cmd.getHostDeviceName();
         String wwnn = cmd.getWwnn();
@@ -6644,6 +6839,7 @@ public class ManagementServerImpl extends MutualExclusiveIdsManagerBase implemen
         cmdList.add(DeletePoolCmd.class);
         cmdList.add(ListSwiftsCmd.class);
         cmdList.add(ListStoragePoolsCmd.class);
+        cmdList.add(org.apache.cloudstack.api.command.admin.storage.ListDeploymentStoragePoolsCmd.class);
         cmdList.add(ListStorageTagsCmd.class);
         cmdList.add(ListStorageAccessGroupsCmd.class);
         cmdList.add(FindStoragePoolsForMigrationCmd.class);
@@ -6844,6 +7040,7 @@ public class ManagementServerImpl extends MutualExclusiveIdsManagerBase implemen
         cmdList.add(DeleteSnapshotPoliciesCmd.class);
         cmdList.add(ListSnapshotPoliciesCmd.class);
         cmdList.add(ListSnapshotsCmd.class);
+        cmdList.add(org.apache.cloudstack.api.command.user.snapshot.ListSnapshotCopyTargetsCmd.class);
         cmdList.add(RevertSnapshotCmd.class);
         cmdList.add(CreateSSHKeyPairCmd.class);
         cmdList.add(DeleteSSHKeyPairCmd.class);
@@ -6868,6 +7065,8 @@ public class ManagementServerImpl extends MutualExclusiveIdsManagerBase implemen
         cmdList.add(ExpungeVMCmd.class);
         cmdList.add(GetVMPasswordCmd.class);
         cmdList.add(ListVMsCmd.class);
+        cmdList.add(org.apache.cloudstack.api.command.user.vm.ListVirtualMachineCreationSourcesCmd.class);
+        cmdList.add(org.apache.cloudstack.api.command.user.vm.ValidateVirtualMachineCreationCmd.class);
         cmdList.add(GetVirtualMachineGuestNetworkStateCmd.class);
         cmdList.add(RefreshVirtualMachineGuestNetworkStateCmd.class);
         cmdList.add(UpdateVmCloneFlattenBandwidthCmd.class);
@@ -7139,11 +7338,23 @@ public class ManagementServerImpl extends MutualExclusiveIdsManagerBase implemen
         cmdList.add(DeleteBucketCmd.class);
         cmdList.add(ListBucketsCmd.class);
         cmdList.add(SyncBucketUsageCmd.class);
+        cmdList.add(org.apache.cloudstack.api.command.user.bucket.GetBucketCredentialsCmd.class);
+        cmdList.add(org.apache.cloudstack.api.command.user.bucket.RotateBucketCredentialsCmd.class);
+        cmdList.add(org.apache.cloudstack.api.command.user.bucket.GetBucketObjectMetadataCmd.class);
+        cmdList.add(org.apache.cloudstack.api.command.admin.storage.CheckObjectStoragePoolCmd.class);
+        cmdList.add(org.apache.cloudstack.api.command.user.bucket.GetBucketProtectionCmd.class);
+        cmdList.add(org.apache.cloudstack.api.command.user.bucket.ReconcileBucketProtectionCmd.class);
+        cmdList.add(org.apache.cloudstack.api.command.user.bucket.GetBucketDeletionImpactCmd.class);
+        cmdList.add(org.apache.cloudstack.api.command.user.bucket.ListBucketObjectVersionsCmd.class);
+        cmdList.add(org.apache.cloudstack.api.command.user.bucket.ManageBucketObjectVersionCmd.class);
+        cmdList.add(org.apache.cloudstack.api.command.user.bucket.PurgeBucketCmd.class);
+        cmdList.add(org.apache.cloudstack.api.command.user.bucket.GetBucketPurgeStatusCmd.class);
 
         //ABLESTACK Made APIs
         cmdList.add(DeployVMVolumeCmdByAdmin.class);
         cmdList.add(DeployVMVolumeCmd.class);
         cmdList.add(AllocateVbmcToVMCmd.class);
+        cmdList.add(org.apache.cloudstack.api.command.user.vm.CheckVbmcToVMCmd.class);
         cmdList.add(RemoveVbmcToVMCmd.class);
         cmdList.add(ListHostDevicesCmd.class);
         cmdList.add(UpdateHostDevicesCmd.class);
@@ -7164,9 +7375,7 @@ public class ManagementServerImpl extends MutualExclusiveIdsManagerBase implemen
         cmdList.add(ListHostRedfishDataCmd.class);
         cmdList.add(DownloadEventsCmd.class);
         cmdList.add(UpdateCompressDedupCmd.class);
-        cmdList.add(UpdateVmNicLinkStateCmd.class);
         cmdList.add(CloneVMCmd.class);
-        cmdList.add(UpdateVmNicLinkStateCmd.class);
 
         return cmdList;
     }
@@ -7572,6 +7781,7 @@ public class ManagementServerImpl extends MutualExclusiveIdsManagerBase implemen
     @Override
     public Map<String, Object> listCapabilities(final ListCapabilitiesCmd cmd) {
         final Map<String, Object> capabilities = new HashMap<>();
+        capabilities.put("userdatamaxlength", UserDataManager.VM_USERDATA_MAX_LENGTH.value());
 
         final Account caller = getCaller();
         Long domainId = cmd.getDomainId();
@@ -7756,7 +7966,7 @@ public class ManagementServerImpl extends MutualExclusiveIdsManagerBase implemen
 
         // Verify input parameters
         final InstanceGroupVO group = _vmGroupDao.findById(groupId.longValue());
-        if (group == null) {
+        if (group == null || group.getRemoved() != null) {
             final InvalidParameterValueException ex = new InvalidParameterValueException("unable to find an instance group with specified groupId");
             ex.addProxyObject(groupId.toString(), "groupId");
             throw ex;
@@ -7764,18 +7974,7 @@ public class ManagementServerImpl extends MutualExclusiveIdsManagerBase implemen
 
         _accountMgr.checkAccess(caller, null, true, group);
 
-        // Check if name is already in use by this account (exclude this group)
-        final boolean isNameInUse = _vmGroupDao.isNameInUse(group.getAccountId(), groupName);
-
-        if (isNameInUse && !group.getName().equals(groupName)) {
-            throw new InvalidParameterValueException("Unable to update instance group, a group with name " + groupName + " already exists for account");
-        }
-
-        if (groupName != null) {
-            _vmGroupDao.updateVmGroup(groupId, groupName);
-        }
-
-        return _vmGroupDao.findById(groupId);
+        return VmInstanceGroupNames.rename(_vmGroupDao, _accountDao, group.getAccountId(), groupId, groupName);
     }
 
     @Override
@@ -7949,6 +8148,7 @@ public class ManagementServerImpl extends MutualExclusiveIdsManagerBase implemen
 
     @Override
     public Pair<List<? extends SSHKeyPair>, Integer> listSSHKeyPairs(final ListSSHKeyPairsCmd cmd) {
+        final Long id = cmd.getId();
         final String name = cmd.getName();
         final String fingerPrint = cmd.getFingerprint();
         final String keyword = cmd.getKeyword();
@@ -7969,6 +8169,10 @@ public class ManagementServerImpl extends MutualExclusiveIdsManagerBase implemen
 
         final SearchCriteria<SSHKeyPairVO> sc = sb.create();
         _accountMgr.buildACLSearchCriteria(sc, domainId, isRecursive, permittedAccounts, listProjectResourcesCriteria);
+
+        if (id != null) {
+            sc.addAnd("id", SearchCriteria.Op.EQ, id);
+        }
 
         if (name != null) {
             sc.addAnd("name", SearchCriteria.Op.EQ, name);
@@ -8008,6 +8212,11 @@ public class ManagementServerImpl extends MutualExclusiveIdsManagerBase implemen
 
     @Override
     public boolean deleteUserData(final DeleteUserDataCmd cmd) {
+        return deleteUserDataOfType(cmd, false);
+    }
+
+    private boolean deleteUserDataOfType(final DeleteUserDataCmd cmd, final boolean forCks) {
+        final String resourceType = forCks ? "CNI configuration" : "UserData";
         final Account caller = getCaller();
         final String accountName = cmd.getAccountName();
         final Long domainId = cmd.getDomainId();
@@ -8028,7 +8237,7 @@ public class ManagementServerImpl extends MutualExclusiveIdsManagerBase implemen
         final UserDataVO userData = userDataDao.findById(cmd.getId());
         if (userData == null) {
             final InvalidParameterValueException ex = new InvalidParameterValueException(
-                    "A UserData with id '" + cmd.getId() + "' does not exist for account " + owner.getAccountName() + " in specified domain id");
+                    "A " + resourceType + " with id '" + cmd.getId() + "' does not exist for account " + owner.getAccountName() + " in specified domain id");
             final DomainVO domain = ApiDBUtils.findDomainById(owner.getDomainId());
             String domainUuid = String.valueOf(owner.getDomainId());
             if (domain != null) {
@@ -8036,6 +8245,27 @@ public class ManagementServerImpl extends MutualExclusiveIdsManagerBase implemen
             }
             ex.addProxyObject(domainUuid, "domainId");
             throw ex;
+        }
+
+        // UUID ACL checks run in the API layer; reject the wrong resource type
+        // before checking references or mutating either the record or its comments.
+        if (userData.isForCks() != forCks) {
+            throw new InvalidParameterValueException("The requested resource is not a " + resourceType + ". Use "
+                    + (forCks ? "deleteUserData for ordinary user data." : "deleteCniConfiguration for CNI configurations."));
+        }
+
+        if (forCks) {
+            // Integration beans live in delegated plugin contexts, initialized after server.
+            final CniConfigurationReferenceChecker checker;
+            try {
+                checker = ComponentContext.getDelegateComponentOfType(CniConfigurationReferenceChecker.class);
+            } catch (org.springframework.beans.factory.NoSuchBeanDefinitionException e) {
+                throw new CloudRuntimeException("CNI reference validation is unavailable; retry after Kubernetes service initialization.", e);
+            }
+            if (checker.hasActiveCniReferences(userData.getId())) {
+                // Do not disclose cluster names or counts outside the caller's ACL scope.
+                throw new InvalidParameterValueException("CNI configuration cannot be removed while referenced by an active Kubernetes cluster.");
+            }
         }
 
         List<VMTemplateVO> templatesLinkedToUserData = templateDao.findTemplatesLinkedToUserdata(userData.getId());
@@ -8048,15 +8278,20 @@ public class ManagementServerImpl extends MutualExclusiveIdsManagerBase implemen
             throw new CloudRuntimeException(String.format("Userdata %s cannot be removed as it is being used by some instances", userData.getName()));
         }
 
-        annotationDao.removeByEntityType(AnnotationService.EntityType.USER_DATA.name(), userData.getUuid());
-
-        return userDataDao.remove(userData.getId());
+        return Transaction.execute((TransactionCallback<Boolean>) status -> {
+            if (!userDataDao.remove(userData.getId())) {
+                throw new CloudRuntimeException("Failed to delete " + resourceType + ".");
+            }
+            // A false annotation result means there were no comments; that is valid.
+            annotationDao.removeByEntityType(AnnotationService.EntityType.USER_DATA.name(), userData.getUuid());
+            return true;
+        });
     }
 
     @Override
     @ActionEvent(eventType = EventTypes.EVENT_DELETE_CNI_CONFIG, eventDescription = "CNI Configuration deletion")
     public boolean deleteCniConfiguration(DeleteCniConfigurationCmd cmd) {
-        return deleteUserData(cmd);
+        return CniConfigurationReferences.withLock(cmd.getId(), () -> deleteUserDataOfType(cmd, true));
     }
 
     @Override
@@ -8107,56 +8342,79 @@ public class ManagementServerImpl extends MutualExclusiveIdsManagerBase implemen
     @ActionEvent(eventType = EventTypes.EVENT_REGISTER_CNI_CONFIG, eventDescription = "registering CNI configuration", async = true)
     public UserData registerCniConfiguration(RegisterCniConfigurationCmd cmd) {
         final Account owner = getOwner(cmd);
-        checkForUserDataByName(cmd, owner);
-        final String name = cmd.getName();
+        final String name = UserDataRegistrationValidation.name(cmd.getName(), "CNI configuration");
+        final String userdata;
+        final String params;
+        try {
+            userdata = userDataManager.validateUserData(cmd.getCniConfig(), cmd.getHttpMethod());
+            params = UserDataRegistrationValidation.params(cmd.getParams(), "CNI configuration");
+        } catch (InvalidParameterValueException error) {
+            throw new InvalidParameterValueException("Invalid CNI configuration: " + error.getMessage()
+                    .replace("User data", "CNI content").replace("user data", "CNI content"));
+        }
+        UserDataRegistrationValidation.requireContent(userdata, "CNI configuration");
 
-        String userdata = cmd.getCniConfig();
-        final String params = cmd.getParams();
-
-        userdata = userDataManager.validateUserData(userdata, cmd.getHttpMethod());
-
-        return createAndSaveUserData(name, userdata, params, owner, true);
+        // Share the owner/name namespace and DB lock with normal UserData registration.
+        // CNI deliberately permits identical content under a different name.
+        final GlobalLock lock = GlobalLock.getInternLock("userdata-register-" + owner.getDomainId() + "-" + owner.getAccountId());
+        try {
+            if (!lock.lock(10)) {
+                throw new CloudRuntimeException("Another CNI or user data registration is in progress for this account. Please retry.");
+            }
+            try {
+                if (userDataDao.findByName(owner.getAccountId(), owner.getDomainId(), name) != null) {
+                    throw new InvalidParameterValueException("A CNI configuration or user data with the same name already exists for this account.");
+                }
+                return createAndSaveUserData(name, userdata, params, owner, true);
+            } finally {
+                lock.unlock();
+            }
+        } finally {
+            lock.releaseRef();
+        }
     }
 
     @Override
     @ActionEvent(eventType = EventTypes.EVENT_REGISTER_USER_DATA, eventDescription = "registering userdata", async = true)
     public UserData registerUserData(final RegisterUserDataCmd cmd) {
         final Account owner = getOwner(cmd);
-        checkForUserDataByName(cmd, owner);
-        final String name = cmd.getName();
+        final String name = UserDataRegistrationValidation.name(cmd.getName());
+        final String userdata = userDataManager.validateUserData(cmd.getUserData(), cmd.getHttpMethod());
+        UserDataRegistrationValidation.requireContent(userdata);
+        final String params = UserDataRegistrationValidation.params(cmd.getParams());
 
-        String userdata = cmd.getUserData();
-        checkForUserData(cmd, owner);
-        final String params = cmd.getParams();
-
-        userdata = userDataManager.validateUserData(userdata, cmd.getHttpMethod());
-
-        return createAndSaveUserData(name, userdata, params, owner, false);
+        // A DB-backed lock covers both duplicate checks and persistence across management nodes.
+        final GlobalLock lock = GlobalLock.getInternLock("userdata-register-" + owner.getDomainId() + "-" + owner.getAccountId());
+        try {
+            if (!lock.lock(10)) {
+                throw new CloudRuntimeException("Another user data registration is in progress for this account. Please retry.");
+            }
+            try {
+                if (userDataDao.findByName(owner.getAccountId(), owner.getDomainId(), name) != null) {
+                    throw new InvalidParameterValueException("A userdata with the same name already exists for this account.");
+                }
+                checkForUserData(userdata, owner);
+                return createAndSaveUserData(name, userdata, params, owner, false);
+            } finally {
+                lock.unlock();
+            }
+        } finally {
+            lock.releaseRef();
+        }
     }
 
     /**
-     * @param cmd
+     * @param canonicalUserData
      * @param owner
      * @throws InvalidParameterValueException
      */
-    private void checkForUserData(final RegisterUserDataCmd cmd, final Account owner) throws InvalidParameterValueException {
-        final UserDataVO userData = userDataDao.findByUserData(owner.getAccountId(), owner.getDomainId(), cmd.getUserData());
+    private void checkForUserData(final String canonicalUserData, final Account owner) throws InvalidParameterValueException {
+        final UserDataVO userData = userDataDao.findByUserData(owner.getAccountId(), owner.getDomainId(), canonicalUserData);
         if (userData != null) {
             throw new InvalidParameterValueException(String.format("Userdata %s with same content already exists for this account.", userData.getName()));
         }
     }
 
-    /**
-     * @param cmd
-     * @param owner
-     * @throws InvalidParameterValueException
-     */
-    private void checkForUserDataByName(final BaseRegisterUserDataCmd cmd, final Account owner) throws InvalidParameterValueException {
-        final UserDataVO userData = userDataDao.findByName(owner.getAccountId(), owner.getDomainId(), cmd.getName());
-        if (userData != null) {
-            throw new InvalidParameterValueException(String.format("A userdata with name %s already exists for this account.", cmd.getName()));
-        }
-    }
 
     /**
      * @param cmd

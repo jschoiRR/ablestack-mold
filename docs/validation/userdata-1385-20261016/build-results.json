@@ -1,0 +1,42 @@
+{
+  "issue": 1385,
+  "ui_source": "8c7c83b609b31b6df0f162517c24468f911391a6",
+  "wsl_repository": "/home/ablecloud/work/dhslove/cloud-epic-1381",
+  "ui_tests": {
+    "command": "npm run test:unit -- --runInBand --coverage=false --runTestsByPath tests/unit/views/compute/ResetUserData.spec.js tests/unit/views/compute/UserDataSelection.spec.js tests/unit/views/compute/AutoScaleCreationPreflight.spec.js tests/unit/views/compute/AutoScaleEditing.spec.js tests/unit/views/compute/RegisterUserData.spec.js",
+    "suites_passed": 5,
+    "tests_passed": 152,
+    "elapsed_seconds": 20.737,
+    "log": "/home/ablecloud/work/ud1385-tests-final.log"
+  },
+  "lint": {
+    "command": "npm run lint -- --no-fix src/views/compute/ResetUserData.vue src/utils/userDataReset.js src/utils/userDataSelection.js tests/unit/views/compute/ResetUserData.spec.js tests/unit/views/compute/UserDataSelection.spec.js",
+    "result": "No lint errors found",
+    "log": "/home/ablecloud/work/ud1385-lint-final.log"
+  },
+  "server_tests": {
+    "command": "mvn -pl server -Dtest=UserVmJoinDaoImplTest -DfailIfNoTests=false -Dcheckstyle.skip -Drat.skip=true test",
+    "passed": 13,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "result": "BUILD SUCCESS",
+    "log": "/home/ablecloud/work/ud1385-maven.log"
+  },
+  "server_package": {
+    "command": "mvn -pl server -DskipTests -Dcheckstyle.skip -Drat.skip=true package",
+    "result": "BUILD SUCCESS",
+    "log": "/home/ablecloud/work/ud1385-server-package.log"
+  },
+  "ui_build": {
+    "command": "NODE_OPTIONS=--max-old-space-size=6144 npm run build",
+    "result": "DONE Build complete",
+    "warnings": ["asset size limit", "entrypoint size limit"],
+    "advisory": "Browserslist caniuse-lite is outdated",
+    "log": "/home/ablecloud/work/ud1385-build-error-final.log"
+  },
+  "full_cloud_build": false,
+  "manual_github_actions": false,
+  "qemu_build": false,
+  "pr_merge": false
+}

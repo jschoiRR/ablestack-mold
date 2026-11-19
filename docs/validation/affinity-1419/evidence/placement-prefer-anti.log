@@ -1,0 +1,6 @@
+mysql: [Warning] Using a password on the command line interface can be insecure.
+prefer-anti [('qa-ag06-ui-vm-01', 'Running', 'ablecube31-1'), ('qa-ag06-vm-02', 'Running', 'ablecube31-1'), ('qa-ag06-vm-03', 'Running', 'ablecube31-2'), ('qa-ag06-vm-04', 'Running', 'ablecube31-3')]
+Traceback (most recent call last):
+  File "/home/ablecloud/work/affinity-1419-20261019/placement.py", line 63, in <module>
+    cur=snapshot();assert len({v['hostid'] for v in cur[:3]})==3;assert len({v['hostid'] for v in cur})==3
+AssertionError

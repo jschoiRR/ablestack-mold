@@ -1,0 +1,95 @@
+{
+  "groups": [
+    {
+      "id": 1,
+      "kind": "group",
+      "name": "AS-PROD-32-AS01-USER",
+      "uuid": "a34d28f5-d903-45d6-b546-aabc670d3abc",
+      "state": "DISABLED",
+      "members": 1,
+      "profile": 2,
+      "removed": null,
+      "lbMembers": 1,
+      "operation": null,
+      "schedules": 0
+    },
+    {
+      "id": 2,
+      "kind": "group",
+      "name": "AS-PROD-32-AS01-VPC",
+      "uuid": "85fabab7-7992-4292-bad3-a43c4bd85cdc",
+      "state": "DISABLED",
+      "members": 1,
+      "profile": 3,
+      "removed": null,
+      "lbMembers": 1,
+      "operation": null,
+      "schedules": 0
+    },
+    {
+      "id": 4,
+      "kind": "group",
+      "name": "AS-PROD-32-AS02-RECOVERY",
+      "uuid": "7cfc210d-169a-43ac-b10f-7a0ed385272f",
+      "state": "DISABLED",
+      "members": 1,
+      "profile": 10,
+      "removed": null,
+      "lbMembers": 1,
+      "operation": null,
+      "schedules": 0
+    },
+    {
+      "id": 5,
+      "kind": "group",
+      "name": "AS-PROD-32-AS04-CONCURRENCY",
+      "uuid": "18bef25a-4053-4454-bc85-f6d777b9391d",
+      "state": "DISABLED",
+      "members": 1,
+      "profile": 11,
+      "removed": null,
+      "lbMembers": 1,
+      "operation": null,
+      "schedules": 3
+    }
+  ],
+  "counters": [
+    {
+      "kind": "counter",
+      "type": "user_vm",
+      "value": 4,
+      "account": "epic1346-as01-user32"
+    },
+    {
+      "kind": "counter",
+      "type": "volume",
+      "value": 4,
+      "account": "epic1346-as01-user32"
+    },
+    {
+      "kind": "counter",
+      "type": "cpu",
+      "value": 8,
+      "account": "epic1346-as01-user32"
+    },
+    {
+      "kind": "counter",
+      "type": "memory",
+      "value": 8192,
+      "account": "epic1346-as01-user32"
+    },
+    {
+      "kind": "counter",
+      "type": "primary_storage",
+      "value": 429496729600,
+      "account": "epic1346-as01-user32"
+    }
+  ],
+  "orphans": [
+    {
+      "kind": "orphans",
+      "vmMaps": 0,
+      "volumeRows": 0
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "router": "r-551-VM",
+  "mode": "inspect",
+  "exitcode": 0,
+  "stdout": "8d5a574200130b92bf24c54ff5dbd6d738d86959a4ac0630c8be1ee6810b8ff8  /var/www/html/userdata/10.138.6.107/user-data\n#cloud-config\nwrite_files:\n  - path: /var/tmp/ud1386-proof\n    permissions: \"0644\"\n    content: \"UD1386-B 한글\\n\"\nruncmd:\n  - [sh, -c, \"printf UD1386-B-executed > /var/tmp/ud1386-executed\"]\n\nTAG=B-value",
+  "stderr": ""
+}

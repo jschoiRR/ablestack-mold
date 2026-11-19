@@ -1,0 +1,25 @@
+{
+  "issue": 1385,
+  "cluster": 31,
+  "source": "80c1f53bd8d5eb1ad192e3b092c9c1423a1b455d",
+  "backup": "/root/ud1385-20261016-025128",
+  "before": {
+    "jar_sha256": "46814056203075c445b6122eeb968c7a11540a0b761eecfc345ac251fcd2dd7e",
+    "config_sha256": "b7de5f6a1f7a3a17310ee7d34ca801bb316fc6f841039f865fbabf154cd59a13",
+    "web_inf_inode": 67111992,
+    "meta_inf_present": false
+  },
+  "jar_sha256": "b7d28d9b977c60e8bbe8107a0000f4f58246cfcdd8a4d7e2576f6a6c38d241b2",
+  "changed_classes": [
+    "com/cloud/api/query/dao/UserVmJoinDaoImpl.class"
+  ],
+  "class_hashes": {
+    "com/cloud/api/query/dao/UserVmJoinDaoImpl.class": "174355b59882772bca5634797e6f9b4b3c456ca394dd42bddc0d3b6722f3a142"
+  },
+  "unchanged_jar_entries_verified": true,
+  "static_files_verified": 855,
+  "web_inf_preserved": true,
+  "config_preserved": true,
+  "mold": "active",
+  "client_http": 200
+}

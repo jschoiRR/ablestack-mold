@@ -1,0 +1,30 @@
+{
+  "javaSource": "9b1363af4f2815e87a920f1191c3925f6c85c277",
+  "uiSource": "f8628299a6c0f5698bfca94416b5a8d70f633c6e",
+  "java": {
+    "api": 12,
+    "schema": 18,
+    "server": 269,
+    "total": 299,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "ui": {
+    "suites": 10,
+    "tests": 222,
+    "coverageCollected": false
+  },
+  "changedMavenModules": [
+    "api",
+    "engine/schema",
+    "server"
+  ],
+  "moduleInstall": "PASS",
+  "moduleCheckstyle": "PASS",
+  "moduleRat": "PASS after preserving pre-existing generated dist files",
+  "uiFocusedLint": "PASS",
+  "uiProductionBuild": "PASS",
+  "fullCloudBuildRun": false,
+  "fullCiClaimed": false
+}

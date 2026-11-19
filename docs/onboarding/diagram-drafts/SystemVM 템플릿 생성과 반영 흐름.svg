@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1352" viewBox="0 0 1800 1352">
+<rect width="100%" height="100%" fill="white"/>
+<text x="72" y="48" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="52" font-weight="700" fill="#172B45">SystemVM 템플릿 생성과 반영</text>
+<text x="72" y="127" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="36" font-weight="400" fill="#506378">이미지를 변경하는 업무가 있을 때 진행하는 별도 실습입니다</text>
+<rect x="72" y="208" width="1656" height="164" rx="20" fill="#F0F7FF" stroke="none" stroke-width="2"/>
+<rect x="96" y="238" width="48" height="48" rx="24" fill="#146CBA" stroke="none" stroke-width="2"/>
+<text x="110" y="248" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="29" font-weight="700" fill="white">1</text>
+<text x="170" y="238" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="42" font-weight="700" fill="#172B45">Linux · 템플릿 생성</text>
+<polyline points="610,232 610,348" fill="none" stroke="#D7E1EB" stroke-width="2"/>
+<text x="646" y="236" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="40" font-weight="400" fill="#506378">tools/appliance/build.sh로 KVM 이미지 생성</text>
+<text x="646" y="298" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="40" font-weight="400" fill="#506378">qcow2.bz2 결과 확인</text>
+<polyline points="900,377 900,412" fill="none" stroke="#146CBA" stroke-width="4"/>
+<polygon points="900,412 908.0,396.0 892.0,396.0" fill="#146CBA"/>
+<rect x="72" y="418" width="1656" height="164" rx="20" fill="#F5F2FF" stroke="none" stroke-width="2"/>
+<rect x="96" y="448" width="48" height="48" rx="24" fill="#6554B7" stroke="none" stroke-width="2"/>
+<text x="110" y="458" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="29" font-weight="700" fill="white">2</text>
+<text x="170" y="448" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="42" font-weight="700" fill="#172B45">Mold · 템플릿 등록</text>
+<polyline points="610,442 610,558" fill="none" stroke="#D7E1EB" stroke-width="2"/>
+<text x="646" y="446" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="40" font-weight="400" fill="#506378">이미지 → 템플릿 · URL 또는 로컬 업로드</text>
+<text x="646" y="508" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="40" font-weight="400" fill="#506378">SSVM·CPVM: SYSTEM / VR: ROUTING</text>
+<polyline points="900,587 900,622" fill="none" stroke="#6554B7" stroke-width="4"/>
+<polygon points="900,622 908.0,606.0 892.0,606.0" fill="#6554B7"/>
+<rect x="72" y="628" width="1656" height="142" rx="20" fill="#EFF9F6" stroke="none" stroke-width="2"/>
+<rect x="96" y="658" width="48" height="48" rx="24" fill="#008878" stroke="none" stroke-width="2"/>
+<text x="110" y="668" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="29" font-weight="700" fill="white">3</text>
+<text x="170" y="658" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="42" font-weight="700" fill="#172B45">준비 완료 확인</text>
+<polyline points="610,652 610,746" fill="none" stroke="#D7E1EB" stroke-width="2"/>
+<text x="646" y="656" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="40" font-weight="400" fill="#506378">대상 Zone에서 Ready 상태 확인</text>
+<polyline points="900,775 900,810" fill="none" stroke="#008878" stroke-width="4"/>
+<polygon points="900,810 908.0,794.0 892.0,794.0" fill="#008878"/>
+<rect x="72" y="816" width="1656" height="164" rx="20" fill="#F0F7FF" stroke="none" stroke-width="2"/>
+<rect x="96" y="846" width="48" height="48" rx="24" fill="#146CBA" stroke="none" stroke-width="2"/>
+<text x="110" y="856" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="29" font-weight="700" fill="white">4</text>
+<text x="170" y="846" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="42" font-weight="700" fill="#172B45">글로벌 설정 확인</text>
+<polyline points="610,840 610,956" fill="none" stroke="#D7E1EB" stroke-width="2"/>
+<text x="646" y="844" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="40" font-weight="400" fill="#506378">VR: router.template.kvm을 템플릿 이름과 일치</text>
+<text x="646" y="906" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="40" font-weight="400" fill="#506378">이미지 버전·내부 다운로드 허용 범위 확인</text>
+<polyline points="900,985 900,1020" fill="none" stroke="#146CBA" stroke-width="4"/>
+<polygon points="900,1020 908.0,1004.0 892.0,1004.0" fill="#146CBA"/>
+<rect x="72" y="1026" width="1656" height="164" rx="20" fill="#F5F2FF" stroke="none" stroke-width="2"/>
+<rect x="96" y="1056" width="48" height="48" rx="24" fill="#6554B7" stroke="none" stroke-width="2"/>
+<text x="110" y="1066" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="29" font-weight="700" fill="white">5</text>
+<text x="170" y="1056" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="42" font-weight="700" fill="#172B45">새 시스템 VM에 반영</text>
+<polyline points="610,1050 610,1166" fill="none" stroke="#D7E1EB" stroke-width="2"/>
+<text x="646" y="1054" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="40" font-weight="400" fill="#506378">정한 시간에 서비스 재시작과 VM 재생성</text>
+<text x="646" y="1116" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="40" font-weight="400" fill="#506378">네트워크·콘솔·다운로드 기능 확인</text>
+<text x="72" y="1221" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="36" font-weight="700" fill="#172B45">템플릿 등록만으로 실행 중인 시스템 VM 이미지가 바뀌지는 않습니다.</text>
+</svg>

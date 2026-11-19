@@ -1,0 +1,42 @@
+[
+  {
+    "request": {
+      "command": "listVirtualMachines",
+      "id": "df825f8b-a205-4ed1-b397-737b9557d432",
+      "details": "min,affgrp"
+    },
+    "response": {
+      "errorresponse": {
+        "uuidList": [],
+        "errorcode": 432,
+        "cserrorcode": 9999,
+        "errortext": "The API [listVirtualMachines] does not exist or is not available for the account qa-ag04-user."
+      }
+    }
+  },
+  {
+    "request": {
+      "command": "listAffinityGroups",
+      "id": "2ed13f5c-3f14-4749-8087-992b715b1152"
+    },
+    "response": {
+      "listaffinitygroupsresponse": {
+        "count": 1,
+        "affinitygroup": [
+          {
+            "id": "2ed13f5c-3f14-4749-8087-992b715b1152",
+            "name": "qa-ag04-user-target",
+            "account": "qa-ag04-user",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host affinity",
+            "virtualmachineIds": [
+              "df825f8b-a205-4ed1-b397-737b9557d432"
+            ]
+          }
+        ]
+      }
+    }
+  }
+]

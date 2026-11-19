@@ -1,0 +1,224 @@
+[
+  {
+    "label": "root-single-and-multi",
+    "expected": [
+      1,
+      2,
+      3,
+      4,
+      14,
+      21,
+      22
+    ],
+    "actual": [
+      1,
+      2,
+      3,
+      4,
+      14,
+      21,
+      22
+    ],
+    "passed": true
+  },
+  {
+    "label": "second-single-and-multi",
+    "expected": [
+      2,
+      3,
+      4,
+      5,
+      14
+    ],
+    "actual": [
+      2,
+      3,
+      4,
+      5,
+      14
+    ],
+    "passed": true
+  },
+  {
+    "label": "other-owner",
+    "expected": [
+      16
+    ],
+    "actual": [
+      16
+    ],
+    "passed": true
+  },
+  {
+    "label": "project-owner",
+    "expected": [
+      17
+    ],
+    "actual": [
+      17
+    ],
+    "passed": true
+  },
+  {
+    "label": "owner-union",
+    "expected": [
+      1,
+      2,
+      3,
+      4,
+      14,
+      16,
+      21,
+      22
+    ],
+    "actual": [
+      1,
+      2,
+      3,
+      4,
+      14,
+      16,
+      21,
+      22
+    ],
+    "passed": true
+  },
+  {
+    "label": "global-owners",
+    "expected": [
+      1,
+      2,
+      3,
+      4,
+      14,
+      16,
+      17,
+      21,
+      22
+    ],
+    "actual": [
+      1,
+      2,
+      3,
+      4,
+      14,
+      16,
+      17,
+      21,
+      22
+    ],
+    "passed": true
+  },
+  {
+    "label": "empty-owner-scope",
+    "expected": [
+      1,
+      2,
+      3,
+      4,
+      14,
+      16,
+      17,
+      21,
+      22
+    ],
+    "actual": [
+      1,
+      2,
+      3,
+      4,
+      14,
+      16,
+      17,
+      21,
+      22
+    ],
+    "passed": true
+  },
+  {
+    "label": "unused",
+    "expected": [],
+    "actual": [],
+    "passed": true
+  },
+  {
+    "label": "unknown",
+    "expected": [],
+    "actual": [],
+    "passed": true
+  },
+  {
+    "label": "literal-quotes-wildcards",
+    "expected": [
+      18
+    ],
+    "actual": [
+      18
+    ],
+    "passed": true
+  },
+  {
+    "label": "injection-is-literal",
+    "expected": [],
+    "actual": [],
+    "passed": true
+  },
+  {
+    "label": "substring-is-not-a-key",
+    "expected": [],
+    "actual": [],
+    "passed": true
+  },
+  {
+    "label": "key-material-is-case-sensitive",
+    "expected": [
+      13
+    ],
+    "actual": [
+      13
+    ],
+    "passed": true
+  },
+  {
+    "label": "legacy-trailing-newline",
+    "expected": [
+      19,
+      21,
+      22
+    ],
+    "actual": [
+      19,
+      21,
+      22
+    ],
+    "passed": true
+  },
+  {
+    "label": "unicode-name",
+    "expected": [
+      23
+    ],
+    "actual": [
+      23
+    ],
+    "passed": true
+  },
+  {
+    "label": "empty-material",
+    "expected": [],
+    "actual": [],
+    "passed": true
+  },
+  {
+    "label": "null-material",
+    "expected": [],
+    "actual": [],
+    "passed": true
+  },
+  {
+    "label": "wrong-owner",
+    "expected": [],
+    "actual": [],
+    "passed": true
+  }
+]

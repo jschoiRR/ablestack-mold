@@ -1,0 +1,51 @@
+{
+  "truncated": false,
+  "events": [
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 13132,
+      "id": "36984.2571",
+      "url": "http://10.10.31.10:8080/client/api/",
+      "httpMethod": "POST",
+      "parameters": {
+        "command": "resetUserDataForVirtualMachine",
+        "response": "json",
+        "id": "f5003747-806c-439f-8b71-35ef75e28f5a",
+        "userdata": ""
+      }
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 13134,
+      "id": "36984.2571",
+      "url": "http://10.10.31.10:8080/client/api/",
+      "status": 200,
+      "mimeType": "application/json"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 13136,
+      "id": "36984.2572",
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&details=group,nics,secgrp,tmpl,servoff,diskoff,iso,volume,affgrp,backoff,guestnetwork&id=f5003747-806c-439f-8b71-35ef75e28f5a&page=1&pagesize=20&showIcon=true&command=listVirtualMachinesMetrics&response=json&sessionkey=<redacted>",
+      "httpMethod": "GET",
+      "parameters": {
+        "listall": "true",
+        "details": "group,nics,secgrp,tmpl,servoff,diskoff,iso,volume,affgrp,backoff,guestnetwork",
+        "id": "f5003747-806c-439f-8b71-35ef75e28f5a",
+        "page": "1",
+        "pagesize": "20",
+        "showIcon": "true",
+        "command": "listVirtualMachinesMetrics",
+        "response": "json"
+      }
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 13141,
+      "id": "36984.2572",
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&details=group,nics,secgrp,tmpl,servoff,diskoff,iso,volume,affgrp,backoff,guestnetwork&id=f5003747-806c-439f-8b71-35ef75e28f5a&page=1&pagesize=20&showIcon=true&command=listVirtualMachinesMetrics&response=json&sessionkey=<redacted>",
+      "status": 200,
+      "mimeType": "application/json"
+    }
+  ]
+}

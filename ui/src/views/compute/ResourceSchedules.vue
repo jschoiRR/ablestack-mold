@@ -16,9 +16,15 @@
 // under the License.
 
 <template>
-  <div>
+  <div :class="{ 'autoscale-tab': resourceType === 'AutoScaleVmGroup' }">
+    <a-space v-if="resourceType === 'AutoScaleVmGroup'" wrap class="autoscale-toolbar">
+      <a-button type="primary" @click="createSchedule" :disabled="isSubmitted || !('createResourceSchedule' in $store.getters.apis)"><template #icon><plus-outlined /></template>{{ $t('label.schedule.add') }}</a-button>
+      <a-button @click="fetchData" :disabled="isSubmitted" :loading="tabLoading || scheduleRefreshing"><template #icon><reload-outlined /></template>{{ $t('label.refresh') }}</a-button>
+    </a-space>
+    <a-alert v-if="resourceType === 'AutoScaleVmGroup'" type="info" show-icon :message="$t('message.autoscale.schedule.contract')" style="margin-bottom: 10px" />
     <p v-if="listRefreshFailed" role="status">{{ $t('message.list.refresh.stale') }}</p>
     <a-button
+      v-if="resourceType !== 'AutoScaleVmGroup'"
       type="dashed"
       style="width: 100%; margin-bottom: 10px"
       @click="showAddModal"
@@ -38,6 +44,13 @@
       @refresh="this.fetchData"
     >
       <template #scheduleActions="{ record }">
+        <div v-if="resourceType === 'AutoScaleVmGroup'" class="autoscale-row-actions">
+          <a-dropdown :trigger="['click']" placement="bottomRight" overlay-class-name="autoscale-row-menu"><a-button size="small" :aria-label="$t('label.actions')"><template #icon><down-outlined /></template></a-button><template #overlay><a-menu>
+            <a-menu-item key="edit" :disabled="tabLoading || isSubmitted || !('updateResourceSchedule' in $store.getters.apis)" @click="updateSchedule(record)">{{ $t('label.autoscale.schedule.edit') }}</a-menu-item>
+            <a-menu-item key="delete" danger :disabled="tabLoading || isSubmitted || !('deleteResourceSchedule' in $store.getters.apis)" @click="prepareScheduleRemoval(record)">{{ $t('label.autoscale.schedule.remove') }}</a-menu-item>
+          </a-menu></template></a-dropdown>
+        </div>
+        <template v-else>
         <tooltip-button
           :tooltip="$t('label.edit')"
           :disabled="!('updateResourceSchedule' in $store.getters.apis)"
@@ -58,6 +71,7 @@
             type="primary"
           />
         </a-popconfirm>
+        </template>
       </template>
     </list-view>
     <a-pagination
@@ -83,12 +97,32 @@
   </div>
 
   <a-modal
+v-if="resourceType === 'AutoScaleVmGroup'"
+class="mold-dialog autoscale-dialog"
+centered
+:width="520"
+:visible="!!pendingScheduleRemoval"
+:title="$t('label.autoscale.schedule.remove')"
+:ok-text="$t('label.delete')"
+      :ok-button-props="{ danger: true, disabled: tabLoading || isSubmitted }"
+      @ok="confirmScheduleRemoval({ id: pendingScheduleRemoval?.id })"
+      @cancel="pendingScheduleRemoval = null">
+    <a-descriptions bordered :column="1" size="small"><a-descriptions-item :label="$t('label.description')">{{ pendingScheduleRemoval?.name }}</a-descriptions-item><a-descriptions-item :label="$t('label.id')">{{ pendingScheduleRemoval?.id }}</a-descriptions-item></a-descriptions>
+  </a-modal>
+
+  <a-modal
+    :class="resourceType === 'AutoScaleVmGroup' ? 'mold-dialog autoscale-dialog' : undefined"
+    :centered="resourceType === 'AutoScaleVmGroup'"
+    :width="resourceType === 'AutoScaleVmGroup' ? 760 : 520"
     :visible="showModal"
     :title="$t('label.schedule')"
     :maskClosable="false"
     :closable="true"
-    @cancel="closeModal"
-    @ok="submitForm"
+
+      @cancel="closeModal"
+    :confirmLoading="isSubmitted"
+
+      @ok="submitForm"
   >
     <a-form
       layout="vertical"
@@ -219,7 +253,8 @@
             <a-date-picker
               v-model:value="form.startDate"
               show-time
-              :locale="this.$i18n.locale"
+              :locale="resourceType === 'AutoScaleVmGroup' ? datePickerLocale : this.$i18n.locale"
+              :dropdown-class-name="resourceType === 'AutoScaleVmGroup' ? 'autoscale-schedule-picker' : undefined"
               :placeholder="$t('message.select.start.date.and.time')"
             />
           </a-form-item>
@@ -238,7 +273,8 @@
             <a-date-picker
               v-model:value="form.endDate"
               show-time
-              :locale="this.$i18n.locale"
+              :locale="resourceType === 'AutoScaleVmGroup' ? datePickerLocale : this.$i18n.locale"
+              :dropdown-class-name="resourceType === 'AutoScaleVmGroup' ? 'autoscale-schedule-picker' : undefined"
               :placeholder="$t('message.select.end.date.and.time')"
             />
           </a-form-item>
@@ -264,7 +300,9 @@
             v-if="!form.useCronFormat"
             v-model="form.schedule"
             :periods="periods"
-            :button-props="{ type: 'primary', size: 'small', disabled: form.useCronFormat }"
+            :locale="resourceType === 'AutoScaleVmGroup' ? $i18n.locale.replace('_', '-') : undefined"
+            :custom-locale="cronLocale"
+            :button-props="{ type: resourceType === 'AutoScaleVmGroup' ? 'default' : 'primary', size: 'small', disabled: form.useCronFormat }"
             @error="error = $event"
           />
           <label
@@ -311,9 +349,14 @@
 </template>
 
 <script>
+import '@/style/components/view/autoscale.less'
+import { autoScaleResourceScope } from '@/utils/autoScaleUi'
 import { listRefreshMixin } from '@/utils/listRefreshMixin'
 
-import { reactive, ref, toRaw } from 'vue'
+import { reactive, ref, toRaw, h } from 'vue'
+import koKR from 'ant-design-vue/es/date-picker/locale/ko_KR'
+import enUS from 'ant-design-vue/es/date-picker/locale/en_US'
+import 'dayjs/locale/ko'
 import { getAPI, postAPI } from '@/api'
 import ListView from '@/components/view/ListView'
 import Status from '@/components/widgets/Status'
@@ -326,6 +369,7 @@ import cronstrue from 'cronstrue/i18n'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 import timezone from 'dayjs/plugin/timezone'
+import { schedulePickerDate, autoScaleScheduleError } from '@/utils/autoScaleSchedule'
 
 dayjs.extend(utc)
 dayjs.extend(timezone)
@@ -357,10 +401,13 @@ export default {
     this.fetchTimeZone = debounce(this.fetchTimeZone, 800)
     return {
       tabLoading: false,
+      scheduleRefreshing: false,
+      scheduleReadScope: null,
       columnKeys: ['action', 'enabled', 'description', 'schedule', 'timezone', 'startdate', 'enddate', 'created', 'scheduleActions'],
       selectedColumnKeys: [],
       columns: [],
       schedules: [],
+      pendingScheduleRemoval: null,
       timeZoneMap: [],
       resourceActionsMap: {
         VirtualMachine: [
@@ -386,6 +433,7 @@ export default {
       showModal: false,
       isSubmitted: false,
       isEdit: false,
+      originalSchedule: null,
       error: '',
       pattern: 'YYYY-MM-DD HH:mm:ss'
     }
@@ -394,6 +442,28 @@ export default {
     this.apiParams = this.$getApiParams('createResourceSchedule')
   },
   computed: {
+    datePickerLocale () { return this.$i18n.locale === 'ko_KR' ? koKR : enUS },
+    cronLocale () {
+      if (this.resourceType !== 'AutoScaleVmGroup' || this.$i18n.locale !== 'ko_KR') return undefined
+      return {
+        '*': {
+          prefix: '매',
+          suffix: '',
+          text: '',
+          '*': { empty: { text: '매번' }, value: { text: '{{val.text}}' }, range: { text: '{{start.text}}–{{end.text}}' }, everyX: { text: '{{every.value}}마다' } },
+          month: { '*': { prefix: '' }, empty: { text: '매월' }, value: { text: '{{val.alt}}' }, range: { text: '{{start.alt}}–{{end.alt}}' } },
+          day: { '*': { prefix: '' }, empty: { text: '매일' }, value: { text: '{{val.text}}일' } },
+          dayOfWeek: { '*': { prefix: '' }, empty: { text: '모든 요일' }, value: { text: '{{val.alt}}' }, range: { text: '{{start.alt}}–{{end.alt}}' } },
+          hour: { '*': { prefix: '' }, empty: { text: '매시' }, value: { text: '{{val.text}}시' } },
+          minute: { '*': { prefix: '' }, empty: { text: '매분' }, value: { text: '{{val.text}}분' } }
+        },
+        year: { text: '년', dayOfWeek: { '*': { prefix: '' } } },
+        month: { text: '월', dayOfWeek: { '*': { prefix: '' } } },
+        week: { text: '주' },
+        day: { text: '일' }
+      }
+    },
+
     pageSizeOptions () {
       var sizes = [20, 50, 100, 200, this.$store.getters.defaultListViewPageSize]
       if (this.device !== 'desktop') {
@@ -411,8 +481,7 @@ export default {
     this.selectedColumnKeys = this.columnKeys
     if (this.resourceType === 'AutoScaleVmGroup') {
       this.columnKeys = ['enabled', 'description', 'schedule', 'minmembers',
-        'maxmembers', 'timezone', 'startdate', 'enddate', 'created',
-        'scheduleActions']
+        'maxmembers', 'timezone', 'startdate', 'enddate', 'created', 'scheduleActions']
       this.selectedColumnKeys = [...this.columnKeys]
     }
     this.updateColumns()
@@ -458,8 +527,25 @@ export default {
       this.resetForm()
       this.showAddModal()
     },
+    prepareScheduleRemoval (record) {
+      this.pendingScheduleRemoval = { resourceId: this.resource.id, id: record?.id, name: record?.description }
+    },
+    confirmScheduleRemoval (record) {
+      const target = this.pendingScheduleRemoval
+      this.pendingScheduleRemoval = null
+      if (record && record.id !== target?.id) {
+        this.$message.warning(this.$t('message.autoscale.selection.stale'))
+        return
+      }
+      const schedule = this.schedules.find(item => item.id === target?.id)
+      if (this.tabLoading || this.isSubmitted || target?.resourceId !== this.resource.id || !schedule) {
+        this.$message.warning(this.$t('message.autoscale.selection.stale'))
+        return
+      }
+      return this.removeSchedule(schedule)
+    },
     removeSchedule (schedule) {
-      postAPI('deleteResourceSchedule', {
+      return postAPI('deleteResourceSchedule', {
         id: schedule.id,
         resourceid: this.resource.id,
         resourcetype: this.resourceType
@@ -483,11 +569,13 @@ export default {
     updateSchedule (schedule) {
       this.resetForm()
       this.isEdit = true
+      this.originalSchedule = { ...schedule }
       Object.assign(this.form, schedule)
+      this.form.useCronFormat = true
       this.form.minMembers = schedule?.details?.minmembers ? Number(schedule.details.minmembers) : null
       this.form.maxMembers = schedule?.details?.maxmembers ? Number(schedule.details.maxmembers) : null
-      this.form.startDate = dayjs(schedule.startdate)
-      this.form.endDate = schedule.enddate ? dayjs(schedule.enddate) : null
+      this.form.startDate = schedulePickerDate(schedule.startdate, schedule.timezone)
+      this.form.endDate = schedulePickerDate(schedule.enddate, schedule.timezone)
       this.showAddModal()
     },
     showAddModal () {
@@ -499,6 +587,14 @@ export default {
       this.formRef.value.validate().then(() => {
         const formRaw = toRaw(this.form)
         const values = this.handleRemoveFields(formRaw)
+        if (this.resourceType === 'AutoScaleVmGroup') {
+          const validationError = autoScaleScheduleError(values)
+          if (validationError) {
+            this.$message.error(this.$t(validationError))
+            this.isSubmitted = false
+            return
+          }
+        }
         const selectedAction = values.action || (this.actions.length === 1 ? this.actions[0].value : null)
         var params = {
           description: values.description,
@@ -521,6 +617,11 @@ export default {
         } else {
           params.id = this.form.id
           command = 'updateResourceSchedule'
+          if (values.timezone === this.originalSchedule.timezone) {
+            if (params.startdate === schedulePickerDate(this.originalSchedule.startdate, values.timezone)?.format(this.pattern)) delete params.startdate
+            if (params.enddate === schedulePickerDate(this.originalSchedule.enddate, values.timezone)?.format(this.pattern)) delete params.enddate
+          }
+          if (this.originalSchedule.enddate && !values.endDate) params.clearenddate = true
         }
 
         postAPI(command, params).then(response => {
@@ -536,7 +637,7 @@ export default {
           this.isSubmitted = false
         })
       }).catch(error => {
-        this.$notifyError(error)
+        if (this.resourceType !== 'AutoScaleVmGroup' || !error.errorFields) this.$notifyError(error)
         if (error.errorFields !== undefined) {
           this.formRef.value.scrollToField(error.errorFields[0].name)
         }
@@ -568,6 +669,9 @@ export default {
     },
     fetchSchedules () {
       const listRequest = this.listRequestToken('fetchSchedules')
+      const scope = autoScaleResourceScope(this)
+      const same = this.scheduleReadScope === scope
+      if (this.resourceType === 'AutoScaleVmGroup') { this.scheduleRefreshing = true; if (!same) this.schedules = [] }
 
       if (!this.resource.id) {
         return
@@ -579,12 +683,13 @@ export default {
         resourcetype: this.resourceType,
         listall: true
       }
-      this.tabLoading = !listRequest.loaded
+      this.tabLoading = this.resourceType === 'AutoScaleVmGroup' ? !same : !listRequest.loaded
       return getAPI('listResourceSchedule', params).then(json => {
         if (!this.isListRequestCurrent('fetchSchedules', listRequest)) return
-        this.schedules = []
+        if (this.resourceType === 'AutoScaleVmGroup' && this.$refs.listview) this.$refs.listview.setSelection([])
         this.totalCount = json?.listresourcescheduleresponse?.count || 0
         const rawSchedules = json?.listresourcescheduleresponse?.resourceschedule || []
+        if (this.resourceType === 'AutoScaleVmGroup') this.scheduleReadScope = scope
         this.schedules = rawSchedules.map(s => ({
           ...s,
           minmembers: s.details?.minmembers,
@@ -602,9 +707,11 @@ export default {
         if (!this.isListRequestCurrent('fetchSchedules', listRequest)) return
 
         this.tabLoading = false
+        this.scheduleRefreshing = false
       }).finally(() => {
         if (!this.isListRequestCurrent('fetchSchedules', listRequest)) return
         this.tabLoading = false
+        this.scheduleRefreshing = false
       })
     },
     changePage (page, pageSize) {
@@ -621,7 +728,7 @@ export default {
       this.updateColumns()
     },
     generateHumanReadableSchedule (schedule) {
-      return cronstrue.toString(schedule, { locale: this.$i18n.locale, throwExceptionOnParseError: false, verbose: true })
+      return cronstrue.toString(schedule, { locale: this.$i18n.locale === 'ko_KR' ? 'ko' : this.$i18n.locale, throwExceptionOnParseError: false, verbose: true })
     },
     updateColumns () {
       this.columns = []
@@ -630,13 +737,20 @@ export default {
         startdate: this.$t('label.start.date.and.time'),
         enddate: this.$t('label.end.date.and.time')
       }
+      if (this.resourceType === 'AutoScaleVmGroup') columnTitleMap.scheduleActions = this.$t('label.actions')
       for (var columnKey of this.columnKeys) {
         if (!this.selectedColumnKeys.includes(columnKey)) continue
-        this.columns.push({
+        const column = {
           key: columnKey,
           title: columnTitleMap[columnKey] || this.$t('label.' + String(columnKey).toLowerCase()),
           dataIndex: columnKey
-        })
+        }
+        if (this.resourceType === 'AutoScaleVmGroup' && columnKey === 'enabled') {
+          column.key = 'autoscaleScheduleState'
+          column.customRender = ({ record }) => h(Status, { text: record.enabled ? 'Enabled' : 'Disabled', displayText: true, displayLabel: this.$t(record.enabled ? 'state.enabled' : 'state.disabled') })
+        }
+        if (this.resourceType === 'AutoScaleVmGroup' && columnKey === 'scheduleActions') Object.assign(column, { fixed: 'right', width: 90 })
+        this.columns.push(column)
       }
       if (this.columns.length > 0) {
         this.columns[this.columns.length - 1].customFilterDropdown = true

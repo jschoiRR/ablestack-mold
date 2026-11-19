@@ -1,0 +1,46 @@
+[INFO] Scanning for projects...
+[WARNING]
+[WARNING] Some problems were encountered while building the effective model for org.apache.cloudstack:cloud-plugin-hypervisor-kvm:jar:4.23.0.0
+[WARNING] 'dependencies.dependency.(groupId:artifactId:type:classifier)' must be unique: org.json:json:jar -> duplicate declaration of version (?) @ line 130, column 21
+[WARNING]
+[WARNING] It is highly recommended to fix these problems because they threaten the stability of your build.
+[WARNING]
+[WARNING] For this reason, future Maven versions might no longer support building such malformed projects.
+[WARNING]
+[INFO]
+[INFO] -----------------< org.apache.cloudstack:cloud-server >-----------------
+[INFO] Building Apache CloudStack Server 4.23.0.0
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO]
+[INFO] --- checkstyle:3.6.0:check (cloudstack-checkstyle) @ cloud-server ---
+[INFO] Starting audit...
+[ERROR] /home/ablecloud/work/dhslove/cloud-affinity-1413/server/src/test/java/com/cloud/vm/UserVmUserDataResetTest.java:47: Using the '.*' form of import should be avoided - org.junit.Assert.*. [AvoidStarImport]
+[ERROR] /home/ablecloud/work/dhslove/cloud-affinity-1413/server/src/test/java/com/cloud/vm/UserVmUserDataResetTest.java:48: Using the '.*' form of import should be avoided - org.mockito.ArgumentMatchers.*. [AvoidStarImport]
+[ERROR] /home/ablecloud/work/dhslove/cloud-affinity-1413/server/src/test/java/com/cloud/vm/UserVmUserDataResetTest.java:49: Using the '.*' form of import should be avoided - org.mockito.Mockito.*. [AvoidStarImport]
+[ERROR] /home/ablecloud/work/dhslove/cloud-affinity-1413/server/src/test/java/com/cloud/server/CniRegistrationTest.java:19: Using the '.*' form of import should be avoided - org.junit.Assert.*. [AvoidStarImport]
+[ERROR] /home/ablecloud/work/dhslove/cloud-affinity-1413/server/src/test/java/com/cloud/server/CniRegistrationTest.java:20: Using the '.*' form of import should be avoided - org.mockito.ArgumentMatchers.*. [AvoidStarImport]
+[ERROR] /home/ablecloud/work/dhslove/cloud-affinity-1413/server/src/test/java/com/cloud/server/CniRegistrationTest.java:21: Using the '.*' form of import should be avoided - org.mockito.Mockito.*. [AvoidStarImport]
+[ERROR] /home/ablecloud/work/dhslove/cloud-affinity-1413/server/src/test/java/com/cloud/server/UserDataDeletionTest.java:19: Using the '.*' form of import should be avoided - org.junit.Assert.*. [AvoidStarImport]
+[ERROR] /home/ablecloud/work/dhslove/cloud-affinity-1413/server/src/test/java/com/cloud/server/UserDataDeletionTest.java:20: Using the '.*' form of import should be avoided - org.mockito.ArgumentMatchers.*. [AvoidStarImport]
+[ERROR] /home/ablecloud/work/dhslove/cloud-affinity-1413/server/src/test/java/com/cloud/server/UserDataDeletionTest.java:21: Using the '.*' form of import should be avoided - org.mockito.Mockito.*. [AvoidStarImport]
+[ERROR] /home/ablecloud/work/dhslove/cloud-affinity-1413/server/src/test/java/com/cloud/server/UserDataRegistrationTest.java:19: Using the '.*' form of import should be avoided - org.junit.Assert.*. [AvoidStarImport]
+[ERROR] /home/ablecloud/work/dhslove/cloud-affinity-1413/server/src/test/java/com/cloud/server/UserDataRegistrationTest.java:20: Using the '.*' form of import should be avoided - org.mockito.ArgumentMatchers.*. [AvoidStarImport]
+[ERROR] /home/ablecloud/work/dhslove/cloud-affinity-1413/server/src/test/java/com/cloud/server/UserDataRegistrationTest.java:21: Using the '.*' form of import should be avoided - org.mockito.Mockito.*. [AvoidStarImport]
+[ERROR] /home/ablecloud/work/dhslove/cloud-affinity-1413/server/src/test/java/com/cloud/api/query/UserDataReferenceQueryTest.java:22: Using the '.*' form of import should be avoided - org.mockito.Mockito.*. [AvoidStarImport]
+[ERROR] /home/ablecloud/work/dhslove/cloud-affinity-1413/server/src/test/java/com/cloud/network/CniMetadataJsonTest.java:20: Using the '.*' form of import should be avoided - org.junit.Assert.*. [AvoidStarImport]
+[ERROR] /home/ablecloud/work/dhslove/cloud-affinity-1413/server/src/test/java/com/cloud/network/rules/UserdataToRouterRulesTest.java:25: Using the '.*' form of import should be avoided - org.mockito.Mockito.*. [AvoidStarImport]
+Audit done.
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  21.546 s
+[INFO] Finished at: 2026-10-19T17:09:14+09:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-checkstyle-plugin:3.6.0:check (cloudstack-checkstyle) on project cloud-server: Failed during checkstyle execution: There are 15 errors reported by Checkstyle 8.18 with cloud-style.xml ruleset. -> [Help 1]
+[ERROR]
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR]
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoExecutionException

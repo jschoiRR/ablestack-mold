@@ -16,6 +16,7 @@
 // under the License.
 
 <template>
+  <a-alert v-if="dashboardReadError" type="error" show-icon :message="$t('message.request.failed')"><template #description><a-button @click="fetchData">{{ $t('label.refresh') }}</a-button></template></a-alert>
   <a-row class="capacity-dashboard" :gutter="[12,12]">
     <a-col :xs="{ span: 24 }" :lg="{ span: 12 }" :xl="{ span: 8 }" :xxl="{ span: 8 }">
       <chart-card :loading="loading" class="dashboard-card">
@@ -366,7 +367,7 @@
 </template>
 
 <script>
-import { getAPI } from '@/api'
+import dashboardReadMixin from '@/utils/dashboardReadMixin'
 import store from '@/store'
 
 import ChartCard from '@/components/widgets/ChartCard'
@@ -376,6 +377,7 @@ import Status from '@/components/widgets/Status'
 
 export default {
   name: 'UsageDashboard',
+  mixins: [dashboardReadMixin],
   components: {
     ChartCard,
     UsageDashboardChart,
@@ -429,7 +431,7 @@ export default {
   created () {
     this.project = store.getters.project
     this.fetchData()
-    this.$store.watch(
+    this.unwatchDashboardProject = this.$store.watch(
       (state, getters) => getters.project,
       (newValue, oldValue) => {
         if (newValue && newValue.id && (!oldValue || newValue.id !== oldValue.id)) {
@@ -461,6 +463,7 @@ export default {
       }
     }
   },
+  beforeUnmount () { if (this.unwatchDashboardProject) this.unwatchDashboardProject() },
   methods: {
     getStrokeColor (available) {
       return available <= 0 ? '#ff4d4f' : '#52c41a'
@@ -474,88 +477,58 @@ export default {
       this.updateData()
     },
     listAccount () {
-      this.loading = true
-      getAPI('listAccounts', { id: this.$store.getters.userInfo.accountid }).then(json => {
-        this.loading = false
+      this.readDashboard('listAccounts', { id: this.$store.getters.userInfo.accountid }, json => {
         if (json && json.listaccountsresponse && json.listaccountsresponse.account) {
           this.account = json.listaccountsresponse.account[0]
         }
       })
     },
     listProject () {
-      this.loading = true
       const params = {
         id: store.getters.project.id,
         listall: true
       }
-      getAPI('listProjects', params).then(json => {
-        this.loading = false
+      this.readDashboard('listProjects', params, json => {
         if (json?.listprojectsresponse?.project) {
           this.project = json.listprojectsresponse.project[0]
         }
       })
     },
     updateData () {
-      this.data = {
-        running: 0,
-        stopped: 0,
-        instances: 0,
-        kubernetes: 0,
-        volumes: 0,
-        snapshots: 0,
-        networks: 0,
-        vpcs: 0,
-        ips: 0,
-        templates: 0
-      }
       this.listInstances()
       this.listEvents()
       if ('listKubernetesClusters' in this.$store.getters.apis) {
-        this.loading = true
-        getAPI('listKubernetesClusters', { listall: true, page: 1, pagesize: 1 }).then(json => {
-          this.loading = false
+        this.readDashboard('listKubernetesClusters', { listall: true, page: 1, pagesize: 1 }, json => {
           this.data.kubernetes = json?.listkubernetesclustersresponse?.count
         })
       }
       if ('listVolumes' in this.$store.getters.apis) {
-        this.loading = true
-        getAPI('listVolumes', { listall: true, page: 1, pagesize: 1 }).then(json => {
-          this.loading = false
+        this.readDashboard('listVolumes', { listall: true, page: 1, pagesize: 1 }, json => {
           this.data.volumes = json?.listvolumesresponse?.count
         })
       }
       if ('listSnapshots' in this.$store.getters.apis) {
-        this.loading = true
-        getAPI('listSnapshots', { listall: true, page: 1, pagesize: 1 }).then(json => {
-          this.loading = false
+        this.readDashboard('listSnapshots', { listall: true, page: 1, pagesize: 1 }, json => {
           this.data.snapshots = json?.listsnapshotsresponse?.count
         })
       }
       if ('listNetworks' in this.$store.getters.apis) {
-        this.loading = true
-        getAPI('listNetworks', { listall: true, page: 1, pagesize: 1 }).then(json => {
-          this.loading = false
+        this.readDashboard('listNetworks', { listall: true, page: 1, pagesize: 1 }, json => {
           this.data.networks = json?.listnetworksresponse?.count
         })
       }
       if ('listVPCs' in this.$store.getters.apis) {
-        this.loading = true
-        getAPI('listVPCs', { listall: true, page: 1, pagesize: 1 }).then(json => {
-          this.loading = false
+        this.readDashboard('listVPCs', { listall: true, page: 1, pagesize: 1 }, json => {
           this.data.vpcs = json?.listvpcsresponse?.count
         })
       }
       if ('listPublicIpAddresses' in this.$store.getters.apis) {
-        this.loading = true
-        getAPI('listPublicIpAddresses', { listall: true, page: 1, pagesize: 1 }).then(json => {
-          this.loading = false
+        this.readDashboard('listPublicIpAddresses', { listall: true, page: 1, pagesize: 1 }, json => {
           this.data.ips = json?.listpublicipaddressesresponse?.count
         })
       }
       if ('listTemplates' in this.$store.getters.apis) {
-        this.loading = true
-        getAPI('listTemplates', { templatefilter: 'self', listall: true, page: 1, pagesize: 1 }).then(json => {
-          this.loading = false
+        this.readDashboard('listTemplates', { templatefilter: 'self', listall: true, page: 1, pagesize: 1 }, json => {
           this.data.templates = json?.listtemplatesresponse?.count
         })
       }
@@ -564,22 +537,18 @@ export default {
       if (!('listVirtualMachines' in this.$store.getters.apis)) {
         return
       }
-      this.loading = true
-      getAPI('listVirtualMachines', { listall: true, details: 'min', page: 1, pagesize: 1 }).then(json => {
-        this.loading = false
+
+      this.readDashboard('listVirtualMachines', { listall: true, details: 'min', page: 1, pagesize: 1 }, json => {
         this.data.instances = json?.listvirtualmachinesresponse?.count
       })
-      getAPI('listVirtualMachines', { listall: true, details: 'min', state: 'running', page: 1, pagesize: 1 }).then(json => {
-        this.loading = false
+      this.readDashboard('listVirtualMachines', { listall: true, details: 'min', state: 'running', page: 1, pagesize: 1 }, json => {
         this.data.running = json?.listvirtualmachinesresponse?.count
       })
-      getAPI('listVirtualMachines', { listall: true, details: 'min', state: 'stopped', page: 1, pagesize: 1 }).then(json => {
-        this.loading = false
+      this.readDashboard('listVirtualMachines', { listall: true, details: 'min', state: 'stopped', page: 1, pagesize: 1 }, json => {
         this.data.stopped = json?.listvirtualmachinesresponse?.count
       })
       if (this.isLeaseFeatureEnabled) {
-        getAPI('listVirtualMachines', { leased: true, listall: true, details: 'min', page: 1, pagesize: 1 }).then(json => {
-          this.loading = false
+        this.readDashboard('listVirtualMachines', { leased: true, listall: true, details: 'min', page: 1, pagesize: 1 }, json => {
           this.data.leasedinstances = json?.listvirtualmachinesresponse?.count
           if (!this.data.leasedinstances) {
             this.data.leasedinstances = 0
@@ -596,10 +565,10 @@ export default {
         pagesize: 8,
         listall: true
       }
-      this.loading = true
-      getAPI('listEvents', params).then(json => {
+
+      this.readDashboard('listEvents', params, json => {
         this.events = []
-        this.loading = false
+
         if (json && json.listeventsresponse && json.listeventsresponse.event) {
           this.events = json.listeventsresponse.event
         }

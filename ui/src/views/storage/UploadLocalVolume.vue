@@ -17,6 +17,16 @@
 
 <template>
   <div class="form-layout">
+    <a-alert v-if="uploadError" type="error" show-icon :message="uploadError.message" style="margin-bottom: 16px">
+      <template #description>
+        <a-collapse ghost>
+          <a-collapse-panel key="diagnostic" :header="$t('label.creation.source.error.details')">
+            <div style="white-space: pre-wrap; overflow-wrap: anywhere">{{ uploadError.detail }}</div>
+          </a-collapse-panel>
+        </a-collapse>
+      </template>
+    </a-alert>
+
     <span v-if="uploading">
       <loading-outlined />
       {{ $t('message.upload.file.processing') }}
@@ -28,7 +38,7 @@
         show-icon
         :message="$t('message.ssvm.cert.untrusted')"
         :description="$t('message.ssvm.cert.trust.instructions')" />
-      <div :span="24" class="action-button">
+      <MoldDialogActions :span="24" :busy="loading || uploading">
         <a-button @click="closeAction">{{ $t('label.cancel') }}</a-button>
         <a-button :href="ssvmOrigin" target="_blank" rel="noopener noreferrer">
           {{ $t('label.ssvm.open.cert.page') }}
@@ -36,7 +46,7 @@
         <a-button type="primary" :loading="loading" @click="retryUpload">
           {{ $t('label.retry.upload') }}
         </a-button>
-      </div>
+      </MoldDialogActions>
     </div>
     <a-spin :spinning="loading" v-else v-ctrl-enter="handleSubmit">
       <a-form
@@ -86,7 +96,7 @@
         </a-form-item>
         <a-form-item name="diskofferingid" ref="diskofferingid">
           <template #label>
-            <tooltip-label :title="$t('label.diskofferingid')" :tooltip="apiParams.diskofferingid.description"/>
+            <tooltip-label :title="$t('label.diskofferingid')" :tooltip="$t('message.creation.source.upload.offering')"/>
           </template>
           <infinite-scroll-select
             v-model:value="form.diskofferingid"
@@ -98,7 +108,7 @@
             defaultIcon="hdd-outlined"
             :defaultOption="{ id: null, displaytext: ''}"
             allowClear="true"
-            :placeholder="apiParams.diskofferingid.description"
+            :placeholder="$t('message.creation.source.upload.offering')"
             @change-option="onChangeDiskOffering" />
         </a-form-item>
         <a-form-item ref="format" name="format">
@@ -158,18 +168,20 @@
             :placeholder="$t('label.account')"
             @change-option-value="handleAccountChange" />
         </a-form-item>
-        <div :span="24" class="action-button">
+        <MoldDialogActions :span="24" :busy="loading || uploading">
           <a-button @click="closeAction">{{ $t('label.cancel') }}</a-button>
           <a-button :loading="loading" type="primary" ref="submit" @click="handleSubmit">{{ $t('label.ok') }}</a-button>
-        </div>
+        </MoldDialogActions>
       </a-form>
     </a-spin>
   </div>
 </template>
 
 <script>
+import MoldDialogActions from '@/components/view/MoldDialogActions'
 import { ref, reactive, toRaw } from 'vue'
-import { getAPI } from '@/api'
+import { volumeUploadError } from '@/utils/volumeUploadError'
+import { getAPI } from '@/utils/storageApi'
 import { axios } from '../../utils/request'
 import { mixinForm } from '@/utils/mixin'
 import { probeSsvmCert } from '@/utils/ssvmProbe'
@@ -181,6 +193,7 @@ export default {
   name: 'UploadLocalVolume',
   mixins: [mixinForm],
   components: {
+    MoldDialogActions,
     ResourceIcon,
     TooltipLabel,
     InfiniteScrollSelect
@@ -188,6 +201,7 @@ export default {
   data () {
     return {
       fileList: [],
+      uploadError: null,
       formats: ['RAW', 'VHD', 'VHDX', 'OVA', 'QCOW2'],
       domainId: null,
       account: null,
@@ -335,11 +349,7 @@ export default {
         })
         this.closeAction()
       }).catch(e => {
-        this.$notification.error({
-          message: this.$t('message.upload.failed'),
-          description: `${this.$t('message.upload.volume.failed')} -  ${e}`,
-          duration: 0
-        })
+        this.showUploadError(e)
       }).finally(() => {
         this.uploading = false
         this.loading = false
@@ -348,6 +358,7 @@ export default {
     handleSubmit (e) {
       e.preventDefault()
       if (this.loading) return
+      this.uploadError = null
       this.formRef.value.validate().then(() => {
         const formRaw = toRaw(this.form)
         const values = this.handleRemoveFields(formRaw)
@@ -374,15 +385,15 @@ export default {
           }
           this.handleUpload()
         }).catch(e => {
-          this.$notification.error({
-            message: this.$t('message.upload.failed'),
-            description: `${this.$t('message.upload.volume.failed')} -  ${e?.response?.data?.postuploadvolumeresponse?.errortext || e}`,
-            duration: 0
-          })
+          this.showUploadError(e)
         }).finally(() => {
           this.loading = false
         })
       })
+    },
+    showUploadError (error) {
+      this.uploadError = volumeUploadError(error, key => this.$t(key))
+      this.$notification.error({ message: this.$t('message.upload.failed'), description: this.uploadError.message, duration: 0 })
     },
     closeAction () {
       this.$emit('close-action')

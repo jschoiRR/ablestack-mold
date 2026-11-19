@@ -1,0 +1,305 @@
+{
+  "truncated": false,
+  "events": [
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 25385,
+      "id": "36984.4278",
+      "url": "http://10.10.31.10:8080/client/api/?id=0817ee26-99f2-47b9-a0c4-028e68ace786&account=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&listall=true&page=1&pagesize=2&command=listUserData&response=json&sessionkey=<redacted>",
+      "httpMethod": "GET",
+      "parameters": {
+        "id": "0817ee26-99f2-47b9-a0c4-028e68ace786",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "2",
+        "command": "listUserData",
+        "response": "json"
+      }
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 25387,
+      "id": "36984.4278",
+      "url": "http://10.10.31.10:8080/client/api/?id=0817ee26-99f2-47b9-a0c4-028e68ace786&account=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&listall=true&page=1&pagesize=2&command=listUserData&response=json&sessionkey=<redacted>",
+      "status": 200,
+      "mimeType": "application/json"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 25389,
+      "id": "36984.4279",
+      "url": "http://10.10.31.10:8080/client/api/?account=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&name=UD1392-31-20261016-ui-text-v2&listall=true&page=1&pagesize=500&command=listUserData&response=json&sessionkey=<redacted>",
+      "httpMethod": "GET",
+      "parameters": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "name": "UD1392-31-20261016-ui-text-v2",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "500",
+        "command": "listUserData",
+        "response": "json"
+      }
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 25394,
+      "id": "36984.4279",
+      "url": "http://10.10.31.10:8080/client/api/?account=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&name=UD1392-31-20261016-ui-text-v2&listall=true&page=1&pagesize=500&command=listUserData&response=json&sessionkey=<redacted>",
+      "status": 200,
+      "mimeType": "application/json"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 25396,
+      "id": "36984.4280",
+      "url": "http://10.10.31.10:8080/client/api/",
+      "httpMethod": "POST",
+      "parameters": {
+        "command": "registerUserData",
+        "response": "json",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "name": "UD1392-31-20261016-ui-text-v2",
+        "userdata": "I2Nsb3VkLWNvbmZpZwojIFVEMTM5Mi0zMS0yMDI2MTAxNiBVVEYtOCDtlZzquIAg8J+YgCAke1RPS0VOfQojIOq4tO2WiS3qsIDrgpjri6Trnbzwn5iA6ri07ZaJLeqwgOuCmOuLpOudvPCfmIDquLTtlokt6rCA64KY64uk65288J+YgOq4tO2WiS3qsIDrgpjri6Trnbzwn5iA6ri07ZaJLeqwgOuCmOuLpOudvPCfmIDquLTtlokt6rCA64KY64uk65288J+YgOq4tO2WiS3qsIDrgpjri6Trnbzwn5iA6ri07ZaJLeqwgOuCmOuLpOudvPCfmIDquLTtlokt6rCA64KY64uk65288J+YgOq4tO2WiS3qsIDrgpjri6Trnbzwn5iA6ri07ZaJLeqwgOuCmOuLpOudvPCfmIDquLTtlokt6rCA64KY64uk65288J+YgOq4tO2WiS3qsIDrgpjri6Trnbzwn5iA6ri07ZaJLeqwgOuCmOuLpOudvPCfmIDquLTtlokt6rCA64KY64uk65288J+YgOq4tO2WiS3qsIDrgpjri6Trnbzwn5iA6ri07ZaJLeqwgOuCmOuLpOudvPCfmIDquLTtlokt6rCA64KY64uk65288J+YgOq4tO2WiS3qsIDrgpjri6Trnbzwn5iA6ri07ZaJLeqwgOuCmOuLpOudvPCfmIDquLTtlokt6rCA64KY64uk65288J+YgOq4tO2WiS3qsIDrgpjri6Trnbzwn5iA6ri07ZaJLeqwgOuCmOuLpOudvPCfmIDquLTtlokt6rCA64KY64uk65288J+YgOq4tO2WiS3qsIDrgpjri6Trnbzwn5iA6ri07ZaJLeqwgOuCmOuLpOudvPCfmIDquLTtlokt6rCA64KY64uk65288J+YgOq4tO2WiS3qsIDrgpjri6Trnbzwn5iA6ri07ZaJLeqwgOuCmOuLpOudvPCfmIDquLTtlokt6rCA64KY64uk65288J+YgOq4tO2WiS3qsIDrgpjri6Trnbzwn5iA6ri07ZaJLeqwgOuCmOuLpOudvPCfmIDquLTtlokt6rCA64KY64uk65288J+YgOq4tO2WiS3qsIDrgpjri6Trnbzwn5iA6ri07ZaJLeqwgOuCmOuLpOudvPCfmIDquLTtlokt6rCA64KY64uk65288J+YgOq4tO2WiS3qsIDrgpjri6Trnbzwn5iA6ri07ZaJLeqwgOuCmOuLpOudvPCfmIDquLTtlokt6rCA64KY64uk65288J+YgOq4tO2WiS3qsIDrgpjri6Trnbzwn5iA6ri07ZaJLeqwgOuCmOuLpOudvPCfmIDquLTtlokt6rCA64KY64uk65288J+YgOq4tO2WiS3qsIDrgpjri6Trnbzwn5iA6ri07ZaJLeqwgOuCmOuLpOudvPCfmIDquLTtlokt6rCA64KY64uk65288J+YgOq4tO2WiS3qsIDrgpjri6Trnbzwn5iA6ri07ZaJLeqwgOuCmOuLpOudvPCfmIDquLTtlokt6rCA64KY64uk65288J+YgOq4tO2WiS3qsIDrgpjri6Trnbzwn5iA6ri07ZaJLeqwgOuCmOuLpOudvPCfmIDquLTtlokt6rCA64KY64uk65288J+YgOq4tO2WiS3qsIDrgpjri6Trnbzwn5iA6ri07ZaJLeqwgOuCmOuLpOudvPCfmIDquLTtlokt6rCA64KY64uk65288J+YgOq4tO2WiS3qsIDrgpjri6Trnbzwn5iA6ri07ZaJLeqwgOuCmOuLpOudvPCfmIDquLTtlokt6rCA64KY64uk65288J+YgOq4tO2WiS3qsIDrgpjri6Trnbzwn5iA6ri07ZaJLeqwgOuCmOuLpOudvPCfmIDquLTtlokt6rCA64KY64uk65288J+YgOq4tO2WiS3qsIDrgpjri6Trnbzwn5iA6ri07ZaJLeqwgOuCmOuLpOudvPCfmIDquLTtlokt6rCA64KY64uk65288J+YgOq4tO2WiS3qsIDrgpjri6Trnbzwn5iA6ri07ZaJLeqwgOuCmOuLpOudvPCfmIDquLTtlokt6rCA64KY64uk65288J+YgOq4tO2WiS3qsIDrgpjri6Trnbzwn5iA6ri07ZaJLeqwgOuCmOuLpOudvPCfmIDquLTtlokt6rCA64KY64uk65288J+YgOq4tO2WiS3qsIDrgpjri6Trnbzwn5iA6ri07ZaJLeqwgOuCmOuLpOudvPCfmIDquLTtlokt6rCA64KY64uk65288J+YgOq4tO2WiS3qsIDrgpjri6Trnbzwn5iA6ri07ZaJLeqwgOuCmOuLpOudvPCfmIDquLTtlokt6rCA64KY64uk65288J+YgOq4tO2WiS3qsIDrgpjri6Trnbzwn5iA6ri07ZaJLeqwgOuCmOuLpOudvPCfmIDquLTtlokt6rCA64KY64uk65288J+YgOq4tO2WiS3qsIDrgpjri6Trnbzwn5iA6ri07ZaJLeqwgOuCmOuLpOudvPCfmIDquLTtlokt6rCA64KY64uk65288J+YgOq4tO2WiS3qsIDrgpjri6Trnbzwn5iA6ri07ZaJLeqwgOuCmOuLpOudvPCfmIDquLTtlokt6rCA64KY64uk65288J+YgOq4tO2WiS3qsIDrgpjri6Trnbzwn5iA6ri07ZaJLeqwgOuCmOuLpOudvPCfmIDquLTtlokt6rCA64KY64uk65288J+YgOq4tO2WiS3qsIDrgpjri6Trnbzwn5iA6ri07ZaJLeqwgOuCmOuLpOudvPCfmIDquLTtlokt6rCA64KY64uk65288J+YgOq4tO2WiS3qsIDrgpjri6Trnbzwn5iA6ri07ZaJLeqwgOuCmOuLpOudvPCfmIDquLTtlokt6rCA64KY64uk65288J+YgOq4tO2WiS3qsIDrgpjri6Trnbzwn5iA6ri07ZaJLeqwgOuCmOuLpOudvPCfmIDquLTtlokt6rCA64KY64uk65288J+YgOq4tO2WiS3qsIDrgpjri6Trnbzwn5iA6ri07ZaJLeqwgOuCmOuLpOudvPCfmIDquLTtlokt6rCA64KY64uk65288J+YgOq4tO2WiS3qsIDrgpjri6Trnbzwn5iACiMg7KSEIDAg6rKA7KadCiMg7KSEIDEg6rKA7KadCiMg7KSEIDIg6rKA7KadCiMg7KSEIDMg6rKA7KadCiMg7KSEIDQg6rKA7KadCiMg7KSEIDUg6rKA7KadCiMg7KSEIDYg6rKA7KadCiMg7KSEIDcg6rKA7KadCiMg7KSEIDgg6rKA7KadCiMg7KSEIDkg6rKA7KadCiMg7KSEIDEwIOqygOymnQojIOykhCAxMSDqsoDspp0KIyDspIQgMTIg6rKA7KadCiMg7KSEIDEzIOqygOymnQojIOykhCAxNCDqsoDspp0KIyDspIQgMTUg6rKA7KadCiMg7KSEIDE2IOqygOymnQojIOykhCAxNyDqsoDspp0KIyDspIQgMTgg6rKA7KadCiMg7KSEIDE5IOqygOymnQojIOykhCAyMCDqsoDspp0KIyDspIQgMjEg6rKA7KadCiMg7KSEIDIyIOqygOymnQojIOykhCAyMyDqsoDspp0KIyDspIQgMjQg6rKA7KadCiMg7KSEIDI1IOqygOymnQojIOykhCAyNiDqsoDspp0KIyDspIQgMjcg6rKA7KadCiMg7KSEIDI4IOqygOymnQojIOykhCAyOSDqsoDspp0KIyDspIQgMzAg6rKA7KadCiMg7KSEIDMxIOqygOymnQojIOykhCAzMiDqsoDspp0KIyDspIQgMzMg6rKA7KadCiMg7KSEIDM0IOqygOymnQojIOykhCAzNSDqsoDspp0KIyDspIQgMzYg6rKA7KadCiMg7KSEIDM3IOqygOymnQojIOykhCAzOCDqsoDspp0KIyDspIQgMzkg6rKA7KadCiMg7KSEIDQwIOqygOymnQojIOykhCA0MSDqsoDspp0KIyDspIQgNDIg6rKA7KadCiMg7KSEIDQzIOqygOymnQojIOykhCA0NCDqsoDspp0KIyBVRDEzOTIg7LWc7KKFIOyDiCDrsoTsoIQK",
+        "params": "TOKEN"
+      }
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 25402,
+      "id": "36984.4280",
+      "url": "http://10.10.31.10:8080/client/api/",
+      "status": 200,
+      "mimeType": "application/json"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 25404,
+      "id": "36984.4281",
+      "url": "http://10.10.31.10:8080/client/api/?account=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&name=UD1392-31-20261016-ui-text-v2&listall=true&page=1&pagesize=500&command=listUserData&response=json&sessionkey=<redacted>",
+      "httpMethod": "GET",
+      "parameters": {
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "name": "UD1392-31-20261016-ui-text-v2",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "500",
+        "command": "listUserData",
+        "response": "json"
+      }
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 25409,
+      "id": "36984.4281",
+      "url": "http://10.10.31.10:8080/client/api/?account=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&name=UD1392-31-20261016-ui-text-v2&listall=true&page=1&pagesize=500&command=listUserData&response=json&sessionkey=<redacted>",
+      "status": 200,
+      "mimeType": "application/json"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 25411,
+      "id": "36984.4282",
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&id=0817ee26-99f2-47b9-a0c4-028e68ace786&page=1&pagesize=20&command=listUserData&response=json&sessionkey=<redacted>",
+      "httpMethod": "GET",
+      "parameters": {
+        "listall": "true",
+        "id": "0817ee26-99f2-47b9-a0c4-028e68ace786",
+        "page": "1",
+        "pagesize": "20",
+        "command": "listUserData",
+        "response": "json"
+      }
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 25412,
+      "id": "36984.4283",
+      "url": "http://10.10.31.10:8080/client/api/?entityid=b9a08c3a-137c-4c33-839c-0ab5f123873b&entitytype=USER_DATA&annotationfilter=all&page=1&pagesize=500&command=listAnnotations&response=json&sessionkey=<redacted>",
+      "httpMethod": "GET",
+      "parameters": {
+        "entityid": "b9a08c3a-137c-4c33-839c-0ab5f123873b",
+        "entitytype": "USER_DATA",
+        "annotationfilter": "all",
+        "page": "1",
+        "pagesize": "500",
+        "command": "listAnnotations",
+        "response": "json"
+      }
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 25419,
+      "id": "36984.4283",
+      "url": "http://10.10.31.10:8080/client/api/?entityid=b9a08c3a-137c-4c33-839c-0ab5f123873b&entitytype=USER_DATA&annotationfilter=all&page=1&pagesize=500&command=listAnnotations&response=json&sessionkey=<redacted>",
+      "status": 200,
+      "mimeType": "application/json"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 25421,
+      "id": "36984.4284",
+      "url": "http://10.10.31.10:8080/client/api/",
+      "httpMethod": "POST",
+      "parameters": {
+        "command": "addAnnotation",
+        "response": "json",
+        "entityid": "b9a08c3a-137c-4c33-839c-0ab5f123873b",
+        "entitytype": "USER_DATA",
+        "annotation": "MOLD_USERDATA_VERSION/1\n{\"sourceid\":\"0817ee26-99f2-47b9-a0c4-028e68ace786\",\"targetid\":\"b9a08c3a-137c-4c33-839c-0ab5f123873b\",\"before\":3075,\"after\":3102}",
+        "adminsonly": "false"
+      }
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 25424,
+      "id": "36984.4282",
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&id=0817ee26-99f2-47b9-a0c4-028e68ace786&page=1&pagesize=20&command=listUserData&response=json&sessionkey=<redacted>",
+      "status": 200,
+      "mimeType": "application/json"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 25429,
+      "id": "36984.4285",
+      "url": "http://10.10.31.10:8080/client/api/?managementserverid=716fb21e-86f3-4f8c-b34d-11c8d0220230&command=readyForShutdown&response=json&sessionkey=<redacted>",
+      "httpMethod": "GET",
+      "parameters": {
+        "managementserverid": "716fb21e-86f3-4f8c-b34d-11c8d0220230",
+        "command": "readyForShutdown",
+        "response": "json"
+      }
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 25432,
+      "id": "36984.4285",
+      "url": "http://10.10.31.10:8080/client/api/?managementserverid=716fb21e-86f3-4f8c-b34d-11c8d0220230&command=readyForShutdown&response=json&sessionkey=<redacted>",
+      "status": 200,
+      "mimeType": "application/json"
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 25436,
+      "id": "36984.4284",
+      "url": "http://10.10.31.10:8080/client/api/",
+      "status": 503,
+      "mimeType": "application/json"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 25438,
+      "id": "36984.4286",
+      "url": "http://10.10.31.10:8080/client/api/?entityid=b9a08c3a-137c-4c33-839c-0ab5f123873b&entitytype=USER_DATA&annotationfilter=all&page=1&pagesize=500&command=listAnnotations&response=json&sessionkey=<redacted>",
+      "httpMethod": "GET",
+      "parameters": {
+        "entityid": "b9a08c3a-137c-4c33-839c-0ab5f123873b",
+        "entitytype": "USER_DATA",
+        "annotationfilter": "all",
+        "page": "1",
+        "pagesize": "500",
+        "command": "listAnnotations",
+        "response": "json"
+      }
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 25443,
+      "id": "36984.4286",
+      "url": "http://10.10.31.10:8080/client/api/?entityid=b9a08c3a-137c-4c33-839c-0ab5f123873b&entitytype=USER_DATA&annotationfilter=all&page=1&pagesize=500&command=listAnnotations&response=json&sessionkey=<redacted>",
+      "status": 200,
+      "mimeType": "application/json"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 25451,
+      "id": "36984.4288",
+      "url": "http://10.10.31.10:8080/client/api/?managementserverid=716fb21e-86f3-4f8c-b34d-11c8d0220230&command=readyForShutdown&response=json&sessionkey=<redacted>",
+      "httpMethod": "GET",
+      "parameters": {
+        "managementserverid": "716fb21e-86f3-4f8c-b34d-11c8d0220230",
+        "command": "readyForShutdown",
+        "response": "json"
+      }
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 25454,
+      "id": "36984.4288",
+      "url": "http://10.10.31.10:8080/client/api/?managementserverid=716fb21e-86f3-4f8c-b34d-11c8d0220230&command=readyForShutdown&response=json&sessionkey=<redacted>",
+      "status": 200,
+      "mimeType": "application/json"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 25458,
+      "id": "36984.4289",
+      "url": "http://10.10.31.10:8080/client/api/?managementserverid=716fb21e-86f3-4f8c-b34d-11c8d0220230&command=readyForShutdown&response=json&sessionkey=<redacted>",
+      "httpMethod": "GET",
+      "parameters": {
+        "managementserverid": "716fb21e-86f3-4f8c-b34d-11c8d0220230",
+        "command": "readyForShutdown",
+        "response": "json"
+      }
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 25461,
+      "id": "36984.4289",
+      "url": "http://10.10.31.10:8080/client/api/?managementserverid=716fb21e-86f3-4f8c-b34d-11c8d0220230&command=readyForShutdown&response=json&sessionkey=<redacted>",
+      "status": 200,
+      "mimeType": "application/json"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 25465,
+      "id": "36984.4290",
+      "url": "http://10.10.31.10:8080/client/api/?entityid=b9a08c3a-137c-4c33-839c-0ab5f123873b&entitytype=USER_DATA&annotationfilter=all&page=1&pagesize=500&command=listAnnotations&response=json&sessionkey=<redacted>",
+      "httpMethod": "GET",
+      "parameters": {
+        "entityid": "b9a08c3a-137c-4c33-839c-0ab5f123873b",
+        "entitytype": "USER_DATA",
+        "annotationfilter": "all",
+        "page": "1",
+        "pagesize": "500",
+        "command": "listAnnotations",
+        "response": "json"
+      }
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 25468,
+      "id": "36984.4290",
+      "url": "http://10.10.31.10:8080/client/api/?entityid=b9a08c3a-137c-4c33-839c-0ab5f123873b&entitytype=USER_DATA&annotationfilter=all&page=1&pagesize=500&command=listAnnotations&response=json&sessionkey=<redacted>",
+      "status": 200,
+      "mimeType": "application/json"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 25470,
+      "id": "36984.4291",
+      "url": "http://10.10.31.10:8080/client/api/",
+      "httpMethod": "POST",
+      "parameters": {
+        "command": "addAnnotation",
+        "response": "json",
+        "entityid": "b9a08c3a-137c-4c33-839c-0ab5f123873b",
+        "entitytype": "USER_DATA",
+        "annotation": "MOLD_USERDATA_VERSION/1\n{\"sourceid\":\"0817ee26-99f2-47b9-a0c4-028e68ace786\",\"targetid\":\"b9a08c3a-137c-4c33-839c-0ab5f123873b\",\"before\":3075,\"after\":3102}",
+        "adminsonly": "false"
+      }
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 25475,
+      "id": "36984.4291",
+      "url": "http://10.10.31.10:8080/client/api/",
+      "status": 200,
+      "mimeType": "application/json"
+    }
+  ]
+}

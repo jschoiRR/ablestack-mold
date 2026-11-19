@@ -1,0 +1,133 @@
+Browser tab: 4, Title: "사용자 데이터 라이브러리 - ABLESTACK-Mold", URL: "http://10.10.31.10:8080/client/#/userdata".
+1 AXWebArea 사용자 데이터 라이브러리 - ABLESTACK-Mold, URL: 10.10.31.10:8080/client/#/userdata
+	2 container
+		3 container
+			4 image
+			5 menu
+				6 dashboard 대시보드
+					7 link Description: dashboard 대시보드, Value: 10.10.31.10:8080/client/#/dashboard
+				8 container
+					9 image cloud
+					10 text 컴퓨트
+				50 content list sub_menu_37_$$_/compute-popup
+					51 cloud-server 가상머신
+						52 link Description: cloud-server 가상머신, Value: 10.10.31.10:8080/client/#/vm
+					53 camera VM 스냅샷
+						54 link Description: camera VM 스냅샷, Value: 10.10.31.10:8080/client/#/vmsnapshot
+					55 쿠버네티스
+						56 link Description: 쿠버네티스, Value: 10.10.31.10:8080/client/#/kubernetes
+					57 fullscreen 오토스케일 VM 그룹
+						58 link Description: fullscreen 오토스케일 VM 그룹, Value: 10.10.31.10:8080/client/#/autoscalevmgroup
+					59 gold 가상머신 그룹
+						60 link Description: gold 가상머신 그룹, Value: 10.10.31.10:8080/client/#/vmgroup
+					61 key SSH 키 쌍
+						62 link Description: key SSH 키 쌍, Value: 10.10.31.10:8080/client/#/ssh
+					63 solution 사용자 데이터 라이브러리
+						64 link Description: solution 사용자 데이터 라이브러리, Value: 10.10.31.10:8080/client/#/userdata
+					65 solution CNI 구성
+						66 link Description: solution CNI 구성, Value: 10.10.31.10:8080/client/#/cniconfiguration
+					67 swap Affinity 그룹
+						68 link Description: swap Affinity 그룹, Value: 10.10.31.10:8080/client/#/affinitygroup
+				11 container
+					12 image hdd
+					13 text 스토리지
+				14 container
+					15 image wifi
+					16 text 네트워크
+				17 container
+					18 image picture
+					19 text 이미지
+				20 schedule 이벤트
+					21 link Description: schedule 이벤트, Value: 10.10.31.10:8080/client/#/event
+				22 project 프로젝트
+					23 link Description: project 프로젝트, Value: 10.10.31.10:8080/client/#/project
+				24 team 계정
+					25 link Description: team 계정, Value: 10.10.31.10:8080/client/#/account
+				26 global Zone
+					27 link Description: global Zone, Value: 10.10.31.10:8080/client/#/zones
+				28 container
+					29 image shopping
+					30 text 서비스 오퍼링
+				31 container
+					32 image tool
+					33 text 도구
+				34 read API 문서
+					35 link Description: read API 문서, Value: 10.10.31.10:8080/client/#/apidocs/
+		36 container
+			37 image menu-fold
+			38 container
+				39 combo box (settable) rc_select_6
+				40 image project
+				41 text 기본 보기
+			42 button 생성 down
+				43 text 생성
+				44 image down
+			45 image translation
+			46 image bell
+			47 container
+				48 text UU UD1389 user
+		49 container
+			69 container
+				70 container
+					71 link Description: home, Value: 10.10.31.10:8080/client/#/
+					72 text /
+					73 link Description: 사용자 데이터 라이브러리, Value: 10.10.31.10:8080/client/#/userdata
+					74 link Description: question-circle, Value: docs.ablecloud.io/latest/adminguide/virtual_machines.html#user-data-and-meta-data
+					75 button reload 업데이트
+						76 image reload
+						77 text 업데이트
+					78 switch 프로젝트, Value: 0
+						79 text 프로젝트
+				80 button 사용자 데이터 등록
+					81 image plus
+					82 text 사용자 데이터 등록
+				83 container
+					84 button filter
+						85 image filter
+					86 text field (settable)
+					87 button search
+						88 image search
+			89 text 검색창: 이름 포함 검색 또는 정확한 UUID. 필터: UUID·정확한 이름·도메인·소유 계정. 프로젝트는 상단 공통 보기를 선택하세요. 열 정렬은 현재 페이지에만 적용됩니다.
+			90 table
+				91 row
+					92 cell
+						93 container
+							94 checkbox (settable, integer) Description:  , Value: 0
+					95 cell
+						96 container
+							97 text 이름
+							98 image caret-up
+							99 image caret-down
+					100 cell
+						101 container
+							102 text 아이디
+							103 image caret-up
+							104 image caret-down
+					105 cell
+						106 button filter
+							107 image filter
+				108 row
+					109 cell
+						110 container
+							111 checkbox (settable, integer) Description:  , Value: 0
+					112 cell
+						113 link Description: UD1389-31-20261016-user, Value: 10.10.31.10:8080/client/#/userdata/b234e5ec-6ccf-4a27-9ad8-05081d7a78a9
+					114 cell
+						115 text b234e5ec-6ccf-4a27-9ad8-05081d7a78a9
+			116 content list
+				117 text 전체 1 개 항목 중 1-1 표시
+				118 container 이전 페이지
+					119 button (disabled) left
+						120 image left
+				121 text 1
+				122 container 다음 페이지
+					123 button (disabled) right
+						124 image right
+				125 container
+					126 combo box (settable) rc_select_7
+					127 text 20 / 쪽
+	128 container
+		129 image check-circle
+		130 text 사용 가능한 모든 기능을 발견했습니다!
+
+The focused UI element is 1 AXWebArea 사용자 데이터 라이브러리 - ABLESTACK-Mold, URL: 10.10.31.10:8080/client/#/userdata

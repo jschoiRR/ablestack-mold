@@ -1,0 +1,1 @@
+{"body": "#cloud-config\nwrite_files:\n  - path: /var/tmp/ud1386-proof\n    permissions: \"0644\"\n    content: \"UD1386-B \ud55c\uae00\\n\"\nruncmd:\n  - [sh, -c, \"printf UD1386-B-executed > /var/tmp/ud1386-executed\"]\n", "sha256": "8d5a574200130b92bf24c54ff5dbd6d738d86959a4ac0630c8be1ee6810b8ff8", "tag": "guard-B"}

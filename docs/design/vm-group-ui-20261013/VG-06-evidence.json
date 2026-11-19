@@ -1,0 +1,597 @@
+{
+  "issue": 1363,
+  "epic": 1357,
+  "pr": 1364,
+  "deployed_source": "df54d81d7bc051f8128e08cd03aa6b7b0896ee11",
+  "backend_build_source": "44b5c8c7d1bf8167efb1943c780bf5e68c903e7a",
+  "api": {
+    "31": {
+      "contract": {
+        "pass": true,
+        "cases": 21,
+        "resources_preserved": true,
+        "mappings_restored": true
+      },
+      "race": {
+        "pass": true,
+        "cases": 10,
+        "resources_preserved": true,
+        "mappings_restored": true
+      }
+    },
+    "32": {
+      "contract": {
+        "pass": true,
+        "cases": 21,
+        "resources_preserved": true,
+        "mappings_restored": true
+      },
+      "race": {
+        "pass": true,
+        "cases": 10,
+        "resources_preserved": true,
+        "mappings_restored": true
+      }
+    }
+  },
+  "deployment": {
+    "31": {
+      "source": "df54d81d7bc051f8128e08cd03aa6b7b0896ee11",
+      "jar_sha256": "b7cb2cf969589e837466e4a1b22c2665cb0c6d107196fbfbba2aa015f266f65f",
+      "config_sha256": "b7de5f6a1f7a3a17310ee7d34ca801bb316fc6f841039f865fbabf154cd59a13",
+      "index_sha256": "7017481f75e3d75634399db6560f6b1db7d97a13fcf21b0a3cf5dcb6e2defce1",
+      "WEB-INF": true,
+      "META-INF": false,
+      "http": 200,
+      "service": "active",
+      "pid": "834619",
+      "static_files_verified": 849,
+      "jar_entries_verified": 58,
+      "active_markers": {
+        "blockingLoadingState": [
+          "js/chunk-1767a70a.2ef2b82a.js"
+        ],
+        "fetchSyncProgress": [
+          "js/chunk-1767a70a.2ef2b82a.js"
+        ],
+        "extractJobId": [
+          "js/chunk-1767a70a.2ef2b82a.js"
+        ],
+        "vm-group-delete-summary": [
+          "js/app.4e2d115b.js"
+        ]
+      },
+      "removed_old_deployment_data": [
+        "/root/epic1357-vg06-deploy-20261014-115634",
+        "/home/ablecloud/vg06-stage-20261014",
+        "/home/ablecloud/vg06-final-ui-stage-20261014"
+      ],
+      "disk_free_gib": 325.9
+    },
+    "32": {
+      "source": "df54d81d7bc051f8128e08cd03aa6b7b0896ee11",
+      "jar_sha256": "626e11add02f429548df6d4ad366608dedebf2d878802f698d9fc274bf79e088",
+      "config_sha256": "e3839c761e59e77f960b9f9f717055ea91882682a3a036b07e4c69277aac8687",
+      "index_sha256": "7017481f75e3d75634399db6560f6b1db7d97a13fcf21b0a3cf5dcb6e2defce1",
+      "WEB-INF": true,
+      "META-INF": false,
+      "http": 200,
+      "service": "active",
+      "pid": "1293012",
+      "static_files_verified": 849,
+      "jar_entries_verified": 58,
+      "active_markers": {
+        "blockingLoadingState": [
+          "js/chunk-1767a70a.2ef2b82a.js"
+        ],
+        "fetchSyncProgress": [
+          "js/chunk-1767a70a.2ef2b82a.js"
+        ],
+        "extractJobId": [
+          "js/chunk-1767a70a.2ef2b82a.js"
+        ],
+        "vm-group-delete-summary": [
+          "js/app.4e2d115b.js"
+        ]
+      },
+      "removed_old_deployment_data": [
+        "/root/epic1357-vg06-deploy-20261014-115954",
+        "/home/ablecloud/vg06-stage-20261014",
+        "/home/ablecloud/vg06-final-ui-stage-20261014"
+      ],
+      "disk_free_gib": 31.4
+    }
+  },
+  "cleanup": {
+    "31": {
+      "active_vms": 0,
+      "active_volumes": 0,
+      "active_nics": 0,
+      "maps": 0,
+      "active_groups": 0,
+      "active_annotations": 0,
+      "active_networks": 0,
+      "active_accounts": 0,
+      "active_projects": 0
+    },
+    "32": {
+      "active_vms": 0,
+      "active_volumes": 0,
+      "active_nics": 0,
+      "maps": 0,
+      "active_groups": 0,
+      "active_annotations": 0,
+      "active_networks": 0,
+      "active_accounts": 0,
+      "active_projects": 0
+    }
+  },
+  "ui_observations": [
+    {
+      "site": "31",
+      "case": "admin-two-vm-link-A"
+    },
+    {
+      "site": "32",
+      "case": "admin-two-vm-link-A"
+    },
+    {
+      "site": "31",
+      "case": "admin-move-B"
+    },
+    {
+      "site": "32",
+      "case": "admin-move-B"
+    },
+    {
+      "site": "31",
+      "case": "admin-clear"
+    },
+    {
+      "site": "32",
+      "case": "admin-clear"
+    },
+    {
+      "site": "31",
+      "case": "admin-other-account-link"
+    },
+    {
+      "site": "32",
+      "case": "admin-other-account-link"
+    },
+    {
+      "site": "31",
+      "case": "normal-user-move-B"
+    },
+    {
+      "site": "32",
+      "case": "normal-user-move-B"
+    },
+    {
+      "site": "31",
+      "case": "normal-user-clear"
+    },
+    {
+      "site": "32",
+      "case": "normal-user-clear"
+    },
+    {
+      "site": "31",
+      "case": "project-modal-owner"
+    },
+    {
+      "site": "32",
+      "case": "project-modal-owner"
+    },
+    {
+      "site": "31",
+      "case": "project-link-A"
+    },
+    {
+      "site": "32",
+      "case": "project-link-A"
+    },
+    {
+      "site": "31",
+      "case": "project-move-B"
+    },
+    {
+      "site": "32",
+      "case": "project-move-B"
+    },
+    {
+      "site": "31",
+      "case": "project-clear"
+    },
+    {
+      "site": "32",
+      "case": "project-clear"
+    },
+    {
+      "site": "31",
+      "case": "no-group-read-disabled-selector"
+    },
+    {
+      "site": "32",
+      "case": "no-group-read-disabled-selector"
+    },
+    {
+      "site": "31",
+      "case": "readonly-members"
+    },
+    {
+      "site": "32",
+      "case": "readonly-members"
+    },
+    {
+      "site": "31",
+      "case": "list-search-page2"
+    },
+    {
+      "site": "32",
+      "case": "list-search-page2"
+    },
+    {
+      "site": "31",
+      "case": "URL-search-sort-page-reentry"
+    },
+    {
+      "site": "32",
+      "case": "URL-search-sort-page-reentry"
+    },
+    {
+      "site": "31",
+      "case": "create-empty-whitespace-256"
+    },
+    {
+      "site": "32",
+      "case": "create-empty-whitespace-256"
+    },
+    {
+      "site": "31",
+      "case": "create-normalized-duplicate"
+    },
+    {
+      "site": "32",
+      "case": "create-normalized-duplicate"
+    },
+    {
+      "site": "31",
+      "case": "create-server-error-retain-draft"
+    },
+    {
+      "site": "32",
+      "case": "create-server-error-retain-draft"
+    },
+    {
+      "site": "31",
+      "case": "create-Korean-255"
+    },
+    {
+      "site": "32",
+      "case": "create-Korean-255"
+    },
+    {
+      "site": "31",
+      "case": "rename-invalid-duplicate-server-failure"
+    },
+    {
+      "site": "32",
+      "case": "rename-invalid-duplicate-server-failure"
+    },
+    {
+      "site": "31",
+      "case": "rename-unchanged"
+    },
+    {
+      "site": "32",
+      "case": "rename-unchanged"
+    },
+    {
+      "site": "31",
+      "case": "partial-one-success-one-failure"
+    },
+    {
+      "site": "32",
+      "case": "partial-one-success-one-failure"
+    },
+    {
+      "site": "31",
+      "case": "retry-failed-only"
+    },
+    {
+      "site": "31",
+      "case": "partial-retry-all-complete"
+    },
+    {
+      "site": "32",
+      "case": "partial-retry-all-complete"
+    },
+    {
+      "site": "31",
+      "case": "keyboard-menu-cancel-focus-return"
+    },
+    {
+      "site": "31",
+      "case": "member-read-error-retains-blocks"
+    },
+    {
+      "site": "32",
+      "case": "member-read-error-retains-blocks"
+    },
+    {
+      "site": "31",
+      "case": "member-permission-loss-clears-blocks"
+    },
+    {
+      "site": "32",
+      "case": "member-permission-loss-clears-blocks"
+    },
+    {
+      "site": "31",
+      "case": "late-old-group-read-rejected"
+    },
+    {
+      "site": "32",
+      "case": "late-old-group-read-rejected"
+    },
+    {
+      "site": "31",
+      "case": "desktop-long-modal-body-scroll"
+    },
+    {
+      "site": "32",
+      "case": "desktop-long-modal-body-scroll"
+    },
+    {
+      "site": "31",
+      "case": "candidate-page2"
+    },
+    {
+      "site": "32",
+      "case": "candidate-page2"
+    },
+    {
+      "site": "31",
+      "case": "mobile-390-modal-scrolling"
+    },
+    {
+      "site": "32",
+      "case": "mobile-390-modal-scrolling"
+    },
+    {
+      "site": "31",
+      "case": "link-existing-A-members-to-B"
+    },
+    {
+      "site": "32",
+      "case": "link-existing-A-members-to-B"
+    },
+    {
+      "site": "32",
+      "case": "retry-failed-only-confirmed"
+    },
+    {
+      "site": "31",
+      "case": "comment-draft-retained-across-tabs"
+    },
+    {
+      "site": "32",
+      "case": "comment-draft-retained-across-tabs"
+    },
+    {
+      "site": "31",
+      "case": "comment-created"
+    },
+    {
+      "site": "32",
+      "case": "comment-created"
+    },
+    {
+      "site": "31",
+      "case": "delete-empty-cancel"
+    },
+    {
+      "site": "32",
+      "case": "delete-empty-cancel"
+    },
+    {
+      "site": "31",
+      "case": "delete-empty-submitted"
+    },
+    {
+      "site": "32",
+      "case": "delete-empty-submitted"
+    },
+    {
+      "site": "31",
+      "case": "delete-two-members-annotation-confirmation"
+    },
+    {
+      "site": "32",
+      "case": "delete-two-members-annotation-confirmation"
+    },
+    {
+      "site": "31",
+      "case": "delete-member-group-submitted-VMs-preserved"
+    },
+    {
+      "site": "32",
+      "case": "delete-member-group-submitted-VMs-preserved"
+    },
+    {
+      "site": "31",
+      "case": "bulk-member-fixture-linked"
+    },
+    {
+      "site": "32",
+      "case": "bulk-member-fixture-linked"
+    },
+    {
+      "site": "31",
+      "case": "final-desktop-toolbar-summary-pagination"
+    },
+    {
+      "site": "32",
+      "case": "final-desktop-toolbar-summary-pagination"
+    },
+    {
+      "site": "31",
+      "case": "final-forbidden-hides-aggregate-rows-blocks"
+    },
+    {
+      "site": "32",
+      "case": "final-forbidden-hides-aggregate-rows-blocks"
+    },
+    {
+      "site": "31",
+      "case": "group-read-error-retains-blocks"
+    },
+    {
+      "site": "32",
+      "case": "group-read-error-retains-blocks"
+    },
+    {
+      "site": "31",
+      "case": "final-modal-owner-only-already-member-disabled"
+    },
+    {
+      "site": "31",
+      "case": "final-mobile-modal-within-screen"
+    },
+    {
+      "site": "32",
+      "case": "final-modal-owner-only-already-member-disabled"
+    },
+    {
+      "site": "32",
+      "case": "final-mobile-modal-within-screen"
+    },
+    {
+      "site": "31",
+      "case": "bulk-delete-cancel"
+    },
+    {
+      "site": "32",
+      "case": "bulk-delete-cancel"
+    },
+    {
+      "site": "31",
+      "case": "bulk-delete-partial-one-success-one-failure"
+    },
+    {
+      "site": "32",
+      "case": "bulk-delete-partial-one-success-one-failure"
+    },
+    {
+      "site": "31",
+      "case": "bulk-retry-only-failed-confirmation"
+    },
+    {
+      "site": "32",
+      "case": "bulk-retry-only-failed-confirmation"
+    },
+    {
+      "site": "31",
+      "case": "bulk-retry-deletes-failed-only"
+    },
+    {
+      "site": "32",
+      "case": "bulk-retry-deletes-failed-only"
+    },
+    {
+      "site": "31",
+      "case": "empty-template-safe-group-selector"
+    },
+    {
+      "site": "31",
+      "case": "empty-offering-safe-group-selector"
+    },
+    {
+      "site": "32",
+      "case": "empty-template-safe-group-selector"
+    },
+    {
+      "site": "32",
+      "case": "empty-offering-safe-group-selector"
+    },
+    {
+      "site": "31",
+      "case": "real-no-vm-read-role-no-aggregate-no-members"
+    },
+    {
+      "site": "32",
+      "case": "real-no-vm-read-role-no-aggregate-no-members"
+    },
+    {
+      "site": "31",
+      "case": "final-normal-user-link-A"
+    },
+    {
+      "site": "32",
+      "case": "final-normal-user-link-A"
+    },
+    {
+      "site": "31",
+      "case": "final-normal-user-move-B"
+    },
+    {
+      "site": "32",
+      "case": "final-normal-user-move-B"
+    },
+    {
+      "site": "31",
+      "case": "final-normal-user-clear"
+    },
+    {
+      "site": "32",
+      "case": "final-normal-user-clear"
+    },
+    {
+      "site": "31",
+      "case": "mixed-project-list-valid-links"
+    },
+    {
+      "site": "31",
+      "case": "captured-runtime-exceptions"
+    },
+    {
+      "site": "32",
+      "case": "mixed-project-list-valid-links"
+    },
+    {
+      "site": "32",
+      "case": "captured-runtime-exceptions"
+    },
+    {
+      "site": "31",
+      "case": "final-group-route-dialog-tabs-runtime-no-exceptions"
+    },
+    {
+      "site": "32",
+      "case": "final-group-route-dialog-tabs-runtime-no-exceptions"
+    },
+    {
+      "site": "31",
+      "case": "final-normalized-duplicate-Korean-retained"
+    },
+    {
+      "site": "32",
+      "case": "final-normalized-duplicate-Korean-retained"
+    }
+  ],
+  "image_sha256": {
+    "final-members-32.jpg": "9067385a138e90db19c7bbb854dbbd384fc05fea65b8ba40224a9b12991105a7",
+    "final-dialog-mobile-32.jpg": "a0b0881e04d01a552d0b1c2a67bfff04ea4b7f79ebb5f911eeb8c4e5435765cc",
+    "final-members-31.jpg": "dbaaa468043d90b517909a0ce1b162ad4933c234c0b5b6121238183aaadc1cfb",
+    "final-bulk-partial-31.jpg": "397fda7159c115da8ddbf9b4cfe7331a1457a78a561420f97f85cfe58414e3af",
+    "final-bulk-partial-32.jpg": "70c1d357046c3dad045840adc03580ebc185403414854ef3d01df59f3c17c452",
+    "final-dialog-mobile-31.jpg": "c7d8cdfa0896b48aebf71fea22c89c9e7a12d3a05ef2bc9ca0244d358346ba51"
+  },
+  "limits": [
+    "No full Cloud build or full CI",
+    "No high-load benchmark or atomic compare-and-swap guarantee",
+    "Interrupted fault-injection attempts excluded and repeated on both sites",
+    "Earlier console queue truncated; final fresh group route/dialog/tab capture had zero exceptions without truncation"
+  ]
+}

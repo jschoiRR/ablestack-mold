@@ -1,0 +1,814 @@
+{
+  "active": {
+    "role": null,
+    "tag": "BUTTON",
+    "text": "취소"
+  },
+  "app": "http://10.10.31.10:8080/client/js/app.1c6ca5f1.js",
+  "body": {
+    "height": 495,
+    "width": 958,
+    "x": 321,
+    "y": 247.5
+  },
+  "bodyScroll": {
+    "client": 495,
+    "scroll": 495,
+    "scrollTop": 0
+  },
+  "buttons": [
+    {
+      "disabled": false,
+      "rect": {
+        "height": 32,
+        "width": 57.765625,
+        "x": 1119.46875,
+        "y": 759.5
+      },
+      "text": "취소"
+    },
+    {
+      "disabled": false,
+      "rect": {
+        "height": 32,
+        "width": 57.765625,
+        "x": 1193.234375,
+        "y": 759.5
+      },
+      "text": "삭제"
+    }
+  ],
+  "controls": [],
+  "dpr": 1,
+  "footer": {
+    "height": 65,
+    "width": 958,
+    "x": 321,
+    "y": 742.5
+  },
+  "header": {
+    "height": 55,
+    "width": 958,
+    "x": 321,
+    "y": 192.5
+  },
+  "height": 1000,
+  "modal": {
+    "height": 617,
+    "width": 960,
+    "x": 320,
+    "y": 191.5
+  },
+  "modalOverflow": 0,
+  "pageOverflow": 0,
+  "spacing": [
+    {
+      "class": "userdata-delete-content",
+      "gap": "16px",
+      "marginBottom": "0px",
+      "marginTop": "0px",
+      "rect": {
+        "height": 447,
+        "width": 902,
+        "x": 349,
+        "y": 271.5
+      }
+    }
+  ],
+  "tabs": [],
+  "text": [
+    {
+      "background": [
+        34,
+        40,
+        47,
+        1
+      ],
+      "class": "ant-modal-title",
+      "color": [
+        255,
+        255,
+        255,
+        0.65
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 7.128935659391724,
+      "rect": {
+        "height": 22,
+        "width": 910,
+        "x": 345,
+        "y": 208.5
+      },
+      "tag": "DIV",
+      "text": "사용자 데이터 제거"
+    },
+    {
+      "background": [
+        64.24,
+        58.620000000000005,
+        43.22,
+        1
+      ],
+      "class": "ant-alert-message",
+      "color": [
+        255,
+        231,
+        163,
+        1
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 9.19099416185937,
+      "rect": {
+        "height": 22,
+        "width": 848,
+        "x": 387,
+        "y": 280.5
+      },
+      "tag": "DIV",
+      "text": "선택한 사용자 데이터 라이브러리 항목을 삭제합니다. 사용 중인 항목은 서버가 삭제를 거절합니다. 항목별 결과를 확인하세요."
+    },
+    {
+      "background": [
+        34,
+        40,
+        47,
+        1
+      ],
+      "class": "",
+      "color": [
+        240,
+        243,
+        246,
+        1
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 13.348661188320586,
+      "rect": {
+        "height": 19,
+        "width": 80.1875,
+        "x": 349,
+        "y": 328.5
+      },
+      "tag": "STRONG",
+      "text": "삭제 대상 2개"
+    },
+    {
+      "background": [
+        34,
+        40,
+        47,
+        1
+      ],
+      "class": "ant-table-cell",
+      "color": [
+        255,
+        255,
+        255,
+        0.85
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 11.117067846548215,
+      "rect": {
+        "height": 39,
+        "width": 261.09375,
+        "x": 349,
+        "y": 365.5
+      },
+      "tag": "TH",
+      "text": "이름"
+    },
+    {
+      "background": [
+        34,
+        40,
+        47,
+        1
+      ],
+      "class": "ant-table-cell",
+      "color": [
+        255,
+        255,
+        255,
+        0.85
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 11.117067846548215,
+      "rect": {
+        "height": 39,
+        "width": 213.625,
+        "x": 610.09375,
+        "y": 365.5
+      },
+      "tag": "TH",
+      "text": "계정"
+    },
+    {
+      "background": [
+        34,
+        40,
+        47,
+        1
+      ],
+      "class": "ant-table-cell",
+      "color": [
+        255,
+        255,
+        255,
+        0.85
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 11.117067846548215,
+      "rect": {
+        "height": 39,
+        "width": 154.28125,
+        "x": 823.71875,
+        "y": 365.5
+      },
+      "tag": "TH",
+      "text": "작업 상태"
+    },
+    {
+      "background": [
+        34,
+        40,
+        47,
+        1
+      ],
+      "class": "ant-table-cell",
+      "color": [
+        255,
+        255,
+        255,
+        0.85
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 11.117067846548215,
+      "rect": {
+        "height": 39,
+        "width": 273,
+        "x": 978,
+        "y": 365.5
+      },
+      "tag": "TH",
+      "text": "사유"
+    },
+    {
+      "background": [
+        34,
+        40,
+        47,
+        1
+      ],
+      "class": "",
+      "color": [
+        240,
+        243,
+        246,
+        1
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 13.348661188320586,
+      "rect": {
+        "height": 41,
+        "width": 213.828125,
+        "x": 357,
+        "y": 413.5
+      },
+      "tag": "STRONG",
+      "text": "UD1392-31-20261016-standard-second"
+    },
+    {
+      "background": [
+        34,
+        40,
+        47,
+        1
+      ],
+      "class": "",
+      "color": [
+        240,
+        243,
+        246,
+        1
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 13.348661188320586,
+      "rect": {
+        "height": 44,
+        "width": 245.09375,
+        "x": 357,
+        "y": 456.5
+      },
+      "tag": "DIV",
+      "text": "e0bace35-5eba-4b57-8d25-611a8627498e"
+    },
+    {
+      "background": [
+        34,
+        40,
+        47,
+        1
+      ],
+      "class": "ant-table-cell",
+      "color": [
+        240,
+        243,
+        246,
+        1
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 13.348661188320586,
+      "rect": {
+        "height": 105,
+        "width": 213.625,
+        "x": 610.09375,
+        "y": 404.5
+      },
+      "tag": "TD",
+      "text": "admin"
+    },
+    {
+      "background": [
+        34,
+        40,
+        47,
+        1
+      ],
+      "class": "",
+      "color": [
+        240,
+        243,
+        246,
+        1
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 13.348661188320586,
+      "rect": {
+        "height": 22,
+        "width": 197.625,
+        "x": 618.09375,
+        "y": 456.5
+      },
+      "tag": "DIV",
+      "text": "ROOT"
+    },
+    {
+      "background": [
+        34,
+        40,
+        47,
+        1
+      ],
+      "class": "ant-badge-status-text",
+      "color": [
+        255,
+        255,
+        255,
+        0.65
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 7.128935659391724,
+      "rect": {
+        "height": 19,
+        "width": 25.765625,
+        "x": 845.71875,
+        "y": 446.5
+      },
+      "tag": "SPAN",
+      "text": "대기"
+    },
+    {
+      "background": [
+        34,
+        40,
+        47,
+        1
+      ],
+      "class": "",
+      "color": [
+        105,
+        177,
+        255,
+        1
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 6.607418085557632,
+      "rect": {
+        "height": 19,
+        "width": 95.546875,
+        "x": 986,
+        "y": 424.5
+      },
+      "tag": "A",
+      "text": "사용 가상머신: 0"
+    },
+    {
+      "background": [
+        34,
+        40,
+        47,
+        1
+      ],
+      "class": "",
+      "color": [
+        105,
+        177,
+        255,
+        1
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 6.607418085557632,
+      "rect": {
+        "height": 19,
+        "width": 82.65625,
+        "x": 986,
+        "y": 446.5
+      },
+      "tag": "A",
+      "text": "연결 템플릿: 0"
+    },
+    {
+      "background": [
+        34,
+        40,
+        47,
+        1
+      ],
+      "class": "",
+      "color": [
+        105,
+        177,
+        255,
+        1
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 6.607418085557632,
+      "rect": {
+        "height": 19,
+        "width": 65.734375,
+        "x": 986,
+        "y": 468.5
+      },
+      "tag": "A",
+      "text": "연결 ISO: 0"
+    },
+    {
+      "background": [
+        34,
+        40,
+        47,
+        1
+      ],
+      "class": "",
+      "color": [
+        240,
+        243,
+        246,
+        1
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 13.348661188320586,
+      "rect": {
+        "height": 41,
+        "width": 185.15625,
+        "x": 357,
+        "y": 518.5
+      },
+      "tag": "STRONG",
+      "text": "UD1392-31-20261016-final-comments"
+    },
+    {
+      "background": [
+        34,
+        40,
+        47,
+        1
+      ],
+      "class": "",
+      "color": [
+        240,
+        243,
+        246,
+        1
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 13.348661188320586,
+      "rect": {
+        "height": 44,
+        "width": 245.09375,
+        "x": 357,
+        "y": 561.5
+      },
+      "tag": "DIV",
+      "text": "18be0a2b-f539-4fdf-a709-b184c90101b1"
+    },
+    {
+      "background": [
+        34,
+        40,
+        47,
+        1
+      ],
+      "class": "ant-table-cell",
+      "color": [
+        240,
+        243,
+        246,
+        1
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 13.348661188320586,
+      "rect": {
+        "height": 105,
+        "width": 213.625,
+        "x": 610.09375,
+        "y": 509.5
+      },
+      "tag": "TD",
+      "text": "admin"
+    },
+    {
+      "background": [
+        34,
+        40,
+        47,
+        1
+      ],
+      "class": "",
+      "color": [
+        240,
+        243,
+        246,
+        1
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 13.348661188320586,
+      "rect": {
+        "height": 22,
+        "width": 197.625,
+        "x": 618.09375,
+        "y": 561.5
+      },
+      "tag": "DIV",
+      "text": "ROOT"
+    },
+    {
+      "background": [
+        34,
+        40,
+        47,
+        1
+      ],
+      "class": "ant-badge-status-text",
+      "color": [
+        255,
+        255,
+        255,
+        0.65
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 7.128935659391724,
+      "rect": {
+        "height": 19,
+        "width": 25.765625,
+        "x": 845.71875,
+        "y": 551.5
+      },
+      "tag": "SPAN",
+      "text": "대기"
+    },
+    {
+      "background": [
+        34,
+        40,
+        47,
+        1
+      ],
+      "class": "",
+      "color": [
+        105,
+        177,
+        255,
+        1
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 6.607418085557632,
+      "rect": {
+        "height": 19,
+        "width": 95.546875,
+        "x": 986,
+        "y": 529.5
+      },
+      "tag": "A",
+      "text": "사용 가상머신: 1"
+    },
+    {
+      "background": [
+        34,
+        40,
+        47,
+        1
+      ],
+      "class": "",
+      "color": [
+        105,
+        177,
+        255,
+        1
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 6.607418085557632,
+      "rect": {
+        "height": 19,
+        "width": 82.65625,
+        "x": 986,
+        "y": 551.5
+      },
+      "tag": "A",
+      "text": "연결 템플릿: 1"
+    },
+    {
+      "background": [
+        34,
+        40,
+        47,
+        1
+      ],
+      "class": "",
+      "color": [
+        105,
+        177,
+        255,
+        1
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 6.607418085557632,
+      "rect": {
+        "height": 19,
+        "width": 65.734375,
+        "x": 986,
+        "y": 573.5
+      },
+      "tag": "A",
+      "text": "연결 ISO: 1"
+    },
+    {
+      "background": [
+        34,
+        40,
+        47,
+        1
+      ],
+      "class": "",
+      "color": [
+        105,
+        177,
+        255,
+        1
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 6.607418085557632,
+      "rect": {
+        "height": 22,
+        "width": 22,
+        "x": 1204,
+        "y": 631.5
+      },
+      "tag": "A",
+      "text": "1"
+    },
+    {
+      "background": [
+        39,
+        46,
+        54,
+        1
+      ],
+      "class": "",
+      "color": [
+        197,
+        204,
+        212,
+        1
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 8.469986394935841,
+      "rect": {
+        "height": 22,
+        "width": 110.71875,
+        "x": 365,
+        "y": 691.5
+      },
+      "tag": "SPAN",
+      "text": "참조 정보 새로고침"
+    },
+    {
+      "background": [
+        39,
+        46,
+        54,
+        1
+      ],
+      "class": "",
+      "color": [
+        105,
+        177,
+        255,
+        1
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 6.0990029417517615,
+      "rect": {
+        "height": 22,
+        "width": 25.765625,
+        "x": 1135.46875,
+        "y": 764.5
+      },
+      "tag": "SPAN",
+      "text": "취소"
+    },
+    {
+      "background": [
+        180,
+        35,
+        24,
+        1
+      ],
+      "class": "",
+      "color": [
+        255,
+        255,
+        255,
+        1
+      ],
+      "disabled": false,
+      "placeholder": false,
+      "ratio": 6.57428861557707,
+      "rect": {
+        "height": 22,
+        "width": 25.765625,
+        "x": 1209.234375,
+        "y": 764.5
+      },
+      "tag": "SPAN",
+      "text": "삭제"
+    }
+  ],
+  "theme": "dark",
+  "url": "http://10.10.31.10:8080/client/#/userdata",
+  "width": 1600,
+  "essentialPaint": [],
+  "mainOverflow": 0,
+  "styles": [
+    "http://10.10.31.10:8080/client/css/vendors.eb47fec1.css",
+    "http://10.10.31.10:8080/client/css/app.7bb57033.css",
+    "http://10.10.31.10:8080/client/css/chunk-427991a2.0f1c1c04.css",
+    "http://10.10.31.10:8080/client/css/chunk-1be648b4.f16722ba.css",
+    "http://10.10.31.10:8080/client/css/chunk-44ce4508.e2d74bcd.css",
+    "http://10.10.31.10:8080/client/css/chunk-b6f1c0ca.bf4fcaad.css",
+    "http://10.10.31.10:8080/client/css/chunk-26c4d084.5b0407e4.css",
+    "http://10.10.31.10:8080/client/css/chunk-7b4658eb.49f46107.css",
+    "http://10.10.31.10:8080/client/css/chunk-2ba46c8a.45eee0b9.css",
+    "http://10.10.31.10:8080/client/css/chunk-fb0c6ee4.65ce41d6.css",
+    "http://10.10.31.10:8080/client/css/chunk-2e4d3950.d234a2f8.css",
+    "http://10.10.31.10:8080/client/css/chunk-a106f6f0.37b6aed6.css",
+    "http://10.10.31.10:8080/client/css/chunk-33b385b7.0f1c1c04.css",
+    "http://10.10.31.10:8080/client/css/chunk-371f99b0.ea78ccb5.css",
+    "http://10.10.31.10:8080/client/css/chunk-f665d1a2.3d3f93f2.css",
+    "http://10.10.31.10:8080/client/css/chunk-fbd48a9a.f25f2ff8.css"
+  ],
+  "activePanel": null,
+  "activeTab": null,
+  "breadcrumb": {
+    "borderLeft": "0px",
+    "borderRight": "0px"
+  },
+  "commentMetadataCount": 0,
+  "standardProseAbsent": true
+}

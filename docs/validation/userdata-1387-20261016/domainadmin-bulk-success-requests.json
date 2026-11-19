@@ -1,0 +1,67 @@
+{
+  "label": "domainadmin-bulk-success",
+  "requests": [
+    {
+      "id": "34440.1720",
+      "command": "listUserData",
+      "params": {
+        "id": "6c1524dc-146e-4930-90e3-e04d5f29731f",
+        "account": "ud1387-31-20261016-domainadmin",
+        "domainid": "02c07834-7449-4be3-b22e-795c39909601",
+        "page": "1",
+        "pagesize": "2"
+      }
+    },
+    {
+      "id": "34440.1721",
+      "command": "deleteUserData",
+      "params": {
+        "id": "6c1524dc-146e-4930-90e3-e04d5f29731f",
+        "account": "ud1387-31-20261016-domainadmin",
+        "domainid": "02c07834-7449-4be3-b22e-795c39909601"
+      }
+    },
+    {
+      "id": "34440.1722",
+      "command": "listUserData",
+      "params": {
+        "id": "6f3d09b3-a24b-43f3-95a5-12fa8ad3fe00",
+        "account": "ud1387-31-20261016-domainadmin",
+        "domainid": "02c07834-7449-4be3-b22e-795c39909601",
+        "page": "1",
+        "pagesize": "2"
+      }
+    },
+    {
+      "id": "34440.1723",
+      "command": "deleteUserData",
+      "params": {
+        "id": "6f3d09b3-a24b-43f3-95a5-12fa8ad3fe00",
+        "account": "ud1387-31-20261016-domainadmin",
+        "domainid": "02c07834-7449-4be3-b22e-795c39909601"
+      }
+    }
+  ],
+  "responses": [
+    {
+      "id": "34440.1720",
+      "status": 200
+    },
+    {
+      "id": "34440.1721",
+      "status": 200
+    },
+    {
+      "id": "34440.1722",
+      "status": 200
+    },
+    {
+      "id": "34440.1723",
+      "status": 200
+    }
+  ],
+  "exceptions": [],
+  "truncated": false,
+  "hasMore": false,
+  "cursor": 7392
+}

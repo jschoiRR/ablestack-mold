@@ -1,0 +1,258 @@
+Browser tab: 6, Title: "Affinity 그룹 - ABLESTACK-Mold", URL: "http://10.10.31.10:8080/client/#/affinitygroup/b2425532-f2bb-4511-86f5-917f6a4f1869?tab=instances".
+1 AXWebArea Affinity 그룹 - ABLESTACK-Mold, URL: 10.10.31.10:8080/client/#/affinitygroup/b2425532-f2bb-4511-86f5-917f6a4f1869?tab=instances
+	2 container
+		3645 container
+			3646 image
+			3647 menu
+				3648 dashboard 대시보드
+					3649 link Description: dashboard 대시보드, Value: 10.10.31.10:8080/client/#/dashboard
+				3650 container
+					3651 image cloud
+					3652 text 컴퓨트
+				3653 content list sub_menu_415_$$_/compute-popup
+					3654 cloud-server 가상머신
+						3655 link Description: cloud-server 가상머신, Value: 10.10.31.10:8080/client/#/vm
+					3656 camera VM 스냅샷
+						3657 link Description: camera VM 스냅샷, Value: 10.10.31.10:8080/client/#/vmsnapshot
+					3658 쿠버네티스
+						3659 link Description: 쿠버네티스, Value: 10.10.31.10:8080/client/#/kubernetes
+					3660 fullscreen 오토스케일 VM 그룹
+						3661 link Description: fullscreen 오토스케일 VM 그룹, Value: 10.10.31.10:8080/client/#/autoscalevmgroup
+					3662 gold 가상머신 그룹
+						3663 link Description: gold 가상머신 그룹, Value: 10.10.31.10:8080/client/#/vmgroup
+					3664 key SSH 키 쌍
+						3665 link Description: key SSH 키 쌍, Value: 10.10.31.10:8080/client/#/ssh
+					3666 solution 사용자 데이터 라이브러리
+						3667 link Description: solution 사용자 데이터 라이브러리, Value: 10.10.31.10:8080/client/#/userdata
+					3668 solution CNI 구성
+						3669 link Description: solution CNI 구성, Value: 10.10.31.10:8080/client/#/cniconfiguration
+					3670 swap Affinity 그룹
+						3671 link Description: swap Affinity 그룹, Value: 10.10.31.10:8080/client/#/affinitygroup
+				3672 container
+					3673 image hdd
+					3674 text 스토리지
+				3675 container
+					3676 image wifi
+					3677 text 네트워크
+				3678 container
+					3679 image picture
+					3680 text 이미지
+				3681 container
+					3682 image lock
+					3683 text 키 관리
+				3684 schedule 이벤트
+					3685 link Description: schedule 이벤트, Value: 10.10.31.10:8080/client/#/event
+				3686 project 프로젝트
+					3687 link Description: project 프로젝트, Value: 10.10.31.10:8080/client/#/project
+				3688 idcard 역할
+					3689 link Description: idcard 역할, Value: 10.10.31.10:8080/client/#/role
+				3690 team 계정
+					3691 link Description: team 계정, Value: 10.10.31.10:8080/client/#/account
+				3692 block 도메인
+					3693 link Description: block 도메인, Value: 10.10.31.10:8080/client/#/domain
+				3694 container
+					3695 image bank
+					3696 text 인프라스트럭쳐
+				3697 container
+					3698 image shopping
+					3699 text 서비스 오퍼링
+				3700 container
+					3701 image setting
+					3702 text 구성
+				3703 appstore-add 확장
+					3704 link Description: appstore-add 확장, Value: 10.10.31.10:8080/client/#/extension
+				3705 container
+					3706 image tool
+					3707 text 도구
+				3708 read API 문서
+					3709 link Description: read API 문서, Value: 10.10.31.10:8080/client/#/apidocs/
+		3714 container
+			3715 text 페이지 스타일 설정
+			3716 button 닫기
+				3717 image close
+			3718 heading 페이지 스타일 설정, Value: 3
+				3719 text 페이지 스타일 설정
+			3720 container
+				3721 container
+					3722 image
+					3723 container
+						3724 radio button (settable, integer) Description:  , Value: 0
+				3725 container
+					3726 image
+					3727 container
+						3728 radio button (settable, integer) Description:  , Value: 1
+					3729 image check
+			3730 heading 테마 색상, Value: 3
+				3731 text 테마 색상
+			3732 container
+				3733 container
+					3734 radio button (settable, integer) Description:  , Value: 0
+					3735 image check
+				3736 container
+					3737 radio button (settable, integer) Description:  , Value: 0
+				3738 container
+					3739 radio button (settable, integer) Description:  , Value: 0
+				3740 container
+					3741 radio button (settable, integer) Description:  , Value: 0
+				3742 container
+					3743 radio button (settable, integer) Description:  , Value: 0
+				3744 container
+					3745 radio button (settable, integer) Description:  , Value: 0
+				3746 container
+					3747 radio button (settable, integer) Description:  , Value: 0
+				3748 container
+					3749 radio button (settable, integer) Description:  , Value: 0
+			3750 heading 네비게이션 설정, Value: 3
+				3751 text 네비게이션 설정
+			3752 container
+				3753 container
+					3754 text 배경색
+					3755 color well (disabled, settable) #ffffff
+				3756 container
+					3757 text 텍스트 색상
+					3758 color well (disabled, settable) #000000
+			3759 container
+				3760 image exclamation-circle
+				3761 text 설정은 현재 브라우저에서만 볼 수 있습니다. 설정을 적용하려면 JSON 파일을 다운로드하고 경로 `/public/config.json` 아래의 `config.json` 파일의 `theme` 섹션에서 해당 콘텐츠를 교체하세요.
+			3762 button download 세팅값 다운로드(json)
+				3763 image download
+				3764 text 세팅값 다운로드(json)
+			3765 button undo 기본값으로 재설정
+				3766 image undo
+				3767 text 기본값으로 재설정
+		122 container
+			3710 image menu-fold
+			124 container
+				125 combo box (settable) rc_select_0
+				126 image project
+				127 text 기본 보기
+			3711 button 생성 down
+				3712 text 생성
+				3713 image down
+			131 image translation
+			132 image bell
+			133 container
+				134 text AC admin cloud
+		135 container
+			3354 container
+				3355 link Description: home, Value: 10.10.31.10:8080/client/#/
+				3356 text /
+				3357 link Description: Affinity 그룹, Value: 10.10.31.10:8080/client/#/affinitygroup
+				3358 text / qa-ag05-target
+				3359 link Description: question-circle, Value: docs.ablecloud.io/latest/adminguide/virtual_machines.html#affinity-groups
+				3360 button reload 업데이트
+					3361 image reload
+					3362 text 업데이트
+			3363 button down 작업
+				3364 image down
+				3365 text 작업
+			2735 container
+				2736 image swap
+				2737 heading qa-ag05-target, Value: 4
+					2738 text qa-ag05-target
+				2739 text 같은 호스트 배치 · 엄격
+				2740 text 아이디
+				2741 button barcode
+					2742 image barcode
+				2743 link Description: b2425532-f2bb-4511-86f5-917f6a4f1869 , Value: javascript:;
+				2744 text 같은 그룹의 VM을 같은 호스트에 배치합니다. 조건을 만족하지 못하면 배치가 실패합니다. 연결 VM 수 3 계정
+				2745 image user
+				2746 link Description: admin, Value: 10.10.31.10:8080/client/#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f
+				2747 text 도메인
+				2748 image block
+				2749 link Description: ROOT, Value: 10.10.31.10:8080/client/#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details
+				2750 link Description: cloud-server 가상머신 보기, Value: 10.10.31.10:8080/client/#/vm?affinitygroupid=b2425532-f2bb-4511-86f5-917f6a4f1869
+			3115 container
+				3116 tab group
+					3117 container
+						3118 tab (selectable, settable, boolean) 상세, Value: 0, ID: rc-tabs-5-tab-details
+						3119 tab (selected, settable, boolean) 가상머신, Value: 1, ID: rc-tabs-5-tab-instances
+						3120 tab (selectable, settable, boolean) 이벤트, Value: 0, ID: rc-tabs-5-tab-events
+				3121 container Description: 가상머신, ID: rc-tabs-5-panel-instances
+					3122 container
+						3123 heading 연결 가상머신, Value: 3
+							3124 text 연결 가상머신
+						3125 text 중지된 일반 가상머신의 대상 그룹 연결만 변경합니다. 다른 Affinity 그룹 연결은 유지하며 VM을 자동 중지하지 않습니다. 연결 VM 수: 3 · 조회 결과: 3
+						3126 button 가상머신 연결
+						3127 button (disabled) 선택 연결 해제 (0)
+						3128 button VM별 작업 결과
+						3129 text field (settable) 가상머신 검색
+						3130 button search
+							3131 image search
+						3132 button 업데이트
+							3624 image reload
+						3134 container 연결 가상머신
+							3135 table
+								3136 row
+									3137 cell
+										3138 container
+											3139 checkbox (settable, integer) Description:  , Value: 0
+									3140 cell
+										3141 text 표시 이름
+									3142 cell
+										3143 text 상태
+									3144 cell
+										3145 text 호스트
+									3146 cell
+										3147 text 계정
+									3148 cell
+										3149 text 프로젝트
+									3150 cell
+										3151 text 도메인
+									3152 cell
+										3153 text 연결 관리 제한 사유
+								3625 row
+									3626 cell
+										3627 container
+											3628 checkbox (settable, integer) Description: qa-ag05-vm-01, Value: 0
+									3629 cell
+										3630 link Description: qa-ag05-vm-01, Value: 10.10.31.10:8080/client/#/vm/579b1439-136d-4280-b2bb-b10613496d20
+										3631 text i-2-664-VM
+									3632 cell
+										3633 text 정지된 상태
+									3634 cell
+										3635 text —
+									3636 cell
+										3637 text admin
+									3638 cell
+										3639 text —
+									3640 cell
+										3641 text ROOT
+									3642 cell
+										3643 text —
+								3154 row
+									3155 cell
+										3156 container
+											3157 checkbox (settable, integer) Description: qa-ag05-vm-02, Value: 0
+									3158 cell
+										3159 link Description: qa-ag05-vm-02, Value: 10.10.31.10:8080/client/#/vm/ebf7db49-ea07-4dba-be8a-78fc915b19ec
+										3160 text i-2-665-VM
+									3161 cell
+										3162 text 정지된 상태
+									3163 cell
+										3164 text —
+									3165 cell
+										3166 text admin
+									3167 cell
+										3168 text —
+									3169 cell
+										3170 text ROOT
+									3171 cell
+										3172 text —
+						3192 content list
+							3193 container 이전 페이지
+								3194 button (disabled) left
+									3195 image left
+							3196 text 1
+							3644 text 2
+							3197 container 다음 페이지
+								3198 button right
+									3199 image right
+							3200 container
+								3201 combo box (collapsed, settable) ID: rc_select_17, Secondary Actions: Expand
+								3202 text 2 / 쪽
+	265 container
+		266 image info-circle
+		267 text Wall 모니터링을 사용할 수 없습니다. 기존 알림은 최신 정보가 아닐 수 있으며 Mold는 계속 사용할 수 있습니다. 비활성
+
+The focused UI element is 3360 button reload 업데이트

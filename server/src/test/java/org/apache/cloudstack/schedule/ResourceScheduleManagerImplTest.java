@@ -98,6 +98,7 @@ public class ResourceScheduleManagerImplTest {
         CallContext.register(callingUser, callingAccount);
 
         Mockito.when(vmScheduleWorker.getApiResourceType()).thenReturn(ApiCommandResourceType.VirtualMachine);
+        Mockito.when(vmScheduleWorker.isResourceValid(Mockito.anyLong())).thenReturn(true);
         Mockito.when(autoScaleScheduleWorker.getApiResourceType()).thenReturn(ApiCommandResourceType.AutoScaleVmGroup);
         Map<ApiCommandResourceType, BaseScheduleWorker> workerMap = new HashMap<>();
         workerMap.put(ApiCommandResourceType.VirtualMachine, vmScheduleWorker);
@@ -466,6 +467,60 @@ public class ResourceScheduleManagerImplTest {
     public void autoScaleScheduleDoesNotInheritVmOnlyDenial() {
         resourceScheduleManager.checkVmScheduleApiAccess("deleteVMSchedule", ApiCommandResourceType.AutoScaleVmGroup, null, null);
         Mockito.verify(accountManager, Mockito.never()).checkApiAccessForUser(Mockito.any(), Mockito.anyString(), Mockito.any());
+    }
+
+    @Test public void rejectsUnknownTimeZoneInsteadOfSilentGmt() {
+        Assert.assertThrows(InvalidParameterValueException.class, () -> resourceScheduleManager.validateTimeZone("Asia/Typo"));
+        Assert.assertEquals("Asia/Seoul", resourceScheduleManager.validateTimeZone("Asia/Seoul").getID());
+        Assert.assertEquals("GMT+09:00", resourceScheduleManager.validateTimeZone("GMT+09:00").getID());
+    }
+
+    @Test public void rejectsDstGapAndOverlapAndPreservesNormalWallTime() {
+        TimeZone original = TimeZone.getDefault();
+        try {
+            TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
+            TimeZone zone = TimeZone.getTimeZone("America/New_York");
+            Date gap = Date.from(java.time.Instant.parse("2027-03-14T02:30:00Z"));
+            Date overlap = Date.from(java.time.Instant.parse("2027-11-07T01:30:00Z"));
+            Assert.assertThrows(InvalidParameterValueException.class, () -> resourceScheduleManager.parseScheduleDate(gap, zone));
+            Assert.assertThrows(InvalidParameterValueException.class, () -> resourceScheduleManager.parseScheduleDate(overlap, zone));
+            Date normal = Date.from(java.time.Instant.parse("2027-03-14T03:30:00Z"));
+            Assert.assertEquals(java.time.Instant.parse("2027-03-14T07:30:00Z"), resourceScheduleManager.parseScheduleDate(normal, zone).toInstant());
+        } finally {
+            TimeZone.setDefault(original);
+        }
+    }
+
+    @Test public void rejectsZeroLengthScheduleWindow() {
+        Date future = DateUtils.addDays(new Date(), 1);
+        Assert.assertThrows(InvalidParameterValueException.class,
+                () -> resourceScheduleManager.validateStartDateEndDate(future, future, TimeZone.getTimeZone("UTC")));
+    }
+
+    @Test public void rejectsEditingScheduleOfDeletedResource() {
+        ResourceScheduleVO schedule = Mockito.mock(ResourceScheduleVO.class);
+        Mockito.when(resourceScheduleDao.findById(98L)).thenReturn(schedule);
+        Mockito.when(schedule.getResourceType()).thenReturn(ApiCommandResourceType.VirtualMachine);
+        Mockito.when(schedule.getResourceId()).thenReturn(99L);
+        Mockito.when(vmScheduleWorker.isResourceValid(99L)).thenReturn(false);
+        Assert.assertThrows(InvalidParameterValueException.class,
+                () -> resourceScheduleManager.updateSchedule(98L, "changed", null, null, null, null, null, null));
+        Mockito.verify(resourceScheduleDao, Mockito.never()).update(Mockito.anyLong(), Mockito.any());
+    }
+
+    @Test public void explicitEndDateClearDoesNotChangeOmittedStartOrDetails() {
+        ResourceScheduleVO schedule = new ResourceScheduleVO(ApiCommandResourceType.AutoScaleVmGroup, 21L,
+                "clear end", "0 0 0 * * *", "UTC", "UPDATE", DateUtils.addDays(new Date(), 1), DateUtils.addDays(new Date(), 2), false);
+        ReflectionTestUtils.setField(schedule, "id", 97L);
+        Mockito.when(resourceScheduleDao.findById(97L)).thenReturn(schedule);
+        Mockito.when(resourceScheduleDao.update(Mockito.eq(97L), Mockito.any())).thenReturn(true);
+        Mockito.when(autoScaleScheduleWorker.isResourceValid(21L)).thenReturn(true);
+        Mockito.when(autoScaleScheduleWorker.parseAction("UPDATE")).thenReturn(AutoScaleScheduleAction.UPDATE);
+        Date start = schedule.getStartDate();
+        resourceScheduleManager.updateSchedule(97L, null, null, null, null, null, false, null, true);
+        Assert.assertNull(schedule.getEndDate());
+        Assert.assertEquals(start, schedule.getStartDate());
+        Mockito.verify(resourceScheduleDetailsDao, Mockito.never()).saveDetails(Mockito.anyList());
     }
 
 }

@@ -1,0 +1,88 @@
+{
+  "label": "single-detail-delete",
+  "requests": [
+    {
+      "id": "34440.1589",
+      "command": "listUserData",
+      "params": {
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "id": "34440.1592",
+      "command": "listUserData",
+      "params": {
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "id": "34440.1593",
+      "command": "listUserData",
+      "params": {
+        "id": "d48ffe83-cc2a-4607-87cf-985189fdb60c",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "id": "34440.1600",
+      "command": "listUserData",
+      "params": {
+        "id": "d48ffe83-cc2a-4607-87cf-985189fdb60c",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "page": "1",
+        "pagesize": "2"
+      }
+    },
+    {
+      "id": "34440.1601",
+      "command": "deleteUserData",
+      "params": {
+        "id": "d48ffe83-cc2a-4607-87cf-985189fdb60c",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f"
+      }
+    },
+    {
+      "id": "34440.1603",
+      "command": "listUserData",
+      "params": {
+        "page": "1",
+        "pagesize": "20"
+      }
+    }
+  ],
+  "responses": [
+    {
+      "id": "34440.1589",
+      "status": 200
+    },
+    {
+      "id": "34440.1592",
+      "status": 200
+    },
+    {
+      "id": "34440.1593",
+      "status": 200
+    },
+    {
+      "id": "34440.1600",
+      "status": 200
+    },
+    {
+      "id": "34440.1601",
+      "status": 200
+    },
+    {
+      "id": "34440.1603",
+      "status": 200
+    }
+  ],
+  "exceptions": [],
+  "truncated": false,
+  "hasMore": false,
+  "cursor": 6435
+}

@@ -1,0 +1,429 @@
+Browser tab: 6, Title: "가상머신 - ABLESTACK-Mold", URL: "http://10.10.31.10:8080/client/#/vm/4b2cb732-4e40-48e4-8933-707111aa3147".
+1 AXWebArea 가상머신 - ABLESTACK-Mold, URL: 10.10.31.10:8080/client/#/vm/4b2cb732-4e40-48e4-8933-707111aa3147
+	2 container
+		785 container
+			786 image
+			787 menu
+				788 dashboard 대시보드
+					789 link Description: dashboard 대시보드, Value: 10.10.31.10:8080/client/#/dashboard
+				790 container
+					791 image cloud
+					792 text 컴퓨트
+				793 content list sub_menu_89_$$_/compute-popup
+					794 cloud-server 가상머신
+						795 link Description: cloud-server 가상머신, Value: 10.10.31.10:8080/client/#/vm
+					796 camera VM 스냅샷
+						797 link Description: camera VM 스냅샷, Value: 10.10.31.10:8080/client/#/vmsnapshot
+					798 쿠버네티스
+						799 link Description: 쿠버네티스, Value: 10.10.31.10:8080/client/#/kubernetes
+					800 fullscreen 오토스케일 VM 그룹
+						801 link Description: fullscreen 오토스케일 VM 그룹, Value: 10.10.31.10:8080/client/#/autoscalevmgroup
+					802 gold 가상머신 그룹
+						803 link Description: gold 가상머신 그룹, Value: 10.10.31.10:8080/client/#/vmgroup
+					804 key SSH 키 쌍
+						805 link Description: key SSH 키 쌍, Value: 10.10.31.10:8080/client/#/ssh
+					806 solution 사용자 데이터 라이브러리
+						807 link Description: solution 사용자 데이터 라이브러리, Value: 10.10.31.10:8080/client/#/userdata
+					808 solution CNI 구성
+						809 link Description: solution CNI 구성, Value: 10.10.31.10:8080/client/#/cniconfiguration
+					810 swap Affinity 그룹
+						811 link Description: swap Affinity 그룹, Value: 10.10.31.10:8080/client/#/affinitygroup
+				812 container
+					813 image hdd
+					814 text 스토리지
+				815 container
+					816 image wifi
+					817 text 네트워크
+				818 container
+					819 image picture
+					820 text 이미지
+				821 container
+					822 image lock
+					823 text 키 관리
+				824 schedule 이벤트
+					825 link Description: schedule 이벤트, Value: 10.10.31.10:8080/client/#/event
+				826 project 프로젝트
+					827 link Description: project 프로젝트, Value: 10.10.31.10:8080/client/#/project
+				828 idcard 역할
+					829 link Description: idcard 역할, Value: 10.10.31.10:8080/client/#/role
+				830 team 계정
+					831 link Description: team 계정, Value: 10.10.31.10:8080/client/#/account
+				832 block 도메인
+					833 link Description: block 도메인, Value: 10.10.31.10:8080/client/#/domain
+				834 container
+					835 image bank
+					836 text 인프라스트럭쳐
+				837 container
+					838 image shopping
+					839 text 서비스 오퍼링
+				840 container
+					841 image setting
+					842 text 구성
+				843 appstore-add 확장
+					844 link Description: appstore-add 확장, Value: 10.10.31.10:8080/client/#/extension
+				845 container
+					846 image tool
+					847 text 도구
+				848 read API 문서
+					849 link Description: read API 문서, Value: 10.10.31.10:8080/client/#/apidocs/
+		781 container
+			782 text 페이지 스타일 설정
+			783 button 닫기
+				784 image close
+			850 heading 페이지 스타일 설정, Value: 3
+				851 text 페이지 스타일 설정
+			852 container
+				853 container
+					854 image
+					855 container
+						856 radio button (settable, integer) Description:  , Value: 0
+				857 container
+					858 image
+					859 container
+						860 radio button (settable, integer) Description:  , Value: 1
+					861 image check
+			862 heading 테마 색상, Value: 3
+				863 text 테마 색상
+			864 container
+				865 container
+					866 radio button (settable, integer) Description:  , Value: 0
+					867 image check
+				868 container
+					869 radio button (settable, integer) Description:  , Value: 0
+				870 container
+					871 radio button (settable, integer) Description:  , Value: 0
+				872 container
+					873 radio button (settable, integer) Description:  , Value: 0
+				874 container
+					875 radio button (settable, integer) Description:  , Value: 0
+				876 container
+					877 radio button (settable, integer) Description:  , Value: 0
+				878 container
+					879 radio button (settable, integer) Description:  , Value: 0
+				880 container
+					881 radio button (settable, integer) Description:  , Value: 0
+			882 heading 네비게이션 설정, Value: 3
+				883 text 네비게이션 설정
+			884 container
+				885 container
+					886 text 배경색
+					887 color well (disabled, settable) #ffffff
+				888 container
+					889 text 텍스트 색상
+					890 color well (disabled, settable) #000000
+			891 container
+				892 image exclamation-circle
+				893 text 설정은 현재 브라우저에서만 볼 수 있습니다. 설정을 적용하려면 JSON 파일을 다운로드하고 경로 `/public/config.json` 아래의 `config.json` 파일의 `theme` 섹션에서 해당 콘텐츠를 교체하세요.
+			894 button download 세팅값 다운로드(json)
+				895 image download
+				896 text 세팅값 다운로드(json)
+			897 button undo 기본값으로 재설정
+				898 image undo
+				899 text 기본값으로 재설정
+		122 container
+			900 image menu-fold
+			124 container
+				125 combo box (settable) rc_select_1
+				126 image project
+				127 text 기본 보기
+			901 button 생성 down
+				902 text 생성
+				903 image down
+			131 image translation
+			132 image bell
+			133 container
+				134 text AC admin cloud
+		135 container
+			904 container
+				905 link Description: home, Value: 10.10.31.10:8080/client/#/
+				906 text /
+				907 link Description: 가상머신, Value: 10.10.31.10:8080/client/#/vm
+				908 text / UD1391-31-20261016-admin
+				909 link Description: question-circle, Value: docs.ablecloud.io/latest/adminguide/virtual_machines.html
+				910 button reload 업데이트
+					916 image reload
+					912 text 업데이트
+			913 button down 작업
+				914 image down
+				915 text 작업
+			917 container
+				918 image edit
+				919 heading UD1391-31-20261016-admin, Value: 4
+					920 text UD1391-31-20261016-admin
+				921 text i-2-585-VM x86_64 KVM HA 활성화 동적으로 확장 가능
+				922 link code
+					923 button (disabled) code
+						924 image code
+				925 text 상태 정지된 상태 아이디
+				926 button barcode
+					927 image barcode
+				928 link Description: 4b2cb732-4e40-48e4-8933-707111aa3147 , Value: javascript:;
+				929 text CPU 2 CPU x 2.00 GHz
+				930 image question-circle
+				931 text x86_64 메모리 2048 MB 메모리 네트워크
+				932 image wifi
+				933 text 1 NIC(s)
+				934 text eth0
+				935 link Description:  , Value: javascript:;
+				936 text 기본
+				937 image apartment
+				938 link Description: UD1391-31-20261016-admin, Value: 10.10.31.10:8080/client/#/guestnetwork/7c25d36e-2be8-452c-bc87-e3a9fb9570ec
+				939 text 템플릿
+				940 image save
+				941 link Description: Rocky-Linux-9-5-x86-64-Server-Cloud-Image.qcow2, Value: 10.10.31.10:8080/client/#/template/8d692729-7565-4e92-965b-ebaadc1efcb0
+				942 text 컴퓨트 오퍼링
+				943 image cloud
+				944 link Description: 2Core 2GB, Value: 10.10.31.10:8080/client/#/computeoffering/cd928fb0-6e2b-4ec8-b02b-023aed55b2b1
+				945 text Zone
+				946 image global
+				947 link Description: Zone, Value: 10.10.31.10:8080/client/#/zone/7013f5a1-de59-4cea-a596-f4f58815f31c
+				948 text 사용자 데이터
+				949 image solution
+				950 link Description: UD1391-31-20261016-admin, Value: 10.10.31.10:8080/client/#/userdata/4cb11aab-bf01-4c0f-a6a1-e3c66c015dfa
+				951 text 계정
+				952 image user
+				953 link Description: admin, Value: 10.10.31.10:8080/client/#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f
+				954 text 도메인
+				955 image block
+				956 link Description: ROOT, Value: 10.10.31.10:8080/client/#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details
+				957 text 생성일
+				958 image calendar
+				959 text 2026. 10. 16. 오후 8:52:44
+				960 container
+					961 text 태그
+					962 container
+						963 image plus
+						964 text  새 태그
+			965 container
+				966 tab group
+					967 container
+						968 tab (selected, settable, boolean) 상세, Value: 1, ID: rc-tabs-10-tab-details
+						969 tab (selectable, settable, boolean) IP 구성, Value: 0, ID: rc-tabs-10-tab-guestnetwork
+						970 tab (selectable, settable, boolean) 메트릭, Value: 0, ID: rc-tabs-10-tab-stats
+						971 tab (selectable, settable, boolean) 프로세스, Value: 0, ID: rc-tabs-10-tab-processes
+						972 tab (selectable, settable, boolean) 스케줄, Value: 0, ID: rc-tabs-10-tab-schedules
+						973 tab (selectable, settable, boolean) ISO, Value: 0, ID: rc-tabs-10-tab-cdrom
+						974 tab (selectable, settable, boolean) 볼륨, Value: 0, ID: rc-tabs-10-tab-volumes
+						975 tab (selectable, settable, boolean) NIC, Value: 0, ID: rc-tabs-10-tab-nics
+						976 tab (selectable, settable, boolean) 설정, Value: 0, ID: rc-tabs-10-tab-settings
+						977 tab (selectable, settable, boolean) 호스트 장치, Value: 0, ID: rc-tabs-10-tab-hostdevices
+						978 tab (selectable, settable, boolean) VM 스냅샷, Value: 0, ID: rc-tabs-10-tab-vmsnapshots
+						979 tab (selectable, settable, boolean) 이벤트, Value: 0, ID: rc-tabs-10-tab-events
+						980 tab (selectable, settable, boolean) 코멘트, Value: 0, ID: rc-tabs-10-tab-comments
+				981 container Description: 상세, ID: rc-tabs-10-panel-details
+					982 content list
+						983 container
+							984 text VM 호스트 명
+							985 text UD1391-31-20261016-admin
+						986 container
+							987 text VM 표시 명
+							988 text UD1391-31-20261016-admin
+						989 container
+							990 text 아이디
+							991 text 4b2cb732-4e40-48e4-8933-707111aa3147
+						992 container
+							993 text 상태
+							994 text Stopped
+						995 container
+							996 text 템플릿
+							997 text Rocky-Linux-9-5-x86-64-Server-Cloud-Image.qcow2
+						998 container
+							999 text 템플릿 형식
+							1000 text USER
+						1001 container
+							1002 text 컴퓨트 오퍼링
+							1003 text 2Core 2GB
+						1004 container
+							1005 text 동적으로 확장 가능
+							1006 text true
+						1007 container
+							1008 text HA 활성화
+							1009 text true
+						1010 container
+							1011 text 하이퍼바이저
+							1012 text KVM
+						1013 container
+							1014 text CPU 아키텍처
+							1015 text x86_64
+						1016 container
+							1017 text 계정
+							1018 text admin
+						1019 container
+							1020 text 도메인
+							1021 text ROOT
+						1022 container
+							1023 text Zone
+							1024 text Zone
+						1025 container
+							1026 text 사용자 데이터 ID
+							1027 text 4cb11aab-bf01-4c0f-a6a1-e3c66c015dfa
+						1028 container
+							1029 text 사용자 데이터 이름
+							1030 text UD1391-31-20261016-admin
+						1031 container
+							1032 text VBMC 포트
+							1033 text 미할당
+						1034 container
+							1035 text 삭제 보호
+							1036 text false
+	187 container
+		188 image info-circle
+		189 text Wall 모니터링을 사용할 수 없습니다. 기존 알림은 최신 정보가 아닐 수 있으며 Mold는 계속 사용할 수 있습니다. 비활성
+	1037 container
+		1038 container VM 저장 사용자 데이터 조회
+			1039 container
+				1040 button Close
+					1041 image close
+				1042 text VM 저장 사용자 데이터 조회
+				1043 container 사용자 데이터 본문
+					1044 table
+						1045 row
+							1046 cell
+								1047 text VM 표시 명
+							1048 cell
+								1049 text UD1391-31-20261016-admin (4b2cb732-4e40-48e4-8933-707111aa3147)
+						1050 row
+							1051 cell
+								1052 text 사용자 데이터 라이브러리
+							1053 cell
+								1054 text UD1391-31-20261016-admin
+						1055 row
+							1056 cell
+								1057 text 사용자 데이터 정책
+							1058 cell
+								1059 text -
+						1060 row
+							1061 cell
+								1062 text 변수 값 (VM 메타데이터)
+							1063 cell
+								1064 text -
+					1065 container
+						1066 image info-circle
+						1067 text 현재 연결된 라이브러리 원본과 VM 저장 본문이 바이트 단위로 같습니다.
+					1068 button copy 클립보드에 복사
+						1069 image copy
+						1070 text 클립보드에 복사
+					1071 button download 다운로드
+						1072 image download
+						1073 text 다운로드
+					1074 container 본문 표시 형식
+						1075 container
+							1076 radio button (settable, integer) Description: 원문 (UTF-8), Value: 1
+							1077 text 원문 (UTF-8)
+						1078 container
+							1079 radio button (settable, integer) Description: Base64, Value: 0
+							1080 text Base64
+					1081 button 업데이트
+						1082 image reload
+					1083 text Mold에 저장된 VM 본문입니다. 라이브러리 원본 및 템플릿 정책·변수 정보와 구분됩니다. 공급자 전달 상태와 게스트 실행 결과는 이 조회로 확인할 수 없습니다.
+					1084 text 표시: 원문 (UTF-8) · 원문 크기: 12012 바이트
+					1085 container 원문 (UTF-8)
+						1086 text ﻿#cloud-config
+# UD1391-31-20261016 한글·UTF-8·😀
+# <script>본문은 실행되지 않습니다</script>
+# 긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라긴행-가나다라
+# 줄 0 한글 본문
+# 줄 1 한글 본문
+# 줄 2 한글 본문
+# 줄 3 한글 본문
+# 줄 4 한글 본문
+# 줄 5 한글 본문
+# 줄 6 한글 본문
+# 줄 7 한글 본문
+# 줄 8 한글 본문
+# 줄 9 한글 본문
+# 줄 10 한글 본문
+# 줄 11 한글 본문
+# 줄 12 한글 본문
+# 줄 13 한글 본문
+# 줄 14 한글 본문
+# 줄 15 한글 본문
+# 줄 16 한글 본문
+# 줄 17 한글 본문
+# 줄 18 한글 본문
+# 줄 19 한글 본문
+# 줄 20 한글 본문
+# 줄 21 한글 본문
+# 줄 22 한글 본문
+# 줄 23 한글 본문
+# 줄 24 한글 본문
+# 줄 25 한글 본문
+# 줄 26 한글 본문
+# 줄 27 한글 본문
+# 줄 28 한글 본문
+# 줄 29 한글 본문
+# 줄 30 한글 본문
+# 줄 31 한글 본문
+# 줄 32 한글 본문
+# 줄 33 한글 본문
+# 줄 34 한글 본문
+# 줄 35 한글 본문
+# 줄 36 한글 본문
+# 줄 37 한글 본문
+# 줄 38 한글 본문
+# 줄 39 한글 본문
+# 줄 40 한글 본문
+# 줄 41 한글 본문
+# 줄 42 한글 본문
+# 줄 43 한글 본문
+# 줄 44 한글 본문
+# 줄 45 한글 본문
+# 줄 46 한글 본문
+# 줄 47 한글 본문
+# 줄 48 한글 본문
+# 줄 49 한글 본문
+# 줄 50 한글 본문
+# 줄 51 한글 본문
+# 줄 52 한글 본문
+# 줄 53 한글 본문
+# 줄 54 한글 본문
+# 줄 55 한글 본문
+# 줄 56 한글 본문
+# 줄 57 한글 본문
+# 줄 58 한글 본문
+# 줄 59 한글 본문
+# 줄 60 한글 본문
+# 줄 61 한글 본문
+# 줄 62 한글 본문
+# 줄 63 한글 본문
+# 줄 64 한글 본문
+# 줄 65 한글 본문
+# 줄 66 한글 본문
+# 줄 67 한글 본문
+# 줄 68 한글 본문
+# 줄 69 한글 본문
+# 줄 70 한글 본문
+# 줄 71 한글 본문
+# 줄 72 한글 본문
+# 줄 73 한글 본문
+# 줄 74 한글 본문
+# 줄 75 한글 본문
+# 줄 76 한글 본문
+# 줄 77 한글 본문
+# 줄 78 한글 본문
+# 줄 79 한글 본문
+# 줄 80 한글 본문
+# 줄 81 한글 본문
+# 줄 82 한글 본문
+# 줄 83 한글 본문
+# 줄 84 한글 본문
+# 줄 85 한글 본문
+# 줄 86 한글 본문
+# 줄 87 한글 본문
+# 줄 88 한글 본문
+# 줄 89 한글 본문
+# 줄 90 한글 본문
+# 줄 91 한글 본문
+# 줄 92 한글 본문
+# 줄 93 한글 본문
+# 줄 94 한글 본문
+# 줄 95 한글 본문
+# 줄 96 한글 본문
+# 줄 97 한글 본문
+# 줄 98 한글 본문
+# 줄 99 한글 본문
+
+
+				1087 button 닫기
+
+The focused UI element is 1087 button 닫기

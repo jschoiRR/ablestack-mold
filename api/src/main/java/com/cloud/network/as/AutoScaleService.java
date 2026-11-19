@@ -38,6 +38,8 @@ import com.cloud.exception.ResourceUnavailableException;
 
 public interface AutoScaleService {
 
+    org.apache.cloudstack.api.response.AutoScaleCreationRequestResponse queryAutoScaleCreationRequest(String requestId);
+
     public AutoScalePolicy createAutoScalePolicy(CreateAutoScalePolicyCmd createAutoScalePolicyCmd);
 
     public boolean deleteAutoScalePolicy(long autoScalePolicyId);

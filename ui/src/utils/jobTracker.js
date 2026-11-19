@@ -16,13 +16,14 @@
 // under the License.
 
 // Job lifetime is independent of the component which submitted the request.
-export function createJobTracker ({ query, onState, interval = 3000, maxRetries = 3 }) {
+export function createJobTracker ({ query, onState, interval = 3000, maxRetries = 3, maxDuration = 0 }) {
   const jobs = new Map()
   const safe = fn => { try { fn() } catch (e) { console.error('[jobTracker] observer failed', e) } }
   const finish = (job, result) => {
     if (job.done) return
     job.done = true
     clearTimeout(job.timer)
+    clearTimeout(job.deadlineTimer)
     job.result = result
     safe(() => onState(job.id, result, job.meta))
     job.resolve(result)
@@ -58,6 +59,7 @@ export function createJobTracker ({ query, onState, interval = 3000, maxRetries 
       const job = { id, meta, failures: 0, done: false }
       job.promise = new Promise(resolve => { job.resolve = resolve })
       jobs.set(id, job)
+      if (maxDuration > 0) job.deadlineTimer = setTimeout(() => finish(job, { jobstatus: null, trackingStatus: 'timeout' }), maxDuration)
       poll(job)
       return job.promise
     },

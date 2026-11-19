@@ -1,0 +1,644 @@
+{
+  "passed": 22,
+  "total": 22,
+  "tests": [
+    {
+      "label": "ui-list-mixed",
+      "passed": true,
+      "id": "31849434-ba94-4e64-ad2f-b11dc0eefb07",
+      "name": "SSH1374-20261015-MiXeD",
+      "href": "#/ssh/31849434-ba94-4e64-ad2f-b11dc0eefb07?account=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f"
+    },
+    {
+      "label": "ui-list-symbols",
+      "passed": true,
+      "id": "5da1a188-f51d-465e-8ad0-315658101efe",
+      "name": "SSH1374-키_혼합+공백 /%?#&",
+      "href": "#/ssh/5da1a188-f51d-465e-8ad0-315658101efe?account=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f"
+    },
+    {
+      "label": "ui-list-translation",
+      "passed": true,
+      "id": "680640b7-88d9-457b-9d57-bdb3b319a7fd",
+      "name": "label.cancel",
+      "href": "#/ssh/680640b7-88d9-457b-9d57-bdb3b319a7fd?account=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f"
+    },
+    {
+      "label": "ui-list-event",
+      "passed": true,
+      "id": "865b8e75-f187-4c66-8fb4-ed23e8e1aff6",
+      "name": "USER.LOGIN",
+      "href": "#/ssh/865b8e75-f187-4c66-8fb4-ed23e8e1aff6?account=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f"
+    },
+    {
+      "label": "ui-list-annotated",
+      "passed": true,
+      "id": "7c2ea08d-944e-4d6e-8d90-409235acc68d",
+      "name": "SSH1374-20261015-AnNoTaTeD",
+      "href": "#/ssh/7c2ea08d-944e-4d6e-8d90-409235acc68d?account=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f"
+    },
+    {
+      "label": "ui-list-user",
+      "passed": true,
+      "id": "e4c990d7-4d48-41b0-8412-3c1c5cdb7aff",
+      "name": "SSH1374-20261015-MiXeD",
+      "href": "#/ssh/e4c990d7-4d48-41b0-8412-3c1c5cdb7aff?account=ssh1374-20261015-user&domainid=0b0edaa7-58c9-4ba5-ae4c-8ec7674ca58e"
+    },
+    {
+      "label": "ui-detail-mixed",
+      "passed": true,
+      "id": "31849434-ba94-4e64-ad2f-b11dc0eefb07",
+      "name": "SSH1374-20261015-MiXeD",
+      "title_and_field_match": true
+    },
+    {
+      "label": "ui-detail-symbols",
+      "passed": true,
+      "id": "5da1a188-f51d-465e-8ad0-315658101efe",
+      "name": "SSH1374-키_혼합+공백 /%?#&",
+      "title_and_field_match": true
+    },
+    {
+      "label": "ui-detail-translation",
+      "passed": true,
+      "id": "680640b7-88d9-457b-9d57-bdb3b319a7fd",
+      "name": "label.cancel",
+      "title_and_field_match": true
+    },
+    {
+      "label": "ui-detail-event",
+      "passed": true,
+      "id": "865b8e75-f187-4c66-8fb4-ed23e8e1aff6",
+      "name": "USER.LOGIN",
+      "title_and_field_match": true
+    },
+    {
+      "label": "ui-detail-annotated",
+      "passed": true,
+      "id": "7c2ea08d-944e-4d6e-8d90-409235acc68d",
+      "name": "SSH1374-20261015-AnNoTaTeD",
+      "title_and_field_match": true
+    },
+    {
+      "label": "ui-comment-name-and-target",
+      "passed": true,
+      "id": "7c2ea08d-944e-4d6e-8d90-409235acc68d"
+    },
+    {
+      "label": "ui-name-url-encoding",
+      "passed": true,
+      "name": "SSH1374-키_혼합+공백 /%?#&",
+      "id": "5da1a188-f51d-465e-8ad0-315658101efe"
+    },
+    {
+      "label": "ui-search-mixed",
+      "passed": true,
+      "query_name": "SSH1374-20261015-MiXeD",
+      "count": 2,
+      "names": [
+        "SSH1374-20261015-MiXeD",
+        "SSH1374-20261015-MiXeD"
+      ]
+    },
+    {
+      "label": "ui-search-symbols",
+      "passed": true,
+      "query_name": "SSH1374-키_혼합+공백 /%?#&",
+      "count": 1,
+      "names": [
+        "SSH1374-키_혼합+공백 /%?#&"
+      ]
+    },
+    {
+      "label": "ui-search-translation",
+      "passed": true,
+      "query_name": "label.cancel",
+      "count": 1,
+      "names": [
+        "label.cancel"
+      ]
+    },
+    {
+      "label": "ui-sort-original-name",
+      "passed": true,
+      "ascending": [
+        "k8s-1",
+        "k1230-20261006",
+        "k1230-20261006",
+        "label.cancel",
+        "SSH1374-20261015-AnNoTaTeD",
+        "SSH1374-20261015-MiXeD",
+        "SSH1374-20261015-MiXeD",
+        "SSH1374-키_혼합+공백 /%?#&",
+        "USER.LOGIN"
+      ],
+      "descending": [
+        "USER.LOGIN",
+        "SSH1374-키_혼합+공백 /%?#&",
+        "SSH1374-20261015-MiXeD",
+        "SSH1374-20261015-MiXeD",
+        "SSH1374-20261015-AnNoTaTeD",
+        "label.cancel",
+        "k1230-20261006",
+        "k1230-20261006",
+        "k8s-1"
+      ]
+    },
+    {
+      "label": "ui-project-list",
+      "passed": true,
+      "id": "242b7dc4-8489-4358-b7f5-68f23e605adf",
+      "name": "SSH1374-20261015-MiXeD",
+      "href": "#/ssh/242b7dc4-8489-4358-b7f5-68f23e605adf?projectid=99ae5a35-9ef1-4868-9a44-cb6a2900c114&domainid=7ef6b29a-b253-11f1-a895-0024814c313f"
+    },
+    {
+      "label": "ui-project-detail",
+      "passed": true,
+      "id": "242b7dc4-8489-4358-b7f5-68f23e605adf",
+      "name": "SSH1374-20261015-MiXeD",
+      "title_and_field_match": true
+    },
+    {
+      "label": "ui-project-comments",
+      "passed": true
+    },
+    {
+      "label": "ui-normal-user-list",
+      "passed": true,
+      "id": "e4c990d7-4d48-41b0-8412-3c1c5cdb7aff",
+      "name": "SSH1374-20261015-MiXeD",
+      "href": "#/ssh/e4c990d7-4d48-41b0-8412-3c1c5cdb7aff?account=ssh1374-20261015-user&domainid=0b0edaa7-58c9-4ba5-ae4c-8ec7674ca58e"
+    },
+    {
+      "label": "ui-normal-user-detail",
+      "passed": true,
+      "id": "e4c990d7-4d48-41b0-8412-3c1c5cdb7aff",
+      "name": "SSH1374-20261015-MiXeD",
+      "title_and_field_match": true
+    }
+  ],
+  "network": [
+    {
+      "command": "listSSHKeyPairs",
+      "params": {
+        "page": "1",
+        "pagesize": "20"
+      },
+      "status": 200,
+      "count": 9,
+      "ids": [
+        "e4c990d7-4d48-41b0-8412-3c1c5cdb7aff",
+        "7c2ea08d-944e-4d6e-8d90-409235acc68d",
+        "865b8e75-f187-4c66-8fb4-ed23e8e1aff6",
+        "680640b7-88d9-457b-9d57-bdb3b319a7fd",
+        "5da1a188-f51d-465e-8ad0-315658101efe",
+        "31849434-ba94-4e64-ad2f-b11dc0eefb07",
+        "6d6cf53f-881e-41bf-b7e1-92031ba9d891",
+        "54dace93-f746-463d-8592-c796712c3004",
+        "879f7484-e0da-41f2-8ac1-5c23d354c3a2"
+      ],
+      "names": [
+        "SSH1374-20261015-MiXeD",
+        "SSH1374-20261015-AnNoTaTeD",
+        "USER.LOGIN",
+        "label.cancel",
+        "SSH1374-키_혼합+공백 /%?#&",
+        "SSH1374-20261015-MiXeD",
+        "k1230-20261006",
+        "k1230-20261006",
+        "k8s-1"
+      ]
+    },
+    {
+      "command": "listSSHKeyPairs",
+      "params": {
+        "id": "31849434-ba94-4e64-ad2f-b11dc0eefb07",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "page": "1",
+        "pagesize": "2"
+      },
+      "status": 200,
+      "count": 1,
+      "ids": [
+        "31849434-ba94-4e64-ad2f-b11dc0eefb07"
+      ],
+      "names": [
+        "SSH1374-20261015-MiXeD"
+      ]
+    },
+    {
+      "command": "listSSHKeyPairs",
+      "params": {
+        "id": "5da1a188-f51d-465e-8ad0-315658101efe",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "page": "1",
+        "pagesize": "2"
+      },
+      "status": 200,
+      "count": 1,
+      "ids": [
+        "5da1a188-f51d-465e-8ad0-315658101efe"
+      ],
+      "names": [
+        "SSH1374-키_혼합+공백 /%?#&"
+      ]
+    },
+    {
+      "command": "listSSHKeyPairs",
+      "params": {
+        "id": "680640b7-88d9-457b-9d57-bdb3b319a7fd",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "page": "1",
+        "pagesize": "2"
+      },
+      "status": 200,
+      "count": 1,
+      "ids": [
+        "680640b7-88d9-457b-9d57-bdb3b319a7fd"
+      ],
+      "names": [
+        "label.cancel"
+      ]
+    },
+    {
+      "command": "listSSHKeyPairs",
+      "params": {
+        "id": "865b8e75-f187-4c66-8fb4-ed23e8e1aff6",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "page": "1",
+        "pagesize": "2"
+      },
+      "status": 200,
+      "count": 1,
+      "ids": [
+        "865b8e75-f187-4c66-8fb4-ed23e8e1aff6"
+      ],
+      "names": [
+        "USER.LOGIN"
+      ]
+    },
+    {
+      "command": "listSSHKeyPairs",
+      "params": {
+        "id": "7c2ea08d-944e-4d6e-8d90-409235acc68d",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "page": "1",
+        "pagesize": "2"
+      },
+      "status": 200,
+      "count": 1,
+      "ids": [
+        "7c2ea08d-944e-4d6e-8d90-409235acc68d"
+      ],
+      "names": [
+        "SSH1374-20261015-AnNoTaTeD"
+      ]
+    },
+    {
+      "command": "listSSHKeyPairs",
+      "params": {
+        "page": "1",
+        "pagesize": "20"
+      },
+      "status": 200,
+      "count": 9,
+      "ids": [
+        "e4c990d7-4d48-41b0-8412-3c1c5cdb7aff",
+        "7c2ea08d-944e-4d6e-8d90-409235acc68d",
+        "865b8e75-f187-4c66-8fb4-ed23e8e1aff6",
+        "680640b7-88d9-457b-9d57-bdb3b319a7fd",
+        "5da1a188-f51d-465e-8ad0-315658101efe",
+        "31849434-ba94-4e64-ad2f-b11dc0eefb07",
+        "6d6cf53f-881e-41bf-b7e1-92031ba9d891",
+        "54dace93-f746-463d-8592-c796712c3004",
+        "879f7484-e0da-41f2-8ac1-5c23d354c3a2"
+      ],
+      "names": [
+        "SSH1374-20261015-MiXeD",
+        "SSH1374-20261015-AnNoTaTeD",
+        "USER.LOGIN",
+        "label.cancel",
+        "SSH1374-키_혼합+공백 /%?#&",
+        "SSH1374-20261015-MiXeD",
+        "k1230-20261006",
+        "k1230-20261006",
+        "k8s-1"
+      ]
+    },
+    {
+      "command": "listSSHKeyPairs",
+      "params": {
+        "id": "7c2ea08d-944e-4d6e-8d90-409235acc68d",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "page": "1",
+        "pagesize": "2"
+      },
+      "status": 200,
+      "count": 1,
+      "ids": [
+        "7c2ea08d-944e-4d6e-8d90-409235acc68d"
+      ],
+      "names": [
+        "SSH1374-20261015-AnNoTaTeD"
+      ]
+    },
+    {
+      "command": "listSSHKeyPairs",
+      "params": {
+        "name": "SSH1374-키_혼합+공백 /%?#&",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "page": "1",
+        "pagesize": "2"
+      },
+      "status": 200,
+      "count": 1,
+      "ids": [
+        "5da1a188-f51d-465e-8ad0-315658101efe"
+      ],
+      "names": [
+        "SSH1374-키_혼합+공백 /%?#&"
+      ]
+    },
+    {
+      "command": "listSSHKeyPairs",
+      "params": {
+        "page": "1",
+        "pagesize": "20"
+      },
+      "status": 200,
+      "count": 9,
+      "ids": [
+        "e4c990d7-4d48-41b0-8412-3c1c5cdb7aff",
+        "7c2ea08d-944e-4d6e-8d90-409235acc68d",
+        "865b8e75-f187-4c66-8fb4-ed23e8e1aff6",
+        "680640b7-88d9-457b-9d57-bdb3b319a7fd",
+        "5da1a188-f51d-465e-8ad0-315658101efe",
+        "31849434-ba94-4e64-ad2f-b11dc0eefb07",
+        "6d6cf53f-881e-41bf-b7e1-92031ba9d891",
+        "54dace93-f746-463d-8592-c796712c3004",
+        "879f7484-e0da-41f2-8ac1-5c23d354c3a2"
+      ],
+      "names": [
+        "SSH1374-20261015-MiXeD",
+        "SSH1374-20261015-AnNoTaTeD",
+        "USER.LOGIN",
+        "label.cancel",
+        "SSH1374-키_혼합+공백 /%?#&",
+        "SSH1374-20261015-MiXeD",
+        "k1230-20261006",
+        "k1230-20261006",
+        "k8s-1"
+      ]
+    },
+    {
+      "command": "listSSHKeyPairs",
+      "params": {
+        "name": "SSH1374-20261015-MiXeD",
+        "page": "1",
+        "pagesize": "20"
+      },
+      "status": 200,
+      "count": 2,
+      "ids": [
+        "e4c990d7-4d48-41b0-8412-3c1c5cdb7aff",
+        "31849434-ba94-4e64-ad2f-b11dc0eefb07"
+      ],
+      "names": [
+        "SSH1374-20261015-MiXeD",
+        "SSH1374-20261015-MiXeD"
+      ]
+    },
+    {
+      "command": "listSSHKeyPairs",
+      "params": {
+        "page": "1",
+        "pagesize": "20"
+      },
+      "status": 200,
+      "count": 9,
+      "ids": [
+        "e4c990d7-4d48-41b0-8412-3c1c5cdb7aff",
+        "7c2ea08d-944e-4d6e-8d90-409235acc68d",
+        "865b8e75-f187-4c66-8fb4-ed23e8e1aff6",
+        "680640b7-88d9-457b-9d57-bdb3b319a7fd",
+        "5da1a188-f51d-465e-8ad0-315658101efe",
+        "31849434-ba94-4e64-ad2f-b11dc0eefb07",
+        "6d6cf53f-881e-41bf-b7e1-92031ba9d891",
+        "54dace93-f746-463d-8592-c796712c3004",
+        "879f7484-e0da-41f2-8ac1-5c23d354c3a2"
+      ],
+      "names": [
+        "SSH1374-20261015-MiXeD",
+        "SSH1374-20261015-AnNoTaTeD",
+        "USER.LOGIN",
+        "label.cancel",
+        "SSH1374-키_혼합+공백 /%?#&",
+        "SSH1374-20261015-MiXeD",
+        "k1230-20261006",
+        "k1230-20261006",
+        "k8s-1"
+      ]
+    },
+    {
+      "command": "listSSHKeyPairs",
+      "params": {
+        "name": "SSH1374-키_혼합+공백 /%?#&",
+        "page": "1",
+        "pagesize": "20"
+      },
+      "status": 200,
+      "count": 1,
+      "ids": [
+        "5da1a188-f51d-465e-8ad0-315658101efe"
+      ],
+      "names": [
+        "SSH1374-키_혼합+공백 /%?#&"
+      ]
+    },
+    {
+      "command": "listSSHKeyPairs",
+      "params": {
+        "page": "1",
+        "pagesize": "20"
+      },
+      "status": 200,
+      "count": 9,
+      "ids": [
+        "e4c990d7-4d48-41b0-8412-3c1c5cdb7aff",
+        "7c2ea08d-944e-4d6e-8d90-409235acc68d",
+        "865b8e75-f187-4c66-8fb4-ed23e8e1aff6",
+        "680640b7-88d9-457b-9d57-bdb3b319a7fd",
+        "5da1a188-f51d-465e-8ad0-315658101efe",
+        "31849434-ba94-4e64-ad2f-b11dc0eefb07",
+        "6d6cf53f-881e-41bf-b7e1-92031ba9d891",
+        "54dace93-f746-463d-8592-c796712c3004",
+        "879f7484-e0da-41f2-8ac1-5c23d354c3a2"
+      ],
+      "names": [
+        "SSH1374-20261015-MiXeD",
+        "SSH1374-20261015-AnNoTaTeD",
+        "USER.LOGIN",
+        "label.cancel",
+        "SSH1374-키_혼합+공백 /%?#&",
+        "SSH1374-20261015-MiXeD",
+        "k1230-20261006",
+        "k1230-20261006",
+        "k8s-1"
+      ]
+    },
+    {
+      "command": "listSSHKeyPairs",
+      "params": {
+        "name": "label.cancel",
+        "page": "1",
+        "pagesize": "20"
+      },
+      "status": 200,
+      "count": 1,
+      "ids": [
+        "680640b7-88d9-457b-9d57-bdb3b319a7fd"
+      ],
+      "names": [
+        "label.cancel"
+      ]
+    },
+    {
+      "command": "listSSHKeyPairs",
+      "params": {
+        "page": "1",
+        "pagesize": "20"
+      },
+      "status": 200,
+      "count": 9,
+      "ids": [
+        "e4c990d7-4d48-41b0-8412-3c1c5cdb7aff",
+        "7c2ea08d-944e-4d6e-8d90-409235acc68d",
+        "865b8e75-f187-4c66-8fb4-ed23e8e1aff6",
+        "680640b7-88d9-457b-9d57-bdb3b319a7fd",
+        "5da1a188-f51d-465e-8ad0-315658101efe",
+        "31849434-ba94-4e64-ad2f-b11dc0eefb07",
+        "6d6cf53f-881e-41bf-b7e1-92031ba9d891",
+        "54dace93-f746-463d-8592-c796712c3004",
+        "879f7484-e0da-41f2-8ac1-5c23d354c3a2"
+      ],
+      "names": [
+        "SSH1374-20261015-MiXeD",
+        "SSH1374-20261015-AnNoTaTeD",
+        "USER.LOGIN",
+        "label.cancel",
+        "SSH1374-키_혼합+공백 /%?#&",
+        "SSH1374-20261015-MiXeD",
+        "k1230-20261006",
+        "k1230-20261006",
+        "k8s-1"
+      ]
+    },
+    {
+      "command": "listSSHKeyPairs",
+      "params": {
+        "projectid": "99ae5a35-9ef1-4868-9a44-cb6a2900c114",
+        "page": "1",
+        "pagesize": "20"
+      },
+      "status": 200,
+      "count": 1,
+      "ids": [
+        "242b7dc4-8489-4358-b7f5-68f23e605adf"
+      ],
+      "names": [
+        "SSH1374-20261015-MiXeD"
+      ]
+    },
+    {
+      "command": "listSSHKeyPairs",
+      "params": {
+        "id": "242b7dc4-8489-4358-b7f5-68f23e605adf",
+        "projectid": "99ae5a35-9ef1-4868-9a44-cb6a2900c114",
+        "page": "1",
+        "pagesize": "2"
+      },
+      "status": 200,
+      "count": 1,
+      "ids": [
+        "242b7dc4-8489-4358-b7f5-68f23e605adf"
+      ],
+      "names": [
+        "SSH1374-20261015-MiXeD"
+      ]
+    },
+    {
+      "command": "listSSHKeyPairs",
+      "params": {
+        "projectid": "99ae5a35-9ef1-4868-9a44-cb6a2900c114",
+        "page": "1",
+        "pagesize": "20"
+      },
+      "status": 200,
+      "count": 1,
+      "ids": [
+        "242b7dc4-8489-4358-b7f5-68f23e605adf"
+      ],
+      "names": [
+        "SSH1374-20261015-MiXeD"
+      ]
+    },
+    {
+      "command": "listSSHKeyPairs",
+      "params": {
+        "id": "242b7dc4-8489-4358-b7f5-68f23e605adf",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "projectid": "99ae5a35-9ef1-4868-9a44-cb6a2900c114",
+        "page": "1",
+        "pagesize": "2"
+      },
+      "status": 200,
+      "count": 1,
+      "ids": [
+        "242b7dc4-8489-4358-b7f5-68f23e605adf"
+      ],
+      "names": [
+        "SSH1374-20261015-MiXeD"
+      ]
+    },
+    {
+      "command": "listSSHKeyPairs",
+      "params": {
+        "page": "1",
+        "pagesize": "20"
+      },
+      "status": 200,
+      "count": 1,
+      "ids": [
+        "e4c990d7-4d48-41b0-8412-3c1c5cdb7aff"
+      ],
+      "names": [
+        "SSH1374-20261015-MiXeD"
+      ]
+    },
+    {
+      "command": "listSSHKeyPairs",
+      "params": {
+        "id": "e4c990d7-4d48-41b0-8412-3c1c5cdb7aff",
+        "account": "ssh1374-20261015-user",
+        "domainid": "0b0edaa7-58c9-4ba5-ae4c-8ec7674ca58e",
+        "page": "1",
+        "pagesize": "2"
+      },
+      "status": 200,
+      "count": 1,
+      "ids": [
+        "e4c990d7-4d48-41b0-8412-3c1c5cdb7aff"
+      ],
+      "names": [
+        "SSH1374-20261015-MiXeD"
+      ]
+    }
+  ]
+}

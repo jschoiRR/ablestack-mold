@@ -17,6 +17,16 @@
 
 <template>
   <div class="form-layout" v-ctrl-enter="handleSubmit">
+    <a-alert v-if="uploadError" type="error" show-icon :message="uploadError.message" style="margin-bottom: 16px">
+      <template #description>
+        <a-collapse ghost>
+          <a-collapse-panel key="diagnostic" :header="$t('label.creation.source.error.details')">
+            <div style="white-space: pre-wrap; overflow-wrap: anywhere">{{ uploadError.detail }}</div>
+          </a-collapse-panel>
+        </a-collapse>
+      </template>
+    </a-alert>
+
     <span v-if="uploadPercentage > 0">
       <loading-outlined />
       {{ $t('message.upload.file.processing') }}
@@ -32,7 +42,7 @@
         <a-form-item name="url" ref="url" :label="$t('label.url')">
           <a-input
             v-model:value="form.url"
-            :placeholder="apiParams.url.description"/>
+            :placeholder="$t('message.creation.source.upload.url')"/>
         </a-form-item>
         <a-form-item name="name" ref="name">
           <template #label>
@@ -76,7 +86,7 @@
         </a-form-item>
         <a-form-item name="diskofferingid" ref="diskofferingid">
           <template #label>
-            <tooltip-label :title="$t('label.diskofferingid')" :tooltip="apiParams.diskofferingid.description || $t('label.diskoffering')"/>
+            <tooltip-label :title="$t('label.diskofferingid')" :tooltip="$t('message.creation.source.upload.offering')"/>
           </template>
           <infinite-scroll-select
             v-model:value="form.diskofferingid"
@@ -131,18 +141,22 @@
             allowClear="true"
             @change-option-value="handleAccountChange" />
         </a-form-item>
-        <div :span="24" class="action-button">
+        <MoldDialogActions :span="24" :busy="loading">
           <a-button @click="closeAction">{{ $t('label.cancel') }}</a-button>
           <a-button :loading="loading" type="primary" ref="submit" @click="handleSubmit">{{ $t('label.ok') }}</a-button>
-        </div>
+        </MoldDialogActions>
       </a-form>
     </a-spin>
   </div>
 </template>
 
 <script>
+import MoldDialogActions from '@/components/view/MoldDialogActions'
 import { ref, reactive, toRaw } from 'vue'
+import { volumeUploadError, resolveVolumeUpload } from '@/utils/volumeUploadError'
 import { postAPI } from '@/api'
+import { getAPI } from '@/utils/storageApi'
+import { createJobTracker } from '@/utils/jobTracker'
 import { mixinForm } from '@/utils/mixin'
 import ResourceIcon from '@/components/view/ResourceIcon'
 import TooltipLabel from '@/components/widgets/TooltipLabel'
@@ -152,12 +166,14 @@ export default {
   name: 'UploadVolume',
   mixins: [mixinForm],
   components: {
+    MoldDialogActions,
     ResourceIcon,
     TooltipLabel,
     InfiniteScrollSelect
   },
   data () {
     return {
+      uploadError: null,
       formats: ['RAW', 'VHD', 'VHDX', 'OVA', 'QCOW2'],
       zoneSelected: '',
       selectedDiskOfferingId: null,
@@ -203,6 +219,14 @@ export default {
   },
   created () {
     this.initForm()
+    this.uploadTracker = createJobTracker({
+      query: jobId => getAPI('queryAsyncJobResult', { jobid: jobId }, { backgroundJob: true, preserveOnFailure: true }).then(json => json.queryasyncjobresultresponse),
+      onState: () => {}
+    })
+  },
+  beforeUnmount () {
+    this.uploadDisposed = true
+    this.uploadTracker.clear()
   },
   methods: {
     initForm () {
@@ -242,6 +266,7 @@ export default {
     handleSubmit (e) {
       e.preventDefault()
       if (this.loading) return
+      this.uploadError = null
       this.formRef.value.validate().then(() => {
         const formRaw = toRaw(this.form)
         const values = this.handleRemoveFields(formRaw)
@@ -255,21 +280,26 @@ export default {
         }
         params.domainId = this.domainId
         this.loading = true
-        postAPI('uploadVolume', params).then(json => {
+        postAPI('uploadVolume', params, { preserveOnFailure: true }).then(json => resolveVolumeUpload(json.uploadvolumeresponse, jobId => this.uploadTracker.track(jobId))).then(() => {
+          if (this.uploadDisposed) return
           this.$notification.success({
-            message: this.$t('message.success.upload'),
-            description: this.$t('message.success.upload.volume.description')
+            message: this.$t('message.creation.source.upload.registered'),
+            description: this.$t('message.creation.source.upload.registration.complete')
           })
           this.closeAction()
           this.$emit('refresh-data')
         }).catch(error => {
-          this.$notifyError(error)
+          if (!this.uploadDisposed) this.showUploadError(error)
         }).finally(() => {
           this.loading = false
         })
       }).catch((error) => {
         this.formRef.value.scrollToField(error.errorFields[0].name)
       })
+    },
+    showUploadError (error) {
+      this.uploadError = volumeUploadError(error, key => this.$t(key))
+      this.$notification.error({ message: this.$t('message.upload.failed'), description: this.uploadError.message, duration: 0 })
     },
     closeAction () {
       this.$emit('close-action')

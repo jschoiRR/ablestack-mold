@@ -1,0 +1,14 @@
+UD-03 #1384 / 2026-10-16
+Final deployed UI: 762c9de0fb07ab33bc857bdbb827769d75e2002d
+WSL ext4: /home/ablecloud/work/dhslove/cloud-epic-1381/ui
+Focused Jest: UserDataSelection, AutoScaleCreationPreflight, AutoScaleEditing, RegisterUserData
+Test Suites: 4 passed, 4 total
+Tests: 128 passed, 128 total
+ESLint changed files: No lint errors found
+Production UI build: Build complete; asset/entrypoint size warnings 2
+No full Cloud build or manually dispatched GitHub Actions
+Saved live-evidence assertions: python docs/validation/userdata-1384-20261016/qualify.py -> PASS
+Deployment: 855 static hashes; JAR/6 classes/WEB-INF/config/PID preserved; mold active; client 200
+Cleanup: API and DB active test residuals 0; original userdata exact match
+Final bounded actual reset runtime: exceptions 0, truncated false, hasMore false
+Global runtime caveat: 7 interim metadata/cancellation exceptions; see report and #1392

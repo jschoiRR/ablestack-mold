@@ -1,0 +1,227 @@
+// Licensed to the Apache Software Foundation (ASF) under one
+// or more contributor license agreements.  See the NOTICE file
+// distributed with this work for additional information
+// regarding copyright ownership.  The ASF licenses this file
+// to you under the Apache License, Version 2.0 (the
+// "License"); you may not use this file except in compliance
+// with the License.  You may obtain a copy of the License at
+//
+//   http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing,
+// software distributed under the License is distributed on an
+// "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+// KIND, either express or implied.  See the License for the
+// specific language governing permissions and limitations
+// under the License.
+package org.apache.cloudstack.backup;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.inject.Inject;
+
+import org.apache.cloudstack.backup.dao.BackupDao;
+import org.apache.cloudstack.backup.dao.BackupScheduleDao;
+import org.apache.cloudstack.engine.subsystem.api.storage.VolumeDataFactory;
+import org.apache.cloudstack.engine.subsystem.api.storage.EndPoint;
+import org.apache.cloudstack.engine.subsystem.api.storage.EndPointSelector;
+import org.apache.cloudstack.engine.subsystem.api.storage.PrimaryDataStore;
+import org.apache.cloudstack.engine.subsystem.api.storage.VolumeInfo;
+import org.apache.cloudstack.storage.to.VolumeObjectTO;
+import org.apache.cloudstack.storage.datastore.db.PrimaryDataStoreDao;
+import org.apache.cloudstack.storage.datastore.db.StoragePoolVO;
+import com.cloud.hypervisor.Hypervisor.HypervisorType;
+import com.cloud.service.ServiceOfferingVO;
+import com.cloud.service.dao.ServiceOfferingDao;
+import com.cloud.storage.DiskOfferingVO;
+import com.cloud.storage.Storage;
+import com.cloud.storage.VolumeVO;
+import com.cloud.storage.dao.DiskOfferingDao;
+import com.cloud.storage.Volume;
+import com.cloud.storage.Storage.StoragePoolType;
+import com.cloud.storage.dao.VolumeDao;
+import com.cloud.utils.component.ManagerBase;
+import com.cloud.utils.db.GlobalLock;
+import com.cloud.utils.exception.CloudRuntimeException;
+import com.cloud.vm.VMInstanceVO;
+import com.cloud.vm.VirtualMachine;
+import com.cloud.vm.dao.VMInstanceDao;
+import com.cloud.vm.snapshot.dao.VMSnapshotDao;
+
+/** Europa safety policy; coexistence requires the separate backup lineage design. */
+public class BackupSnapshotGuard extends ManagerBase {
+    @Inject private BackupDao backupDao;
+    @Inject private com.cloud.agent.AgentManager agentManager;
+    @Inject private BackupScheduleDao scheduleDao;
+    @Inject private VMSnapshotDao snapshotDao;
+    @Inject private VMInstanceDao vmDao;
+    @Inject private VolumeDao volumeDao;
+    @Inject private VolumeDataFactory volumeDataFactory;
+    @Inject private PrimaryDataStoreDao poolDao;
+    @Inject private AblestackSharedRawBackupService sharedRaw;
+    @Inject private ServiceOfferingDao serviceOfferingDao;
+    @Inject private DiskOfferingDao diskOfferingDao;
+    @Inject private EndPointSelector endpointSelector;
+
+    /** Shared RAW needs a storage-wide recovery point covering every VM writer. */
+    public void checkBackupSource(long vmId, String provider) {
+        if (!BackupProviderNameUtils.isNasFamily(provider) && !BackupProviderNameUtils.isCommvaultFamily(provider)
+                && !BackupProviderNameUtils.isNetBackupFamily(provider) && !BackupProviderNameUtils.isVeeamFamily(provider)) {
+            return;
+        }
+        VMInstanceVO vm = vmDao.findById(vmId);
+        if (vm == null || vm.getHypervisorType() != HypervisorType.KVM) return;
+        for (VolumeVO volume : volumeDao.findByInstance(vmId)) {
+            if (volume.getFormat() != Storage.ImageFormat.RAW) continue;
+            StoragePoolVO pool = volume.getPoolId() == null ? null : poolDao.findById(volume.getPoolId());
+            if (pool == null) {
+                throw new CloudRuntimeException("BACKUP_SOURCE_UNKNOWN: Cannot determine the primary storage for RAW volume " + volume.getUuid());
+            }
+            if (pool.getPoolType() == Storage.StoragePoolType.SharedMountPoint) {
+                sharedRaw.checkSources(vmId);
+                return;
+            }
+        }
+    }
+
+    public String snapshotReason(long vmId) {
+        VMInstanceVO vm = vmDao.findById(vmId);
+        if (vm == null || vm.getHypervisorType() != HypervisorType.KVM) {
+            return null;
+        }
+        if (!backupDao.listByVmId(null, vmId).isEmpty()) {
+            return "BACKUP_EXISTS";
+        }
+        if (!scheduleDao.listByVM(vmId).isEmpty()) {
+            return "BACKUP_SCHEDULE_EXISTS";
+        }
+        return null;
+    }
+
+    public String backupReason(long vmId) {
+        VMInstanceVO vm = vmDao.findById(vmId);
+        return vm != null && vm.getHypervisorType() == HypervisorType.KVM
+                && !snapshotDao.findByVm(vmId).isEmpty() ? "VM_SNAPSHOT_EXISTS" : null;
+    }
+
+    public void checkSnapshot(long vmId) {
+        String reason = snapshotReason(vmId);
+        if (reason != null) {
+            throw new CloudRuntimeException(reason + ": VM snapshot creation and restore are unavailable while backups or backup schedules exist.");
+        }
+    }
+
+    public void checkRuntime(long vmId) {
+        VMInstanceVO vm = vmDao.findById(vmId);
+        if (vm == null || vm.getHypervisorType() != HypervisorType.KVM) return;
+        Long hostId = vm.getHostId() == null ? vm.getLastHostId() : vm.getHostId();
+        boolean stopped = vm.getState() == VirtualMachine.State.Stopped;
+        List<VolumeObjectTO> offlineVolumes = stopped ? getVolumeTOList(vmId) : null;
+        if (hostId == null && stopped) {
+            hostId = getStoppedRbdInspectionHost(offlineVolumes);
+        }
+        if (hostId == null) throw new CloudRuntimeException("BACKUP_TRACKING_UNKNOWN: No host available for tracking inspection.");
+        try {
+            com.cloud.agent.api.Answer answer = agentManager.send(hostId,
+                    new com.cloud.agent.api.CheckVmBackupTrackingCommand(vm.getInstanceName(), stopped,
+                            offlineVolumes));
+            if (answer == null || !answer.getResult()) {
+                throw new CloudRuntimeException(answer == null ? "BACKUP_TRACKING_UNKNOWN: No agent response." : answer.getDetails());
+            }
+        } catch (com.cloud.exception.AgentUnavailableException | com.cloud.exception.OperationTimedoutException e) {
+            throw new CloudRuntimeException("BACKUP_TRACKING_UNKNOWN: Unable to verify backup tracking.", e);
+        }
+    }
+
+    private Long getStoppedRbdInspectionHost(List<VolumeObjectTO> volumes) {
+        VolumeInfo candidate = null;
+        for (VolumeObjectTO volume : volumes) {
+            VolumeInfo info = volumeDataFactory.getVolume(volume.getId());
+            // A never-started RBD clone has no VM host history. Inspect its
+            // actual ready disks through a storage endpoint; a running VM or
+            // an unqualified/local disk must never use this fallback.
+            if (info == null || info.getState() != Volume.State.Ready
+                    || !(info.getDataStore() instanceof PrimaryDataStore)
+                    || ((PrimaryDataStore) info.getDataStore()).getPoolType() != StoragePoolType.RBD) {
+                throw new CloudRuntimeException("BACKUP_TRACKING_UNKNOWN: A ready shared RBD volume is required for hostless inspection.");
+            }
+            if (candidate == null) { candidate = info; }
+        }
+        EndPoint endpoint = candidate == null ? null : endpointSelector.select(candidate);
+        return endpoint == null || endpoint.getId() <= 0 ? null : endpoint.getId();
+    }
+
+    private List<VolumeObjectTO> getVolumeTOList(long vmId) {
+        List<VolumeVO> volumes = volumeDao.findByInstance(vmId);
+        if (volumes == null || volumes.isEmpty()) {
+            throw new CloudRuntimeException("BACKUP_TRACKING_UNKNOWN: No volumes available for tracking inspection.");
+        }
+        List<VolumeObjectTO> volumeTOs = new ArrayList<>();
+        for (VolumeVO volume : volumes) {
+            VolumeInfo volumeInfo = volumeDataFactory.getVolume(volume.getId());
+            VolumeObjectTO volumeTO = volumeInfo == null ? null : (VolumeObjectTO) volumeInfo.getTO();
+            if (volumeTO == null) {
+                throw new CloudRuntimeException("BACKUP_TRACKING_UNKNOWN: Cannot inspect volume " + volume.getId());
+            }
+            volumeTOs.add(volumeTO);
+        }
+        return volumeTOs;
+    }
+
+    public void checkBackup(long vmId) {
+        if (backupReason(vmId) != null) {
+            throw new CloudRuntimeException("VM_SNAPSHOT_EXISTS: Backup creation, scheduling and offering assignment are unavailable while VM snapshots exist.");
+        }
+        checkSharedVolumeOfferings(vmId);
+    }
+
+    /** Sharing is an offering property, independent of image format, storage backend, or VM power state. */
+    private void checkSharedVolumeOfferings(long vmId) {
+        VMInstanceVO vm = vmDao.findById(vmId);
+        if (vm == null) return;
+        if (vm.getServiceOfferingId() > 0) {
+            ServiceOfferingVO compute = serviceOfferingDao.findByIdIncludingRemoved(vm.getServiceOfferingId());
+            if (compute == null) {
+                throw new CloudRuntimeException("BACKUP_SOURCE_UNKNOWN: Cannot determine the compute offering for VM " + vmId);
+            }
+            // Compute offerings store their root-disk sharing option in the associated disk offering.
+            checkSharedDiskOffering(compute.getDiskOfferingId(), "compute offering");
+        }
+        List<VolumeVO> volumes = volumeDao.findByInstance(vmId);
+        if (volumes == null) {
+            throw new CloudRuntimeException("BACKUP_SOURCE_UNKNOWN: Cannot determine the volumes for VM " + vmId);
+        }
+        for (VolumeVO volume : volumes) {
+            checkSharedDiskOffering(volume.getDiskOfferingId(), "disk offering for volume " + volume.getUuid());
+        }
+    }
+
+    private void checkSharedDiskOffering(Long offeringId, String source) {
+        if (offeringId == null || offeringId <= 0) return;
+        DiskOfferingVO offering = diskOfferingDao.findByIdIncludingRemoved(offeringId);
+        if (offering == null) {
+            throw new CloudRuntimeException("BACKUP_SOURCE_UNKNOWN: Cannot determine the " + source);
+        }
+        if (offering.getShareable()) {
+            throw new CloudRuntimeException("BACKUP_SHARED_VOLUME_UNSUPPORTED: VM backups are unavailable while shared volumes are enabled in the " + source);
+        }
+    }
+
+    public Lease acquire(long vmId) {
+        GlobalLock lock = GlobalLock.getInternLock("vm.backup.snapshot." + vmId);
+        if (!lock.lock(3)) {
+            lock.releaseRef();
+            throw new CloudRuntimeException("BACKUP_SNAPSHOT_BUSY: Another backup or snapshot operation is in progress. Retry after it completes.");
+        }
+        return new Lease(lock);
+    }
+
+    public static final class Lease implements AutoCloseable {
+        private final GlobalLock lock;
+        private Lease(GlobalLock lock) { this.lock = lock; }
+        @Override public void close() {
+            try { lock.unlock(); } finally { lock.releaseRef(); }
+        }
+    }
+}

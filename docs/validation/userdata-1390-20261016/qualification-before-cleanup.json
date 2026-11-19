@@ -1,0 +1,481 @@
+{
+  "passed": true,
+  "complete": false,
+  "check_count": 116,
+  "checks": [
+    {
+      "check": "qualified static files and unchanged backend",
+      "passed": true
+    },
+    {
+      "check": "webapp/config/process and HTTP preserved",
+      "passed": true
+    },
+    {
+      "check": "API DB body admin",
+      "passed": true
+    },
+    {
+      "check": "API DB body user",
+      "passed": true
+    },
+    {
+      "check": "API DB body domainadmin",
+      "passed": true
+    },
+    {
+      "check": "API DB body outsider",
+      "passed": true
+    },
+    {
+      "check": "API DB body project",
+      "passed": true
+    },
+    {
+      "check": "API DB body empty",
+      "passed": true
+    },
+    {
+      "check": "API DB body inline",
+      "passed": true
+    },
+    {
+      "check": "API DB body different",
+      "passed": true
+    },
+    {
+      "check": "API DB body append",
+      "passed": true
+    },
+    {
+      "check": "API DB body binary",
+      "passed": true
+    },
+    {
+      "check": "clipboard-raw.bin exact bytes",
+      "passed": true,
+      "sha256": "1e9a22314fe825e414b43c4617ae489a6a6eb73b8f168879e7ff5a8fa8426622"
+    },
+    {
+      "check": "download-raw.bin exact bytes",
+      "passed": true,
+      "sha256": "1e9a22314fe825e414b43c4617ae489a6a6eb73b8f168879e7ff5a8fa8426622"
+    },
+    {
+      "check": "clipboard-base64.bin canonical Base64",
+      "passed": true
+    },
+    {
+      "check": "download-base64.bin canonical Base64",
+      "passed": true
+    },
+    {
+      "check": "light-1440x1000 viewport and center",
+      "passed": true
+    },
+    {
+      "check": "light-1440x1000 bounded modal and body scrolling",
+      "passed": true
+    },
+    {
+      "check": "light-1440x1000 32px buttons",
+      "passed": true
+    },
+    {
+      "check": "light-1440x1000 exact stored text",
+      "passed": true
+    },
+    {
+      "check": "light-1440x1000 final bundle",
+      "passed": true
+    },
+    {
+      "check": "light-1440x1000 code contrast",
+      "passed": true,
+      "ratio": 14.67911847763172
+    },
+    {
+      "check": "light-1280x720 viewport and center",
+      "passed": true
+    },
+    {
+      "check": "light-1280x720 bounded modal and body scrolling",
+      "passed": true
+    },
+    {
+      "check": "light-1280x720 32px buttons",
+      "passed": true
+    },
+    {
+      "check": "light-1280x720 exact stored text",
+      "passed": true
+    },
+    {
+      "check": "light-1280x720 final bundle",
+      "passed": true
+    },
+    {
+      "check": "light-1280x720 code contrast",
+      "passed": true,
+      "ratio": 14.67911847763172
+    },
+    {
+      "check": "light-390x844 viewport and center",
+      "passed": true
+    },
+    {
+      "check": "light-390x844 bounded modal and body scrolling",
+      "passed": true
+    },
+    {
+      "check": "light-390x844 32px buttons",
+      "passed": true
+    },
+    {
+      "check": "light-390x844 exact stored text",
+      "passed": true
+    },
+    {
+      "check": "light-390x844 final bundle",
+      "passed": true
+    },
+    {
+      "check": "light-390x844 code contrast",
+      "passed": true,
+      "ratio": 14.67911847763172
+    },
+    {
+      "check": "light-390x480 viewport and center",
+      "passed": true
+    },
+    {
+      "check": "light-390x480 bounded modal and body scrolling",
+      "passed": true
+    },
+    {
+      "check": "light-390x480 32px buttons",
+      "passed": true
+    },
+    {
+      "check": "light-390x480 exact stored text",
+      "passed": true
+    },
+    {
+      "check": "light-390x480 final bundle",
+      "passed": true
+    },
+    {
+      "check": "light-390x480 code contrast",
+      "passed": true,
+      "ratio": 14.67911847763172
+    },
+    {
+      "check": "light fixed ant-modal-header",
+      "passed": true
+    },
+    {
+      "check": "light fixed ant-modal-footer",
+      "passed": true
+    },
+    {
+      "check": "dark-1440x1000 viewport and center",
+      "passed": true
+    },
+    {
+      "check": "dark-1440x1000 bounded modal and body scrolling",
+      "passed": true
+    },
+    {
+      "check": "dark-1440x1000 32px buttons",
+      "passed": true
+    },
+    {
+      "check": "dark-1440x1000 exact stored text",
+      "passed": true
+    },
+    {
+      "check": "dark-1440x1000 final bundle",
+      "passed": true
+    },
+    {
+      "check": "dark-1440x1000 code contrast",
+      "passed": true,
+      "ratio": 14.56307547372849
+    },
+    {
+      "check": "dark-1280x720 viewport and center",
+      "passed": true
+    },
+    {
+      "check": "dark-1280x720 bounded modal and body scrolling",
+      "passed": true
+    },
+    {
+      "check": "dark-1280x720 32px buttons",
+      "passed": true
+    },
+    {
+      "check": "dark-1280x720 exact stored text",
+      "passed": true
+    },
+    {
+      "check": "dark-1280x720 final bundle",
+      "passed": true
+    },
+    {
+      "check": "dark-1280x720 code contrast",
+      "passed": true,
+      "ratio": 14.56307547372849
+    },
+    {
+      "check": "dark-390x844 viewport and center",
+      "passed": true
+    },
+    {
+      "check": "dark-390x844 bounded modal and body scrolling",
+      "passed": true
+    },
+    {
+      "check": "dark-390x844 32px buttons",
+      "passed": true
+    },
+    {
+      "check": "dark-390x844 exact stored text",
+      "passed": true
+    },
+    {
+      "check": "dark-390x844 final bundle",
+      "passed": true
+    },
+    {
+      "check": "dark-390x844 code contrast",
+      "passed": true,
+      "ratio": 14.56307547372849
+    },
+    {
+      "check": "dark-390x480 viewport and center",
+      "passed": true
+    },
+    {
+      "check": "dark-390x480 bounded modal and body scrolling",
+      "passed": true
+    },
+    {
+      "check": "dark-390x480 32px buttons",
+      "passed": true
+    },
+    {
+      "check": "dark-390x480 exact stored text",
+      "passed": true
+    },
+    {
+      "check": "dark-390x480 final bundle",
+      "passed": true
+    },
+    {
+      "check": "dark-390x480 code contrast",
+      "passed": true,
+      "ratio": 14.56307547372849
+    },
+    {
+      "check": "dark fixed ant-modal-header",
+      "passed": true
+    },
+    {
+      "check": "dark fixed ant-modal-footer",
+      "passed": true
+    },
+    {
+      "check": "body case append",
+      "passed": true
+    },
+    {
+      "check": "comparison case append",
+      "passed": true
+    },
+    {
+      "check": "body case empty",
+      "passed": true
+    },
+    {
+      "check": "comparison case empty",
+      "passed": true
+    },
+    {
+      "check": "body case inline",
+      "passed": true
+    },
+    {
+      "check": "comparison case inline",
+      "passed": true
+    },
+    {
+      "check": "body case binary",
+      "passed": true
+    },
+    {
+      "check": "comparison case binary",
+      "passed": true
+    },
+    {
+      "check": "VM variable values correctly labeled",
+      "passed": true
+    },
+    {
+      "check": "role user",
+      "passed": true
+    },
+    {
+      "check": "role domainadmin",
+      "passed": true
+    },
+    {
+      "check": "role project",
+      "passed": true
+    },
+    {
+      "check": "source denial preserves independent VM access",
+      "passed": true
+    },
+    {
+      "check": "API denied action hidden",
+      "passed": true
+    },
+    {
+      "check": "error-503-light stale body exports disabled",
+      "passed": true
+    },
+    {
+      "check": "error-503-dark stale body exports disabled",
+      "passed": true
+    },
+    {
+      "check": "error-403-dark clears body",
+      "passed": true
+    },
+    {
+      "check": "invalid-body-light clears body",
+      "passed": true
+    },
+    {
+      "check": "actual-vm-changed clears body",
+      "passed": true
+    },
+    {
+      "check": "actual-vm-deleted clears body",
+      "passed": true
+    },
+    {
+      "check": "late response stays in new VM",
+      "passed": true
+    },
+    {
+      "check": "escape closes and restores action focus",
+      "passed": true
+    },
+    {
+      "check": "network-actual-vm-changed.json complete event interval",
+      "passed": true
+    },
+    {
+      "check": "network-actual-vm-deleted.json complete event interval",
+      "passed": true
+    },
+    {
+      "check": "network-append.json complete event interval",
+      "passed": true
+    },
+    {
+      "check": "network-binary.json complete event interval",
+      "passed": true
+    },
+    {
+      "check": "network-dark-matrix.json complete event interval",
+      "passed": true
+    },
+    {
+      "check": "network-empty.json complete event interval",
+      "passed": true
+    },
+    {
+      "check": "network-error-403-dark.json complete event interval",
+      "passed": true
+    },
+    {
+      "check": "network-error-503-dark.json complete event interval",
+      "passed": true
+    },
+    {
+      "check": "network-error-503-light.json complete event interval",
+      "passed": true
+    },
+    {
+      "check": "network-final-byte-tools.json complete event interval",
+      "passed": true
+    },
+    {
+      "check": "network-inline.json complete event interval",
+      "passed": true
+    },
+    {
+      "check": "network-invalid-body-light.json complete event interval",
+      "passed": true
+    },
+    {
+      "check": "network-late-new-vm.json complete event interval",
+      "passed": true
+    },
+    {
+      "check": "network-library-body-regression.json complete event interval",
+      "passed": true
+    },
+    {
+      "check": "network-library-entry.json complete event interval",
+      "passed": true
+    },
+    {
+      "check": "network-project-leave.json complete event interval",
+      "passed": true
+    },
+    {
+      "check": "network-project-leave.json known route cancellation",
+      "passed": true
+    },
+    {
+      "check": "network-role-domainadmin.json complete event interval",
+      "passed": true
+    },
+    {
+      "check": "network-role-get-denied.json complete event interval",
+      "passed": true
+    },
+    {
+      "check": "network-role-project.json complete event interval",
+      "passed": true
+    },
+    {
+      "check": "network-role-project.json known route cancellation",
+      "passed": true
+    },
+    {
+      "check": "network-role-source-denied.json complete event interval",
+      "passed": true
+    },
+    {
+      "check": "network-role-user.json complete event interval",
+      "passed": true
+    },
+    {
+      "check": "shared library body regression",
+      "passed": true
+    },
+    {
+      "check": "keyboard remains inside dialog",
+      "passed": true
+    },
+    {
+      "check": "code keyboard focus visible",
+      "passed": true
+    }
+  ]
+}

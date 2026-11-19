@@ -1,0 +1,76 @@
+{
+  "checks": [
+    {
+      "name": "UUID",
+      "passed": true
+    },
+    {
+      "name": "exact-name",
+      "passed": true
+    },
+    {
+      "name": "partial-name",
+      "passed": true
+    },
+    {
+      "name": "owner-domain",
+      "passed": true
+    },
+    {
+      "name": "zero-result",
+      "passed": true
+    },
+    {
+      "name": "server-count-page",
+      "passed": true,
+      "count": 20,
+      "pages": [
+        10,
+        10
+      ]
+    },
+    {
+      "name": "user-scope",
+      "passed": true,
+      "ids": [
+        "b234e5ec-6ccf-4a27-9ad8-05081d7a78a9"
+      ]
+    },
+    {
+      "name": "user-cross-domain-denied",
+      "passed": true,
+      "response": {}
+    },
+    {
+      "name": "project-member",
+      "passed": true
+    },
+    {
+      "name": "domainadmin-scope",
+      "passed": true,
+      "ids": [
+        "b234e5ec-6ccf-4a27-9ad8-05081d7a78a9"
+      ]
+    },
+    {
+      "name": "domainadmin-cross-domain-denied",
+      "passed": true,
+      "response": {}
+    },
+    {
+      "name": "outsider-scope",
+      "passed": true,
+      "ids": []
+    },
+    {
+      "name": "outsider-cross-domain-denied",
+      "passed": true,
+      "response": {}
+    },
+    {
+      "name": "admin-project",
+      "passed": true
+    }
+  ],
+  "passed": 14
+}

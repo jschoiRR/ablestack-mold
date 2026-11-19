@@ -1,0 +1,98 @@
+{
+  "body": {
+    "bottom": 594,
+    "height": 478,
+    "left": 281,
+    "right": 999,
+    "top": 116,
+    "width": 718,
+    "x": 281,
+    "y": 116
+  },
+  "bodyOverflow": "auto",
+  "buttons": [
+    {
+      "background": "rgb(39, 46, 54)",
+      "border": "rgb(62, 70, 80)",
+      "color": "rgb(197, 204, 212)",
+      "disabled": false,
+      "fontSize": "14px",
+      "padding": "4px 15px",
+      "rect": {
+        "bottom": 643,
+        "height": 32,
+        "left": 839.46875,
+        "right": 897.234375,
+        "top": 611,
+        "width": 57.765625,
+        "x": 839.46875,
+        "y": 611
+      },
+      "text": "취소"
+    },
+    {
+      "background": "rgb(9, 105, 218)",
+      "border": "rgb(9, 105, 218)",
+      "color": "rgb(255, 255, 255)",
+      "disabled": false,
+      "fontSize": "14px",
+      "padding": "4px 15px",
+      "rect": {
+        "bottom": 643,
+        "height": 32,
+        "left": 913.234375,
+        "right": 971,
+        "top": 611,
+        "width": 57.765625,
+        "x": 913.234375,
+        "y": 611
+      },
+      "text": "확인"
+    }
+  ],
+  "footer": {
+    "bottom": 659,
+    "height": 65,
+    "left": 281,
+    "right": 999,
+    "top": 594,
+    "width": 718,
+    "x": 281,
+    "y": 594
+  },
+  "inputs": [
+    {
+      "aria": "현재 저장된 본문(템플릿 포함)",
+      "background": "rgb(27, 33, 40)",
+      "border": "rgb(105, 177, 255)",
+      "color": "rgb(240, 243, 246)",
+      "fontSize": "14px",
+      "readonly": true,
+      "tag": "TEXTAREA",
+      "value": "#cloud-config\n# UD1385-31-20261016-template\n\n\n# APPEND 새 한글\n"
+    }
+  ],
+  "modal": {
+    "bottom": 660,
+    "height": 600,
+    "left": 280,
+    "right": 1000,
+    "top": 60,
+    "width": 720,
+    "x": 280,
+    "y": 60
+  },
+  "switches": [
+    {
+      "checked": "false",
+      "label": "사용자 데이터 변경"
+    }
+  ],
+  "text": "사용자 데이터 변경을 끄면 현재 설정을 유지하며 재설정 요청을 보내지 않습니다. 변경을 켜면 아래 설정을 적용합니다.\n\n현재 사용자 데이터: 수동 User Data 입력\n\nT\nAPPEND 템플릿 한글\n현재 저장된 본문(템플릿 포함)\n사용자 데이터 변경",
+  "theme": "dark-mode ant-scrolling-effect",
+  "url": "http://10.10.31.10:8080/client/#/vm/3e56db2c-7b14-4c30-9d85-58ce88aacc7d",
+  "viewport": {
+    "height": 720,
+    "width": 1280
+  }
+}

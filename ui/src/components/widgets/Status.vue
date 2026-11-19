@@ -17,7 +17,7 @@
 
 <template>
   <div style="display: inline-flex;">
-    <a-tooltip placement="bottom" :trigger="showTooltip ? 'hover' : []">
+    <a-tooltip placement="bottom" :trigger="showTooltip ? 'hover' : []" :color="tooltipColor" :overlay-class-name="tooltipOverlayClassName">
       <template v-if="showTooltip" #title>
         <slot name="tooltip">
           {{ getTooltip(text) }}
@@ -42,6 +42,10 @@ export default {
       type: String,
       required: true
     },
+    displayLabel: {
+      type: String,
+      default: ''
+    },
     displayText: {
       type: Boolean,
       default: false
@@ -49,6 +53,14 @@ export default {
     showTooltip: {
       type: Boolean,
       default: true
+    },
+    tooltipColor: {
+      type: String,
+      default: ''
+    },
+    tooltipOverlayClassName: {
+      type: String,
+      default: ''
     },
     styles: {
       type: Object,
@@ -61,6 +73,7 @@ export default {
   },
   methods: {
     getText () {
+      if (this.displayText && this.displayLabel) return this.displayLabel
       if (this.displayText && this.text) {
         var state = this.text
         switch (state.toLowerCase()) {
@@ -75,6 +88,14 @@ export default {
             break
           case 'running':
             state = this.$t('state.running')
+            break
+          case 'scaling':
+          case 'scalingstoppedcluster':
+          case 'upgrading':
+          case 'importing':
+          case 'removingnodes':
+          case 'recovering':
+            state = this.$t('state.' + state.toLowerCase())
             break
           case 'stopped':
             state = this.$t('state.stopped')
@@ -102,6 +123,9 @@ export default {
             break
           case 'failed':
             state = this.$t('state.failed')
+            break
+          case 'canceled':
+            state = this.$t('state.canceled')
             break
           case 'readonly':
             state = this.$t('state.readonly')
@@ -136,6 +160,15 @@ export default {
           case 'connecting':
             state = this.$t('state.connecting')
             break
+          case 'uploaded':
+            state = this.$t('label.creation.source.state.Uploaded')
+            break
+          case 'uploading':
+            state = this.$t('label.creation.source.state.Uploading')
+            break
+          case 'uploaderror':
+            state = this.$t('label.creation.source.state.UploadError')
+            break
           case 'ready':
             state = this.$t('state.ready')
             break
@@ -154,11 +187,20 @@ export default {
           case 'destroyed':
             state = this.$t('state.destroyed')
             break
+          case 'creating':
+            state = this.$t('state.creating')
+            break
+          case 'reverting':
+            state = this.$t('state.reverting')
+            break
           case 'snapshotting':
             state = this.$t('state.snapshotting')
             break
           case 'backedup':
             state = this.$t('state.backedup')
+            break
+          case 'expired':
+            state = this.$t('state.expired')
             break
           case 'backingup':
             state = this.$t('state.backingup')
@@ -274,6 +316,7 @@ export default {
         case 'poweroff':
         case 'stopped':
         case 'failed':
+        case 'canceled':
         case 'unmanaged':
         case 'no':
         case 'critical':
@@ -290,6 +333,8 @@ export default {
         case 'inprogress':
         case 'connecting':
         case 'prepareformaintenance':
+        case 'creating':
+        case 'reverting':
         case 'snapshotting':
         case 'backingup':
         case 'destroying':
@@ -305,6 +350,7 @@ export default {
           }
           break
         case 'degraded':
+        case 'expired':
         case 'maintenance':
         case 'pending':
         case 'unsecure':
@@ -333,6 +379,7 @@ export default {
       }
     },
     getTooltip (state) {
+      if (this.displayText && this.displayLabel) return this.displayLabel
       if (!(state && this.displayText)) {
         return ''
       }

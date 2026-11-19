@@ -1,0 +1,85 @@
+[
+  {
+    "case": "before",
+    "action": "create",
+    "cluster": "8e3afa80-2db1-4df2-b22a-c16bd5689074",
+    "job": "2f19a178-18ca-4362-9953-0e44d768e407",
+    "status": 2,
+    "error": {
+      "errorcode": 530,
+      "errortext": "K1410_FIXTURE_ONLY_BEFORE_NODE"
+    }
+  },
+  {
+    "case": "before",
+    "action": "delete",
+    "cluster": "8e3afa80-2db1-4df2-b22a-c16bd5689074",
+    "job": "2a72ea4b-d2c5-4f42-906e-9fbd5b044e6a",
+    "status": 1
+  },
+  {
+    "case": "warmup",
+    "action": "create",
+    "cluster": "74b6e461-fcc4-4dec-bd95-473411f8afbf",
+    "job": "5a5f09a5-d272-4c5f-9884-c3b7a4ef3bca",
+    "status": 2,
+    "error": {}
+  },
+  {
+    "case": "warmup",
+    "action": "delete",
+    "cluster": "74b6e461-fcc4-4dec-bd95-473411f8afbf",
+    "job": "91e9364b-27ce-46f3-b546-00f43c0f31be",
+    "status": 1
+  },
+  {
+    "case": "async",
+    "action": "create",
+    "cluster": "6005f08b-f84c-4b78-ad57-0e45fe6f9b3a",
+    "job": "49e32c97-fab5-4cff-b1e2-536238488f61",
+    "status": 2,
+    "error": {
+      "errorcode": 530,
+      "errortext": "K1410_FIXTURE_ONLY_ASYNC_START"
+    }
+  },
+  {
+    "case": "async",
+    "action": "delete",
+    "cluster": "6005f08b-f84c-4b78-ad57-0e45fe6f9b3a",
+    "job": "d9920d6c-bac5-4de3-8881-e8ae3f5e336b",
+    "status": 1
+  },
+  {
+    "case": "legacy",
+    "action": "create",
+    "cluster": "e46b9657-6508-4419-9f31-bff8524dbb7a",
+    "job": "a7dec980-8a81-42ab-943d-208e105672ec",
+    "status": 2,
+    "error": {
+      "errorcode": 530,
+      "errortext": "K1410_FIXTURE_ONLY_ASYNC_START"
+    }
+  },
+  {
+    "case": "legacy",
+    "action": "delete",
+    "cluster": "e46b9657-6508-4419-9f31-bff8524dbb7a",
+    "job": "8963ef75-d547-4d5f-bb81-21cb18aa2e28",
+    "status": 1
+  },
+  {
+    "case": "success",
+    "action": "create",
+    "cluster": "5c2b40c9-98d5-4d35-ad55-3dbf8098f8af",
+    "job": "72e6835b-1d6e-46e3-8830-c542b91f0fd3",
+    "status": 1
+  },
+  {
+    "case": "success",
+    "action": "delete",
+    "cluster": "5c2b40c9-98d5-4d35-ad55-3dbf8098f8af",
+    "job": "f5b3de44-3880-4aff-b880-b978a2de310e",
+    "status": 1
+  }
+]

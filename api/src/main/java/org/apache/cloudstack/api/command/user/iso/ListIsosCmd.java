@@ -25,6 +25,7 @@ import org.apache.cloudstack.api.ResponseObject.ResponseView;
 import org.apache.cloudstack.api.command.user.UserCmd;
 import org.apache.cloudstack.api.response.GuestOSCategoryResponse;
 import org.apache.cloudstack.api.response.ListResponse;
+import org.apache.cloudstack.api.response.UserDataResponse;
 import org.apache.cloudstack.api.response.TemplateResponse;
 import org.apache.cloudstack.api.response.ZoneResponse;
 import org.apache.cloudstack.context.CallContext;
@@ -95,6 +96,14 @@ public class ListIsosCmd extends BaseListTaggedResourcesCmd implements UserCmd {
             description = "the ID of the OS category for the ISO",
             since = "4.21.0")
     private Long osCategoryId;
+
+    @Parameter(name = ApiConstants.USER_DATA_ID, type = CommandType.UUID, entityType = UserDataResponse.class,
+            description = "List resources associated with this user data library UUID", since = "4.23.0")
+    private Long userDataId;
+
+    public Long getUserDataId() {
+        return userDataId;
+    }
 
     /////////////////////////////////////////////////////
     /////////////////// Accessors ///////////////////////

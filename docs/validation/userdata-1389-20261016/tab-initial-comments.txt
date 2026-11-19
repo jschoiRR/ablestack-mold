@@ -1,0 +1,32 @@
+Browser tab: 4, Title: "사용자 데이터 라이브러리 - ABLESTACK-Mold", URL: "http://10.10.31.10:8080/client/#/userdata/1fc463a9-c04b-4a1d-b1d3-75a9ac8c0e3c?tab=comments".
+The following is a diff from the previous accessibility tree with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+Removed element IDs: 245-310
+~0 AXWebArea 사용자 데이터 라이브러리 - ABLESTACK-Mold, URL: 10.10.31.10:8080/client/#/userdata/1fc463a9-c04b-4a1d-b1d3-75a9ac8c0e3c?tab=comments
+~						237 tab (selectable, settable, boolean) 상세, Value: 0, ID: rc-tabs-6-tab-details
+~						238 tab (selectable, settable, boolean) 사용자 데이터 본문, Value: 0, ID: rc-tabs-6-tab-userdata.content
+~						239 tab (selectable, settable, boolean) 사용 가상머신, Value: 0, ID: rc-tabs-6-tab-userdata.usage.vms
+~						240 tab (selectable, settable, boolean) 연결 템플릿, Value: 0, ID: rc-tabs-6-tab-userdata.usage.templates
+~						241 tab (selectable, settable, boolean) 연결 ISO, Value: 0, ID: rc-tabs-6-tab-userdata.usage.isos
+~						242 tab (selected, settable, boolean) 코멘트, Value: 1, ID: rc-tabs-6-tab-comments
+~				243 container Description: 코멘트, ID: rc-tabs-6-panel-comments
+~					244 button (disabled) 보내기
++					245 button reload 업데이트
++						246 image reload
++						247 text 업데이트
++					248 container
++						249 image edit
++						250 container
++							251 text entry area (settable)
++							252 checkbox (settable, integer) Description: 관리자만 표시  , Value: 0
++							253 text 관리자만 표시
++						254 text 코멘트 (0)
++						255 content list
++							256 text 전체 0 개 항목 중 0-0 표시
++							257 container 이전 페이지
++								258 button (disabled) left
++									259 image left
++							260 text 1
++							261 container 다음 페이지
++								262 button (disabled) right
++									263 image right
+The focused UI element is 0 AXWebArea 사용자 데이터 라이브러리 - ABLESTACK-Mold, URL: 10.10.31.10:8080/client/#/userdata/1fc463a9-c04b-4a1d-b1d3-75a9ac8c0e3c?tab=comments

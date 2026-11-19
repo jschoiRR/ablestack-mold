@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="954" viewBox="0 0 1800 954">
+<rect width="100%" height="100%" fill="white"/>
+<text x="72" y="48" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="52" font-weight="700" fill="#172B45">화면에서 백엔드 코드를 찾는 3단계</text>
+<text x="72" y="127" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="36" font-weight="400" fill="#506378">브라우저의 실제 요청을 기준으로 API Command와 서비스 구현을 연결합니다</text>
+<rect x="72" y="208" width="1656" height="164" rx="20" fill="#F0F7FF" stroke="none" stroke-width="2"/>
+<rect x="96" y="238" width="48" height="48" rx="24" fill="#146CBA" stroke="none" stroke-width="2"/>
+<text x="110" y="248" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="29" font-weight="700" fill="white">1</text>
+<text x="170" y="238" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="42" font-weight="700" fill="#172B45">브라우저 F12</text>
+<polyline points="610,232 610,348" fill="none" stroke="#D7E1EB" stroke-width="2"/>
+<text x="646" y="236" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="40" font-weight="400" fill="#506378">Network 탭에서 API 이름 확인</text>
+<text x="646" y="298" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="40" font-weight="400" fill="#506378">예: command=startVirtualMachine</text>
+<polyline points="900,377 900,412" fill="none" stroke="#146CBA" stroke-width="4"/>
+<polygon points="900,412 908.0,396.0 892.0,396.0" fill="#146CBA"/>
+<rect x="72" y="418" width="1656" height="164" rx="20" fill="#F5F2FF" stroke="none" stroke-width="2"/>
+<rect x="96" y="448" width="48" height="48" rx="24" fill="#6554B7" stroke="none" stroke-width="2"/>
+<text x="110" y="458" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="29" font-weight="700" fill="white">2</text>
+<text x="170" y="448" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="42" font-weight="700" fill="#172B45">api/ 모듈 검색</text>
+<polyline points="610,442 610,558" fill="none" stroke="#D7E1EB" stroke-width="2"/>
+<text x="646" y="446" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="40" font-weight="400" fill="#506378">@APICommand의 API 이름으로 검색</text>
+<text x="646" y="508" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="40" font-weight="400" fill="#506378">StartVMCmd.java 확인</text>
+<polyline points="900,587 900,622" fill="none" stroke="#6554B7" stroke-width="4"/>
+<polygon points="900,622 908.0,606.0 892.0,606.0" fill="#6554B7"/>
+<rect x="72" y="628" width="1656" height="164" rx="20" fill="#EFF9F6" stroke="none" stroke-width="2"/>
+<rect x="96" y="658" width="48" height="48" rx="24" fill="#008878" stroke="none" stroke-width="2"/>
+<text x="110" y="668" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="29" font-weight="700" fill="white">3</text>
+<text x="170" y="658" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="42" font-weight="700" fill="#172B45">server/ 서비스 추적</text>
+<polyline points="610,652 610,768" fill="none" stroke="#D7E1EB" stroke-width="2"/>
+<text x="646" y="656" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="40" font-weight="400" fill="#506378">_userVmService.startVirtualMachine(this)</text>
+<text x="646" y="718" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="40" font-weight="400" fill="#506378">UserVmManagerImpl.java의 실제 로직 확인</text>
+<text x="72" y="823" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="36" font-weight="700" fill="#172B45">동일한 API에 사용자용·관리자용 Command가 있을 수 있으므로 실제 요청과 클래스도 대조합니다.</text>
+</svg>

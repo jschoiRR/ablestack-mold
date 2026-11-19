@@ -1,0 +1,287 @@
+{
+  "passed": 18,
+  "total": 18,
+  "tests": [
+    {
+      "label": "ui-invalid-retained",
+      "passed": true,
+      "status": 431,
+      "input_retained": true,
+      "loading_released": true
+    },
+    {
+      "label": "ui-invalid-corrected-success",
+      "passed": true,
+      "id": "5d5a5d8e-dd67-4794-a422-e577cd339233",
+      "form_closed": true,
+      "list_refreshed": true,
+      "success_message": true
+    },
+    {
+      "label": "ui-duplicate-retained",
+      "passed": true,
+      "status": 431,
+      "loading_released": true
+    },
+    {
+      "label": "ui-cancel-after-failure",
+      "passed": true
+    },
+    {
+      "label": "ui-api-503-retained",
+      "passed": true,
+      "status": 503,
+      "input_retained": true,
+      "loading_released": true
+    },
+    {
+      "label": "ui-api-retry-pending-one-request",
+      "passed": true,
+      "request_count": 1,
+      "status": 200
+    },
+    {
+      "label": "ui-network-failure-retained",
+      "passed": true,
+      "controlled_abort": true,
+      "loading_released": true
+    },
+    {
+      "label": "ui-network-retry-success",
+      "passed": true,
+      "id": "1cb8ec43-ce94-4fed-abdc-33dcb1d6e461",
+      "form_closed": true,
+      "list_refreshed": true,
+      "success_message": true
+    },
+    {
+      "label": "ui-required-validation-no-api",
+      "passed": true
+    },
+    {
+      "label": "ui-generation-failure-retained",
+      "passed": true,
+      "status": 431
+    },
+    {
+      "label": "ui-generation-private-key-copy-download",
+      "passed": true,
+      "id": "312b0228-7cde-4cbb-ac46-11f29f301311",
+      "bytes": 1675,
+      "copy_hash": "9d64a3d3563874f6c6ea39f138270ea2bfc4a5e9f287d07c2cb297461c67b210",
+      "download_hash": "9d64a3d3563874f6c6ea39f138270ea2bfc4a5e9f287d07c2cb297461c67b210",
+      "response_hash": "9d64a3d3563874f6c6ea39f138270ea2bfc4a5e9f287d07c2cb297461c67b210",
+      "matching": true
+    },
+    {
+      "label": "ui-generation-close-list-refresh",
+      "passed": true
+    },
+    {
+      "label": "ui-owner-scope-retained",
+      "passed": true,
+      "status": 431,
+      "input_retained": true,
+      "loading_released": true
+    },
+    {
+      "label": "ui-owner-scope-corrected-success",
+      "passed": true,
+      "id": "721edf57-a97b-4e04-bc33-b836ed5e54a0",
+      "form_closed": true,
+      "list_refreshed": true,
+      "success_message": true
+    },
+    {
+      "label": "ui-project-scope-retained",
+      "passed": true,
+      "status": 431,
+      "input_retained": true,
+      "loading_released": true
+    },
+    {
+      "label": "ui-project-scope-corrected-success",
+      "passed": true,
+      "id": "0dab35bb-cf82-47fc-992a-59e3f69dc421",
+      "form_closed": true,
+      "list_refreshed": true,
+      "success_message": true
+    },
+    {
+      "label": "ui-project-duplicate-retained",
+      "passed": true,
+      "status": 431,
+      "projectid": "2e22e242-3c14-4f38-8040-456a9827a492"
+    },
+    {
+      "label": "ui-current-401-requires-login",
+      "passed": true,
+      "status": 401,
+      "expected_auth_redirect": true
+    }
+  ],
+  "network": [
+    {
+      "command": "registerSSHKeyPair",
+      "params": {
+        "name": "ssh1373-20261015-same"
+      },
+      "status": 431,
+      "errorcode": 431
+    },
+    {
+      "command": "registerSSHKeyPair",
+      "params": {
+        "name": "ssh1373-20261015-same"
+      },
+      "status": 200,
+      "errorcode": null,
+      "key": {
+        "id": "5d5a5d8e-dd67-4794-a422-e577cd339233",
+        "name": "ssh1373-20261015-same",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "fingerprint": "4c:e6:c1:bd:a8:74:b3:e4:22:bf:c4:50:d5:dd:bf:c6"
+      }
+    },
+    {
+      "command": "registerSSHKeyPair",
+      "params": {
+        "name": "ssh1373-20261015-same"
+      },
+      "status": 431,
+      "errorcode": 431
+    },
+    {
+      "command": "registerSSHKeyPair",
+      "params": {
+        "name": "ssh1373-20261015-transport"
+      },
+      "status": 503,
+      "errorcode": 503
+    },
+    {
+      "command": "registerSSHKeyPair",
+      "params": {
+        "name": "ssh1373-20261015-transport"
+      },
+      "status": 200,
+      "errorcode": null,
+      "key": {
+        "id": "52938920-03de-4a1a-8821-cfe557936545",
+        "name": "ssh1373-20261015-transport",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "fingerprint": "8d:30:36:9f:af:a5:14:e5:83:b5:8d:a6:25:60:2b:b4"
+      }
+    },
+    {
+      "command": "registerSSHKeyPair",
+      "params": {
+        "name": "ssh1373-20261015-connection"
+      },
+      "status": 200,
+      "errorcode": null,
+      "key": {
+        "id": "1cb8ec43-ce94-4fed-abdc-33dcb1d6e461",
+        "name": "ssh1373-20261015-connection",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "fingerprint": "43:28:d3:ac:1b:4a:04:40:6d:cc:f3:85:fb:65:3d:20"
+      }
+    },
+    {
+      "command": "createSSHKeyPair",
+      "params": {
+        "name": "ssh1373-20261015-same"
+      },
+      "status": 431,
+      "errorcode": 431
+    },
+    {
+      "command": "createSSHKeyPair",
+      "params": {
+        "name": "ssh1373-20261015-generated"
+      },
+      "status": 200,
+      "errorcode": null,
+      "key": {
+        "id": "312b0228-7cde-4cbb-ac46-11f29f301311",
+        "name": "ssh1373-20261015-generated",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "fingerprint": "fe:c5:67:c8:4a:4b:2e:f0:cc:2b:46:5f:51:66:e1:f1"
+      }
+    },
+    {
+      "command": "registerSSHKeyPair",
+      "params": {
+        "name": "ssh1373-20261015-same",
+        "account": "ssh1373-20261015-user",
+        "domainid": "879606a4-e3a8-4142-b067-40e0e39c09fa"
+      },
+      "status": 431,
+      "errorcode": 431
+    },
+    {
+      "command": "registerSSHKeyPair",
+      "params": {
+        "name": "ssh1373-20261015-same",
+        "account": "ssh1373-20261015-user",
+        "domainid": "879606a4-e3a8-4142-b067-40e0e39c09fa"
+      },
+      "status": 200,
+      "errorcode": null,
+      "key": {
+        "id": "721edf57-a97b-4e04-bc33-b836ed5e54a0",
+        "name": "ssh1373-20261015-same",
+        "account": "ssh1373-20261015-user",
+        "domainid": "879606a4-e3a8-4142-b067-40e0e39c09fa",
+        "fingerprint": "4c:e6:c1:bd:a8:74:b3:e4:22:bf:c4:50:d5:dd:bf:c6"
+      }
+    },
+    {
+      "command": "registerSSHKeyPair",
+      "params": {
+        "name": "ssh1373-20261015-same",
+        "projectid": "2e22e242-3c14-4f38-8040-456a9827a492"
+      },
+      "status": 431,
+      "errorcode": 431
+    },
+    {
+      "command": "registerSSHKeyPair",
+      "params": {
+        "name": "ssh1373-20261015-same",
+        "projectid": "2e22e242-3c14-4f38-8040-456a9827a492"
+      },
+      "status": 200,
+      "errorcode": null,
+      "key": {
+        "id": "0dab35bb-cf82-47fc-992a-59e3f69dc421",
+        "name": "ssh1373-20261015-same",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "projectid": "2e22e242-3c14-4f38-8040-456a9827a492",
+        "fingerprint": "4c:e6:c1:bd:a8:74:b3:e4:22:bf:c4:50:d5:dd:bf:c6"
+      }
+    },
+    {
+      "command": "registerSSHKeyPair",
+      "params": {
+        "name": "ssh1373-20261015-same",
+        "projectid": "2e22e242-3c14-4f38-8040-456a9827a492"
+      },
+      "status": 431,
+      "errorcode": 431
+    },
+    {
+      "command": "registerSSHKeyPair",
+      "params": {
+        "name": "ssh1373-20261015-auth-expired",
+        "projectid": "2e22e242-3c14-4f38-8040-456a9827a492"
+      },
+      "status": 401,
+      "errorcode": 401
+    }
+  ]
+}

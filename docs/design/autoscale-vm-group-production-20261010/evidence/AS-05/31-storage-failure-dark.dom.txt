@@ -1,0 +1,433 @@
+- complementary:
+  - menu:
+    - menuitem "dashboard 대시보드":
+      - link "dashboard 대시보드":
+        - /url: "#/dashboard"
+        - img "dashboard":
+        - text: 대시보드
+    - img "cloud":
+    - text: 컴퓨트
+    - list:
+      - menuitem "cloud-server 가상머신":
+        - link "cloud-server 가상머신":
+          - /url: "#/vm"
+          - img "cloud-server":
+          - text: 가상머신
+      - menuitem "camera VM 스냅샷":
+        - link "camera VM 스냅샷":
+          - /url: "#/vmsnapshot"
+          - img "camera":
+          - text: VM 스냅샷
+      - menuitem "쿠버네티스":
+        - link "쿠버네티스":
+          - /url: "#/kubernetes"
+          - text: 쿠버네티스
+      - menuitem "fullscreen 오토스케일 VM 그룹":
+        - link "fullscreen 오토스케일 VM 그룹":
+          - /url: "#/autoscalevmgroup"
+          - img "fullscreen":
+          - text: 오토스케일 VM 그룹
+      - menuitem "gold 가상머신 그룹":
+        - link "gold 가상머신 그룹":
+          - /url: "#/vmgroup"
+          - img "gold":
+          - text: 가상머신 그룹
+      - menuitem "key SSH 키 쌍":
+        - link "key SSH 키 쌍":
+          - /url: "#/ssh"
+          - img "key":
+          - text: SSH 키 쌍
+      - menuitem "solution 사용자 데이터 라이브러리":
+        - link "solution 사용자 데이터 라이브러리":
+          - /url: "#/userdata"
+          - img "solution":
+          - text: 사용자 데이터 라이브러리
+      - menuitem "solution CNI 구성":
+        - link "solution CNI 구성":
+          - /url: "#/cniconfiguration"
+          - img "solution":
+          - text: CNI 구성
+      - menuitem "swap Affinity 그룹":
+        - link "swap Affinity 그룹":
+          - /url: "#/affinitygroup"
+          - img "swap":
+          - text: Affinity 그룹
+    - img "hdd":
+    - text: 스토리지
+    - img "wifi":
+    - text: 네트워크
+    - img "picture":
+    - text: 이미지
+    - img "lock":
+    - text: 키 관리
+    - menuitem "schedule 이벤트":
+      - link "schedule 이벤트":
+        - /url: "#/event"
+        - img "schedule":
+        - text: 이벤트
+    - menuitem "project 프로젝트":
+      - link "project 프로젝트":
+        - /url: "#/project"
+        - img "project":
+        - text: 프로젝트
+    - menuitem "idcard 역할":
+      - link "idcard 역할":
+        - /url: "#/role"
+        - img "idcard":
+        - text: 역할
+    - menuitem "team 계정":
+      - link "team 계정":
+        - /url: "#/account"
+        - img "team":
+        - text: 계정
+    - menuitem "block 도메인":
+      - link "block 도메인":
+        - /url: "#/domain"
+        - img "block":
+        - text: 도메인
+    - img "bank":
+    - text: 인프라스트럭쳐
+    - img "shopping":
+    - text: 서비스 오퍼링
+    - img "setting":
+    - text: 구성
+    - menuitem "appstore-add 확장":
+      - link "appstore-add 확장":
+        - /url: "#/extension"
+        - img "appstore-add":
+        - text: 확장
+    - img "tool":
+    - text: 도구
+    - menuitem "read API 문서":
+      - link "read API 문서":
+        - /url: "#/apidocs/"
+        - img "read":
+        - text: API 문서
+- generic: 페이지 스타일 설정
+- button "닫기":
+  - img "close":
+- heading "페이지 스타일 설정" [level=3]
+- radio
+- radio [checked]
+- img "check":
+- heading "테마 색상" [level=3]
+- radio
+- img "check"
+- radio
+- radio
+- radio
+- radio
+- radio
+- radio
+- radio
+- separator
+- heading "프로젝트 네비게이션 설정" [level=3]
+- generic: 배경색
+- textbox: "#001529"
+- generic: 텍스트 색상
+- textbox: "#ffffff"
+- separator
+- alert:
+  - img "exclamation-circle":
+  - generic: "설정은 현재 브라우저에서만 볼 수 있습니다. 설정을 적용하려면 JSON 파일을 다운로드하고 경로 `/public/config.json` 아래의 `config.json` 파일의 `theme` 섹션에서 해당 콘텐츠를 교체하세요."
+- button "download 세팅값 다운로드(json)":
+  - img "download":
+  - generic: 세팅값 다운로드(json)
+- button "undo 기본값으로 재설정":
+  - img "undo":
+  - generic: 기본값으로 재설정
+- img "menu-fold":
+- combobox
+- img "project":
+- text: AS-PROD-31-AS01-project
+- button "생성 down":
+  - generic: 생성
+  - img "down":
+- img "translation":
+- img "bell":
+- superscript:
+  - paragraph: "2"
+  - paragraph: "1"
+- generic: AC
+- generic: admin cloud
+- main:
+  - link "home":
+    - /url: "#/"
+    - img "home":
+  - text: /
+  - link "오토스케일 VM 그룹":
+    - /url: "#/autoscalevmgroup"
+  - text: /
+  - generic: AS-PROD-31-AS04-CONCURRENCY
+  - link "question-circle":
+    - /url: http://docs.ablecloud.io/latest/adminguide/autoscale_with_virtual_router.html
+    - img "question-circle":
+  - button "reload 업데이트":
+    - img "reload":
+    - generic: 업데이트
+  - button "down 작업":
+    - img "down":
+    - generic: 작업
+  - img "fullscreen":
+  - heading "AS-PROD-31-AS04-CONCURRENCY" [level=4]
+  - separator
+  - generic: 상태
+  - generic: 확장 / 축소 중
+  - generic: 아이디
+  - button "barcode":
+    - img "barcode":
+  - link "bf0f5385-ae2c-4da4-aec4-eb985dbdeba4":
+    - /url: javascript:;
+  - generic: 프로젝트
+  - img "project":
+  - link "AS-PROD-31-AS01-project":
+    - /url: "#/project/fb318714-bc01-4be5-9e33-0f49a7013127"
+  - generic: 연결된 네트워크
+  - img "wifi":
+  - link "AS-PROD-31-AS01-projectNetwork":
+    - /url: "#/guestnetwork/797d8d5e-efff-4364-a53c-c2ac90596fe8"
+  - generic: Public IP 주소
+  - img "gateway":
+  - link "10.10.31.104":
+    - /url: "#/publicip/67ede107-b283-4b65-b16a-d675f7709aa4"
+  - link "copy":
+    - /url: javascript:;
+    - img "copy":
+  - generic: 도메인
+  - img "block":
+  - link "ROOT":
+    - /url: "#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details"
+  - generic: 생성일
+  - img "calendar":
+  - text: 2026. 10. 11. 오전 10:19:39
+  - separator
+  - link "cloud-server 가상머신 보기":
+    - /url: "#/vm?autoscalevmgroupid=bf0f5385-ae2c-4da4-aec4-eb985dbdeba4"
+    - button "cloud-server 가상머신 보기":
+      - img "cloud-server":
+      - generic: 가상머신 보기
+  - tablist:
+    - tab "상세"
+    - tab "오토스케일 VM 프로필"
+    - tab "부하 분산 규칙"
+    - tab "스케일업 정책"
+    - tab "스케일다운 정책"
+    - tab "스케줄"
+    - tab "이벤트" [selected]
+    - tab "코멘트"
+  - tabpanel "이벤트":
+    - button "reload 업데이트" [active]:
+      - img "reload":
+      - generic: 업데이트
+    - button "setting 열 선택":
+      - img "setting":
+      - generic: 열 선택
+    - table:
+      - rowgroup:
+        - row "레벨 caret-up caret-down 유형 caret-up caret-down 상태 caret-up caret-down 사용자 이름 caret-up caret-down 계정 caret-up caret-down 도메인 caret-up caret-down 생성일 caret-up caret-down":
+          - columnheader "레벨 caret-up caret-down":
+            - generic: 레벨
+            - img "caret-up":
+            - img "caret-down":
+          - columnheader "유형 caret-up caret-down":
+            - generic: 유형
+            - img "caret-up":
+            - img "caret-down":
+          - columnheader "상태 caret-up caret-down":
+            - generic: 상태
+            - img "caret-up":
+            - img "caret-down":
+          - columnheader "사용자 이름 caret-up caret-down":
+            - generic: 사용자 이름
+            - img "caret-up":
+            - img "caret-down":
+          - columnheader "계정 caret-up caret-down":
+            - generic: 계정
+            - img "caret-up":
+            - img "caret-down":
+          - columnheader "도메인 caret-up caret-down":
+            - generic: 도메인
+            - img "caret-up":
+            - img "caret-down":
+          - columnheader "생성일 caret-up caret-down":
+            - generic: 생성일
+            - img "caret-up":
+            - img "caret-down":
+      - rowgroup:
+        - row "ERROR 오토스케일링VM그룹 스케일업 완료 system ROOT 2026. 10. 11. 오후 3:46:37":
+          - cell "ERROR":
+            - link "ERROR":
+              - /url: "#/event/5c766eca-3035-467f-bdc8-afa9df7ee699"
+          - cell "오토스케일링VM그룹 스케일업"
+          - cell "완료":
+            - generic: 완료
+          - cell "system":
+            - link "system":
+              - /url: "#/accountuser?username=system&domainid=7ef6b29a-b253-11f1-a895-0024814c313f"
+          - cell
+          - cell "ROOT":
+            - link "ROOT":
+              - /url: "#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details"
+          - cell "2026. 10. 11. 오후 3:46:37"
+        - row "INFO 오토스케일링VM그룹 스케일업 시작 system ROOT 2026. 10. 11. 오후 3:46:37":
+          - cell "INFO":
+            - link "INFO":
+              - /url: "#/event/bdc0bf86-658c-49a5-ad95-381fe0b1489e"
+          - cell "오토스케일링VM그룹 스케일업"
+          - cell "시작":
+            - generic: 시작
+          - cell "system":
+            - link "system":
+              - /url: "#/accountuser?username=system&domainid=7ef6b29a-b253-11f1-a895-0024814c313f"
+          - cell
+          - cell "ROOT":
+            - link "ROOT":
+              - /url: "#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details"
+          - cell "2026. 10. 11. 오후 3:46:37"
+        - row "ERROR 오토스케일링VM그룹 스케일업 완료 system ROOT 2026. 10. 11. 오후 3:46:21":
+          - cell "ERROR":
+            - link "ERROR":
+              - /url: "#/event/4fc0aacf-e01d-4462-be36-a785a5a9e99b"
+          - cell "오토스케일링VM그룹 스케일업"
+          - cell "완료":
+            - generic: 완료
+          - cell "system":
+            - link "system":
+              - /url: "#/accountuser?username=system&domainid=7ef6b29a-b253-11f1-a895-0024814c313f"
+          - cell
+          - cell "ROOT":
+            - link "ROOT":
+              - /url: "#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details"
+          - cell "2026. 10. 11. 오후 3:46:21"
+        - row "INFO 오토스케일링VM그룹 스케일업 시작 system ROOT 2026. 10. 11. 오후 3:46:21":
+          - cell "INFO":
+            - link "INFO":
+              - /url: "#/event/5fec8281-4afe-4328-b341-6a32ab3e0f45"
+          - cell "오토스케일링VM그룹 스케일업"
+          - cell "시작":
+            - generic: 시작
+          - cell "system":
+            - link "system":
+              - /url: "#/accountuser?username=system&domainid=7ef6b29a-b253-11f1-a895-0024814c313f"
+          - cell
+          - cell "ROOT":
+            - link "ROOT":
+              - /url: "#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details"
+          - cell "2026. 10. 11. 오후 3:46:21"
+        - row "INFO 오토스케일링VM그룹 활성화 완료 admin ROOT 2026. 10. 11. 오후 3:46:11":
+          - cell "INFO":
+            - link "INFO":
+              - /url: "#/event/e12e4ac9-bfa5-4144-99e3-14473d3c6ce6"
+          - cell "오토스케일링VM그룹 활성화"
+          - cell "완료":
+            - generic: 완료
+          - cell "admin":
+            - link "admin":
+              - /url: "#/accountuser?username=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f"
+          - cell
+          - cell "ROOT":
+            - link "ROOT":
+              - /url: "#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details"
+          - cell "2026. 10. 11. 오후 3:46:11"
+        - row "INFO 오토스케일링VM그룹 활성화 시작 admin ROOT 2026. 10. 11. 오후 3:46:08":
+          - cell "INFO":
+            - link "INFO":
+              - /url: "#/event/86b91540-8be3-40ee-8c95-3213798de049"
+          - cell "오토스케일링VM그룹 활성화"
+          - cell "시작":
+            - generic: 시작
+          - cell "admin":
+            - link "admin":
+              - /url: "#/accountuser?username=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f"
+          - cell
+          - cell "ROOT":
+            - link "ROOT":
+              - /url: "#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details"
+          - cell "2026. 10. 11. 오후 3:46:08"
+        - row "INFO 오토스케일링VM그룹 활성화 예정됨 admin ROOT 2026. 10. 11. 오후 3:46:08":
+          - cell "INFO":
+            - link "INFO":
+              - /url: "#/event/9b5c788b-ac15-4a01-9e9e-8e44606a74a8"
+          - cell "오토스케일링VM그룹 활성화"
+          - cell "예정됨":
+            - generic: 예정됨
+          - cell "admin":
+            - link "admin":
+              - /url: "#/accountuser?username=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f"
+          - cell
+          - cell "ROOT":
+            - link "ROOT":
+              - /url: "#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details"
+          - cell "2026. 10. 11. 오후 3:46:08"
+        - row "INFO 오토스케일링VM그룹 비활성화 완료 admin ROOT 2026. 10. 11. 오후 3:45:50":
+          - cell "INFO":
+            - link "INFO":
+              - /url: "#/event/cf24c2b8-4190-434c-b151-08f6a7eaffd1"
+          - cell "오토스케일링VM그룹 비활성화"
+          - cell "완료":
+            - generic: 완료
+          - cell "admin":
+            - link "admin":
+              - /url: "#/accountuser?username=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f"
+          - cell
+          - cell "ROOT":
+            - link "ROOT":
+              - /url: "#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details"
+          - cell "2026. 10. 11. 오후 3:45:50"
+        - row "INFO 오토스케일링VM그룹 비활성화 시작 admin ROOT 2026. 10. 11. 오후 3:45:48":
+          - cell "INFO":
+            - link "INFO":
+              - /url: "#/event/9e39c791-6184-4557-b853-5782d1ef4682"
+          - cell "오토스케일링VM그룹 비활성화"
+          - cell "시작":
+            - generic: 시작
+          - cell "admin":
+            - link "admin":
+              - /url: "#/accountuser?username=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f"
+          - cell
+          - cell "ROOT":
+            - link "ROOT":
+              - /url: "#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details"
+          - cell "2026. 10. 11. 오후 3:45:48"
+        - row "INFO 오토스케일링VM그룹 비활성화 예정됨 admin ROOT 2026. 10. 11. 오후 3:45:48":
+          - cell "INFO":
+            - link "INFO":
+              - /url: "#/event/2f7a741d-49cb-4a83-9196-8c72625a5577"
+          - cell "오토스케일링VM그룹 비활성화"
+          - cell "예정됨":
+            - generic: 예정됨
+          - cell "admin":
+            - link "admin":
+              - /url: "#/accountuser?username=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f"
+          - cell
+          - cell "ROOT":
+            - link "ROOT":
+              - /url: "#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details"
+          - cell "2026. 10. 11. 오후 3:45:48"
+    - list:
+      - listitem: 전체 354 개 항목 중 1-10 표시
+      - listitem "이전 페이지":
+        - button "left" [disabled]:
+          - img "left":
+      - listitem "1":
+        - generic: "1"
+      - listitem "2":
+        - generic: "2"
+      - listitem "3":
+        - generic: "3"
+      - listitem "4":
+        - generic: "4"
+      - listitem "5":
+        - generic: "5"
+      - listitem "다음 5 페이지":
+        - img "double-right":
+        - generic: •••
+      - listitem "36":
+        - generic: "36"
+      - listitem "다음 페이지":
+        - button "right":
+          - img "right":
+      - combobox
+      - generic: 10 / 쪽
+      - text: 이동하기
+      - textbox

@@ -1,0 +1,108 @@
+<!-- Licensed to the Apache Software Foundation (ASF) under one or more contributor license agreements. See the NOTICE file distributed with this work for additional information regarding copyright ownership. The ASF licenses this file to you under the Apache License, Version 2.0. You may obtain a copy at http://www.apache.org/licenses/LICENSE-2.0 . Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an AS IS BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND. -->
+## 목적과 검증 결론
+
+사용자 데이터 라이브러리의 API↔UI 대응, 31번 클러스터의 실제 UI 기능, 가상머신 UI 표준 준수 여부를 검증하고 결함과 개선 방향을 독립 과제로 관리한다.
+
+기본 등록·조회·상세·코멘트·프로젝트 CRUD, 템플릿/ISO 연결 정책과 사용 중 삭제 제한은 동작한다. 입력 검증, 등록 실패 복구, VM 선택기의 검색/페이지 처리, VM 재설정 입력 모드, 적용 실패의 상태 정합성, 목록 일괄 작업에는 재현 결함이 있다. 이를 **결함 수정 6개 + 기능/UX 보완 4개 + 최종 UI 표준 검토 1개**로 관리한다.
+
+- 검증: 2026-10-15, 31번 Mold 실제 UI/API/관리 로그. 분석 소스는 upstream Europa `4bd1a2cff50c83089dc23ff1c83def631a343e3d`.
+- [전체 검증 보고서와 API·DOM·화면·정리 근거](https://github.com/dhslove/ablestack-cloud/blob/dhslove/userdata-library-validation-20261015/docs/validation/userdata-20261015/report.ko.md)
+- 아래 재현 결함은 최초 검증 시점의 기록이다. 현재 구현·배포·완료 범위는 하단 진행 항목을 따른다. 미완료 하위 이슈는 수정 완료를 뜻하지 않는다.
+
+## 재현된 결함
+
+| 영역 | 실제 확인 |
+| --- | --- |
+| 등록 검증 | 공백 이름·공백 본문 저장. eA==/eA가 같은 저장 본문으로 중복 등록됨 |
+| 실패 복구/대화상자 | 잘못된 Base64의 431 오류 후 등록 창이 닫혀 입력 손실. 독립 Footer가 없어 390×480에서 확인 버튼이 본문 스크롤 밖에 위치 |
+| VM 선택기 | 실제 30건 중 첫 서버 10건만 로컬 페이지 처리. page-01 검색 시 handleSearchFilter is not a function |
+| VM 재설정 모드 | 라이브러리→수동 입력 전환 시 userdata/userdataid 동시 전송으로 431. 설정 안함도 잘못된 userdataid로 431 |
+| 적용 상태 | UserData 미지원 L2 VM은 530 실패를 표시하지만 userdataid/변수값이 Cloud에 저장되고 사용 관계에도 남음 |
+| 일괄 작업 | 2개 선택 표시 후 제거 실행 버튼 없음. groupAction 정의와 공통 툴바의 toolbarLabel 계약 불일치 |
+
+## API와 UI의 차이
+
+- register/list/delete/reset/link API는 UI 진입점이 있다. 템플릿/ISO 편집의 연결/해제·정책은 실제 검증했으므로 누락 기능으로 분류하지 않는다.
+- getVirtualMachineUserData는 실제 본문을 반환하지만 UI 호출 경로가 없다.
+- 라이브러리의 사용 VM·연결 템플릿/ISO 가시성, 삭제 차단 사유, 본문 copy/download, ID·소유 범위 검색을 보완한다.
+- 라이브러리 수정 API는 현재 없다. 복제/버전 관리는 API/변경 정책부터 정의하며 기존 참조 VM을 자동 변경하지 않는다.
+
+## UI 표준과 스타일 재사용
+
+사용자 요구를 모든 UI 하위 이슈의 완료 조건으로 적용한다.
+
+1. 가상머신 메뉴의 **목록·상세·탭·탭과 실제 콘텐츠의 매칭·대화상자 표준**을 준수한다.
+2. 현재 ListView/ResourceLayout/InfoCard/ResourceView와 데스크톱 좌측·모바일 상단 탭, 정상 이력 복원은 재사용한다. 별도 메뉴용 레이아웃 프레임워크를 만들지 않는다.
+3. 상세 메타데이터·사용자 데이터 본문·사용 VM·연결 템플릿/ISO·코멘트의 책임을 분리하고 이름/URL/콘텐츠/권한을 일치시킨다.
+4. [공통 대화상자 표준 #1213](https://github.com/ablecloud-team/ablestack-cloud/issues/1213)과 실제 VM 제목/Header·Footer, 기존 MoldDialog를 재사용한다. Header/Footer는 고정하고 Body만 스크롤한다.
+5. **일반·다크 모드** 모두 기존 공통 테마 토큰·상태 스타일을 우선 사용한다. 새 코드 영역·popup·오류·선택·비활성·로딩까지 실제 화면과 computed style로 검증한다.
+6. 텍스트 primary 버튼을 앞에, 보조 아이콘 버튼을 우측에 두며 VM 공통 툴바·표·페이지·간격·반응형을 따른다. copy/download는 실제 동작과 원본 바이트를 확인한다.
+
+## 하위 이슈와 우선순위
+
+| ID | 우선순위 | 분류 | 이슈 |
+| --- | --- | --- | --- |
+| UD-01 | P1 | 재현 결함 | [[UD-01][Europa][P1][사용자 데이터] 등록 입력 검증과 Base64 정규화 정합성 개선](https://github.com/ablecloud-team/ablestack-cloud/issues/1382) |
+| UD-02 | P1 | 재현 결함 | [[UD-02][Europa][P1][사용자 데이터] 등록 대화상자 오류 복구와 공통 모달 표준 적용](https://github.com/ablecloud-team/ablestack-cloud/issues/1383) |
+| UD-03 | P1 | 재현 결함 | [[UD-03][Europa][P1][사용자 데이터] VM 사용자 데이터 선택기 검색과 서버 페이지 처리 복구](https://github.com/ablecloud-team/ablestack-cloud/issues/1384) |
+| UD-04 | P1 | 재현 결함 | [[UD-04][Europa][P1][사용자 데이터] VM 재설정 입력 모드와 설정 안함 및 현재값 복원 정합성 개선](https://github.com/ablecloud-team/ablestack-cloud/issues/1385) |
+| UD-05 | P1 | 재현 결함 | [[UD-05][Europa][P1][사용자 데이터] 사용자 데이터 적용 실패의 VM 상태 정합성과 지원 조건 검증](https://github.com/ablecloud-team/ablestack-cloud/issues/1386) |
+| UD-06 | P1 | 재현 결함 | [[UD-06][Europa][P1][사용자 데이터] 목록 선택 후 일괄 삭제 작업 노출과 결과 처리 복구](https://github.com/ablecloud-team/ablestack-cloud/issues/1387) |
+| UD-07 | P1 | 개선 | [[UD-07][Europa][P1][사용자 데이터] 사용 VM 및 템플릿 ISO 참조와 삭제 차단 사유 가시화](https://github.com/ablecloud-team/ablestack-cloud/issues/1388) |
+| UD-08 | P1 | 개선 | [[UD-08][Europa][P1][사용자 데이터] 목록 상세 본문 탭의 VM UI 표준과 일반 다크 테마 일치](https://github.com/ablecloud-team/ablestack-cloud/issues/1389) |
+| UD-09 | P2 | 개선 | [[UD-09][Europa][P2][사용자 데이터] VM 저장 사용자 데이터 조회 API의 UI 접근 경로 제공](https://github.com/ablecloud-team/ablestack-cloud/issues/1390) |
+| UD-10 | P2 | 개선 | [[UD-10][Europa][P2][사용자 데이터] 라이브러리 복제와 버전 관리 및 변경 정책 수립](https://github.com/ablecloud-team/ablestack-cloud/issues/1391) |
+| UD-11 | P1 | 최종 검토 | [[UD-11][Europa][P1][사용자 데이터] 전체 UI 표준 준수 최종 통합 검토 및 회귀 검증](https://github.com/ablecloud-team/ablestack-cloud/issues/1392) |
+
+
+## 진행 순서와 의존성
+
+- 1단계: UD-01~UD-06의 재현 결함을 각각 수정·검증한다. UD-02 입력 복구는 UD-01의 오류 계약, UD-04 모드 복원은 UD-03 선택기 계약과 함께 검증한다. 백엔드 실패 정합성 UD-05는 독립적으로 먼저 진행할 수 있다.
+- 2단계: UD-07 참조 조회 계약을 확정하고 UD-08 목록·상세·본문·사용 관계 탭 표준에 연결한다.
+- 3단계: UD-09 VM 저장본 읽기, UD-10 복제/버전 관리 정책을 확장한다. 두 과제는 기존 사용자 데이터 수정/적용과 별도 의미로 안내한다.
+- 4단계: UD-11 #1392에서 통합된 실제 배포 화면을 VM 표준·일반/다크·반응형·공통 스타일/컴포넌트 재사용 기준으로 최종 검토한다. 사용 가상머신 전용 탭과 모든 탭/대화상자 매칭을 포함하며, 범위 내 미준수/미검증이 남으면 완료 처리하지 않는다.
+
+## 완료 검증과 현재 범위
+
+- [ ] [UD-11 #1392](https://github.com/ablecloud-team/ablestack-cloud/issues/1392)의 전체 UI 표준 최종 검토를 통과하고 실제 화면·측정·기능 회귀 결과를 연결한다.
+- [ ] 하위 이슈의 구현 PR/변경 범위/검증 근거를 연결하고 해결된 항목만 종료한다.
+- [ ] 관리자/일반 사용자/도메인 관리자/프로젝트 및 API 권한별 기능을 검증한다.
+- [ ] 정상/오류/빈값/지연 응답/중복 제출/재시도/삭제·이름 변경/페이지 경계에서 UI와 API가 일치한다.
+- [ ] 일반/다크, 1440×1000·1280×720·390×844·390×480 및 확대에서 목록·상세·탭·모달을 실제 검증한다.
+- [ ] VM 신규 생성 wizard의 라이브러리 선택과 실제 생성, 지원 공급자의 사용자 데이터 전달 및 게스트 cloud-init 실행을 검증한다. 이번 검증은 전용 정지 VM의 UI 재설정과 Cloud 저장/API/공급자 계약까지이며 게스트 실행 검증을 완료로 계산하지 않는다.
+- [ ] 사용 중 삭제 보호와 부분 실패 복구를 검증하고 전용 자원의 활성 잔여가 없음을 확인한다.
+
+이번 기능 검증에 사용한 데이터 31건과 스타일 촬영용 1건, 전용 정지 VM 2개/볼륨, 템플릿·ISO 각 1개, 계정·프로젝트 각 1개 및 코멘트는 정리했다. 기존 라이브러리 전체 응답이 시작 시점과 정확히 일치했고 활성 테스트 VM/볼륨/템플릿/ISO/프로젝트/계정은 0건이다. 전체 Cloud 빌드는 실행하지 않았다.
+
+## 실제 화면 예시
+
+![일반 모드 상세](https://raw.githubusercontent.com/dhslove/ablestack-cloud/refs/heads/dhslove/userdata-library-validation-20261015/docs/validation/userdata-20261015/detail-light-desktop.png)
+
+![다크 모드 상세](https://raw.githubusercontent.com/dhslove/ablestack-cloud/refs/heads/dhslove/userdata-library-validation-20261015/docs/validation/userdata-20261015/detail-dark-desktop.png)
+
+![VM 선택기 페이지 결함](https://raw.githubusercontent.com/dhslove/ablestack-cloud/refs/heads/dhslove/userdata-library-validation-20261015/docs/validation/userdata-20261015/selector-page2.png)
+
+![목록 일괄 작업 누락](https://raw.githubusercontent.com/dhslove/ablestack-cloud/refs/heads/dhslove/userdata-library-validation-20261015/docs/validation/userdata-20261015/bulk-selected.png)
+
+## 구현 진행 — UD-01·UD-02·UD-03·UD-04·UD-05 완료 / 2026-10-16
+
+- 누적 Epic Draft PR: https://github.com/ablecloud-team/ablestack-cloud/pull/1393
+- [x] UD-01 #1382: 입력·정규화·중복 검증, 31번 서버/UI 배포와 범위 내 검증 완료. [보고서](https://github.com/dhslove/ablestack-cloud/blob/dhslove/epic-1381-userdata-library/docs/validation/userdata-1382-20261015/report.ko.md).
+- [x] UD-02 #1383: 공통 등록 모달·고정 Header/Footer·오류 복구·제출/이탈 잠금, 31번 UI 배포와 범위 내 검증 완료. [최종 보고서](https://github.com/dhslove/ablestack-cloud/blob/1687d18f5226b6f723ee0bf113c36a7e775973ac/docs/validation/userdata-1383-20261015/report.ko.md).
+- UD-02 검증: 등록/SSH 회귀 56건, 실제 UI 42항목, 일반/다크 네 viewport, 활성 대비 408개 샘플, 7개 생성 결과 API 원문/소유 범위 대조, 정적 파일 855개 해시와 기존 JAR·설정·PID 보존.
+- 시험 자원 API/DB 활성 잔여 0건, 기존 사용자 데이터 1개와 CNI 3개 전체 API 응답 동일.
+- [x] UD-03 #1384: 서버 검색·페이지·안전한 선택과 재사용 경로, 31번 UI 배포와 범위 내 검증 완료. [설계](https://github.com/dhslove/ablestack-cloud/blob/366d77cacc29563cc54791065dcec42b824dc9d0/docs/design/userdata-1384-design.ko.md) · [검증 보고서](https://github.com/dhslove/ablestack-cloud/blob/366d77cacc29563cc54791065dcec42b824dc9d0/docs/validation/userdata-1384-20261016/report.ko.md).
+- UD-03: 단위128건, 최종10페이지/100개 ID API 일치, 실제 VM 생성·재설정과 한글 변수 API/DB 일치, 일반/다크8개 화면·32px 버튼, 855개 정적 해시·기존 서버 보존, API/DB 시험 자원 활성 잔여0건.
+- [x] UD-04 #1385: 현재값/활성 모드/설정 안함·템플릿 정책, 31번 서버/UI 배포와 범위 내 검증 완료. [설계](https://github.com/dhslove/ablestack-cloud/blob/e1c9310c8fcfc6cfb6b135481e1270e954ceff9f/docs/design/userdata-1385-design.ko.md) · [검증 보고서](https://github.com/dhslove/ablestack-cloud/blob/e1c9310c8fcfc6cfb6b135481e1270e954ceff9f/docs/validation/userdata-1385-20261016/report.ko.md) · [정량 증거](https://github.com/dhslove/ablestack-cloud/blob/e1c9310c8fcfc6cfb6b135481e1270e954ceff9f/docs/validation/userdata-1385-20261016/qualification-summary.json).
+- UD-04: UI152건·변경 server13건, 실제 권한/프로젝트/정책 UI→API/DB 대조, 최종 일반/다크8개 화면·32px 버튼, 855정적/7클래스 해시, API/DB 시험 활성 잔여0건.
+- [x] UD-05 #1386: 실패/지연 중 기존 Cloud 값·참조 보존, 지원 조건·모든 NIC 수락 후 저장과 복원, 실제 VR/ConfigDrive 게스트 검증 완료. [설계](https://github.com/dhslove/ablestack-cloud/blob/006db373775ccf3991fcd7a17796408b91a10333/docs/design/userdata-1386-design.ko.md) · [보고서](https://github.com/dhslove/ablestack-cloud/blob/006db373775ccf3991fcd7a17796408b91a10333/docs/validation/userdata-1386-20261016/report.ko.md) · [정량 증거](https://github.com/dhslove/ablestack-cloud/blob/006db373775ccf3991fcd7a17796408b91a10333/docs/validation/userdata-1386-20261016/qualification-summary.json).
+- UD-05: UI160·server46건, 실제 공급자 장애/동시 요청/권한·프로젝트, 최종 서버의 기존 updateVM 전달 회귀, 일반/다크8개 화면·32px 버튼, 855정적/9클래스 해시, 시험 활성 잔여0건.
+- [x] UD-06 #1387: 일괄 삭제 노출·UUID/소유 범위 고정·부분 실패·현재 확인·실패만 재시도, 역할/프로젝트 실환경 검증 완료. [설계](https://github.com/dhslove/ablestack-cloud/blob/990940f79ce149cb7e01960cd1d8844cae6a12dd/docs/design/userdata-1387-design.ko.md) · [보고서](https://github.com/dhslove/ablestack-cloud/blob/990940f79ce149cb7e01960cd1d8844cae6a12dd/docs/validation/userdata-1387-20261016/report.ko.md) · [정량 근거](https://github.com/dhslove/ablestack-cloud/blob/990940f79ce149cb7e01960cd1d8844cae6a12dd/docs/validation/userdata-1387-20261016/qualification-summary.json).
+
+- [x] UD-07 #1388: 사용 VM/템플릿/ISO 전용 참조 탭·서버 UUID 필터/ACL/count/page·삭제 전 안내와 실제 경합 검증 완료. [보고서](https://github.com/dhslove/ablestack-cloud/blob/dhslove/epic-1381-userdata-library/docs/validation/userdata-1388-20261016/report.ko.md) · [정량 근거](https://github.com/dhslove/ablestack-cloud/blob/dhslove/epic-1381-userdata-library/docs/validation/userdata-1388-20261016/qualification.json).
+
+- 현재 구현 진행은 **7/11**이다. UD-08~UD-11 4개와 이 Epic은 계속 OPEN이다. 전체 UI 최종 표준 검토는 UD-11 #1392에서 수행한다.
+- 전체 Cloud 빌드·수동 Actions·PR 병합은 수행하지 않았다. PR은 후속 개선을 누적하는 Draft다.
+
+
+다음은 #1389 목록/상세/본문 표준, 이어 #1390 저장 데이터 조회, #1391 변경 정책, #1392 최종 UI 통합 검토를 진행한다. UD-07에서 분리 재현한 공통 경로 전환 CancelToken 예외도 #1392에 전달했다. VR/ConfigDrive 시험 게스트 실행은 UD-05에서 확인했고 전체 UI 최종 적합성은 #1392에 남는다. 역할 전환/wizard 공통 메타데이터 예외와 AutoScale 프로필/VNF 실환경 미검증은 #1392에 전달했다.

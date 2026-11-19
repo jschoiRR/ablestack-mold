@@ -1,0 +1,178 @@
+{
+  "issue": 1419,
+  "epic": 1413,
+  "pullRequest": 1420,
+  "date": "2026-10-19",
+  "result": "COMPLETED_WITH_OPEN_FOLLOWUP",
+  "upstreamEuropa": "8c5a92a4d9978229221613f4ff3e36e2df54daeb",
+  "finalUi": "1a5b52159fdc1d7fec97e9daa4afc5acd60bc011",
+  "sourceStages": [
+    {
+      "until": "2026-10-19T16:04:03+09:00",
+      "source": "b5b941ec0fa5c6bd11c054422e4160bc1ec7ef03",
+      "scope": "Initial UI creation, real VM wizard/deploy, owner/project/role paths and actual host placement"
+    },
+    {
+      "source": "8beac110e7fc497edd9cbf1a1da5b0fd8a329249",
+      "deployed": "2026-10-19T16:04:03+09:00",
+      "scope": "Owner query fix, policy display, partial retry, delete reconfirmation and layout checks"
+    },
+    {
+      "source": "8588368d2d4c1090ac185d576dc4406f11df8a02",
+      "result": "BUILD_AND_STATIC_DEPLOY_PASS_MOBILE_OVERFLOW_FAIL",
+      "scope": "First mobile CSS fix"
+    },
+    {
+      "source": "1a5b52159fdc1d7fec97e9daa4afc5acd60bc011",
+      "result": "PASS",
+      "scope": "Final CSS priority fix, 6 selector states, keyboard clear, members/events and cleanup UI"
+    }
+  ],
+  "focusedRegression": {
+    "finalUiProductionBuild": "PASS",
+    "lastUnitSource": "8588368d2d4c1090ac185d576dc4406f11df8a02",
+    "fullCloudBuildRun": false,
+    "tests": 318,
+    "fullCiQualified": false,
+    "passed": true,
+    "suites": 23,
+    "finalTemplateAndScriptIdentical": true,
+    "finalLint": "PASS"
+  },
+  "ui": {
+    "unchangedProductionSourceLayoutStates": 36,
+    "successfulReceiptsVerifiedInDb": 12,
+    "consumers": {
+      "kubernetes": "Preview/role selection only",
+      "vnf": "Runtime unavailable: no VNF template",
+      "autoScale": "Preview/selection only",
+      "backup": "Runtime unavailable: Unknown API",
+      "vmWizard": "Actual creation/start on initial deployed UI; final selector display/selection/keyboard regression"
+    },
+    "rolesAndScopes": [
+      "admin",
+      "normal user",
+      "project",
+      "domain admin",
+      "list-only restricted"
+    ],
+    "layoutStates": 42,
+    "observationsAreNotAllPassCounters": true,
+    "observations": 61,
+    "finalSelectorStates": 6,
+    "sourceProvenance": "ui-checks.json and responsive-matrix.json"
+  },
+  "placement": {
+    "preferredAntiAffinityRestart": "Original assertion of always distinct hosts FAILED and retained; all four Running on 31-1/31-1/31-2/31-3",
+    "strictAffinity": "Same host; conflicting requested host start rejected",
+    "strictAntiAffinity": "3 hosts distributed; fourth VM rejected with other 3 preserved",
+    "preferredAntiAffinityCold": "2 new VMs on 31-3 and 31-2",
+    "preferredAffinity": "First VM pinned to host 31-1, second auto placed there; third pinned to 31-2 accepted",
+    "hostFailureTested": false,
+    "agreement": "API VM state/host/group mapping versus DB and all 3 hypervisor running domains",
+    "preferredAntiAffinityForced": "Same host explicitly requested and accepted",
+    "physicalCapacityExhaustionTested": false
+  },
+  "deployment": {
+    "source": "1a5b52159fdc1d7fec97e9daa4afc5acd60bc011",
+    "time": "2026-10-19T16:38:33+09:00",
+    "package": "4c40154d27a8c8bc737f1f1c8bf868c520d4b435f5dbf851e39032e42818af08",
+    "index": "ce81cbe7b7183009b57ce02209dd5206311bb6489d01507dffd5d4f61ad62a70",
+    "files": 893,
+    "staticHashesMatch": true,
+    "serverFilesPreserved": true,
+    "jarCount": 9,
+    "pid": "1765167",
+    "state": "active",
+    "http": "200",
+    "markers": {
+      "affinity-group-selection": true,
+      "affinity-policy": true,
+      "affinity-change-form": true,
+      "affinity-table-region": true,
+      "affinity-members-toolbar": true,
+      "affinity-member-results": true,
+      "affinity-create-dialog": true,
+      "affinity-group-owner": true,
+      "listAffinityGroupTypes": true,
+      "affinity-selection-summary": true,
+      "preserveSelectedRowKeys": true,
+      "blockingLoadingState": true,
+      "fetchSyncProgress": true,
+      "extractJobId": true,
+      "affixPointerWrapper": true,
+      "affixPointerCard": true,
+      "affinityBreadcrumbEllipsis": true
+    },
+    "backup": "/root/ag06-ui-deploy-priority-20261019/webapp-backup"
+  },
+  "finalRuntime": {
+    "time": "2026-10-19T16:41:11+09:00",
+    "source": "1a5b52159fdc1d7fec97e9daa4afc5acd60bc011",
+    "checks": {
+      "webinf": true,
+      "metainf": true,
+      "config": true,
+      "jars": true,
+      "staticHashes": true,
+      "pid": true
+    },
+    "files": 893,
+    "pid": "1765167",
+    "state": "active",
+    "http": "200",
+    "index": "ce81cbe7b7183009b57ce02209dd5206311bb6489d01507dffd5d4f61ad62a70"
+  },
+  "cleanup": {
+    "baselinePreservation": {
+      "groups": {
+        "before": 4,
+        "after": 4,
+        "same": true,
+        "beforeHash": "40491a582bf199f5733dd53c0e6cc3170883d254ced6abcc9b19d55f80fc3be4",
+        "afterHash": "40491a582bf199f5733dd53c0e6cc3170883d254ced6abcc9b19d55f80fc3be4"
+      },
+      "vms": {
+        "before": 119,
+        "after": 119,
+        "same": true,
+        "beforeHash": "a19593a10ac3460b2753ef7dee32cc41225f88b35cf2ad6a3a170b4f04006031",
+        "afterHash": "a19593a10ac3460b2753ef7dee32cc41225f88b35cf2ad6a3a170b4f04006031"
+      }
+    },
+    "browserCacheRestored": true,
+    "originalFtFilesUnchanged": true,
+    "browserViewportRestored": true,
+    "vmFixtures": 9,
+    "browserThemeRestored": "light",
+    "activeResidualCounters": {
+      "active_test_networks": 0,
+      "active_test_nics": 0,
+      "active_test_vms": 0,
+      "active_test_users": 0,
+      "active_test_projects": 0,
+      "test_roles": 0,
+      "active_test_domains": 0,
+      "active_test_volumes": 0,
+      "test_affinity_maps": 0,
+      "test_affinity_groups": 0,
+      "active_test_accounts": 0
+    },
+    "allNineDomainsAbsentOnAllThreeHosts": true
+  },
+  "knownOpenItems": [
+    {
+      "scope": "Backend count and pagination for domain-shared affinity groups",
+      "state": "OPEN",
+      "issue": 1421
+    },
+    {
+      "scope": "No CAS between final read and replacement write"
+    },
+    {
+      "scope": "Receipt persistence limited to app memory/session"
+    }
+  ],
+  "epicTargetState": "OPEN: 6 of 7 sub-issues complete",
+  "prTargetState": "DRAFT_OPEN: no merge"
+}

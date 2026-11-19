@@ -1,0 +1,25 @@
+{
+  "truncated": false,
+  "events": [
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 24205,
+      "id": "36984.4141",
+      "url": "http://10.10.31.10:8080/client/api/?projectid=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6&command=listApis&response=json&sessionkey=<redacted>",
+      "httpMethod": "GET",
+      "parameters": {
+        "projectid": "7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6",
+        "command": "listApis",
+        "response": "json"
+      }
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 24208,
+      "id": "36984.4141",
+      "url": "http://10.10.31.10:8080/client/api/?projectid=7a8b3753-0bd1-44b6-8a86-05dc1ffb9ce6&command=listApis&response=json&sessionkey=<redacted>",
+      "status": 200,
+      "mimeType": "application/json"
+    }
+  ]
+}

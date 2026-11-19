@@ -76,6 +76,47 @@ public class KvmVmOperationGuardTest {
         try (java.util.stream.Stream<Path> entries = Files.list(path)) { return entries.count(); }
     }
 
+    @Test public void actionLockContentionIsRejectedBeforeGuestDispatch() throws Exception {
+        Path root = Files.createTempDirectory("vm-process-action-guard");
+        String uuid = UUID.randomUUID().toString();
+        java.util.Map<String, Object> request = new java.util.LinkedHashMap<>();
+        request.put("schemaVersion", "1.0");
+        request.put("requestId", UUID.randomUUID().toString());
+        request.put("operationId", UUID.randomUUID().toString());
+        request.put("authority", java.util.Map.of("vmUuid", uuid));
+        request.put("action", "process.kill");
+        request.put("identity", java.util.Map.of("pid", 123));
+        request.put("service", null);
+        String json = new com.google.gson.GsonBuilder().serializeNulls().create().toJson(request);
+        try (KvmVmOperationGuard held = new KvmVmOperationGuard(root, uuid, "snapshot", false)) {
+            java.util.Map<String, Object> result = com.cloud.agent.api.VmProcessAction.decode(
+                    KvmVmOperationGuard.processAction(root, uuid, json, false), request);
+            assertEquals("FAILED", result.get("state"));
+            assertEquals("NOT_STARTED", result.get("effect"));
+            assertEquals("BUSY", ((java.util.Map<?, ?>) result.get("error")).get("code"));
+            assertEquals(1, entryCount(root.resolve(uuid)));
+            try (java.util.stream.Stream<Path> files = Files.list(root)) {
+                assertEquals(0, files.filter(p -> p.getFileName().toString().startsWith("process-")).count());
+            }
+        }
+        assertEquals(0, entryCount(root.resolve(uuid)));
+    }
+
+    @Test public void readinessWaitsForShortReadContentionWithinItsBudget() throws Exception {
+        Path root = Files.createTempDirectory("vm-process-readiness-guard");
+        String uuid = UUID.randomUUID().toString();
+        try (KvmVmOperationGuard first = new KvmVmOperationGuard(root, uuid, "monitoring", true)) {
+            java.util.concurrent.CompletableFuture<Void> releasing = java.util.concurrent.CompletableFuture.runAsync(() -> {
+                try { Thread.sleep(150); first.close(); }
+                catch (InterruptedException e) { Thread.currentThread().interrupt(); throw new RuntimeException(e); }
+            });
+            try (KvmVmOperationGuard second = new KvmVmOperationGuard(root, uuid, "monitoring", true, 1000)) {
+                assertEquals(0, entryCount(root.resolve(uuid)));
+            }
+            releasing.get();
+        }
+    }
+
     @Test public void renewalAdvancesAndCloseCancelsScheduledJob() throws Exception {
         Path root = Files.createTempDirectory("vm-guard"); String uuid = UUID.randomUUID().toString();
         java.lang.reflect.Field field = KvmVmOperationGuard.class.getDeclaredField("RENEWER");
@@ -113,6 +154,72 @@ public class KvmVmOperationGuardTest {
         Files.writeString(root.resolve(uuid).resolve("partial.tmp"), "{");
         try { new KvmVmOperationGuard(root, uuid, "stats", true); fail("partial lease accepted"); }
         catch (IOException expected) { }
+    }
+
+    private java.util.Map<String, Object> readLease(String uuid) throws Exception {
+        return new java.util.LinkedHashMap<>(java.util.Map.of("kind", "q4-read-lease", "stage", "UNKNOWN", "vmUuid", uuid,
+                "requestId", UUID.randomUUID().toString(), "guestExecPid", 4532, "ownerPid", 999999999L,
+                "ownerStartTicks", "1", "hostBootId", Files.readString(Path.of("/proc/sys/kernel/random/boot_id")).trim()));
+    }
+
+    private String completion(java.util.Map<String, Object> lease) {
+        String proof = new com.google.gson.Gson().toJson(java.util.Map.of("schemaVersion", "1.0", "kind", "snapshot",
+                "requestId", lease.get("requestId"), "authority", java.util.Map.of("vmUuid", lease.get("vmUuid"))));
+        return new com.google.gson.Gson().toJson(java.util.Map.of("return", java.util.Map.of("exited", true, "exitcode", 0,
+                "out-truncated", false, "out-data", java.util.Base64.getEncoder().encodeToString(proof.getBytes(java.nio.charset.StandardCharsets.UTF_8)))));
+    }
+
+    private Path marker(Path dir, java.util.Map<String, Object> lease) throws Exception {
+        Path marker = dir.resolve("q4-read-" + lease.get("requestId") + ".json");
+        Files.writeString(marker, new com.google.gson.Gson().toJson(lease));
+        Files.setPosixFilePermissions(marker, java.nio.file.attribute.PosixFilePermissions.fromString("rw-------"));
+        return marker;
+    }
+
+    @Test public void completedOrphanReadIsReconciledWithoutReplayingGuestCommand() throws Exception {
+        Path dir = Files.createTempDirectory("completed-read"); String uuid = UUID.randomUUID().toString();
+        java.util.Map<String, Object> lease = readLease(uuid); Path marker = marker(dir, lease);
+        java.util.concurrent.atomic.AtomicInteger queries = new java.util.concurrent.atomic.AtomicInteger();
+        KvmVmOperationGuard.reconcileCompletedReads(dir, uuid, pid -> { assertEquals(4532L, pid.longValue()); queries.incrementAndGet(); return completion(lease); });
+        assertFalse(Files.exists(marker)); assertEquals(1, queries.get());
+    }
+
+    @Test public void liveReadOwnerAndUnknownMutationAreNeverReaped() throws Exception {
+        Path dir = Files.createTempDirectory("live-read"); String uuid = UUID.randomUUID().toString();
+        java.util.Map<String, Object> lease = readLease(uuid);
+        lease.put("ownerPid", ProcessHandle.current().pid());
+        String stat = Files.readString(Path.of("/proc/self/stat")); lease.put("ownerStartTicks", stat.substring(stat.lastIndexOf(')') + 2).split(" ")[19]);
+        Path marker = marker(dir, lease); Path mutation = dir.resolve(UUID.randomUUID() + ".json");
+        Files.writeString(mutation, "{\"operationKind\":\"process.restart\",\"expiresAt\":0}");
+        KvmVmOperationGuard.reconcileCompletedReads(dir, uuid, pid -> { fail("live owner must not be queried"); return ""; });
+        assertTrue(Files.exists(marker)); assertTrue(Files.exists(mutation));
+    }
+
+    @Test public void runningTruncatedMismatchedAndReplacedReadMarkersStayProtected() throws Exception {
+        Path dir = Files.createTempDirectory("unknown-read"); String uuid = UUID.randomUUID().toString();
+        java.util.Map<String, Object> lease = readLease(uuid); Path marker = marker(dir, lease);
+        for (String response : java.util.List.of("{\"return\":{\"exited\":false}}", completion(lease).replace("\"out-truncated\":false", "\"out-truncated\":true"),
+                completion(readLease(uuid)), completion(readLease(UUID.randomUUID().toString())), "{\"return\":null}", "{")) {
+            KvmVmOperationGuard.reconcileCompletedReads(dir, uuid, pid -> response); assertTrue(Files.exists(marker));
+        }
+        KvmVmOperationGuard.reconcileCompletedReads(dir, uuid, pid -> {
+            try { Path replacement = Files.createTempFile(dir, "replacement", ".tmp"); Files.writeString(replacement, Files.readString(marker)); Files.move(replacement, marker, java.nio.file.StandardCopyOption.REPLACE_EXISTING); } catch (Exception e) { throw new RuntimeException(e); }
+            return completion(lease);
+        });
+        assertTrue(Files.exists(marker));
+        KvmVmOperationGuard.reconcileCompletedReads(dir, uuid, pid -> { throw new IllegalStateException("transport lost"); });
+        assertTrue(Files.exists(marker));
+    }
+
+    @Test public void readProofRejectsDuplicateJsonKeysAndInvalidUtf8() throws Exception {
+        java.util.Map<String, Object> lease = readLease(UUID.randomUUID().toString());
+        for (String output : java.util.List.of("{\"schemaVersion\":\"1.0\",\"schemaVersion\":\"1.0\"}", "{\"authority\":{\"vmUuid\":\"x\",\"vmUuid\":\"x\"}}")) {
+            String status = new com.google.gson.Gson().toJson(java.util.Map.of("return", java.util.Map.of("exited", true, "exitcode", 0, "out-truncated", false,
+                    "out-data", java.util.Base64.getEncoder().encodeToString(output.getBytes(java.nio.charset.StandardCharsets.UTF_8)))));
+            try { KvmVmOperationGuard.completedRead(lease, status); fail("duplicate accepted"); } catch (IOException expected) { }
+        }
+        String status = new com.google.gson.Gson().toJson(java.util.Map.of("return", java.util.Map.of("exited", true, "exitcode", 0, "out-truncated", false, "out-data", "/w==")));
+        try { KvmVmOperationGuard.completedRead(lease, status); fail("invalid UTF8 accepted"); } catch (IOException expected) { }
     }
 
 }

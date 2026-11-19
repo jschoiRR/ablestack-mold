@@ -1,0 +1,63 @@
+{
+  "label": "project-bulk-success",
+  "requests": [
+    {
+      "id": "34440.1672",
+      "command": "listUserData",
+      "params": {
+        "id": "c1b8866f-2655-46b4-b046-3b0ae564df64",
+        "projectid": "c05f1069-55a0-438b-95a8-6c80dc851dfb",
+        "page": "1",
+        "pagesize": "2"
+      }
+    },
+    {
+      "id": "34440.1673",
+      "command": "deleteUserData",
+      "params": {
+        "id": "c1b8866f-2655-46b4-b046-3b0ae564df64",
+        "projectid": "c05f1069-55a0-438b-95a8-6c80dc851dfb"
+      }
+    },
+    {
+      "id": "34440.1674",
+      "command": "listUserData",
+      "params": {
+        "id": "36f83c2d-c651-4bc5-bd06-f60aa410300d",
+        "projectid": "c05f1069-55a0-438b-95a8-6c80dc851dfb",
+        "page": "1",
+        "pagesize": "2"
+      }
+    },
+    {
+      "id": "34440.1675",
+      "command": "deleteUserData",
+      "params": {
+        "id": "36f83c2d-c651-4bc5-bd06-f60aa410300d",
+        "projectid": "c05f1069-55a0-438b-95a8-6c80dc851dfb"
+      }
+    }
+  ],
+  "responses": [
+    {
+      "id": "34440.1672",
+      "status": 200
+    },
+    {
+      "id": "34440.1673",
+      "status": 200
+    },
+    {
+      "id": "34440.1674",
+      "status": 200
+    },
+    {
+      "id": "34440.1675",
+      "status": 200
+    }
+  ],
+  "exceptions": [],
+  "truncated": false,
+  "hasMore": false,
+  "cursor": 7011
+}

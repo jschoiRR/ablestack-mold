@@ -16,15 +16,39 @@
 // under the License.
 
 <template>
-  <div style="width: 80vw;">
-    <a-row :gutter="12">
-      <a-col :md="24" :lg="17">
+  <div class="backup-deploy-layout">
+    <div class="backup-create-scroll"><div class="backup-deploy-grid">
+      <div class="backup-deploy-form">
         <a-alert>
           <template #message>
             <div v-html="$t('message.create.instance.from.backup.prefill')"></div>
           </template>
         </a-alert>
         <a-card :bordered="true" :title="$t('label.configure.instance')">
+          <a-alert
+            v-if="requiresBackupDiskCapacity"
+            type="info"
+            show-icon
+            style="margin-bottom: 10px"
+            :message="$t('message.backup.instance.disk.capacity.fixed')" />
+          <a-alert
+            v-if="hasRestoreDiskSizeMismatch"
+            type="error"
+            show-icon
+            style="margin-bottom: 10px"
+            :message="$t('message.backup.instance.disk.capacity.mismatch')" />
+          <a-alert
+            v-if="hasBackupBootMismatch"
+            type="warning"
+            show-icon
+            style="margin-bottom: 10px"
+            :message="$t('message.backup.instance.boot.mismatch')" />
+          <a-alert
+            v-if="hasThinRestoreOffering"
+            type="warning"
+            show-icon
+            style="margin-bottom: 10px"
+            :message="$t('message.backup.instance.thin.allocation')" />
           <a-form
             v-ctrl-enter="handleSubmit"
             :ref="formRef"
@@ -170,6 +194,8 @@
                       @tabChange="key => onTabChange(key, 'tabKey')">
                       <a-alert
                         v-if="showOsTypeWarning && selectedTemplateIso"
+                        type="warning"
+                        show-icon
                         style="margin-bottom: 10px">
                         <template #message>
                           <div>
@@ -383,6 +409,7 @@
                               input-decorator="rootdisksize"
                               :preFillContent="dataPreFill"
                               :minDiskSize="dataPreFill.minrootdisksize"
+                              :maxDiskSize="requiresBackupDiskCapacity ? dataPreFill.backupRootDiskSize : 0"
                               :rootDiskSelected="overrideDiskOffering"
                               :isCustomized="overrideDiskOffering.iscustomized"
                               @handler-error="handlerError"
@@ -434,6 +461,8 @@
                       v-if="diskOffering && (diskOffering.iscustomized || diskOffering.iscustomizediops)"
                       input-decorator="size"
                       :preFillContent="dataPreFill"
+                      :minDiskSize="requiresBackupDiskCapacity ? dataPreFill.backupRootDiskSize : 0"
+                      :maxDiskSize="requiresBackupDiskCapacity ? dataPreFill.backupRootDiskSize : 0"
                       :diskSelected="diskSelected"
                       :isCustomized="diskOffering.iscustomized"
                       @handler-error="handlerError"
@@ -453,6 +482,7 @@
                   <div v-if="zoneSelected">
                     <volume-disk-offering-select-view
                       :items="dataPreFill.datadisksdetails"
+                      :fixedCapacity="requiresBackupDiskCapacity"
                       :zoneId="zoneId"
                       @select-volumes-disk-offering="updateVolumesDiskOffering($event)" />
                   </div>
@@ -651,6 +681,8 @@
                         :zoneId="zoneId"
                         :value="affinityGroupIds"
                         :loading="loading.affinityGroups"
+                        :error="affinityGroupsError"
+                        :owner="params.affinityGroups.options"
                         :preFillContent="dataPreFill"
                         @select-affinity-group-item="($event) => updateAffinityGroups($event)"
                         @handle-search-filter="($event) => handleSearchFilter('affinityGroups', $event)"/>
@@ -758,7 +790,14 @@
                 </template>
               </a-step>
             </a-steps>
-            <div class="card-footer">
+          </a-form>
+        </a-card>
+      </div>
+      <div class="backup-deploy-summary vm-info-card">
+          <info-card :resource="vm" :title="$t('label.yourinstance')" @change-resource="(data) => resource = data" />
+      </div>
+    </div></div>
+            <div class="backup-create-footer">
               <a-button @click="closeAction" :disabled="loading.deploy">
                 {{ $t('label.cancel') }}
               </a-button>
@@ -766,26 +805,20 @@
                 {{ $t('label.create') }}
               </a-button>
             </div>
-          </a-form>
-        </a-card>
-      </a-col>
-      <a-col :md="24" :lg="7" v-if="!isMobile()">
-        <a-affix :offsetTop="75" class="vm-info-card">
-          <info-card :resource="vm" :title="$t('label.yourinstance')" @change-resource="(data) => resource = data" />
-        </a-affix>
-      </a-col>
-    </a-row>
+
   </div>
 </template>
 
 <script>
 import { ref, reactive, toRaw, nextTick, h } from 'vue'
 import { Button } from 'ant-design-vue'
+import { affinitySelectionIds, affinitySelectionGroups, fetchAffinityGroupOptions } from '@/utils/affinityGroupSelection'
 import { getAPI, postAPI } from '@/api'
 import _ from 'lodash'
 import { mixin, mixinDevice } from '@/utils/mixin.js'
 import store from '@/store'
 import eventBus from '@/config/eventBus'
+import { isAblestackInstanceCreation, trackBackupInstanceCreation } from '@/utils/backupInstanceCreation'
 
 import OwnershipSelection from '@views/compute/wizard/OwnershipSelection'
 import InfoCard from '@/components/view/InfoCard'
@@ -933,6 +966,7 @@ export default {
       hypervisor: '',
       serviceOffering: {},
       diskOffering: {},
+      affinityGroupsError: '',
       affinityGroups: [],
       networks: [],
       networksAdd: [],
@@ -988,6 +1022,38 @@ export default {
     }
   },
   computed: {
+    requiresBackupDiskCapacity () {
+      return isAblestackInstanceCreation(this.dataPreFill.backupprovider)
+    },
+    hasBackupBootMismatch () {
+      if (!this.requiresBackupDiskCapacity || !this.dataPreFill.backupBootType || !this.form.boottype) return false
+      return this.form.boottype !== this.dataPreFill.backupBootType ||
+        (this.form.boottype === 'UEFI' && this.form.bootmode !== this.dataPreFill.backupBootMode)
+    },
+    hasRestoreDiskSizeMismatch () {
+      if (!this.requiresBackupDiskCapacity || !this.dataPreFill.backupRootDiskSize) return false
+      const backupSize = Number(this.dataPreFill.backupRootDiskSize)
+      const rootOffering = this.tabKey === 'isoid' ? this.diskOffering : this.overrideDiskOffering
+      const configuredSize = this.tabKey === 'isoid' ? this.form.size : this.form.rootdisksize
+      const rootSize = rootOffering?.disksize > 0 && !rootOffering.iscustomized
+        ? Number(rootOffering.disksize) : Number(configuredSize || backupSize)
+      if (rootSize !== backupSize || (this.tabKey === 'templateid' && this.template?.size > backupSize * 1024 ** 3)) return true
+      return Object.values(this.form.volumesdiskoffering || {}).some(disk => {
+        const backupDisk = (this.dataPreFill.datadisksdetails || []).find(item => item.deviceid === disk.deviceid)
+        const offering = (this.options.diskOfferings || []).find(item => item.id === disk.offering)
+        const size = offering && !offering.iscustomized ? offering.disksize : disk.size
+        return backupDisk && Number(size) !== Number(backupDisk.size)
+      })
+    },
+    hasThinRestoreOffering () {
+      if (!this.requiresBackupDiskCapacity) return false
+      const rootOffering = this.tabKey === 'isoid' ? this.diskOffering : this.overrideDiskOffering
+      if (rootOffering?.provisioningtype?.toLowerCase() === 'thin') return true
+      return Object.values(this.form.volumesdiskoffering || {}).some(disk => {
+        const offering = (this.options.diskOfferings || []).find(item => item.id === disk.offering)
+        return (disk.provisioningtype || offering?.provisioningtype)?.toLowerCase() === 'thin'
+      })
+    },
     rootDiskSize () {
       return this.showRootDiskSizeChanger && this.rootDiskSizeFixed > 0
     },
@@ -1063,7 +1129,7 @@ export default {
       }
     },
     affinityGroupIds () {
-      return _.map(this.affinityGroups, 'id')
+      return affinitySelectionIds(this.form.affinitygroupids)
     },
     params () {
       return {
@@ -1345,7 +1411,7 @@ export default {
         }
 
         this.zone = _.find(this.options.zones, (option) => option.id === this.instanceConfig.zoneid)
-        this.affinityGroups = _.filter(this.options.affinityGroups, (option) => _.includes(instanceConfig.affinitygroupids, option.id))
+        this.affinityGroups = affinitySelectionGroups(instanceConfig.affinitygroupids, [...this.affinityGroups, ...this.options.affinityGroups])
         this.networks = this.getSelectedNetworksWithExistingConfig(_.filter(this.options.networks, (option) => _.includes(instanceConfig.networkids, option.id)))
 
         this.diskOffering = _.find(this.options.diskOfferings, (option) => option.id === instanceConfig.diskofferingid)
@@ -1566,9 +1632,10 @@ export default {
       this.fetchInstaceGroups()
       this.fetchIoPolicyTypes()
       nextTick().then(() => {
-        ['name', 'keyboard', 'boottype', 'bootmode', 'iothreadsenabled', 'iodriverpolicy', 'nicmultiqueuenumber', 'nicpackedvirtqueues'].forEach(this.fillValue)
-        this.form.boottype = this.defaultBootType ? this.defaultBootType : this.options.bootTypes && this.options.bootTypes.length > 0 ? this.options.bootTypes[0].id : undefined
-        this.form.bootmode = this.defaultBootMode ? this.defaultBootMode : this.options.bootModes && this.options.bootModes.length > 0 ? this.options.bootModes[0].id : undefined
+        ['name', 'keyboard', 'boottype', 'bootmode', 'iothreadsenabled', 'iodriverpolicy', 'nicmultiqueuenumber', 'nicpackedvirtqueuesenabled'].forEach(this.fillValue)
+        this.form.boottype = this.form.boottype || this.defaultBootType || this.options.bootTypes?.[0]?.id
+        this.fetchBootModes(this.form.boottype)
+        this.form.bootmode = this.dataPreFill.bootmode || this.defaultBootMode || this.options.bootModes?.[0]?.id
         this.instanceConfig = toRaw(this.form)
       })
     },
@@ -1686,18 +1753,20 @@ export default {
         }
         if (template) {
           var size = template.size / (1024 * 1024 * 1024) || 0 // bytes to GB
-          this.dataPreFill.minrootdisksize = Math.ceil(size)
+          this.dataPreFill.minrootdisksize = Math.max(Math.ceil(size), this.dataPreFill.backupRootDiskSize || 0)
           this.form.dynamicscalingenabled = template.isdynamicallyscalable
-          this.defaultBootType = template.details?.UEFI ? 'UEFI' : 'BIOS'
+          const backupTemplate = template.id === this.dataPreFill.templateid
+          this.defaultBootType = (backupTemplate && this.dataPreFill.boottype) || (template.details?.UEFI ? 'UEFI' : 'BIOS')
           this.form.boottype = this.defaultBootType
           this.fetchBootModes(this.form.boottype)
-          this.defaultBootMode = template.details?.UEFI || this.options.bootModes?.[0]?.id || undefined
+          this.defaultBootMode = (backupTemplate && this.dataPreFill.bootmode) || template.details?.UEFI || this.options.bootModes?.[0]?.id || undefined
           this.form.bootmode = this.defaultBootMode
-          this.form.iothreadsenabled = template.details && Object.prototype.hasOwnProperty.call(template.details, 'iothreads')
-          this.form.iodriverpolicy = template.details?.['io.policy']
-          this.form.keyboard = template.details?.keyboard
+          this.form.iothreadsenabled = backupTemplate && this.dataPreFill.iothreadsenabled !== undefined
+            ? this.dataPreFill.iothreadsenabled : template.details && Object.prototype.hasOwnProperty.call(template.details, 'iothreads')
+          this.form.iodriverpolicy = (backupTemplate && this.dataPreFill.iodriverpolicy) || template.details?.['io.policy']
+          this.form.keyboard = (backupTemplate && this.dataPreFill.keyboard) || template.details?.keyboard
           this.showOsTypeWarning = this.dataPreFill.ostypeid && template.ostypeid !== this.dataPreFill.ostypeid
-          if (template.details['vmware-to-kvm-mac-addresses']) {
+          if (template.details?.['vmware-to-kvm-mac-addresses']) {
             this.dataPreFill.macAddressArray = JSON.parse(template.details['vmware-to-kvm-mac-addresses'])
           }
           this.selectedArchitecture = template?.arch || 'x86_64'
@@ -1753,7 +1822,8 @@ export default {
       this.form.volumesdiskoffering = value
     },
     updateAffinityGroups (ids) {
-      this.form.affinitygroupids = ids
+      this.form.affinitygroupids = affinitySelectionIds(ids)
+      this.affinityGroups = affinitySelectionGroups(ids, [...this.affinityGroups, ...this.options.affinityGroups])
     },
     updateNetworks (ids) {
       this.form.networkids = ids
@@ -1844,6 +1914,13 @@ export default {
           this.$notification.error({
             message: this.$t('message.request.failed'),
             description: this.$t('message.step.2.continue')
+          })
+          return
+        }
+        if (this.hasRestoreDiskSizeMismatch) {
+          this.$notification.error({
+            message: this.$t('message.request.failed'),
+            description: this.$t('message.backup.instance.disk.capacity.mismatch')
           })
           return
         }
@@ -2011,6 +2088,7 @@ export default {
                 if (networkConfig && networkConfig.length > 0) {
                   deployVmData['iptonetworklist[' + j + '].ip'] = networkConfig[0].ipAddress ? networkConfig[0].ipAddress : undefined
                   deployVmData['iptonetworklist[' + j + '].mac'] = networkConfig[0].macAddress ? networkConfig[0].macAddress : undefined
+                  deployVmData['iptonetworklist[' + j + '].enabled'] = networkConfig[0].enabled === undefined ? true : networkConfig[0].enabled
                 }
               }
             }
@@ -2053,6 +2131,7 @@ export default {
         const title = this.$t('label.create.instance.from.backup')
         const description = values.name || ''
         const password = this.$t('label.password')
+        const trackCreation = isAblestackInstanceCreation(this.dataPreFill.backupprovider)
 
         deployVmData = Object.fromEntries(
           Object.entries(deployVmData).filter(([key, value]) => value !== undefined))
@@ -2060,10 +2139,12 @@ export default {
         postAPI('createVMFromBackup', deployVmData, 'GET', {}).then(response => {
           const jobId = response.deployvirtualmachineresponse.jobid
           if (jobId) {
+            this.$emit('restore-started')
             this.$pollJob({
               jobId,
               title,
               description,
+              successMessage: this.$t('label.create.instance.from.backup.requested'),
               successMethod: result => {
                 const vm = result.jobresult.virtualmachine
                 const name = vm.displayname || vm.name || vm.id
@@ -2083,7 +2164,10 @@ export default {
                     duration: 0
                   })
                 }
-                eventBus.emit('vm-refresh-data')
+                if (trackCreation) {
+                  trackBackupInstanceCreation({ backupId: deployVmData.backupid, jobId, vm, router: this.$router })
+                }
+                eventBus.emit(trackCreation ? 'backup-restore-updated' : 'vm-refresh-data')
               },
               loadingMessage: `${title} ${this.$t('label.in.progress')}`,
               catchMessage: this.$t('error.fetching.async.job.result'),
@@ -2094,7 +2178,7 @@ export default {
           }
           // Sending a refresh in case it hasn't picked up the new VM
           new Promise(resolve => setTimeout(resolve, 3000)).then(() => {
-            eventBus.emit('vm-refresh-data')
+            eventBus.emit(trackCreation ? 'backup-restore-updated' : 'vm-refresh-data')
           })
           if (!values.stayonpage) {
             this.$emit('close-action')
@@ -2179,6 +2263,7 @@ export default {
       })
     },
     fetchOptions (param, name, exclude) {
+      if (name === 'affinityGroups' && !exclude?.includes(name)) return fetchAffinityGroupOptions(this, param)
       if (exclude && exclude.length > 0) {
         if (exclude.includes(name)) {
           return
@@ -2775,4 +2860,23 @@ export default {
   .form-item-hidden {
     display: none;
   }
+</style>
+
+<style lang="scss" scoped>
+.backup-deploy-layout { display: flex; flex-direction: column; min-height: 0; width: 100%; overflow: hidden; }
+.backup-create-scroll { container-type: inline-size; }
+.backup-deploy-grid { display: grid; grid-template-columns: minmax(0, 1fr) 280px; gap: 16px; align-items: start; }
+.backup-deploy-form, .backup-deploy-summary { min-width: 0; }
+.backup-deploy-form :deep(.ant-card-body) { padding: 16px; }
+.backup-deploy-form :deep(.ant-steps-item-content) { min-width: 0; }
+.backup-deploy-form :deep(.ant-table-wrapper) { max-width: 100%; overflow-x: auto; }
+.backup-deploy-summary :deep(.resource-detail-item__details a) { color: var(--ui-text-primary); }
+.backup-deploy-summary :deep(.ant-card-body) { max-height: none !important; overflow: visible !important; }
+@container (max-width: 900px) {
+  .backup-deploy-grid { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 600px) {
+  .backup-deploy-form :deep(.ant-card-body) { padding: 8px; }
+  .backup-deploy-form :deep(.zone-radio-button) { min-width: 0; }
+}
 </style>

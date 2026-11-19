@@ -1,0 +1,99 @@
+{
+  "truncated": false,
+  "events": [
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 16710,
+      "id": "36984.3062",
+      "url": "http://10.10.31.10:8080/client/api/",
+      "httpMethod": "POST",
+      "parameters": {
+        "command": "addAnnotation",
+        "response": "json",
+        "entityid": "6ab285d3-d90d-4da1-98dc-652ac5c17f14",
+        "entitytype": "USER_DATA",
+        "annotation": "UD1392 controlled comment draft",
+        "adminsonly": "false"
+      }
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 16711,
+      "id": "36984.3063",
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&id=6ab285d3-d90d-4da1-98dc-652ac5c17f14&page=1&pagesize=20&command=listUserData&response=json&sessionkey=<redacted>",
+      "httpMethod": "GET",
+      "parameters": {
+        "listall": "true",
+        "id": "6ab285d3-d90d-4da1-98dc-652ac5c17f14",
+        "page": "1",
+        "pagesize": "20",
+        "command": "listUserData",
+        "response": "json"
+      }
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 16714,
+      "id": "36984.3063",
+      "url": "http://10.10.31.10:8080/client/api/?listall=true&id=6ab285d3-d90d-4da1-98dc-652ac5c17f14&page=1&pagesize=20&command=listUserData&response=json&sessionkey=<redacted>",
+      "status": 200,
+      "mimeType": "application/json"
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 16718,
+      "id": "36984.3062",
+      "url": "http://10.10.31.10:8080/client/api/",
+      "status": 503,
+      "mimeType": "application/json"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 16722,
+      "id": "36984.3064",
+      "url": "http://10.10.31.10:8080/client/api/?entityid=6ab285d3-d90d-4da1-98dc-652ac5c17f14&entitytype=USER_DATA&annotationfilter=all&page=1&pagesize=10&command=listAnnotations&response=json&sessionkey=<redacted>",
+      "httpMethod": "GET",
+      "parameters": {
+        "entityid": "6ab285d3-d90d-4da1-98dc-652ac5c17f14",
+        "entitytype": "USER_DATA",
+        "annotationfilter": "all",
+        "page": "1",
+        "pagesize": "10",
+        "command": "listAnnotations",
+        "response": "json"
+      }
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 16727,
+      "id": "36984.3064",
+      "url": "http://10.10.31.10:8080/client/api/?entityid=6ab285d3-d90d-4da1-98dc-652ac5c17f14&entitytype=USER_DATA&annotationfilter=all&page=1&pagesize=10&command=listAnnotations&response=json&sessionkey=<redacted>",
+      "status": 200,
+      "mimeType": "application/json"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 16731,
+      "id": "36984.3065",
+      "url": "http://10.10.31.10:8080/client/api/?entityid=6ab285d3-d90d-4da1-98dc-652ac5c17f14&entitytype=USER_DATA&annotationfilter=all&page=1&pagesize=10&command=listAnnotations&response=json&sessionkey=<redacted>",
+      "httpMethod": "GET",
+      "parameters": {
+        "entityid": "6ab285d3-d90d-4da1-98dc-652ac5c17f14",
+        "entitytype": "USER_DATA",
+        "annotationfilter": "all",
+        "page": "1",
+        "pagesize": "10",
+        "command": "listAnnotations",
+        "response": "json"
+      }
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 16734,
+      "id": "36984.3065",
+      "url": "http://10.10.31.10:8080/client/api/?entityid=6ab285d3-d90d-4da1-98dc-652ac5c17f14&entitytype=USER_DATA&annotationfilter=all&page=1&pagesize=10&command=listAnnotations&response=json&sessionkey=<redacted>",
+      "status": 200,
+      "mimeType": "application/json"
+    }
+  ]
+}

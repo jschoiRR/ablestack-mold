@@ -1,0 +1,27 @@
+{
+  "issue": 1386,
+  "cluster": 31,
+  "source": "f89387ef67b3b07ca89b1ec7cf38e38c99930af7",
+  "backup": "/root/ud1386-20261016-103424",
+  "before": {
+    "jar_sha256": "dd9d15c418be965bb9d270d5ac737a1de699c9db24ed6ef234b2040f8a8d4c24",
+    "config_sha256": "b7de5f6a1f7a3a17310ee7d34ca801bb316fc6f841039f865fbabf154cd59a13",
+    "web_inf_inode": 67111992,
+    "meta_inf_present": false
+  },
+  "jar_sha256": "27adb5fc8310905fc0b8fea6a8406c772fe398c9abff82b144f7acf54e436f74",
+  "changed_classes": [
+    "com/cloud/network/rules/UserdataToRouterRules.class",
+    "com/cloud/vm/UserVmManagerImpl.class"
+  ],
+  "class_hashes": {
+    "com/cloud/vm/UserVmManagerImpl.class": "62593bbd539459021b49afff0498ed3ac5a5dd2dac37e043b2d40fa4f2de4097",
+    "com/cloud/network/rules/UserdataToRouterRules.class": "50c60daeef6641eefff9def7d50823006915cdebe4480652faffe0d04cde837a"
+  },
+  "unchanged_jar_entries_verified": true,
+  "static_files_verified": 0,
+  "web_inf_preserved": true,
+  "config_preserved": true,
+  "mold": "active",
+  "client_http": 200
+}

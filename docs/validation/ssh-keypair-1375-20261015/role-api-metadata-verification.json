@@ -1,0 +1,29 @@
+{
+  "passed": 4,
+  "tests": [
+    {
+      "tag": "user",
+      "create_allowed": true,
+      "register_allowed": true,
+      "list_allowed": true
+    },
+    {
+      "tag": "domainAdmin",
+      "create_allowed": true,
+      "register_allowed": true,
+      "list_allowed": true
+    },
+    {
+      "tag": "createOnly",
+      "create_allowed": true,
+      "register_allowed": false,
+      "list_allowed": true
+    },
+    {
+      "tag": "registerOnly",
+      "create_allowed": false,
+      "register_allowed": true,
+      "list_allowed": true
+    }
+  ]
+}

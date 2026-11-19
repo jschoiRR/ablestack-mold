@@ -1,0 +1,63 @@
+{
+  "vm": "ebf7db49-ea07-4dba-be8a-78fc915b19ec",
+  "before": [
+    "92d3963c-f878-48a5-a830-cbfd902acaf2",
+    "b2425532-f2bb-4511-86f5-917f6a4f1869"
+  ],
+  "after": [
+    "92d3963c-f878-48a5-a830-cbfd902acaf2"
+  ],
+  "result": {
+    "virtualmachine": {
+      "id": "ebf7db49-ea07-4dba-be8a-78fc915b19ec",
+      "name": "qa-ag05-vm-02",
+      "displayname": "qa-ag05-vm-02",
+      "account": "admin",
+      "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+      "username": "admin",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "domain": "ROOT",
+      "domainpath": "ROOT",
+      "created": "2026-10-19T13:23:47+0900",
+      "state": "Stopped",
+      "haenable": false,
+      "zoneid": "7013f5a1-de59-4cea-a596-f4f58815f31c",
+      "zonename": "Zone",
+      "volumemutationblockedreason": "",
+      "guestosid": "9708b6ac-b253-11f1-a895-0024814c313f",
+      "securitygroup": [],
+      "nic": [],
+      "hypervisor": "KVM",
+      "instancename": "i-2-665-VM",
+      "details": {
+        "deployvm": "true",
+        "tpmversion": "NONE",
+        "rootDiskController": "osdefault"
+      },
+      "clonefastsourcepowerallowed": false,
+      "clonefastpowerallowed": false,
+      "affinitygroup": [
+        {
+          "id": "92d3963c-f878-48a5-a830-cbfd902acaf2",
+          "name": "qa-ag05-other",
+          "description": "AG05 disposable UI fixture",
+          "account": "admin"
+        }
+      ],
+      "displayvm": true,
+      "isdynamicallyscalable": true,
+      "deleteprotection": false,
+      "ostypeid": "9708b6ac-b253-11f1-a895-0024814c313f",
+      "osdisplayname": "Rocky Linux 9",
+      "receivedbytes": 0,
+      "sentbytes": 0,
+      "vbmcport": "None",
+      "kvdoenable": false,
+      "kvdoinuse": false,
+      "arch": "x86_64",
+      "vbmcstatus": "Unallocated",
+      "tags": [],
+      "hasannotations": false
+    }
+  }
+}

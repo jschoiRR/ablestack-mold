@@ -1,0 +1,29 @@
+{
+  "issue": 1388,
+  "cluster": 31,
+  "source": "8591ec822a568aa40f21171351a8678f589a41e5",
+  "backup": "/root/ud1388-20261016-114125",
+  "before": {
+    "jar_sha256": "27adb5fc8310905fc0b8fea6a8406c772fe398c9abff82b144f7acf54e436f74",
+    "config_sha256": "b7de5f6a1f7a3a17310ee7d34ca801bb316fc6f841039f865fbabf154cd59a13",
+    "web_inf_inode": 67111992,
+    "meta_inf_present": false
+  },
+  "jar_sha256": "bf53fc37aee0431dd53377526523fcfa2b650e1a32ce9524e243438bab3be7c1",
+  "changed_classes": [
+    "org/apache/cloudstack/api/command/user/template/ListTemplatesCmd.class",
+    "org/apache/cloudstack/api/command/user/iso/ListIsosCmd.class",
+    "com/cloud/api/query/QueryManagerImpl.class"
+  ],
+  "class_hashes": {
+    "org/apache/cloudstack/api/command/user/template/ListTemplatesCmd.class": "2c7a4213757578f485cb1bf996ca609792426f373d71c17a96501a281dab6d4a",
+    "org/apache/cloudstack/api/command/user/iso/ListIsosCmd.class": "76fc6cce0cfb594e87fa17fea000cdcfbda1bbb8b53e0a32e54ef0cf844c5e20",
+    "com/cloud/api/query/QueryManagerImpl.class": "7f051d51538452f8c1918d8a65fb569d12394e4bdec2c52e3dc18eb52b23b445"
+  },
+  "unchanged_jar_entries_verified": true,
+  "static_files_verified": 0,
+  "web_inf_preserved": true,
+  "config_preserved": true,
+  "mold": "active",
+  "client_http": 200
+}

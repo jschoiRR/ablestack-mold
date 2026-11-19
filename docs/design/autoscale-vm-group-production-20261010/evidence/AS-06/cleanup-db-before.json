@@ -1,0 +1,257 @@
+{
+  "at": 1791720032.863272,
+  "clusters": {
+    "31": [
+      {
+        "id": 475,
+        "host": 1,
+        "kind": "vm",
+        "uuid": "62328050-c733-4e5c-940f-77f2dfa0e837",
+        "state": "Running",
+        "removed": null,
+        "instance": "i-35-475-VM"
+      },
+      {
+        "id": 476,
+        "host": 4,
+        "kind": "vm",
+        "uuid": "89435b1c-f84f-4c02-b50c-27823d08289d",
+        "state": "Running",
+        "removed": null,
+        "instance": "i-35-476-VM"
+      },
+      {
+        "id": 397,
+        "host": 1,
+        "kind": "vm",
+        "uuid": "bc00f070-797a-40b0-9785-c965dc50fc63",
+        "state": "Running",
+        "removed": null,
+        "instance": "i-35-397-VM"
+      },
+      {
+        "id": 456,
+        "vm": 397,
+        "kind": "volume",
+        "path": "7d97eaef-5619-494b-92a4-ddddb13cfa11",
+        "pool": 1,
+        "size": 107374182400,
+        "uuid": "7d97eaef-5619-494b-92a4-ddddb13cfa11",
+        "state": "Ready",
+        "removed": null
+      },
+      {
+        "id": 534,
+        "vm": 475,
+        "kind": "volume",
+        "path": "394275d7-9e31-402b-9a58-33f44431e5bf",
+        "pool": 1,
+        "size": 128849018880,
+        "uuid": "394275d7-9e31-402b-9a58-33f44431e5bf",
+        "state": "Ready",
+        "removed": null
+      },
+      {
+        "id": 535,
+        "vm": 475,
+        "kind": "volume",
+        "path": "74741763-1ac6-4558-8661-7210001d582a",
+        "pool": 1,
+        "size": 10737418240,
+        "uuid": "74741763-1ac6-4558-8661-7210001d582a",
+        "state": "Ready",
+        "removed": null
+      },
+      {
+        "id": 536,
+        "vm": 476,
+        "kind": "volume",
+        "path": "81fcae6b-cf2f-4f88-928b-4f055de19579",
+        "pool": 1,
+        "size": 128849018880,
+        "uuid": "81fcae6b-cf2f-4f88-928b-4f055de19579",
+        "state": "Ready",
+        "removed": null
+      },
+      {
+        "id": 537,
+        "vm": 476,
+        "kind": "volume",
+        "path": "a3c5fdbf-e494-42f6-9372-4ffafceaa9c7",
+        "pool": 1,
+        "size": 10737418240,
+        "uuid": "a3c5fdbf-e494-42f6-9372-4ffafceaa9c7",
+        "state": "Ready",
+        "removed": null
+      },
+      {
+        "id": 3,
+        "vm": 397,
+        "kind": "map"
+      },
+      {
+        "id": 81,
+        "vm": 475,
+        "kind": "map"
+      },
+      {
+        "id": 82,
+        "vm": 476,
+        "kind": "map"
+      },
+      {
+        "vm": 397,
+        "kind": "lb",
+        "revoke": 0,
+        "removed": null
+      },
+      {
+        "vm": 475,
+        "kind": "lb",
+        "revoke": 0,
+        "removed": null
+      },
+      {
+        "vm": 476,
+        "kind": "lb",
+        "revoke": 0,
+        "removed": null
+      },
+      {
+        "max": 3,
+        "min": 1,
+        "kind": "group",
+        "phase": null,
+        "state": "DISABLED",
+        "target": null,
+        "operation": null
+      }
+    ],
+    "32": [
+      {
+        "id": 151,
+        "host": 1,
+        "kind": "vm",
+        "uuid": "35c8594c-027a-4f6b-bbee-c372e9b22e76",
+        "state": "Running",
+        "removed": null,
+        "instance": "i-6-151-VM"
+      },
+      {
+        "id": 152,
+        "host": 2,
+        "kind": "vm",
+        "uuid": "09ace9c1-6dda-4870-a679-0c478cbbd718",
+        "state": "Running",
+        "removed": null,
+        "instance": "i-6-152-VM"
+      },
+      {
+        "id": 73,
+        "host": 2,
+        "kind": "vm",
+        "uuid": "6f9bd71b-1745-48c5-9c88-cc0cccd9d1ff",
+        "state": "Running",
+        "removed": null,
+        "instance": "i-6-73-VM"
+      },
+      {
+        "id": 71,
+        "vm": 73,
+        "kind": "volume",
+        "path": "d38a9172-aa7f-4ab5-80c8-cff68a74ab28",
+        "pool": 3,
+        "size": 107374182400,
+        "uuid": "d38a9172-aa7f-4ab5-80c8-cff68a74ab28",
+        "state": "Ready",
+        "removed": null
+      },
+      {
+        "id": 149,
+        "vm": 151,
+        "kind": "volume",
+        "path": "7be7aa59-ee84-41bc-b23a-5252a307d981",
+        "pool": 3,
+        "size": 128849018880,
+        "uuid": "7be7aa59-ee84-41bc-b23a-5252a307d981",
+        "state": "Ready",
+        "removed": null
+      },
+      {
+        "id": 150,
+        "vm": 151,
+        "kind": "volume",
+        "path": "2e74a7ed-7a54-44a2-8c05-d503accaf85a",
+        "pool": 3,
+        "size": 10737418240,
+        "uuid": "2e74a7ed-7a54-44a2-8c05-d503accaf85a",
+        "state": "Ready",
+        "removed": null
+      },
+      {
+        "id": 151,
+        "vm": 152,
+        "kind": "volume",
+        "path": "937e94e7-ba52-4489-b67d-31d0eb528472",
+        "pool": 3,
+        "size": 128849018880,
+        "uuid": "937e94e7-ba52-4489-b67d-31d0eb528472",
+        "state": "Ready",
+        "removed": null
+      },
+      {
+        "id": 152,
+        "vm": 152,
+        "kind": "volume",
+        "path": "ab1076d6-481d-476e-8f91-c7070bd5dda6",
+        "pool": 3,
+        "size": 10737418240,
+        "uuid": "ab1076d6-481d-476e-8f91-c7070bd5dda6",
+        "state": "Ready",
+        "removed": null
+      },
+      {
+        "id": 4,
+        "vm": 73,
+        "kind": "map"
+      },
+      {
+        "id": 82,
+        "vm": 151,
+        "kind": "map"
+      },
+      {
+        "id": 83,
+        "vm": 152,
+        "kind": "map"
+      },
+      {
+        "vm": 73,
+        "kind": "lb",
+        "revoke": 0,
+        "removed": null
+      },
+      {
+        "vm": 151,
+        "kind": "lb",
+        "revoke": 0,
+        "removed": null
+      },
+      {
+        "vm": 152,
+        "kind": "lb",
+        "revoke": 0,
+        "removed": null
+      },
+      {
+        "max": 1,
+        "min": 1,
+        "kind": "group",
+        "phase": null,
+        "state": "DISABLED",
+        "target": null,
+        "operation": null
+      }
+    ]
+  }
+}

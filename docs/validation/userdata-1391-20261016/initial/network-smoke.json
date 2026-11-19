@@ -1,0 +1,433 @@
+{
+  "start": 9903,
+  "cursor": 10078,
+  "truncated": false,
+  "hasMore": false,
+  "events": [
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 9905,
+      "requestId": "25396.2134",
+      "api": "listUserData",
+      "id": "4cb11aab-bf01-4c0f-a6a1-e3c66c015dfa",
+      "entityid": null,
+      "projectid": null,
+      "path": "/client/api/"
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 9907,
+      "requestId": "25396.2134",
+      "api": "listUserData",
+      "status": 200
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 9909,
+      "requestId": "25396.2135",
+      "api": "listUserData",
+      "id": null,
+      "entityid": null,
+      "projectid": null,
+      "path": "/client/api/"
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 9914,
+      "requestId": "25396.2135",
+      "api": "listUserData",
+      "status": 200
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 9916,
+      "requestId": "25396.2136",
+      "api": "registerUserData",
+      "id": null,
+      "entityid": null,
+      "projectid": null,
+      "path": "/client/api/"
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 9921,
+      "requestId": "25396.2136",
+      "api": "registerUserData",
+      "status": 200
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 9923,
+      "requestId": "25396.2137",
+      "api": "listUserData",
+      "id": null,
+      "entityid": null,
+      "projectid": null,
+      "path": "/client/api/"
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 9928,
+      "requestId": "25396.2137",
+      "api": "listUserData",
+      "status": 200
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 9930,
+      "requestId": "25396.2138",
+      "api": "listUserData",
+      "id": "4cb11aab-bf01-4c0f-a6a1-e3c66c015dfa",
+      "entityid": null,
+      "projectid": null,
+      "path": "/client/api/"
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 9931,
+      "requestId": "25396.2139",
+      "api": "listAnnotations",
+      "id": null,
+      "entityid": "23626d16-1048-40d4-8d3a-b8ea15c598c9",
+      "projectid": null,
+      "path": "/client/api/"
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 9938,
+      "requestId": "25396.2139",
+      "api": "listAnnotations",
+      "status": 200
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 9940,
+      "requestId": "25396.2138",
+      "api": "listUserData",
+      "status": 200
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 9944,
+      "requestId": "25396.2140",
+      "api": "addAnnotation",
+      "id": null,
+      "entityid": "23626d16-1048-40d4-8d3a-b8ea15c598c9",
+      "projectid": null,
+      "path": "/client/api/"
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 9949,
+      "requestId": "25396.2140",
+      "api": "addAnnotation",
+      "status": 431
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 9951,
+      "requestId": "25396.2141",
+      "api": "listAnnotations",
+      "id": null,
+      "entityid": "23626d16-1048-40d4-8d3a-b8ea15c598c9",
+      "projectid": null,
+      "path": "/client/api/"
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 9956,
+      "requestId": "25396.2141",
+      "api": "listAnnotations",
+      "status": 200
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 9960,
+      "requestId": "25396.2142",
+      "api": "readyForShutdown",
+      "id": null,
+      "entityid": null,
+      "projectid": null,
+      "path": "/client/api/"
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 9963,
+      "requestId": "25396.2142",
+      "api": "readyForShutdown",
+      "status": 200
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 9967,
+      "requestId": "25396.2143",
+      "api": "readyForShutdown",
+      "id": null,
+      "entityid": null,
+      "projectid": null,
+      "path": "/client/api/"
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 9970,
+      "requestId": "25396.2143",
+      "api": "readyForShutdown",
+      "status": 200
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 9974,
+      "requestId": "25396.2144",
+      "api": "readyForShutdown",
+      "id": null,
+      "entityid": null,
+      "projectid": null,
+      "path": "/client/api/"
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 9977,
+      "requestId": "25396.2144",
+      "api": "readyForShutdown",
+      "status": 200
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 9981,
+      "requestId": "25396.2145",
+      "api": "readyForShutdown",
+      "id": null,
+      "entityid": null,
+      "projectid": null,
+      "path": "/client/api/"
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 9984,
+      "requestId": "25396.2145",
+      "api": "readyForShutdown",
+      "status": 200
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 9988,
+      "requestId": "25396.2146",
+      "api": "readyForShutdown",
+      "id": null,
+      "entityid": null,
+      "projectid": null,
+      "path": "/client/api/"
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 9991,
+      "requestId": "25396.2146",
+      "api": "readyForShutdown",
+      "status": 200
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 9995,
+      "requestId": "25396.2147",
+      "api": "readyForShutdown",
+      "id": null,
+      "entityid": null,
+      "projectid": null,
+      "path": "/client/api/"
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 9998,
+      "requestId": "25396.2147",
+      "api": "readyForShutdown",
+      "status": 200
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 10002,
+      "requestId": "25396.2148",
+      "api": "readyForShutdown",
+      "id": null,
+      "entityid": null,
+      "projectid": null,
+      "path": "/client/api/"
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 10005,
+      "requestId": "25396.2148",
+      "api": "readyForShutdown",
+      "status": 200
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 10009,
+      "requestId": "25396.2149",
+      "api": "readyForShutdown",
+      "id": null,
+      "entityid": null,
+      "projectid": null,
+      "path": "/client/api/"
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 10012,
+      "requestId": "25396.2149",
+      "api": "readyForShutdown",
+      "status": 200
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 10016,
+      "requestId": "25396.2150",
+      "api": "readyForShutdown",
+      "id": null,
+      "entityid": null,
+      "projectid": null,
+      "path": "/client/api/"
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 10019,
+      "requestId": "25396.2150",
+      "api": "readyForShutdown",
+      "status": 200
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 10023,
+      "requestId": "25396.2151",
+      "api": "readyForShutdown",
+      "id": null,
+      "entityid": null,
+      "projectid": null,
+      "path": "/client/api/"
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 10026,
+      "requestId": "25396.2151",
+      "api": "readyForShutdown",
+      "status": 200
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 10030,
+      "requestId": "25396.2152",
+      "api": "readyForShutdown",
+      "id": null,
+      "entityid": null,
+      "projectid": null,
+      "path": "/client/api/"
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 10033,
+      "requestId": "25396.2152",
+      "api": "readyForShutdown",
+      "status": 200
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 10037,
+      "requestId": "25396.2153",
+      "api": "listHostsMetrics",
+      "id": null,
+      "entityid": null,
+      "projectid": null,
+      "path": "/client/api/"
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 10040,
+      "requestId": "25396.2153",
+      "api": "listHostsMetrics",
+      "status": 200
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 10044,
+      "requestId": "25396.2154",
+      "api": "readyForShutdown",
+      "id": null,
+      "entityid": null,
+      "projectid": null,
+      "path": "/client/api/"
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 10047,
+      "requestId": "25396.2154",
+      "api": "readyForShutdown",
+      "status": 200
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 10051,
+      "requestId": "25396.2155",
+      "api": "readyForShutdown",
+      "id": null,
+      "entityid": null,
+      "projectid": null,
+      "path": "/client/api/"
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 10054,
+      "requestId": "25396.2155",
+      "api": "readyForShutdown",
+      "status": 200
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 10058,
+      "requestId": "25396.2156",
+      "api": "getWallAlertAvailability",
+      "id": null,
+      "entityid": null,
+      "projectid": null,
+      "path": "/client/api/"
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 10061,
+      "requestId": "25396.2156",
+      "api": "getWallAlertAvailability",
+      "status": 200
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 10065,
+      "requestId": "25396.2157",
+      "api": "readyForShutdown",
+      "id": null,
+      "entityid": null,
+      "projectid": null,
+      "path": "/client/api/"
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 10068,
+      "requestId": "25396.2157",
+      "api": "readyForShutdown",
+      "status": 200
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 10072,
+      "requestId": "25396.2158",
+      "api": "readyForShutdown",
+      "id": null,
+      "entityid": null,
+      "projectid": null,
+      "path": "/client/api/"
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 10075,
+      "requestId": "25396.2158",
+      "api": "readyForShutdown",
+      "status": 200
+    }
+  ]
+}

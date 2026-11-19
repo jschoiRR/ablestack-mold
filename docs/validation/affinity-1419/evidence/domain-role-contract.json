@@ -1,0 +1,23 @@
+{
+  "foreignGroupRead": {
+    "allowed": true,
+    "result": {
+      "count": 1,
+      "affinitygroup": [
+        {
+          "id": "f020c858-f8c5-4ccc-aa67-161272106965",
+          "name": "qa-ag06-user-target",
+          "account": "qa-ag06-user",
+          "domainid": "681fd899-ca4d-4bc6-87f1-8cbd2254e962",
+          "domain": "qa-ag06-domain",
+          "domainpath": "ROOT/qa-ag06-domain",
+          "type": "host affinity"
+        }
+      ]
+    }
+  },
+  "foreignGroupWrite": {
+    "allowed": false,
+    "error": "{'uuidList': [], 'errorcode': 531, 'cserrorcode': 4365, 'errortext': 'Account [{\"accountName\":\"qa-ag06-domainadmin\",\"id\":199,\"uuid\":\"7236be00-dfae-4d33-ad42-6243729cd083\"}] does not have permission to operate with resource AffinityGroup {\"id\":122,\"name\":\"qa-ag06-user-target\",\"uuid\":\"f020c858-f8c5-4ccc-aa67-161272106965\"}'}"
+  }
+}

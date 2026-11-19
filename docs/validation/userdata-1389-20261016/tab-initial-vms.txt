@@ -1,0 +1,95 @@
+Browser tab: 4, Title: "사용자 데이터 라이브러리 - ABLESTACK-Mold", URL: "http://10.10.31.10:8080/client/#/userdata/1fc463a9-c04b-4a1d-b1d3-75a9ac8c0e3c?tab=userdata.usage.vms".
+The following is a diff from the previous accessibility tree with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+Removed element IDs: 202, 210-220, 222-247
+~0 AXWebArea 사용자 데이터 라이브러리 - ABLESTACK-Mold, URL: 10.10.31.10:8080/client/#/userdata/1fc463a9-c04b-4a1d-b1d3-75a9ac8c0e3c?tab=userdata.usage.vms
++						222 image reload
++					223 text UD1389-31-20261016-main
++				224 text 아이디
++				225 button barcode
++					226 image barcode
++				227 link Description: 1fc463a9-c04b-4a1d-b1d3-75a9ac8c0e3c , Value: javascript:;
++				228 text 계정
++				229 image user
++				230 link Description: admin, Value: 10.10.31.10:8080/client/#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f
++				231 text 도메인
++				232 image block
++				233 link Description: ROOT, Value: 10.10.31.10:8080/client/#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details
++			234 container
++				235 tab group
++					236 container
++						237 tab (selectable, settable, boolean) 상세, Value: 0, ID: rc-tabs-3-tab-details
++						238 tab (selectable, settable, boolean) 사용자 데이터 본문, Value: 0, ID: rc-tabs-3-tab-userdata.content
++						239 tab (selected, settable, boolean) 사용 가상머신, Value: 1, ID: rc-tabs-3-tab-userdata.usage.vms
++						240 tab (selectable, settable, boolean) 연결 템플릿, Value: 0, ID: rc-tabs-3-tab-userdata.usage.templates
++						241 tab (selectable, settable, boolean) 연결 ISO, Value: 0, ID: rc-tabs-3-tab-userdata.usage.isos
++						242 tab (selectable, settable, boolean) 코멘트, Value: 0, ID: rc-tabs-3-tab-comments
++				243 container Description: 사용 가상머신, ID: rc-tabs-3-panel-userdata.usage.vms
++					244 container 참조 정보
++						245 button reload 업데이트
++							246 image reload
++							247 text 업데이트
++						248 container
++							249 text field (settable) 검색
++							250 button search
++								251 image search
++						252 text 저장된 사용자 데이터 UUID의 연결 관계입니다. 본문 복사·템플릿 상속 본문·게스트 실행 여부는 포함하지 않습니다.
++						253 text 검색·페이지 이동은 서버에서 처리합니다. 열 정렬과 상태 집계는 현재 페이지에만 적용됩니다.
++						254 text 조회 프로젝트: - (없으면 기본 보기). 접근 가능한 참조만 표시합니다. 다른 프로젝트는 보기를 전환하여 확인하세요.
++						255 container
++							256 text 현재 페이지 상태:   정지된 VM 1
++						257 table
++							258 row
++								259 cell
++									260 container
++										261 text VM 표시 명
++										262 image caret-up
++										263 image caret-down
++								264 cell
++									265 container
++										266 text 아이디
++										267 image caret-up
++										268 image caret-down
++								269 cell
++									270 container
++										271 text 상태
++										272 image caret-up
++										273 image caret-down
++								274 cell
++									275 container
++										276 text 계정
++										277 image caret-up
++										278 image caret-down
++								279 cell
++									280 container
++										281 text 프로젝트
++										282 image caret-up
++										283 image caret-down
++								284 cell
++									285 container
++										286 text 도메인
++										287 image caret-up
++										288 image caret-down
++							289 row
++								290 cell
++									291 link Description: UD1389-31-20261016-vm, Value: 10.10.31.10:8080/client/#/vm/f7912d0f-d093-4677-9df4-ded9de010e85
++								292 cell
++									293 text f7912d0f-d093-4677-9df4-ded9de010e85
++								294 cell
++									295 text 정지된 상태
++								296 cell
++									297 link Description: admin, Value: 10.10.31.10:8080/client/#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&dataView=true
++								298 cell
++									299 link Description: ROOT, Value: 10.10.31.10:8080/client/#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details
++						300 content list
++							301 text 총 1개
++							302 container 이전 페이지
++								303 button (disabled) left
++									304 image left
++							305 text 1
++							306 container 다음 페이지
++								307 button (disabled) right
++									308 image right
++							309 container
++								310 combo box (settable) rc_select_5
++								311 text 20 / 쪽
+The focused UI element is 0 AXWebArea 사용자 데이터 라이브러리 - ABLESTACK-Mold, URL: 10.10.31.10:8080/client/#/userdata/1fc463a9-c04b-4a1d-b1d3-75a9ac8c0e3c?tab=userdata.usage.vms

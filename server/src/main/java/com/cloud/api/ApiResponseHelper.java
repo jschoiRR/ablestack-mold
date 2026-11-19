@@ -131,7 +131,6 @@ import org.apache.cloudstack.api.response.LBHealthCheckResponse;
 import org.apache.cloudstack.api.response.LBStickinessPolicyResponse;
 import org.apache.cloudstack.api.response.LBStickinessResponse;
 import org.apache.cloudstack.api.response.ListResponse;
-import org.apache.cloudstack.backup.BackupProviderNameUtils;
 import org.apache.cloudstack.api.response.LoadBalancerResponse;
 import org.apache.cloudstack.api.response.ManagementServerResponse;
 import org.apache.cloudstack.api.response.NetworkACLItemResponse;
@@ -217,6 +216,8 @@ import org.apache.cloudstack.direct.download.DirectDownloadManager.HostCertifica
 import org.apache.cloudstack.engine.subsystem.api.storage.DataStore;
 import org.apache.cloudstack.engine.subsystem.api.storage.DataStoreCapabilities;
 import org.apache.cloudstack.engine.subsystem.api.storage.DataStoreManager;
+import org.apache.cloudstack.storage.object.BucketCredentials;
+import org.apache.cloudstack.engine.subsystem.api.storage.ObjectStoreCredentialProvider;
 import org.apache.cloudstack.engine.subsystem.api.storage.SnapshotDataFactory;
 import org.apache.cloudstack.engine.subsystem.api.storage.SnapshotInfo;
 import org.apache.cloudstack.framework.jobs.AsyncJob;
@@ -505,6 +506,7 @@ public class ApiResponseHelper implements ResponseGenerator, ResourceIdSupport {
     NetworkDetailsDao networkDetailsDao;
     @Inject
     private VMSnapshotDao vmSnapshotDao;
+    @Inject private com.cloud.vm.snapshot.VMSnapshotService vmSnapshotService;
     @Inject
     private BackupOfferingDao backupOfferingDao;
     @Inject
@@ -542,6 +544,8 @@ public class ApiResponseHelper implements ResponseGenerator, ResourceIdSupport {
 
     @Inject
     ObjectStoreDao _objectStoreDao;
+    @Inject
+    private org.apache.cloudstack.storage.datastore.db.BucketQuotaOperationDao _bucketQuotaOperationDao;
     @Inject
     VpcOfferingDao vpcOfferingDao;
     @Inject
@@ -754,7 +758,11 @@ public class ApiResponseHelper implements ResponseGenerator, ResourceIdSupport {
             snapshotResponse.setVolumeName(volume.getName());
             snapshotResponse.setVolumeType(volume.getVolumeType().name());
             snapshotResponse.setVolumeState(volume.getState().name());
-            snapshotResponse.setVirtualSize(volume.getSize());
+            if (snapshot instanceof com.cloud.storage.SnapshotVO) {
+                snapshotResponse.setVirtualSize(((com.cloud.storage.SnapshotVO) snapshot).getSize());
+            } else if (snapshot instanceof SnapshotInfo) {
+                snapshotResponse.setVirtualSize(((SnapshotInfo) snapshot).getSize());
+            }
             DataCenter zone = ApiDBUtils.findZoneById(volume.getDataCenterId());
             if (zone != null) {
                 snapshotResponse.setZoneId(zone.getUuid());
@@ -851,6 +859,8 @@ public class ApiResponseHelper implements ResponseGenerator, ResourceIdSupport {
         UserVm vm = ApiDBUtils.findUserVmById(vmSnapshot.getVmId());
         if (vm != null) {
             vmSnapshotResponse.setVirtualMachineId(vm.getUuid());
+            vmSnapshotResponse.setVirtualMachineState(vm.getState().toString());
+            vmSnapshotResponse.setVirtualMachineInstanceName(vm.getInstanceName());
             vmSnapshotResponse.setVirtualMachineName(StringUtils.isEmpty(vm.getDisplayName()) ? vm.getHostName() : vm.getDisplayName());
             vmSnapshotResponse.setHypervisor(vm.getHypervisorType().getHypervisorDisplayName());
             DataCenterVO datacenter = ApiDBUtils.findZoneById(vm.getDataCenterId());
@@ -861,9 +871,14 @@ public class ApiResponseHelper implements ResponseGenerator, ResourceIdSupport {
         }
         if (vmSnapshot.getParent() != null) {
             VMSnapshot vmSnapshotParent = ApiDBUtils.getVMSnapshotById(vmSnapshot.getParent());
-            if (vmSnapshotParent != null) {
+            if (vmSnapshotParent == null) {
+                vmSnapshotParent = vmSnapshotDao.findByIdIncludingRemoved(vmSnapshot.getParent());
+            }
+            if (vmSnapshotParent != null && vmSnapshotParent.getVmId().equals(vmSnapshot.getVmId())) {
                 vmSnapshotResponse.setParent(vmSnapshotParent.getUuid());
                 vmSnapshotResponse.setParentName(vmSnapshotParent.getDisplayName());
+            } else {
+                vmSnapshotResponse.setParentMissing(true);
             }
         }
         populateOwner(vmSnapshotResponse, vmSnapshot);
@@ -878,6 +893,7 @@ public class ApiResponseHelper implements ResponseGenerator, ResourceIdSupport {
         vmSnapshotResponse.setHasAnnotation(annotationDao.hasAnnotations(vmSnapshot.getUuid(), AnnotationService.EntityType.VM_SNAPSHOT.name(),
                 _accountMgr.isRootAdmin(CallContext.current().getCallingAccount().getId())));
 
+        vmSnapshotResponse.setForceDeletionAllowed(vmSnapshotService != null && vmSnapshotService.isForcedDeletionAllowed(vmSnapshot.getId()));
         vmSnapshotResponse.setCurrent(vmSnapshot.getCurrent());
         vmSnapshotResponse.setType(vmSnapshot.getType().toString());
         vmSnapshotResponse.setObjectName("vmsnapshot");
@@ -898,6 +914,8 @@ public class ApiResponseHelper implements ResponseGenerator, ResourceIdSupport {
         policyResponse.setMaxSnaps(policy.getMaxSnaps());
         policyResponse.setTimezone(policy.getTimezone());
         policyResponse.setForDisplay(policy.isDisplay());
+        policyResponse.setSchedulingEnabled(policy.isActive() && policy.isDisplay());
+        populateOwner(policyResponse, policy);
         policyResponse.setObjectName("snapshotpolicy");
 
         List<? extends ResourceTag> tags = _resourceTagDao.listBy(policy.getId(), ResourceObjectType.SnapshotPolicy);
@@ -1153,6 +1171,10 @@ public class ApiResponseHelper implements ResponseGenerator, ResourceIdSupport {
         ipResponse.setIpAddress(ipAddr.getAddress().toString());
         if (ipAddr.getAllocatedTime() != null) {
             ipResponse.setAllocated(ipAddr.getAllocatedTime());
+            IPAddressVO allocation = ipAddr instanceof IPAddressVO ? (IPAddressVO) ipAddr : ApiDBUtils.findIpAddressById(ipAddr.getId());
+            if (allocation != null) {
+                ipResponse.setAllocationGeneration(allocation.getAllocationGeneration());
+            }
         }
         DataCenter zone = ApiDBUtils.findZoneById(ipAddr.getDataCenterId());
         if (zone != null) {
@@ -3857,6 +3879,15 @@ public class ApiResponseHelper implements ResponseGenerator, ResourceIdSupport {
         response.setMinMembers(vmGroup.getMinMembers());
         response.setMaxMembers(vmGroup.getMaxMembers());
         response.setState(vmGroup.getState().toString());
+        response.setOperationInProgress(vmGroup.isOperationInProgress());
+        response.setEvaluation(vmGroup.getEvaluation());
+        response.setMemberStateCounts(ApiDBUtils.countAutoScaleMemberStates(vmGroup.getId()));
+        response.setStatusCollectedAt(System.currentTimeMillis());
+        response.setLastScaledAt(vmGroup.getLastScaled());
+        response.setLastCheckedAt(vmGroup.getLastInterval());
+        response.setOperationDeadline(vmGroup.getOperationDeadline());
+        response.setScalingAction(vmGroup.getOperationAction());
+        response.setScalingPhase(vmGroup.getOperationPhase());
         response.setInterval(vmGroup.getInterval());
         response.setForDisplay(vmGroup.isDisplay());
         response.setCreated(vmGroup.getCreated());
@@ -5603,10 +5634,11 @@ public class ApiResponseHelper implements ResponseGenerator, ResourceIdSupport {
     }
 
     public ObjectStoreResponse createObjectStoreResponse(ObjectStore os) {
-        ObjectStoreResponse objectStoreResponse = new ObjectStoreResponse();
-        objectStoreResponse.setId(os.getUuid());
-        objectStoreResponse.setName(os.getName());
-        objectStoreResponse.setProviderName(os.getProviderName());
+        ObjectStoreResponse objectStoreResponse = _objectStoreDao.newObjectStoreResponse(_objectStoreDao.findById(os.getId()));
+        objectStoreResponse.setCapabilities(java.util.Map.of("encryption", "Unknown", "versioning", "Unknown", "objectlocking", "Unknown", "reason", "PROVIDER_NOT_VERIFIED"));
+        try {
+            objectStoreResponse.setCapabilities(((org.apache.cloudstack.storage.object.ObjectStoreEntity)_dataStoreMgr.getDataStore(os.getId(), DataStoreRole.Object)).protectionCapabilities());
+        } catch (RuntimeException unavailable) { /* fail closed, with no provider error or credential details */ }
         objectStoreResponse.setObjectName("objectstore");
         return objectStoreResponse;
     }
@@ -5619,6 +5651,11 @@ public class ApiResponseHelper implements ResponseGenerator, ResourceIdSupport {
         bucketResponse.setCreated(bucket.getCreated());
         bucketResponse.setState(bucket.getState());
         bucketResponse.setSize(bucket.getSize());
+        bucketResponse.setUsageLastUpdated(bucket.getUsageLastUpdated());
+        bucketResponse.setUsageLastAttempt(bucket.getUsageLastAttempt());
+        bucketResponse.setUsageLastAttemptMs(bucket.getUsageLastAttemptMs());
+        bucketResponse.setUsageStatus(bucket.getUsageStatus());
+        bucketResponse.setUsageSource(bucket.getUsageSource());
         if(bucket.getQuota() != null) {
             bucketResponse.setQuota(bucket.getQuota());
         }
@@ -5626,16 +5663,46 @@ public class ApiResponseHelper implements ResponseGenerator, ResourceIdSupport {
         bucketResponse.setEncryption(bucket.isEncryption());
         bucketResponse.setObjectLock(bucket.isObjectLock());
         bucketResponse.setPolicy(bucket.getPolicy());
-        bucketResponse.setBucketURL(bucket.getBucketURL());
-        bucketResponse.setAccessKey(bucket.getAccessKey());
-        bucketResponse.setSecretKey(bucket.getSecretKey());
+        org.apache.cloudstack.api.response.BucketProtectionResponse protection = new org.apache.cloudstack.api.response.BucketProtectionResponse();
+        try {
+            if (bucket.getProtectionSnapshot() != null) protection = new com.google.gson.Gson().fromJson(bucket.getProtectionSnapshot(), org.apache.cloudstack.api.response.BucketProtectionResponse.class);
+        } catch (RuntimeException invalid) { /* legacy or unreadable snapshots remain Unknown */ }
+        protection.compare(bucket.isEncryption(), bucket.isVersioning(), bucket.isObjectLock());
+        bucketResponse.setProtection(protection);
         ObjectStoreVO objectStoreVO = _objectStoreDao.findById(bucket.getObjectStoreId());
+        bucketResponse.setBucketURL("Glue".equals(objectStoreVO.getProviderName())
+                ? objectStoreVO.getUrl().replaceAll("/+$", "") + "/" + bucket.getName() : bucket.getBucketURL());
+        BucketCredentials credential = resolveBucketCredentials(bucket, objectStoreVO);
+        bucketResponse.setCredentialRevision(credential.getRevision());
+        bucketResponse.setCredentialState(credential.getState());
+        bucketResponse.setCredentialChecked(credential.getChecked());
+        if (_bucketQuotaOperationDao != null) {
+            org.apache.cloudstack.storage.datastore.db.BucketQuotaOperationVO operation = _bucketQuotaOperationDao.findLatestByBucket(bucket.getId());
+            if (operation != null) {
+                bucketResponse.setQuotaOperationId(operation.getUuid());
+                bucketResponse.setQuotaOperationState(operation.getState());
+            bucketResponse.setQuotaOperationType(operation.getOperationType());
+                bucketResponse.setQuotaOperationUpdated(operation.getUpdated());
+            }
+        }
         bucketResponse.setObjectStoragePoolId(objectStoreVO.getUuid());
         bucketResponse.setObjectStoragePool(objectStoreVO.getName());
         bucketResponse.setObjectName("bucket");
         bucketResponse.setProvider(objectStoreVO.getProviderName());
         populateAccount(bucketResponse, bucket.getAccountId());
         return bucketResponse;
+    }
+
+    protected BucketCredentials resolveBucketCredentials(Bucket bucket, ObjectStoreVO store) {
+        if (!"Glue".equals(store.getProviderName())) {
+            return new BucketCredentials(bucket.getAccessKey(), bucket.getSecretKey(), null, null);
+        }
+        try {
+            return ((ObjectStoreCredentialProvider) _dataStoreMgr.getDataStore(store.getId(), DataStoreRole.Object).getDriver()).getBucketCredentials(bucket);
+        } catch (RuntimeException e) {
+            // No stale snapshot fallback and no provider exception/key values in API diagnostics.
+            return new BucketCredentials(null, null, "NeedsVerification", null);
+        }
     }
 
     @Override
@@ -5702,7 +5769,7 @@ public class ApiResponseHelper implements ResponseGenerator, ResourceIdSupport {
         response.setId(backupRepository.getUuid());
         response.setCreated(backupRepository.getCreated());
         response.setAddress(backupRepository.getAddress());
-        response.setProviderName(BackupProviderNameUtils.toDisplayName(backupRepository.getProvider()));
+        response.setProviderName(backupRepository.getProvider());
         response.setType(backupRepository.getType());
         if (StringUtils.isNotBlank(backupRepository.getMountOptions())) {
             response.setMountOptions(backupRepository.getMountOptions());

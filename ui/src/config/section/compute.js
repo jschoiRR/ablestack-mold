@@ -17,12 +17,19 @@
 
 import { shallowRef, defineAsyncComponent } from 'vue'
 import store from '@/store'
+import { getAblestackBackupOfferingRemovalMessage, isAblestackBackupProvider } from '@/utils/ablestackBackupPolicy'
 import { snapshotBusy, snapshotActionReason } from '@/utils/vmSnapshotActions'
 import { isZoneCreated } from '@/utils/zone'
+import { partialScaleRecoverySize } from '@/utils/kubernetesScaleRecovery'
 import { escapeHtml } from '@/utils/util'
 import { getAPI, postAPI, getBaseUrl } from '@/api'
 import { getLatestKubernetesIsoParams } from '@/utils/acsrepo'
 import { isFastClonePowerOperationBlocked, getFastClonePowerBlockedLabel, getFastClonePhase } from '@/utils/fastClone'
+import { isCloneBlockedByExtraConfigDisk } from '@/utils/vmClone'
+import { vmUserDataSupported } from '@/utils/vmUserData'
+import { userDataLibraryParams, cniLibraryParams } from '@/utils/userDataContent'
+import { affinityGroupListParams } from '@/utils/affinityGroupCreation'
+import { affinityMemberCount } from '@/utils/affinityGroupMembers'
 import kubernetesIcon from '@/assets/icons/kubernetes.svg?inline'
 
 const activeFastCloneStatuses = ['pending', 'running']
@@ -88,6 +95,7 @@ const getBackupOperationTooltip = (record, store, selectedItems, fallbackLabel) 
 }
 
 const getCloneOperationTooltip = (record, store, selectedItems) => {
+  if (isCloneBlockedByExtraConfigDisk(record, selectedItems)) return 'message.clone.extraconfig.disk.blocked'
   return getBackupOperationTooltip(
     record,
     store,
@@ -291,7 +299,8 @@ export default {
           popup: true,
           show: (record) => { return ['Running', 'Stopped'].includes(record.state) && record.vmtype !== 'sharedfsvm' },
           disabled: (record, store, selectedItems) => {
-            return (record.hostcontrolstate === 'Offline' && record.hypervisor === 'KVM') ||
+            return isCloneBlockedByExtraConfigDisk(record, selectedItems) ||
+              (record.hostcontrolstate === 'Offline' && record.hypervisor === 'KVM') ||
               disableDuringFastCloneFlatten(record, store, selectedItems) ||
               disableDuringBackup(record, store, selectedItems)
           },
@@ -328,8 +337,8 @@ export default {
               (['Stopped'].includes(record.state) && (!['KVM', 'LXC'].includes(record.hypervisor) ||
               (record.hypervisor === 'KVM' && ['PowerFlex', 'Filesystem', 'NetworkFilesystem', 'SharedMountPoint'].includes(record.pooltype))))) && record.vmtype !== 'sharedfsvm')
           },
-          disabled: (record, store, selectedItems) => { return snapshotBusy(record.id) || (record.hostcontrolstate === 'Offline' && record.hypervisor === 'KVM') || disableDuringFastCloneFlatten(record, store, selectedItems) },
-          tooltip: (record, store, selectedItems) => getFastCloneOperationTooltip(record, store, selectedItems, 'label.action.vmsnapshot.create'),
+          disabled: (record, store, selectedItems) => { return !!record.vmsnapshotblockedreason || snapshotBusy(record.id) || (record.hostcontrolstate === 'Offline' && record.hypervisor === 'KVM') || disableDuringFastCloneFlatten(record, store, selectedItems) },
+          tooltip: (record, store, selectedItems) => record.vmsnapshotblockedreason ? 'message.backup.snapshot.snapshot.blocked' : getFastCloneOperationTooltip(record, store, selectedItems, 'label.action.vmsnapshot.create'),
           mapping: {
             virtualmachineid: {
               value: (record, params) => { return record.id }
@@ -359,6 +368,8 @@ export default {
           message: 'label.backup.offering.assign',
           docHelp: 'adminguide/virtual_machines.html#backup-offerings',
           dataView: true,
+          tooltip: record => record.backupblockedreason ? 'message.backup.snapshot.backup.blocked' : '',
+          disabled: record => !!record.backupblockedreason,
           args: ['virtualmachineid', 'backupofferingid'],
           show: (record) => { return ['Running', 'Stopped', 'Shutdown'].includes(record.state) && record.hypervisor !== 'External' && !record.backupofferingid },
           mapping: {
@@ -378,9 +389,12 @@ export default {
           message: 'message.backup.create',
           docHelp: 'adminguide/virtual_machines.html#creating-vm-backups',
           dataView: true,
-          show: (record) => { return record.backupofferingid },
-          disabled: (record, store, selectedItems) => { return record.hostcontrolstate === 'Offline' || disableDuringFastCloneFlatten(record, store, selectedItems) },
-          tooltip: (record, store, selectedItems) => getFastCloneOperationTooltip(record, store, selectedItems, 'label.create.backup'),
+          show: (record) => {
+            const provider = (record.backupprovider || '').toLowerCase()
+            return record.backupofferingid && !['ablestack-netbackup', 'ablestack-veeam'].includes(provider)
+          },
+          disabled: (record, store, selectedItems) => { return !!record.backupblockedreason || record.hostcontrolstate === 'Offline' || disableDuringFastCloneFlatten(record, store, selectedItems) },
+          tooltip: (record, store, selectedItems) => record.backupblockedreason ? 'message.backup.snapshot.backup.blocked' : getFastCloneOperationTooltip(record, store, selectedItems, 'label.create.backup'),
           popup: true,
           component: shallowRef(defineAsyncComponent(() => import('@/views/compute/StartBackup.vue')))
         },
@@ -390,6 +404,7 @@ export default {
           label: 'label.backup.configure.schedule',
           docHelp: 'adminguide/virtual_machines.html#creating-vm-backups',
           dataView: true,
+          tooltip: record => record.backupblockedreason ? 'message.backup.snapshot.backup.blocked' : '',
           popup: true,
           show: (record) => { return record.backupofferingid },
           disabled: (record) => { return record.hostcontrolstate === 'Offline' },
@@ -407,10 +422,10 @@ export default {
           api: 'removeVirtualMachineFromBackupOffering',
           icon: 'scissor-outlined',
           label: 'label.backup.offering.remove',
-          message: 'message.backup.offering.remove',
+          message: getAblestackBackupOfferingRemovalMessage,
           docHelp: 'adminguide/virtual_machines.html#restoring-vm-backups',
           dataView: true,
-          args: ['virtualmachineid', 'forced'],
+          args: (record) => isAblestackBackupProvider(record) ? ['virtualmachineid'] : ['virtualmachineid', 'forced'],
           show: (record) => { return record.backupofferingid },
           disabled: (record) => { return record.hostcontrolstate === 'Offline' },
           mapping: {
@@ -443,7 +458,8 @@ export default {
           popup: true,
           show: (record) => isoActionAvailable(record) && attachedIsoCount(record) < isoMaxCount(record),
           disabled: (record) => { return record.hostcontrolstate === 'Offline' || record.hostcontrolstate === 'Maintenance' },
-          component: shallowRef(defineAsyncComponent(() => import('@/views/compute/AttachIso.vue')))
+          selfManagedDialog: true,
+          component: shallowRef(defineAsyncComponent(() => import('@/views/compute/VmIsoManager.vue')))
         },
         {
           api: 'detachIso',
@@ -453,7 +469,8 @@ export default {
           popup: true,
           show: (record) => isoActionAvailable(record) && attachedIsoCount(record) > 0,
           disabled: (record) => { return record.hostcontrolstate === 'Offline' || record.hostcontrolstate === 'Maintenance' },
-          component: shallowRef(defineAsyncComponent(() => import('@/views/compute/DetachIso.vue')))
+          selfManagedDialog: true,
+          component: shallowRef(defineAsyncComponent(() => import('@/views/compute/VmIsoManager.vue')))
         },
         {
           api: 'updateVMAffinityGroup',
@@ -466,6 +483,7 @@ export default {
           disabled: disableDuringFastCloneFlatten,
           tooltip: (record, store, selectedItems) => getFastCloneOperationTooltip(record, store, selectedItems, 'label.change.affinity'),
           component: shallowRef(defineAsyncComponent(() => import('@/views/compute/ChangeAffinity'))),
+          selfManagedDialog: true,
           popup: true
         },
         {
@@ -559,7 +577,18 @@ export default {
           component: shallowRef(defineAsyncComponent(() => import('@/views/compute/ResetSshKeyPair')))
         },
         {
+          api: 'getVirtualMachineUserData',
+          show: (_, store) => vmUserDataSupported(store.apis),
+          selfManagedDialog: true,
+          icon: 'file-search-outlined',
+          label: 'label.userdata.vm.stored',
+          dataView: true,
+          popup: true,
+          component: shallowRef(defineAsyncComponent(() => import('@/views/compute/ViewVmUserData')))
+        },
+        {
           api: 'resetUserDataForVirtualMachine',
+          selfManagedDialog: true,
           icon: 'solution-outlined',
           label: 'label.reset.user.data.on.vm',
           message: 'message.desc.reset.userdata',
@@ -613,34 +642,14 @@ export default {
           show: (record, store) => { return ['Destroyed', 'Expunging'].includes(record.state) && store.features.allowuserexpungerecovervm && record.vmtype !== 'sharedfsvm' }
         },
         {
-          api: 'allocateVbmcToVM',
+          api: 'listVirtualMachines',
           icon: 'heart-filled',
-          label: 'label.vbmcport.allocate',
-          message: 'message.action.vbmcport.allocate.instance',
+          label: 'label.vbmc.manage',
           dataView: true,
           popup: true,
-          args: ['virtualmachineid'],
-          show: (record) => { return ['Running', 'Stopped'].includes(record.state) && record.vbmcport === 'None' && record.vmtype !== 'sharedfsvm' },
-          mapping: {
-            virtualmachineid: {
-              value: (record, params) => { return record.id }
-            }
-          }
-        },
-        {
-          api: 'removeVbmcToVM',
-          icon: 'heart-filled',
-          label: 'label.vbmcport.remove',
-          message: 'message.action.vbmcport.remove.instance',
-          dataView: true,
-          popup: true,
-          args: ['virtualmachineid'],
-          show: (record) => { return record.vbmcport !== 'None' && record.vmtype !== 'sharedfsvm' },
-          mapping: {
-            virtualmachineid: {
-              value: (record, params) => { return record.id }
-            }
-          }
+          selfManagedDialog: true,
+          show: record => record.vmtype !== 'sharedfsvm',
+          component: shallowRef(defineAsyncComponent(() => import('@/views/compute/VmVbmcManager.vue')))
         },
         {
           api: 'destroyVirtualMachine',
@@ -681,7 +690,7 @@ export default {
       name: 'vmsnapshot',
       title: 'label.vm.snapshots',
       icon: 'camera-outlined',
-      docHelp: 'adminguide/storage.html#working-with-volume-snapshots',
+      docHelp: 'adminguide/virtual_machines.html#virtual-machine-snapshots',
       permission: ['listVMSnapshot'],
       resourceType: 'VMSnapshot',
       columns: () => {
@@ -691,14 +700,25 @@ export default {
           if (store.getters.listAllProjects) {
             fields.push('project')
           }
-          fields.push('domain')
         } else if (store.getters.listAllProjects) {
           fields.push('project')
         }
+        fields.push('zonename')
         return fields
       },
       details: ['name', 'id', 'displayname', 'description', 'type', 'current', 'parentName', 'virtualmachineid', 'virtualmachinename', 'account', 'domain', 'created'],
-      searchFilters: ['name', 'domainid', 'account', 'tags'],
+      searchFilters: ['virtualmachineid', 'type', 'current', 'name', 'domainid', 'account', 'tags'],
+      defaultFilter: 'all',
+      filters: () => ['all', 'ready', 'creating', 'allocated', 'reverting', 'expunging', 'error'],
+      filterLabels: {
+        all: 'label.all',
+        ready: 'state.ready',
+        creating: 'state.creating',
+        allocated: 'state.allocated',
+        reverting: 'state.reverting',
+        expunging: 'state.expunging',
+        error: 'state.error'
+      },
       tabs: [
         {
           name: 'details',
@@ -717,7 +737,29 @@ export default {
       ],
       actions: [
         {
+          api: 'createVMSnapshot',
+          icon: 'plus-outlined',
+          label: 'label.action.vmsnapshot.create',
+          listView: true,
+          popup: true,
+          snapshotMode: 'create',
+          selfManagedDialog: true,
+          component: shallowRef(defineAsyncComponent(() => import('@/views/compute/VmSnapshotDialog.vue')))
+        },
+        {
+          api: 'listVMSnapshot',
+          icon: 'branches-outlined',
+          label: 'label.vmsnapshot.relations',
+          dataView: true,
+          popup: true,
+          snapshotMode: 'relation',
+          selfManagedDialog: true,
+          menuGroup: 'STORAGE',
+          component: shallowRef(defineAsyncComponent(() => import('@/views/compute/VmSnapshotDialog.vue')))
+        },
+        {
           api: 'createSnapshotFromVMSnapshot',
+          selfManagedDialog: true,
           disabled: record => !!snapshotActionReason('createSnapshotFromVMSnapshot', record, null, snapshotBusy(record.virtualmachineid)),
           tooltip: record => snapshotActionReason('createSnapshotFromVMSnapshot', record, null, snapshotBusy(record.virtualmachineid)),
           icon: 'camera-outlined',
@@ -730,6 +772,10 @@ export default {
         },
         {
           api: 'revertToVMSnapshot',
+          snapshotMode: 'restore',
+          selfManagedDialog: true,
+          popup: true,
+          component: shallowRef(defineAsyncComponent(() => import('@/views/compute/VmSnapshotDialog.vue'))),
           disabled: record => !!snapshotActionReason('revertToVMSnapshot', record, null, snapshotBusy(record.virtualmachineid)),
           tooltip: record => snapshotActionReason('revertToVMSnapshot', record, null, snapshotBusy(record.virtualmachineid)),
           icon: 'sync-outlined',
@@ -746,7 +792,10 @@ export default {
         },
         {
           api: 'deleteVMSnapshot',
-          disabled: record => !!snapshotActionReason('deleteVMSnapshot', record, null, snapshotBusy(record.virtualmachineid)),
+          snapshotMode: 'delete',
+          selfManagedDialog: true,
+          component: shallowRef(defineAsyncComponent(() => import('@/views/compute/VmSnapshotDialog.vue'))),
+          disabled: (record, store, selectedItems) => selectedItems?.length ? false : !!snapshotActionReason('deleteVMSnapshot', record, null, snapshotBusy(record.virtualmachineid)),
           tooltip: record => snapshotActionReason('deleteVMSnapshot', record, null, snapshotBusy(record.virtualmachineid)),
           icon: 'delete-outlined',
           label: 'label.action.vmsnapshot.delete',
@@ -765,6 +814,7 @@ export default {
             }
           },
           groupAction: true,
+          groupShow: selection => selection.length > 1,
           popup: true,
           groupMap: (selection) => { return selection.map(x => { return { vmsnapshotid: x } }) }
         }
@@ -778,7 +828,7 @@ export default {
       searchFilters: ['name', 'domainid', 'account', 'state'],
       permission: ['listKubernetesClusters'],
       columns: (store) => {
-        var fields = ['name', 'state', 'clustertype', 'size', 'cpunumber', 'memory', 'kubernetesversionname']
+        var fields = ['name', 'state', 'clustertype', { field: 'size', customTitle: 'cks.cluster.size' }, { field: 'resources', customTitle: 'cks.cluster.total.allocated.resources' }, 'kubernetesversionname']
         if (['Admin', 'DomainAdmin'].includes(store.userInfo.roletype)) {
           fields.push('account')
         }
@@ -795,7 +845,7 @@ export default {
         const filters = ['cloud.managed', 'external.managed']
         return filters
       },
-      details: ['name', 'description', 'zonename', 'kubernetesversionname', 'autoscalingenabled', 'csienabled', 'minsize', 'maxsize', 'size', 'controlnodes', 'controlaffinitygroupnames', 'etcdnodes', 'etcdaffinitygroupnames', 'workeraffinitygroupnames', 'cpunumber', 'memory', 'keypair', 'cniconfigname', 'associatednetworkname', 'account', 'domain', 'zonename', 'clustertype', 'created'],
+      details: ['name', 'description', 'zonename', 'kubernetesversionname', 'autoscalingenabled', 'csienabled', { field: 'minsize', customTitle: 'cks.cluster.minsize' }, { field: 'maxsize', customTitle: 'cks.cluster.maxsize' }, { field: 'size', customTitle: 'cks.cluster.size' }, 'controlnodes', 'controlaffinitygroupnames', 'etcdnodes', 'etcdaffinitygroupnames', 'workeraffinitygroupnames', { field: 'cpunumber', customTitle: 'cks.cluster.total.allocated.cpu' }, { field: 'memory', customTitle: 'cks.cluster.total.allocated.memory' }, 'keypair', 'cniconfigname', 'associatednetworkname', 'account', 'domain', 'clustertype', 'created'],
       tabs: [
         {
           name: 'k8s',
@@ -982,6 +1032,7 @@ export default {
       actions: [
         {
           api: 'createKubernetesCluster',
+          dialogWidth: 1120,
           icon: 'plus-outlined',
           label: 'label.kubernetes.cluster.create',
           docHelp: 'plugins/cloudstack-kubernetes-service.html#creating-a-new-kubernetes-cluster',
@@ -994,8 +1045,9 @@ export default {
           api: 'startKubernetesCluster',
           icon: 'caret-right-outlined',
           label: 'label.kubernetes.cluster.start',
-          message: 'message.kubernetes.cluster.start',
+          message: 'message.kubernetes.cluster.start.credentials',
           docHelp: 'plugins/cloudstack-kubernetes-service.html#starting-a-stopped-kubernetes-cluster',
+          args: (record, store, isGroupAction) => isGroupAction ? [] : ['rotatecontrollercredentials'],
           dataView: true,
           show: (record) => { return ['Stopped'].includes(record.state) && record.clustertype === 'CloudManaged' },
           groupAction: true,
@@ -1016,17 +1068,19 @@ export default {
         },
         {
           api: 'scaleKubernetesCluster',
+          dialogWidth: 760,
           icon: 'arrows-alt-outlined',
           label: 'label.kubernetes.cluster.scale',
           message: 'message.kubernetes.cluster.scale',
           docHelp: 'plugins/cloudstack-kubernetes-service.html#scaling-kubernetes-cluster',
           dataView: true,
-          show: (record) => { return ['Created', 'Running', 'Stopped'].includes(record.state) && record.clustertype === 'CloudManaged' },
+          show: (record) => { return record.clustertype === 'CloudManaged' && (['Created', 'Running', 'Stopped'].includes(record.state) || partialScaleRecoverySize(record) !== null) },
           popup: true,
           component: shallowRef(defineAsyncComponent(() => import('@/views/compute/ScaleKubernetesCluster.vue')))
         },
         {
           api: 'updateKubernetesClusterAffinityGroups',
+          dialogWidth: 760,
           icon: 'swap-outlined',
           label: 'label.change.affinity',
           dataView: true,
@@ -1036,6 +1090,7 @@ export default {
         },
         {
           api: 'upgradeKubernetesCluster',
+          dialogWidth: 760,
           icon: 'plus-circle-outlined',
           label: 'label.kubernetes.cluster.upgrade',
           message: 'message.kubernetes.cluster.upgrade',
@@ -1047,6 +1102,7 @@ export default {
         },
         {
           api: 'addNodesToKubernetesCluster',
+          dialogWidth: 920,
           icon: 'plus-outlined',
           label: 'label.kubernetes.cluster.add.nodes.to.cluster',
           message: 'message.kubernetes.cluster.add.nodes',
@@ -1057,6 +1113,7 @@ export default {
         },
         {
           api: 'removeNodesFromKubernetesCluster',
+          dialogWidth: 920,
           icon: 'minus-outlined',
           label: 'label.kubernetes.cluster.remove.nodes.from.cluster',
           message: 'message.kubernetes.cluster.remove.nodes',
@@ -1064,6 +1121,26 @@ export default {
           show: (record) => { return ['Running', 'Alert'].includes(record.state) && record.clustertype === 'CloudManaged' && (record.virtualmachines.filter(vm => vm.isexternalnode) || []).length > 0 },
           popup: true,
           component: shallowRef(defineAsyncComponent(() => import('@/views/compute/KubernetesRemoveNodes.vue')))
+        },
+        {
+          api: 'addVirtualMachinesToKubernetesCluster',
+          icon: 'plus-outlined',
+          label: 'label.kubernetes.external.nodes.add',
+          dataView: true,
+          popup: true,
+          dialogWidth: 920,
+          show: record => record.clustertype === 'ExternalManaged' && record.state === 'Running',
+          component: shallowRef(defineAsyncComponent(() => import('@/views/compute/ExternalKubernetesNodes.vue')))
+        },
+        {
+          api: 'removeVirtualMachinesFromKubernetesCluster',
+          icon: 'disconnect-outlined',
+          label: 'label.kubernetes.external.nodes.remove',
+          dataView: true,
+          popup: true,
+          dialogWidth: 920,
+          show: record => record.clustertype === 'ExternalManaged' && record.state === 'Running' && (record.virtualmachines || []).length > 0,
+          component: shallowRef(defineAsyncComponent(() => import('@/views/compute/ExternalKubernetesNodes.vue')))
         },
         {
           api: 'deleteKubernetesCluster',
@@ -1095,12 +1172,13 @@ export default {
       permission: ['listAutoScaleVmGroups'],
       searchFilters: ['name', 'zoneid', 'domainid', 'account'],
       columns: (store) => {
-        var fields = ['name', 'state', 'associatednetworkname', 'publicip', 'publicport', 'privateport', 'minmembers', 'maxmembers', 'availablevirtualmachinecount', 'account']
+        var fields = ['name', 'state', { field: 'availablevirtualmachinecount', customTitle: 'autoscale.members.range' }, { field: 'associatednetworkname', customTitle: 'autoscale.network.lb' }, { field: 'lastcheckedat', customTitle: 'autoscale.last.checked' }, { field: 'account', customTitle: 'autoscale.owner' }]
         if (store.listAllProjects) {
           fields.push('project')
         }
         return fields
       },
+      optionalColumns: ['domain', { field: 'infrastructurenetworkname', customTitle: 'networkname', infrastructurenetworkname: record => record.associatednetworkname || '—' }, 'lbprovider', 'interval', 'created', 'zonename'],
       details: ['name', 'id', 'account', 'domain', 'associatednetworkname', 'associatednetworkid', 'lbruleid', 'lbprovider', 'publicip', 'publicipid', 'publicport', 'privateport', 'minmembers', 'maxmembers', 'availablevirtualmachinecount', 'interval', 'state', 'created'],
       related: [{
         name: 'vm',
@@ -1111,6 +1189,10 @@ export default {
         {
           name: 'details',
           component: shallowRef(defineAsyncComponent(() => import('@/components/view/DetailsTab.vue')))
+        },
+        {
+          name: 'autoscale.operations',
+          component: shallowRef(defineAsyncComponent(() => import('@/views/compute/AutoScaleOperations.vue')))
         },
         {
           name: 'autoscale.vm.profile',
@@ -1156,6 +1238,8 @@ export default {
         },
         {
           api: 'enableAutoScaleVmGroup',
+          disabled: (record) => !!record.operationinprogress,
+          disabledMessage: (record) => record.operationinprogress ? 'message.autoscale.operation.wait' : '',
           icon: 'play-circle-outlined',
           label: 'label.enable.autoscale.vmgroup',
           message: 'message.confirm.enable.autoscale.vmgroup',
@@ -1178,6 +1262,8 @@ export default {
         },
         {
           api: 'updateAutoScaleVmGroup',
+          disabled: (record) => !!record.operationinprogress,
+          disabledMessage: (record) => record.operationinprogress ? 'message.autoscale.operation.wait' : '',
           icon: 'edit-outlined',
           label: 'label.update.autoscale.vmgroup',
           dataView: true,
@@ -1193,6 +1279,8 @@ export default {
         },
         {
           api: 'deleteAutoScaleVmGroup',
+          disabled: (record) => !!record.operationinprogress,
+          disabledMessage: (record) => record.operationinprogress ? 'message.autoscale.operation.wait' : '',
           icon: 'delete-outlined',
           label: 'label.delete.autoscale.vmgroup',
           message: 'message.action.delete.autoscale.vmgroup',
@@ -1211,31 +1299,25 @@ export default {
       docHelp: 'adminguide/virtual_machines.html#changing-the-vm-name-os-or-group',
       resourceType: 'VMInstanceGroup',
       permission: ['listInstanceGroups'],
-      searchFilters: ['name', 'zoneid', 'domainid', 'account'],
+      searchFilters: ['name', 'domainid', 'account'],
       columns: (store) => {
-        var fields = ['name', 'account']
-        if (store.listAllProjects) {
+        var fields = ['name', 'virtualmachinecount', 'virtualmachinestates', store.project?.id ? 'project' : 'account']
+        if (store.listAllProjects && !fields.includes('project')) {
           fields.push('project')
         }
         fields.push('domain')
         return fields
       },
-      details: ['name', 'id', 'account', 'domain', 'created'],
+      details: ['name', 'id', 'virtualmachinecount', 'virtualmachinestates', 'account', 'domain', 'project', 'created'],
       related: [{
         name: 'vm',
         title: 'label.instances',
         param: 'groupid'
       }],
-      tabs: [
-        {
-          name: 'details',
-          component: shallowRef(defineAsyncComponent(() => import('@/components/view/DetailsTab.vue')))
-        },
-        {
-          name: 'comments',
-          component: shallowRef(defineAsyncComponent(() => import('@/components/view/AnnotationsTab.vue')))
-        }
-      ],
+      tabs: [{
+        name: 'instancegroup',
+        component: shallowRef(defineAsyncComponent(() => import('@/views/compute/InstanceGroupTab.vue')))
+      }],
       actions: [
         {
           api: 'createInstanceGroup',
@@ -1297,8 +1379,13 @@ export default {
           component: shallowRef(defineAsyncComponent(() => import('@/components/view/DetailsTab.vue')))
         },
         {
+          name: 'ssh.keypair.usage',
+          component: shallowRef(defineAsyncComponent(() => import('@/views/compute/SSHKeyPairUsage.vue')))
+        },
+        {
           name: 'comments',
-          component: shallowRef(defineAsyncComponent(() => import('@/components/view/AnnotationsTab.vue')))
+          component: shallowRef(defineAsyncComponent(() => import('@/components/view/AnnotationsTab.vue'))),
+          show: () => 'listAnnotations' in store.getters.apis
         }
       ],
       actions: [
@@ -1309,16 +1396,30 @@ export default {
           docHelp: 'adminguide/virtual_machines.html#creating-the-ssh-keypair',
           listView: true,
           popup: true,
+          selfManagedDialog: true,
+          component: shallowRef(defineAsyncComponent(() => import('@/views/compute/CreateSSHKeyPair.vue')))
+        },
+        {
+          api: 'registerSSHKeyPair',
+          icon: 'import-outlined',
+          label: 'label.register.ssh.key.pair',
+          docHelp: 'adminguide/virtual_machines.html#creating-the-ssh-keypair',
+          listView: true,
+          popup: true,
+          selfManagedDialog: true,
           component: shallowRef(defineAsyncComponent(() => import('@/views/compute/CreateSSHKeyPair.vue')))
         },
         {
           api: 'deleteSSHKeyPair',
+          selfManagedDialog: true,
+          component: shallowRef(defineAsyncComponent(() => import('@/views/compute/DeleteSSHKeyPair.vue'))),
           icon: 'delete-outlined',
           label: 'label.remove.ssh.key.pair',
           message: 'message.please.confirm.remove.ssh.key.pair',
           dataView: true,
           args: ['name', 'account', 'domainid', 'projectid'],
           mapping: {
+            ignoreproject: { value: record => record.projectid ? undefined : true },
             name: {
               value: (record, params) => { return record.name }
             },
@@ -1341,7 +1442,8 @@ export default {
                 name: data[0].name,
                 account: data[0].account,
                 domainid: data[0].domainid,
-                projectid: data[0].projectid
+                projectid: data[0].projectid,
+                ignoreproject: data[0].projectid ? undefined : true
               }
             })
           }
@@ -1368,7 +1470,9 @@ export default {
         return fields
       },
       resourceType: 'UserData',
-      details: ['id', 'name', 'userdata', 'account', 'domain', 'params'],
+      searchFilters: ['id', 'name', 'domainid', 'account'],
+      customParamHandler: userDataLibraryParams,
+      details: ['id', 'name', 'account', 'domain', 'project', { field: 'params', customTitle: 'userdata.parameters' }],
       related: [{
         name: 'vm',
         title: 'label.instances',
@@ -1380,13 +1484,38 @@ export default {
           component: shallowRef(defineAsyncComponent(() => import('@/components/view/DetailsTab.vue')))
         },
         {
+          name: 'userdata.content',
+          component: shallowRef(defineAsyncComponent(() => import('@/views/compute/UserDataContent.vue')))
+        },
+        {
+          name: 'userdata.versions',
+          component: shallowRef(defineAsyncComponent(() => import('@/views/compute/UserDataVersions.vue')))
+        },
+        {
+          name: 'userdata.usage.vms',
+          resourceType: 'vms',
+          component: shallowRef(defineAsyncComponent(() => import('@/views/compute/UserDataUsage.vue')))
+        },
+        {
+          name: 'userdata.usage.templates',
+          resourceType: 'templates',
+          component: shallowRef(defineAsyncComponent(() => import('@/views/compute/UserDataUsage.vue')))
+        },
+        {
+          name: 'userdata.usage.isos',
+          resourceType: 'isos',
+          component: shallowRef(defineAsyncComponent(() => import('@/views/compute/UserDataUsage.vue')))
+        },
+        {
           name: 'comments',
+          show: () => Boolean(store.getters.apis?.listAnnotations),
           component: shallowRef(defineAsyncComponent(() => import('@/components/view/AnnotationsTab.vue')))
         }
       ],
       actions: [
         {
           api: 'registerUserData',
+          selfManagedDialog: true,
           icon: 'plus-outlined',
           label: 'label.register.user.data',
           docHelp: 'adminguide/virtual_machines.html#user-data-and-meta-data',
@@ -1395,47 +1524,36 @@ export default {
           component: shallowRef(defineAsyncComponent(() => import('@/views/compute/RegisterUserData.vue')))
         },
         {
+          api: 'registerUserData',
+          selfManagedDialog: true,
+          cloneUserData: true,
+          show: (_, store) => ['listUserData', 'registerUserData', 'listAnnotations', 'addAnnotation'].every(api => api in store.apis),
+          icon: 'copy-outlined',
+          label: 'label.userdata.clone',
+          dataView: true,
+          popup: true,
+          component: shallowRef(defineAsyncComponent(() => import('@/views/compute/RegisterUserData.vue')))
+        },
+        {
           api: 'deleteUserData',
+          selfManagedDialog: true,
+          component: shallowRef(defineAsyncComponent(() => import('@/views/compute/DeleteUserData.vue'))),
           icon: 'delete-outlined',
           label: 'label.remove.user.data',
-          message: 'message.please.confirm.remove.user.data',
+          toolbarLabel: 'label.remove.user.data',
           dataView: true,
-          args: ['id', 'account', 'domainid', 'projectid'],
-          mapping: {
-            id: {
-              value: (record, params) => { return record.id }
-            },
-            projectid: {
-              value: (record, params) => { return record.projectid }
-            },
-            account: {
-              value: (record, params) => { return record.account }
-            },
-            domainid: {
-              value: (record, params) => { return record.domainid }
-            }
-          },
           groupAction: true,
-          popup: true,
-          groupMap: (selection, values, record) => {
-            return selection.map(x => {
-              const data = record.filter(y => { return y.id === x })
-              return {
-                id: x,
-                account: data[0].account,
-                domainid: data[0].domainid,
-                projectid: data[0].projectid
-              }
-            })
-          }
+          popup: true
         }
       ]
     },
     {
       name: 'cniconfiguration',
+      searchFilters: ['id', 'name', 'domainid', 'account'],
+      customParamHandler: cniLibraryParams,
       title: 'label.cniconfiguration',
       icon: 'solution-outlined',
-      docHelp: 'adminguide/virtual_machines.html#user-data-and-meta-data',
+      docHelp: 'local:cni-configuration',
       permission: ['listCniConfiguration'],
       columns: () => {
         var fields = ['name', 'id']
@@ -1451,16 +1569,25 @@ export default {
         return fields
       },
       resourceType: 'UserData',
-      details: ['id', 'name', 'userdata', 'account', 'domain', 'params'],
-      related: [{
-        name: 'vm',
-        title: 'label.instances',
-        param: 'userdata'
-      }],
+      details: ['id', 'name', 'account', 'domain', 'project', 'params'],
       tabs: [
         {
           name: 'details',
           component: shallowRef(defineAsyncComponent(() => import('@/components/view/DetailsTab.vue')))
+        },
+        {
+          name: 'cni.content',
+          component: shallowRef(defineAsyncComponent(() => import('@/views/compute/CniContent.vue')))
+        },
+        {
+          name: 'cni.usage',
+          show: () => Boolean(store.getters.apis?.listKubernetesClusters),
+          component: shallowRef(defineAsyncComponent(() => import('@/views/compute/CniUsage.vue')))
+        },
+        {
+          name: 'cni.history',
+          show: () => ['listCniConfiguration', 'listAnnotations'].every(api => !!store.getters.apis?.[api]),
+          component: shallowRef(defineAsyncComponent(() => import('@/views/compute/CniHistory.vue')))
         },
         {
           name: 'comments',
@@ -1470,47 +1597,34 @@ export default {
       actions: [
         {
           api: 'registerCniConfiguration',
+          selfManagedDialog: true,
           icon: 'plus-outlined',
           label: 'label.register.cni.config',
-          docHelp: 'adminguide/virtual_machines.html#creating-the-ssh-keypair',
+          docHelp: 'local:cni-configuration',
           listView: true,
           popup: true,
           component: shallowRef(defineAsyncComponent(() => import('@/views/compute/RegisterUserData.vue')))
         },
         {
+          api: 'registerCniConfiguration',
+          selfManagedDialog: true,
+          show: (_, store) => ['listCniConfiguration', 'registerCniConfiguration', 'listAnnotations', 'addAnnotation'].every(api => api in store.apis),
+          icon: 'copy-outlined',
+          label: 'label.cni.clone',
+          dataView: true,
+          popup: true,
+          component: shallowRef(defineAsyncComponent(() => import('@/views/compute/CloneCniConfiguration.vue')))
+        },
+        {
           api: 'deleteCniConfiguration',
+          selfManagedDialog: true,
+          component: shallowRef(defineAsyncComponent(() => import('@/views/compute/DeleteCniConfiguration.vue'))),
           icon: 'delete-outlined',
           label: 'label.remove.cni.configuration',
-          message: 'message.please.confirm.remove.cni.configuration',
+          toolbarLabel: 'label.remove.cni.configuration',
           dataView: true,
-          args: ['id', 'account', 'domainid', 'projectid'],
-          mapping: {
-            id: {
-              value: (record, params) => { return record.id }
-            },
-            projectid: {
-              value: (record, params) => { return record.projectid }
-            },
-            account: {
-              value: (record, params) => { return record.account }
-            },
-            domainid: {
-              value: (record, params) => { return record.domainid }
-            }
-          },
           groupAction: true,
-          popup: true,
-          groupMap: (selection, values, record) => {
-            return selection.map(x => {
-              const data = record.filter(y => { return y.id === x })
-              return {
-                id: x,
-                account: data[0].account,
-                domainid: data[0].domainid,
-                projectid: data[0].projectid
-              }
-            })
-          }
+          popup: true
         }
       ]
     },
@@ -1520,9 +1634,10 @@ export default {
       icon: 'swap-outlined',
       docHelp: 'adminguide/virtual_machines.html#affinity-groups',
       permission: ['listAffinityGroups'],
-      searchFilters: ['name', 'zoneid', 'domainid', 'account', 'type'],
+      searchFilters: ['name', 'type', 'domainid', 'account', 'projectid'],
+      customParamHandler: affinityGroupListParams,
       columns: () => {
-        var fields = ['name', 'type', 'description']
+        var fields = ['name', 'type', { affinitymembercount: affinityMemberCount }, 'description']
         if (['Admin', 'DomainAdmin'].includes(store.getters.userInfo.roletype)) {
           fields.push('account')
           if (store.getters.listAllProjects) {
@@ -1534,7 +1649,7 @@ export default {
         }
         return fields
       },
-      details: ['name', 'id', 'description', 'type', 'account', 'domain', 'dedicatedresources'],
+      details: ['name', 'id', 'description', 'type', 'affinitymembercount', 'account', 'project', 'domain', 'dedicatedresources'],
       related: [{
         name: 'vm',
         title: 'label.instances',
@@ -1546,6 +1661,10 @@ export default {
           component: shallowRef(defineAsyncComponent(() => import('@/components/view/DetailsTab.vue')))
         },
         {
+          name: 'instances',
+          component: shallowRef(defineAsyncComponent(() => import('@/views/compute/AffinityGroupMembers.vue')))
+        },
+        {
           name: 'events',
           resourceType: 'AffinityGroup',
           component: shallowRef(defineAsyncComponent(() => import('@/components/view/EventsTab.vue'))),
@@ -1555,6 +1674,7 @@ export default {
       actions: [
         {
           api: 'createAffinityGroup',
+          selfManagedDialog: true,
           icon: 'plus-outlined',
           label: 'label.add.affinity.group',
           docHelp: 'adminguide/virtual_machines.html#creating-a-new-affinity-group',
@@ -1566,12 +1686,14 @@ export default {
           api: 'deleteAffinityGroup',
           icon: 'delete-outlined',
           label: 'label.delete.affinity.group',
+          toolbarLabel: 'label.delete.affinity.group',
           docHelp: 'adminguide/virtual_machines.html#delete-an-affinity-group',
           message: 'message.delete.affinity.group',
           dataView: true,
+          selfManagedDialog: true,
           groupAction: true,
           popup: true,
-          groupMap: (selection) => { return selection.map(x => { return { id: x } }) }
+          component: shallowRef(defineAsyncComponent(() => import('@/views/compute/DeleteAffinityGroups.vue')))
         }
       ]
     }

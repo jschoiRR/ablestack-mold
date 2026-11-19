@@ -16,6 +16,8 @@
 // under the License.
 package com.cloud.vm.dao;
 
+import java.util.List;
+
 import org.apache.cloudstack.resourcedetail.ResourceDetailsDao;
 
 import com.cloud.utils.db.GenericDao;
@@ -23,4 +25,6 @@ import com.cloud.vm.VMInstanceDetailVO;
 
 public interface VMInstanceDetailsDao extends GenericDao<VMInstanceDetailVO, Long>, ResourceDetailsDao<VMInstanceDetailVO> {
     int removeDetailsWithPrefix(long vmId, String prefix);
+
+    List<Long> listVmIdsBySSHKeyPairName(String keyPairName, List<Long> accountIds);
 }

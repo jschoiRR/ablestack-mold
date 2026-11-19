@@ -1,0 +1,109 @@
+- generic: 페이지 스타일 설정
+- button "닫기":
+  - img "close":
+- heading "페이지 스타일 설정" [level=3]
+- radio [checked]
+- img "check":
+- radio
+- heading "테마 색상" [level=3]
+- radio
+- img "check"
+- radio
+- radio
+- radio
+- radio
+- radio
+- radio
+- radio
+- separator
+- heading "네비게이션 설정" [level=3]
+- generic: 배경색
+- textbox: "#ffffff"
+- generic: 텍스트 색상
+- textbox: "#000000"
+- separator
+- alert:
+  - img "exclamation-circle":
+  - generic: "설정은 현재 브라우저에서만 볼 수 있습니다. 설정을 적용하려면 JSON 파일을 다운로드하고 경로 `/public/config.json` 아래의 `config.json` 파일의 `theme` 섹션에서 해당 콘텐츠를 교체하세요."
+- button "download 세팅값 다운로드(json)":
+  - img "download":
+  - generic: 세팅값 다운로드(json)
+- button "undo 기본값으로 재설정":
+  - img "undo":
+  - generic: 기본값으로 재설정
+- img "menu-unfold":
+- combobox
+- img "project":
+- text: 기본 보기
+- img "translation":
+- img "bell":
+- generic: AC
+- generic: admin cloud
+- main:
+  - link "home":
+    - /url: "#/"
+    - img "home":
+  - text: /
+  - link "Affinity 그룹":
+    - /url: "#/affinitygroup"
+  - text: /
+  - generic: qa-ag05-visual-target
+  - link "question-circle":
+    - /url: http://docs.ablecloud.io/latest/adminguide/virtual_machines.html#affinity-groups
+    - img "question-circle":
+  - button "reload 업데이트":
+    - img "reload":
+    - generic: 업데이트
+  - button "down 작업":
+    - img "down":
+    - generic: 작업
+  - img "swap":
+  - heading "qa-ag05-visual-target" [level=4]
+  - generic "host affinity": 같은 호스트 배치 · 엄격
+  - separator
+  - generic: 아이디
+  - button "barcode":
+    - img "barcode":
+  - link "299e546a-b031-4678-8765-7650157c952f":
+    - /url: javascript:;
+  - paragraph: 같은 그룹의 VM을 같은 호스트에 배치합니다. 조건을 만족하지 못하면 배치가 실패합니다.
+  - generic: 연결 VM 수
+  - generic: "3"
+  - generic: 계정
+  - img "user":
+  - link "admin":
+    - /url: "#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f"
+  - generic: 도메인
+  - img "block":
+  - link "ROOT":
+    - /url: "#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details"
+  - separator
+  - link "cloud-server 가상머신 보기":
+    - /url: "#/vm?affinitygroupid=299e546a-b031-4678-8765-7650157c952f"
+    - button "cloud-server 가상머신 보기":
+      - img "cloud-server":
+      - generic: 가상머신 보기
+  - tablist:
+    - tab "상세" [selected]
+    - tab "가상머신"
+    - tab "이벤트"
+  - tabpanel "상세":
+    - list:
+      - strong: 이름
+      - generic: qa-ag05-visual-target
+      - strong: 아이디
+      - generic: 299e546a-b031-4678-8765-7650157c952f
+      - strong: 설명
+      - generic: 긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명
+      - strong: 유형
+      - generic "host affinity": 같은 호스트 배치 · 엄격
+      - generic: 같은 그룹의 VM을 같은 호스트에 배치합니다. 조건을 만족하지 못하면 배치가 실패합니다.
+      - strong: 연결 VM 수
+      - generic: "3"
+      - strong: 계정
+      - generic: admin
+      - strong: 도메인
+      - generic: ROOT
+- alert:
+  - img "info-circle":
+  - generic: Wall 모니터링을 사용할 수 없습니다. 기존 알림은 최신 정보가 아닐 수 있으며 Mold는 계속 사용할 수 있습니다. 비활성

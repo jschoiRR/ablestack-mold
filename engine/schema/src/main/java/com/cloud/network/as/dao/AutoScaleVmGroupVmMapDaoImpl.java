@@ -17,6 +17,13 @@
 package com.cloud.network.as.dao;
 
 import java.util.List;
+import java.util.Map;
+import java.util.LinkedHashMap;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import com.cloud.utils.db.TransactionLegacy;
+import com.cloud.utils.exception.CloudRuntimeException;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -59,6 +66,25 @@ public class AutoScaleVmGroupVmMapDaoImpl extends GenericDaoBase<AutoScaleVmGrou
         AllFieldsSearch.and("vmGroupId", AllFieldsSearch.entity().getVmGroupId(), SearchCriteria.Op.EQ);
         AllFieldsSearch.and("instanceId", AllFieldsSearch.entity().getInstanceId(), SearchCriteria.Op.EQ);
         AllFieldsSearch.done();
+    }
+
+    @Override
+    public Map<String, Integer> countMemberStates(long vmGroupId) {
+        // One aggregate query; do not load a VM or its credentials for every member.
+        String sql = "SELECT CASE WHEN v.id IS NULL THEN 'Missing' WHEN v.removed IS NOT NULL THEN 'Removed' " +
+                "ELSE v.state END AS member_state, COUNT(*) AS member_count " +
+                "FROM autoscale_vmgroup_vm_map m LEFT JOIN vm_instance v ON v.id = m.instance_id " +
+                "WHERE m.vmgroup_id = ? GROUP BY member_state";
+        Map<String, Integer> counts = new LinkedHashMap<>();
+        try (PreparedStatement statement = TransactionLegacy.currentTxn().prepareStatement(sql)) {
+            statement.setLong(1, vmGroupId);
+            try (ResultSet rows = statement.executeQuery()) {
+                while (rows.next()) { counts.put(rows.getString("member_state"), rows.getInt("member_count")); }
+            }
+        } catch (SQLException e) {
+            throw new CloudRuntimeException("Unable to read AutoScale member state counts", e);
+        }
+        return counts;
     }
 
     @Override

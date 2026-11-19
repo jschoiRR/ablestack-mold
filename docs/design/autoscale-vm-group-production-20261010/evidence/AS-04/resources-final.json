@@ -1,0 +1,58 @@
+[
+  {
+    "cluster": 31,
+    "group": {
+      "id": "bf0f5385-ae2c-4da4-aec4-eb985dbdeba4",
+      "state": "DISABLED",
+      "operationinprogress": false,
+      "scalingaction": null,
+      "scalingphase": null,
+      "minmembers": 1,
+      "maxmembers": 3,
+      "availablevirtualmachinecount": 1
+    },
+    "vm": {
+      "id": "bc00f070-797a-40b0-9785-c965dc50fc63",
+      "name": "autoScaleVm-AS-PROD-31-AS04-CONCURRENCY-1-rvajox",
+      "instancename": "i-35-397-VM",
+      "state": "Running",
+      "hostid": "159baf9a-89ad-4a94-91dc-e7395a670bf4",
+      "hostname": "ablecube31-1",
+      "ipaddress": "172.29.31.184",
+      "templatename": "AS-PROD-31-AS04-PROJECT-HTTP8080"
+    },
+    "lbHttp": 200,
+    "expungeGraceSeconds": 60,
+    "deletedVmRootRows": 26,
+    "deletedImagesAbsent": 26,
+    "activeImagesPresent": 1
+  },
+  {
+    "cluster": 32,
+    "group": {
+      "id": "18bef25a-4053-4454-bc85-f6d777b9391d",
+      "state": "DISABLED",
+      "operationinprogress": false,
+      "scalingaction": null,
+      "scalingphase": null,
+      "minmembers": 1,
+      "maxmembers": 3,
+      "availablevirtualmachinecount": 1
+    },
+    "vm": {
+      "id": "6f9bd71b-1745-48c5-9c88-cc0cccd9d1ff",
+      "name": "autoScaleVm-AS-PROD-32-AS04-CONCURRENCY-1-zoqdbs",
+      "instancename": "i-6-73-VM",
+      "state": "Running",
+      "hostid": "a7b3e91f-2248-436b-affb-e3b31b36ed62",
+      "hostname": "ablecube32-2",
+      "ipaddress": "172.28.32.160",
+      "templatename": "Rocky-Linux-9-5-x86-64-Server-Cloud-Image.qcow2"
+    },
+    "lbHttp": 200,
+    "expungeGraceSeconds": 60,
+    "deletedVmRootRows": 26,
+    "deletedImagesAbsent": 26,
+    "activeImagesPresent": 1
+  }
+]

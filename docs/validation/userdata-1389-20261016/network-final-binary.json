@@ -1,0 +1,180 @@
+{
+  "start": 13357,
+  "cursor": 13416,
+  "truncated": false,
+  "events": [
+    {
+      "sequence": 13368,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.3244",
+      "type": "XHR",
+      "params": {
+        "command": "listUserData",
+        "id": "1fc463a9-c04b-4a1d-b1d3-75a9ac8c0e3c",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "2"
+      }
+    },
+    {
+      "sequence": 13369,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.3245",
+      "type": "XHR",
+      "params": {
+        "command": "listUserData",
+        "id": "cd2544db-5b1f-4af1-a9bc-6b541553a956",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "sequence": 13370,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.3246",
+      "type": "XHR",
+      "params": {
+        "command": "listResourceIcon"
+      }
+    },
+    {
+      "sequence": 13371,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.3247",
+      "type": "XHR",
+      "params": {
+        "command": "listAccounts",
+        "name": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f"
+      }
+    },
+    {
+      "sequence": 13378,
+      "method": "Network.responseReceived",
+      "requestId": "23116.3246",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listResourceIcon"
+      }
+    },
+    {
+      "sequence": 13390,
+      "method": "Network.responseReceived",
+      "requestId": "23116.3245",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listUserData",
+        "id": "cd2544db-5b1f-4af1-a9bc-6b541553a956",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "sequence": 13392,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.3248",
+      "type": "XHR",
+      "params": {
+        "command": "listUserData",
+        "id": "cd2544db-5b1f-4af1-a9bc-6b541553a956",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "2"
+      }
+    },
+    {
+      "sequence": 13393,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.3249",
+      "type": "XHR",
+      "params": {
+        "command": "listResourceIcon"
+      }
+    },
+    {
+      "sequence": 13394,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.3250",
+      "type": "XHR",
+      "params": {
+        "command": "listAccounts",
+        "name": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f"
+      }
+    },
+    {
+      "sequence": 13397,
+      "method": "Network.responseReceived",
+      "requestId": "23116.3244",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listUserData",
+        "id": "1fc463a9-c04b-4a1d-b1d3-75a9ac8c0e3c",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "2"
+      }
+    },
+    {
+      "sequence": 13401,
+      "method": "Network.responseReceived",
+      "requestId": "23116.3247",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listAccounts",
+        "name": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f"
+      }
+    },
+    {
+      "sequence": 13405,
+      "method": "Network.responseReceived",
+      "requestId": "23116.3249",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listResourceIcon"
+      }
+    },
+    {
+      "sequence": 13409,
+      "method": "Network.responseReceived",
+      "requestId": "23116.3248",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listUserData",
+        "id": "cd2544db-5b1f-4af1-a9bc-6b541553a956",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "2"
+      }
+    },
+    {
+      "sequence": 13413,
+      "method": "Network.responseReceived",
+      "requestId": "23116.3250",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listAccounts",
+        "name": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f"
+      }
+    }
+  ]
+}

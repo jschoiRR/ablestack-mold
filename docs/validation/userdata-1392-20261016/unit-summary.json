@@ -1,0 +1,1368 @@
+{
+  "source": "beb090148d910db0f5940aaaad7f4078bc201257",
+  "numPassedTestSuites": 15,
+  "numTotalTestSuites": 15,
+  "numPassedTests": 317,
+  "numTotalTests": 317,
+  "success": true,
+  "testResults": [
+    {
+      "name": "/home/ablecloud/work/dhslove/cloud-epic-1381/ui/tests/unit/views/compute/UserDataSelection.spec.js",
+      "status": "passed",
+      "assertionResults": [
+        {
+          "fullName": "every server page is reachable with 0 records and None never inflates total",
+          "status": "passed"
+        },
+        {
+          "fullName": "every server page is reachable with 10 records and None never inflates total",
+          "status": "passed"
+        },
+        {
+          "fullName": "every server page is reachable with 11 records and None never inflates total",
+          "status": "passed"
+        },
+        {
+          "fullName": "every server page is reachable with 30 records and None never inflates total",
+          "status": "passed"
+        },
+        {
+          "fullName": "every server page is reachable with 100 records and None never inflates total",
+          "status": "passed"
+        },
+        {
+          "fullName": "search submits server keyword, resets page and preserves selected item outside search results",
+          "status": "passed"
+        },
+        {
+          "fullName": "page-size change resets to page one and sends lowercase pagesize",
+          "status": "passed"
+        },
+        {
+          "fullName": "a deleted last page recovers to the remaining valid server page",
+          "status": "passed"
+        },
+        {
+          "fullName": "inconsistent empty pages have a bounded fallback to page one",
+          "status": "passed"
+        },
+        {
+          "fullName": "a late old search cannot overwrite the newer result or loading state",
+          "status": "passed"
+        },
+        {
+          "fullName": "failure preserves successful data, pagination and selection, blocks row selection, and retry recovers",
+          "status": "passed"
+        },
+        {
+          "fullName": "HTTP 401 is distinguished from empty success",
+          "status": "passed"
+        },
+        {
+          "fullName": "HTTP 403 is distinguished from empty success",
+          "status": "passed"
+        },
+        {
+          "fullName": "missing list permission never issues an API request",
+          "status": "passed"
+        },
+        {
+          "fullName": "the installed Alert renders a retry button which actually reloads a failed query",
+          "status": "passed"
+        },
+        {
+          "fullName": "missing owner never issues an unscoped request",
+          "status": "passed"
+        },
+        {
+          "fullName": "owner change clears selection immediately and ignores old owner replies",
+          "status": "passed"
+        },
+        {
+          "fullName": "prefill outside page one is resolved by owner-scoped UUID once and never reselected on paging",
+          "status": "passed"
+        },
+        {
+          "fullName": "deleted selected UUID blocks submission until explicit None or another row is chosen",
+          "status": "passed"
+        },
+        {
+          "fullName": "disabled selector rejects row clicks and None",
+          "status": "passed"
+        },
+        {
+          "fullName": "radio change and its bubbling row click emit only one selection",
+          "status": "passed"
+        },
+        {
+          "fullName": "search Enter is stopped and cannot submit the enclosing form",
+          "status": "passed"
+        },
+        {
+          "fullName": "unmount discards an outstanding response",
+          "status": "passed"
+        },
+        {
+          "fullName": "consumer $name receives a verified row and clears stale variables on None",
+          "status": "passed"
+        },
+        {
+          "fullName": "consumer $name receives a verified row and clears stale variables on None",
+          "status": "passed"
+        },
+        {
+          "fullName": "consumer $name receives a verified row and clears stale variables on None",
+          "status": "passed"
+        },
+        {
+          "fullName": "AutoScale row selection supersedes an old parameter lookup",
+          "status": "passed"
+        },
+        {
+          "fullName": "stable None and mismatched row IDs cannot leak as a real userdataid",
+          "status": "passed"
+        },
+        {
+          "fullName": "shared submit guard applies to active library lookup, while manual/template modes remain available",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "/home/ablecloud/work/dhslove/cloud-epic-1381/ui/tests/unit/components/view/ResourceView.spec.js",
+      "status": "passed",
+      "assertionResults": [
+        {
+          "fullName": "ResourceView resource navigation refreshes the destination data for /customaction/2 with query {}: true",
+          "status": "passed"
+        },
+        {
+          "fullName": "ResourceView resource navigation refreshes the destination data for /customaction/3 with query {\"tab\":\"events\"}: true",
+          "status": "passed"
+        },
+        {
+          "fullName": "ResourceView resource navigation refreshes the destination data for /vm/4 with query {\"keyword\":\"action/\"}: true",
+          "status": "passed"
+        },
+        {
+          "fullName": "ResourceView resource navigation refreshes the destination data for /action/updateCustomAction with query {}: false",
+          "status": "passed"
+        },
+        {
+          "fullName": "ResourceView resource navigation refreshes the destination data for /vm/4 with query {\"tab\":\"browser\"}: false",
+          "status": "passed"
+        },
+        {
+          "fullName": "ResourceView resource navigation isolates general detail by path and SSH detail by its verified identity scope",
+          "status": "passed"
+        },
+        {
+          "fullName": "ResourceView resource navigation selects a valid tab for query {\"tab\":\"events\"} and history ",
+          "status": "passed"
+        },
+        {
+          "fullName": "ResourceView resource navigation selects a valid tab for query {\"tab\":\"customactions\"} and history ",
+          "status": "passed"
+        },
+        {
+          "fullName": "ResourceView resource navigation selects a valid tab for query {} and history events",
+          "status": "passed"
+        },
+        {
+          "fullName": "ResourceView resource navigation selects a valid tab for query {} and history customactions",
+          "status": "passed"
+        },
+        {
+          "fullName": "ResourceView resource navigation preserves a declared tab while resource-dependent visibility is loading",
+          "status": "passed"
+        },
+        {
+          "fullName": "ResourceView resource navigation removes the exact popstate listener on unmount",
+          "status": "passed"
+        },
+        {
+          "fullName": "ResourceView resource navigation repeatedly navigates between async tabs of different resources without retaining old content",
+          "status": "passed"
+        },
+        {
+          "fullName": "ResourceView standard tab layout uses shared vertical layout by default and preserves single-tab content without a tab bar",
+          "status": "passed"
+        },
+        {
+          "fullName": "ResourceView standard tab layout uses VM-standard left tabs on desktop/tablet and top tabs on mobile without losing the selected tab or input",
+          "status": "passed"
+        },
+        {
+          "fullName": "ResourceView standard tab layout keeps permission-hidden tabs out of the vertical navigation",
+          "status": "passed"
+        },
+        {
+          "fullName": "ResourceView standard tab layout shares the existing VM tab position policy for desktop",
+          "status": "passed"
+        },
+        {
+          "fullName": "ResourceView standard tab layout shares the existing VM tab position policy for tablet",
+          "status": "passed"
+        },
+        {
+          "fullName": "ResourceView standard tab layout shares the existing VM tab position policy for mobile",
+          "status": "passed"
+        },
+        {
+          "fullName": "userdata invalid or hidden deep links replace the URL with the visible fallback without dropping filters",
+          "status": "passed"
+        },
+        {
+          "fullName": "departing VM or image views cannot rewrite a valid destination library tab before unmount",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "/home/ablecloud/work/dhslove/cloud-epic-1381/ui/tests/unit/views/compute/ResetUserData.spec.js",
+      "status": "passed",
+      "assertionResults": [
+        {
+          "fullName": "fresh Running state blocks reset",
+          "status": "passed"
+        },
+        {
+          "fullName": "fresh Starting state blocks reset",
+          "status": "passed"
+        },
+        {
+          "fullName": "fresh Stopping state blocks reset",
+          "status": "passed"
+        },
+        {
+          "fullName": "fresh Destroyed state blocks reset",
+          "status": "passed"
+        },
+        {
+          "fullName": "unsupported L2 and secondary-only ConfigDrive cannot reset; VR secondary can",
+          "status": "passed"
+        },
+        {
+          "fullName": "unsupported VM remains readable and keep is a no-op even if change is forced",
+          "status": "passed"
+        },
+        {
+          "fullName": "real command-shaped 530 response preserves the provider recovery reason",
+          "status": "passed"
+        },
+        {
+          "fullName": "lost transport response is an unknown outcome, not a confirmed server failure",
+          "status": "passed"
+        },
+        {
+          "fullName": "current keep is a no-op, not an empty reset",
+          "status": "passed"
+        },
+        {
+          "fullName": "only active userdataregistered input is serialized despite a hidden draft",
+          "status": "passed"
+        },
+        {
+          "fullName": "only active userdatatext input is serialized despite a hidden draft",
+          "status": "passed"
+        },
+        {
+          "fullName": "None undefined clears without sending a fake UUID or stale custom variables",
+          "status": "passed"
+        },
+        {
+          "fullName": "None  clears without sending a fake UUID or stale custom variables",
+          "status": "passed"
+        },
+        {
+          "fullName": "None 0 clears without sending a fake UUID or stale custom variables",
+          "status": "passed"
+        },
+        {
+          "fullName": "ALLOWOVERRIDE template default has no inactive custom payload",
+          "status": "passed"
+        },
+        {
+          "fullName": "APPEND template default has no inactive custom payload",
+          "status": "passed"
+        },
+        {
+          "fullName": "DENYOVERRIDE template default has no inactive custom payload",
+          "status": "passed"
+        },
+        {
+          "fullName": "ALLOW manual override excludes template and library variables",
+          "status": "passed"
+        },
+        {
+          "fullName": "ALLOW empty userdataregistered returns to template and preserves template variables",
+          "status": "passed"
+        },
+        {
+          "fullName": "ALLOW empty userdatatext returns to template and preserves template variables",
+          "status": "passed"
+        },
+        {
+          "fullName": "APPEND library combines only effective variable definitions and deduplicates keys",
+          "status": "passed"
+        },
+        {
+          "fullName": "legacy details preserve punctuation and Korean, object details are filtered",
+          "status": "passed"
+        },
+        {
+          "fullName": "UTF-8 and literal percent round trip, binary is not silently corrupted",
+          "status": "passed"
+        },
+        {
+          "fullName": "valid variable names that match object properties remain ordinary string values",
+          "status": "passed"
+        },
+        {
+          "fullName": "fresh current library, off-page variables and policy load before editing, keep sends no mutation",
+          "status": "passed"
+        },
+        {
+          "fullName": "mode round trips preserve drafts and verified selection remount preserves restored variables",
+          "status": "passed"
+        },
+        {
+          "fullName": "manual current content restores as text without a library ID",
+          "status": "passed"
+        },
+        {
+          "fullName": "APPEND current combined body is visible, never used as a new append input",
+          "status": "passed"
+        },
+        {
+          "fullName": "template-only variables load even without a VM library ID",
+          "status": "passed"
+        },
+        {
+          "fullName": "current/policy failures block submit and retry recovers",
+          "status": "passed"
+        },
+        {
+          "fullName": "failed mutation keeps the dialog, active mode and drafts; retry submits one input",
+          "status": "passed"
+        },
+        {
+          "fullName": "late current read after unmount cannot initialize a closed dialog",
+          "status": "passed"
+        },
+        {
+          "fullName": "AutoScale reads the actual profile rather than the parent group current values",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "/home/ablecloud/work/dhslove/cloud-epic-1381/ui/tests/unit/views/compute/UserDataVersions.spec.js",
+      "status": "passed",
+      "assertionResults": [
+        {
+          "fullName": "owner is frozen and project clones never inherit ambient account or ignoreproject",
+          "status": "passed"
+        },
+        {
+          "fullName": "source id mismatch fails closed",
+          "status": "passed"
+        },
+        {
+          "fullName": "source name mismatch fails closed",
+          "status": "passed"
+        },
+        {
+          "fullName": "source account mismatch fails closed",
+          "status": "passed"
+        },
+        {
+          "fullName": "source domainid mismatch fails closed",
+          "status": "passed"
+        },
+        {
+          "fullName": "source projectid mismatch fails closed",
+          "status": "passed"
+        },
+        {
+          "fullName": "missing, corrupt source and denied API cannot become an empty clone",
+          "status": "passed"
+        },
+        {
+          "fullName": "byte comparison preserves BOM, CRLF and binary; params do not change duplicate policy",
+          "status": "passed"
+        },
+        {
+          "fullName": "lost registration cannot reconcile mismatching userdata",
+          "status": "passed"
+        },
+        {
+          "fullName": "lost registration cannot reconcile mismatching params",
+          "status": "passed"
+        },
+        {
+          "fullName": "lost registration cannot reconcile mismatching account",
+          "status": "passed"
+        },
+        {
+          "fullName": "lost registration cannot reconcile mismatching domainid",
+          "status": "passed"
+        },
+        {
+          "fullName": "lost registration cannot reconcile mismatching projectid",
+          "status": "passed"
+        },
+        {
+          "fullName": "reconciliation ignores substring names, verifies exact UUID/owner/bytes and fails on truncated lists",
+          "status": "passed"
+        },
+        {
+          "fullName": "source metadata excludes bodies and tolerates malformed or foreign notes without trusting them",
+          "status": "passed"
+        },
+        {
+          "fullName": "history traverses pages and rejects inconsistent counts instead of claiming no provenance",
+          "status": "passed"
+        },
+        {
+          "fullName": "source note retry reconciles an already saved or response-lost note without duplicate POST",
+          "status": "passed"
+        },
+        {
+          "fullName": "scope change before note mutation prevents a late POST under another session",
+          "status": "passed"
+        },
+        {
+          "fullName": "clone seeds exact Base64 and variables, then explicit text editing normalizes line endings",
+          "status": "passed"
+        },
+        {
+          "fullName": "late clone source after project change never publishes",
+          "status": "passed"
+        },
+        {
+          "fullName": "late clone source after user change never publishes",
+          "status": "passed"
+        },
+        {
+          "fullName": "late clone source after resource change never publishes",
+          "status": "passed"
+        },
+        {
+          "fullName": "late clone source after permission change never publishes",
+          "status": "passed"
+        },
+        {
+          "fullName": "late clone source after disposed change never publishes",
+          "status": "passed"
+        },
+        {
+          "fullName": "unchanged body or parameter-only version never posts",
+          "status": "passed"
+        },
+        {
+          "fullName": "registration success verifies bytes and owner, records provenance and leaves a receipt",
+          "status": "passed"
+        },
+        {
+          "fullName": "failed registration retains a frozen attempt; a late actual result is reconciled without a second registration",
+          "status": "passed"
+        },
+        {
+          "fullName": "confirmed missing attempt unlocks inputs and requires an explicit subsequent registration",
+          "status": "passed"
+        },
+        {
+          "fullName": "note failure retries only the note, never the already created version",
+          "status": "passed"
+        },
+        {
+          "fullName": "a confirmed concurrent name conflict unlocks the retained draft without posting again",
+          "status": "passed"
+        },
+        {
+          "fullName": "pending clone blocks close, unload and duplicate submissions; revoked capability prevents mutation",
+          "status": "passed"
+        },
+        {
+          "fullName": "version tab verifies current entity, deduplicates advisory records and clears them on permission errors",
+          "status": "passed"
+        },
+        {
+          "fullName": "version tab late records cannot cross a project scope",
+          "status": "passed"
+        },
+        {
+          "fullName": "reused content preview preserves exact bytes and performs no source lookup",
+          "status": "passed"
+        },
+        {
+          "fullName": "unnamed library detail route retains the userdata API and clone contract",
+          "status": "passed"
+        },
+        {
+          "fullName": "actual production component registry renders clone form on an unnamed detail route",
+          "status": "passed"
+        },
+        {
+          "fullName": "actual production registry renders visible empty provenance feedback",
+          "status": "passed"
+        },
+        {
+          "fullName": "long source name truncation never splits a Unicode surrogate pair",
+          "status": "passed"
+        },
+        {
+          "fullName": "completed receipt restores focus to close when the submit button was removed",
+          "status": "passed"
+        },
+        {
+          "fullName": "clone links close the action before navigation and are inert while pending",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "/home/ablecloud/work/dhslove/cloud-epic-1381/ui/tests/unit/components/view/MoldDialog.spec.js",
+      "status": "passed",
+      "assertionResults": [
+        {
+          "fullName": "shared sm preset exposes one body and an independent footer at width 480",
+          "status": "passed"
+        },
+        {
+          "fullName": "shared md preset exposes one body and an independent footer at width 720",
+          "status": "passed"
+        },
+        {
+          "fullName": "shared lg preset exposes one body and an independent footer at width 960",
+          "status": "passed"
+        },
+        {
+          "fullName": "shared xl preset exposes one body and an independent footer at width 1120",
+          "status": "passed"
+        },
+        {
+          "fullName": "legacy dialog width and custom width remain unchanged without a preset",
+          "status": "passed"
+        },
+        {
+          "fullName": "shared cancel event remains the closing path",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "/home/ablecloud/work/dhslove/cloud-epic-1381/ui/tests/unit/views/compute/DeleteUserData.spec.js",
+      "status": "passed",
+      "assertionResults": [
+        {
+          "fullName": "immutable UUID/owner snapshot does not follow list refresh or same-name rows",
+          "status": "passed"
+        },
+        {
+          "fullName": "owner and project API scopes are exclusive; invalid targets fail closed",
+          "status": "passed"
+        },
+        {
+          "fullName": "malformed or incomplete lookup blocks deletion",
+          "status": "passed"
+        },
+        {
+          "fullName": "malformed or incomplete lookup blocks deletion",
+          "status": "passed"
+        },
+        {
+          "fullName": "malformed or incomplete lookup blocks deletion",
+          "status": "passed"
+        },
+        {
+          "fullName": "malformed or incomplete lookup blocks deletion",
+          "status": "passed"
+        },
+        {
+          "fullName": "changed identity blocks delete",
+          "status": "passed"
+        },
+        {
+          "fullName": "changed identity blocks delete",
+          "status": "passed"
+        },
+        {
+          "fullName": "changed identity blocks delete",
+          "status": "passed"
+        },
+        {
+          "fullName": "changed identity blocks delete",
+          "status": "passed"
+        },
+        {
+          "fullName": "same project identity remains valid independently of display account",
+          "status": "passed"
+        },
+        {
+          "fullName": "partial failure retains reason and retries only the failed original UUID",
+          "status": "passed"
+        },
+        {
+          "fullName": "pending request blocks duplicate submit, Escape/close and beforeunload",
+          "status": "passed"
+        },
+        {
+          "fullName": "lost success response confirms UUID absence and never resends deletion",
+          "status": "passed"
+        },
+        {
+          "fullName": "unknown response and read error remain unconfirmed until explicit read; then retry only present UUID",
+          "status": "passed"
+        },
+        {
+          "fullName": "already removed original does not delete a replacement with the same name",
+          "status": "passed"
+        },
+        {
+          "fullName": "preflight 403 failure sends no delete",
+          "status": "passed"
+        },
+        {
+          "fullName": "preflight 432 failure sends no delete",
+          "status": "passed"
+        },
+        {
+          "fullName": "preflight 531 failure sends no delete",
+          "status": "passed"
+        },
+        {
+          "fullName": "preflight 503 failure sends no delete",
+          "status": "passed"
+        },
+        {
+          "fullName": "UUID conversion 431 with failed fallback is never treated as absence",
+          "status": "passed"
+        },
+        {
+          "fullName": "changing session during preflight stops requests",
+          "status": "passed"
+        },
+        {
+          "fullName": "changing project during preflight stops requests",
+          "status": "passed"
+        },
+        {
+          "fullName": "changing route during preflight stops requests",
+          "status": "passed"
+        },
+        {
+          "fullName": "changing permission during preflight stops requests",
+          "status": "passed"
+        },
+        {
+          "fullName": "loss of scope during POST marks outcome unknown and does not continue the batch",
+          "status": "passed"
+        },
+        {
+          "fullName": "metadata exposes a named group toolbar; Autogen freezes selection before refresh",
+          "status": "passed"
+        },
+        {
+          "fullName": "single detail deletion returns to library; list keeps only failed selected rows",
+          "status": "passed"
+        },
+        {
+          "fullName": "shared dialog keeps cancel before danger delete, no auto Ctrl+Enter, busy shell disabled",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "/home/ablecloud/work/dhslove/cloud-epic-1381/ui/tests/unit/views/compute/UserDataUsage.spec.js",
+      "status": "passed",
+      "assertionResults": [
+        {
+          "fullName": "uses UUID server query, ACL permits cross-owner rows, checks identity before and after",
+          "status": "passed"
+        },
+        {
+          "fullName": "project is explicit and library project wins over ambient context",
+          "status": "passed"
+        },
+        {
+          "fullName": "unsupported filter never issues an unfiltered request",
+          "status": "passed"
+        },
+        {
+          "fullName": "malformed counts and wrong UUIDs cannot become a successful empty list",
+          "status": "passed"
+        },
+        {
+          "fullName": "same scope refresh retains rows and recoverable failures retain stale feedback",
+          "status": "passed"
+        },
+        {
+          "fullName": "empty successful result remains empty while refresh is pending",
+          "status": "passed"
+        },
+        {
+          "fullName": "project changes discard late responses",
+          "status": "passed"
+        },
+        {
+          "fullName": "tab changes discard late responses",
+          "status": "passed"
+        },
+        {
+          "fullName": "user changes discard late responses",
+          "status": "passed"
+        },
+        {
+          "fullName": "query changes discard late responses",
+          "status": "passed"
+        },
+        {
+          "fullName": "search/page/sort state stays in tab-specific router history",
+          "status": "passed"
+        },
+        {
+          "fullName": "HTTP 403 is not zero references",
+          "status": "passed"
+        },
+        {
+          "fullName": "HTTP 432 is not zero references",
+          "status": "passed"
+        },
+        {
+          "fullName": "HTTP 503 is not zero references",
+          "status": "passed"
+        },
+        {
+          "fullName": "invalid source never produces an unfiltered reference query",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "/home/ablecloud/work/dhslove/cloud-epic-1381/ui/tests/unit/views/compute/UserDataContent.spec.js",
+      "status": "passed",
+      "assertionResults": [
+        {
+          "fullName": "strict UTF-8 preserves Korean emoji BOM CRLF long lines and final newlines byte for byte",
+          "status": "passed"
+        },
+        {
+          "fullName": "malformed Base64 @@ never becomes raw text",
+          "status": "passed"
+        },
+        {
+          "fullName": "malformed Base64 a never becomes raw text",
+          "status": "passed"
+        },
+        {
+          "fullName": "malformed Base64 abcd= never becomes raw text",
+          "status": "passed"
+        },
+        {
+          "fullName": "malformed Base64 Zh== never becomes raw text",
+          "status": "passed"
+        },
+        {
+          "fullName": "malformed Base64 YWJj\n never becomes raw text",
+          "status": "passed"
+        },
+        {
+          "fullName": "malformed Base64 42 never becomes raw text",
+          "status": "passed"
+        },
+        {
+          "fullName": "binary bytes are preserved, never replaced with Unicode replacement characters",
+          "status": "passed"
+        },
+        {
+          "fullName": "empty null is distinct from a read failure",
+          "status": "passed"
+        },
+        {
+          "fullName": "empty undefined is distinct from a read failure",
+          "status": "passed"
+        },
+        {
+          "fullName": "empty  is distinct from a read failure",
+          "status": "passed"
+        },
+        {
+          "fullName": "UUID keyword becomes exact id while owner/project scope and pagination stay intact",
+          "status": "passed"
+        },
+        {
+          "fullName": "content lookup is fixed to the UUID and owner; source identity is verified before publication",
+          "status": "passed"
+        },
+        {
+          "fullName": "changed name identity is never displayed",
+          "status": "passed"
+        },
+        {
+          "fullName": "changed id identity is never displayed",
+          "status": "passed"
+        },
+        {
+          "fullName": "changed account identity is never displayed",
+          "status": "passed"
+        },
+        {
+          "fullName": "changed domainid identity is never displayed",
+          "status": "passed"
+        },
+        {
+          "fullName": "unsupported permission and invalid source never issue unfiltered content requests",
+          "status": "passed"
+        },
+        {
+          "fullName": "HTTP 403 is not empty content and only recoverable failures keep stale content",
+          "status": "passed"
+        },
+        {
+          "fullName": "HTTP 432 is not empty content and only recoverable failures keep stale content",
+          "status": "passed"
+        },
+        {
+          "fullName": "HTTP 431 is not empty content and only recoverable failures keep stale content",
+          "status": "passed"
+        },
+        {
+          "fullName": "HTTP 503 is not empty content and only recoverable failures keep stale content",
+          "status": "passed"
+        },
+        {
+          "fullName": "late responses after project changes cannot publish another scope",
+          "status": "passed"
+        },
+        {
+          "fullName": "late responses after user changes cannot publish another scope",
+          "status": "passed"
+        },
+        {
+          "fullName": "late responses after tab changes cannot publish another scope",
+          "status": "passed"
+        },
+        {
+          "fullName": "late responses after source changes cannot publish another scope",
+          "status": "passed"
+        },
+        {
+          "fullName": "binary mode and malformed stored data have distinct feedback",
+          "status": "passed"
+        },
+        {
+          "fullName": "copy event receives exact selected text and reports real command failure",
+          "status": "passed"
+        },
+        {
+          "fullName": "download uses original bytes or selected Base64 and a UUID based safe filename",
+          "status": "passed"
+        },
+        {
+          "fullName": "modern clipboard waits for the actual write before reporting success",
+          "status": "passed"
+        },
+        {
+          "fullName": "rejected modern clipboard falls back to selected text and restores focus without changing exact bytes",
+          "status": "passed"
+        },
+        {
+          "fullName": "late clipboard completion never posts success into a different scope",
+          "status": "passed"
+        },
+        {
+          "fullName": "loading watchers coalesce an already pending content lookup",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "/home/ablecloud/work/dhslove/cloud-epic-1381/ui/tests/unit/views/compute/RegisterUserData.spec.js",
+      "status": "passed",
+      "assertionResults": [
+        {
+          "fullName": "plain text is UTF-8, never auto-detected as Base64",
+          "status": "passed"
+        },
+        {
+          "fullName": "normalizes permitted Base64 eA",
+          "status": "passed"
+        },
+        {
+          "fullName": "normalizes permitted Base64 eA==",
+          "status": "passed"
+        },
+        {
+          "fullName": "normalizes permitted Base64 eA%3D%3D",
+          "status": "passed"
+        },
+        {
+          "fullName": "normalizes permitted Base64 eA\n",
+          "status": "passed"
+        },
+        {
+          "fullName": "binary Base64 and literal plus with percent padding remain supported",
+          "status": "passed"
+        },
+        {
+          "fullName": "rejects malformed Base64 %",
+          "status": "passed"
+        },
+        {
+          "fullName": "rejects malformed Base64 %GG",
+          "status": "passed"
+        },
+        {
+          "fullName": "rejects malformed Base64 A",
+          "status": "passed"
+        },
+        {
+          "fullName": "rejects malformed Base64 eA=",
+          "status": "passed"
+        },
+        {
+          "fullName": "rejects malformed Base64 eA===",
+          "status": "passed"
+        },
+        {
+          "fullName": "rejects malformed Base64 eA==Yg==",
+          "status": "passed"
+        },
+        {
+          "fullName": "rejects malformed Base64 !!!!",
+          "status": "passed"
+        },
+        {
+          "fullName": "rejects empty or whitespace plain text and encoded content",
+          "status": "passed"
+        },
+        {
+          "fullName": "rejects empty or whitespace plain text and encoded content",
+          "status": "passed"
+        },
+        {
+          "fullName": "rejects empty or whitespace plain text and encoded content",
+          "status": "passed"
+        },
+        {
+          "fullName": "rejects empty or whitespace plain text and encoded content",
+          "status": "passed"
+        },
+        {
+          "fullName": "canonical byte boundaries follow the supplied server limit, including padding",
+          "status": "passed"
+        },
+        {
+          "fullName": "name and variable normalization and duplicate policy",
+          "status": "passed"
+        },
+        {
+          "fullName": "server validation failures retain the complete form and allow retry",
+          "status": "passed"
+        },
+        {
+          "fullName": "two queued validations submit only once",
+          "status": "passed"
+        },
+        {
+          "fullName": "duplicate name preserves ownership, values, focus and body scroll",
+          "status": "passed"
+        },
+        {
+          "fullName": "HTTP 503 preserves ownership, values, focus and body scroll",
+          "status": "passed"
+        },
+        {
+          "fullName": "Network Error preserves ownership, values, focus and body scroll",
+          "status": "passed"
+        },
+        {
+          "fullName": "validation focuses the first invalid name field without posting",
+          "status": "passed"
+        },
+        {
+          "fullName": "validation focuses the first invalid userdata field without posting",
+          "status": "passed"
+        },
+        {
+          "fullName": "validation focuses the first invalid params field without posting",
+          "status": "passed"
+        },
+        {
+          "fullName": "validation, requests, close and navigation share a synchronous lock",
+          "status": "passed"
+        },
+        {
+          "fullName": "revoked API permission blocks submission, including after validation",
+          "status": "passed"
+        },
+        {
+          "fullName": "late result from a disposed dialog neither refreshes nor closes another dialog",
+          "status": "passed"
+        },
+        {
+          "fullName": "CNI retains its API, encoding, owner and variable contract",
+          "status": "passed"
+        },
+        {
+          "fullName": "API response text is rendered as an inline string with a network fallback",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "/home/ablecloud/work/dhslove/cloud-epic-1381/ui/tests/unit/api/request.spec.js",
+      "status": "passed",
+      "assertionResults": [
+        {
+          "fullName": "request failure session handling keeps the session when route navigation cancels an Axios request",
+          "status": "passed"
+        },
+        {
+          "fullName": "request failure session handling retains existing network failure notification and logout behavior",
+          "status": "passed"
+        },
+        {
+          "fullName": "optional discovery failure isolation keeps session and route on optional failure undefined",
+          "status": "passed"
+        },
+        {
+          "fullName": "optional discovery failure isolation keeps session and route on optional failure 432",
+          "status": "passed"
+        },
+        {
+          "fullName": "optional discovery failure isolation keeps session and route on optional failure 404",
+          "status": "passed"
+        },
+        {
+          "fullName": "optional discovery failure isolation keeps session and route on optional failure 503",
+          "status": "passed"
+        },
+        {
+          "fullName": "optional discovery failure isolation does not suppress real authentication failures",
+          "status": "passed"
+        },
+        {
+          "fullName": "optional discovery login generation boundary tags optional requests locally without changing wire parameters",
+          "status": "passed"
+        },
+        {
+          "fullName": "optional discovery login generation boundary ignores a delayed 401 from previous generation 0",
+          "status": "passed"
+        },
+        {
+          "fullName": "optional discovery login generation boundary ignores a delayed 401 from previous generation 1",
+          "status": "passed"
+        },
+        {
+          "fullName": "optional discovery login generation boundary preserves current authentication failure handling, optional=true",
+          "status": "passed"
+        },
+        {
+          "fullName": "optional discovery login generation boundary preserves current authentication failure handling, optional=false",
+          "status": "passed"
+        },
+        {
+          "fullName": "optional discovery login generation boundary ignores an old 401 travelling through the actual Axios request/response chain",
+          "status": "passed"
+        },
+        {
+          "fullName": "snapshot read failure isolation preserves session for retry after read failure undefined",
+          "status": "passed"
+        },
+        {
+          "fullName": "snapshot read failure isolation preserves session for retry after read failure 503",
+          "status": "passed"
+        },
+        {
+          "fullName": "snapshot read failure isolation preserves session for retry after read failure 404",
+          "status": "passed"
+        },
+        {
+          "fullName": "snapshot read failure isolation preserves session for retry after read failure 403",
+          "status": "passed"
+        },
+        {
+          "fullName": "snapshot read failure isolation still handles a current authentication failure",
+          "status": "passed"
+        },
+        {
+          "fullName": "snapshot read failure isolation ignores an old read response after login changes",
+          "status": "passed"
+        },
+        {
+          "fullName": "source creation submission transport failure rejects a lost submission response to the caller without logging out or navigating away",
+          "status": "passed"
+        },
+        {
+          "fullName": "source creation submission transport failure still expires a current session on a real authentication failure",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "/home/ablecloud/work/dhslove/cloud-epic-1381/ui/tests/unit/views/compute/ImageUserDataDialog.spec.js",
+      "status": "passed",
+      "assertionResults": [
+        {
+          "fullName": "{\n  name: 'UpdateTemplate',\n  components: [Object],\n  props: [Object],\n  data: [Function: data],\n  mounted: [Function: mounted],\n  computed: [Object],\n  beforeCreate: [Function: beforeCreate],\n  created: [Function: created],\n  methods: [Object],\n  render: [Function: render]\n} user-data linkage waits for the link with templateid for both template and ISO, then closes",
+          "status": "passed"
+        },
+        {
+          "fullName": "{\n  name: 'UpdateTemplate',\n  components: [Object],\n  props: [Object],\n  data: [Function: data],\n  mounted: [Function: mounted],\n  computed: [Object],\n  beforeCreate: [Function: beforeCreate],\n  created: [Function: created],\n  methods: [Object],\n  render: [Function: render]\n} user-data linkage partial link failure keeps draft and explains saved metadata, no false success",
+          "status": "passed"
+        },
+        {
+          "fullName": "{\n  name: 'UpdateTemplate',\n  components: [Object],\n  props: [Object],\n  data: [Function: data],\n  mounted: [Function: mounted],\n  computed: [Object],\n  beforeCreate: [Function: beforeCreate],\n  created: [Function: created],\n  methods: [Object],\n  render: [Function: render]\n} user-data linkage validation and click/Enter share one lock; invalid selection never submits",
+          "status": "passed"
+        },
+        {
+          "fullName": "{\n  name: 'UpdateTemplate',\n  components: [Object],\n  props: [Object],\n  data: [Function: data],\n  mounted: [Function: mounted],\n  computed: [Object],\n  beforeCreate: [Function: beforeCreate],\n  created: [Function: created],\n  methods: [Object],\n  render: [Function: render]\n} user-data linkage unchanged link and unavailable link APIs never rewrite the link",
+          "status": "passed"
+        },
+        {
+          "fullName": "{\n  name: 'UpdateTemplate',\n  components: [Object],\n  props: [Object],\n  data: [Function: data],\n  mounted: [Function: mounted],\n  computed: [Object],\n  beforeCreate: [Function: beforeCreate],\n  created: [Function: created],\n  methods: [Object],\n  render: [Function: render]\n} user-data linkage explicit none omits userdataid/policy while fixing project and image UUID",
+          "status": "passed"
+        },
+        {
+          "fullName": "{\n  name: 'UpdateIso',\n  components: [Object],\n  props: [Object],\n  data: [Function: data],\n  mounted: [Function: mounted],\n  computed: [Object],\n  beforeCreate: [Function: beforeCreate],\n  created: [Function: created],\n  methods: [Object],\n  render: [Function: render]\n} user-data linkage waits for the link with templateid for both template and ISO, then closes",
+          "status": "passed"
+        },
+        {
+          "fullName": "{\n  name: 'UpdateIso',\n  components: [Object],\n  props: [Object],\n  data: [Function: data],\n  mounted: [Function: mounted],\n  computed: [Object],\n  beforeCreate: [Function: beforeCreate],\n  created: [Function: created],\n  methods: [Object],\n  render: [Function: render]\n} user-data linkage partial link failure keeps draft and explains saved metadata, no false success",
+          "status": "passed"
+        },
+        {
+          "fullName": "{\n  name: 'UpdateIso',\n  components: [Object],\n  props: [Object],\n  data: [Function: data],\n  mounted: [Function: mounted],\n  computed: [Object],\n  beforeCreate: [Function: beforeCreate],\n  created: [Function: created],\n  methods: [Object],\n  render: [Function: render]\n} user-data linkage validation and click/Enter share one lock; invalid selection never submits",
+          "status": "passed"
+        },
+        {
+          "fullName": "{\n  name: 'UpdateIso',\n  components: [Object],\n  props: [Object],\n  data: [Function: data],\n  mounted: [Function: mounted],\n  computed: [Object],\n  beforeCreate: [Function: beforeCreate],\n  created: [Function: created],\n  methods: [Object],\n  render: [Function: render]\n} user-data linkage unchanged link and unavailable link APIs never rewrite the link",
+          "status": "passed"
+        },
+        {
+          "fullName": "{\n  name: 'UpdateIso',\n  components: [Object],\n  props: [Object],\n  data: [Function: data],\n  mounted: [Function: mounted],\n  computed: [Object],\n  beforeCreate: [Function: beforeCreate],\n  created: [Function: created],\n  methods: [Object],\n  render: [Function: render]\n} user-data linkage explicit none omits userdataid/policy while fixing project and image UUID",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "/home/ablecloud/work/dhslove/cloud-epic-1381/ui/tests/unit/views/compute/VmUserData.spec.js",
+      "status": "passed",
+      "assertionResults": [
+        {
+          "fullName": "API schema determines access for any role, malformed metadata never grants access",
+          "status": "passed"
+        },
+        {
+          "fullName": "stored body read is UUID bound, checks revision before and after, compares exact bytes",
+          "status": "passed"
+        },
+        {
+          "fullName": "source difference is byte-level, never an execution result",
+          "status": "passed"
+        },
+        {
+          "fullName": "unavailable original denied does not hide the permitted VM body or claim equality",
+          "status": "passed"
+        },
+        {
+          "fullName": "unavailable original deleted does not hide the permitted VM body or claim equality",
+          "status": "passed"
+        },
+        {
+          "fullName": "unavailable original wrong-owner does not hide the permitted VM body or claim equality",
+          "status": "passed"
+        },
+        {
+          "fullName": "unavailable original invalid does not hide the permitted VM body or claim equality",
+          "status": "passed"
+        },
+        {
+          "fullName": "no library API still reads stored body; absent metadata permits UUID checked body without comparison",
+          "status": "passed"
+        },
+        {
+          "fullName": "wrong VM id metadata fails closed",
+          "status": "passed"
+        },
+        {
+          "fullName": "wrong VM account metadata fails closed",
+          "status": "passed"
+        },
+        {
+          "fullName": "wrong VM domainid metadata fails closed",
+          "status": "passed"
+        },
+        {
+          "fullName": "wrong VM projectid metadata fails closed",
+          "status": "passed"
+        },
+        {
+          "fullName": "revision change of userdata during fetch is rejected",
+          "status": "passed"
+        },
+        {
+          "fullName": "revision change of userdataid during fetch is rejected",
+          "status": "passed"
+        },
+        {
+          "fullName": "revision change of userdatadetails during fetch is rejected",
+          "status": "passed"
+        },
+        {
+          "fullName": "revision change of userdatapolicy during fetch is rejected",
+          "status": "passed"
+        },
+        {
+          "fullName": "revision change of account during fetch is rejected",
+          "status": "passed"
+        },
+        {
+          "fullName": "VM deletion during optional source comparison clears previously fetched body",
+          "status": "passed"
+        },
+        {
+          "fullName": "late scope invalidation discards body before any additional request",
+          "status": "passed"
+        },
+        {
+          "fullName": "mismatched stored response ID is never shown",
+          "status": "passed"
+        },
+        {
+          "fullName": "empty or binary VM body  uses the same strict viewer",
+          "status": "passed"
+        },
+        {
+          "fullName": "empty or binary VM body /wAB uses the same strict viewer",
+          "status": "passed"
+        },
+        {
+          "fullName": "project scope is explicit on each metadata read",
+          "status": "passed"
+        },
+        {
+          "fullName": "VM controller retains stale body only for recoverable errors and disables export",
+          "status": "passed"
+        },
+        {
+          "fullName": "metadata permission denial does not block independently permitted stored body access",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "/home/ablecloud/work/dhslove/cloud-epic-1381/ui/tests/unit/views/DashboardRead.spec.js",
+      "status": "passed",
+      "assertionResults": [
+        {
+          "fullName": "owns a navigation cancellation without publishing empty success or an error",
+          "status": "passed"
+        },
+        {
+          "fullName": "actual failure preserves last values and remains visible until successful retry",
+          "status": "passed"
+        },
+        {
+          "fullName": "late route results cannot publish",
+          "status": "passed"
+        },
+        {
+          "fullName": "late project results cannot publish",
+          "status": "passed"
+        },
+        {
+          "fullName": "late user results cannot publish",
+          "status": "passed"
+        },
+        {
+          "fullName": "late session results cannot publish",
+          "status": "passed"
+        },
+        {
+          "fullName": "late unmount results cannot publish",
+          "status": "passed"
+        },
+        {
+          "fullName": "latest identical request wins while parallel argument sets remain independent",
+          "status": "passed"
+        },
+        {
+          "fullName": "scope switch clears old owner values and old finalizers cannot stop new loading",
+          "status": "passed"
+        },
+        {
+          "fullName": "disposed and inactive dashboard watchers never issue a new request",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "/home/ablecloud/work/dhslove/cloud-epic-1381/ui/tests/unit/views/ProjectMenu.spec.js",
+      "status": "passed",
+      "assertionResults": [
+        {
+          "fullName": "awaits capability completion before project commit/navigation, and locks double selection",
+          "status": "passed"
+        },
+        {
+          "fullName": "handles transition failure ERR_CANCELED and restores selection without committing a new owner",
+          "status": "passed"
+        },
+        {
+          "fullName": "handles transition failure 503 and restores selection without committing a new owner",
+          "status": "passed"
+        },
+        {
+          "fullName": "default view 0 is an empty project context, never projectid=0",
+          "status": "passed"
+        },
+        {
+          "fullName": "default view 0 is an empty project context, never projectid=0",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "/home/ablecloud/work/dhslove/cloud-epic-1381/ui/tests/unit/components/view/AnnotationsDraft.spec.js",
+      "status": "passed",
+      "assertionResults": [
+        {
+          "fullName": "failure retains the draft and visibility, and displays a real failure without inventing success",
+          "status": "passed"
+        },
+        {
+          "fullName": "successful submission clears only the submitted snapshot and resets the controlled visibility checkbox",
+          "status": "passed"
+        },
+        {
+          "fullName": "new typing during a pending success is not discarded; duplicate sends share a lock",
+          "status": "passed"
+        },
+        {
+          "fullName": "late resource completion never clears or reports against the new context",
+          "status": "passed"
+        },
+        {
+          "fullName": "late user completion never clears or reports against the new context",
+          "status": "passed"
+        },
+        {
+          "fullName": "late project completion never clears or reports against the new context",
+          "status": "passed"
+        },
+        {
+          "fullName": "late session completion never clears or reports against the new context",
+          "status": "passed"
+        },
+        {
+          "fullName": "late unmount completion never clears or reports against the new context",
+          "status": "passed"
+        }
+      ]
+    }
+  ]
+}

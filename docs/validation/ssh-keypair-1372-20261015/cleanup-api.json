@@ -1,0 +1,133 @@
+{
+  "passed": true,
+  "actions": [
+    {
+      "command": "destroyVirtualMachine",
+      "id": "7d0dfff1-b0f2-490b-990f-ae159a8ec832",
+      "name": null,
+      "label": "root_single-destroy-expunge",
+      "passed": true
+    },
+    {
+      "command": "destroyVirtualMachine",
+      "id": "370e3886-fb69-4326-9183-df8f62ce623f",
+      "name": null,
+      "label": "root_multi-destroy-expunge",
+      "passed": true
+    },
+    {
+      "command": "destroyVirtualMachine",
+      "id": "e5404ead-17bd-4dee-8501-059e737c8758",
+      "name": null,
+      "label": "root_second-destroy-expunge",
+      "passed": true
+    },
+    {
+      "command": "destroyVirtualMachine",
+      "id": "f481575c-9e05-4fee-85a8-86b6c1f3a732",
+      "name": null,
+      "label": "root_none-destroy-expunge",
+      "passed": true
+    },
+    {
+      "command": "destroyVirtualMachine",
+      "id": "f67c1868-4455-478e-8a31-5b1ba7a94622",
+      "name": null,
+      "label": "user_single-destroy-expunge",
+      "passed": true
+    },
+    {
+      "command": "destroyVirtualMachine",
+      "id": "70ae72c9-513a-4a07-8d27-87178e57e2f7",
+      "name": null,
+      "label": "project_single-destroy-expunge",
+      "passed": true
+    },
+    {
+      "command": "deleteNetwork",
+      "id": "0770c0fc-9dff-4e88-a9fe-58266deeb404",
+      "name": null,
+      "label": "root-network-delete",
+      "passed": true
+    },
+    {
+      "command": "deleteNetwork",
+      "id": "20d71d02-4847-4d4f-9e55-d74a655a3264",
+      "name": null,
+      "label": "user-network-delete",
+      "passed": true
+    },
+    {
+      "command": "deleteNetwork",
+      "id": "12d97fc5-c0b4-4c24-bd5c-4ddab63a12f1",
+      "name": null,
+      "label": "project-network-delete",
+      "passed": true
+    },
+    {
+      "command": "deleteSSHKeyPair",
+      "id": null,
+      "name": "ssh1372-20261015-same",
+      "label": "root_a-key-delete",
+      "passed": true
+    },
+    {
+      "command": "deleteSSHKeyPair",
+      "id": null,
+      "name": "ssh1372-20261015-second",
+      "label": "root_b-key-delete",
+      "passed": true
+    },
+    {
+      "command": "deleteSSHKeyPair",
+      "id": null,
+      "name": "ssh1372-20261015-unused'_%+",
+      "label": "unused-key-delete",
+      "passed": true
+    },
+    {
+      "command": "deleteSSHKeyPair",
+      "id": null,
+      "name": "ssh1372-20261015-same",
+      "label": "user_a-key-delete",
+      "passed": true
+    },
+    {
+      "command": "deleteSSHKeyPair",
+      "id": null,
+      "name": "ssh1372-20261015-same",
+      "label": "project_a-key-delete",
+      "passed": true
+    },
+    {
+      "command": "deleteProject",
+      "id": "53e55368-2992-4aab-bafd-8b7270bbb0fc",
+      "name": null,
+      "label": "project-delete",
+      "passed": true
+    },
+    {
+      "command": "deleteAccount",
+      "id": "21c7a65a-a0dd-4b82-abc9-4eb660c41e5e",
+      "name": null,
+      "label": "user-account-delete",
+      "passed": true
+    },
+    {
+      "command": "deleteAccount",
+      "id": "2c59ca2a-e1d6-4b98-b4a9-0428c99d9c89",
+      "name": null,
+      "label": "domain_admin-account-delete",
+      "passed": true
+    },
+    {
+      "command": "deleteDomain",
+      "id": "ca992c9c-5a01-4416-a3ea-b98ec47b0c88",
+      "name": null,
+      "label": "domain-delete",
+      "passed": true
+    }
+  ],
+  "baseline_keys_preserved": 3,
+  "remaining_api_vms": 0
+}

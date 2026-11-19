@@ -1,0 +1,20 @@
+{
+  "passed": 2,
+  "total": 2,
+  "tests": [
+    {
+      "tag": "createOnly",
+      "command": "registerSSHKeyPair",
+      "status": 432,
+      "denied": true,
+      "passed": true
+    },
+    {
+      "tag": "registerOnly",
+      "command": "createSSHKeyPair",
+      "status": 432,
+      "denied": true,
+      "passed": true
+    }
+  ]
+}

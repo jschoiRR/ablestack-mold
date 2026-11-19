@@ -73,7 +73,7 @@ public class ResourceScheduledJobDaoImpl extends GenericDaoBase<ResourceSchedule
         if (currentTimestamp == null) {
             currentTimestamp = new Date();
         }
-        Date truncatedTs = DateUtils.round(currentTimestamp, Calendar.MINUTE);
+        Date truncatedTs = DateUtils.truncate(currentTimestamp, Calendar.MINUTE);
         SearchCriteria<ResourceScheduledJobVO> sc = jobsToStartSearch.create();
         sc.setParameters(RESOURCE_TYPE, resourceType);
         sc.setParameters(SCHEDULED_TIMESTAMP, truncatedTs);

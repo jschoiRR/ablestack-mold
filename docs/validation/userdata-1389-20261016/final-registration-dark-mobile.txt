@@ -1,0 +1,184 @@
+Browser tab: 4, Title: "사용자 데이터 라이브러리 - ABLESTACK-Mold", URL: "http://10.10.31.10:8080/client/#/userdata?page=1&pagesize=20&name=UD1389-31-20261016-main&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&account=admin".
+1 AXWebArea 사용자 데이터 라이브러리 - ABLESTACK-Mold, URL: 10.10.31.10:8080/client/#/userdata?page=1&pagesize=20&name=UD1389-31-20261016-main&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&account=admin
+	2 container
+		68 container
+			69 text 페이지 스타일 설정
+			70 button 닫기
+				71 image close
+			372 container
+				373 heading 페이지 스타일 설정, Value: 3
+					374 text 페이지 스타일 설정
+				375 container
+					376 image
+					377 container
+						378 radio button (settable, integer) Description:  , Value: 0
+				379 container
+					380 image
+					381 container
+						382 radio button (settable, integer) Description:  , Value: 1
+					383 image check
+				384 heading 테마 색상, Value: 3
+					385 text 테마 색상
+				386 container
+					387 radio button (settable, integer) Description:  , Value: 0
+					388 image check
+				389 container
+					390 radio button (settable, integer) Description:  , Value: 0
+				391 container
+					392 radio button (settable, integer) Description:  , Value: 0
+				393 container
+					394 radio button (settable, integer) Description:  , Value: 0
+				395 container
+					396 radio button (settable, integer) Description:  , Value: 0
+				397 container
+					398 radio button (settable, integer) Description:  , Value: 0
+				399 container
+					400 radio button (settable, integer) Description:  , Value: 0
+				401 container
+					402 radio button (settable, integer) Description:  , Value: 0
+				403 heading 네비게이션 설정, Value: 3
+					404 text 네비게이션 설정
+				405 container
+					406 container
+						407 text 배경색
+						408 color well (disabled, settable) #ffffff
+					409 container
+						410 text 텍스트 색상
+						411 color well (disabled, settable) #000000
+				412 image exclamation-circle
+				413 text 설정은 현재 브라우저에서만 볼 수 있습니다. 설정을 적용하려면 JSON 파일을 다운로드하고 경로 `/public/config.json` 아래의 `config.json` 파일의 `theme` 섹션에서 해당 콘텐츠를 교체하세요.
+				414 button download 세팅값 다운로드(json)
+					415 image download
+					416 text 세팅값 다운로드(json)
+				417 button undo 기본값으로 재설정
+					418 image undo
+					419 text 기본값으로 재설정
+		122 container
+			420 image menu-unfold
+			124 container
+				125 combo box (settable) rc_select_0
+				126 image project
+				127 text 기본 보기
+			131 image translation
+			132 image bell
+			133 container
+				134 text AC admin cloud
+		135 container
+			266 container
+				267 link Description: home, Value: 10.10.31.10:8080/client/#/
+				268 text /
+				269 link Description: 사용자 데이터 라이브러리, Value: 10.10.31.10:8080/client/#/userdata
+				270 link Description: question-circle, Value: docs.ablecloud.io/latest/adminguide/virtual_machines.html#user-data-and-meta-data
+				271 button reload 업데이트
+					272 image reload
+					273 text 업데이트
+				274 switch 프로젝트, Value: 0
+					275 text 프로젝트
+			276 container
+				277 button 사용자 데이터 등록
+					278 image plus
+					279 text 사용자 데이터 등록
+				280 button filter
+					281 image filter
+				282 text field (settable)
+				283 button search
+					284 image search
+			421 container
+				422 text 이름 : UD1389-31-2026101...
+				423 image close
+				424 text 도메인 아이디 : ROOT
+				425 image close
+				426 text 계정 : admin
+				427 image close
+			216 text 검색창: 이름 포함 검색 또는 정확한 UUID. 필터: UUID·정확한 이름·도메인·소유 계정. 프로젝트는 상단 공통 보기를 선택하세요. 열 정렬은 현재 페이지에만 적용됩니다.
+			294 table
+				295 row
+					296 cell
+						297 container
+							298 checkbox (settable, integer) Description:  , Value: 0
+					299 cell
+						300 container
+							301 text 이름
+							302 image caret-up
+							303 image caret-down
+					304 cell
+						305 container
+							306 text 아이디
+							307 image caret-up
+							308 image caret-down
+					309 cell
+						310 container
+							311 text 계정
+							312 image caret-up
+							313 image caret-down
+					314 cell
+						315 container
+							316 text 도메인
+							317 image caret-up
+							318 image caret-down
+					319 cell
+						320 button filter
+							321 image filter
+				322 row
+					323 cell
+						324 container
+							325 checkbox (settable, integer) Description:  , Value: 0
+					326 cell
+						327 link Description: UD1389-31-20261016-main, Value: 10.10.31.10:8080/client/#/userdata/1fc463a9-c04b-4a1d-b1d3-75a9ac8c0e3c
+					328 cell
+						329 text 1fc463a9-c04b-4a1d-b1d3-75a9ac8c0e3c
+					330 cell
+						331 link Description: admin, Value: 10.10.31.10:8080/client/#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&dataView=true
+					332 cell
+						333 link Description: ROOT, Value: 10.10.31.10:8080/client/#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details
+			257 content list
+				258 text 전체 1 개 항목 중 1-1 표시
+				259 container 이전 페이지
+					260 button (disabled) left
+						261 image left
+				334 text 1
+				263 container 다음 페이지
+					264 button (disabled) right
+						265 image right
+				335 container
+					336 combo box (settable) rc_select_1
+					428 text 20 / 쪽
+	197 container
+		198 image info-circle
+		199 text Wall 모니터링을 사용할 수 없습니다. 기존 알림은 최신 정보가 아닐 수 있으며 Mold는 계속 사용할 수 있습니다. 비활성
+	338 container
+		339 container 사용자 데이터 등록 도움말
+			340 container
+				341 button Close
+					342 image close
+				343 container vcDialogTitle0
+					344 text 사용자 데이터 등록
+					345 link Description: 도움말, Value: docs.ablecloud.io/latest/adminguide/virtual_machines.html#user-data-and-meta-data
+				346 container
+					347 text 사용자 데이터를 등록하려면 다음 데이터를 입력하십시오.
+					348 container userdata-registration-form
+						349 container
+							429 text * 이름
+							351 image info-circle
+						352 text field (settable) * 이름 info-circle, ID: form_item_name
+						353 container
+							430 text * 사용자 데이터
+							355 image info-circle
+						356 text entry area (settable) * 사용자 데이터 info-circle, ID: form_item_userdata
+						357 text Base64 인코드
+						358 container
+							359 checkbox (settable, integer) Base64 인코드  , Value: 0, ID: form_item_isbase64
+						360 container
+							361 text 사용자 데이터 매개변수
+							362 image info-circle
+						363 container
+							364 combo box (settable) 사용자 데이터 매개변수 info-circle, ID: form_item_params
+							365 text comma separated list of variables declared in user data content
+						366 container
+							367 text 도메인 아이디
+							368 image info-circle
+						369 combo box (settable) domain-selection
+				370 button 취소
+				371 button 등록
+
+The focused UI element is 352 text field (settable) * 이름 info-circle, ID: form_item_name

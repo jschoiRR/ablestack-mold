@@ -1,0 +1,902 @@
+{
+  "31": {
+    "group": {
+      "id": "bf0f5385-ae2c-4da4-aec4-eb985dbdeba4",
+      "name": "AS-PROD-31-AS04-CONCURRENCY",
+      "lbruleid": "806cf32a-f632-4dc0-be52-0f85c19c7070",
+      "associatednetworkname": "AS-PROD-31-AS01-projectNetwork",
+      "associatednetworkid": "797d8d5e-efff-4364-a53c-c2ac90596fe8",
+      "lbprovider": "VirtualRouter",
+      "publicipid": "67ede107-b283-4b65-b16a-d675f7709aa4",
+      "publicip": "10.10.31.104",
+      "publicport": "8084",
+      "privateport": "8080",
+      "vmprofileid": "13090328-2f59-4121-9316-bbb30da24c9b",
+      "minmembers": 1,
+      "maxmembers": 1,
+      "availablevirtualmachinecount": 3,
+      "interval": 10,
+      "state": "DISABLED",
+      "scaleuppolicies": [
+        {
+          "id": "36d98f38-55e0-473d-8a6b-e009f50ae757",
+          "name": "ScaleUpPolicy-0",
+          "action": "SCALEUP",
+          "duration": 60,
+          "quiettime": 10,
+          "conditions": [
+            {
+              "id": "a20fc96c-640b-4858-a9e1-d13ff10575cc",
+              "threshold": 20,
+              "relationaloperator": "GT",
+              "counterid": "978ac6cb-b253-11f1-a895-0024814c313f",
+              "countername": "VM CPU - average percentage",
+              "counter": {
+                "id": "978ac6cb-b253-11f1-a895-0024814c313f",
+                "name": "VM CPU - average percentage",
+                "source": "CPU",
+                "value": "vm.cpu.average.percentage",
+                "provider": "VirtualRouter"
+              },
+              "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+              "domain": "ROOT",
+              "domainpath": "ROOT",
+              "projectid": "fb318714-bc01-4be5-9e33-0f49a7013127",
+              "project": "AS-PROD-31-AS01-project"
+            }
+          ],
+          "projectid": "fb318714-bc01-4be5-9e33-0f49a7013127",
+          "project": "AS-PROD-31-AS01-project",
+          "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+          "domain": "ROOT",
+          "domainpath": "ROOT"
+        }
+      ],
+      "scaledownpolicies": [
+        {
+          "id": "64cfc4bd-7665-4670-bf99-1c93b742f66a",
+          "name": "ScaleDownPolicy-0",
+          "action": "SCALEDOWN",
+          "duration": 60,
+          "quiettime": 10,
+          "conditions": [
+            {
+              "id": "f638d3ce-f6be-41b5-9b08-e36ccacf7817",
+              "threshold": 10,
+              "relationaloperator": "LT",
+              "counterid": "978ac6cb-b253-11f1-a895-0024814c313f",
+              "countername": "VM CPU - average percentage",
+              "counter": {
+                "id": "978ac6cb-b253-11f1-a895-0024814c313f",
+                "name": "VM CPU - average percentage",
+                "source": "CPU",
+                "value": "vm.cpu.average.percentage",
+                "provider": "VirtualRouter"
+              },
+              "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+              "domain": "ROOT",
+              "domainpath": "ROOT",
+              "projectid": "fb318714-bc01-4be5-9e33-0f49a7013127",
+              "project": "AS-PROD-31-AS01-project"
+            }
+          ],
+          "projectid": "fb318714-bc01-4be5-9e33-0f49a7013127",
+          "project": "AS-PROD-31-AS01-project",
+          "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+          "domain": "ROOT",
+          "domainpath": "ROOT"
+        }
+      ],
+      "projectid": "fb318714-bc01-4be5-9e33-0f49a7013127",
+      "project": "AS-PROD-31-AS01-project",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "domain": "ROOT",
+      "domainpath": "ROOT",
+      "fordisplay": true,
+      "created": "2026-10-11T10:19:39+0900",
+      "operationinprogress": true,
+      "scalingaction": "SCALEDOWN",
+      "scalingphase": "DESTROYING_RETRY",
+      "evaluation": {
+        "evaluatedat": 1791728476653,
+        "cooldownuntil": 1791728340778,
+        "policies": [
+          {
+            "id": "36d98f38-55e0-473d-8a6b-e009f50ae757",
+            "action": "SCALEUP",
+            "duration": 60,
+            "conditions": [
+              {
+                "id": "a20fc96c-640b-4858-a9e1-d13ff10575cc",
+                "countername": "VM CPU - average percentage",
+                "source": "CPU",
+                "unit": "%",
+                "operator": "GT",
+                "threshold": 20,
+                "value": 0.26958223901771555,
+                "samples": 21,
+                "resources": 3,
+                "collectedat": 1791728470000,
+                "matched": false
+              }
+            ],
+            "status": "NOT_MATCHED"
+          },
+          {
+            "id": "64cfc4bd-7665-4670-bf99-1c93b742f66a",
+            "action": "SCALEDOWN",
+            "duration": 60,
+            "conditions": [
+              {
+                "id": "f638d3ce-f6be-41b5-9b08-e36ccacf7817",
+                "countername": "VM CPU - average percentage",
+                "source": "CPU",
+                "unit": "%",
+                "operator": "LT",
+                "threshold": 10,
+                "value": 0.26958223901771555,
+                "samples": 21,
+                "resources": 3,
+                "collectedat": 1791728470000,
+                "matched": true
+              }
+            ],
+            "status": "MATCHED"
+          }
+        ],
+        "collectedat": 1791728470000,
+        "status": "MIN_MEMBERS",
+        "reason": "MIN_MEMBERS"
+      },
+      "memberstatecounts": {
+        "Running": 3
+      },
+      "statuscollectedat": 1791729826588,
+      "lastscaledat": 1791728330778,
+      "lastcheckedat": 1791728470000,
+      "operationdeadline": 1791729663000,
+      "evaluationerror": false,
+      "hasannotations": false
+    },
+    "members": [
+      {
+        "id": "bc00f070-797a-40b0-9785-c965dc50fc63",
+        "name": "autoScaleVm-AS-PROD-31-AS04-CONCURRENCY-1-rvajox",
+        "displayname": "autoScaleVm-AS-PROD-31-AS04-CONCURRENCY-1-rvajox",
+        "state": "Running",
+        "hostid": "159baf9a-89ad-4a94-91dc-e7395a670bf4",
+        "hostname": "ablecube31-1",
+        "created": "2026-10-11T10:19:49+0900",
+        "isautoscalescaleup": null,
+        "deleteprotection": true,
+        "volumes": [
+          {
+            "id": "7d97eaef-5619-494b-92a4-ddddb13cfa11",
+            "name": "ROOT-397",
+            "type": "ROOT",
+            "state": "Ready",
+            "path": "7d97eaef-5619-494b-92a4-ddddb13cfa11",
+            "size": 107374182400,
+            "format": null,
+            "storage": "Primary",
+            "provisioningtype": "sparse"
+          }
+        ]
+      },
+      {
+        "id": "5c35fccb-7cae-4c5c-b306-85905012a31a",
+        "name": "autoScaleVm-AS-PROD-31-AS04-CONCURRENCY-79-cvhqkg",
+        "displayname": "autoScaleVm-AS-PROD-31-AS04-CONCURRENCY-79-cvhqkg",
+        "state": "Running",
+        "hostid": "3fb147f3-aea4-4f65-b8c6-e7192ea26138",
+        "hostname": "ablecube31-2",
+        "created": "2026-10-11T23:18:29+0900",
+        "isautoscalescaleup": null,
+        "deleteprotection": false,
+        "volumes": [
+          {
+            "id": "a816eeb2-6ce7-4857-b8b8-0d69a309ebc5",
+            "name": "ROOT-477",
+            "type": "ROOT",
+            "state": "Ready",
+            "path": "a816eeb2-6ce7-4857-b8b8-0d69a309ebc5",
+            "size": 107374182400,
+            "format": null,
+            "storage": "Primary",
+            "provisioningtype": "sparse"
+          }
+        ]
+      },
+      {
+        "id": "61a91d8b-1fa4-4e4d-b5ef-06f2ad6a0119",
+        "name": "autoScaleVm-AS-PROD-31-AS04-CONCURRENCY-80-qgutrd",
+        "displayname": "autoScaleVm-AS-PROD-31-AS04-CONCURRENCY-80-qgutrd",
+        "state": "Running",
+        "hostid": "384871b9-7c75-4717-a673-e96a76abeb71",
+        "hostname": "ablecube31-3",
+        "created": "2026-10-11T23:18:41+0900",
+        "isautoscalescaleup": null,
+        "deleteprotection": true,
+        "volumes": [
+          {
+            "id": "a5b44c2b-2085-4358-91ac-033a6da53b8f",
+            "name": "ROOT-478",
+            "type": "ROOT",
+            "state": "Ready",
+            "path": "a5b44c2b-2085-4358-91ac-033a6da53b8f",
+            "size": 107374182400,
+            "format": null,
+            "storage": "Primary",
+            "provisioningtype": "sparse"
+          }
+        ]
+      }
+    ],
+    "lb": [
+      {
+        "id": "bc00f070-797a-40b0-9785-c965dc50fc63",
+        "name": "autoScaleVm-AS-PROD-31-AS04-CONCURRENCY-1-rvajox",
+        "state": "Running",
+        "servicestate": null
+      },
+      {
+        "id": "5c35fccb-7cae-4c5c-b306-85905012a31a",
+        "name": "autoScaleVm-AS-PROD-31-AS04-CONCURRENCY-79-cvhqkg",
+        "state": "Running",
+        "servicestate": null
+      }
+    ],
+    "events": [
+      {
+        "id": "c18fe3b5-8aa3-49a2-a7ed-6145e77c20ab",
+        "username": "admin",
+        "type": "AUTOSCALEVMGROUP.ENABLE",
+        "level": "INFO",
+        "description": "Successfully completed enabling autoscale vm group",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domain": "ROOT",
+        "domainpath": "ROOT",
+        "resourceid": "bf0f5385-ae2c-4da4-aec4-eb985dbdeba4",
+        "resourcetype": "AutoScaleVmGroup",
+        "resourcename": "AS-PROD-31-AS04-CONCURRENCY",
+        "created": "2026-10-11T23:18:19+0900",
+        "state": "Completed",
+        "parentid": "f6997b80-f1de-4917-9e32-35c646aea0c9"
+      },
+      {
+        "id": "6d7be110-80e9-4c27-97ae-ee9141269702",
+        "username": "admin",
+        "type": "AUTOSCALEVMGROUP.ENABLE",
+        "level": "INFO",
+        "description": "Enabling autoscale vm group",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domain": "ROOT",
+        "domainpath": "ROOT",
+        "resourceid": "bf0f5385-ae2c-4da4-aec4-eb985dbdeba4",
+        "resourcetype": "AutoScaleVmGroup",
+        "resourcename": "AS-PROD-31-AS04-CONCURRENCY",
+        "created": "2026-10-11T23:18:17+0900",
+        "state": "Started",
+        "parentid": "f6997b80-f1de-4917-9e32-35c646aea0c9"
+      },
+      {
+        "id": "acf8b9a6-944b-431e-b693-214694c9acc7",
+        "username": "admin",
+        "type": "AUTOSCALEVMGROUP.UPDATE",
+        "level": "INFO",
+        "description": "Successfully completed updating autoscale vm group. AutoScale Instance Group ID: bf0f5385-ae2c-4da4-aec4-eb985dbdeba4",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domain": "ROOT",
+        "domainpath": "ROOT",
+        "resourceid": "bf0f5385-ae2c-4da4-aec4-eb985dbdeba4",
+        "resourcetype": "AutoScaleVmGroup",
+        "resourcename": "AS-PROD-31-AS04-CONCURRENCY",
+        "created": "2026-10-11T23:18:14+0900",
+        "state": "Completed",
+        "parentid": "998826dd-9619-4048-bf4f-6087d7ebb1ad"
+      },
+      {
+        "id": "43c8c428-ca16-40b0-b05e-831faabcb653",
+        "username": "admin",
+        "type": "AUTOSCALEVMGROUP.UPDATE",
+        "level": "INFO",
+        "description": "Updating autoscale vm group. AutoScale Instance Group ID: bf0f5385-ae2c-4da4-aec4-eb985dbdeba4",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domain": "ROOT",
+        "domainpath": "ROOT",
+        "resourceid": "bf0f5385-ae2c-4da4-aec4-eb985dbdeba4",
+        "resourcetype": "AutoScaleVmGroup",
+        "resourcename": "AS-PROD-31-AS04-CONCURRENCY",
+        "created": "2026-10-11T23:18:14+0900",
+        "state": "Started",
+        "parentid": "998826dd-9619-4048-bf4f-6087d7ebb1ad"
+      },
+      {
+        "id": "0afb68da-4dc5-4815-a51c-cc148818bcae",
+        "username": "admin",
+        "type": "AUTOSCALEVMGROUP.ENABLE",
+        "level": "INFO",
+        "description": "Successfully completed enabling autoscale vm group",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domain": "ROOT",
+        "domainpath": "ROOT",
+        "resourceid": "bf0f5385-ae2c-4da4-aec4-eb985dbdeba4",
+        "resourcetype": "AutoScaleVmGroup",
+        "resourcename": "AS-PROD-31-AS04-CONCURRENCY",
+        "created": "2026-10-11T15:37:13+0900",
+        "state": "Completed",
+        "parentid": "356d19de-5138-4fee-b2fa-e15829dca786"
+      },
+      {
+        "id": "49583655-c3bd-424d-8f27-767064710e28",
+        "username": "admin",
+        "type": "AUTOSCALEVMGROUP.ENABLE",
+        "level": "INFO",
+        "description": "Enabling autoscale vm group",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domain": "ROOT",
+        "domainpath": "ROOT",
+        "resourceid": "bf0f5385-ae2c-4da4-aec4-eb985dbdeba4",
+        "resourcetype": "AutoScaleVmGroup",
+        "resourcename": "AS-PROD-31-AS04-CONCURRENCY",
+        "created": "2026-10-11T15:37:11+0900",
+        "state": "Started",
+        "parentid": "356d19de-5138-4fee-b2fa-e15829dca786"
+      },
+      {
+        "id": "73cc7b4e-fc67-46b7-a977-988d64a3fcc5",
+        "username": "admin",
+        "type": "AUTOSCALEVMGROUP.UPDATE",
+        "level": "INFO",
+        "description": "Successfully completed updating autoscale vm group. AutoScale Instance Group ID: bf0f5385-ae2c-4da4-aec4-eb985dbdeba4",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domain": "ROOT",
+        "domainpath": "ROOT",
+        "resourceid": "bf0f5385-ae2c-4da4-aec4-eb985dbdeba4",
+        "resourcetype": "AutoScaleVmGroup",
+        "resourcename": "AS-PROD-31-AS04-CONCURRENCY",
+        "created": "2026-10-11T15:36:54+0900",
+        "state": "Completed",
+        "parentid": "19a9cf99-9822-4a90-9187-992a09712447"
+      },
+      {
+        "id": "ec434cd2-af4f-4d62-8ca4-bee97cb88c57",
+        "username": "admin",
+        "type": "AUTOSCALEVMGROUP.UPDATE",
+        "level": "INFO",
+        "description": "Updating autoscale vm group. AutoScale Instance Group ID: bf0f5385-ae2c-4da4-aec4-eb985dbdeba4",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domain": "ROOT",
+        "domainpath": "ROOT",
+        "resourceid": "bf0f5385-ae2c-4da4-aec4-eb985dbdeba4",
+        "resourcetype": "AutoScaleVmGroup",
+        "resourcename": "AS-PROD-31-AS04-CONCURRENCY",
+        "created": "2026-10-11T15:36:54+0900",
+        "state": "Started",
+        "parentid": "19a9cf99-9822-4a90-9187-992a09712447"
+      },
+      {
+        "id": "33b3653c-7048-4a84-88cf-e560b866d2be",
+        "username": "admin",
+        "type": "AUTOSCALEVMGROUP.DISABLE",
+        "level": "INFO",
+        "description": "Successfully completed disabling autoscale vm group",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domain": "ROOT",
+        "domainpath": "ROOT",
+        "resourceid": "bf0f5385-ae2c-4da4-aec4-eb985dbdeba4",
+        "resourcetype": "AutoScaleVmGroup",
+        "resourcename": "AS-PROD-31-AS04-CONCURRENCY",
+        "created": "2026-10-11T15:35:14+0900",
+        "state": "Completed",
+        "parentid": "534115a8-fbfb-45a2-bc3c-9bfb049b590f"
+      },
+      {
+        "id": "c5f644e0-49b3-4818-92ac-78323fa17827",
+        "username": "admin",
+        "type": "AUTOSCALEVMGROUP.DISABLE",
+        "level": "INFO",
+        "description": "Disabling autoscale vm group",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domain": "ROOT",
+        "domainpath": "ROOT",
+        "resourceid": "bf0f5385-ae2c-4da4-aec4-eb985dbdeba4",
+        "resourcetype": "AutoScaleVmGroup",
+        "resourcename": "AS-PROD-31-AS04-CONCURRENCY",
+        "created": "2026-10-11T15:35:12+0900",
+        "state": "Started",
+        "parentid": "534115a8-fbfb-45a2-bc3c-9bfb049b590f"
+      },
+      {
+        "id": "a8932c8f-79cf-471d-8283-2612a0eac433",
+        "username": "admin",
+        "type": "AUTOSCALEVMGROUP.UPDATE",
+        "level": "INFO",
+        "description": "Successfully completed updating autoscale vm group. AutoScale Instance Group ID: bf0f5385-ae2c-4da4-aec4-eb985dbdeba4",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domain": "ROOT",
+        "domainpath": "ROOT",
+        "resourceid": "bf0f5385-ae2c-4da4-aec4-eb985dbdeba4",
+        "resourcetype": "AutoScaleVmGroup",
+        "resourcename": "AS-PROD-31-AS04-CONCURRENCY",
+        "created": "2026-10-11T15:28:51+0900",
+        "state": "Completed",
+        "parentid": "054c855c-501d-4523-b380-bbb071372ed5"
+      },
+      {
+        "id": "18d809b4-4df7-444d-821f-87fe7707e122",
+        "username": "admin",
+        "type": "AUTOSCALEVMGROUP.UPDATE",
+        "level": "INFO",
+        "description": "Updating autoscale vm group. AutoScale Instance Group ID: bf0f5385-ae2c-4da4-aec4-eb985dbdeba4",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domain": "ROOT",
+        "domainpath": "ROOT",
+        "resourceid": "bf0f5385-ae2c-4da4-aec4-eb985dbdeba4",
+        "resourcetype": "AutoScaleVmGroup",
+        "resourcename": "AS-PROD-31-AS04-CONCURRENCY",
+        "created": "2026-10-11T15:28:51+0900",
+        "state": "Started",
+        "parentid": "054c855c-501d-4523-b380-bbb071372ed5"
+      }
+    ],
+    "readAt": 1791729824985
+  },
+  "32": {
+    "group": {
+      "id": "18bef25a-4053-4454-bc85-f6d777b9391d",
+      "name": "AS-PROD-32-AS04-CONCURRENCY",
+      "lbruleid": "d75900b6-4d7c-4082-97c5-f2b7d32e2826",
+      "associatednetworkname": "AS-PROD-32-AS01-userNetwork",
+      "associatednetworkid": "f889cc7d-02c5-490b-b256-a289b73ff824",
+      "lbprovider": "VirtualRouter",
+      "publicipid": "d82e3f23-29e2-4b44-a85c-6c8821f2a4f6",
+      "publicip": "10.10.32.169",
+      "publicport": "8084",
+      "privateport": "8080",
+      "vmprofileid": "9cf4661f-7eea-4445-b9dd-90ddd6f07f7b",
+      "minmembers": 1,
+      "maxmembers": 1,
+      "availablevirtualmachinecount": 3,
+      "interval": 10,
+      "state": "DISABLED",
+      "scaleuppolicies": [
+        {
+          "id": "37417d80-35d9-41d4-b751-5d46fc6af23a",
+          "name": "ScaleUpPolicy-0",
+          "action": "SCALEUP",
+          "duration": 60,
+          "quiettime": 10,
+          "conditions": [
+            {
+              "id": "4a8fdf72-6fee-4a24-80a0-c0544651c5ea",
+              "threshold": 5,
+              "relationaloperator": "GT",
+              "counterid": "58eefbed-b23b-11f1-990e-0024811f8935",
+              "countername": "VM CPU - average percentage",
+              "counter": {
+                "id": "58eefbed-b23b-11f1-990e-0024811f8935",
+                "name": "VM CPU - average percentage",
+                "source": "CPU",
+                "value": "vm.cpu.average.percentage",
+                "provider": "VirtualRouter"
+              },
+              "domainid": "2246448b-b23b-11f1-990e-0024811f8935",
+              "domain": "ROOT",
+              "domainpath": "ROOT",
+              "account": "epic1346-as01-user32"
+            }
+          ],
+          "account": "epic1346-as01-user32",
+          "domainid": "2246448b-b23b-11f1-990e-0024811f8935",
+          "domain": "ROOT",
+          "domainpath": "ROOT"
+        }
+      ],
+      "scaledownpolicies": [
+        {
+          "id": "7639559c-63ad-4235-bbb4-462dfaba5261",
+          "name": "ScaleDownPolicy-0",
+          "action": "SCALEDOWN",
+          "duration": 60,
+          "quiettime": 10,
+          "conditions": [
+            {
+              "id": "2ec799ba-1c5f-4a5b-9ac5-709d10ddde48",
+              "threshold": 1,
+              "relationaloperator": "LT",
+              "counterid": "58eefbed-b23b-11f1-990e-0024811f8935",
+              "countername": "VM CPU - average percentage",
+              "counter": {
+                "id": "58eefbed-b23b-11f1-990e-0024811f8935",
+                "name": "VM CPU - average percentage",
+                "source": "CPU",
+                "value": "vm.cpu.average.percentage",
+                "provider": "VirtualRouter"
+              },
+              "domainid": "2246448b-b23b-11f1-990e-0024811f8935",
+              "domain": "ROOT",
+              "domainpath": "ROOT",
+              "account": "epic1346-as01-user32"
+            }
+          ],
+          "account": "epic1346-as01-user32",
+          "domainid": "2246448b-b23b-11f1-990e-0024811f8935",
+          "domain": "ROOT",
+          "domainpath": "ROOT"
+        }
+      ],
+      "account": "epic1346-as01-user32",
+      "domainid": "2246448b-b23b-11f1-990e-0024811f8935",
+      "domain": "ROOT",
+      "domainpath": "ROOT",
+      "fordisplay": true,
+      "created": "2026-10-11T10:19:26+0900",
+      "operationinprogress": true,
+      "scalingaction": "SCALEDOWN",
+      "scalingphase": "DESTROYING_RETRY",
+      "evaluation": {
+        "evaluatedat": 1791728464384,
+        "cooldownuntil": 1791728345710,
+        "policies": [
+          {
+            "id": "37417d80-35d9-41d4-b751-5d46fc6af23a",
+            "action": "SCALEUP",
+            "duration": 60,
+            "conditions": [
+              {
+                "id": "4a8fdf72-6fee-4a24-80a0-c0544651c5ea",
+                "countername": "VM CPU - average percentage",
+                "source": "CPU",
+                "unit": "%",
+                "operator": "GT",
+                "threshold": 5,
+                "value": 0.16078221446657856,
+                "samples": 21,
+                "resources": 3,
+                "collectedat": 1791728463000,
+                "matched": false
+              }
+            ],
+            "status": "NOT_MATCHED"
+          },
+          {
+            "id": "7639559c-63ad-4235-bbb4-462dfaba5261",
+            "action": "SCALEDOWN",
+            "duration": 60,
+            "conditions": [
+              {
+                "id": "2ec799ba-1c5f-4a5b-9ac5-709d10ddde48",
+                "countername": "VM CPU - average percentage",
+                "source": "CPU",
+                "unit": "%",
+                "operator": "LT",
+                "threshold": 1,
+                "value": 0.16078221446657856,
+                "samples": 21,
+                "resources": 3,
+                "collectedat": 1791728463000,
+                "matched": true
+              }
+            ],
+            "status": "MATCHED"
+          }
+        ],
+        "collectedat": 1791728463000,
+        "status": "MIN_MEMBERS",
+        "reason": "MIN_MEMBERS"
+      },
+      "memberstatecounts": {
+        "Running": 3
+      },
+      "statuscollectedat": 1791729826727,
+      "lastscaledat": 1791728335710,
+      "lastcheckedat": 1791728473000,
+      "operationdeadline": 1791729665000,
+      "evaluationerror": false,
+      "hasannotations": false
+    },
+    "members": [
+      {
+        "id": "6f9bd71b-1745-48c5-9c88-cc0cccd9d1ff",
+        "name": "autoScaleVm-AS-PROD-32-AS04-CONCURRENCY-1-zoqdbs",
+        "displayname": "autoScaleVm-AS-PROD-32-AS04-CONCURRENCY-1-zoqdbs",
+        "state": "Running",
+        "hostid": "a7b3e91f-2248-436b-affb-e3b31b36ed62",
+        "hostname": "ablecube32-2",
+        "created": "2026-10-11T10:19:36+0900",
+        "isautoscalescaleup": null,
+        "deleteprotection": true,
+        "volumes": [
+          {
+            "id": "d38a9172-aa7f-4ab5-80c8-cff68a74ab28",
+            "name": "ROOT-73",
+            "type": "ROOT",
+            "state": "Ready",
+            "path": "d38a9172-aa7f-4ab5-80c8-cff68a74ab28",
+            "size": 107374182400,
+            "format": null,
+            "storage": "Primary",
+            "provisioningtype": "thin"
+          }
+        ]
+      },
+      {
+        "id": "7e79cfea-52e7-484f-87f5-b7923b846a6b",
+        "name": "autoScaleVm-AS-PROD-32-AS04-CONCURRENCY-79-rguufe",
+        "displayname": "autoScaleVm-AS-PROD-32-AS04-CONCURRENCY-79-rguufe",
+        "state": "Running",
+        "hostid": "a7b3e91f-2248-436b-affb-e3b31b36ed62",
+        "hostname": "ablecube32-2",
+        "created": "2026-10-11T23:18:36+0900",
+        "isautoscalescaleup": null,
+        "deleteprotection": false,
+        "volumes": [
+          {
+            "id": "79258e09-2d2e-4c63-8201-0b7e54c6bd49",
+            "name": "ROOT-153",
+            "type": "ROOT",
+            "state": "Ready",
+            "path": "79258e09-2d2e-4c63-8201-0b7e54c6bd49",
+            "size": 107374182400,
+            "format": null,
+            "storage": "Primary",
+            "provisioningtype": "thin"
+          }
+        ]
+      },
+      {
+        "id": "e65dbb1a-78f8-4742-b2dc-1fb14e00d238",
+        "name": "autoScaleVm-AS-PROD-32-AS04-CONCURRENCY-80-hnqluq",
+        "displayname": "autoScaleVm-AS-PROD-32-AS04-CONCURRENCY-80-hnqluq",
+        "state": "Running",
+        "hostid": "a7b3e91f-2248-436b-affb-e3b31b36ed62",
+        "hostname": "ablecube32-2",
+        "created": "2026-10-11T23:18:45+0900",
+        "isautoscalescaleup": null,
+        "deleteprotection": true,
+        "volumes": [
+          {
+            "id": "f529fee8-a253-4dc5-985f-ae5106f7bfb6",
+            "name": "ROOT-154",
+            "type": "ROOT",
+            "state": "Ready",
+            "path": "f529fee8-a253-4dc5-985f-ae5106f7bfb6",
+            "size": 107374182400,
+            "format": null,
+            "storage": "Primary",
+            "provisioningtype": "thin"
+          }
+        ]
+      }
+    ],
+    "lb": [
+      {
+        "id": "6f9bd71b-1745-48c5-9c88-cc0cccd9d1ff",
+        "name": "autoScaleVm-AS-PROD-32-AS04-CONCURRENCY-1-zoqdbs",
+        "state": "Running",
+        "servicestate": null
+      },
+      {
+        "id": "7e79cfea-52e7-484f-87f5-b7923b846a6b",
+        "name": "autoScaleVm-AS-PROD-32-AS04-CONCURRENCY-79-rguufe",
+        "state": "Running",
+        "servicestate": null
+      }
+    ],
+    "events": [
+      {
+        "id": "360a7132-6454-490d-8a24-f9c562f88700",
+        "username": "epic1346-as01-user32",
+        "type": "AUTOSCALEVMGROUP.DISABLE",
+        "level": "INFO",
+        "description": "Successfully completed disabling autoscale vm group",
+        "account": "epic1346-as01-user32",
+        "domainid": "2246448b-b23b-11f1-990e-0024811f8935",
+        "domain": "ROOT",
+        "domainpath": "ROOT",
+        "resourceid": "18bef25a-4053-4454-bc85-f6d777b9391d",
+        "resourcetype": "AutoScaleVmGroup",
+        "resourcename": "AS-PROD-32-AS04-CONCURRENCY",
+        "created": "2026-10-11T23:43:28+0900",
+        "state": "Completed",
+        "parentid": "82c9c173-75bb-4f6d-82d4-1b9f16bafb68"
+      },
+      {
+        "id": "709b8d8b-214d-4901-9c32-a4bc379e01d9",
+        "username": "epic1346-as01-user32",
+        "type": "AUTOSCALEVMGROUP.DISABLE",
+        "level": "INFO",
+        "description": "Disabling autoscale vm group",
+        "account": "epic1346-as01-user32",
+        "domainid": "2246448b-b23b-11f1-990e-0024811f8935",
+        "domain": "ROOT",
+        "domainpath": "ROOT",
+        "resourceid": "18bef25a-4053-4454-bc85-f6d777b9391d",
+        "resourcetype": "AutoScaleVmGroup",
+        "resourcename": "AS-PROD-32-AS04-CONCURRENCY",
+        "created": "2026-10-11T23:43:25+0900",
+        "state": "Started",
+        "parentid": "82c9c173-75bb-4f6d-82d4-1b9f16bafb68"
+      },
+      {
+        "id": "82c9c173-75bb-4f6d-82d4-1b9f16bafb68",
+        "username": "epic1346-as01-user32",
+        "type": "AUTOSCALEVMGROUP.DISABLE",
+        "level": "INFO",
+        "description": "Disabling AutoScale Instance Group with ID: 18bef25a-4053-4454-bc85-f6d777b9391d",
+        "account": "epic1346-as01-user32",
+        "domainid": "2246448b-b23b-11f1-990e-0024811f8935",
+        "domain": "ROOT",
+        "domainpath": "ROOT",
+        "resourceid": "18bef25a-4053-4454-bc85-f6d777b9391d",
+        "resourcetype": "AutoScaleVmGroup",
+        "resourcename": "AS-PROD-32-AS04-CONCURRENCY",
+        "created": "2026-10-11T23:43:25+0900",
+        "state": "Scheduled"
+      },
+      {
+        "id": "5524b8cb-c7d8-4805-b78a-8886ee396f74",
+        "username": "system",
+        "type": "AUTOSCALEVMGROUP.SCALEDOWN",
+        "level": "ERROR",
+        "description": "AutoScale lifecycle failed at DESTROYING; recorded members are retained for reconciliation",
+        "account": "epic1346-as01-user32",
+        "domainid": "2246448b-b23b-11f1-990e-0024811f8935",
+        "domain": "ROOT",
+        "domainpath": "ROOT",
+        "resourceid": "18bef25a-4053-4454-bc85-f6d777b9391d",
+        "resourcetype": "AutoScaleVmGroup",
+        "resourcename": "AS-PROD-32-AS04-CONCURRENCY",
+        "created": "2026-10-11T23:41:05+0900",
+        "state": "Completed"
+      },
+      {
+        "id": "2d0571d1-779d-4ae7-a049-3d3662c459bc",
+        "username": "system",
+        "type": "AUTOSCALEVMGROUP.SCALEDOWN",
+        "level": "INFO",
+        "description": "Scaling down AutoScale VM group 5",
+        "account": "epic1346-as01-user32",
+        "domainid": "2246448b-b23b-11f1-990e-0024811f8935",
+        "domain": "ROOT",
+        "domainpath": "ROOT",
+        "resourceid": "18bef25a-4053-4454-bc85-f6d777b9391d",
+        "resourcetype": "AutoScaleVmGroup",
+        "resourcename": "AS-PROD-32-AS04-CONCURRENCY",
+        "created": "2026-10-11T23:40:02+0900",
+        "state": "Started"
+      },
+      {
+        "id": "aaaac23a-4c8b-491c-bbcf-cacf3c442e9f",
+        "username": "epic1346-as01-user32",
+        "type": "AUTOSCALEVMGROUP.ENABLE",
+        "level": "INFO",
+        "description": "Successfully completed enabling autoscale vm group",
+        "account": "epic1346-as01-user32",
+        "domainid": "2246448b-b23b-11f1-990e-0024811f8935",
+        "domain": "ROOT",
+        "domainpath": "ROOT",
+        "resourceid": "18bef25a-4053-4454-bc85-f6d777b9391d",
+        "resourcetype": "AutoScaleVmGroup",
+        "resourcename": "AS-PROD-32-AS04-CONCURRENCY",
+        "created": "2026-10-11T23:39:52+0900",
+        "state": "Completed",
+        "parentid": "98937b72-16cb-4ae0-a42f-c4a664d84b84"
+      },
+      {
+        "id": "f87a85a3-ccbf-4ddb-b879-5f5c37afd553",
+        "username": "epic1346-as01-user32",
+        "type": "AUTOSCALEVMGROUP.ENABLE",
+        "level": "INFO",
+        "description": "Enabling autoscale vm group",
+        "account": "epic1346-as01-user32",
+        "domainid": "2246448b-b23b-11f1-990e-0024811f8935",
+        "domain": "ROOT",
+        "domainpath": "ROOT",
+        "resourceid": "18bef25a-4053-4454-bc85-f6d777b9391d",
+        "resourcetype": "AutoScaleVmGroup",
+        "resourcename": "AS-PROD-32-AS04-CONCURRENCY",
+        "created": "2026-10-11T23:39:49+0900",
+        "state": "Started",
+        "parentid": "98937b72-16cb-4ae0-a42f-c4a664d84b84"
+      },
+      {
+        "id": "98937b72-16cb-4ae0-a42f-c4a664d84b84",
+        "username": "epic1346-as01-user32",
+        "type": "AUTOSCALEVMGROUP.ENABLE",
+        "level": "INFO",
+        "description": "Enabling AutoScale Instance Group with ID: 18bef25a-4053-4454-bc85-f6d777b9391d",
+        "account": "epic1346-as01-user32",
+        "domainid": "2246448b-b23b-11f1-990e-0024811f8935",
+        "domain": "ROOT",
+        "domainpath": "ROOT",
+        "resourceid": "18bef25a-4053-4454-bc85-f6d777b9391d",
+        "resourcetype": "AutoScaleVmGroup",
+        "resourcename": "AS-PROD-32-AS04-CONCURRENCY",
+        "created": "2026-10-11T23:39:49+0900",
+        "state": "Scheduled"
+      },
+      {
+        "id": "3bcad0dd-6397-4317-a097-0cf3df76a2c6",
+        "username": "epic1346-as01-user32",
+        "type": "AUTOSCALEVMGROUP.UPDATE",
+        "level": "INFO",
+        "description": "Successfully completed updating autoscale vm group. AutoScale Instance Group ID: 18bef25a-4053-4454-bc85-f6d777b9391d",
+        "account": "epic1346-as01-user32",
+        "domainid": "2246448b-b23b-11f1-990e-0024811f8935",
+        "domain": "ROOT",
+        "domainpath": "ROOT",
+        "resourceid": "18bef25a-4053-4454-bc85-f6d777b9391d",
+        "resourcetype": "AutoScaleVmGroup",
+        "resourcename": "AS-PROD-32-AS04-CONCURRENCY",
+        "created": "2026-10-11T23:39:29+0900",
+        "state": "Completed",
+        "parentid": "3e481c2f-f918-447b-861a-4151602a12f1"
+      },
+      {
+        "id": "a5def4a2-d194-42ec-ba2e-5198bdd929c2",
+        "username": "epic1346-as01-user32",
+        "type": "AUTOSCALEVMGROUP.UPDATE",
+        "level": "INFO",
+        "description": "Updating autoscale vm group. AutoScale Instance Group ID: 18bef25a-4053-4454-bc85-f6d777b9391d",
+        "account": "epic1346-as01-user32",
+        "domainid": "2246448b-b23b-11f1-990e-0024811f8935",
+        "domain": "ROOT",
+        "domainpath": "ROOT",
+        "resourceid": "18bef25a-4053-4454-bc85-f6d777b9391d",
+        "resourcetype": "AutoScaleVmGroup",
+        "resourcename": "AS-PROD-32-AS04-CONCURRENCY",
+        "created": "2026-10-11T23:39:29+0900",
+        "state": "Started",
+        "parentid": "3e481c2f-f918-447b-861a-4151602a12f1"
+      },
+      {
+        "id": "3e481c2f-f918-447b-861a-4151602a12f1",
+        "username": "epic1346-as01-user32",
+        "type": "AUTOSCALEVMGROUP.UPDATE",
+        "level": "INFO",
+        "description": "Updating AutoScale Instance Group with ID: 5",
+        "account": "epic1346-as01-user32",
+        "domainid": "2246448b-b23b-11f1-990e-0024811f8935",
+        "domain": "ROOT",
+        "domainpath": "ROOT",
+        "resourceid": "18bef25a-4053-4454-bc85-f6d777b9391d",
+        "resourcetype": "AutoScaleVmGroup",
+        "resourcename": "AS-PROD-32-AS04-CONCURRENCY",
+        "created": "2026-10-11T23:39:29+0900",
+        "state": "Scheduled"
+      },
+      {
+        "id": "2e0ede8f-1c89-4e10-85ec-668b4218ccac",
+        "username": "epic1346-as01-user32",
+        "type": "AUTOSCALEVMGROUP.DISABLE",
+        "level": "INFO",
+        "description": "Successfully completed disabling autoscale vm group",
+        "account": "epic1346-as01-user32",
+        "domainid": "2246448b-b23b-11f1-990e-0024811f8935",
+        "domain": "ROOT",
+        "domainpath": "ROOT",
+        "resourceid": "18bef25a-4053-4454-bc85-f6d777b9391d",
+        "resourcetype": "AutoScaleVmGroup",
+        "resourcename": "AS-PROD-32-AS04-CONCURRENCY",
+        "created": "2026-10-11T23:21:23+0900",
+        "state": "Completed",
+        "parentid": "f06783c1-c0c4-47cd-aeb6-a721972a74fe"
+      }
+    ],
+    "readAt": 1791729825137
+  }
+}

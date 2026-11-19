@@ -1,0 +1,130 @@
+Browser tab: 6, Title: "Affinity 그룹 - ABLESTACK-Mold", URL: "http://10.10.31.10:8080/client/#/affinitygroup/b2425532-f2bb-4511-86f5-917f6a4f1869?tab=details".
+1 AXWebArea Affinity 그룹 - ABLESTACK-Mold, URL: 10.10.31.10:8080/client/#/affinitygroup/b2425532-f2bb-4511-86f5-917f6a4f1869?tab=details
+	5 container
+		2357 container
+			2358 text 페이지 스타일 설정
+			2359 button 닫기
+				2360 image close
+			4353 container
+				4354 heading 페이지 스타일 설정, Value: 3
+					4355 text 페이지 스타일 설정
+				4356 container
+					4357 image
+					4358 container
+						4359 radio button (settable, integer) Description:  , Value: 1
+					4360 image check
+				4361 container
+					4362 image
+					4363 container
+						4364 radio button (settable, integer) Description:  , Value: 0
+				4365 heading 테마 색상, Value: 3
+					4366 text 테마 색상
+				4367 container
+					4368 radio button (settable, integer) Description:  , Value: 0
+					4369 image check
+				4370 container
+					4371 radio button (settable, integer) Description:  , Value: 0
+				4372 container
+					4373 radio button (settable, integer) Description:  , Value: 0
+				4374 container
+					4375 radio button (settable, integer) Description:  , Value: 0
+				4376 container
+					4377 radio button (settable, integer) Description:  , Value: 0
+				4378 container
+					4379 radio button (settable, integer) Description:  , Value: 0
+				4380 container
+					4381 radio button (settable, integer) Description:  , Value: 0
+				4382 container
+					4383 radio button (settable, integer) Description:  , Value: 0
+				4384 heading 네비게이션 설정, Value: 3
+					4385 text 네비게이션 설정
+				4386 container
+					4387 container
+						4388 text 배경색
+						4389 color well (settable) #ffffff
+					4390 container
+						4391 text 텍스트 색상
+						4392 color well (settable) #000000
+				4393 image exclamation-circle
+				4394 text 설정은 현재 브라우저에서만 볼 수 있습니다. 설정을 적용하려면 JSON 파일을 다운로드하고 경로 `/public/config.json` 아래의 `config.json` 파일의 `theme` 섹션에서 해당 콘텐츠를 교체하세요.
+				4395 button download 세팅값 다운로드(json)
+					4396 image download
+					4397 text 세팅값 다운로드(json)
+				4398 button undo 기본값으로 재설정
+					4399 image undo
+					4400 text 기본값으로 재설정
+		125 container
+			4208 image menu-unfold
+			127 container
+				128 combo box (settable) rc_select_0
+				129 image project
+				130 text 기본 보기
+			134 image translation
+			135 image bell
+			136 container
+				137 text AC admin cloud
+		138 container
+			4234 container
+				4235 container
+					4236 link Description: home, Value: 10.10.31.10:8080/client/#/
+					4237 text /
+					4238 link Description: Affinity 그룹, Value: 10.10.31.10:8080/client/#/affinitygroup
+					4401 text / qa-ag05-target
+					4402 link Description: question-circle, Value: docs.ablecloud.io/latest/adminguide/virtual_machines.html#affinity-groups
+					4403 button reload 업데이트
+						4409 image reload
+						4405 text 업데이트
+				4406 button down 작업
+					4407 image down
+					4408 text 작업
+			4410 container
+				4411 image swap
+				4412 heading qa-ag05-target, Value: 4
+					4413 text qa-ag05-target
+				4414 text 같은 호스트 배치 · 엄격
+				4415 text 아이디
+				4416 button barcode
+					4417 image barcode
+				4418 link Description: b2425532-f2bb-4511-86f5-917f6a4f1869 , Value: javascript:;
+				4419 text 같은 그룹의 VM을 같은 호스트에 배치합니다. 조건을 만족하지 못하면 배치가 실패합니다. 연결 VM 수 3 계정
+				4420 image user
+				4421 link Description: admin, Value: 10.10.31.10:8080/client/#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f
+				4422 text 도메인
+				4423 image block
+				4424 link Description: ROOT, Value: 10.10.31.10:8080/client/#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details
+				4425 link Description: cloud-server 가상머신 보기, Value: 10.10.31.10:8080/client/#/vm?affinitygroupid=b2425532-f2bb-4511-86f5-917f6a4f1869
+			4426 container
+				4427 tab group
+					4428 container
+						4429 tab (selected, settable, boolean) 상세, Value: 1, ID: rc-tabs-19-tab-details
+						4430 tab (selectable, settable, boolean) 가상머신, Value: 0, ID: rc-tabs-19-tab-instances
+						4431 tab (selectable, settable, boolean) 이벤트, Value: 0, ID: rc-tabs-19-tab-events
+				4432 container Description: 상세, ID: rc-tabs-19-panel-details
+					4433 content list
+						4434 container
+							4435 text 이름
+							4436 text qa-ag05-target
+						4437 container
+							4438 text 아이디
+							4439 text b2425532-f2bb-4511-86f5-917f6a4f1869
+						4440 container
+							4441 text 설명
+							4442 text AG05 disposable UI fixture
+						4443 container
+							4444 text 유형
+							4445 text 같은 호스트 배치 · 엄격
+							4446 text 같은 그룹의 VM을 같은 호스트에 배치합니다. 조건을 만족하지 못하면 배치가 실패합니다.
+						4447 container
+							4448 text 연결 VM 수
+							4449 text 3
+						4450 container
+							4451 text 계정
+							4452 text admin
+						4453 container
+							4454 text 도메인
+							4455 text ROOT
+	533 container
+		534 image info-circle
+		535 text Wall 모니터링을 사용할 수 없습니다. 기존 알림은 최신 정보가 아닐 수 있으며 Mold는 계속 사용할 수 있습니다. 비활성
+
+The focused UI element is 1 AXWebArea Affinity 그룹 - ABLESTACK-Mold, URL: 10.10.31.10:8080/client/#/affinitygroup/b2425532-f2bb-4511-86f5-917f6a4f1869?tab=details

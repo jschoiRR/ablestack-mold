@@ -1,0 +1,104 @@
+{
+  "31": {
+    "group": {
+      "id": "bf0f5385-ae2c-4da4-aec4-eb985dbdeba4",
+      "name": "AS-PROD-31-AS04-CONCURRENCY",
+      "state": "DISABLED",
+      "operationinprogress": false,
+      "minmembers": 1,
+      "maxmembers": 3,
+      "availablevirtualmachinecount": 1
+    },
+    "members": [
+      {
+        "id": "bc00f070-797a-40b0-9785-c965dc50fc63",
+        "name": "autoScaleVm-AS-PROD-31-AS04-CONCURRENCY-1-rvajox",
+        "instancename": "i-35-397-VM",
+        "state": "Running",
+        "templateid": "c8ee6ff0-154e-4aed-a8b3-e0cfba8421fe",
+        "serviceofferingid": "39c3aa33-5632-4dea-bd84-ba794d292c87",
+        "keypair": null,
+        "affinitygroup": [],
+        "volumes": [
+          {
+            "id": "7d97eaef-5619-494b-92a4-ddddb13cfa11",
+            "type": "ROOT",
+            "size": 107374182400,
+            "state": "Ready",
+            "storage": "Primary",
+            "provisioningtype": "sparse",
+            "diskofferingid": null
+          }
+        ]
+      }
+    ],
+    "lbMemberCount": 1,
+    "scheduleCount": 3,
+    "allSchedulesDisabled": true,
+    "profileOriginalEquality": {
+      "templateid": true,
+      "serviceofferingid": true,
+      "destroyvmgraceperiod": true,
+      "otherdeployparams": true,
+      "userdataid": true,
+      "userdata": true,
+      "userdatadetails": true,
+      "counterparams": true
+    },
+    "http": {
+      "200": 20,
+      "failure": 0
+    }
+  },
+  "32": {
+    "group": {
+      "id": "18bef25a-4053-4454-bc85-f6d777b9391d",
+      "name": "AS-PROD-32-AS04-CONCURRENCY",
+      "state": "DISABLED",
+      "operationinprogress": false,
+      "minmembers": 1,
+      "maxmembers": 3,
+      "availablevirtualmachinecount": 1
+    },
+    "members": [
+      {
+        "id": "6f9bd71b-1745-48c5-9c88-cc0cccd9d1ff",
+        "name": "autoScaleVm-AS-PROD-32-AS04-CONCURRENCY-1-zoqdbs",
+        "instancename": "i-6-73-VM",
+        "state": "Running",
+        "templateid": "b31d2c92-67b9-40c4-a137-4ff9778c6b0d",
+        "serviceofferingid": "b02ac1bf-2da7-46e1-8961-d94d76dad9ab",
+        "keypair": null,
+        "affinitygroup": [],
+        "volumes": [
+          {
+            "id": "d38a9172-aa7f-4ab5-80c8-cff68a74ab28",
+            "type": "ROOT",
+            "size": 107374182400,
+            "state": "Ready",
+            "storage": "Primary",
+            "provisioningtype": "thin",
+            "diskofferingid": null
+          }
+        ]
+      }
+    ],
+    "lbMemberCount": 1,
+    "scheduleCount": 3,
+    "allSchedulesDisabled": true,
+    "profileOriginalEquality": {
+      "templateid": true,
+      "serviceofferingid": true,
+      "destroyvmgraceperiod": true,
+      "otherdeployparams": true,
+      "userdataid": true,
+      "userdata": true,
+      "userdatadetails": true,
+      "counterparams": true
+    },
+    "http": {
+      "200": 20,
+      "failure": 0
+    }
+  }
+}

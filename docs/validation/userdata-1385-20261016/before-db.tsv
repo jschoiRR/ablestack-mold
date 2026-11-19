@@ -1,0 +1,18 @@
+resource	active_residuals
+userdata	17
+vm	7
+volume	7
+template	3
+network	3
+account	2
+project	1
+project-account	1
+domain	1
+uuid	display_name	state	removed	user_data_id	library_uuid	user_data_details	userdata_sha256
+db065200-f6f0-48ed-9b4e-19415bbe6cef	UD1385-31-20261016-base	Stopped	0	240	dce976c1-3396-4ac8-bd5a-6a9a369a45a3	{VAR1=현재 한글, 값=1}	d355b16ba38be628c9e7512dbaa010afe30c731f1d9607d46f5c3c9ecb2bcb4b
+fe3c993c-6bf9-4666-afae-251b1a1dae1f	UD1385-31-20261016-ALLOWOVERRIDE	Stopped	0	NULL	NULL	{T=템플릿 한글}	3692c2068061ad8d2b438bf752de2701b79c6b7332b0222b5f6bbc564b1f696b
+3e56db2c-7b14-4c30-9d85-58ce88aacc7d	UD1385-31-20261016-APPEND	Stopped	0	240	dce976c1-3396-4ac8-bd5a-6a9a369a45a3	{VAR1=현재 한글, 값=1, T=템플릿 한글}	b796bc740ab6e75465831474de243aec9c5491e91cf006c4aa04797339cc90d0
+e5187f51-a49e-4549-98b2-0c3da9ec7dad	UD1385-31-20261016-DENYOVERRIDE	Stopped	0	NULL	NULL	{T=템플릿 한글}	3692c2068061ad8d2b438bf752de2701b79c6b7332b0222b5f6bbc564b1f696b
+39eb32b9-7079-4725-93b2-8e127a7f1a86	UD1385-31-20261016-user	Stopped	0	254	1fb89041-d3fe-449a-9d61-9d3b0c35ebbb	{VAR1=소유자 한글}	bbd317854c25917fbc3346aaa15ee99178ab60f8b40121a68ceb7378446b3d62
+b565108c-b3bb-4ab3-90d8-42111a9811e8	UD1385-31-20261016-domainadmin	Stopped	0	255	e27b522a-8a54-4473-a5a3-92524951c9ae	{VAR1=소유자 한글}	ab4862d824b08d8a86422a58c134939f7e1c7493c33fb699e74f89026817e5aa
+711ae814-f74b-43b6-b5fd-4d0d188daf04	UD1385-31-20261016-project	Stopped	0	256	0f814785-c45b-40f8-bc75-95567a49a0cd	{VAR1=소유자 한글}	fd5c48aacfbcf8fedde4e7ca552e03ce51a0ab27c17760eefdda2a16a8c18d10

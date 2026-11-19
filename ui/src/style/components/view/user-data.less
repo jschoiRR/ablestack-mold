@@ -1,0 +1,95 @@
+// Licensed to the Apache Software Foundation (ASF) under one
+// or more contributor license agreements. See the NOTICE file
+// distributed with this work for additional information
+// regarding copyright ownership. The ASF licenses this file
+// to you under the Apache License, Version 2.0 (the
+// "License"); you may not use this file except in compliance
+// with the License. You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing,
+// software distributed under the License is distributed on an
+// "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+// KIND, either express or implied. See the License for the
+// specific language governing permissions and limitations
+// under the License.
+/* Opt in only the library and the existing user-data consumers. Values are
+ * shared semantic tokens; no second palette or generic AntD override. */
+body .userdata-library, body .userdata-selection, body .userdata-usage,
+body .userdata-content, body .userdata-versions,
+body .userdata-registration-dialog, body .userdata-delete-dialog,
+body .userdata-reset-dialog, body .vm-userdata-dialog, body .image-userdata-dialog {
+  --ui-text-placeholder: var(--ui-text-muted);
+  --ui-text-disabled: var(--ui-text-secondary);
+  --ui-border-strong: var(--ui-text-muted);
+  --ui-focus: var(--ui-link);
+  a:not(.ant-btn), a:not(.ant-btn):hover, a:not(.ant-btn):focus { color: var(--ui-link) !important; }
+  .ant-breadcrumb, .ant-breadcrumb-separator, .ant-breadcrumb-link, .ant-breadcrumb-link > span { color: var(--ui-text-secondary); }
+  .ant-tabs-tab:hover, .ant-tabs-tab-active .ant-tabs-tab-btn, .ant-pagination-item-active a,
+  .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled) { color: var(--ui-link) !important; }
+  .ant-radio-disabled + span, .ant-checkbox-wrapper-disabled > span, .ant-radio-button-wrapper-disabled { color: var(--ui-text-secondary) !important; opacity: 1; }
+  .ant-input-search .ant-input-search-button:not(.ant-btn-primary) { color: var(--ui-text-secondary) !important; }
+  .ant-input-clear-icon, .ant-select-clear, .ant-select-arrow { color: var(--ui-text-muted); opacity: 1; }
+  .ant-input:not(:disabled), .ant-select:not(.ant-select-disabled) .ant-select-selector,
+  .ant-input-affix-wrapper:not(.ant-input-affix-wrapper-disabled) { border-color: var(--ui-border-strong); }
+  .ant-input::placeholder, .ant-select-selection-placeholder { color: var(--ui-text-muted); opacity: 1; }
+  .ant-input:focus, .ant-input:hover, .ant-input-affix-wrapper-focused,
+  .ant-select-focused:not(.ant-select-disabled) .ant-select-selector { border-color: var(--ui-focus); }
+  .ant-btn-primary:not(:disabled) { color: var(--ui-action-primary-text); background: var(--ui-action-primary-bg); border-color: var(--ui-action-primary-bg); }
+  .ant-btn-primary:not(:disabled):hover, .ant-btn-primary:not(:disabled):focus { color: var(--ui-action-primary-text); background: var(--ui-action-primary-hover); border-color: var(--ui-action-primary-hover); }
+  .ant-btn-primary.ant-btn-dangerous:not(:disabled) { background: var(--ui-action-danger-bg); border-color: var(--ui-action-danger-bg); }
+  .ant-btn:disabled { background: var(--ui-bg-disabled) !important; color: var(--ui-text-secondary) !important; border-color: var(--ui-border-strong) !important; }
+  .ant-btn:disabled > span, .ant-btn:disabled .anticon { color: var(--ui-text-secondary) !important; }
+  .ant-btn:focus-visible, summary:focus-visible, a:focus-visible,
+  .ant-radio-input:focus-visible + .ant-radio-inner,
+  .ant-radio-button-wrapper:has(input:focus-visible) { outline: 2px solid var(--ui-link); outline-offset: 2px; }
+  // The legacy dark-mode :not(:hover, :focus) selector otherwise wins over
+  // these opt-in semantic boundaries even while the control is idle.
+  .ant-checkbox-inner { background: var(--ui-bg-input) !important; border-color: var(--ui-border-strong) !important; }
+  .ant-checkbox-checked .ant-checkbox-inner { background: var(--ui-action-primary-bg) !important; border-color: var(--ui-link) !important; }
+  .ant-checkbox-checked .ant-checkbox-inner::after { border-color: var(--ui-action-primary-text) !important; }
+  .ant-checkbox-indeterminate .ant-checkbox-inner::after { background: var(--ui-action-primary-bg); }
+  .ant-checkbox-input:focus-visible + .ant-checkbox-inner { outline: 2px solid var(--ui-link); outline-offset: 2px; }
+  .ant-radio-inner { background: var(--ui-bg-input) !important; border-color: var(--ui-border-strong) !important; }
+  .ant-radio-checked .ant-radio-inner { border-color: var(--ui-link) !important; }
+  .ant-radio-inner::after { background-color: var(--ui-link) !important; }
+}
+
+// Keep form switch styling separate from the library's standard project switch.
+body .userdata-selection, body .userdata-usage,
+body .userdata-content, body .userdata-versions,
+body .userdata-registration-dialog, body .userdata-delete-dialog,
+body .userdata-reset-dialog, body .vm-userdata-dialog, body .image-userdata-dialog {
+  --userdata-switch-bg: var(--ui-text-muted);
+  .ant-switch:focus-visible { outline: 2px solid var(--ui-link); outline-offset: 2px; }
+  .ant-switch:not(.ant-switch-checked) { background: var(--userdata-switch-bg) !important; border-color: var(--ui-text-muted) !important; }
+  .ant-switch-checked { background: var(--ui-action-primary-bg) !important; border-color: var(--ui-link) !important; }
+  .ant-switch-inner { color: var(--ui-action-primary-text) !important; }
+  .ant-switch-disabled { opacity: 1; }
+}
+
+body.dark-mode .userdata-reset-dialog, body.dark-mode .image-userdata-dialog { --userdata-switch-bg: var(--ui-bg-disabled); }
+
+// The workbench content has 12px side padding. The legacy 24px full-bleed
+// breadcrumb margin otherwise adds a page-level horizontal scrollbar.
+body .userdata-library .breadcrumb-card { margin-left: -12px; margin-right: -12px; border-left: 0; border-right: 0; }
+
+@media (max-width: 767px) {
+  body .userdata-library .autogen-toolbar-actions {
+    display: flex !important;
+    flex-wrap: wrap;
+    gap: 8px;
+    min-width: 0;
+    > .row-action-button { display: flex !important; flex-wrap: wrap; gap: 8px; width: 100%; min-width: 0; margin-right: 0 !important; }
+    > span:not(.row-action-button) { display: block !important; flex: 1 1 100%; min-width: 0; }
+    .input-search { margin-left: 0; }
+  }
+}
+
+// Comment metadata and visibility actions are information, not decoration.
+body .userdata-library {
+  .ant-comment-content-author-name, .ant-comment-content-author-time,
+  .ant-comment-actions > li, .ant-comment-actions > li > span { color: var(--ui-text-secondary) !important; }
+  .ant-comment-actions .anticon { color: var(--ui-link) !important; }
+}

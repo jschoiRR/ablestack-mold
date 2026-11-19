@@ -1,0 +1,128 @@
+{
+  "body": {
+    "bottom": 622,
+    "height": 534,
+    "left": 281,
+    "right": 999,
+    "top": 88,
+    "width": 718,
+    "x": 281,
+    "y": 88
+  },
+  "bodyOverflow": "auto",
+  "buttons": [
+    {
+      "background": "rgb(39, 46, 54)",
+      "border": "rgb(62, 70, 80)",
+      "color": "rgb(197, 204, 212)",
+      "disabled": false,
+      "fontSize": "14px",
+      "padding": "4px 15px",
+      "rect": {
+        "bottom": 671,
+        "height": 32,
+        "left": 839.46875,
+        "right": 897.234375,
+        "top": 639,
+        "width": 57.765625,
+        "x": 839.46875,
+        "y": 639
+      },
+      "text": "취소"
+    },
+    {
+      "background": "rgb(8, 86, 182)",
+      "border": "rgb(8, 86, 182)",
+      "color": "rgb(255, 255, 255)",
+      "disabled": false,
+      "fontSize": "14px",
+      "padding": "4px 15px",
+      "rect": {
+        "bottom": 671,
+        "height": 32,
+        "left": 913.234375,
+        "right": 971,
+        "top": 639,
+        "width": 57.765625,
+        "x": 913.234375,
+        "y": 639
+      },
+      "text": "확인"
+    }
+  ],
+  "footer": {
+    "bottom": 687,
+    "height": 65,
+    "left": 281,
+    "right": 999,
+    "top": 622,
+    "width": 718,
+    "x": 281,
+    "y": 622
+  },
+  "globalNotifications": 0,
+  "header": {
+    "bottom": 88,
+    "height": 55,
+    "left": 281,
+    "right": 999,
+    "top": 33,
+    "width": 718,
+    "x": 281,
+    "y": 33
+  },
+  "inputs": [
+    {
+      "background": "rgb(27, 33, 40)",
+      "border": "rgb(154, 164, 175)",
+      "color": "rgb(240, 243, 246)",
+      "fontSize": "14px",
+      "readonly": false,
+      "tag": "INPUT",
+      "value": ""
+    },
+    {
+      "background": "rgba(0, 0, 0, 0)",
+      "border": "rgb(197, 204, 212)",
+      "color": "rgb(197, 204, 212)",
+      "fontSize": "14px",
+      "readonly": true,
+      "tag": "INPUT",
+      "value": ""
+    },
+    {
+      "background": "rgb(27, 33, 40)",
+      "border": "rgb(154, 164, 175)",
+      "color": "rgb(240, 243, 246)",
+      "fontSize": "14px",
+      "readonly": false,
+      "tag": "INPUT",
+      "value": "B-value"
+    }
+  ],
+  "modal": {
+    "bottom": 688,
+    "height": 656,
+    "left": 280,
+    "right": 1000,
+    "top": 32,
+    "width": 720,
+    "x": 280,
+    "y": 32
+  },
+  "switches": [
+    {
+      "checked": "true",
+      "disabled": false,
+      "label": "사용자 데이터 변경"
+    }
+  ],
+  "text": "Request failed with status code 530\n사용자 데이터 변경을 끄면 현재 설정을 유지하며 재설정 요청을 보내지 않습니다. 변경을 켜면 아래 설정을 적용합니다.\n지원하는 모든 NIC 공급자가 수락한 뒤 Cloud에 저장합니다. 미지원 NIC는 제외합니다. 게스트 수신은 별도이며 재설정만으로 cloud-init을 다시 실행하지 않습니다.\n\n현재 사용자 데이터: UD1386-31-20261016-A\n\nTAG\nA-value\n현재 저장된 본문(템플릿 포함)\n사용자 데이터 변경\n저장된 User Data\n수동 User Data 입력\n설정 안함은 라이브러리 연결과 사용자 지정 본문·변수값을 지웁니다. 취소하면 현재 설정을 유지합니다.\n설정 안함\n\n선택한 사용자 데이터: UD1386-31-20261016-B\n\n\t 사용자 데이터\t 계정\t 도메인\t\n \n\t\n \n\t\n \n\t\n \n\n\n\tUD1386-31-20261016-B\tadmin\tROOT\n\n\tUD1386-31-20261016-A\tadmin\tROOT\n\n\tAS-PROD-31-AS01-HTTP\tadmin\tROOT\n전체: 3\n1\n10 / 쪽\n키\t값\nTAG\t",
+  "theme": "dark-mode ant-scrolling-effect",
+  "url": "http://10.10.31.10:8080/client/#/vm/ee2f21dc-6281-439e-bbfb-11ad6013ec97",
+  "viewport": {
+    "height": 720,
+    "width": 1280
+  },
+  "source": "3b9dcd01b5fede2a761162dd24204a5b061154b4"
+}

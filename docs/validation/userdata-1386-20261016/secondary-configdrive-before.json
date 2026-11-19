@@ -1,0 +1,43 @@
+{
+  "id": "704c3735-85e2-4fa8-94e5-c20c82c46bed",
+  "name": "UD1386-31-20261016-unsupported",
+  "instancename": "i-2-548-VM",
+  "state": "Stopped",
+  "hostid": null,
+  "hostname": null,
+  "userdata": "I2Nsb3VkLWNvbmZpZwp3cml0ZV9maWxlczoKICAtIHBhdGg6IC92YXIvdG1wL3VkMTM4Ni1wcm9vZgogICAgcGVybWlzc2lvbnM6ICIwNjQ0IgogICAgY29udGVudDogIlVEMTM4Ni1BIO2VnOq4gFxuIgpydW5jbWQ6CiAgLSBbc2gsIC1jLCAicHJpbnRmIFVEMTM4Ni1BLWV4ZWN1dGVkID4gL3Zhci90bXAvdWQxMzg2LWV4ZWN1dGVkIl0K",
+  "userdataid": "c483043f-3de0-4870-bb82-cfe421423f9d",
+  "userdatadetails": "{TAG=A-value}",
+  "nic": [
+    {
+      "id": "6055e472-d0ac-43b8-9d15-edb47016eec3",
+      "networkid": "15b2f6b3-4cb6-4c19-82eb-237c4e6010c4",
+      "networkname": "UD1386-31-20261016-unsupported",
+      "isolationuri": "vlan://3984",
+      "broadcasturi": "vlan://3984",
+      "traffictype": "Guest",
+      "type": "L2",
+      "isdefault": true,
+      "macaddress": "02:1f:01:20:00:01",
+      "secondaryip": [],
+      "extradhcpoption": [],
+      "deviceid": "0",
+      "enabled": true
+    },
+    {
+      "id": "aac4456e-c55b-4633-ae1f-c274045f3aa3",
+      "networkid": "be09b004-a451-4b18-8c9d-1dc245c57a38",
+      "networkname": "UD1386-31-20261016-configdrive",
+      "isolationuri": "vlan://3985",
+      "broadcasturi": "vlan://3985",
+      "traffictype": "Guest",
+      "type": "L2",
+      "isdefault": false,
+      "macaddress": "02:1f:01:21:00:02",
+      "secondaryip": [],
+      "extradhcpoption": [],
+      "deviceid": "1",
+      "enabled": true
+    }
+  ]
+}

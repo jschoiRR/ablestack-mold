@@ -1,0 +1,201 @@
+Browser tab: 4, Title: "사용자 데이터 라이브러리 - ABLESTACK-Mold", URL: "http://10.10.31.10:8080/client/#/userdata/cd2544db-5b1f-4af1-a9bc-6b541553a956?tab=userdata.content".
+1 AXWebArea 사용자 데이터 라이브러리 - ABLESTACK-Mold, URL: 10.10.31.10:8080/client/#/userdata/cd2544db-5b1f-4af1-a9bc-6b541553a956?tab=userdata.content
+	2 container
+		981 container
+			982 image
+			983 menu
+				984 dashboard 대시보드
+					985 link Description: dashboard 대시보드, Value: 10.10.31.10:8080/client/#/dashboard
+				986 container
+					987 image cloud
+					988 text 컴퓨트
+				989 content list sub_menu_55_$$_/compute-popup
+					990 cloud-server 가상머신
+						991 link Description: cloud-server 가상머신, Value: 10.10.31.10:8080/client/#/vm
+					992 camera VM 스냅샷
+						993 link Description: camera VM 스냅샷, Value: 10.10.31.10:8080/client/#/vmsnapshot
+					994 쿠버네티스
+						995 link Description: 쿠버네티스, Value: 10.10.31.10:8080/client/#/kubernetes
+					996 fullscreen 오토스케일 VM 그룹
+						997 link Description: fullscreen 오토스케일 VM 그룹, Value: 10.10.31.10:8080/client/#/autoscalevmgroup
+					998 gold 가상머신 그룹
+						999 link Description: gold 가상머신 그룹, Value: 10.10.31.10:8080/client/#/vmgroup
+					1000 key SSH 키 쌍
+						1001 link Description: key SSH 키 쌍, Value: 10.10.31.10:8080/client/#/ssh
+					1002 solution 사용자 데이터 라이브러리
+						1003 link Description: solution 사용자 데이터 라이브러리, Value: 10.10.31.10:8080/client/#/userdata
+					1004 solution CNI 구성
+						1005 link Description: solution CNI 구성, Value: 10.10.31.10:8080/client/#/cniconfiguration
+					1006 swap Affinity 그룹
+						1007 link Description: swap Affinity 그룹, Value: 10.10.31.10:8080/client/#/affinitygroup
+				1008 container
+					1009 image hdd
+					1010 text 스토리지
+				1011 container
+					1012 image wifi
+					1013 text 네트워크
+				1014 container
+					1015 image picture
+					1016 text 이미지
+				1017 container
+					1018 image lock
+					1019 text 키 관리
+				1020 schedule 이벤트
+					1021 link Description: schedule 이벤트, Value: 10.10.31.10:8080/client/#/event
+				1022 project 프로젝트
+					1023 link Description: project 프로젝트, Value: 10.10.31.10:8080/client/#/project
+				1024 idcard 역할
+					1025 link Description: idcard 역할, Value: 10.10.31.10:8080/client/#/role
+				1026 team 계정
+					1027 link Description: team 계정, Value: 10.10.31.10:8080/client/#/account
+				1028 block 도메인
+					1029 link Description: block 도메인, Value: 10.10.31.10:8080/client/#/domain
+				1030 container
+					1031 image bank
+					1032 text 인프라스트럭쳐
+				1033 container
+					1034 image shopping
+					1035 text 서비스 오퍼링
+				1036 container
+					1037 image setting
+					1038 text 구성
+				1039 appstore-add 확장
+					1040 link Description: appstore-add 확장, Value: 10.10.31.10:8080/client/#/extension
+				1041 container
+					1042 image tool
+					1043 text 도구
+				1044 read API 문서
+					1045 link Description: read API 문서, Value: 10.10.31.10:8080/client/#/apidocs/
+		600 container
+			601 text 페이지 스타일 설정
+			602 button 닫기
+				603 image close
+			1046 heading 페이지 스타일 설정, Value: 3
+				1047 text 페이지 스타일 설정
+			1048 container
+				1049 container
+					1050 image
+					1051 container
+						1052 radio button (settable, integer) Description:  , Value: 0
+				1053 container
+					1054 image
+					1055 container
+						1056 radio button (settable, integer) Description:  , Value: 1
+					1057 image check
+			1058 heading 테마 색상, Value: 3
+				1059 text 테마 색상
+			1060 container
+				1061 container
+					1062 radio button (settable, integer) Description:  , Value: 0
+					1063 image check
+				1064 container
+					1065 radio button (settable, integer) Description:  , Value: 0
+				1066 container
+					1067 radio button (settable, integer) Description:  , Value: 0
+				1068 container
+					1069 radio button (settable, integer) Description:  , Value: 0
+				1070 container
+					1071 radio button (settable, integer) Description:  , Value: 0
+				1072 container
+					1073 radio button (settable, integer) Description:  , Value: 0
+				1074 container
+					1075 radio button (settable, integer) Description:  , Value: 0
+				1076 container
+					1077 radio button (settable, integer) Description:  , Value: 0
+			1078 heading 네비게이션 설정, Value: 3
+				1079 text 네비게이션 설정
+			1080 container
+				1081 container
+					1082 text 배경색
+					1083 color well (disabled, settable) #ffffff
+				1084 container
+					1085 text 텍스트 색상
+					1086 color well (disabled, settable) #000000
+			1087 container
+				1088 image exclamation-circle
+				1089 text 설정은 현재 브라우저에서만 볼 수 있습니다. 설정을 적용하려면 JSON 파일을 다운로드하고 경로 `/public/config.json` 아래의 `config.json` 파일의 `theme` 섹션에서 해당 콘텐츠를 교체하세요.
+			1090 button download 세팅값 다운로드(json)
+				1091 image download
+				1092 text 세팅값 다운로드(json)
+			1093 button undo 기본값으로 재설정
+				1094 image undo
+				1095 text 기본값으로 재설정
+		122 container
+			1096 image menu-fold
+			124 container
+				125 combo box (settable) rc_select_0
+				126 image project
+				127 text 기본 보기
+			1097 button 생성 down
+				1098 text 생성
+				1099 image down
+			131 image translation
+			132 image bell
+			133 container
+				134 text AC admin cloud
+		135 container
+			1100 container
+				1101 link Description: home, Value: 10.10.31.10:8080/client/#/
+				1102 text /
+				1103 link Description: 사용자 데이터 라이브러리, Value: 10.10.31.10:8080/client/#/userdata
+				1104 text / UD1389-31-20261016-binary
+				1105 link Description: question-circle, Value: docs.ablecloud.io/latest/adminguide/virtual_machines.html#user-data-and-meta-data
+				1106 button reload 업데이트
+					1112 image reload
+					1108 text 업데이트
+			1109 button down 작업
+				1110 image down
+				1111 text 작업
+			1113 container
+				1114 image solution
+				1115 heading UD1389-31-20261016-binary, Value: 4
+					1116 text UD1389-31-20261016-binary
+				1117 text 아이디
+				1118 button barcode
+					1119 image barcode
+				1120 link Description: cd2544db-5b1f-4af1-a9bc-6b541553a956 , Value: javascript:;
+				1121 text 계정
+				1122 image user
+				1123 link Description: admin, Value: 10.10.31.10:8080/client/#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f
+				1124 text 도메인
+				1125 image block
+				1126 link Description: ROOT, Value: 10.10.31.10:8080/client/#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details
+				1127 link Description: cloud-server 가상머신 보기, Value: 10.10.31.10:8080/client/#/vm?userdataid=cd2544db-5b1f-4af1-a9bc-6b541553a956
+			1128 container
+				1129 tab group
+					1130 container
+						1131 tab (selectable, settable, boolean) 상세, Value: 0, ID: rc-tabs-46-tab-details
+						1132 tab (selected, settable, boolean) 사용자 데이터 본문, Value: 1, ID: rc-tabs-46-tab-userdata.content
+						1133 tab (selectable, settable, boolean) 사용 가상머신, Value: 0, ID: rc-tabs-46-tab-userdata.usage.vms
+						1134 tab (selectable, settable, boolean) 연결 템플릿, Value: 0, ID: rc-tabs-46-tab-userdata.usage.templates
+						1135 tab (selectable, settable, boolean) 연결 ISO, Value: 0, ID: rc-tabs-46-tab-userdata.usage.isos
+						1136 tab (selectable, settable, boolean) 코멘트, Value: 0, ID: rc-tabs-46-tab-comments
+				1137 container Description: 사용자 데이터 본문, ID: rc-tabs-46-panel-userdata.content
+					1138 container 사용자 데이터 본문
+						1139 button copy 클립보드에 복사
+							1140 image copy
+							1141 text 클립보드에 복사
+						1142 button download 다운로드
+							1143 image download
+							1144 text 다운로드
+						1145 container 본문 표시 형식
+							1146 container
+								1147 radio button (disabled, settable, integer) Description: 원문 (UTF-8), Value: 0
+								1148 text 원문 (UTF-8)
+							1149 container
+								1150 radio button (settable, integer) Description: Base64, Value: 1
+								1151 text Base64
+						1152 button 업데이트
+							1153 image reload
+						1154 text 등록된 라이브러리의 본문입니다. 실행 결과를 의미하지 않습니다. 선택한 표시 형식으로 복사·다운로드합니다. 원문 다운로드는 BOM·줄바꿈을 포함한 저장 바이트를 보존합니다.
+						1155 text 표시: Base64 · 원문 크기: 5 바이트
+						1156 container
+							1157 image exclamation-circle
+							1158 text UTF-8 텍스트로 해석할 수 없는 본문입니다. Base64로 확인하고 내려받으세요.
+						1159 container Base64
+							1160 text /wABAv4=
+	197 container
+		198 image info-circle
+		199 text Wall 모니터링을 사용할 수 없습니다. 기존 알림은 최신 정보가 아닐 수 있으며 Mold는 계속 사용할 수 있습니다. 비활성
+
+The focused UI element is 1 AXWebArea 사용자 데이터 라이브러리 - ABLESTACK-Mold, URL: 10.10.31.10:8080/client/#/userdata/cd2544db-5b1f-4af1-a9bc-6b541553a956?tab=userdata.content

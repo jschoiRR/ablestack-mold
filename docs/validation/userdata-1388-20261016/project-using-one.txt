@@ -1,0 +1,184 @@
+Browser tab: 3, Title: "사용자 데이터 라이브러리 - ABLESTACK-Mold", URL: "http://10.10.31.10:8080/client/#/userdata/24bc6d38-0d34-4677-bc5d-ebc5321372bc?tab=userdata.usage.vms".
+1 AXWebArea 사용자 데이터 라이브러리 - ABLESTACK-Mold, URL: 10.10.31.10:8080/client/#/userdata/24bc6d38-0d34-4677-bc5d-ebc5321372bc?tab=userdata.usage.vms
+	2 container
+		456 container
+			457 image
+			458 menu
+				459 dashboard 대시보드
+					460 link Description: dashboard 대시보드, Value: 10.10.31.10:8080/client/#/dashboard
+				461 container
+					462 image cloud
+					463 text 컴퓨트
+				464 content list sub_menu_55_$$_/compute-popup
+					465 cloud-server 가상머신
+						466 link Description: cloud-server 가상머신, Value: 10.10.31.10:8080/client/#/vm
+					467 camera VM 스냅샷
+						468 link Description: camera VM 스냅샷, Value: 10.10.31.10:8080/client/#/vmsnapshot
+					469 쿠버네티스
+						470 link Description: 쿠버네티스, Value: 10.10.31.10:8080/client/#/kubernetes
+					471 fullscreen 오토스케일 VM 그룹
+						472 link Description: fullscreen 오토스케일 VM 그룹, Value: 10.10.31.10:8080/client/#/autoscalevmgroup
+					473 gold 가상머신 그룹
+						474 link Description: gold 가상머신 그룹, Value: 10.10.31.10:8080/client/#/vmgroup
+					475 key SSH 키 쌍
+						476 link Description: key SSH 키 쌍, Value: 10.10.31.10:8080/client/#/ssh
+					477 solution 사용자 데이터 라이브러리
+						478 link Description: solution 사용자 데이터 라이브러리, Value: 10.10.31.10:8080/client/#/userdata
+					479 solution CNI 구성
+						480 link Description: solution CNI 구성, Value: 10.10.31.10:8080/client/#/cniconfiguration
+					481 swap Affinity 그룹
+						482 link Description: swap Affinity 그룹, Value: 10.10.31.10:8080/client/#/affinitygroup
+				483 container
+					484 image hdd
+					485 text 스토리지
+				486 container
+					487 image wifi
+					488 text 네트워크
+				489 container
+					490 image picture
+					491 text 이미지
+				492 schedule 이벤트
+					493 link Description: schedule 이벤트, Value: 10.10.31.10:8080/client/#/event
+				494 project 프로젝트
+					495 link Description: project 프로젝트, Value: 10.10.31.10:8080/client/#/project
+				496 team 계정
+					497 link Description: team 계정, Value: 10.10.31.10:8080/client/#/account
+				498 global Zone
+					499 link Description: global Zone, Value: 10.10.31.10:8080/client/#/zones
+				500 container
+					501 image shopping
+					502 text 서비스 오퍼링
+				503 container
+					504 image tool
+					505 text 도구
+				506 read API 문서
+					507 link Description: read API 문서, Value: 10.10.31.10:8080/client/#/apidocs/
+		36 container
+			37 image menu-fold
+			453 text 132ba8c1-0b26-45af-aa82-a6cd09001421
+			38 container
+				39 combo box (collapsed, settable) ID: rc_select_38, Secondary Actions: Expand
+				454 image project
+				455 text UD1388-31-20261016-project
+			42 button 생성 down
+				43 text 생성
+				44 image down
+			45 image translation
+			46 image bell
+			47 container
+				48 text UQ UD1388 QA
+		49 container
+			508 container
+				509 container
+					510 link Description: home, Value: 10.10.31.10:8080/client/#/
+					511 text /
+					512 link Description: 사용자 데이터 라이브러리, Value: 10.10.31.10:8080/client/#/userdata
+					513 text / UD1388-31-20261016-project
+					514 link Description: question-circle, Value: docs.ablecloud.io/latest/adminguide/virtual_machines.html#user-data-and-meta-data
+					515 button reload 업데이트
+						516 image reload
+						517 text 업데이트
+				518 button down 작업
+					519 image down
+					520 text 작업
+			521 container
+				522 image solution
+				523 heading UD1388-31-20261016-project, Value: 4
+					524 text UD1388-31-20261016-project
+				525 text 아이디
+				526 button barcode
+					527 image barcode
+				528 link Description: 24bc6d38-0d34-4677-bc5d-ebc5321372bc , Value: javascript:;
+				529 text 프로젝트
+				530 image project
+				531 link Description: UD1388-31-20261016-project, Value: 10.10.31.10:8080/client/#/project/132ba8c1-0b26-45af-aa82-a6cd09001421
+				532 text 도메인
+				533 image block
+				534 text ud1388-31-20261016
+				535 link Description: cloud-server 가상머신 보기, Value: 10.10.31.10:8080/client/#/vm?userdataid=24bc6d38-0d34-4677-bc5d-ebc5321372bc
+			536 container
+				537 tab group
+					538 container
+						539 tab (selectable, settable, boolean) 상세, Value: 0, ID: rc-tabs-30-tab-details
+						540 tab (selected, settable, boolean) 사용 가상머신, Value: 1, ID: rc-tabs-30-tab-userdata.usage.vms
+						541 tab (selectable, settable, boolean) 연결 템플릿, Value: 0, ID: rc-tabs-30-tab-userdata.usage.templates
+						542 tab (selectable, settable, boolean) 연결 ISO, Value: 0, ID: rc-tabs-30-tab-userdata.usage.isos
+						543 tab (selectable, settable, boolean) 코멘트, Value: 0, ID: rc-tabs-30-tab-comments
+				544 container Description: 사용 가상머신, ID: rc-tabs-30-panel-userdata.usage.vms
+					545 container 참조 정보
+						546 button reload 업데이트
+							547 image reload
+							548 text 업데이트
+						549 container
+							550 text field (settable) 검색
+							551 button search
+								552 image search
+						553 text 저장된 사용자 데이터 UUID의 연결 관계입니다. 본문 복사·템플릿 상속 본문·게스트 실행 여부는 포함하지 않습니다.
+						554 text 검색·페이지 이동은 서버에서 처리합니다. 열 정렬과 상태 집계는 현재 페이지에만 적용됩니다.
+						555 text 조회 프로젝트: UD1388-31-20261016-project (없으면 기본 보기). 접근 가능한 참조만 표시합니다. 다른 프로젝트는 보기를 전환하여 확인하세요.
+						556 container
+							557 text 현재 페이지 상태:   정지된 VM 1
+						558 table
+							559 row
+								560 cell
+									561 container
+										562 text VM 표시 명
+										563 image caret-up
+										564 image caret-down
+								565 cell
+									566 container
+										567 text 아이디
+										568 image caret-up
+										569 image caret-down
+								570 cell
+									571 container
+										572 text 상태
+										573 image caret-up
+										574 image caret-down
+								575 cell
+									576 container
+										577 text 계정
+										578 image caret-up
+										579 image caret-down
+								580 cell
+									581 container
+										582 text 프로젝트
+										583 image caret-up
+										584 image caret-down
+								585 cell
+									586 container
+										587 text 도메인
+										588 image caret-up
+										589 image caret-down
+							590 row
+								591 cell
+									592 link Description: UD1388-31-20261016-project-vm-01, Value: 10.10.31.10:8080/client/#/vm/ca16e9f3-7250-4e63-810b-d79859e601ee
+								593 cell
+									594 text ca16e9f3-7250-4e63-810b-d79859e601ee
+								595 cell
+									596 text 정지된 상태
+								597 cell
+									598 link Description: UD1388-31-20261016-project, Value: 10.10.31.10:8080/client/#/project/132ba8c1-0b26-45af-aa82-a6cd09001421
+								599 cell
+									600 text ud1388-31-20261016
+						601 content list
+							602 text 총 1개
+							603 container 이전 페이지
+								604 button (disabled) left
+									605 image left
+							606 text 1
+							607 container 다음 페이지
+								608 button (disabled) right
+									609 image right
+							610 container
+								611 combo box (settable) rc_select_40
+								612 text 20 / 쪽
+	613 container
+		614 container
+			615 image check-circle
+			616 text 전환 : "UD1388-31-20261016"
+		617 container
+			618 image check-circle
+			619 text 전환 : "UD1388-31-20261016-project"
+
+The focused UI element is 39 combo box (collapsed, settable) ID: rc_select_38, Secondary Actions: Expand

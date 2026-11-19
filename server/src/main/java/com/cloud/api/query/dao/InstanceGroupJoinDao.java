@@ -16,6 +16,9 @@
 // under the License.
 package com.cloud.api.query.dao;
 
+import java.util.List;
+import java.util.Map;
+
 import org.apache.cloudstack.api.response.InstanceGroupResponse;
 
 import com.cloud.api.query.vo.InstanceGroupJoinVO;
@@ -23,6 +26,8 @@ import com.cloud.utils.db.GenericDao;
 import com.cloud.vm.InstanceGroup;
 
 public interface InstanceGroupJoinDao extends GenericDao<InstanceGroupJoinVO, Long> {
+
+    Map<Long, Map<String, Long>> listMemberStateCounts(List<Long> visibleGroupIds, boolean includeHidden);
 
     InstanceGroupResponse newInstanceGroupResponse(InstanceGroupJoinVO group);
 

@@ -1,0 +1,118 @@
+- img "menu-unfold":
+- combobox
+- img "project":
+- text: 기본 보기
+- img "translation":
+- img "bell":
+- generic: UQ
+- generic: UD1392 QA
+- main:
+  - link "home":
+    - /url: "#/"
+    - img "home":
+  - text: /
+  - link "사용자 데이터 라이브러리":
+    - /url: "#/userdata"
+  - link "question-circle":
+    - /url: http://docs.ablecloud.io/latest/adminguide/virtual_machines.html#user-data-and-meta-data
+    - img "question-circle":
+  - button "reload 업데이트":
+    - img "reload":
+    - generic: 업데이트
+  - switch "프로젝트":
+    - generic: 프로젝트
+  - button "사용자 데이터 등록":
+    - img "plus":
+    - generic: 사용자 데이터 등록
+  - button "filter":
+    - img "filter":
+  - textbox "검색"
+  - button "search":
+    - img "search":
+  - paragraph: "검색창: 이름 포함 검색 또는 정확한 UUID. 필터: UUID·정확한 이름·도메인·소유 계정. 프로젝트는 상단 공통 보기를 선택하세요. 열 정렬은 현재 페이지에만 적용됩니다."
+  - table:
+    - rowgroup:
+      - row "이름 caret-up caret-down 아이디 caret-up caret-down 계정 caret-up caret-down 도메인 caret-up caret-down":
+        - columnheader:
+          - checkbox
+        - columnheader "이름 caret-up caret-down":
+          - generic: 이름
+          - img "caret-up":
+          - img "caret-down":
+        - columnheader "아이디 caret-up caret-down":
+          - generic: 아이디
+          - img "caret-up":
+          - img "caret-down":
+        - columnheader "계정 caret-up caret-down":
+          - generic: 계정
+          - img "caret-up":
+          - img "caret-down":
+        - columnheader "도메인 caret-up caret-down":
+          - generic: 도메인
+          - img "caret-up":
+          - img "caret-down":
+    - rowgroup:
+      - row "UD1392-31-20261016-ui-user f33729e5-fe78-4863-94ad-596c6d626e4d ud1392-31-20261016-user ud1392-31-20261016":
+        - cell:
+          - checkbox
+        - cell "UD1392-31-20261016-ui-user":
+          - link "UD1392-31-20261016-ui-user":
+            - /url: "#/userdata/f33729e5-fe78-4863-94ad-596c6d626e4d"
+        - cell "f33729e5-fe78-4863-94ad-596c6d626e4d"
+        - cell "ud1392-31-20261016-user":
+          - link "ud1392-31-20261016-user":
+            - /url: "#/account?name=ud1392-31-20261016-user&domainid=0fb393fe-50e4-41de-9f8d-6da09f29edff&dataView=true"
+        - cell "ud1392-31-20261016":
+          - link "ud1392-31-20261016":
+            - /url: "#/domain/0fb393fe-50e4-41de-9f8d-6da09f29edff?tab=details"
+      - row "UD1392-31-20261016-outsider 4c590676-71ba-4786-a19f-23ecfaf9a9a4 ud1392-31-20261016-outsider ud1392-31-20261016":
+        - cell:
+          - checkbox
+        - cell "UD1392-31-20261016-outsider":
+          - link "UD1392-31-20261016-outsider":
+            - /url: "#/userdata/4c590676-71ba-4786-a19f-23ecfaf9a9a4"
+        - cell "4c590676-71ba-4786-a19f-23ecfaf9a9a4"
+        - cell "ud1392-31-20261016-outsider":
+          - link "ud1392-31-20261016-outsider":
+            - /url: "#/account?name=ud1392-31-20261016-outsider&domainid=0fb393fe-50e4-41de-9f8d-6da09f29edff&dataView=true"
+        - cell "ud1392-31-20261016":
+          - link "ud1392-31-20261016":
+            - /url: "#/domain/0fb393fe-50e4-41de-9f8d-6da09f29edff?tab=details"
+      - row "UD1392-31-20261016-domainadmin 6082dcd6-47df-4ec5-8710-ca83705803e5 ud1392-31-20261016-domainadmin ud1392-31-20261016":
+        - cell:
+          - checkbox
+        - cell "UD1392-31-20261016-domainadmin":
+          - link "UD1392-31-20261016-domainadmin":
+            - /url: "#/userdata/6082dcd6-47df-4ec5-8710-ca83705803e5"
+        - cell "6082dcd6-47df-4ec5-8710-ca83705803e5"
+        - cell "ud1392-31-20261016-domainadmin":
+          - link "ud1392-31-20261016-domainadmin":
+            - /url: "#/account?name=ud1392-31-20261016-domainadmin&domainid=0fb393fe-50e4-41de-9f8d-6da09f29edff&dataView=true"
+        - cell "ud1392-31-20261016":
+          - link "ud1392-31-20261016":
+            - /url: "#/domain/0fb393fe-50e4-41de-9f8d-6da09f29edff?tab=details"
+      - row "UD1392-31-20261016-user 8877d7e7-92e3-4925-be90-c59933b3cbb4 ud1392-31-20261016-user ud1392-31-20261016":
+        - cell:
+          - checkbox
+        - cell "UD1392-31-20261016-user":
+          - link "UD1392-31-20261016-user":
+            - /url: "#/userdata/8877d7e7-92e3-4925-be90-c59933b3cbb4"
+        - cell "8877d7e7-92e3-4925-be90-c59933b3cbb4"
+        - cell "ud1392-31-20261016-user":
+          - link "ud1392-31-20261016-user":
+            - /url: "#/account?name=ud1392-31-20261016-user&domainid=0fb393fe-50e4-41de-9f8d-6da09f29edff&dataView=true"
+        - cell "ud1392-31-20261016":
+          - link "ud1392-31-20261016":
+            - /url: "#/domain/0fb393fe-50e4-41de-9f8d-6da09f29edff?tab=details"
+  - list:
+    - listitem: 전체 4 개 항목 중 1-4 표시
+    - listitem "이전 페이지":
+      - button "left" [disabled]:
+        - img "left":
+    - listitem "1":
+      - generic: "1"
+    - listitem "다음 페이지":
+      - button "right" [disabled]:
+        - img "right":
+    - combobox
+    - generic: 20 / 쪽

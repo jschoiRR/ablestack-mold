@@ -1,0 +1,42 @@
+[
+  {
+    "request": {
+      "command": "listAffinityGroups",
+      "account": "qa-ag01-1019",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f"
+    },
+    "response": {
+      "listaffinitygroupsresponse": {
+        "count": 1,
+        "affinitygroup": [
+          {
+            "id": "4c73af99-934b-472d-97eb-e80d10556c70",
+            "name": "qa-ag01-20261019-user",
+            "description": "AG01 disposable user",
+            "account": "qa-ag01-1019",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "request": {
+      "command": "listAffinityGroups",
+      "id": "8fcf1f7b-b366-4096-8708-97c902e17762",
+      "account": "admin",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f"
+    },
+    "response": {
+      "listaffinitygroupsresponse": {
+        "uuidList": [],
+        "errorcode": 531,
+        "cserrorcode": 4365,
+        "errortext": "Caller does not have permission to operate with provided resource."
+      }
+    }
+  }
+]

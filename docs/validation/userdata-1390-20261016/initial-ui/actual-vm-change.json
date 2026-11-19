@@ -1,0 +1,90 @@
+{
+  "id": "6560a188-1383-4618-93ed-0525a3354068",
+  "before": {
+    "virtualmachineuserdata": {
+      "virtualmachineid": "6560a188-1383-4618-93ed-0525a3354068",
+      "userdata": "I2Nsb3VkLWNvbmZpZwojIOyduOudvOyduCDwn5iACg=="
+    }
+  },
+  "response": {
+    "virtualmachine": {
+      "id": "6560a188-1383-4618-93ed-0525a3354068",
+      "name": "UD1390-31-20261016-inline",
+      "displayname": "UD1390-31-20261016-inline",
+      "account": "admin",
+      "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+      "username": "admin",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "domain": "ROOT",
+      "domainpath": "ROOT",
+      "created": "2026-10-16T15:32:07+0900",
+      "state": "Stopped",
+      "haenable": true,
+      "zoneid": "7013f5a1-de59-4cea-a596-f4f58815f31c",
+      "zonename": "Zone",
+      "templateid": "8d692729-7565-4e92-965b-ebaadc1efcb0",
+      "templatename": "Rocky-Linux-9-5-x86-64-Server-Cloud-Image.qcow2",
+      "templatetype": "USER",
+      "templateformat": "QCOW2",
+      "templatedisplaytext": "Rocky-Linux-9-5-x86-64-Server-Cloud-Image.qcow2",
+      "passwordenabled": false,
+      "isos": [],
+      "isomaxcount": 2,
+      "serviceofferingid": "cd928fb0-6e2b-4ec8-b02b-023aed55b2b1",
+      "serviceofferingname": "2Core 2GB",
+      "volumemutationblockedreason": "",
+      "cpunumber": 2,
+      "cpuspeed": 2000,
+      "memory": 2048,
+      "guestosid": "9708b6ac-b253-11f1-a895-0024814c313f",
+      "rootdeviceid": 0,
+      "rootdevicetype": "ROOT",
+      "securitygroup": [],
+      "nic": [
+        {
+          "id": "82d7e968-bb39-489c-b246-b09eddbfdf43",
+          "networkid": "28bfade3-d330-49ca-a07c-c1d94c32524b",
+          "networkname": "UD1390-31-20261016-admin",
+          "isolationuri": "vlan://3980",
+          "broadcasturi": "vlan://3980",
+          "traffictype": "Guest",
+          "type": "L2",
+          "isdefault": true,
+          "macaddress": "02:1f:01:2d:00:03",
+          "secondaryip": [],
+          "extradhcpoption": [],
+          "deviceid": "0",
+          "enabled": true
+        }
+      ],
+      "hypervisor": "KVM",
+      "details": {
+        "deployvm": "true",
+        "tpmversion": "NONE",
+        "rootDiskController": "osdefault"
+      },
+      "clonefastsourcepowerallowed": false,
+      "clonefastpowerallowed": false,
+      "affinitygroup": [],
+      "displayvm": true,
+      "isdynamicallyscalable": true,
+      "deleteprotection": false,
+      "ostypeid": "9708b6ac-b253-11f1-a895-0024814c313f",
+      "osdisplayname": "Rocky Linux 9",
+      "receivedbytes": 0,
+      "sentbytes": 0,
+      "vbmcport": "None",
+      "kvdoenable": false,
+      "kvdoinuse": false,
+      "vbmcstatus": "Unallocated",
+      "tags": [],
+      "hasannotations": false
+    }
+  },
+  "after": {
+    "virtualmachineuserdata": {
+      "virtualmachineid": "6560a188-1383-4618-93ed-0525a3354068",
+      "userdata": "I2Nsb3VkLWNvbmZpZwojIFVEMTM5MCBjaGFuZ2VkIGR1cmluZyBwZW5kaW5nIHJlYWQK"
+    }
+  }
+}

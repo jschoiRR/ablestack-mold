@@ -1,0 +1,165 @@
+{
+  "ALLOWOVERRIDE": {
+    "linkuserdatatotemplateresponse": {
+      "template": {
+        "id": "82ebaee8-ea77-4b92-8ffa-631d4c5e016c",
+        "name": "UDLIB-31-20261015-template",
+        "displaytext": "UDLIB-31-20261015-template",
+        "ispublic": false,
+        "created": "2026-10-15T16:24:25+0900",
+        "isready": false,
+        "format": "QCOW2",
+        "bootable": true,
+        "isfeatured": false,
+        "crossZones": false,
+        "ostypeid": "9708b6ac-b253-11f1-a895-0024814c313f",
+        "ostypename": "Rocky Linux 9",
+        "account": "admin",
+        "templatetype": "USER",
+        "hypervisor": "KVM",
+        "domain": "ROOT",
+        "domainpath": "ROOT",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "bits": 0,
+        "isdynamicallyscalable": false,
+        "userdataid": "88bb3516-3dff-4cfc-8f5f-96a100254c2d",
+        "userdataname": "UDLIB-31-20261015-base64",
+        "userdatapolicy": "ALLOWOVERRIDE",
+        "tags": []
+      }
+    }
+  },
+  "APPEND": {
+    "linkuserdatatotemplateresponse": {
+      "template": {
+        "id": "82ebaee8-ea77-4b92-8ffa-631d4c5e016c",
+        "name": "UDLIB-31-20261015-template",
+        "displaytext": "UDLIB-31-20261015-template",
+        "ispublic": false,
+        "created": "2026-10-15T16:24:25+0900",
+        "isready": false,
+        "format": "QCOW2",
+        "bootable": true,
+        "isfeatured": false,
+        "crossZones": false,
+        "ostypeid": "9708b6ac-b253-11f1-a895-0024814c313f",
+        "ostypename": "Rocky Linux 9",
+        "account": "admin",
+        "templatetype": "USER",
+        "hypervisor": "KVM",
+        "domain": "ROOT",
+        "domainpath": "ROOT",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "bits": 0,
+        "isdynamicallyscalable": false,
+        "userdataid": "88bb3516-3dff-4cfc-8f5f-96a100254c2d",
+        "userdataname": "UDLIB-31-20261015-base64",
+        "userdatapolicy": "APPEND",
+        "tags": []
+      }
+    }
+  },
+  "DENYOVERRIDE": {
+    "linkuserdatatotemplateresponse": {
+      "template": {
+        "id": "82ebaee8-ea77-4b92-8ffa-631d4c5e016c",
+        "name": "UDLIB-31-20261015-template",
+        "displaytext": "UDLIB-31-20261015-template",
+        "ispublic": false,
+        "created": "2026-10-15T16:24:25+0900",
+        "isready": false,
+        "format": "QCOW2",
+        "bootable": true,
+        "isfeatured": false,
+        "crossZones": false,
+        "ostypeid": "9708b6ac-b253-11f1-a895-0024814c313f",
+        "ostypename": "Rocky Linux 9",
+        "account": "admin",
+        "templatetype": "USER",
+        "hypervisor": "KVM",
+        "domain": "ROOT",
+        "domainpath": "ROOT",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "bits": 0,
+        "isdynamicallyscalable": false,
+        "userdataid": "88bb3516-3dff-4cfc-8f5f-96a100254c2d",
+        "userdataname": "UDLIB-31-20261015-base64",
+        "userdatapolicy": "DENYOVERRIDE",
+        "tags": []
+      }
+    }
+  },
+  "INVALID": {
+    "linkuserdatatotemplateresponse": {
+      "uuidList": [],
+      "errorcode": 530,
+      "cserrorcode": 4250,
+      "errortext": "Failed to link userdata to Template, due to: No enum constant com.cloud.user.UserData.UserDataOverridePolicy.INVALID"
+    }
+  },
+  "delete-linked": {
+    "deleteuserdataresponse": {
+      "uuidList": [],
+      "errorcode": 530,
+      "cserrorcode": 4250,
+      "errortext": "Userdata UDLIB-31-20261015-base64 cannot be removed as it is linked to active template/templates"
+    }
+  },
+  "unlink": {
+    "linkuserdatatotemplateresponse": {
+      "template": {
+        "id": "82ebaee8-ea77-4b92-8ffa-631d4c5e016c",
+        "name": "UDLIB-31-20261015-template",
+        "displaytext": "UDLIB-31-20261015-template",
+        "ispublic": false,
+        "created": "2026-10-15T16:24:25+0900",
+        "isready": false,
+        "format": "QCOW2",
+        "bootable": true,
+        "isfeatured": false,
+        "crossZones": false,
+        "ostypeid": "9708b6ac-b253-11f1-a895-0024814c313f",
+        "ostypename": "Rocky Linux 9",
+        "account": "admin",
+        "templatetype": "USER",
+        "hypervisor": "KVM",
+        "domain": "ROOT",
+        "domainpath": "ROOT",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "bits": 0,
+        "isdynamicallyscalable": false,
+        "tags": []
+      }
+    }
+  },
+  "relink-for-ui": {
+    "linkuserdatatotemplateresponse": {
+      "template": {
+        "id": "82ebaee8-ea77-4b92-8ffa-631d4c5e016c",
+        "name": "UDLIB-31-20261015-template",
+        "displaytext": "UDLIB-31-20261015-template",
+        "ispublic": false,
+        "created": "2026-10-15T16:24:25+0900",
+        "isready": false,
+        "format": "QCOW2",
+        "bootable": true,
+        "isfeatured": false,
+        "crossZones": false,
+        "ostypeid": "9708b6ac-b253-11f1-a895-0024814c313f",
+        "ostypename": "Rocky Linux 9",
+        "account": "admin",
+        "templatetype": "USER",
+        "hypervisor": "KVM",
+        "domain": "ROOT",
+        "domainpath": "ROOT",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "bits": 0,
+        "isdynamicallyscalable": false,
+        "userdataid": "88bb3516-3dff-4cfc-8f5f-96a100254c2d",
+        "userdataname": "UDLIB-31-20261015-base64",
+        "userdatapolicy": "ALLOWOVERRIDE",
+        "tags": []
+      }
+    }
+  }
+}

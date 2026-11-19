@@ -17,6 +17,7 @@
 
 <template>
   <div class="page-header-index-wide">
+    <a-alert v-if="dashboardReadError" type="error" show-icon :message="$t('message.request.failed')"><template #description><a-button @click="fetchData">{{ $t('label.refresh') }}</a-button></template></a-alert>
     <div v-if="showOnboarding">
       <onboarding-dashboard />
     </div>
@@ -30,7 +31,7 @@
 </template>
 
 <script>
-import { getAPI } from '@/api'
+import dashboardReadMixin from '@/utils/dashboardReadMixin'
 import store from '@/store'
 import CapacityDashboard from './CapacityDashboard'
 import UsageDashboard from './UsageDashboard'
@@ -41,6 +42,7 @@ import FirstLogin from './FirstLogin'
 
 export default {
   name: 'Dashboard',
+  mixins: [dashboardReadMixin],
   components: {
     CapacityDashboard,
     UsageDashboard,
@@ -70,7 +72,7 @@ export default {
     if (store.getters.project && store.getters.project.id) {
       this.project = true
     }
-    this.$store.watch(
+    this.unwatchDashboardProject = this.$store.watch(
       (state, getters) => getters.project,
       (newValue, oldValue) => {
         if (newValue && newValue.id) {
@@ -81,12 +83,13 @@ export default {
       }
     )
   },
+  beforeUnmount () { if (this.unwatchDashboardProject) this.unwatchDashboardProject() },
   methods: {
     fetchData () {
       if (!['Admin'].includes(this.$store.getters.userInfo.roletype)) {
         return
       }
-      getAPI('listZones').then(json => {
+      this.readDashboard('listZones', {}, json => {
         this.showOnboarding = json.listzonesresponse.count ? json.listzonesresponse.count === 0 : true
       })
     }

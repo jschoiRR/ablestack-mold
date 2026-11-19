@@ -1,0 +1,120 @@
+{
+  "start": 15715,
+  "cursor": 15765,
+  "truncated": false,
+  "events": [
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 15716,
+      "requestId": "27600.2896",
+      "api": "listVirtualMachines",
+      "id": "6560a188-1383-4618-93ed-0525a3354068",
+      "virtualmachineid": null,
+      "projectid": null
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 15719,
+      "requestId": "27600.2896",
+      "api": "listVirtualMachines",
+      "status": 200
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 15721,
+      "requestId": "27600.2897",
+      "api": "getVirtualMachineUserData",
+      "id": null,
+      "virtualmachineid": "6560a188-1383-4618-93ed-0525a3354068",
+      "projectid": null
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 15727,
+      "requestId": "27600.2898",
+      "api": "readyForShutdown",
+      "id": null,
+      "virtualmachineid": null,
+      "projectid": null
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 15730,
+      "requestId": "27600.2898",
+      "api": "readyForShutdown",
+      "status": 200
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 15734,
+      "requestId": "27600.2899",
+      "api": "readyForShutdown",
+      "id": null,
+      "virtualmachineid": null,
+      "projectid": null
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 15737,
+      "requestId": "27600.2899",
+      "api": "readyForShutdown",
+      "status": 200
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 15741,
+      "requestId": "27600.2900",
+      "api": "readyForShutdown",
+      "id": null,
+      "virtualmachineid": null,
+      "projectid": null
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 15744,
+      "requestId": "27600.2900",
+      "api": "readyForShutdown",
+      "status": 200
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 15748,
+      "requestId": "27600.2901",
+      "api": "listHostsMetrics",
+      "id": null,
+      "virtualmachineid": null,
+      "projectid": null
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 15751,
+      "requestId": "27600.2901",
+      "api": "listHostsMetrics",
+      "status": 200
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 15755,
+      "requestId": "27600.2897",
+      "api": "getVirtualMachineUserData",
+      "status": 200
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 15757,
+      "requestId": "27600.2902",
+      "api": "listVirtualMachines",
+      "id": "6560a188-1383-4618-93ed-0525a3354068",
+      "virtualmachineid": null,
+      "projectid": null
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 15762,
+      "requestId": "27600.2902",
+      "api": "listVirtualMachines",
+      "status": 200
+    }
+  ],
+  "exceptions": 0
+}

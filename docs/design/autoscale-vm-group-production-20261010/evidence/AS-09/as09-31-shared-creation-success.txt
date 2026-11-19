@@ -1,0 +1,49 @@
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+
+오토스케일 VM 그룹 생성 중
+가상머신 그룹 생성 완료
+이 화면을 나가도 서버 작업은 계속될 수 있습니다. 응답을 잃으면 중복 요청을 보내지 않고 작업 ID로 확인합니다. 확정된 실패만 이번 작업의 자원을 정리하며, 기존 공유 자원과 로드밸런서는 보존합니다.
+
+생성 작업 ID: dff4f1d5-3efd-4751-809f-1a9f82890c93
+
+오토스케일 VM 프로필 만들기 (profile)
+완료
+아이디: 757c76f1-1f2b-44ec-9909-b44dd8866f38
+작업 ID: 24b40f85-a1f4-4029-848e-130fd2920c65
+조건 (up.0.condition.0)
+완료
+아이디: d5da134a-950f-4d71-85d4-6626d6fa1338
+작업 ID: 79b81828-17d2-461d-8837-5b594aa16c99
+정책 (up.0.policy)
+완료
+아이디: da3a87d6-4582-434e-adac-17c4eb485ab5
+작업 ID: 73036530-1c56-43f3-a226-954f938ff798
+조건 (down.0.condition.0)
+완료
+아이디: f31e5802-b9b2-4db0-b1fd-38739690ca27
+작업 ID: af319ecd-216c-4de7-b6da-a040f4a24533
+정책 (down.0.policy)
+완료
+아이디: 2d3b3c8a-aff7-4b02-92eb-b0a6a1a7b65d
+작업 ID: fa73a987-d639-413c-9e38-6c663b44582a
+오토스케일 VM 그룹 생성 중 (group)
+완료
+아이디: 1d539f2d-3e42-4843-abc8-56e3726ac4b7
+작업 ID: 6c67bc0a-00c4-4f38-87d7-a33812e45460
+닫기
+생성된 그룹 보기

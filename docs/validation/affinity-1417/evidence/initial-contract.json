@@ -1,0 +1,744 @@
+[
+  {
+    "group": "target",
+    "groupResponse": {
+      "count": 1,
+      "affinitygroup": [
+        {
+          "id": "22ee18c3-4a24-4617-84ed-dde3fe7b592a",
+          "name": "qa-ag04-target",
+          "account": "admin",
+          "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+          "domain": "ROOT",
+          "domainpath": "ROOT",
+          "type": "host affinity"
+        }
+      ]
+    },
+    "vmResponse": {}
+  },
+  {
+    "group": "other",
+    "groupResponse": {
+      "count": 1,
+      "affinitygroup": [
+        {
+          "id": "1c095737-9254-414b-a045-e87ba2fdb87f",
+          "name": "qa-ag04-other",
+          "account": "admin",
+          "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+          "domain": "ROOT",
+          "domainpath": "ROOT",
+          "type": "host affinity",
+          "virtualmachineIds": [
+            "23476cc1-92f7-4deb-8a44-ce8037ef3806",
+            "36323d35-d089-4b5b-bb9f-70b8d62d0469",
+            "9c01c6d3-4c94-4ce6-9b42-c01256a70207",
+            "491b9d12-9ac6-4cfd-8311-147df8062bd9",
+            "d2a05ed9-d484-4f17-a9c3-26624e3b5e45",
+            "5a9d3470-c4c5-4868-aaf3-6be9648ffbbd",
+            "0ab4f908-14fd-4581-bf49-b0807bc762a4",
+            "8db0e995-86fd-49c0-aae5-3f9cc9ae8b41",
+            "2b73a051-2656-450e-a6ca-f0b932cacf7a",
+            "5160b1ec-088d-4d28-9967-8550d6595ad4",
+            "8d221bcb-4614-40b7-b9aa-dc40e159d57a"
+          ]
+        }
+      ]
+    },
+    "vmResponse": {
+      "count": 11,
+      "virtualmachine": [
+        {
+          "id": "8d221bcb-4614-40b7-b9aa-dc40e159d57a",
+          "name": "qa-ag04-vm-01",
+          "displayname": "qa-ag04-vm-01",
+          "account": "admin",
+          "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+          "username": "admin",
+          "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+          "domain": "ROOT",
+          "domainpath": "ROOT",
+          "created": "2026-10-19T07:55:57+0900",
+          "state": "Stopped",
+          "haenable": false,
+          "zoneid": "7013f5a1-de59-4cea-a596-f4f58815f31c",
+          "zonename": "Zone",
+          "volumemutationblockedreason": "",
+          "guestosid": "9708b6ac-b253-11f1-a895-0024814c313f",
+          "securitygroup": [],
+          "nic": [],
+          "hypervisor": "KVM",
+          "instancename": "i-2-651-VM",
+          "details": {
+            "deployvm": "true",
+            "tpmversion": "NONE",
+            "rootDiskController": "osdefault"
+          },
+          "clonefastsourcepowerallowed": false,
+          "clonefastpowerallowed": false,
+          "affinitygroup": [
+            {
+              "id": "1c095737-9254-414b-a045-e87ba2fdb87f",
+              "name": "qa-ag04-other",
+              "account": "admin"
+            }
+          ],
+          "displayvm": true,
+          "isdynamicallyscalable": true,
+          "deleteprotection": false,
+          "ostypeid": "9708b6ac-b253-11f1-a895-0024814c313f",
+          "osdisplayname": "Rocky Linux 9",
+          "receivedbytes": 0,
+          "sentbytes": 0,
+          "vbmcport": "None",
+          "kvdoenable": false,
+          "kvdoinuse": false,
+          "arch": "x86_64",
+          "vbmcstatus": "Unallocated",
+          "tags": [],
+          "hasannotations": false
+        },
+        {
+          "id": "5160b1ec-088d-4d28-9967-8550d6595ad4",
+          "name": "qa-ag04-vm-02",
+          "displayname": "qa-ag04-vm-02",
+          "account": "admin",
+          "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+          "username": "admin",
+          "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+          "domain": "ROOT",
+          "domainpath": "ROOT",
+          "created": "2026-10-19T07:55:59+0900",
+          "state": "Stopped",
+          "haenable": false,
+          "zoneid": "7013f5a1-de59-4cea-a596-f4f58815f31c",
+          "zonename": "Zone",
+          "volumemutationblockedreason": "",
+          "guestosid": "9708b6ac-b253-11f1-a895-0024814c313f",
+          "securitygroup": [],
+          "nic": [],
+          "hypervisor": "KVM",
+          "instancename": "i-2-652-VM",
+          "details": {
+            "deployvm": "true",
+            "tpmversion": "NONE",
+            "rootDiskController": "osdefault"
+          },
+          "clonefastsourcepowerallowed": false,
+          "clonefastpowerallowed": false,
+          "affinitygroup": [
+            {
+              "id": "1c095737-9254-414b-a045-e87ba2fdb87f",
+              "name": "qa-ag04-other",
+              "account": "admin"
+            }
+          ],
+          "displayvm": true,
+          "isdynamicallyscalable": true,
+          "deleteprotection": false,
+          "ostypeid": "9708b6ac-b253-11f1-a895-0024814c313f",
+          "osdisplayname": "Rocky Linux 9",
+          "receivedbytes": 0,
+          "sentbytes": 0,
+          "vbmcport": "None",
+          "kvdoenable": false,
+          "kvdoinuse": false,
+          "arch": "x86_64",
+          "vbmcstatus": "Unallocated",
+          "tags": [],
+          "hasannotations": false
+        },
+        {
+          "id": "2b73a051-2656-450e-a6ca-f0b932cacf7a",
+          "name": "qa-ag04-vm-03",
+          "displayname": "qa-ag04-vm-03",
+          "account": "admin",
+          "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+          "username": "admin",
+          "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+          "domain": "ROOT",
+          "domainpath": "ROOT",
+          "created": "2026-10-19T07:56:01+0900",
+          "state": "Stopped",
+          "haenable": false,
+          "zoneid": "7013f5a1-de59-4cea-a596-f4f58815f31c",
+          "zonename": "Zone",
+          "volumemutationblockedreason": "",
+          "guestosid": "9708b6ac-b253-11f1-a895-0024814c313f",
+          "securitygroup": [],
+          "nic": [],
+          "hypervisor": "KVM",
+          "instancename": "i-2-653-VM",
+          "details": {
+            "deployvm": "true",
+            "tpmversion": "NONE",
+            "rootDiskController": "osdefault"
+          },
+          "clonefastsourcepowerallowed": false,
+          "clonefastpowerallowed": false,
+          "affinitygroup": [
+            {
+              "id": "1c095737-9254-414b-a045-e87ba2fdb87f",
+              "name": "qa-ag04-other",
+              "account": "admin"
+            }
+          ],
+          "displayvm": true,
+          "isdynamicallyscalable": true,
+          "deleteprotection": false,
+          "ostypeid": "9708b6ac-b253-11f1-a895-0024814c313f",
+          "osdisplayname": "Rocky Linux 9",
+          "receivedbytes": 0,
+          "sentbytes": 0,
+          "vbmcport": "None",
+          "kvdoenable": false,
+          "kvdoinuse": false,
+          "arch": "x86_64",
+          "vbmcstatus": "Unallocated",
+          "tags": [],
+          "hasannotations": false
+        },
+        {
+          "id": "8db0e995-86fd-49c0-aae5-3f9cc9ae8b41",
+          "name": "qa-ag04-vm-04",
+          "displayname": "qa-ag04-vm-04",
+          "account": "admin",
+          "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+          "username": "admin",
+          "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+          "domain": "ROOT",
+          "domainpath": "ROOT",
+          "created": "2026-10-19T07:56:04+0900",
+          "state": "Stopped",
+          "haenable": false,
+          "zoneid": "7013f5a1-de59-4cea-a596-f4f58815f31c",
+          "zonename": "Zone",
+          "volumemutationblockedreason": "",
+          "guestosid": "9708b6ac-b253-11f1-a895-0024814c313f",
+          "securitygroup": [],
+          "nic": [],
+          "hypervisor": "KVM",
+          "instancename": "i-2-654-VM",
+          "details": {
+            "deployvm": "true",
+            "tpmversion": "NONE",
+            "rootDiskController": "osdefault"
+          },
+          "clonefastsourcepowerallowed": false,
+          "clonefastpowerallowed": false,
+          "affinitygroup": [
+            {
+              "id": "1c095737-9254-414b-a045-e87ba2fdb87f",
+              "name": "qa-ag04-other",
+              "account": "admin"
+            }
+          ],
+          "displayvm": true,
+          "isdynamicallyscalable": true,
+          "deleteprotection": false,
+          "ostypeid": "9708b6ac-b253-11f1-a895-0024814c313f",
+          "osdisplayname": "Rocky Linux 9",
+          "receivedbytes": 0,
+          "sentbytes": 0,
+          "vbmcport": "None",
+          "kvdoenable": false,
+          "kvdoinuse": false,
+          "arch": "x86_64",
+          "vbmcstatus": "Unallocated",
+          "tags": [],
+          "hasannotations": false
+        },
+        {
+          "id": "0ab4f908-14fd-4581-bf49-b0807bc762a4",
+          "name": "qa-ag04-vm-05",
+          "displayname": "qa-ag04-vm-05",
+          "account": "admin",
+          "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+          "username": "admin",
+          "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+          "domain": "ROOT",
+          "domainpath": "ROOT",
+          "created": "2026-10-19T07:56:06+0900",
+          "state": "Stopped",
+          "haenable": false,
+          "zoneid": "7013f5a1-de59-4cea-a596-f4f58815f31c",
+          "zonename": "Zone",
+          "volumemutationblockedreason": "",
+          "guestosid": "9708b6ac-b253-11f1-a895-0024814c313f",
+          "securitygroup": [],
+          "nic": [],
+          "hypervisor": "KVM",
+          "instancename": "i-2-655-VM",
+          "details": {
+            "deployvm": "true",
+            "tpmversion": "NONE",
+            "rootDiskController": "osdefault"
+          },
+          "clonefastsourcepowerallowed": false,
+          "clonefastpowerallowed": false,
+          "affinitygroup": [
+            {
+              "id": "1c095737-9254-414b-a045-e87ba2fdb87f",
+              "name": "qa-ag04-other",
+              "account": "admin"
+            }
+          ],
+          "displayvm": true,
+          "isdynamicallyscalable": true,
+          "deleteprotection": false,
+          "ostypeid": "9708b6ac-b253-11f1-a895-0024814c313f",
+          "osdisplayname": "Rocky Linux 9",
+          "receivedbytes": 0,
+          "sentbytes": 0,
+          "vbmcport": "None",
+          "kvdoenable": false,
+          "kvdoinuse": false,
+          "arch": "x86_64",
+          "vbmcstatus": "Unallocated",
+          "tags": [],
+          "hasannotations": false
+        },
+        {
+          "id": "5a9d3470-c4c5-4868-aaf3-6be9648ffbbd",
+          "name": "qa-ag04-vm-06",
+          "displayname": "qa-ag04-vm-06",
+          "account": "admin",
+          "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+          "username": "admin",
+          "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+          "domain": "ROOT",
+          "domainpath": "ROOT",
+          "created": "2026-10-19T07:56:08+0900",
+          "state": "Stopped",
+          "haenable": false,
+          "zoneid": "7013f5a1-de59-4cea-a596-f4f58815f31c",
+          "zonename": "Zone",
+          "volumemutationblockedreason": "",
+          "guestosid": "9708b6ac-b253-11f1-a895-0024814c313f",
+          "securitygroup": [],
+          "nic": [],
+          "hypervisor": "KVM",
+          "instancename": "i-2-656-VM",
+          "details": {
+            "deployvm": "true",
+            "tpmversion": "NONE",
+            "rootDiskController": "osdefault"
+          },
+          "clonefastsourcepowerallowed": false,
+          "clonefastpowerallowed": false,
+          "affinitygroup": [
+            {
+              "id": "1c095737-9254-414b-a045-e87ba2fdb87f",
+              "name": "qa-ag04-other",
+              "account": "admin"
+            }
+          ],
+          "displayvm": true,
+          "isdynamicallyscalable": true,
+          "deleteprotection": false,
+          "ostypeid": "9708b6ac-b253-11f1-a895-0024814c313f",
+          "osdisplayname": "Rocky Linux 9",
+          "receivedbytes": 0,
+          "sentbytes": 0,
+          "vbmcport": "None",
+          "kvdoenable": false,
+          "kvdoinuse": false,
+          "arch": "x86_64",
+          "vbmcstatus": "Unallocated",
+          "tags": [],
+          "hasannotations": false
+        },
+        {
+          "id": "d2a05ed9-d484-4f17-a9c3-26624e3b5e45",
+          "name": "qa-ag04-vm-07",
+          "displayname": "qa-ag04-vm-07",
+          "account": "admin",
+          "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+          "username": "admin",
+          "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+          "domain": "ROOT",
+          "domainpath": "ROOT",
+          "created": "2026-10-19T07:56:10+0900",
+          "state": "Stopped",
+          "haenable": false,
+          "zoneid": "7013f5a1-de59-4cea-a596-f4f58815f31c",
+          "zonename": "Zone",
+          "volumemutationblockedreason": "",
+          "guestosid": "9708b6ac-b253-11f1-a895-0024814c313f",
+          "securitygroup": [],
+          "nic": [],
+          "hypervisor": "KVM",
+          "instancename": "i-2-657-VM",
+          "details": {
+            "deployvm": "true",
+            "tpmversion": "NONE",
+            "rootDiskController": "osdefault"
+          },
+          "clonefastsourcepowerallowed": false,
+          "clonefastpowerallowed": false,
+          "affinitygroup": [
+            {
+              "id": "1c095737-9254-414b-a045-e87ba2fdb87f",
+              "name": "qa-ag04-other",
+              "account": "admin"
+            }
+          ],
+          "displayvm": true,
+          "isdynamicallyscalable": true,
+          "deleteprotection": false,
+          "ostypeid": "9708b6ac-b253-11f1-a895-0024814c313f",
+          "osdisplayname": "Rocky Linux 9",
+          "receivedbytes": 0,
+          "sentbytes": 0,
+          "vbmcport": "None",
+          "kvdoenable": false,
+          "kvdoinuse": false,
+          "arch": "x86_64",
+          "vbmcstatus": "Unallocated",
+          "tags": [],
+          "hasannotations": false
+        },
+        {
+          "id": "491b9d12-9ac6-4cfd-8311-147df8062bd9",
+          "name": "qa-ag04-vm-08",
+          "displayname": "qa-ag04-vm-08",
+          "account": "admin",
+          "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+          "username": "admin",
+          "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+          "domain": "ROOT",
+          "domainpath": "ROOT",
+          "created": "2026-10-19T07:56:12+0900",
+          "state": "Stopped",
+          "haenable": false,
+          "zoneid": "7013f5a1-de59-4cea-a596-f4f58815f31c",
+          "zonename": "Zone",
+          "volumemutationblockedreason": "",
+          "guestosid": "9708b6ac-b253-11f1-a895-0024814c313f",
+          "securitygroup": [],
+          "nic": [],
+          "hypervisor": "KVM",
+          "instancename": "i-2-658-VM",
+          "details": {
+            "deployvm": "true",
+            "tpmversion": "NONE",
+            "rootDiskController": "osdefault"
+          },
+          "clonefastsourcepowerallowed": false,
+          "clonefastpowerallowed": false,
+          "affinitygroup": [
+            {
+              "id": "1c095737-9254-414b-a045-e87ba2fdb87f",
+              "name": "qa-ag04-other",
+              "account": "admin"
+            }
+          ],
+          "displayvm": true,
+          "isdynamicallyscalable": true,
+          "deleteprotection": false,
+          "ostypeid": "9708b6ac-b253-11f1-a895-0024814c313f",
+          "osdisplayname": "Rocky Linux 9",
+          "receivedbytes": 0,
+          "sentbytes": 0,
+          "vbmcport": "None",
+          "kvdoenable": false,
+          "kvdoinuse": false,
+          "arch": "x86_64",
+          "vbmcstatus": "Unallocated",
+          "tags": [],
+          "hasannotations": false
+        },
+        {
+          "id": "9c01c6d3-4c94-4ce6-9b42-c01256a70207",
+          "name": "qa-ag04-vm-09",
+          "displayname": "qa-ag04-vm-09",
+          "account": "admin",
+          "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+          "username": "admin",
+          "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+          "domain": "ROOT",
+          "domainpath": "ROOT",
+          "created": "2026-10-19T07:56:14+0900",
+          "state": "Stopped",
+          "haenable": false,
+          "zoneid": "7013f5a1-de59-4cea-a596-f4f58815f31c",
+          "zonename": "Zone",
+          "volumemutationblockedreason": "",
+          "guestosid": "9708b6ac-b253-11f1-a895-0024814c313f",
+          "securitygroup": [],
+          "nic": [],
+          "hypervisor": "KVM",
+          "instancename": "i-2-659-VM",
+          "details": {
+            "deployvm": "true",
+            "tpmversion": "NONE",
+            "rootDiskController": "osdefault"
+          },
+          "clonefastsourcepowerallowed": false,
+          "clonefastpowerallowed": false,
+          "affinitygroup": [
+            {
+              "id": "1c095737-9254-414b-a045-e87ba2fdb87f",
+              "name": "qa-ag04-other",
+              "account": "admin"
+            }
+          ],
+          "displayvm": true,
+          "isdynamicallyscalable": true,
+          "deleteprotection": false,
+          "ostypeid": "9708b6ac-b253-11f1-a895-0024814c313f",
+          "osdisplayname": "Rocky Linux 9",
+          "receivedbytes": 0,
+          "sentbytes": 0,
+          "vbmcport": "None",
+          "kvdoenable": false,
+          "kvdoinuse": false,
+          "arch": "x86_64",
+          "vbmcstatus": "Unallocated",
+          "tags": [],
+          "hasannotations": false
+        },
+        {
+          "id": "36323d35-d089-4b5b-bb9f-70b8d62d0469",
+          "name": "qa-ag04-vm-10",
+          "displayname": "qa-ag04-vm-10",
+          "account": "admin",
+          "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+          "username": "admin",
+          "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+          "domain": "ROOT",
+          "domainpath": "ROOT",
+          "created": "2026-10-19T07:56:16+0900",
+          "state": "Stopped",
+          "haenable": false,
+          "zoneid": "7013f5a1-de59-4cea-a596-f4f58815f31c",
+          "zonename": "Zone",
+          "volumemutationblockedreason": "",
+          "guestosid": "9708b6ac-b253-11f1-a895-0024814c313f",
+          "securitygroup": [],
+          "nic": [],
+          "hypervisor": "KVM",
+          "instancename": "i-2-660-VM",
+          "details": {
+            "deployvm": "true",
+            "tpmversion": "NONE",
+            "rootDiskController": "osdefault"
+          },
+          "clonefastsourcepowerallowed": false,
+          "clonefastpowerallowed": false,
+          "affinitygroup": [
+            {
+              "id": "1c095737-9254-414b-a045-e87ba2fdb87f",
+              "name": "qa-ag04-other",
+              "account": "admin"
+            }
+          ],
+          "displayvm": true,
+          "isdynamicallyscalable": true,
+          "deleteprotection": false,
+          "ostypeid": "9708b6ac-b253-11f1-a895-0024814c313f",
+          "osdisplayname": "Rocky Linux 9",
+          "receivedbytes": 0,
+          "sentbytes": 0,
+          "vbmcport": "None",
+          "kvdoenable": false,
+          "kvdoinuse": false,
+          "arch": "x86_64",
+          "vbmcstatus": "Unallocated",
+          "tags": [],
+          "hasannotations": false
+        }
+      ]
+    }
+  },
+  {
+    "group": "user-target",
+    "groupResponse": {
+      "count": 1,
+      "affinitygroup": [
+        {
+          "id": "2ed13f5c-3f14-4749-8087-992b715b1152",
+          "name": "qa-ag04-user-target",
+          "account": "qa-ag04-user",
+          "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+          "domain": "ROOT",
+          "domainpath": "ROOT",
+          "type": "host affinity"
+        }
+      ]
+    },
+    "vmResponse": {}
+  },
+  {
+    "group": "user-other",
+    "groupResponse": {
+      "count": 1,
+      "affinitygroup": [
+        {
+          "id": "d3940779-2e6a-4d91-858e-851f469740f0",
+          "name": "qa-ag04-user-other",
+          "account": "qa-ag04-user",
+          "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+          "domain": "ROOT",
+          "domainpath": "ROOT",
+          "type": "host affinity",
+          "virtualmachineIds": [
+            "df825f8b-a205-4ed1-b397-737b9557d432"
+          ]
+        }
+      ]
+    },
+    "vmResponse": {
+      "count": 1,
+      "virtualmachine": [
+        {
+          "id": "df825f8b-a205-4ed1-b397-737b9557d432",
+          "name": "qa-ag04-user-vm",
+          "displayname": "qa-ag04-user-vm",
+          "account": "qa-ag04-user",
+          "userid": "841523ea-3fed-47a4-8d72-1d755abc879b",
+          "username": "qa-ag04-user",
+          "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+          "domain": "ROOT",
+          "domainpath": "ROOT",
+          "created": "2026-10-19T07:56:54+0900",
+          "state": "Stopped",
+          "haenable": false,
+          "zoneid": "7013f5a1-de59-4cea-a596-f4f58815f31c",
+          "zonename": "Zone",
+          "volumemutationblockedreason": "",
+          "guestosid": "9708b6ac-b253-11f1-a895-0024814c313f",
+          "securitygroup": [],
+          "nic": [],
+          "hypervisor": "KVM",
+          "instancename": "i-194-662-VM",
+          "details": {
+            "deployvm": "true",
+            "tpmversion": "NONE",
+            "rootDiskController": "osdefault"
+          },
+          "clonefastsourcepowerallowed": false,
+          "clonefastpowerallowed": false,
+          "affinitygroup": [
+            {
+              "id": "d3940779-2e6a-4d91-858e-851f469740f0",
+              "name": "qa-ag04-user-other",
+              "account": "qa-ag04-user"
+            }
+          ],
+          "displayvm": true,
+          "isdynamicallyscalable": true,
+          "deleteprotection": false,
+          "ostypeid": "9708b6ac-b253-11f1-a895-0024814c313f",
+          "osdisplayname": "Rocky Linux 9",
+          "receivedbytes": 0,
+          "sentbytes": 0,
+          "vbmcport": "None",
+          "kvdoenable": false,
+          "kvdoinuse": false,
+          "arch": "x86_64",
+          "vbmcstatus": "Unallocated",
+          "tags": [],
+          "hasannotations": false
+        }
+      ]
+    }
+  },
+  {
+    "group": "project-target",
+    "groupResponse": {
+      "count": 1,
+      "affinitygroup": [
+        {
+          "id": "10b5658f-effa-4d28-9e25-a04b8d9041e2",
+          "name": "qa-ag04-project-target",
+          "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+          "domain": "ROOT",
+          "domainpath": "ROOT",
+          "projectid": "78a38450-86a1-483c-b607-e23f862fe320",
+          "project": "qa-ag04-project",
+          "type": "host affinity"
+        }
+      ]
+    },
+    "vmResponse": {}
+  },
+  {
+    "group": "project-other",
+    "groupResponse": {
+      "count": 1,
+      "affinitygroup": [
+        {
+          "id": "23d3082b-1abe-4e57-b789-81ec4d8baed9",
+          "name": "qa-ag04-project-other",
+          "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+          "domain": "ROOT",
+          "domainpath": "ROOT",
+          "projectid": "78a38450-86a1-483c-b607-e23f862fe320",
+          "project": "qa-ag04-project",
+          "type": "host affinity",
+          "virtualmachineIds": [
+            "ba74e59a-2834-45e8-aa60-778d4bc86bde"
+          ]
+        }
+      ]
+    },
+    "vmResponse": {
+      "count": 1,
+      "virtualmachine": [
+        {
+          "id": "ba74e59a-2834-45e8-aa60-778d4bc86bde",
+          "name": "qa-ag04-project-vm",
+          "displayname": "qa-ag04-project-vm",
+          "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+          "username": "admin",
+          "projectid": "78a38450-86a1-483c-b607-e23f862fe320",
+          "project": "qa-ag04-project",
+          "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+          "domain": "ROOT",
+          "domainpath": "ROOT",
+          "created": "2026-10-19T07:56:56+0900",
+          "state": "Stopped",
+          "haenable": false,
+          "zoneid": "7013f5a1-de59-4cea-a596-f4f58815f31c",
+          "zonename": "Zone",
+          "volumemutationblockedreason": "",
+          "guestosid": "9708b6ac-b253-11f1-a895-0024814c313f",
+          "securitygroup": [],
+          "nic": [],
+          "hypervisor": "KVM",
+          "instancename": "i-195-663-VM",
+          "details": {
+            "deployvm": "true",
+            "tpmversion": "NONE",
+            "rootDiskController": "osdefault"
+          },
+          "clonefastsourcepowerallowed": false,
+          "clonefastpowerallowed": false,
+          "affinitygroup": [
+            {
+              "id": "23d3082b-1abe-4e57-b789-81ec4d8baed9",
+              "name": "qa-ag04-project-other",
+              "account": "PrjAcct-qa-ag04-project-1"
+            }
+          ],
+          "displayvm": true,
+          "isdynamicallyscalable": true,
+          "deleteprotection": false,
+          "ostypeid": "9708b6ac-b253-11f1-a895-0024814c313f",
+          "osdisplayname": "Rocky Linux 9",
+          "receivedbytes": 0,
+          "sentbytes": 0,
+          "vbmcport": "None",
+          "kvdoenable": false,
+          "kvdoinuse": false,
+          "arch": "x86_64",
+          "vbmcstatus": "Unallocated",
+          "tags": [],
+          "hasannotations": false
+        }
+      ]
+    }
+  }
+]

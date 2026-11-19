@@ -1,0 +1,314 @@
+- generic: 페이지 스타일 설정
+- button "닫기":
+  - img "close":
+- heading "페이지 스타일 설정" [level=3]
+- radio
+- radio [checked]
+- img "check":
+- heading "테마 색상" [level=3]
+- radio
+- img "check"
+- radio
+- radio
+- radio
+- radio
+- radio
+- radio
+- radio
+- separator
+- heading "네비게이션 설정" [level=3]
+- generic: 배경색
+- textbox [disabled]: "#ffffff"
+- generic: 텍스트 색상
+- textbox [disabled]: "#000000"
+- separator
+- alert:
+  - img "exclamation-circle":
+  - generic: "설정은 현재 브라우저에서만 볼 수 있습니다. 설정을 적용하려면 JSON 파일을 다운로드하고 경로 `/public/config.json` 아래의 `config.json` 파일의 `theme` 섹션에서 해당 콘텐츠를 교체하세요."
+- button "download 세팅값 다운로드(json)":
+  - img "download":
+  - generic: 세팅값 다운로드(json)
+- button "undo 기본값으로 재설정":
+  - img "undo":
+  - generic: 기본값으로 재설정
+- img "menu-unfold":
+- combobox
+- img "project":
+- text: 기본 보기
+- img "translation":
+- img "bell":
+- generic: AC
+- generic: admin cloud
+- main:
+  - link "home":
+    - /url: "#/"
+    - img "home":
+  - text: /
+  - link "템플릿":
+    - /url: "#/template"
+  - text: /
+  - generic: UD1392-31-20261016-templates-0
+  - link "question-circle":
+    - /url: http://docs.ablecloud.io/latest/adminguide/templates.html
+    - img "question-circle":
+  - button "reload 업데이트":
+    - img "reload":
+    - generic: 업데이트
+  - button "down 작업":
+    - img "down":
+    - generic: 작업
+  - img "edit":
+  - heading "UD1392-31-20261016-templates-0" [level=4]
+  - generic: x86_64
+  - generic: KVM
+  - separator
+  - generic: 상태
+  - generic: 사용 가능
+  - generic: 아이디
+  - button "barcode":
+    - img "barcode":
+  - link "b2307bbc-6804-48bb-8209-05d2620ff14a":
+    - /url: javascript:;
+  - generic: OS 유형
+  - generic: Rocky Linux 9
+  - generic: 사용자 데이터
+  - img "solution":
+  - link "UD1392-31-20261016-B":
+    - /url: "#/userdata/6ab285d3-d90d-4da1-98dc-652ac5c17f14"
+  - generic: 계정
+  - img "user":
+  - link "admin":
+    - /url: "#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f"
+  - generic: 도메인
+  - img "block":
+  - link "ROOT":
+    - /url: "#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details"
+  - separator
+  - link "cloud-server 가상머신 보기":
+    - /url: "#/vm?templateid=b2307bbc-6804-48bb-8209-05d2620ff14a"
+    - button "cloud-server 가상머신 보기":
+      - img "cloud-server":
+      - generic: 가상머신 보기
+  - button "rocket 가상머신 생성":
+    - img "rocket":
+    - generic: 가상머신 생성
+  - button "down":
+    - img "down":
+  - separator
+  - generic: 태그
+  - img "plus":
+  - text: 새 태그
+  - tablist:
+    - tab "상세" [selected]
+    - tab "Zone"
+    - tab "설정"
+    - tab "이벤트"
+    - tab "코멘트"
+    - button:
+  - tabpanel "상세":
+    - list:
+      - strong: 이름
+      - generic: UD1392-31-20261016-templates-0
+      - strong: 아이디
+      - generic: b2307bbc-6804-48bb-8209-05d2620ff14a
+      - strong: 설명
+      - generic: UD1392-31-20261016-templates-0
+      - strong: 하이퍼바이저
+      - generic: KVM
+      - strong: CPU 아키텍처
+      - generic: x86_64
+      - strong: 형식
+      - generic: QCOW2
+      - strong: OS 유형
+      - generic: Rocky Linux 9
+      - strong: 크기
+      - generic: 100.00 GiB
+      - strong: 준비
+      - generic: "true"
+      - strong: 비밀번호 관리 사용
+      - generic: "false"
+      - strong: 크로스 존
+      - generic: "false"
+      - strong: 템플릿 형식
+      - generic: USER
+      - strong: 직접 다운로드
+      - generic: "true"
+      - strong: 있는 그대로 배포
+      - generic: "false"
+      - strong: 공개
+      - generic: "false"
+      - strong: 추천
+      - generic: "false"
+      - strong: 추출 가능
+      - generic: "false"
+      - strong: 동적으로 확장 가능
+      - generic: "false"
+      - strong: 계정
+      - generic: admin
+      - strong: 도메인
+      - generic: ROOT
+      - strong: 생성일
+      - generic: 2026. 10. 16. 오후 10:15:18
+      - strong: 사용자 데이터 정책
+      - generic: APPEND
+      - strong: CKS용
+      - generic: "false"
+      - strong: URL
+      - generic: http://10.10.0.203:81/OS-Template/Mold%20Cloud%20Images/Rocky-Linux-9-5-x86-64-Server-Cloud-Image.qcow2
+      - strong: 템플릿 형식
+      - generic: USER
+      - strong: 압축/중복제거
+      - generic: "false"
+- alert:
+  - img "info-circle":
+  - generic: Wall 모니터링을 사용할 수 없습니다. 기존 알림은 최신 정보가 아닐 수 있으며 Mold는 계속 사용할 수 있습니다. 비활성
+- dialog "템플릿 편집":
+  - document:
+    - button "Close":
+      - img "close":
+    - generic: 템플릿 편집
+    - text: "*"
+    - text: 이름
+    - img "info-circle":
+    - textbox "* 이름 info-circle" [active]:
+      - /placeholder: The name of the image file
+      - text: UD1392-31-20261016-templates-0
+    - text: "*"
+    - text: 설명
+    - img "info-circle":
+    - textbox "* 설명 info-circle":
+      - /placeholder: The display text of the image
+      - text: UD1392-31-20261016-templates-0
+    - text: 비밀번호 관리 사용
+    - img "info-circle":
+    - switch "비밀번호 관리 사용 info-circle"
+    - generic "루트 디스크 컨트롤러"
+    - combobox "루트 디스크 컨트롤러"
+    - generic: 루트 디스크 컨트롤러
+    - generic "OS 유형": "* OS 유형"
+    - combobox "* OS 유형"
+    - generic: Rocky Linux 9
+    - generic "사용자 데이터"
+    - radio "사용자 데이터 설정 안함"
+    - generic: 설정 안함
+    - textbox "사용자 데이터 검색":
+      - /placeholder: 검색
+    - button "search":
+      - img "search":
+    - status: "선택한 사용자 데이터: UD1392-31-20261016-B"
+    - table:
+      - rowgroup:
+        - row "solution 사용자 데이터 user 계정 block 도메인":
+          - columnheader
+          - columnheader "solution 사용자 데이터":
+            - img "solution":
+            - text: 사용자 데이터
+          - columnheader "user 계정":
+            - img "user":
+            - text: 계정
+          - columnheader "block 도메인":
+            - img "block":
+            - text: 도메인
+          - columnheader
+    - table:
+      - rowgroup:
+        - row "UD1392-31-20261016-final-plain admin ROOT":
+          - cell:
+            - radio
+          - cell "UD1392-31-20261016-final-plain"
+          - cell "admin"
+          - cell "ROOT"
+        - row "UD1392-31-20261016-seed-13 admin ROOT":
+          - cell:
+            - radio
+          - cell "UD1392-31-20261016-seed-13"
+          - cell "admin"
+          - cell "ROOT"
+        - row "UD1392-31-20261016-seed-12 admin ROOT":
+          - cell:
+            - radio
+          - cell "UD1392-31-20261016-seed-12"
+          - cell "admin"
+          - cell "ROOT"
+        - row "UD1392-31-20261016-seed-11 admin ROOT":
+          - cell:
+            - radio
+          - cell "UD1392-31-20261016-seed-11"
+          - cell "admin"
+          - cell "ROOT"
+        - row "UD1392-31-20261016-seed-10 admin ROOT":
+          - cell:
+            - radio
+          - cell "UD1392-31-20261016-seed-10"
+          - cell "admin"
+          - cell "ROOT"
+        - row "UD1392-31-20261016-seed-9 admin ROOT":
+          - cell:
+            - radio
+          - cell "UD1392-31-20261016-seed-9"
+          - cell "admin"
+          - cell "ROOT"
+        - row "UD1392-31-20261016-seed-8 admin ROOT":
+          - cell:
+            - radio
+          - cell "UD1392-31-20261016-seed-8"
+          - cell "admin"
+          - cell "ROOT"
+        - row "UD1392-31-20261016-ui-text-v2 admin ROOT":
+          - cell:
+            - radio
+          - cell "UD1392-31-20261016-ui-text-v2"
+          - cell "admin"
+          - cell "ROOT"
+        - row "UD1392-31-20261016-b64-가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라 admin ROOT":
+          - cell:
+            - radio
+          - cell "UD1392-31-20261016-b64-가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라"
+          - cell "admin"
+          - cell "ROOT"
+        - row "UD1392-31-20261016-ui-text admin ROOT":
+          - cell:
+            - radio
+          - cell "UD1392-31-20261016-ui-text"
+          - cell "admin"
+          - cell "ROOT"
+    - list:
+      - listitem: "전체: 20"
+      - listitem "이전 페이지":
+        - button "left" [disabled]:
+          - img "left":
+      - listitem "1":
+        - generic: "1"
+      - listitem "2":
+        - generic: "2"
+      - listitem "다음 페이지":
+        - button "right":
+          - img "right":
+      - combobox
+      - generic: 10 / 쪽
+    - text: User Data 링크 정책
+    - img "info-circle":
+    - combobox "User Data 링크 정책 info-circle"
+    - generic "APPEND"
+    - text: 동적으로 확장 가능
+    - img "info-circle":
+    - switch "동적으로 확장 가능 info-circle"
+    - text: CKS용
+    - img "info-circle":
+    - switch "CKS용 info-circle"
+    - text: 템플릿 형식
+    - img "info-circle":
+    - combobox "템플릿 형식 info-circle"
+    - generic: USER
+    - text: 태그
+    - img "info-circle":
+    - textbox "태그 info-circle":
+      - /placeholder: the tag for this template.
+    - text: CPU 아키텍처
+    - img "info-circle":
+    - combobox "CPU 아키텍처 info-circle"
+    - generic: "the CPU arch of the template/ISO. Valid options are: x86_64, aarch64, s390x"
+    - button "취소":
+      - generic: 취소
+    - button "확인":
+      - generic: 확인

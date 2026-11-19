@@ -55,6 +55,9 @@ import org.springframework.scheduling.support.CronExpression;
 import javax.inject.Inject;
 import javax.naming.ConfigurationException;
 import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -193,15 +196,15 @@ public class ResourceScheduleManagerImpl extends MutualExclusiveIdsManagerBase i
 
         worker.validateDetails(parsedAction, details);
 
-        TimeZone timeZone = TimeZone.getTimeZone(timeZoneStr);
+        TimeZone timeZone = validateTimeZone(timeZoneStr);
         String timeZoneId = timeZone.getID();
         Date startDate = DateUtils.addMinutes(new Date(), 1);
         if (cmdStartDate != null) {
-            startDate = Date.from(DateUtil.getZoneDateTime(cmdStartDate, timeZone.toZoneId()).toInstant());
+            startDate = parseScheduleDate(cmdStartDate, timeZone);
         }
         Date endDate = null;
         if (cmdEndDate != null) {
-            endDate = Date.from(DateUtil.getZoneDateTime(cmdEndDate, timeZone.toZoneId()).toInstant());
+            endDate = parseScheduleDate(cmdEndDate, timeZone);
         }
 
         CronExpression cronExpression = DateUtil.parseSchedule(schedule);
@@ -305,6 +308,17 @@ public class ResourceScheduleManagerImpl extends MutualExclusiveIdsManagerBase i
     public ResourceScheduleResponse updateSchedule(Long id, String description, String schedule,
                                                    String timeZoneStr, Date cmdStartDate, Date cmdEndDate,
                                                    Boolean enabled, Map<String, String> details) {
+        return updateSchedule(id, description, schedule, timeZoneStr, cmdStartDate, cmdEndDate, enabled, details, false);
+    }
+
+    @Override
+    @ActionEvent(eventType = EventTypes.EVENT_SCHEDULE_UPDATE, eventDescription = "Updating Resource Schedule")
+    public ResourceScheduleResponse updateSchedule(Long id, String description, String schedule,
+                                                   String timeZoneStr, Date cmdStartDate, Date cmdEndDate,
+                                                   Boolean enabled, Map<String, String> details, boolean clearEndDate) {
+        if (clearEndDate && cmdEndDate != null) {
+            throw new InvalidParameterValueException("Cannot clear and replace the schedule end date in one request");
+        }
         ResourceScheduleVO scheduleVO = resourceScheduleDao.findById(id);
 
         if (scheduleVO == null) {
@@ -312,6 +326,9 @@ public class ResourceScheduleManagerImpl extends MutualExclusiveIdsManagerBase i
         }
 
         BaseScheduleWorker worker = getWorker(scheduleVO.getResourceType());
+        if (!worker.isResourceValid(scheduleVO.getResourceId())) {
+            throw new InvalidParameterValueException("Cannot update a schedule for a deleted or invalid resource");
+        }
         long ownerId = worker.getEntityOwnerId(scheduleVO.getResourceId());
         accountManager.checkAccess(CallContext.current().getCallingAccount(), null, false, accountManager.getAccount(ownerId));
 
@@ -339,7 +356,7 @@ public class ResourceScheduleManagerImpl extends MutualExclusiveIdsManagerBase i
         TimeZone timeZone;
         String timeZoneId;
         if (timeZoneStr != null) {
-            timeZone = TimeZone.getTimeZone(timeZoneStr);
+            timeZone = validateTimeZone(timeZoneStr);
             timeZoneId = timeZone.getID();
             if (!timeZoneId.equals(timeZoneStr)) {
                 logger.warn("Using timezone [{}] for running the schedule [{}] for resource {}, as an equivalent of [{}].",
@@ -352,13 +369,13 @@ public class ResourceScheduleManagerImpl extends MutualExclusiveIdsManagerBase i
         }
 
         Date startDate = scheduleVO.getStartDate().before(DateUtils.addMinutes(new Date(), 1)) ? DateUtils.addMinutes(new Date(), 1) : scheduleVO.getStartDate();
-        Date endDate = scheduleVO.getEndDate();
+        Date endDate = clearEndDate ? null : scheduleVO.getEndDate();
         if (cmdEndDate != null) {
-            endDate = Date.from(DateUtil.getZoneDateTime(cmdEndDate, timeZone.toZoneId()).toInstant());
+            endDate = parseScheduleDate(cmdEndDate, timeZone);
         }
 
         if (cmdStartDate != null) {
-            startDate = Date.from(DateUtil.getZoneDateTime(cmdStartDate, timeZone.toZoneId()).toInstant());
+            startDate = parseScheduleDate(cmdStartDate, timeZone);
         }
 
         boolean enabling = Boolean.TRUE.equals(enabled) && !scheduleVO.getEnabled();
@@ -376,7 +393,7 @@ public class ResourceScheduleManagerImpl extends MutualExclusiveIdsManagerBase i
         if (description != null) {
             scheduleVO.setDescription(description);
         }
-        if (cmdEndDate != null) {
+        if (cmdEndDate != null || clearEndDate) {
             scheduleVO.setEndDate(endDate);
         }
         if (cmdStartDate != null) {
@@ -408,6 +425,23 @@ public class ResourceScheduleManagerImpl extends MutualExclusiveIdsManagerBase i
         });
     }
 
+    TimeZone validateTimeZone(String name) {
+        if (StringUtils.isBlank(name) || (!Arrays.asList(TimeZone.getAvailableIDs()).contains(name)
+                && !name.matches("GMT[+-](?:0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]"))) {
+            throw new InvalidParameterValueException("Unknown resource schedule timezone: " + name);
+        }
+        return TimeZone.getTimeZone(name);
+    }
+
+    Date parseScheduleDate(Date date, TimeZone zone) {
+        LocalDateTime local = LocalDateTime.ofInstant(date.toInstant(), TimeZone.getDefault().toZoneId());
+        List<ZoneOffset> offsets = zone.toZoneId().getRules().getValidOffsets(local);
+        if (offsets.size() != 1) {
+            throw new InvalidParameterValueException("Resource schedule date is nonexistent or ambiguous due to DST: " + local + " " + zone.getID());
+        }
+        return Date.from(local.toInstant(offsets.get(0)));
+    }
+
     void validateStartDateEndDate(Date startDate, Date endDate, TimeZone tz) {
         ZonedDateTime now = ZonedDateTime.now(tz.toZoneId());
         ZonedDateTime zonedStartDate = ZonedDateTime.ofInstant(startDate.toInstant(), tz.toZoneId());
@@ -421,7 +455,7 @@ public class ResourceScheduleManagerImpl extends MutualExclusiveIdsManagerBase i
             if (zonedEndDate.isBefore(now)) {
                 throw new InvalidParameterValueException(String.format("Invalid value for end date. End date [%s] can't be before current time [%s].", zonedEndDate, now));
             }
-            if (zonedEndDate.isBefore(zonedStartDate)) {
+            if (!zonedEndDate.isAfter(zonedStartDate)) {
                 throw new InvalidParameterValueException(String.format("Invalid value for end date. End date [%s] can't be before start date [%s].", zonedEndDate, zonedStartDate));
             }
         }

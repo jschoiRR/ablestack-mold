@@ -42,7 +42,8 @@ public class UpdateVMGroupCmd extends BaseCmd {
     @Parameter(name = ApiConstants.ID, type = CommandType.UUID, entityType = InstanceGroupResponse.class, required = true, description = "Instance group ID")
     private Long id;
 
-    @Parameter(name = ApiConstants.NAME, type = CommandType.STRING, description = "New Instance group name")
+    @Parameter(name = ApiConstants.NAME, type = CommandType.STRING, length = ApiConstants.INSTANCE_GROUP_NAME_INPUT_MAX_LENGTH,
+            description = "New Instance group name. Surrounding whitespace is trimmed; the stored name must contain 1 to 255 characters. Omission preserves the name.")
     private String groupName;
 
     /////////////////////////////////////////////////////

@@ -1,0 +1,16 @@
+id	uuid	description	timezone	start_date	end_date	enabled	schedule
+12	1b5b9e3a-4b72-418f-bcdd-ad3e14fc7bee	AS06-31-UTC-EARLIEST	UTC	2026-10-11 09:10:36	NULL	0	0 14 9 11 10 *
+13	62255cda-45c1-46c6-8948-4f7b89b405d6	AS06-31-KST-CONFLICT	Asia/Seoul	2026-10-11 09:10:44	NULL	0	0 14 18 11 10 *
+14	7302e4d0-1336-4c42-a854-0c8828aed1bf	AS06-31-ENABLED	UTC	2026-10-11 09:20:43	NULL	0	0 24 9 * * *
+id	uuid	schedule_id	scheduled_timestamp	async_job_id	job_status
+2	4b3cc432-13e6-4ae8-8e69-c2c8d8494cee	12	2026-10-11 09:14:00	11222	1
+3	c3eb828a-0ce1-46e4-89ee-4d75ce21b615	13	2026-10-11 09:14:00	NULL	NULL
+6	53b95b6d-ab3b-4083-8342-c3a0eed183c3	14	2026-10-11 09:24:00	11225	1
+id	type	state	created	description
+27672	AUTOSCALEVMGROUP.UPDATE	Started	2026-10-11 09:14:53	Updating autoscale vm group. AutoScale Instance Group ID: bf0f5385-ae2c-4da4-aec4-eb985dbdeba4
+27673	AUTOSCALEVMGROUP.UPDATE	Completed	2026-10-11 09:14:53	Successfully completed updating autoscale vm group. AutoScale Instance Group ID: bf0f5385-ae2c-4da4-aec4-eb985dbdeba4
+27674	AUTOSCALEVMGROUP.UPDATE	Scheduled	2026-10-11 09:19:40	Updating AutoScale Instance Group with ID: 5
+27675	AUTOSCALEVMGROUP.UPDATE	Started	2026-10-11 09:19:40	Updating autoscale vm group. AutoScale Instance Group ID: bf0f5385-ae2c-4da4-aec4-eb985dbdeba4
+27676	AUTOSCALEVMGROUP.UPDATE	Completed	2026-10-11 09:19:40	Successfully completed updating autoscale vm group. AutoScale Instance Group ID: bf0f5385-ae2c-4da4-aec4-eb985dbdeba4
+27695	AUTOSCALEVMGROUP.UPDATE	Started	2026-10-11 09:24:53	Updating autoscale vm group. AutoScale Instance Group ID: bf0f5385-ae2c-4da4-aec4-eb985dbdeba4
+27696	AUTOSCALEVMGROUP.UPDATE	Completed	2026-10-11 09:24:53	Successfully completed updating autoscale vm group. AutoScale Instance Group ID: bf0f5385-ae2c-4da4-aec4-eb985dbdeba4

@@ -22,7 +22,6 @@ import org.apache.cloudstack.api.APICommand;
 import org.apache.cloudstack.api.ApiCommandResourceType;
 import org.apache.cloudstack.api.ApiConstants;
 import org.apache.cloudstack.api.ApiErrorCode;
-import org.apache.cloudstack.api.BaseAsyncCreateCmd;
 import org.apache.cloudstack.api.Parameter;
 import org.apache.cloudstack.api.ServerApiException;
 import org.apache.cloudstack.api.response.ConditionResponse;
@@ -37,7 +36,7 @@ import com.cloud.network.as.Condition;
 
 @APICommand(name = "createCondition", description = "Creates a condition for Instance auto scaling", responseObject = ConditionResponse.class, entityType = {Condition.class},
         requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
-public class CreateConditionCmd extends BaseAsyncCreateCmd {
+public class CreateConditionCmd extends BaseAutoScaleCreateCmd {
     private static final String s_name = "conditionresponse";
 
     // ///////////////////////////////////////////////////
@@ -127,7 +126,7 @@ public class CreateConditionCmd extends BaseAsyncCreateCmd {
 
     @Override
     public String getEventDescription() {
-        return "Creating AutoScale condition";
+        return "Creating AutoScale condition" + (getInjectedJobId() == null ? "" : " requestid=" + getInjectedJobId());
     }
 
     @Override

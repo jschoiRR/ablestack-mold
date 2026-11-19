@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="954" viewBox="0 0 1800 954">
+<rect width="100%" height="100%" fill="white"/>
+<text x="72" y="48" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="52" font-weight="700" fill="#172B45">인증과 권한의 세 가지 확인</text>
+<text x="72" y="127" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="36" font-weight="400" fill="#506378">로그인 성공만으로 모든 VM이나 API를 사용할 수 있는 것은 아닙니다</text>
+<rect x="72" y="208" width="1656" height="164" rx="20" fill="#F0F7FF" stroke="none" stroke-width="2"/>
+<rect x="96" y="238" width="48" height="48" rx="24" fill="#146CBA" stroke="none" stroke-width="2"/>
+<text x="110" y="248" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="29" font-weight="700" fill="white">1</text>
+<text x="170" y="238" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="42" font-weight="700" fill="#172B45">인증</text>
+<polyline points="610,232 610,348" fill="none" stroke="#D7E1EB" stroke-width="2"/>
+<text x="646" y="236" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="40" font-weight="400" fill="#506378">호출자는 누구인가 · 세션 또는 서명된 요청</text>
+<text x="646" y="298" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="40" font-weight="400" fill="#506378">ApiServer의 요청 검증</text>
+<polyline points="900,377 900,412" fill="none" stroke="#146CBA" stroke-width="4"/>
+<polygon points="900,412 908.0,396.0 892.0,396.0" fill="#146CBA"/>
+<rect x="72" y="418" width="1656" height="164" rx="20" fill="#F5F2FF" stroke="none" stroke-width="2"/>
+<rect x="96" y="448" width="48" height="48" rx="24" fill="#6554B7" stroke="none" stroke-width="2"/>
+<text x="110" y="458" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="29" font-weight="700" fill="white">2</text>
+<text x="170" y="448" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="42" font-weight="700" fill="#172B45">API 역할 권한 RBAC</text>
+<polyline points="610,442 610,558" fill="none" stroke="#D7E1EB" stroke-width="2"/>
+<text x="646" y="446" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="40" font-weight="400" fill="#506378">이 Role이 해당 API를 허용하는가</text>
+<text x="646" y="508" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="40" font-weight="400" fill="#506378">API 접근 검사와 RolePermission</text>
+<polyline points="900,587 900,622" fill="none" stroke="#6554B7" stroke-width="4"/>
+<polygon points="900,622 908.0,606.0 892.0,606.0" fill="#6554B7"/>
+<rect x="72" y="628" width="1656" height="164" rx="20" fill="#EFF9F6" stroke="none" stroke-width="2"/>
+<rect x="96" y="658" width="48" height="48" rx="24" fill="#008878" stroke="none" stroke-width="2"/>
+<text x="110" y="668" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="29" font-weight="700" fill="white">3</text>
+<text x="170" y="658" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="42" font-weight="700" fill="#172B45">자원 접근 권한 ACL</text>
+<polyline points="610,652 610,768" fill="none" stroke="#D7E1EB" stroke-width="2"/>
+<text x="646" y="656" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="40" font-weight="400" fill="#506378">이 호출자가 해당 VM을 조작할 수 있는가</text>
+<text x="646" y="718" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="40" font-weight="400" fill="#506378">API의 ACL과 서비스의 checkAccess</text>
+<text x="72" y="823" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="36" font-weight="700" fill="#172B45">API와 서비스에서 관련 검사가 수행됩니다. 역할과 자원의 소유 범위를 함께 확인합니다.</text>
+</svg>

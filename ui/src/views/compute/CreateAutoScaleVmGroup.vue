@@ -16,11 +16,21 @@
 // under the License.
 
 <template>
-  <div>
-    <a-row :gutter="12">
-      <a-col :md="24" :lg="17">
+  <div ref="creationLayout" class="autoscale-create" :class="{ 'autoscale-create--bounded': creationViewportHeight }" :style="{ '--autoscale-viewport-height': creationViewportHeight }">
+    <a-alert v-if="!hasRequiredCreationApis" type="error" show-icon :message="$t('message.autoscale.apis.required')" style="margin-bottom: 16px" />
+    <a-alert v-if="userDataLookupFailed" type="error" show-icon :message="$t('message.autoscale.userdata.unavailable')" style="margin-bottom: 16px">
+      <template #description><a-button size="small" @click="retryUserDataLookup">{{ $t('label.retry') }}</a-button></template>
+    </a-alert>
+    <a-alert v-if="creationOperation" type="info" show-icon :message="$t('label.autoscale.creation.' + creationOperation.status)" style="margin-bottom: 16px">
+      <template #description><a-button @click="processStatusModalVisible = true">{{ $t('label.autoscale.creation.inspect') }}</a-button></template>
+    </a-alert>
+    <a-row v-if="hasRequiredCreationApis" :gutter="12">
+      <a-col :xs="24" :lg="17" class="autoscale-create-form-column">
         <a-card :bordered="true" :title="$t('label.new.autoscale.vmgroup')">
           <a-form
+            class="autoscale-create-form-scroll"
+            tabindex="0"
+            :aria-label="$t('label.new.autoscale.vmgroup')"
             v-ctrl-enter="handleSubmit"
             :ref="formRef"
             :model="form"
@@ -77,7 +87,7 @@
                       :guestOsCategories="options.guestOsCategories"
                       :guestOsCategoriesLoading="loading.guestOsCategories"
                       :selectedGuestOsCategoryId="form.guestoscategoryid"
-                      :imageItems="options.templates"
+                      :imageItems="autoScaleImageItems"
                       :imagesLoading="loading.templates"
                       :diskSizeSelectionDeployAsIsMessageVisible="template && template.deployasis"
                       :rootDiskOverrideDisabled="rootDiskSizeFixed > 0 || (template && template.deployasis) || showOverrideDiskOfferingOption"
@@ -339,6 +349,7 @@
                     </div>
                     <div v-show="!(vm.templateid && templateNics && templateNics.length > 0)" >
                       <network-selection
+                        :localize-auto-scale-support="true"
                         :items="options.networks"
                         :row-count="rowCount.networks"
                         :value="networkOfferingIds"
@@ -367,8 +378,9 @@
                 <template #description>
                   <load-balancer-selection
                     :items="options.loadbalancers"
+                    :rowCount="rowCount.loadbalancers"
                     :zoneId="zoneId"
-                    :loading="loading.networks"
+                    :loading="loading.loadbalancers"
                     :preFillContent="dataPreFill"
                     @select-load-balancer-item="($event) => updateLoadBalancers($event)"
                     @handle-search-filter="($event) => handleSearchFilter('loadbalancers', $event)"
@@ -500,7 +512,7 @@
                     </a-form-item>
                     <a-form-item name="scaleupquiettime" ref="scaleupquiettime">
                       <template #label>
-                        <tooltip-label :title="$t('label.quiettime')" :tooltip="createAutoScalePolicyApiParams.quiettime.description"/>
+                        <tooltip-label :title="$t('label.autoscale.cooldown.seconds')" :tooltip="createAutoScalePolicyApiParams.quiettime.description"/>
                       </template>
                       <a-input v-model:value="selectedScaleUpPolicy.scaleupquiettime" type="number"></a-input>
                     </a-form-item>
@@ -525,8 +537,8 @@
                           v-for="(counter, index) in countersList"
                           :value="counter.id"
                           :key="index"
-                          :label="counter.name">
-                          {{ counter.name }}
+                          :label="counterLabel(counter.name)">
+                          {{ counterLabel(counter.name) }}
                         </a-select-option>
                       </a-select>
                       <span class="error-text">{{ $t('label.required') }}</span>
@@ -543,7 +555,7 @@
                         :filterOption="(input, option) => {
                           return option.value.toLowerCase().indexOf(input.toLowerCase()) >= 0
                         }" >
-                        <a-select-option value="GT">{{ getOperator('GT') }}</a-select-option>
+                        <a-select-option v-for="operator in ['GT', 'GE', 'LT', 'LE', 'EQ']" :key="operator" :value="operator">{{ getOperator(operator) }}</a-select-option>
                       </a-select>
                       <span class="error-text">{{ $t('label.required') }}</span>
                     </div>
@@ -559,7 +571,7 @@
                       <div class="form__label">{{ $t('label.action') }}</div>
                       <a-button ref="submit" type="primary" @click="addScaleUpCondition">
                         <template #icon><plus-outlined /></template>
-                        {{ $t('label.add.condition') }}
+                        {{ $t('label.autoscale.condition.add') }}
                       </a-button>
                     </div>
                   </div>
@@ -574,6 +586,9 @@
                       :pagination="false"
                       :rowKey="record => record.counterid">
                       <template #bodyCell="{ column, record }">
+                        <template v-if="column.dataIndex === 'countername'">
+                          {{ counterLabel(record.countername) }}
+                        </template>
                         <template v-if="column.key === 'relationaloperator'">
                           {{ getOperator(record.relationaloperator) }}
                         </template>
@@ -641,7 +656,7 @@
                     </a-form-item>
                     <a-form-item name="scaledownquiettime" ref="scaledownquiettime">
                       <template #label>
-                        <tooltip-label :title="$t('label.quiettime')" :tooltip="createAutoScalePolicyApiParams.quiettime.description"/>
+                        <tooltip-label :title="$t('label.autoscale.cooldown.seconds')" :tooltip="createAutoScalePolicyApiParams.quiettime.description"/>
                       </template>
                       <a-input v-model:value="selectedScaleDownPolicy.scaledownquiettime" type="number"></a-input>
                     </a-form-item>
@@ -666,8 +681,8 @@
                           v-for="(counter, index) in countersList"
                           :value="counter.id"
                           :key="index"
-                          :label="counter.name">
-                          {{ counter.name }}
+                          :label="counterLabel(counter.name)">
+                          {{ counterLabel(counter.name) }}
                         </a-select-option>
                       </a-select>
                       <span class="error-text">{{ $t('label.required') }}</span>
@@ -684,7 +699,7 @@
                         :filterOption="(input, option) => {
                           return option.value.toLowerCase().indexOf(input.toLowerCase()) >= 0
                         }" >
-                        <a-select-option value="LT">{{ getOperator('LT') }}</a-select-option>
+                        <a-select-option v-for="operator in ['GT', 'GE', 'LT', 'LE', 'EQ']" :key="operator" :value="operator">{{ getOperator(operator) }}</a-select-option>
                       </a-select>
                       <span class="error-text">{{ $t('label.required') }}</span>
                     </div>
@@ -700,7 +715,7 @@
                       <div class="form__label">{{ $t('label.action') }}</div>
                       <a-button ref="submit" type="primary" @click="addScaleDownCondition">
                         <template #icon><plus-outlined /></template>
-                        {{ $t('label.add.condition') }}
+                        {{ $t('label.autoscale.condition.add') }}
                       </a-button>
                     </div>
                   </div>
@@ -715,6 +730,9 @@
                       :pagination="false"
                       :rowKey="record => record.counterid">
                       <template #bodyCell="{ column, record }">
+                        <template v-if="column.dataIndex === 'countername'">
+                          {{ counterLabel(record.countername) }}
+                        </template>
                         <template v-if="column.key === 'relationaloperator'">
                           {{ getOperator(record.relationaloperator) }}
                         </template>
@@ -757,6 +775,8 @@
                         :zoneId="zoneId"
                         :value="affinityGroupIds"
                         :loading="loading.affinityGroups"
+                        :error="affinityGroupsError"
+                        :owner="params.affinityGroups.options"
                         :preFillContent="dataPreFill"
                         @select-affinity-group-item="($event) => updateAffinityGroups($event)"
                         @handle-search-filter="($event) => handleSearchFilter('affinityGroups', $event)"/>
@@ -808,19 +828,17 @@
                                   @tabChange="key => onUserdataTabChange(key, 'userdataTabKey')">
                                   <div v-if="userdataTabKey === 'userdataregistered'">
                                     <a-step
-                                      v-if="isUserAllowedToListUserDatas"
                                       :status="zoneSelected ? 'process' : 'wait'">
                                       <template #description>
                                         <div v-if="zoneSelected">
                                           <user-data-selection
-                                            :items="options.userDatas"
-                                            :row-count="rowCount.userDatas"
+                                            :scope="userDataOwner"
+                                            :value="form.userdataid"
                                             :zoneId="zoneId"
                                             :disabled="template.userdatapolicy === 'DENYOVERRIDE'"
-                                            :loading="loading.userDatas"
                                             :preFillContent="dataPreFill"
-                                            @select-user-data-item="($event) => updateUserData($event)"
-                                            @handle-search-filter="($event) => handleSearchFilter('userData', $event)"
+                                            @select-user-data-item="updateUserData"
+                                            @ready="userDataSelectionReady = $event"
                                           />
                                           <div v-if="userDataParams.length > 0">
                                             <a-input-group>
@@ -948,94 +966,62 @@
                 </template>
               </a-step>
             </a-steps>
-            <div class="card-footer" v-if="isMobile()">
-              <deploy-buttons
-                :loading="loading.deploy"
-                :deployButtonText="$t('label.create')"
-                @handle-cancel="() => $router.back()"
-                @handle-deploy="handleSubmit" />
-            </div>
+            <auto-scale-creation-summary v-if="!showSideSummary" :form="form" :loadbalancer="loadbalancer || {}" />
           </a-form>
+          <div class="card-footer autoscale-create-mobile-footer" v-if="!showSideSummary">
+            <deploy-buttons
+              :loading="loading.deploy || submitting || creationBusy"
+              :disabled="Boolean(hasUnresolvedCreation) || userDataSelectionBlocked"
+              :deployButtonText="$t('label.create')"
+              @handle-cancel="() => $router.back()"
+              @handle-deploy="handleSubmit" />
+          </div>
         </a-card>
       </a-col>
-      <a-col :md="24" :lg="7" v-if="!isMobile()">
-        <a-affix :offsetTop="75" class="vm-info-card">
-          <info-card :footerVisible="true" :resource="vm" :title="$t('label.your.autoscale.vmgroup')" @change-resource="(data) => resource = data">
+      <a-col :lg="7" v-if="showSideSummary" class="autoscale-create-summary-column">
+        <div class="vm-info-card">
+          <info-card :footerVisible="true" scrollable :resource="vm" :title="$t('label.your.autoscale.vmgroup')" @change-resource="(data) => resource = data">
+            <template #details><auto-scale-creation-summary :form="form" :loadbalancer="loadbalancer || {}" /></template>
             <template #footer-content>
               <deploy-buttons
-                :loading="loading.deploy"
+                :loading="loading.deploy || submitting || creationBusy"
+                :disabled="Boolean(hasUnresolvedCreation) || userDataSelectionBlocked"
                 :deployButtonText="$t('label.create')"
                 @handle-cancel="() => $router.back()"
                 @handle-deploy="handleSubmit" />
             </template>
           </info-card>
-        </a-affix>
+        </div>
       </a-col>
     </a-row>
   </div>
-  <div>
-    <a-modal
-      :title="$t('message.creating.autoscale.vmgroup')"
-      :visible="processStatusModalVisible"
-      :afterClose="closeModal"
-      :maskClosable="false"
-      :closable="false"
-      :footer="null"
-      @cancel="processStatusModalVisible = false">
-
-      <div class="form">
-        <a-card class="ant-form-text card-launch-description">
-          {{ $t('message.please.wait.while.autoscale.vmgroup.is.being.created') }}
-        </a-card>
-      </div>
-      <div class="form">
-        <a-card
-          id="launch-content"
-          class="ant-form-text card-launch-content">
-          <a-steps
-            size="small"
-            direction="vertical"
-            :current="currentStep"
-          >
-            <a-step
-              v-for="(step, index) in steps"
-              :key="index"
-              :title="$t(step.title) + (step.detail ? ' (' + step.detail + ')' : '')"
-              :status="step.status">
-              <template #icon>
-                <LoadingOutlined v-if="step.status===status.PROCESS" />
-                <CloseCircleOutlined v-else-if="step.status===status.FAILED" />
-              </template>
-              <template #description>
-                <a-card
-                  class="step-error"
-                  v-if="step.status===status.FAILED"
-                >
-                  <div><strong>{{ $t('label.error.something.went.wrong.please.correct.the.following') }}:</strong></div>
-                  <div>{{ messageError }}</div>
-                </a-card>
-              </template>
-            </a-step>
-          </a-steps>
-        </a-card>
-      </div>
-      <div class="form-action" v-if="processStatus">
-        <a-button
-          type="primary"
-          @click="closeModal"
-        >{{ $t('label.close') }}</a-button>
-      </div>
-    </a-modal>
-  </div>
+  <auto-scale-creation-progress
+:visible="processStatusModalVisible"
+:operation="creationOperation"
+:busy="creationBusy"
+:canQuery="canQueryCreation"
+:canCleanup="canCleanupCreation"
+    @close="processStatusModalVisible = false"
+@resume="resumeCreation"
+@cleanup="cleanupCreation"
+@forget="forgetCreation"
+@open-group="openCreatedGroup" />
 </template>
 
 <script>
-import { ref, reactive, toRaw } from 'vue'
+import '@/style/components/view/autoscale.less'
+import AutoScaleCreationSummary from '@/views/compute/AutoScaleCreationSummary'
+import { ref, reactive, toRaw, markRaw } from 'vue'
+import { affinitySelectionIds, affinitySelectionGroups, fetchAffinityGroupOptions } from '@/utils/affinityGroupSelection'
 import { getAPI, postAPI } from '@/api'
+import { createAutoScaleCreation, autoScaleCreationScope } from '@/utils/autoScaleCreation'
+import AutoScaleCreationProgress from './AutoScaleCreationProgress.vue'
 import _ from 'lodash'
 import { mixin, mixinDevice } from '@/utils/mixin.js'
 import store from '@/store'
 import eventBus from '@/config/eventBus'
+import { autoScaleInteger, autoScaleOfferingEligible, autoScaleCreationApis } from '@/utils/autoscaleValidation'
+import { autoScaleCounterLabel } from '@/utils/autoScalePolicyEvaluation'
 
 import InfoCard from '@/components/view/InfoCard'
 import DeployButtons from '@views/compute/wizard/DeployButtons'
@@ -1047,6 +1033,7 @@ import ComputeSelection from '@views/compute/wizard/ComputeSelection'
 import DiskOfferingSelection from '@views/compute/wizard/DiskOfferingSelection'
 import DiskSizeSelection from '@views/compute/wizard/DiskSizeSelection'
 import MultiDiskSelection from '@views/compute/wizard/MultiDiskSelection'
+import { autoScaleTemplateById } from '@/utils/autoScaleUi'
 import TemplateIsoSelection from '@views/compute/wizard/TemplateIsoSelection'
 import OsBasedImageSelection from '@views/compute/wizard/OsBasedImageSelection'
 import AffinityGroupSelection from '@views/compute/wizard/AffinityGroupSelection'
@@ -1055,6 +1042,7 @@ import NetworkConfiguration from '@views/compute/wizard/NetworkConfiguration'
 import LoadBalancerSelection from '@views/compute/wizard/LoadBalancerSelection'
 import SshKeyPairSelection from '@views/compute/wizard/SshKeyPairSelection'
 import UserDataSelection from '@views/compute/wizard/UserDataSelection'
+import { applyUserDataSelection, userDataSelectionConsumer } from '@/utils/userDataSelection'
 import SecurityGroupSelection from '@views/compute/wizard/SecurityGroupSelection'
 import TooltipLabel from '@/components/widgets/TooltipLabel'
 import InstanceNicsNetworkSelectListView from '@/components/view/InstanceNicsNetworkSelectListView.vue'
@@ -1066,6 +1054,8 @@ const STATUS_FAILED = 'error'
 export default {
   name: 'Wizard',
   components: {
+    AutoScaleCreationSummary,
+    AutoScaleCreationProgress,
     InfoCard,
     DeployButtons,
     ResourceIcon,
@@ -1097,9 +1087,18 @@ export default {
       default: () => {}
     }
   },
-  mixins: [mixin, mixinDevice],
+  mixins: [mixin, mixinDevice, userDataSelectionConsumer],
   data () {
     return {
+      creationViewportHeight: '',
+      showSideSummary: true,
+      creationController: null,
+      creationOperation: null,
+      creationBusy: false,
+      submitting: false,
+      checkingEligibility: false,
+      userDataLookupErrors: { userDataParams: false, templateUserDataParams: false },
+      userDataLookupVersions: { userDataParams: 0, templateUserDataParams: 0 },
       steps: [],
       currentStep: 0,
       processStatus: null,
@@ -1163,7 +1162,6 @@ export default {
         affinityGroups: false,
         networks: false,
         sshKeyPairs: false,
-        userDatas: false,
         loadbalancers: false,
         zones: false
       },
@@ -1176,6 +1174,7 @@ export default {
       selectedTemplateConfiguration: {},
       serviceOffering: {},
       diskOffering: {},
+      affinityGroupsError: '',
       affinityGroups: [],
       networks: [],
       networksAdd: [],
@@ -1297,6 +1296,16 @@ export default {
     }
   },
   computed: {
+    creationScope () { return autoScaleCreationScope(window.location.origin, this.$store.getters.userInfo, this.$store.getters.project) },
+    canQueryCreation () { return Boolean(this.$store.getters.apis.queryAutoScaleCreationRequest && this.$store.getters.apis.queryAsyncJobResult) },
+    canCleanupCreation () { return ['deleteAutoScaleVmProfile', 'deleteCondition', 'deleteAutoScalePolicy', 'deleteAutoScaleVmGroup', 'listAutoScaleVmProfiles', 'listConditions', 'listAutoScalePolicies', 'listAutoScaleVmGroups'].every(name => Boolean(this.$store.getters.apis[name])) },
+    hasUnresolvedCreation () { return this.creationOperation && !['success', 'cleaned'].includes(this.creationOperation.status) },
+    hasRequiredCreationApis () {
+      return this.canQueryCreation && autoScaleCreationApis.every(name => Boolean(this.$store.getters.apis[name]))
+    },
+    userDataLookupFailed () {
+      return Object.values(this.userDataLookupErrors).some(Boolean)
+    },
     rootDiskSize () {
       return this.showRootDiskSizeChanger && this.rootDiskSizeFixed > 0
     },
@@ -1318,7 +1327,7 @@ export default {
       return size.join(' | ')
     },
     affinityGroupIds () {
-      return _.map(this.affinityGroups, 'id')
+      return affinitySelectionIds(this.form.affinitygroupids)
     },
     params () {
       return {
@@ -1358,15 +1367,6 @@ export default {
         },
         sshKeyPairs: {
           list: 'listSSHKeyPairs',
-          options: {
-            page: 1,
-            pageSize: 10,
-            keyword: undefined,
-            listall: false
-          }
-        },
-        userDatas: {
-          list: 'listUserData',
           options: {
             page: 1,
             pageSize: 10,
@@ -1437,6 +1437,10 @@ export default {
     queryArchId () {
       return this.$route.query.arch || null
     },
+    autoScaleImageItems () {
+      if (this.form.guestoscategoryid !== '-2') return this.options.templates
+      return { [this.isNormalAndDomainUser ? 'executable' : 'all']: this.options.templates.sharedexecutable || { count: 0, template: [] } }
+    },
     queryTemplateId () {
       return this.$route.query.templateid || null
     },
@@ -1499,6 +1503,7 @@ export default {
     }
   },
   watch: {
+    creationScope () { this.stopCreationTracking(); this.initCreationTracking() },
     '$route' (to, from) {
       if (to.name === 'createAutoScaleVmGroup') {
         this.resetData()
@@ -1538,7 +1543,7 @@ export default {
 
         this.zone = _.find(this.options.zones, (option) => option.id === vmgroupConfig.zoneid)
         this.networks = _.filter(this.options.networks, (option) => _.includes(vmgroupConfig.networkids, option.id))
-        this.affinityGroups = _.filter(this.options.affinityGroups, (option) => _.includes(vmgroupConfig.affinitygroupids, option.id))
+        this.affinityGroups = affinitySelectionGroups(vmgroupConfig.affinitygroupids, [...this.affinityGroups, ...this.options.affinityGroups])
         this.sshKeyPair = _.find(this.options.sshKeyPairs, (option) => option.name === vmgroupConfig.keypair)
 
         if (this.zone) {
@@ -1623,31 +1628,25 @@ export default {
     }
   },
   beforeCreate () {
-    this.createConditionApi = this.$store.getters.apis.createCondition || {}
-    this.createConditionApiParams = {}
-    this.createConditionApi.params.forEach(param => {
-      this.createConditionApiParams[param.name] = param
-    })
-    this.createAutoScalePolicyApi = this.$store.getters.apis.createAutoScalePolicy || {}
-    this.createAutoScalePolicyApiParams = {}
-    this.createAutoScalePolicyApi.params.forEach(param => {
-      this.createAutoScalePolicyApiParams[param.name] = param
-    })
-    this.createAutoScaleVmGroupApi = this.$store.getters.apis.createAutoScaleVmGroup || {}
-    this.createAutoScaleVmGroupApiParams = {}
-    this.createAutoScaleVmGroupApi.params.forEach(param => {
-      this.createAutoScaleVmGroupApiParams[param.name] = param
-    })
-    this.createAutoScaleVmProfileApi = this.$store.getters.apis.createAutoScaleVmProfile || {}
-    this.createAutoScaleVmProfileApiParams = {}
-    this.createAutoScaleVmProfileApi.params.forEach(param => {
-      this.createAutoScaleVmProfileApiParams[param.name] = param
-    })
+    for (const name of ['createCondition', 'createAutoScalePolicy', 'createAutoScaleVmGroup', 'createAutoScaleVmProfile']) {
+      const api = this.$store.getters.apis[name] || {}
+      this[`${name}Api`] = api
+      this[`${name}ApiParams`] = Object.fromEntries((api.params || []).map(param => [param.name, param]))
+    }
   },
   created () {
     this.initForm()
+    this.initCreationTracking()
+    if (!this.hasRequiredCreationApis) return
     this.dataPreFill = this.preFillContent && Object.keys(this.preFillContent).length > 0 ? this.preFillContent : {}
     this.fetchData()
+  },
+  mounted () { this.startLayoutObservation() },
+  beforeUnmount () { this.stopLayoutObservation(); this.stopCreationTracking() },
+  deactivated () { this.stopLayoutObservation(); this.stopCreationTracking() },
+  activated () {
+    if (!this.creationController) this.initCreationTracking()
+    this.$nextTick(this.startLayoutObservation)
   },
   provide () {
     return {
@@ -1657,6 +1656,69 @@ export default {
     }
   },
   methods: {
+    startLayoutObservation () {
+      this.stopLayoutObservation()
+      const layout = this.$refs.creationLayout
+      const content = layout?.closest('.layout-content')
+      if (layout && content && typeof ResizeObserver !== 'undefined') {
+        this.creationLayoutObserver = new ResizeObserver(this.updateCreationViewportHeight)
+        this.creationLayoutObserver.observe(content)
+        this.creationLayoutObserver.observe(layout)
+      }
+      window.addEventListener('resize', this.updateCreationViewportHeight)
+      this.updateCreationViewportHeight()
+    },
+    stopLayoutObservation () {
+      if (this.creationLayoutObserver) this.creationLayoutObserver.disconnect()
+      window.removeEventListener('resize', this.updateCreationViewportHeight)
+    },
+    updateCreationViewportHeight () {
+      this.showSideSummary = window.innerWidth >= 992
+      const layout = this.$refs.creationLayout
+      const content = layout?.closest('.layout-content')
+      if (!content || !layout.getClientRects().length) return
+      // Follow DeployVM: measure the workspace rather than guessing header heights.
+      const top = layout.getBoundingClientRect().top - content.getBoundingClientRect().top + content.scrollTop - content.clientTop
+      const bottom = parseFloat(getComputedStyle(content).paddingBottom) || 0
+      const height = Math.max(0, Math.floor(content.clientHeight - top - bottom))
+      this.creationViewportHeight = height ? `${height}px` : ''
+    },
+    counterLabel (name) {
+      return autoScaleCounterLabel(name, this.$t)
+    },
+    initCreationTracking () {
+      this.creationController = markRaw(createAutoScaleCreation({
+        api: { get: getAPI, post: postAPI },
+        storage: window.localStorage,
+        scope: this.creationScope,
+        getScope: () => this.creationScope,
+        onChange: (operation, busy) => { this.creationOperation = operation; this.creationBusy = busy }
+      }))
+      this.creationOperation = this.creationController.snapshot()
+      this.creationBusy = false
+    },
+    stopCreationTracking () {
+      if (this.creationController) this.creationController.stop()
+      this.creationController = null
+      this.creationBusy = false
+      this.processStatusModalVisible = false
+    },
+    async resumeCreation () {
+      if (!this.canQueryCreation || !this.creationController) return
+      const result = await this.creationController.resume()
+      // Accepted requests recover from receipts without needing profile secrets.
+      // Only an unaccepted profile requires the operator to refill the form.
+      if (result?.failureKind === 'profile') await this.handleSubmit(null, true)
+    },
+    async cleanupCreation () { if (this.canCleanupCreation && this.creationController) await this.creationController.cleanup() },
+    forgetCreation () { if (this.creationController) this.creationController.forget(); this.processStatusModalVisible = false },
+    openCreatedGroup () {
+      const id = this.creationOperation?.stages.find(stage => stage.type === 'group')?.resourceId
+      if (this.creationOperation?.status === 'success' && id) {
+        this.creationController.forget()
+        this.$router.push('/autoscalevmgroup/' + id)
+      }
+    },
     addStep (title, step) {
       this.steps.push({
         index: this.currentStep,
@@ -1813,6 +1875,7 @@ export default {
     },
     getImageFilters (params, forReset) {
       if (this.isModernImageSelection) {
+        if (this.form.guestoscategoryid === '-2') return ['sharedexecutable']
         if (this.form.guestoscategoryid === '0') {
           return ['self']
         }
@@ -1967,14 +2030,15 @@ export default {
         listAll: true,
         id: this.defaultNetworkId
       }).then(response => {
-        const services = response.listnetworksresponse?.network?.[0]?.service
+        const services = response.listnetworksresponse?.network?.[0]?.service || []
         const index = services.map(svc => { return svc.name }).indexOf('Lb')
         if (index === -1) {
           this.selectedLbProdiver = null
           this.countersList = []
           return
         }
-        this.selectedLbProdiver = services[index].provider[0].name
+        this.selectedLbProdiver = services[index].provider?.[0]?.name
+        if (!this.selectedLbProdiver) { this.countersList = []; return }
         getAPI('listCounters', {
           listAll: true,
           provider: this.selectedLbProdiver
@@ -2135,16 +2199,19 @@ export default {
       this.securitygroupids = securitygroupids || []
     },
     async validateNumber (rule, value) {
-      if (value && (isNaN(value) || value <= 0)) {
-        return Promise.reject(this.$t('message.error.number'))
+      // Policy inputs belong to the selected policy, not the group form model.
+      const policy = rule.field?.startsWith('scaleup')
+        ? this.selectedScaleUpPolicy
+        : rule.field?.startsWith('scaledown') ? this.selectedScaleDownPolicy : null
+      const input = policy ? policy[rule.field] : value
+      const minimum = rule.field === 'expungevmgraceperiod' || rule.field?.endsWith('quiettime') ? 0 : 1
+      if (autoScaleInteger(input, minimum, 2147483647) === null) {
+        return Promise.reject(this.$t('message.autoscale.integer.required'))
       }
       return Promise.resolve()
     },
     isNumber (value) {
-      if (value && (isNaN(value) || value < 0)) {
-        return false
-      }
-      return true
+      return autoScaleInteger(value) !== null
     },
     getOperator (val) {
       if (val === 'GT' || val === 'gt') return this.$t('label.operator.greater')
@@ -2167,13 +2234,13 @@ export default {
         this.$refs.newScaleUpConditionRelationalOperator.classList.remove('error')
       }
 
-      if (!this.newScaleUpCondition.threshold || !this.isNumber(this.newScaleUpCondition.threshold)) {
+      if (!this.isNumber(this.newScaleUpCondition.threshold)) {
         this.$refs.newScaleUpConditionThreshold.classList.add('error')
       } else {
         this.$refs.newScaleUpConditionThreshold.classList.remove('error')
       }
 
-      if (!this.newScaleUpCondition.counterid || !this.newScaleUpCondition.relationaloperator || !this.newScaleUpCondition.threshold) {
+      if (!this.newScaleUpCondition.counterid || !this.newScaleUpCondition.relationaloperator || !this.isNumber(this.newScaleUpCondition.threshold)) {
         return
       }
       const countername = this.countersList.filter(counter => counter.id === this.newScaleUpCondition.counterid).map(counter => { return counter.name }).join(',')
@@ -2183,7 +2250,7 @@ export default {
         counterid: this.newScaleUpCondition.counterid,
         countername: countername,
         relationaloperator: this.newScaleUpCondition.relationaloperator,
-        threshold: this.newScaleUpCondition.threshold
+        threshold: autoScaleInteger(this.newScaleUpCondition.threshold)
       })
       this.selectedScaleUpPolicy.conditions = this.scaleUpConditions
 
@@ -2210,13 +2277,13 @@ export default {
         this.$refs.newScaleDownConditionRelationalOperator.classList.remove('error')
       }
 
-      if (!this.newScaleDownCondition.threshold || !this.isNumber(this.newScaleDownCondition.threshold)) {
+      if (!this.isNumber(this.newScaleDownCondition.threshold)) {
         this.$refs.newScaleDownConditionThreshold.classList.add('error')
       } else {
         this.$refs.newScaleDownConditionThreshold.classList.remove('error')
       }
 
-      if (!this.newScaleDownCondition.counterid || !this.newScaleDownCondition.relationaloperator || !this.newScaleDownCondition.threshold) {
+      if (!this.newScaleDownCondition.counterid || !this.newScaleDownCondition.relationaloperator || !this.isNumber(this.newScaleDownCondition.threshold)) {
         return
       }
       const countername = this.countersList.filter(counter => counter.id === this.newScaleDownCondition.counterid).map(counter => { return counter.name }).join(',')
@@ -2226,7 +2293,7 @@ export default {
         counterid: this.newScaleDownCondition.counterid,
         countername: countername,
         relationaloperator: this.newScaleDownCondition.relationaloperator,
-        threshold: this.newScaleDownCondition.threshold
+        threshold: autoScaleInteger(this.newScaleDownCondition.threshold)
       })
       this.selectedScaleDownPolicy.conditions = this.scaleDownConditions
 
@@ -2244,217 +2311,174 @@ export default {
       this.form.keypairs = names
       this.sshKeyPairs = names.map((sshKeyPair) => { return sshKeyPair.name })
     },
-    updateUserData (id) {
-      if (id === '0') {
-        this.form.userdataid = undefined
+    updateUserData (id, item) {
+      this.userDataValues = {}
+      if (item) {
+        this.userDataLookupVersions.userDataParams++
+        this.userDataLookupErrors.userDataParams = false
+        applyUserDataSelection(this, id, item)
         return
       }
-      this.form.userdataid = id
-      this.userDataParams = []
-      getAPI('listUserData', { id: id }).then(json => {
-        const resp = json?.listuserdataresponse?.userdata || []
-        if (resp) {
-          var params = resp[0].params
-          if (params) {
-            var dataParams = params.split(',')
-          }
-          var that = this
-          dataParams.forEach(function (val, index) {
-            that.userDataParams.push({
-              id: index,
-              key: val
-            })
-          })
-        }
-      })
+      this.form.userdataid = id && id !== '0' ? id : undefined
+      return this.loadUserDataParams(this.form.userdataid, 'userDataParams')
     },
     updateTemplateLinkedUserData (id) {
-      if (id === '0') {
+      return this.loadUserDataParams(id, 'templateUserDataParams')
+    },
+    retryUserDataLookup () {
+      this.updateUserData(this.form.userdataid)
+      this.updateTemplateLinkedUserData(this.template?.userdataid)
+    },
+    async loadUserDataParams (id, property) {
+      const version = ++this.userDataLookupVersions[property]
+      this[property] = []
+      this.userDataLookupErrors[property] = false
+      if (!id || id === '0') return
+      if (!this.isUserAllowedToListUserDatas) {
+        this.userDataLookupErrors[property] = true
         return
       }
-      this.templateUserDataParams = []
-
-      getAPI('listUserData', { id: id }).then(json => {
-        const resp = json?.listuserdataresponse?.userdata || []
-        if (resp) {
-          var params = resp[0].params
-          if (params) {
-            var dataParams = params.split(',')
-          }
-          var that = this
-          that.templateUserDataParams = []
-          if (dataParams) {
-            dataParams.forEach(function (val, index) {
-              that.templateUserDataParams.push({
-                id: index,
-                key: val
-              })
-            })
-          }
+      try {
+        const json = await getAPI('listUserData', { id })
+        if (version !== this.userDataLookupVersions[property]) return
+        const item = json?.listuserdataresponse?.userdata?.find(item => item.id === id)
+        if (!item) {
+          this.userDataLookupErrors[property] = true
+          return
         }
-      })
+        const params = typeof item.params === 'string' ? item.params.split(',').map(key => key.trim()).filter(Boolean) : []
+        this[property] = params.map((key, index) => ({ id: index, key }))
+      } catch (error) {
+        if (version === this.userDataLookupVersions[property]) this.userDataLookupErrors[property] = true
+      }
+    },
+    async validateCreationEligibility (values) {
+      if (!this.hasRequiredCreationApis || this.userDataLookupFailed) {
+        this.$notification.error({ message: this.$t('message.request.failed'), description: this.$t(this.userDataLookupFailed ? 'message.autoscale.userdata.unavailable' : 'message.autoscale.apis.required') })
+        return false
+      }
+      this.checkingEligibility = true
+      const projectid = this.$store.getters.project?.id
+      const scope = projectid ? { projectid } : { account: this.$store.getters.userInfo.account, domainid: this.$store.getters.userInfo.domainid }
+      try {
+        if (values.userdataid || this.template?.userdataid) {
+          const parameterKeys = JSON.stringify([this.userDataParams.map(item => item.key), this.templateUserDataParams.map(item => item.key)])
+          await Promise.all([
+            this.loadUserDataParams(values.userdataid, 'userDataParams'),
+            this.loadUserDataParams(this.template?.userdataid, 'templateUserDataParams')
+          ])
+          if (this.userDataLookupFailed) {
+            this.$notification.error({ message: this.$t('message.request.failed'), description: this.$t('message.autoscale.userdata.unavailable') })
+            return false
+          }
+          if (parameterKeys !== JSON.stringify([this.userDataParams.map(item => item.key), this.templateUserDataParams.map(item => item.key)])) throw new Error('changed UserData parameters')
+        }
+        const [templates, offerings, networks, rules, instances, groups] = await Promise.all([
+          autoScaleTemplateById(getAPI, { ...scope, id: values.templateid, zoneid: values.zoneid, isready: true }),
+          getAPI('listServiceOfferings', { ...scope, id: values.computeofferingid, zoneid: values.zoneid, issystem: false }),
+          getAPI('listNetworks', { ...scope, id: this.defaultNetworkId, canusefordeploy: true }),
+          getAPI('listLoadBalancerRules', { ...scope, id: values.loadbalancerid, networkid: this.defaultNetworkId }),
+          getAPI('listLoadBalancerRuleInstances', { ...scope, id: values.loadbalancerid }),
+          getAPI('listAutoScaleVmGroups', { ...scope, lbruleid: values.loadbalancerid })
+        ])
+        const template = templates.listtemplatesresponse?.template?.find(item => item.id === values.templateid)
+        const offering = offerings.listserviceofferingsresponse?.serviceoffering?.find(item => item.id === values.computeofferingid)
+        const network = networks.listnetworksresponse?.network?.find(item => item.id === this.defaultNetworkId)
+        const rule = rules.listloadbalancerrulesresponse?.loadbalancerrule?.find(item => item.id === values.loadbalancerid)
+        const provider = network?.service?.find(service => service.name === 'Lb')?.provider?.[0]?.name
+        const attached = instances.listloadbalancerruleinstancesresponse
+        const existing = groups.listautoscalevmgroupsresponse
+        const valid = template?.isready === true && template.hypervisor !== 'External' && autoScaleOfferingEligible(offering) &&
+          network?.supportsvmautoscaling === true && provider && rule && (!rule.networkid || rule.networkid === network.id) &&
+          attached && !(attached.count > 0 || attached.loadbalancerruleinstance?.length > 0) &&
+          existing && !(existing.count > 0 || existing.autoscalevmgroup?.length > 0)
+        if (!valid) throw new Error('ineligible')
+        const counters = await getAPI('listCounters', { provider })
+        const available = new Set((counters.counterresponse?.counter || []).map(counter => counter.id))
+        for (const policy of [...this.scaleUpPolicies, ...this.scaleDownPolicies]) {
+          if (policy.conditions.some(condition => !available.has(condition.counterid) || !['GT', 'GE', 'LT', 'LE', 'EQ'].includes(condition.relationaloperator) || autoScaleInteger(condition.threshold) === null)) throw new Error('ineligible')
+        }
+        return true
+      } catch (error) {
+        this.$notification.error({ message: this.$t('message.request.failed'), description: this.$t('message.autoscale.selection.recheck.failed') })
+        return false
+      } finally {
+        this.checkingEligibility = false
+      }
     },
     updateAffinityGroups (ids) {
-      this.form.affinitygroupids = ids
+      this.form.affinitygroupids = affinitySelectionIds(ids)
+      this.affinityGroups = affinitySelectionGroups(ids, [...this.affinityGroups, ...this.options.affinityGroups])
     },
-    async pollJob (jobId) {
-      return new Promise(resolve => {
-        const asyncJobInterval = setInterval(() => {
-          getAPI('queryAsyncJobResult', { jobId }).then(async json => {
-            const result = json.queryasyncjobresultresponse
-            if (result.jobstatus === 0) {
-              return
-            }
+    buildVmProfileParams (createVmGroupData, createVmGroupUserDataDetails) {
+      const params = {
+        ...createVmGroupUserDataDetails,
+        ...{
+          expungevmgraceperiod: createVmGroupData.expungevmgraceperiod,
+          serviceofferingid: createVmGroupData.serviceofferingid,
+          templateid: createVmGroupData.templateid,
+          userdata: createVmGroupData.userdata,
+          userdataid: createVmGroupData.userdataid,
+          zoneid: createVmGroupData.zoneid
+        }
+      }
+      if (createVmGroupData.autoscaleuserid) {
+        params.autoscaleuserid = createVmGroupData.autoscaleuserid
+      }
+      var i = 0
+      if (createVmGroupData.snmpcommunity) {
+        params['counterparam[' + i + '].name'] = 'snmpcommunity'
+        params['counterparam[' + i + '].value'] = createVmGroupData.snmpcommunity
+        i++
+      }
+      if (createVmGroupData.snmpport) {
+        params['counterparam[' + i + '].name'] = 'snmpport'
+        params['counterparam[' + i + '].value'] = createVmGroupData.snmpport
+        i++
+      }
+      var j = 0
+      if (createVmGroupData.rootdisksize) {
+        params['otherdeployparams[' + j + '].name'] = 'rootdisksize'
+        params['otherdeployparams[' + j + '].value'] = createVmGroupData.rootdisksize
+        j++
+      }
+      if (createVmGroupData.overridediskofferingid) {
+        params['otherdeployparams[' + j + '].name'] = 'overridediskofferingid'
+        params['otherdeployparams[' + j + '].value'] = createVmGroupData.overridediskofferingid
+        j++
+      }
+      if (createVmGroupData.diskofferingid) {
+        params['otherdeployparams[' + j + '].name'] = 'diskofferingid'
+        params['otherdeployparams[' + j + '].value'] = createVmGroupData.diskofferingid
+        j++
+      }
+      if (createVmGroupData.size) {
+        params['otherdeployparams[' + j + '].name'] = 'disksize'
+        params['otherdeployparams[' + j + '].value'] = createVmGroupData.size
+        j++
+      }
+      if (createVmGroupData.securitygroupids) {
+        params['otherdeployparams[' + j + '].name'] = 'securitygroupids'
+        params['otherdeployparams[' + j + '].value'] = createVmGroupData.securitygroupids
+        j++
+      }
+      if (createVmGroupData.keypairs) {
+        params['otherdeployparams[' + j + '].name'] = 'keypairs'
+        params['otherdeployparams[' + j + '].value'] = createVmGroupData.keypairs
+        j++
+      }
+      if (createVmGroupData.affinitygroupids) {
+        params['otherdeployparams[' + j + '].name'] = 'affinitygroupids'
+        params['otherdeployparams[' + j + '].value'] = createVmGroupData.affinitygroupids
+        j++
+      }
+      if (createVmGroupData.networkids) {
+        params['otherdeployparams[' + j + '].name'] = 'networkids'
+        params['otherdeployparams[' + j + '].value'] = createVmGroupData.networkids
+        j++
+      }
 
-            clearInterval(asyncJobInterval)
-            resolve(result)
-          })
-        }, 1000)
-      })
-    },
-    createVmProfile (createVmGroupData, createVmGroupUserDataDetails) {
-      this.addStep('message.creating.autoscale.vmprofile', 'createVmProfile')
-
-      return new Promise((resolve, reject) => {
-        const params = {
-          ...createVmGroupUserDataDetails,
-          ...{
-            expungevmgraceperiod: createVmGroupData.expungevmgraceperiod,
-            serviceofferingid: createVmGroupData.serviceofferingid,
-            templateid: createVmGroupData.templateid,
-            userdata: createVmGroupData.userdata,
-            userdataid: createVmGroupData.userdataid,
-            zoneid: createVmGroupData.zoneid
-          }
-        }
-        if (createVmGroupData.autoscaleuserid) {
-          params.autoscaleuserid = createVmGroupData.autoscaleuserid
-        }
-        var i = 0
-        if (createVmGroupData.snmpcommunity) {
-          params['counterparam[' + i + '].name'] = 'snmpcommunity'
-          params['counterparam[' + i + '].value'] = createVmGroupData.snmpcommunity
-          i++
-        }
-        if (createVmGroupData.snmpport) {
-          params['counterparam[' + i + '].name'] = 'snmpport'
-          params['counterparam[' + i + '].value'] = createVmGroupData.snmpport
-          i++
-        }
-        var j = 0
-        if (createVmGroupData.rootdisksize) {
-          params['otherdeployparams[' + j + '].name'] = 'rootdisksize'
-          params['otherdeployparams[' + j + '].value'] = createVmGroupData.rootdisksize
-          j++
-        }
-        if (createVmGroupData.overridediskofferingid) {
-          params['otherdeployparams[' + j + '].name'] = 'overridediskofferingid'
-          params['otherdeployparams[' + j + '].value'] = createVmGroupData.overridediskofferingid
-          j++
-        }
-        if (createVmGroupData.diskofferingid) {
-          params['otherdeployparams[' + j + '].name'] = 'diskofferingid'
-          params['otherdeployparams[' + j + '].value'] = createVmGroupData.diskofferingid
-          j++
-        }
-        if (createVmGroupData.size) {
-          params['otherdeployparams[' + j + '].name'] = 'disksize'
-          params['otherdeployparams[' + j + '].value'] = createVmGroupData.size
-          j++
-        }
-        if (createVmGroupData.securitygroupids) {
-          params['otherdeployparams[' + j + '].name'] = 'securitygroupids'
-          params['otherdeployparams[' + j + '].value'] = createVmGroupData.securitygroupids
-          j++
-        }
-        if (createVmGroupData.keypairs) {
-          params['otherdeployparams[' + j + '].name'] = 'keypairs'
-          params['otherdeployparams[' + j + '].value'] = createVmGroupData.keypairs
-          j++
-        }
-        if (createVmGroupData.affinitygroupids) {
-          params['otherdeployparams[' + j + '].name'] = 'affinitygroupids'
-          params['otherdeployparams[' + j + '].value'] = createVmGroupData.affinitygroupids
-          j++
-        }
-        if (createVmGroupData.networkids) {
-          params['otherdeployparams[' + j + '].name'] = 'networkids'
-          params['otherdeployparams[' + j + '].value'] = createVmGroupData.networkids
-          j++
-        }
-
-        postAPI('createAutoScaleVmProfile', params).then(async json => {
-          const jobId = json.autoscalevmprofileresponse.jobid
-          if (jobId) {
-            const result = await this.pollJob(jobId)
-            if (result.jobstatus === 2) {
-              this.messageError = result.jobresult.errortext
-              this.processStatus = STATUS_FAILED
-              this.setStepStatus(STATUS_FAILED)
-              return
-            }
-            resolve(result.jobresult.autoscalevmprofile)
-          }
-        }).catch(error => {
-          this.messageError = error.response.headers['x-description']
-          this.processStatus = STATUS_FAILED
-          this.setStepStatus(STATUS_FAILED)
-        })
-      })
-    },
-    createCondition (counterid, relationaloperator, threshold) {
-      return new Promise((resolve, reject) => {
-        const params = {
-          counterid: counterid,
-          relationaloperator: relationaloperator,
-          threshold: threshold
-        }
-        postAPI('createCondition', params).then(async json => {
-          const jobId = json.conditionresponse.jobid
-          if (jobId) {
-            const result = await this.pollJob(jobId)
-            if (result.jobstatus === 2) {
-              this.messageError = result.jobresult.errortext
-              this.processStatus = STATUS_FAILED
-              this.setStepStatus(STATUS_FAILED)
-              return
-            }
-            resolve(result.jobresult.condition)
-          }
-        }).catch(error => {
-          this.messageError = error.response.headers['x-description']
-          this.processStatus = STATUS_FAILED
-          this.setStepStatus(STATUS_FAILED)
-        })
-      })
-    },
-    createScalePolicy (action, name, conditionIds, duration, quiettime) {
-      return new Promise((resolve, reject) => {
-        const params = {
-          name: name,
-          action: action,
-          duration: duration,
-          quiettime: quiettime,
-          conditionids: conditionIds
-        }
-        postAPI('createAutoScalePolicy', params).then(async json => {
-          const jobId = json.autoscalepolicyresponse.jobid
-          if (jobId) {
-            const result = await this.pollJob(jobId)
-            if (result.jobstatus === 2) {
-              this.messageError = result.jobresult.errortext
-              this.processStatus = STATUS_FAILED
-              this.setStepStatus(STATUS_FAILED)
-              return
-            }
-            resolve(result.jobresult.autoscalepolicy)
-          }
-        }).catch(error => {
-          this.messageError = error.response.headers['x-description']
-          this.processStatus = STATUS_FAILED
-          this.setStepStatus(STATUS_FAILED)
-        })
-      })
+      return params
     },
     getText (option) {
       return _.get(option, 'displaytext', _.get(option, 'name'))
@@ -2493,6 +2517,9 @@ export default {
               })
             }
           }
+          if (!this.queryGuestOsCategoryId) {
+            this.options.guestOsCategories.push({ id: '-2', name: this.$t('label.sharedexecutable'), disableimagefilters: true })
+          }
           this.form.guestoscategoryid = this.options.guestOsCategories[0].id
           if (skipFetchImages) {
             return
@@ -2511,11 +2538,11 @@ export default {
       }
       this.fetchAllTemplates()
     },
-    async handleSubmit (e) {
-      console.log('wizard submit')
-      e.preventDefault()
-      if (this.loading.deploy) return
-      this.formRef.value.validate().then(async () => {
+    async handleSubmit (e, recovery = false) {
+      if (e && e.preventDefault) e.preventDefault()
+      if (this.userDataSelectionBlocked || this.submitting || this.creationBusy || (this.hasUnresolvedCreation && !recovery) || this.loading.deploy || this.checkingEligibility) return
+      this.submitting = true
+      return this.formRef.value.validate().then(async () => {
         const values = toRaw(this.form)
 
         if (!values.templateid) {
@@ -2542,7 +2569,7 @@ export default {
         }
 
         const defaultNetwork = this.networks.filter(network => network.id === this.defaultNetworkId)[0]
-        if (defaultNetwork.supportsvmautoscaling !== true) {
+        if (defaultNetwork?.supportsvmautoscaling !== true) {
           this.$notification.error({
             message: this.$t('message.request.failed'),
             description: this.$t('message.error.select.network.supports.vm.autoscaling')
@@ -2590,7 +2617,8 @@ export default {
             })
             return
           }
-          if (!policy.scaleupduration || parseInt(policy.scaleupduration) <= 0) {
+          if (autoScaleInteger(policy.scaleupduration, 1, 2147483647) === null ||
+              autoScaleInteger(policy.scaleupquiettime, 0, 2147483647) === null) {
             this.$notification.error({
               message: this.$t('message.request.failed'),
               description: this.$t('message.scaleup.policy.duration.continue')
@@ -2628,7 +2656,8 @@ export default {
             })
             return
           }
-          if (!policy.scaledownduration || parseInt(policy.scaledownduration) <= 0) {
+          if (autoScaleInteger(policy.scaledownduration, 1, 2147483647) === null ||
+              autoScaleInteger(policy.scaledownquiettime, 0, 2147483647) === null) {
             this.$notification.error({
               message: this.$t('message.request.failed'),
               description: this.$t('message.scaledown.policy.duration.continue')
@@ -2658,6 +2687,8 @@ export default {
           })
           return
         }
+
+        if (!await this.validateCreationEligibility(values)) return
 
         this.loading.deploy = true
 
@@ -2785,95 +2816,22 @@ export default {
         }
 
         this.processStatusModalVisible = true
-        this.processStatus = null
-
-        // create autoscale vm profile
-        const vmprofile = await this.createVmProfile(createVmGroupData, createVmGroupUserDataDetails)
-
-        // create scaleup conditions and policy
-        const scaleUpPolicyIds = []
-        for (const policy of this.scaleUpPolicies) {
-          this.setStepStatus(STATUS_FINISH)
-          this.currentStep++
-          this.addStepDetail('message.creating.autoscale.scaleup.conditions', 'createScaleUpConditions', policy.name)
-          var scaleUpConditionIds = []
-          for (const condition of policy.conditions) {
-            const newCondition = await this.createCondition(condition.counterid, condition.relationaloperator, condition.threshold)
-            scaleUpConditionIds.push(newCondition.id)
-          }
-          this.setStepStatus(STATUS_FINISH)
-          this.currentStep++
-          this.addStepDetail('message.creating.autoscale.scaleup.policy', 'createScaleUpPolicy', policy.name)
-          const scaleUpPolicy = await this.createScalePolicy('ScaleUp', policy.name, scaleUpConditionIds.join(','), policy.scaleupduration, policy.scaleupquiettime)
-          scaleUpPolicyIds.push(scaleUpPolicy.id)
-        }
-
-        // create scaledown conditions and policy
-        const scaleDownPolicyIds = []
-        for (const policy of this.scaleDownPolicies) {
-          this.setStepStatus(STATUS_FINISH)
-          this.currentStep++
-          this.addStepDetail('message.creating.autoscale.scaledown.conditions', 'createScaleDownConditions', policy.name)
-          var scaleDownConditionIds = []
-          for (const condition of policy.conditions) {
-            const newCondition = await this.createCondition(condition.counterid, condition.relationaloperator, condition.threshold)
-            scaleDownConditionIds.push(newCondition.id)
-          }
-          this.setStepStatus(STATUS_FINISH)
-          this.currentStep++
-          this.addStepDetail('message.creating.autoscale.scaledown.policy', 'createScaleDownPolicy', policy.name)
-          const scaleDownPolicy = await this.createScalePolicy('ScaleDown', policy.name, scaleDownConditionIds.join(','), policy.scaledownduration, policy.scaledownquiettime)
-          scaleDownPolicyIds.push(scaleDownPolicy.id)
-        }
-
-        this.setStepStatus(STATUS_FINISH)
-        this.currentStep++
-        this.addStep('message.creating.autoscale.vmgroup', 'createVmGroup')
-
-        // create autoscale vmgroup
-        const params = {
-          vmprofileid: vmprofile.id,
-          scaleuppolicyids: scaleUpPolicyIds.join(','),
-          scaledownpolicyids: scaleDownPolicyIds.join(','),
-          lbruleid: values.loadbalancerid,
+        const plan = {
           name: values.name,
-          maxmembers: values.maxmembers,
-          minmembers: values.minmembers,
-          interval: values.interval
+          group: { lbruleid: values.loadbalancerid, minmembers: values.minmembers, maxmembers: values.maxmembers, interval: values.interval },
+          up: this.scaleUpPolicies,
+          down: this.scaleDownPolicies,
+          profile: this.buildVmProfileParams(createVmGroupData, createVmGroupUserDataDetails)
         }
-        postAPI('createAutoScaleVmGroup', params).then(async response => {
-          const jobId = response.autoscalevmgroupresponse.jobid
-          const result = await this.pollJob(jobId)
-          if (result.jobstatus === 2) {
-            this.messageError = result.jobresult.errortext
-            this.processStatus = STATUS_FAILED
-            this.setStepStatus(STATUS_FAILED)
-            return
-          } else {
-            this.setStepStatus(STATUS_FINISH)
-            const vmgroup = result.jobresult.autoscalevmgroup
-            this.$notification.success({
-              message: this.$t('label.new.autoscale.vmgroup'),
-              description: vmgroup.name,
-              duration: 0
-            })
-            eventBus.emit('vm-refresh-data')
-          }
-          // Back to previous page
-          this.processStatusModalVisible = false
-          this.$router.back()
-        }).catch(error => {
-          this.messageError = error.response.headers['x-description']
-          this.processStatus = STATUS_FAILED
-          this.setStepStatus(STATUS_FAILED)
-          this.loading.deploy = false
-        }).finally(() => {
-          this.loading.deploy = false
-        })
+        const result = recovery ? await this.creationController.resume({ profile: plan.profile }) : await this.creationController.start(plan)
+        if (result?.status === 'success') {
+          this.$notification.success({ message: this.$t('label.new.autoscale.vmgroup'), description: values.name })
+          eventBus.emit('vm-refresh-data')
+        }
       }).catch(err => {
         if (err) {
           if (err.errorFields) {
-            this.formRef.value.scrollToField(err.errorFields[0].name)
+            this.formRef.value.scrollToField(err.errorFields[0].name, { block: 'center' })
           }
           if (err.licensesaccepted) {
             this.$notification.error({
@@ -2888,7 +2846,7 @@ export default {
             description: this.$t('error.form.message')
           })
         }
-      })
+      }).finally(() => { this.submitting = false; this.loading.deploy = false })
     },
     fetchZones (zoneId, listZoneAllow) {
       this.zones = []
@@ -2918,6 +2876,7 @@ export default {
       })
     },
     fetchOptions (param, name, exclude) {
+      if (name === 'affinityGroups' && !exclude?.includes(name)) return fetchAffinityGroupOptions(this, param)
       return new Promise((resolve, reject) => {
         if (exclude && exclude.length > 0 && exclude.includes(name)) {
           return resolve(null)
@@ -2978,7 +2937,7 @@ export default {
     },
     fetchTemplates (templateFilter, params) {
       const args = Object.assign({}, params)
-      if (this.isModernImageSelection && this.form.guestoscategoryid && !['-1', '0'].includes(this.form.guestoscategoryid)) {
+      if (this.isModernImageSelection && this.form.guestoscategoryid && !['-1', '0', '-2'].includes(this.form.guestoscategoryid)) {
         args.oscategoryid = this.form.guestoscategoryid
       }
       if (!args.page || args.keyword || (args.category && args.category !== templateFilter)) {
@@ -2989,6 +2948,7 @@ export default {
       if (this.isZoneSelectedMultiArch) {
         args.arch = this.selectedArchitecture
       }
+      if (this.$store.getters.project?.id) args.projectid = this.$store.getters.project.id
       args.templatefilter = templateFilter
       args.isready = true
       args.details = 'all'
@@ -3001,7 +2961,8 @@ export default {
       delete args.featured
 
       return new Promise((resolve, reject) => {
-        getAPI('listTemplates', args).then((response) => {
+        const lookup = args.id && ['executable', 'all'].includes(templateFilter) ? autoScaleTemplateById(getAPI, args) : getAPI('listTemplates', args)
+        lookup.then((response) => {
           resolve(response)
         }).catch((reason) => {
           // ToDo: Handle errors
@@ -3310,6 +3271,70 @@ export default {
 </script>
 
 <style lang="less" scoped>
+  .autoscale-create--bounded {
+    display: flex;
+    flex-direction: column;
+    height: var(--autoscale-viewport-height);
+    min-height: 0;
+
+    > .ant-alert { flex-shrink: 0; }
+    > .ant-row { flex: 1; min-height: 0; }
+
+    .autoscale-create-form-column,
+    .autoscale-create-summary-column,
+    .vm-info-card,
+    .vm-info-card > :deep(.ant-spin-nested-loading),
+    .vm-info-card > :deep(.ant-spin-nested-loading > .ant-spin-container) {
+      height: 100%;
+      min-height: 0;
+    }
+
+    .autoscale-create-form-column > .ant-card,
+    .vm-info-card :deep(.spin-content) {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      min-height: 0;
+    }
+
+    .autoscale-create-form-column > .ant-card > :deep(.ant-card-head),
+    .vm-info-card :deep(.spin-content > .ant-card-head) {
+      flex-shrink: 0;
+    }
+
+    .autoscale-create-form-column > .ant-card > :deep(.ant-card-body),
+    .vm-info-card :deep(.spin-content > .ant-card-body) {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    .vm-info-card :deep(.card-body) {
+      flex: 1;
+      min-height: 0;
+    }
+
+    .autoscale-create-form-scroll,
+    .vm-info-card :deep(.card-content) {
+      flex: 1;
+      min-height: 0;
+      overflow-y: auto;
+      overscroll-behavior-y: contain;
+      scrollbar-width: none;
+
+      &::-webkit-scrollbar { display: none; }
+    }
+
+    .vm-info-card :deep(.card-footer),
+    .autoscale-create-mobile-footer {
+      flex-shrink: 0;
+    }
+
+    .autoscale-create-mobile-footer { margin-top: 16px; }
+  }
+
   .card-footer {
     text-align: right;
     margin-top: 2rem;
@@ -3354,20 +3379,13 @@ export default {
   }
 
   .vm-info-card {
-    .ant-card-body {
-      min-height: 250px;
-      max-height: calc(100vh - 250px);
-      overflow-y: auto;
-      scroll-behavior: smooth;
-    }
-
     .resource-detail-item__label {
       font-weight: normal;
     }
 
     .resource-detail-item__details, .resource-detail-item {
       a {
-        color: rgba(0, 0, 0, 0.65);
+        color: var(--ui-text-primary);
         cursor: default;
         pointer-events: none;
       }
@@ -3413,19 +3431,19 @@ export default {
 
     &__required {
       margin-right: 5px;
-      color: red;
+      color: var(--ui-error-text);
     }
 
     .error-text {
       display: none;
-      color: red;
+      color: var(--ui-error-text);
       font-size: 0.8rem;
     }
 
     .error {
 
       input {
-        border-color: red;
+        border-color: var(--ui-error-text);
       }
       .error-text {
         display: block;

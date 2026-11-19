@@ -1,0 +1,69 @@
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+
+/오토스케일 VM 그룹/AS-PROD-32-AS09-UI업데이트
+작업
+AS-PROD-32-AS09-UI
+상태
+비활성화
+아이디
+68f15279-834c-406b-972a-c9a168a7dfb2
+조정 대상 VM · 범위
+1 · 최소 1 · 최대 1
+공인 → 게스트 포트
+8089 → 8080
+마지막 모니터 확인
+2026. 10. 12. 오전 1:26:00
+연결된 네트워크
+AS-PROD-32-AS01-userNetwork
+Public IP 주소
+10.10.32.169
+
+계정
+epic1346-as01-user32
+도메인
+ROOT
+생성일
+2026. 10. 12. 오전 1:24:59
+가상머신 보기
+상세
+운영 상태
+오토스케일 VM 프로필
+부하 분산 규칙
+스케일업 정책
+스케일다운 정책
+스케줄
+이벤트
+코멘트
+스케일업 정책
+AS09 한글 확장
+정책 추가
+정책 삭제
+이름
+*기간(초)
+*재조정 대기 시간(초)
+동작
+편집
+조건
+카운터	관계 연산자	임계값	작업
+VM CPU 평균 사용률	초과	80
+*카운터
+*관계 연산자
+초과
+*임계값
+동작
+조건 추가

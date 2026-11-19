@@ -16,7 +16,7 @@
 // under the License.
 
 <template>
-  <div class="backup-layout">
+  <div class="backup-layout backup-schedule-wizard">
     <a-tabs :key="`tabs-${resource?.id}-${innerRenderKey}`" defaultActiveKey="1" :animated="false">
       <a-tab-pane :tab="$t('label.schedule')" key="1">
         <FormSchedule
@@ -123,4 +123,38 @@ export default {
       width: 600px;
     }
   }
+</style>
+
+<style lang="less">
+// Both the VM action menu and the backup tab host this component in a modal.
+.ant-modal-wrap:has(.backup-schedule-wizard) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .ant-modal {
+    top: 0 !important;
+    width: 680px !important;
+    margin: 0;
+    padding-bottom: 0;
+    max-width: calc(100vw - 32px);
+  }
+  .ant-modal-body {
+    max-height: ~"min(650px, calc(100dvh - 130px))";
+    overflow-y: auto;
+  }
+  .backup-dialog,
+  .backup-schedule-wizard,
+  .backup-schedule-wizard > .ant-tabs {
+    width: 100%;
+  }
+  .backup-schedule-wizard {
+    .action-button {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      padding-top: 16px;
+      margin: 0;
+    }
+  }
+}
 </style>

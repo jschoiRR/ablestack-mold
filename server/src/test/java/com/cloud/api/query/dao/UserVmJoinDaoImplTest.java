@@ -63,6 +63,8 @@ import com.cloud.vm.dao.VmIsoMapDao;
 @RunWith(MockitoJUnitRunner.class)
 public class UserVmJoinDaoImplTest extends GenericDaoBaseWithTagInformationBaseTest<UserVmJoinVO, UserVmResponse> {
 
+    @Mock
+    private org.apache.cloudstack.backup.BackupSnapshotGuard backupSnapshotGuard;
     @InjectMocks
     private UserVmJoinDaoImpl _userVmJoinDaoImpl;
 
@@ -97,6 +99,9 @@ public class UserVmJoinDaoImplTest extends GenericDaoBaseWithTagInformationBaseT
     private VbmcDao vbmcDao;
     @Mock
     private BackupDao backupDao;
+
+    @Mock
+    private org.apache.cloudstack.backup.BackupVolumeGuard backupVolumeGuard;
 
     @Mock
     private VmIsoMapDao vmIsoMapDao;
@@ -179,6 +184,23 @@ public class UserVmJoinDaoImplTest extends GenericDaoBaseWithTagInformationBaseT
     }
 
     @Test
+    public void explicitUserDataReadIncludesVariablesWithoutLibraryId() {
+        prepareNewUserVmResponseForVnfAppliance();
+        Mockito.when(userVmMock.getUserDataDetails()).thenReturn("{VAR1=한글, value=1}");
+        UserVmResponse response = _userVmJoinDaoImpl.newUserVmResponse(ResponseObject.ResponseView.Full, "virtualmachine", userVmMock,
+                EnumSet.of(ApiConstants.VMDetails.all), null, true, caller);
+        Assert.assertEquals("{VAR1=한글, value=1}", response.getUserDataDetails());
+    }
+
+    @Test
+    public void ordinaryReadDoesNotExposeTemplateOnlyVariables() {
+        prepareNewUserVmResponseForVnfAppliance();
+        UserVmResponse response = _userVmJoinDaoImpl.newUserVmResponse(ResponseObject.ResponseView.Full, "virtualmachine", userVmMock,
+                EnumSet.of(ApiConstants.VMDetails.all), null, false, caller);
+        Assert.assertNull(response.getUserDataDetails());
+    }
+
+    @Test
     public void testNewUserVmResponseForVnfApplianceVnfNics() {
         prepareNewUserVmResponseForVnfAppliance();
 
@@ -218,9 +240,51 @@ public class UserVmJoinDaoImplTest extends GenericDaoBaseWithTagInformationBaseT
         Mockito.when(userVm.getHostId()).thenReturn(7L);
         Mockito.when(userVm.getClusterId()).thenReturn(5L);
         com.cloud.host.DetailVO detail = Mockito.mock(com.cloud.host.DetailVO.class);
-        Mockito.when(detail.getValue()).thenReturn("2");
+        int configuredCap = Integer.parseInt(com.cloud.template.TemplateManager.VmIsoMaxCount.defaultValue());
+        Mockito.when(detail.getValue()).thenReturn(Integer.toString(configuredCap + 1));
         Mockito.when(hostDetailsDao.findDetail(7L, com.cloud.host.Host.HOST_CDROM_MAX_COUNT)).thenReturn(detail);
-        // Configured cap defaults to 1 (no cluster override mocked); host advertises 2; clamps to 1.
+        // Use the current upstream default, then exercise a stricter host limit.
+        Assert.assertEquals(configuredCap, _userVmJoinDaoImpl.effectiveCdromMaxCount(userVm));
+        Mockito.when(detail.getValue()).thenReturn("1");
         Assert.assertEquals(1, _userVmJoinDaoImpl.effectiveCdromMaxCount(userVm));
     }
+    @Test
+    public void sourceInternalProfileIsNotAdvertisedAsOriginalTemplate() {
+        Mockito.when(userVmMock.getTemplateName()).thenReturn(com.cloud.vm.VirtualMachineManager.KVM_BLANK_VM_TEMPLATE_NAME);
+        Mockito.when(userVmMock.getId()).thenReturn(vmId);
+        Mockito.when(_vmInstanceDetailsDao.findDetail(vmId, "vm.creation.source")).thenReturn(
+                new com.cloud.vm.VMInstanceDetailVO(vmId, "vm.creation.source", "true", false));
+        Assert.assertTrue(_userVmJoinDaoImpl.isInternalCreationProfile(userVmMock));
+    }
+
+    @Test
+    public void ordinaryBlankInstanceRetainsItsTemplateResponse() {
+        Mockito.when(userVmMock.getTemplateName()).thenReturn(com.cloud.vm.VirtualMachineManager.KVM_BLANK_VM_TEMPLATE_NAME);
+        Assert.assertFalse(_userVmJoinDaoImpl.isInternalCreationProfile(userVmMock));
+    }
+
+    @Test
+    public void recordedSourceTemplateRemainsVisible() {
+        Mockito.when(userVmMock.getTemplateName()).thenReturn("original-admin-image");
+        Assert.assertFalse(_userVmJoinDaoImpl.isInternalCreationProfile(userVmMock));
+        Mockito.verifyNoInteractions(_vmInstanceDetailsDao);
+    }
+
+    @Test
+    public void sourceFirmwareIsReturnedEvenWhenNonFirmwareDetailsExist() {
+        prepareNewUserVmResponseForVnfAppliance();
+        com.cloud.vm.VMInstanceDetailVO source = new com.cloud.vm.VMInstanceDetailVO(vmId, "vm.creation.source", "true", true);
+        Mockito.when(_vmInstanceDetailsDao.listDetails(vmId, true)).thenReturn(Collections.singletonList(source));
+        UserVmResponse bios = _userVmJoinDaoImpl.newUserVmResponse(ResponseObject.ResponseView.Full, "virtualmachine", userVmMock,
+                EnumSet.of(ApiConstants.VMDetails.all), null, null, caller);
+        Assert.assertEquals("Bios", bios.getBootType());
+        Assert.assertEquals("legacy", bios.getBootMode());
+        Mockito.when(_vmInstanceDetailsDao.listDetails(vmId, true)).thenReturn(Arrays.asList(source,
+                new com.cloud.vm.VMInstanceDetailVO(vmId, "UEFI", "LEGACY", true)));
+        UserVmResponse uefi = _userVmJoinDaoImpl.newUserVmResponse(ResponseObject.ResponseView.Full, "virtualmachine", userVmMock,
+                EnumSet.of(ApiConstants.VMDetails.all), null, null, caller);
+        Assert.assertEquals("Uefi", uefi.getBootType());
+        Assert.assertEquals("legacy", uefi.getBootMode());
+    }
+
 }

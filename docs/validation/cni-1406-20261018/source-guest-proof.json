@@ -1,0 +1,39 @@
+{
+  "before": {
+    "nodes": [
+      {
+        "name": "cni1406-source-cluster-control-1a14c6074e5",
+        "provider_id": "external-cloudstack://3c07f158-a171-4446-a62c-60849e196023",
+        "ready": "True"
+      },
+      {
+        "name": "cni1406-source-cluster-node-1a14c60aa56",
+        "provider_id": "external-cloudstack://3b7e2231-97c4-42f9-9e0e-42feca144cee",
+        "ready": "True"
+      }
+    ],
+    "mtu": "1450",
+    "custom_cni": "calico-3.33.0-mtu1450",
+    "calico_ready": 2,
+    "probe_sha256": "aa7d2b3e21636930a337697b0f9dbcf70621fea71fa170b3369ebca95f208745"
+  },
+  "after": {
+    "nodes": [
+      {
+        "name": "cni1406-source-cluster-control-1a14c6074e5",
+        "provider_id": "external-cloudstack://3c07f158-a171-4446-a62c-60849e196023",
+        "ready": "True"
+      },
+      {
+        "name": "cni1406-source-cluster-node-1a14c60aa56",
+        "provider_id": "external-cloudstack://3b7e2231-97c4-42f9-9e0e-42feca144cee",
+        "ready": "True"
+      }
+    ],
+    "mtu": "1450",
+    "custom_cni": "calico-3.33.0-mtu1450",
+    "calico_ready": 2,
+    "probe_sha256": "aa7d2b3e21636930a337697b0f9dbcf70621fea71fa170b3369ebca95f208745"
+  },
+  "identical": true
+}

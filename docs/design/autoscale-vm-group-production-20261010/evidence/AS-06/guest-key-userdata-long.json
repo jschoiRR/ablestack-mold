@@ -1,0 +1,22 @@
+[
+  {
+    "cluster": 31,
+    "vmid": "62328050-c733-4e5c-940f-77f2dfa0e837",
+    "instance": "i-35-475-VM",
+    "guestIp": "172.29.31.193",
+    "host": "10.10.31.1",
+    "exitCode": 2,
+    "stdout": "u24-base\nAS06-31-UINAME                              SIZE TYPE\nsda                       128849018880 disk\n├─sda1                      1127219200 part\n├─sda2                      2147483648 part\n└─sda3                    104097382400 part\n  └─ubuntu--vg-ubuntu--lv 104094236672 lvm\nsdb                        10737418240 disk\nsr0                         1073741312 rom\nsr1                         1073741312 rom\nstatus: done\nextended_status: degraded done\nboot_status_code: enabled-by-generator\nlast_update: Thu, 01 Jan 1970 00:00:14 +0000\ndetail: DataSourceCloudStack\nerrors: []\nrecoverable_errors:\nWARNING:\n\t- Running invalid command: ['dhcpcd', '--dumplease', '--ipv4only', <cloudinit.distros.ubuntu.Distro object at 0x722877b993d0>]\n\t- Unable to obtain a DHCP lease on enp3s0\n\t- Running invalid command: ['dhcpcd', '--dumplease', '--ipv4only', <cloudinit.distros.ubuntu.Distro object at 0x722877b993d0>]\n\t- Unable to obtain a DHCP lease on enp3s0\n\t- Running invalid command: ['dhcpcd', '--dumplease', '--ipv4only', <cloudinit.distros.ubuntu.Distro object at 0x722877b993d0>]\n\t- Unable to obtain a DHCP lease on enp3s0\n\t- Running invalid command: ['dhcpcd', '--dumplease', '--ipv4only', <cloudinit.distros.ubuntu.Distro object at 0x722877b993d0>]\n\t- Unable to obtain a DHCP lease on enp3s0\n",
+    "stderr": ""
+  },
+  {
+    "cluster": 32,
+    "vmid": "35c8594c-027a-4f6b-bbee-c372e9b22e76",
+    "instance": "i-6-151-VM",
+    "guestIp": "172.28.32.45",
+    "host": "10.10.32.1",
+    "exitCode": 0,
+    "stdout": "autoScaleVm-AS-PROD-32-AS04-CONCURRENCY-77-vhfekp\nAS06-32-UINAME                SIZE TYPE\nsda         128849018880 disk\n├─sda1        1073741824 part\n└─sda2      106299392000 part\n  ├─rl-root  97710505984 lvm\n  └─rl-swap   8585740288 lvm\nsdb          10737418240 disk\nsr0           1073741312 rom\nsr1           1073741312 rom\nstatus: done\nextended_status: degraded done\nboot_status_code: enabled-by-generator\nlast_update: Sun, 11 Oct 2026 09:03:52 +0000\ndetail:\nDataSourceCloudStack\nerrors: []\nrecoverable_errors:\nWARNING:\n\t- Empty network config found\n\t- Empty network config found\n\t- Empty network config found\n\t- Empty network config found\n",
+    "stderr": ""
+  }
+]

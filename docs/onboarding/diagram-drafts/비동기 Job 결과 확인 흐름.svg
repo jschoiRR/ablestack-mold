@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1160" viewBox="0 0 1800 1160">
+<rect width="100%" height="100%" fill="white"/>
+<text x="72" y="48" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="52" font-weight="700" fill="#172B45">비동기 Job 결과를 확인하는 순서</text>
+<text x="72" y="127" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="36" font-weight="400" fill="#506378">jobid는 작업 접수 확인입니다. 성공 여부는 같은 Job의 최종 결과로 확인합니다.</text>
+<rect x="72" y="225" width="785" height="198" rx="18" fill="#F0F7FF" stroke="none" stroke-width="2"/>
+<text x="100" y="255" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="42" font-weight="700" fill="#172B45">API가 처음부터 오류를 반환</text>
+<text x="100" y="326" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="40" font-weight="400" fill="#506378">응답·인증·권한·입력값 확인</text>
+<rect x="930" y="225" width="798" height="198" rx="18" fill="#F5F2FF" stroke="none" stroke-width="2"/>
+<text x="958" y="255" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="42" font-weight="700" fill="#172B45">jobid가 반환됨</text>
+<text x="958" y="326" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="36" font-weight="400" fill="#506378">queryAsyncJobResult로 같은 Job 조회</text>
+<polyline points="1328,430 1328,485" fill="none" stroke="#6554B7" stroke-width="4"/>
+<polygon points="1328,485 1336.0,469.0 1320.0,469.0" fill="#6554B7"/>
+<rect x="72" y="498" width="1656" height="111" rx="16" fill="#F3F7FA" stroke="none" stroke-width="2"/>
+<text x="105" y="532" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="42" font-weight="700" fill="#172B45">조회 응답의 jobstatus에 따라 다음 확인을 선택</text>
+<polyline points="334,615 334,660" fill="none" stroke="#146CBA" stroke-width="4"/>
+<polygon points="334,660 342.0,644.0 326.0,644.0" fill="#146CBA"/>
+<rect x="72" y="670" width="525" height="235" rx="18" fill="#F0F7FF" stroke="none" stroke-width="2"/>
+<text x="102" y="700" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="46" font-weight="700" fill="#146CBA">0  진행 중</text>
+<text x="102" y="783" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="38" font-weight="400" fill="#506378">동일 Job을 계속 조회</text>
+<polyline points="899,615 899,660" fill="none" stroke="#008878" stroke-width="4"/>
+<polygon points="899,660 907.0,644.0 891.0,644.0" fill="#008878"/>
+<rect x="637" y="670" width="525" height="235" rx="18" fill="#EFF9F6" stroke="none" stroke-width="2"/>
+<text x="667" y="700" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="46" font-weight="700" fill="#008878">1  성공</text>
+<text x="667" y="783" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="38" font-weight="400" fill="#506378">jobresult와 실제 자원</text>
+<text x="667" y="837" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="38" font-weight="400" fill="#506378">상태를 함께 확인</text>
+<polyline points="1464,615 1464,660" fill="none" stroke="#B63D46" stroke-width="4"/>
+<polygon points="1464,660 1472.0,644.0 1456.0,644.0" fill="#B63D46"/>
+<rect x="1202" y="670" width="525" height="235" rx="18" fill="#FCEEEE" stroke="none" stroke-width="2"/>
+<text x="1232" y="700" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="46" font-weight="700" fill="#B63D46">2  실패</text>
+<text x="1232" y="783" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="38" font-weight="400" fill="#506378">jobresult.errortext와</text>
+<text x="1232" y="837" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="38" font-weight="400" fill="#506378">서버 로그 확인</text>
+<rect x="72" y="950" width="1656" height="134" rx="16" fill="#F3F7FA" stroke="none" stroke-width="2"/>
+<text x="100" y="980" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="40" font-weight="700" fill="#172B45">조회 중 통신 오류  ·  결과를 받지 못한 상태</text>
+<text x="100" y="1034" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="38" font-weight="400" fill="#506378">연결을 복구한 뒤 같은 Job을 재조회하고 VM 상태도 확인합니다.</text>
+</svg>

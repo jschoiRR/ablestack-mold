@@ -1,0 +1,171 @@
+[
+  {
+    "cluster": 31,
+    "host": 1,
+    "vms": [
+      {
+        "instance": "i-35-397-VM",
+        "path": "7d97eaef-5619-494b-92a4-ddddb13cfa11",
+        "provisioning": "sparse",
+        "state": "running",
+        "diskType": "file",
+        "driver": {
+          "name": "qemu",
+          "type": "qcow2",
+          "cache": "none",
+          "io": "io_uring",
+          "discard": "unmap"
+        },
+        "source": "/mnt/glue-gfs/7d97eaef-5619-494b-92a4-ddddb13cfa11",
+        "filesystem": "gfs2",
+        "image": {
+          "format": "qcow2",
+          "virtual-size": 107374182400,
+          "actual-size": 3741323264
+        }
+      }
+    ]
+  },
+  {
+    "cluster": 31,
+    "host": 2,
+    "vms": [
+      {
+        "instance": "i-35-477-VM",
+        "path": "a816eeb2-6ce7-4857-b8b8-0d69a309ebc5",
+        "provisioning": "sparse",
+        "state": "running",
+        "diskType": "file",
+        "driver": {
+          "name": "qemu",
+          "type": "qcow2",
+          "cache": "none",
+          "io": "io_uring",
+          "discard": "unmap"
+        },
+        "source": "/mnt/glue-gfs/a816eeb2-6ce7-4857-b8b8-0d69a309ebc5",
+        "filesystem": "gfs2",
+        "image": {
+          "format": "qcow2",
+          "virtual-size": 107374182400,
+          "actual-size": 3568594944
+        }
+      }
+    ]
+  },
+  {
+    "cluster": 31,
+    "host": 3,
+    "vms": [
+      {
+        "instance": "i-35-478-VM",
+        "path": "a5b44c2b-2085-4358-91ac-033a6da53b8f",
+        "provisioning": "sparse",
+        "state": "running",
+        "diskType": "file",
+        "driver": {
+          "name": "qemu",
+          "type": "qcow2",
+          "cache": "none",
+          "io": "io_uring",
+          "discard": "unmap"
+        },
+        "source": "/mnt/glue-gfs/a5b44c2b-2085-4358-91ac-033a6da53b8f",
+        "filesystem": "gfs2",
+        "image": {
+          "format": "qcow2",
+          "virtual-size": 107374182400,
+          "actual-size": 3568664576
+        }
+      }
+    ]
+  },
+  {
+    "cluster": 32,
+    "host": 1,
+    "vms": []
+  },
+  {
+    "cluster": 32,
+    "host": 2,
+    "vms": [
+      {
+        "instance": "i-6-73-VM",
+        "path": "d38a9172-aa7f-4ab5-80c8-cff68a74ab28",
+        "provisioning": "thin",
+        "state": "running",
+        "diskType": "block",
+        "driver": {
+          "name": "qemu",
+          "type": "raw",
+          "cache": "none",
+          "discard": "unmap"
+        },
+        "source": "/dev/rbd/rbd/d38a9172-aa7f-4ab5-80c8-cff68a74ab28",
+        "krbdMapping": [
+          {
+            "id": "1",
+            "pool": "rbd",
+            "namespace": "",
+            "name": "d38a9172-aa7f-4ab5-80c8-cff68a74ab28",
+            "snap": "-",
+            "device": "/dev/rbd1"
+          }
+        ]
+      },
+      {
+        "instance": "i-6-153-VM",
+        "path": "79258e09-2d2e-4c63-8201-0b7e54c6bd49",
+        "provisioning": "thin",
+        "state": "running",
+        "diskType": "block",
+        "driver": {
+          "name": "qemu",
+          "type": "raw",
+          "cache": "none",
+          "discard": "unmap"
+        },
+        "source": "/dev/rbd/rbd/79258e09-2d2e-4c63-8201-0b7e54c6bd49",
+        "krbdMapping": [
+          {
+            "id": "3",
+            "pool": "rbd",
+            "namespace": "",
+            "name": "79258e09-2d2e-4c63-8201-0b7e54c6bd49",
+            "snap": "-",
+            "device": "/dev/rbd3"
+          }
+        ]
+      },
+      {
+        "instance": "i-6-154-VM",
+        "path": "f529fee8-a253-4dc5-985f-ae5106f7bfb6",
+        "provisioning": "thin",
+        "state": "running",
+        "diskType": "block",
+        "driver": {
+          "name": "qemu",
+          "type": "raw",
+          "cache": "none",
+          "discard": "unmap"
+        },
+        "source": "/dev/rbd/rbd/f529fee8-a253-4dc5-985f-ae5106f7bfb6",
+        "krbdMapping": [
+          {
+            "id": "5",
+            "pool": "rbd",
+            "namespace": "",
+            "name": "f529fee8-a253-4dc5-985f-ae5106f7bfb6",
+            "snap": "-",
+            "device": "/dev/rbd5"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "cluster": 32,
+    "host": 3,
+    "vms": []
+  }
+]

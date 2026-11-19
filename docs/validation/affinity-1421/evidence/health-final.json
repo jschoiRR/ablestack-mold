@@ -1,0 +1,49 @@
+{
+  "time": "2026-10-19T17:47:35+0900",
+  "service": "active",
+  "pid": "1934377",
+  "http": "200",
+  "webinfPreserved": true,
+  "metainfPreserved": true,
+  "configPreserved": true,
+  "otherJarsPreserved": true,
+  "jar": "9265dca2a9a810252a38d58d17ddcfbfd867f894db0064e9a5dd6bd1f74fb07f",
+  "queryClass": "b766f483a8dac0c305021cdbb60415bbf037adac560b46b049be2f62672ea9e4",
+  "provenance": {
+    "issue": 1421,
+    "source": "a469372cc8273233392fb99722fe39d8e10f8f5e",
+    "module": "server",
+    "queryClassSha256": "b766f483a8dac0c305021cdbb60415bbf037adac560b46b049be2f62672ea9e4",
+    "originalJarSha256": "ee673ee599dc823f1256fb7c0e968973b32a2cdb54a9aa622c2b799c1e4534ad"
+  },
+  "staticFilesVerified": 893,
+  "logs": [
+    {
+      "path": "/var/log/cloudstack/management/management-server.log",
+      "offset": 574462662,
+      "bytes": 9311270,
+      "errorLines": 478,
+      "queryOrLinkageErrors": 0,
+      "staleFailback900": 0,
+      "errorCategories": [
+        "c.c.a.ApiAsyncJobDispatcher",
+        "c.c.a.ApiServer",
+        "c.c.c.C.ListenerThread",
+        "c.c.c.ClusterManagerImpl",
+        "c.c.u.PropertiesUtil",
+        "c.c.u.d.T.Transaction",
+        "o.a.c.u.m.SMTPMailSender"
+      ],
+      "samples": [
+        "2026-10-19 17:34:22,959 ERROR [c.c.c.C.ListenerThread] (Thread-26:[]) (logid:) Unexpected exception java.net.SocketException: Socket closed",
+        "2026-10-19 17:34:49,314 ERROR [c.c.c.ClusterManagerImpl] (main:[]) (logid:) Unable to ping management server at 10.10.31.10:9090 due to ConnectException",
+        "2026-10-19 17:34:49,882 ERROR [c.c.u.PropertiesUtil] (main:[]) (logid:) Unable to find properties file: commands.properties",
+        "2026-10-19 17:34:58,630 ERROR [c.c.a.ApiServer] (qtp1869039062-18:[ctx-fcc99d6c, ctx-eb380e79]) (logid:085321fc) Unable to verify request signature. com.cloud.exception.InvalidParameterValueException: API key pair is expired, expiration date: Sat Oct 10 12:30:00 KST 2026",
+        "2026-10-19 17:34:58,630 ERROR [c.c.a.ApiServer] (qtp1869039062-23:[ctx-e658d795, ctx-e4ff7d0c]) (logid:9bf4964f) Unable to verify request signature. com.cloud.exception.InvalidParameterValueException: API key pair is expired, expiration date: Sat Oct 10 12:30:00 KST 2026",
+        "2026-10-19 17:34:58,630 ERROR [c.c.a.ApiServer] (qtp1869039062-21:[ctx-9c9902b2, ctx-1df5c1ee]) (logid:741f8183) Unable to verify request signature. com.cloud.exception.InvalidParameterValueException: API key pair is expired, expiration date: Sat Oct 10 12:30:00 KST 2026",
+        "2026-10-19 17:34:58,630 ERROR [c.c.a.ApiServer] (qtp1869039062-25:[ctx-5cced0c5, ctx-4523797b]) (logid:946a6294) Unable to verify request signature. com.cloud.exception.InvalidParameterValueException: API key pair is expired, expiration date: Sat Oct 10 12:30:00 KST 2026",
+        "2026-10-19 17:34:58,630 ERROR [c.c.a.ApiServer] (qtp1869039062-24:[ctx-465b25f8, ctx-17c2f1cb]) (logid:6c7bba91) Unable to verify request signature. com.cloud.exception.InvalidParameterValueException: API key pair is expired, expiration date: Sat Oct 10 12:30:00 KST 2026"
+      ]
+    }
+  ]
+}

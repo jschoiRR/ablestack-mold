@@ -1,0 +1,105 @@
+{
+  "31": {
+    "phase": "OBSERVING",
+    "pid": 631379,
+    "startEpoch": 1791859455.7462769,
+    "deadlineEpoch": 1791945855.7462769,
+    "updatedAt": "2026-10-13T02:47:50.750330+00:00",
+    "http": {
+      "31-AS04": {
+        "requests": 44,
+        "ok": 44,
+        "failed": 0
+      }
+    },
+    "apiSamples": 4,
+    "apiErrors": 0,
+    "dbSamples": 1,
+    "dbErrors": 0,
+    "anomalyCount": 0,
+    "maxHttpGapSeconds": 5.0,
+    "maxApiGapSeconds": 60.024,
+    "latestProcess": {
+      "service": "active",
+      "pid": "628863",
+      "status": {
+        "VmSize": "10278228 kB",
+        "VmRSS": "1648164 kB",
+        "Threads": "286"
+      },
+      "fds": 75,
+      "jstatGc": {
+        "unavailable": true
+      },
+      "jvmMetrics": [
+        {
+          "sessions": 15,
+          "heapmemoryused": 567294064,
+          "heapmemorytotal": 1908932608,
+          "threadsblockedcount": 0,
+          "threadsrunnablecount": 13,
+          "threadstotalcount": 268,
+          "collectiontime": "2026-10-13T11:43:18+0900",
+          "name": "ccvm-mngt",
+          "state": "Up"
+        }
+      ],
+      "jarSha256": "036f448a93ff0c6c156a3dafebd3b26af6621203c60a6caf98b43ff10ef179ac",
+      "indexSha256": "aa31be6ec2e7a06efbe8b3413dbafd798f430e5a37b479193e906b60eef4a74f"
+    }
+  },
+  "32": {
+    "phase": "OBSERVING",
+    "pid": 1137049,
+    "startEpoch": 1791859455.7462769,
+    "deadlineEpoch": 1791945855.7462769,
+    "updatedAt": "2026-10-13T02:47:50.750840+00:00",
+    "http": {
+      "32-AS04": {
+        "requests": 44,
+        "ok": 44,
+        "failed": 0
+      },
+      "32-VPC": {
+        "requests": 44,
+        "ok": 44,
+        "failed": 0
+      }
+    },
+    "apiSamples": 4,
+    "apiErrors": 0,
+    "dbSamples": 1,
+    "dbErrors": 0,
+    "anomalyCount": 0,
+    "maxHttpGapSeconds": 5.0,
+    "maxApiGapSeconds": 60.034,
+    "latestProcess": {
+      "service": "active",
+      "pid": "938882",
+      "status": {
+        "VmSize": "8507740 kB",
+        "VmRSS": "2057272 kB",
+        "Threads": "384"
+      },
+      "fds": 69,
+      "jstatGc": {
+        "unavailable": true
+      },
+      "jvmMetrics": [
+        {
+          "sessions": 15,
+          "heapmemoryused": 725904336,
+          "heapmemorytotal": 1908932608,
+          "threadsblockedcount": 0,
+          "threadsrunnablecount": 13,
+          "threadstotalcount": 367,
+          "collectiontime": "2026-10-13T11:44:14+0900",
+          "name": "ccvm-mngt",
+          "state": "Up"
+        }
+      ],
+      "jarSha256": "dce0e50d4b0193202ee7c6522434814065d8f4c2ebd3fe74fd42d84373818e19",
+      "indexSha256": "aa31be6ec2e7a06efbe8b3413dbafd798f430e5a37b479193e906b60eef4a74f"
+    }
+  }
+}

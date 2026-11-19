@@ -1,0 +1,260 @@
+- complementary:
+  - menu:
+    - menuitem "dashboard 대시보드":
+      - link "dashboard 대시보드":
+        - /url: "#/dashboard"
+        - img "dashboard":
+        - text: 대시보드
+    - img "cloud":
+    - text: 컴퓨트
+    - list:
+      - menuitem "cloud-server 가상머신":
+        - link "cloud-server 가상머신":
+          - /url: "#/vm"
+          - img "cloud-server":
+          - text: 가상머신
+      - menuitem "camera VM 스냅샷":
+        - link "camera VM 스냅샷":
+          - /url: "#/vmsnapshot"
+          - img "camera":
+          - text: VM 스냅샷
+      - menuitem "쿠버네티스":
+        - link "쿠버네티스":
+          - /url: "#/kubernetes"
+          - text: 쿠버네티스
+      - menuitem "fullscreen 오토스케일 VM 그룹":
+        - link "fullscreen 오토스케일 VM 그룹":
+          - /url: "#/autoscalevmgroup"
+          - img "fullscreen":
+          - text: 오토스케일 VM 그룹
+      - menuitem "gold 가상머신 그룹":
+        - link "gold 가상머신 그룹":
+          - /url: "#/vmgroup"
+          - img "gold":
+          - text: 가상머신 그룹
+      - menuitem "key SSH 키 쌍":
+        - link "key SSH 키 쌍":
+          - /url: "#/ssh"
+          - img "key":
+          - text: SSH 키 쌍
+      - menuitem "solution 사용자 데이터 라이브러리":
+        - link "solution 사용자 데이터 라이브러리":
+          - /url: "#/userdata"
+          - img "solution":
+          - text: 사용자 데이터 라이브러리
+      - menuitem "solution CNI 구성":
+        - link "solution CNI 구성":
+          - /url: "#/cniconfiguration"
+          - img "solution":
+          - text: CNI 구성
+      - menuitem "swap Affinity 그룹":
+        - link "swap Affinity 그룹":
+          - /url: "#/affinitygroup"
+          - img "swap":
+          - text: Affinity 그룹
+    - img "hdd":
+    - text: 스토리지
+    - img "wifi":
+    - text: 네트워크
+    - img "picture":
+    - text: 이미지
+    - menuitem "schedule 이벤트":
+      - link "schedule 이벤트":
+        - /url: "#/event"
+        - img "schedule":
+        - text: 이벤트
+    - menuitem "project 프로젝트":
+      - link "project 프로젝트":
+        - /url: "#/project"
+        - img "project":
+        - text: 프로젝트
+    - menuitem "team 계정":
+      - link "team 계정":
+        - /url: "#/account"
+        - img "team":
+        - text: 계정
+    - menuitem "block 도메인":
+      - link "block 도메인":
+        - /url: "#/domain"
+        - img "block":
+        - text: 도메인
+    - menuitem "global Zone":
+      - link "global Zone":
+        - /url: "#/zones"
+        - img "global":
+        - text: Zone
+    - img "shopping":
+    - text: 서비스 오퍼링
+    - img "tool":
+    - text: 도구
+    - menuitem "read API 문서":
+      - link "read API 문서":
+        - /url: "#/apidocs/"
+        - img "read":
+        - text: API 문서
+- img "menu-fold":
+- combobox
+- img "project":
+- text: 기본 보기
+- button "생성 down":
+  - generic: 생성
+  - img "down":
+- img "translation":
+- img "bell":
+- generic: AD
+- generic: AG06 domainadmin
+- main:
+  - link "home":
+    - /url: "#/"
+    - img "home":
+  - text: /
+  - link "Affinity 그룹":
+    - /url: "#/affinitygroup"
+  - link "question-circle":
+    - /url: http://docs.ablecloud.io/latest/adminguide/virtual_machines.html#affinity-groups
+    - img "question-circle":
+  - button "reload 업데이트":
+    - img "reload":
+    - generic: 업데이트
+  - switch "프로젝트":
+    - generic: 프로젝트
+  - button "새 Affinity 그룹 추가":
+    - img "plus":
+    - generic: 새 Affinity 그룹 추가
+  - button "고급 검색":
+    - img "filter":
+  - textbox "검색"
+  - button "search":
+    - img "search":
+  - table:
+    - rowgroup:
+      - row "이름 caret-up caret-down 유형 caret-up caret-down 연결 VM 수 caret-up caret-down 설명 caret-up caret-down 계정 caret-up caret-down 도메인 caret-up caret-down filter":
+        - columnheader:
+          - checkbox
+        - columnheader "이름 caret-up caret-down":
+          - generic: 이름
+          - img "caret-up":
+          - img "caret-down":
+        - columnheader "유형 caret-up caret-down":
+          - generic: 유형
+          - img "caret-up":
+          - img "caret-down":
+        - columnheader "연결 VM 수 caret-up caret-down":
+          - generic: 연결 VM 수
+          - img "caret-up":
+          - img "caret-down":
+        - columnheader "설명 caret-up caret-down":
+          - generic: 설명
+          - img "caret-up":
+          - img "caret-down":
+        - columnheader "계정 caret-up caret-down":
+          - generic: 계정
+          - img "caret-up":
+          - img "caret-down":
+        - columnheader "도메인 caret-up caret-down":
+          - generic: 도메인
+          - img "caret-up":
+          - img "caret-down":
+        - columnheader "filter":
+          - button "filter":
+            - img "filter":
+    - rowgroup:
+      - row "qa-ag06-user-target 같은 호스트 배치 · 엄격 0 — qa-ag06-user qa-ag06-domain":
+        - cell:
+          - checkbox
+        - cell "qa-ag06-user-target":
+          - link "qa-ag06-user-target":
+            - /url: "#/affinitygroup/f020c858-f8c5-4ccc-aa67-161272106965"
+        - cell "같은 호스트 배치 · 엄격":
+          - generic "host affinity": 같은 호스트 배치 · 엄격
+        - cell "0"
+        - cell "—"
+        - cell "qa-ag06-user":
+          - link "qa-ag06-user":
+            - /url: "#/account?name=qa-ag06-user&domainid=681fd899-ca4d-4bc6-87f1-8cbd2254e962&dataView=true"
+        - cell "qa-ag06-domain":
+          - link "qa-ag06-domain":
+            - /url: "#/domain/681fd899-ca4d-4bc6-87f1-8cbd2254e962?tab=details"
+        - cell
+      - row "qa-ag06-domain-shared 전용 자원 배치 0 — system qa-ag06-domain":
+        - cell:
+          - checkbox
+        - cell "qa-ag06-domain-shared":
+          - link "qa-ag06-domain-shared":
+            - /url: "#/affinitygroup/ee0488c6-dd89-4467-ae64-cde4da755fdc"
+        - cell "전용 자원 배치":
+          - generic "ExplicitDedication": 전용 자원 배치
+        - cell "0"
+        - cell "—"
+        - cell "system":
+          - link "system":
+            - /url: "#/account?name=system&domainid=681fd899-ca4d-4bc6-87f1-8cbd2254e962&dataView=true"
+        - cell "qa-ag06-domain":
+          - link "qa-ag06-domain":
+            - /url: "#/domain/681fd899-ca4d-4bc6-87f1-8cbd2254e962?tab=details"
+        - cell
+      - row "qa-ag06-restricted-target 같은 호스트 배치 · 엄격 0 — qa-ag06-restricted qa-ag06-domain":
+        - cell:
+          - checkbox
+        - cell "qa-ag06-restricted-target":
+          - link "qa-ag06-restricted-target":
+            - /url: "#/affinitygroup/d5052258-63c0-447a-a6aa-7bb90caf049c"
+        - cell "같은 호스트 배치 · 엄격":
+          - generic "host affinity": 같은 호스트 배치 · 엄격
+        - cell "0"
+        - cell "—"
+        - cell "qa-ag06-restricted":
+          - link "qa-ag06-restricted":
+            - /url: "#/account?name=qa-ag06-restricted&domainid=681fd899-ca4d-4bc6-87f1-8cbd2254e962&dataView=true"
+        - cell "qa-ag06-domain":
+          - link "qa-ag06-domain":
+            - /url: "#/domain/681fd899-ca4d-4bc6-87f1-8cbd2254e962?tab=details"
+        - cell
+  - list:
+    - listitem: 전체 4 개 항목 중 1-4 표시
+    - listitem "이전 페이지":
+      - button "left" [disabled]:
+        - img "left":
+    - listitem "1":
+      - generic: "1"
+    - listitem "다음 페이지":
+      - button "right" [disabled]:
+        - img "right":
+    - combobox
+    - generic: 20 / 쪽
+- dialog "새 Affinity 그룹 추가 도움말":
+  - document:
+    - button "Close":
+      - img "close":
+    - text: 새 Affinity 그룹 추가
+    - link "도움말":
+      - /url: http://docs.ablecloud.io/latest/adminguide/virtual_machines.html#creating-a-new-affinity-group
+      - img "question-circle":
+    - paragraph: 앞뒤 공백은 제거됩니다. 이름은 1~191자, 설명은 255자까지 입력할 수 있습니다.
+    - generic "이름": "* 이름"
+    - textbox "* 이름": qa-ag06-domainadmin-own
+    - generic "설명"
+    - textbox "설명"
+    - generic "유형": "* 유형"
+    - generic: host affinity
+    - combobox "* 유형" [active]
+    - generic: 같은 호스트 배치 · 엄격
+    - paragraph:
+      - generic "host affinity": 같은 호스트 배치 · 엄격
+      - generic: 같은 그룹의 VM을 같은 호스트에 배치합니다. 조건을 만족하지 못하면 배치가 실패합니다.
+    - generic "소유자 유형"
+    - generic "소유자 유형":
+      - combobox
+      - generic: 계정
+    - generic "도메인": "* 도메인"
+    - generic "도메인":
+      - combobox
+      - generic: ROOT/qa-ag06-domain
+    - generic "계정": "* 계정"
+    - generic "계정":
+      - combobox
+      - generic: qa-ag06-domainadmin
+    - button "취소":
+      - generic: 취소
+    - button "확인":
+      - generic: 확인

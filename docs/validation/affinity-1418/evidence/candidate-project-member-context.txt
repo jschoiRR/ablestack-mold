@@ -1,0 +1,174 @@
+Browser tab: 6, Title: "Affinity 그룹 - ABLESTACK-Mold", URL: "http://10.10.31.10:8080/client/#/affinitygroup/b8169613-41ad-4a34-a0ab-8f91804aed9b?tab=instances".
+1 AXWebArea Affinity 그룹 - ABLESTACK-Mold, URL: 10.10.31.10:8080/client/#/affinitygroup/b8169613-41ad-4a34-a0ab-8f91804aed9b?tab=instances
+	28 container
+		473 container
+			474 image
+			475 menu
+				476 dashboard 대시보드
+					477 link Description: dashboard 대시보드, Value: 10.10.31.10:8080/client/#/dashboard
+				478 container
+					479 image cloud
+					480 text 컴퓨트
+				481 content list sub_menu_479_$$_/compute-popup
+					482 cloud-server 가상머신
+						483 link Description: cloud-server 가상머신, Value: 10.10.31.10:8080/client/#/vm
+					484 camera VM 스냅샷
+						485 link Description: camera VM 스냅샷, Value: 10.10.31.10:8080/client/#/vmsnapshot
+					486 쿠버네티스
+						487 link Description: 쿠버네티스, Value: 10.10.31.10:8080/client/#/kubernetes
+					488 fullscreen 오토스케일 VM 그룹
+						489 link Description: fullscreen 오토스케일 VM 그룹, Value: 10.10.31.10:8080/client/#/autoscalevmgroup
+					490 gold 가상머신 그룹
+						491 link Description: gold 가상머신 그룹, Value: 10.10.31.10:8080/client/#/vmgroup
+					492 key SSH 키 쌍
+						493 link Description: key SSH 키 쌍, Value: 10.10.31.10:8080/client/#/ssh
+					494 solution 사용자 데이터 라이브러리
+						495 link Description: solution 사용자 데이터 라이브러리, Value: 10.10.31.10:8080/client/#/userdata
+					496 solution CNI 구성
+						497 link Description: solution CNI 구성, Value: 10.10.31.10:8080/client/#/cniconfiguration
+					498 swap Affinity 그룹
+						499 link Description: swap Affinity 그룹, Value: 10.10.31.10:8080/client/#/affinitygroup
+				500 container
+					501 image hdd
+					502 text 스토리지
+				503 container
+					504 image wifi
+					505 text 네트워크
+				506 container
+					507 image picture
+					508 text 이미지
+				509 container
+					510 image lock
+					511 text 키 관리
+				512 schedule 이벤트
+					513 link Description: schedule 이벤트, Value: 10.10.31.10:8080/client/#/event
+				514 project 프로젝트
+					515 link Description: project 프로젝트, Value: 10.10.31.10:8080/client/#/project
+				516 team 계정
+					517 link Description: team 계정, Value: 10.10.31.10:8080/client/#/account
+				518 global Zone
+					519 link Description: global Zone, Value: 10.10.31.10:8080/client/#/zones
+				520 container
+					521 image shopping
+					522 text 서비스 오퍼링
+				523 container
+					524 image tool
+					525 text 도구
+				526 read API 문서
+					527 link Description: read API 문서, Value: 10.10.31.10:8080/client/#/apidocs/
+		81 container
+			528 image menu-fold
+			83 container
+				317 combo box (collapsed, settable) ID: rc_select_20, Secondary Actions: Expand
+				279 image project
+				280 text qa-ag05-project
+			529 button 생성 down
+				530 text 생성
+				531 image down
+			90 image translation
+			91 image bell
+			92 container
+				93 text AQ AG05 QA
+		94 container
+			373 container
+				374 container
+					375 link Description: home, Value: 10.10.31.10:8080/client/#/
+					376 text /
+					377 link Description: Affinity 그룹, Value: 10.10.31.10:8080/client/#/affinitygroup
+					532 text / qa-ag05-project-target
+					533 link Description: question-circle, Value: docs.ablecloud.io/latest/adminguide/virtual_machines.html#affinity-groups
+					534 button reload 업데이트
+						535 image reload
+						536 text 업데이트
+				537 button down 작업
+					538 image down
+					539 text 작업
+			540 container
+				541 image swap
+				542 heading qa-ag05-project-target, Value: 4
+					543 text qa-ag05-project-target
+				544 text 같은 호스트 배치 · 엄격
+				545 text 아이디
+				546 button barcode
+					547 image barcode
+				548 link Description: b8169613-41ad-4a34-a0ab-8f91804aed9b , Value: javascript:;
+				549 text 프로젝트
+				550 image project
+				551 link Description: qa-ag05-project, Value: 10.10.31.10:8080/client/#/project/6d077125-d983-4ed7-9473-93f629196980
+				552 text 같은 그룹의 VM을 같은 호스트에 배치합니다. 조건을 만족하지 못하면 배치가 실패합니다. 연결 VM 수 1 도메인
+				553 image block
+				554 text ROOT
+				555 link Description: cloud-server 가상머신 보기, Value: 10.10.31.10:8080/client/#/vm?affinitygroupid=b8169613-41ad-4a34-a0ab-8f91804aed9b&projectid=6d077125-d983-4ed7-9473-93f629196980
+			556 container
+				557 tab group
+					558 container
+						559 tab (selectable, settable, boolean) 상세, Value: 0, ID: rc-tabs-7-tab-details
+						560 tab (selected, settable, boolean) 가상머신, Value: 1, ID: rc-tabs-7-tab-instances
+						561 tab (selectable, settable, boolean) 이벤트, Value: 0, ID: rc-tabs-7-tab-events
+				562 container Description: 가상머신, ID: rc-tabs-7-panel-instances
+					563 container
+						564 heading 연결 가상머신, Value: 3
+							565 text 연결 가상머신
+						566 text 중지된 일반 가상머신의 대상 그룹 연결만 변경합니다. 다른 Affinity 그룹 연결은 유지하며 VM을 자동 중지하지 않습니다. 연결 VM 수: 1 · 조회 결과: 1
+						567 button 가상머신 연결
+						568 button (disabled) 선택 연결 해제 (0)
+						569 text field (settable) 가상머신 검색
+						570 button search
+							571 image search
+						572 button 업데이트
+							573 image reload
+						574 container 연결 가상머신
+							575 table
+								576 row
+									577 cell
+										578 container
+											579 checkbox (settable, integer) Description:  , Value: 0
+									580 cell
+										581 text 표시 이름
+									582 cell
+										583 text 상태
+									584 cell
+										585 text 호스트
+									586 cell
+										587 text 계정
+									588 cell
+										589 text 프로젝트
+									590 cell
+										591 text 도메인
+									592 cell
+										593 text 연결 관리 제한 사유
+								594 row
+									595 cell
+										596 container
+											597 checkbox (settable, integer) Description: qa-ag05-project-vm, Value: 0
+									598 cell
+										599 link Description: qa-ag05-project-vm, Value: 10.10.31.10:8080/client/#/vm/40f55791-b61a-4721-92aa-47ab1e608fe8?projectid=6d077125-d983-4ed7-9473-93f629196980
+										600 text —
+									601 cell
+										602 text 정지된 상태
+									603 cell
+										604 text —
+									605 cell
+										606 text —
+									607 cell
+										608 text qa-ag05-project
+									609 cell
+										610 text ROOT
+									611 cell
+										612 text —
+						613 content list
+							614 container 이전 페이지
+								615 button (disabled) left
+									616 image left
+							617 text 1
+							618 container 다음 페이지
+								619 button (disabled) right
+									620 image right
+							621 container
+								622 combo box (settable) rc_select_25
+								623 text 10 / 쪽
+	470 container
+		471 image check-circle
+		472 text 새 Affinity 그룹 추가 - qa-ag05-project-ui
+
+The focused UI element is 560 tab (selected, settable, boolean) 가상머신, Value: 1, ID: rc-tabs-7-tab-instances

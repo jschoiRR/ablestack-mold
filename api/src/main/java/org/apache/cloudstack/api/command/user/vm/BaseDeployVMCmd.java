@@ -131,6 +131,17 @@ public abstract class BaseDeployVMCmd extends BaseAsyncCreateCustomIdCmd impleme
             since = "4.4")
     private Long rootdisksize;
 
+    @Parameter(name = "rootstorageid", type = CommandType.UUID,
+            entityType = org.apache.cloudstack.api.response.StoragePoolResponse.class,
+            authorized = {org.apache.cloudstack.acl.RoleType.Admin},
+            description = "Required primary storage pool for the root volume's first deployment")
+    private Long rootStorageId;
+
+    public Long getRootStorageId() {
+        return rootStorageId;
+    }
+
+
     @ACL
     @Parameter(name = ApiConstants.ROOT_DISK_KMS_KEY_ID,
             type = CommandType.UUID,
@@ -146,7 +157,8 @@ public abstract class BaseDeployVMCmd extends BaseAsyncCreateCustomIdCmd impleme
                     " Example: datadisksdetails[0].diskofferingid=a2a73a84-19db-4852-8930-dfddef053341&datadisksdetails[0].size=10&datadisksdetails[0].miniops=100&datadisksdetails[0].maxiops=200&datadisksdetails[0].kmskeyid=<uuid>")
     private Map dataDisksDetails;
 
-    @Parameter(name = ApiConstants.GROUP, type = CommandType.STRING, description = "an optional group for the virtual machine")
+    @Parameter(name = ApiConstants.GROUP, type = CommandType.STRING, length = ApiConstants.INSTANCE_GROUP_NAME_INPUT_MAX_LENGTH,
+            description = "An optional group for the virtual machine. New names are trimmed and must contain 1 to 255 characters.")
     private String group;
 
     @Parameter(name = ApiConstants.HYPERVISOR, type = CommandType.STRING, description = "the hypervisor on which to deploy the virtual machine. "
@@ -190,7 +202,7 @@ public abstract class BaseDeployVMCmd extends BaseAsyncCreateCustomIdCmd impleme
     private List<String> securityGroupNameList;
 
     @Parameter(name = ApiConstants.IP_NETWORK_LIST, type = CommandType.MAP, description = "ip to network mapping. Can't be specified with networkIds parameter."
-            + " Example: iptonetworklist[0].ip=10.10.10.11&iptonetworklist[0].ipv6=fc00:1234:5678::abcd&iptonetworklist[0].networkid=uuid&iptonetworklist[0].mac=aa:bb:cc:dd:ee::ff - requests to use ip 10.10.10.11 in network id=uuid")
+            + " Example: iptonetworklist[0].ip=10.10.10.11&iptonetworklist[0].ipv6=fc00:1234:5678::abcd&iptonetworklist[0].enabled=false&iptonetworklist[0].networkid=uuid&iptonetworklist[0].mac=aa:bb:cc:dd:ee::ff - requests to use ip 10.10.10.11 in network id=uuid")
     private Map ipToNetworkList;
 
     @Parameter(name = ApiConstants.IP_ADDRESS, type = CommandType.STRING, description = "the ip address for default vm's network")
@@ -425,6 +437,14 @@ public abstract class BaseDeployVMCmd extends BaseAsyncCreateCustomIdCmd impleme
         return convertExternalDetailsToMap(externalDetails);
     }
 
+    protected Boolean getIothreadsEnabled() {
+        return iothreadsEnabled;
+    }
+
+    protected Boolean getNicPackedVirtQueues() {
+        return nicPackedVirtQueues;
+    }
+
     public ApiConstants.BootMode getBootMode() {
         if (StringUtils.isNotBlank(bootMode)) {
             try {
@@ -651,6 +671,14 @@ public abstract class BaseDeployVMCmd extends BaseAsyncCreateCustomIdCmd impleme
             }
 
             VmDiskInfo vmDiskInfo = new VmDiskInfo(diskOffering, size, minIops, maxIops, deviceId, kmsKeyId);
+            String storageUuid = dataDisk.get("storageid");
+            if (storageUuid != null) {
+                com.cloud.storage.StoragePool pool = _entityMgr.findByUuid(com.cloud.storage.StoragePool.class, storageUuid);
+                if (pool == null) {
+                    throw new InvalidParameterValueException("Unable to find storage pool " + storageUuid);
+                }
+                vmDiskInfo.setStoragePoolId(pool.getId());
+            }
             vmDiskInfoList.add(vmDiskInfo);
         }
         this.dataDiskInfoList = vmDiskInfoList;
@@ -701,7 +729,14 @@ public abstract class BaseDeployVMCmd extends BaseAsyncCreateCustomIdCmd impleme
             }
             requestedMac = NetUtils.standardizeMacAddress(requestedMac);
         }
-        return new IpAddresses(requestedIp, requestedIpv6, requestedMac);
+        if (ips.containsKey("linkstate")) {
+            throw new InvalidParameterValueException("iptonetworklist.linkstate is no longer supported; use enabled.");
+        }
+        String enabled = ips.get(ApiConstants.ENABLED);
+        if (enabled != null && !"true".equalsIgnoreCase(enabled) && !"false".equalsIgnoreCase(enabled)) {
+            throw new InvalidParameterValueException("iptonetworklist.enabled must be true or false.");
+        }
+        return new IpAddresses(requestedIp, requestedIpv6, requestedMac, enabled == null || Boolean.parseBoolean(enabled));
     }
 
     @Nonnull

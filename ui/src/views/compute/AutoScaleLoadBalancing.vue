@@ -16,90 +16,47 @@
 // under the License.
 
 <template>
-  <div>
+  <div class="autoscale-tab">
+    <a-space wrap class="autoscale-toolbar">
+      <a-button type="primary" @click="openEditRuleModal(currentRule)" :disabled="loading || !currentRule || !('updateLoadBalancerRule' in $store.getters.apis)"><template #icon><edit-outlined /></template>{{ $t('label.edit.rule') }}</a-button>
+      <a-button @click="openTagsModal(currentRule.id)" :disabled="loading || !currentRule || !('updateLoadBalancerRule' in $store.getters.apis)"><template #icon><tag-outlined /></template>{{ $t('label.edit.tags') }}</a-button>
+      <a-button @click="openStickinessModal(currentRule.id)" :disabled="loading || !currentRule || !('createLBStickinessPolicy' in $store.getters.apis)"><template #icon><link-outlined /></template>{{ $t('label.action.configure.stickiness') }}</a-button>
+      <a-button disabled><template #icon><delete-outlined /></template>{{ $t('label.autoscale.rule.remove') }}</a-button>
+      <a-button @click="fetchData" :disabled="loading" :loading="loading || lbRefreshing"><template #icon><reload-outlined /></template>{{ $t('label.refresh') }}</a-button>
+    </a-space>
     <p v-if="listRefreshFailed" role="status">{{ $t('message.list.refresh.stale') }}</p>
-    <div>
-      <a-alert type="info" v-if="resource.state !== 'DISABLED'">
-        <template #message>
-        <div
-          v-html="$t('message.autoscale.loadbalancer.update')" />
-        </template>
-      </a-alert>
-    </div>
+    <a-alert v-if="resource.state !== 'DISABLED' || resource.operationinprogress" type="info" show-icon :message="$t(resource.operationinprogress ? 'message.autoscale.operation.wait' : 'message.autoscale.loadbalancer.update')" />
+    <a-card size="small" v-if="currentRule">
+      <a-descriptions size="small" :column="{ xs: 1, sm: 2 }">
+        <a-descriptions-item v-for="key in ['name', 'publicport', 'privateport', 'algorithm', 'protocol', 'state']" :key="key" :label="$t('label.' + key)"><status v-if="key === 'state'" :text="currentRule.state" :display-text="true" :display-label="ruleStateLabel(currentRule.state)" /><template v-else>{{ key === 'algorithm' ? returnAlgorithmName(currentRule[key]) : key === 'protocol' ? getCapitalise(currentRule[key] || 'tcp') : currentRule[key] }}</template></a-descriptions-item>
+        <a-descriptions-item :label="$t('label.action.configure.stickiness')">{{ returnStickinessLabel(currentRule.id) }}</a-descriptions-item>
+      </a-descriptions>
+    </a-card>
+    <a-alert type="info" show-icon :message="$t('message.autoscale.lb.delete.bound')" />
     <a-table
-      size="small"
-      class="list-view"
-      :loading="loading"
-      :columns="columns"
-      :dataSource="lbRules"
-      :pagination="false"
-      :rowKey="record => record.id"
-      :expandRowByClick="true">
+size="small"
+:loading="loading"
+:columns="instanceColumns"
+:data-source="ruleInstances"
+:pagination="false"
+row-key="key"
+:scroll="{ x: 640 }">
       <template #bodyCell="{ column, record }">
-        <template v-if="column.key === 'algorithm'">
-        {{ returnAlgorithmName(record.algorithm) }}
-        </template>
-        <template v-if="column.key === 'protocol'">
-          {{ getCapitalise(record.protocol) }}
-        </template>
-        <template v-if="column.key === 'stickiness'">
-          <a-button @click="() => openStickinessModal(record.id)">
-            {{ returnStickinessLabel(record.id) }}
-          </a-button>
-        </template>
-        <template v-if="column.key === 'actions'">
-          <div class="actions">
-            <tooltip-button :tooltip="$t('label.edit')" icon="edit-outlined" @onClick="() => openEditRuleModal(record)" />
-            <tooltip-button :tooltip="$t('label.edit.tags')" :disabled="!('updateLoadBalancerRule' in $store.getters.apis)" icon="tag-outlined" @onClick="() => openTagsModal(record.id)" />
-            <a-popconfirm
-              :title="$t('label.delete') + '?'"
-              @confirm="handleDeleteRule(record)"
-              :okText="$t('label.yes')"
-              :cancelText="$t('label.no')"
-            >
-              <tooltip-button
-                :tooltip="$t('label.delete')"
-                :disabled="!('deleteLoadBalancerRule' in $store.getters.apis) || record.autoscalevmgroup"
-                type="primary"
-                :danger="true"
-                icon="delete-outlined" />
-            </a-popconfirm>
-          </div>
-        </template>
-      </template>
-      <template #expandedRowRender="{ record }">
-        <div class="rule-instance-list">
-          <div v-for="instance in record.ruleInstances" :key="instance.loadbalancerruleinstance.id">
-            <div v-for="ip in instance.lbvmipaddresses" :key="ip" class="rule-instance-list__item">
-              <div>
-                <status :text="instance.loadbalancerruleinstance.state" />
-                <desktop-outlined />
-                <router-link :to="{ path: '/vm/' + instance.loadbalancerruleinstance.id }">
-                  {{ instance.loadbalancerruleinstance.displayname }}
-                </router-link>
-              </div>
-              <div>{{ ip }}</div>
-              <tooltip-button
-                :disabled='record.autoscalevmgroup && record.autoscalevmgroup.state != "DISABLED"'
-                :tooltip="$t('label.remove.vm.from.lb')"
-                type="primary"
-                :danger="true"
-                icon="delete-outlined"
-                @onClick="() => handleDeleteInstanceFromRule(instance, record, ip)" />
-            </div>
-          </div>
-        </div>
+        <router-link v-if="column.key === 'name'" :to="'/vm/' + record.instance.loadbalancerruleinstance.id">{{ record.instance.loadbalancerruleinstance.displayname || record.instance.loadbalancerruleinstance.name }}</router-link>
+        <status v-else-if="column.key === 'state'" :text="record.instance.loadbalancerruleinstance.state" :display-text="true" />
+        <template v-else-if="column.key === 'actions'"><div class="autoscale-row-actions"><a-popconfirm overlay-class-name="autoscale-confirm" :title="$t('message.autoscale.vm.detach.confirm')" @confirm="confirmInstanceRemoval(record)" @cancel="pendingInstanceRemoval = null" :ok-button-props="{ disabled: loading }" :ok-text="$t('label.yes')" :cancel-text="$t('label.no')"><a-button size="small" :disabled="loading || !('removeFromLoadBalancerRule' in $store.getters.apis) || resource.state !== 'DISABLED' || resource.operationinprogress" @click="prepareInstanceRemoval(record)"><template #icon><disconnect-outlined /></template>{{ $t('label.autoscale.vm.detach') }}</a-button></a-popconfirm></div></template>
       </template>
     </a-table>
     <a-modal
+class="mold-dialog autoscale-dialog tags-modal"
+centered
+:width="760"
       v-if="tagsModalVisible"
       :title="$t('label.edit.tags')"
       :visible="tagsModalVisible"
-      :footer="null"
       :closable="true"
       :afterClose="closeModal"
       :maskClosable="false"
-      class="tags-modal"
       @cancel="tagsModalVisible = false">
       <span v-show="tagsModalLoading" class="modal-loading">
         <loading-outlined />
@@ -140,13 +97,15 @@
         </div>
       </div>
 
-      <a-button class="add-tags-done" @click="tagsModalVisible = false" type="primary">{{ $t('label.done') }}</a-button>
+      <template #footer><a-button @click="tagsModalVisible = false">{{ $t('label.done') }}</a-button></template>
     </a-modal>
 
     <a-modal
+class="mold-dialog autoscale-dialog"
+centered
+:width="760"
       :title="$t('label.configure.sticky.policy')"
       :visible="stickinessModalVisible"
-      :footer="null"
       :afterClose="closeModal"
       :maskClosable="false"
       :closable="true"
@@ -163,7 +122,8 @@
         :rules="rules"
         @finish="handleSubmitStickinessForm"
         v-ctrl-enter="handleSubmitStickinessForm"
-        class="custom-ant-form"
+        layout="vertical"
+        class="autoscale-stickiness-form"
        >
         <a-form-item name="methodname" ref="methodname" :label="$t('label.stickiness.method')">
           <a-select
@@ -176,9 +136,9 @@
               return option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0
             }" >
             <a-select-option value="LbCookie" :label="$t('label.lb.cookie')">{{ $t('label.lb.cookie') }}</a-select-option>
-            <a-select-option value="AppCookie" :label="$t('label.lb.cookie')">{{ $t('label.app.cookie') }}</a-select-option>
-            <a-select-option value="SourceBased" :label="$t('label.lb.cookie')">{{ $t('label.source.based') }}</a-select-option>
-            <a-select-option value="none" :label="$t('label.lb.cookie')">{{ $t('label.none') }}</a-select-option>
+            <a-select-option value="AppCookie" :label="$t('label.app.cookie')">{{ $t('label.app.cookie') }}</a-select-option>
+            <a-select-option value="SourceBased" :label="$t('label.source.based')">{{ $t('label.source.based') }}</a-select-option>
+            <a-select-option value="none" :label="$t('label.none')">{{ $t('label.none') }}</a-select-option>
           </a-select>
         </a-form-item>
         <a-form-item
@@ -205,14 +165,14 @@
             'AppCookie'">
           <a-input v-model:value="form.mode" />
         </a-form-item>
-        <a-form-item name="nocache" ref="nocache" :label="$t('label.sticky.nocache')" v-show="stickinessPolicyMethod === 'LbCookie'">
-          <a-checkbox v-model:checked="form.nocache"></a-checkbox>
+        <a-form-item name="nocache" ref="nocache" v-show="stickinessPolicyMethod === 'LbCookie'">
+          <a-checkbox v-model:checked="form.nocache">{{ $t('label.sticky.nocache') }}</a-checkbox>
         </a-form-item>
-        <a-form-item name="indirect" ref="indirect" :label="$t('label.sticky.indirect')" v-show="stickinessPolicyMethod === 'LbCookie'">
-          <a-checkbox v-model:checked="form.indirect"></a-checkbox>
+        <a-form-item name="indirect" ref="indirect" v-show="stickinessPolicyMethod === 'LbCookie'">
+          <a-checkbox v-model:checked="form.indirect">{{ $t('label.sticky.indirect') }}</a-checkbox>
         </a-form-item>
-        <a-form-item name="postonly" ref="postonly" :label="$t('label.sticky.postonly')" v-show="stickinessPolicyMethod === 'LbCookie'">
-          <a-checkbox v-model:checked="form.postonly"></a-checkbox>
+        <a-form-item name="postonly" ref="postonly" v-show="stickinessPolicyMethod === 'LbCookie'">
+          <a-checkbox v-model:checked="form.postonly">{{ $t('label.sticky.postonly') }}</a-checkbox>
         </a-form-item>
         <a-form-item name="domain" ref="domain" :label="$t('label.domain')" v-show="stickinessPolicyMethod === 'LbCookie'">
           <a-input v-model:value="form.domain" />
@@ -223,11 +183,11 @@
         <a-form-item name="holdtime" ref="holdtime" :label="$t('label.sticky.holdtime')" v-show="stickinessPolicyMethod === 'AppCookie'">
           <a-input v-model:value="form.holdtime" type="number" />
         </a-form-item>
-        <a-form-item name="requestLearn" ref="requestLearn" :label="$t('label.sticky.request-learn')" v-show="stickinessPolicyMethod === 'AppCookie'">
-          <a-checkbox v-model:checked="form.requestLearn"></a-checkbox>
+        <a-form-item name="requestLearn" ref="requestLearn" v-show="stickinessPolicyMethod === 'AppCookie'">
+          <a-checkbox v-model:checked="form.requestLearn">{{ $t('label.sticky.request-learn') }}</a-checkbox>
         </a-form-item>
-        <a-form-item name="prefix" ref="prefix" :label="$t('label.sticky.prefix')" v-show="stickinessPolicyMethod === 'AppCookie'">
-          <a-checkbox v-model:checked="form.prefix"></a-checkbox>
+        <a-form-item name="prefix" ref="prefix" v-show="stickinessPolicyMethod === 'AppCookie'">
+          <a-checkbox v-model:checked="form.prefix">{{ $t('label.sticky.prefix') }}</a-checkbox>
         </a-form-item>
         <a-form-item name="tablesize" ref="tablesize" :label="$t('label.sticky.tablesize')" v-show="stickinessPolicyMethod === 'SourceBased'">
           <a-input v-model:value="form.tablesize" />
@@ -236,20 +196,24 @@
           <a-input v-model:value="form.expire" />
         </a-form-item>
 
+      </a-form>
+      <template #footer>
         <div :span="24" class="action-button">
           <a-button @click="stickinessModalVisible = false">{{ $t('label.cancel') }}</a-button>
           <a-button type="primary" ref="submit" @click="handleSubmitStickinessForm">{{ $t('label.ok') }}</a-button>
         </div>
-      </a-form>
+      </template>
     </a-modal>
 
     <a-modal
+class="mold-dialog autoscale-dialog"
+centered
+:width="760"
       :title="$t('label.edit.rule')"
       :visible="editRuleModalVisible"
       :afterClose="closeModal"
       :maskClosable="false"
       :closable="true"
-      :footer="null"
       @cancel="editRuleModalVisible = false">
       <span v-show="editRuleModalLoading" class="modal-loading">
         <loading-outlined />
@@ -290,30 +254,34 @@
             <a-select-option value="http">{{ $t('label.lb.protocol.http') }}</a-select-option>
           </a-select>
         </div>
+
+      </div>
+      <template #footer>
         <div :span="24" class="action-button">
           <a-button @click="() => editRuleModalVisible = false">{{ $t('label.cancel') }}</a-button>
           <a-button type="primary" @click="handleSubmitEditForm">{{ $t('label.ok') }}</a-button>
         </div>
-      </div>
+      </template>
     </a-modal>
   </div>
 </template>
 
 <script>
+import '@/style/components/view/autoscale.less'
+import { autoScaleResourceScope } from '@/utils/autoScaleUi'
+import { autoScaleOwnerParams } from '@/utils/autoScaleEditing'
 import { listRefreshMixin } from '@/utils/listRefreshMixin'
 
 import { ref, reactive, toRaw, nextTick } from 'vue'
 import { getAPI, postAPI } from '@/api'
 import { mixinForm } from '@/utils/mixin'
 import Status from '@/components/widgets/Status'
-import TooltipButton from '@/components/widgets/TooltipButton'
 
 export default {
   name: 'LoadBalancing',
   mixins: [listRefreshMixin(['fetchLBRules']), mixinForm],
   components: {
-    Status,
-    TooltipButton
+    Status
   },
   props: {
     resource: {
@@ -325,7 +293,10 @@ export default {
   data () {
     return {
       loading: true,
+      lbRefreshing: false,
+      lbReadScope: null,
       lbRules: [],
+      pendingInstanceRemoval: null,
       tagsModalVisible: false,
       tagsModalLoading: false,
       tags: [],
@@ -423,6 +394,11 @@ export default {
       searchQuery: null
     }
   },
+  computed: {
+    currentRule () { return this.lbRules[0] },
+    ruleInstances () { return (this.currentRule?.ruleInstances || []).flatMap(instance => (instance.lbvmipaddresses || []).map(ip => ({ key: instance.loadbalancerruleinstance.id + '/' + ip, ip, instance }))) },
+    instanceColumns () { return ['name', 'state', 'ip', 'actions'].map(key => ({ key, dataIndex: key, title: this.$t(key === 'ip' ? 'label.ipaddress' : 'label.' + key), ...(key === 'actions' ? { fixed: 'right', width: 180 } : {}) })) }
+  },
   created () {
     this.initForm()
     this.fetchData()
@@ -439,6 +415,10 @@ export default {
     }
   },
   methods: {
+    ruleStateLabel (state) {
+      const labels = { Active: 'state.ok', Add: 'label.autoscale.rule.pending', Staged: 'label.autoscale.rule.staged', Revoke: 'label.autoscale.rule.revoking' }
+      return labels[state] ? this.$t(labels[state]) : state || this.$t('label.autoscale.not.recorded')
+    },
     initForm () {
       this.formRef = ref()
       this.form = reactive({})
@@ -463,96 +443,62 @@ export default {
         this.$notifyError(error)
       }).finally(() => { this.tiers.loading = false })
     },
-    fetchLBRules () {
+    async fetchLBRules () {
       const listRequest = this.listRequestToken('fetchLBRules')
-      this.loading = !listRequest.loaded
-
-      return getAPI('listLoadBalancerRules', {
-        listAll: true,
-        id: this.resource.lbruleid,
-        page: this.page,
-        pageSize: this.pageSize
-      }).then(response => {
-        if (!this.isListRequestCurrent('fetchLBRules', listRequest)) return
-        this.lbRules = []
-        this.stickinessPolicies = []
-        this.lbRules = response.listloadbalancerrulesresponse.loadbalancerrule || []
-        this.totalCount = response.listloadbalancerrulesresponse.count || 0
-      }).then(() => {
-        if (this.lbRules.length > 0) {
-          setTimeout(() => {
-            this.fetchLBRuleInstances()
-          }, 100)
-          this.fetchLBStickinessPolicies()
-          this.fetchAutoScaleVMgroups()
-          return
-        }
-        this.loading = false
-      }).catch(error => {
-        if (!this.isListRequestCurrent('fetchLBRules', listRequest)) return
-        listRequest.failed = true
-        this.listRefreshFailed = true
-        if (listRequest.loaded) return
-
-        this.$notifyError(error)
-        this.loading = false
-      }).finally(() => {
-        if (!this.isListRequestCurrent('fetchLBRules', listRequest)) return
-        this.loading = false
-      })
-    },
-    fetchLBRuleInstances () {
-      for (const rule of this.lbRules) {
-        this.loading = true
-        getAPI('listLoadBalancerRuleInstances', {
-          listAll: true,
-          lbvmips: true,
-          id: rule.id
-        }).then(response => {
-          rule.ruleInstances = response.listloadbalancerruleinstancesresponse.lbrulevmidip
-        }).catch(error => {
-          this.$notifyError(error)
-        }).finally(() => {
-          this.loading = false
-        })
+      const scope = autoScaleResourceScope(this)
+      const same = this.lbReadScope === scope
+      const current = () => this.isListRequestCurrent('fetchLBRules', listRequest) && scope === autoScaleResourceScope(this)
+      if (!same) { this.lbRules = []; this.stickinessPolicies = [] }
+      this.loading = !same
+      this.lbRefreshing = true
+      try {
+        const response = await getAPI('listLoadBalancerRules', { ...autoScaleOwnerParams(this.resource), listall: true, id: this.resource.lbruleid, page: this.page, pagesize: this.pageSize })
+        if (!current()) return
+        const previous = new Map(this.lbRules.map(rule => [rule.id, rule]))
+        const policies = this.stickinessPolicies
+        let partialFailure = false
+        const results = await Promise.all((response.listloadbalancerrulesresponse?.loadbalancerrule || []).map(async rule => {
+          const params = { ...autoScaleOwnerParams(this.resource), listall: true }
+          const reads = await Promise.allSettled([
+            getAPI('listLoadBalancerRuleInstances', { ...params, lbvmips: true, id: rule.id }),
+            getAPI('listLBStickinessPolicies', { ...params, lbruleid: rule.id }),
+            getAPI('listAutoScaleVmGroups', { ...params, lbruleid: rule.id })
+          ])
+          partialFailure ||= reads.some(read => read.status === 'rejected')
+          const old = previous.get(rule.id) || {}
+          return {
+            rule: {
+              ...old,
+              ...rule,
+              ruleInstances: reads[0].status === 'fulfilled' ? reads[0].value.listloadbalancerruleinstancesresponse?.lbrulevmidip || [] : old.ruleInstances || [],
+              autoscalevmgroup: reads[2].status === 'fulfilled' ? reads[2].value.listautoscalevmgroupsresponse?.autoscalevmgroup?.[0] : old.autoscalevmgroup
+            },
+            policies: reads[1].status === 'fulfilled' ? reads[1].value.listlbstickinesspoliciesresponse?.stickinesspolicies || [] : policies.filter(policy => policy.lbruleid === rule.id)
+          }
+        }))
+        if (!current()) return
+        this.lbRules = results.map(result => result.rule)
+        this.stickinessPolicies = results.flatMap(result => result.policies)
+        this.totalCount = response.listloadbalancerrulesresponse?.count || 0
+        this.lbReadScope = scope
+        listRequest.failed = partialFailure
+        this.listRefreshFailed = partialFailure
+      } catch (error) {
+        if (!current()) return
+        listRequest.failed = true; this.listRefreshFailed = true
+        if (!same) this.$notifyError(error)
+      } finally {
+        if (current()) { this.loading = false; this.lbRefreshing = false }
       }
-    },
-    fetchLBStickinessPolicies () {
-      this.loading = true
-      this.lbRules.forEach(rule => {
-        getAPI('listLBStickinessPolicies', {
-          listAll: true,
-          lbruleid: rule.id
-        }).then(response => {
-          this.stickinessPolicies.push(...response.listlbstickinesspoliciesresponse.stickinesspolicies)
-        }).catch(error => {
-          this.$notifyError(error)
-        }).finally(() => {
-          this.loading = false
-        })
-      })
-    },
-    fetchAutoScaleVMgroups () {
-      this.loading = true
-      this.lbRules.forEach(rule => {
-        getAPI('listAutoScaleVmGroups', {
-          listAll: true,
-          lbruleid: rule.id
-        }).then(response => {
-          rule.autoscalevmgroup = response.listautoscalevmgroupsresponse?.autoscalevmgroup?.[0]
-        }).finally(() => {
-          this.loading = false
-        })
-      })
     },
     returnAlgorithmName (name) {
       switch (name) {
         case 'leastconn':
-          return 'Least connections'
+          return this.$t('label.lb.algorithm.leastconn')
         case 'roundrobin' :
-          return 'Round-robin'
+          return this.$t('label.lb.algorithm.roundrobin')
         case 'source':
-          return 'Source'
+          return this.$t('label.lb.algorithm.source')
         default :
           return ''
       }
@@ -562,7 +508,7 @@ export default {
       if (match.length > 0 && match[0].stickinesspolicy.length > 0) {
         return match[0].stickinesspolicy[0].methodname
       }
-      return 'Configure'
+      return this.$t('label.none')
     },
     getCapitalise (val) {
       if (!val) {
@@ -597,7 +543,7 @@ export default {
       if (this.tagsModalLoading) return
       this.tagsModalLoading = true
 
-      e.preventDefault()
+      if (e) e.preventDefault()
       this.formRef.value.validate().then(() => {
         const formRaw = toRaw(this.form)
         const values = this.handleRemoveFields(formRaw)
@@ -612,19 +558,19 @@ export default {
             jobId: response.createtagsresponse.jobid,
             successMessage: this.$t('message.success.add.tag'),
             successMethod: () => {
-              this.parentToggleLoading()
+              this.parentFetchData()
               this.openTagsModal(this.selectedRule)
             },
             errorMessage: this.$t('message.add.tag.failed'),
             errorMethod: () => {
-              this.parentToggleLoading()
+              this.parentFetchData()
               this.closeModal()
             },
             loadingMessage: this.$t('message.add.tag.processing'),
             catchMessage: this.$t('error.fetching.async.job.result'),
             catchMethod: () => {
               this.parentFetchData()
-              this.parentToggleLoading()
+              this.parentFetchData()
               this.closeModal()
             }
           })
@@ -649,19 +595,19 @@ export default {
           jobId: response.deletetagsresponse.jobid,
           successMessage: this.$t('message.success.delete.tag'),
           successMethod: () => {
-            this.parentToggleLoading()
+            this.parentFetchData()
             this.openTagsModal(this.selectedRule)
           },
           errorMessage: this.$t('message.delete.tag.failed'),
           errorMethod: () => {
-            this.parentToggleLoading()
+            this.parentFetchData()
             this.closeModal()
           },
           loadingMessage: this.$t('message.delete.tag.processing'),
           catchMessage: this.$t('error.fetching.async.job.result'),
           catchMethod: () => {
             this.parentFetchData()
-            this.parentToggleLoading()
+            this.parentFetchData()
             this.closeModal()
           }
         })
@@ -676,6 +622,9 @@ export default {
       }
       this.stickinessModalVisible = true
       this.selectedRule = id
+      this.selectedStickinessPolicy = null
+      this.stickinessPolicyMethod = 'none'
+      this.form.methodname = 'none'
       const match = this.stickinessPolicies.find(policy => policy.lbruleid === id)
 
       if (match && match.stickinesspolicy.length > 0) {
@@ -689,6 +638,8 @@ export default {
           this.form.domain = this.selectedStickinessPolicy.params.domain
           this.form.length = this.selectedStickinessPolicy.params.length
           this.form.holdtime = this.selectedStickinessPolicy.params.holdtime
+          this.form.tablesize = this.selectedStickinessPolicy.params.tablesize
+          this.form.expire = this.selectedStickinessPolicy.params.expire
           this.form.nocache = !!this.selectedStickinessPolicy.params.nocache
           this.form.indirect = !!this.selectedStickinessPolicy.params.indirect
           this.form.postonly = !!this.selectedStickinessPolicy.params.postonly
@@ -708,13 +659,13 @@ export default {
           jobId: response.createLBStickinessPolicy.jobid,
           successMessage: this.$t('message.success.config.sticky.policy'),
           successMethod: () => {
-            this.parentToggleLoading()
+            this.parentFetchData()
             this.fetchData()
             this.closeModal()
           },
           errorMessage: this.$t('message.config.sticky.policy.failed'),
           errorMethod: () => {
-            this.parentToggleLoading()
+            this.parentFetchData()
             this.fetchData()
             this.closeModal()
           },
@@ -722,7 +673,7 @@ export default {
           catchMessage: this.$t('error.fetching.async.job.result'),
           catchMethod: () => {
             this.parentFetchData()
-            this.parentToggleLoading()
+            this.parentFetchData()
             this.fetchData()
             this.closeModal()
           }
@@ -740,13 +691,13 @@ export default {
           jobId: response.deleteLBstickinessrruleresponse.jobid,
           successMessage: this.$t('message.success.remove.sticky.policy'),
           successMethod: () => {
-            this.parentToggleLoading()
+            this.parentFetchData()
             this.fetchData()
             this.closeModal()
           },
           errorMessage: this.$t('message.remove.sticky.policy.failed'),
           errorMethod: () => {
-            this.parentToggleLoading()
+            this.parentFetchData()
             this.fetchData()
             this.closeModal()
           },
@@ -754,7 +705,7 @@ export default {
           catchMessage: this.$t('error.fetching.async.job.result'),
           catchMethod: () => {
             this.parentFetchData()
-            this.parentToggleLoading()
+            this.parentFetchData()
             this.fetchData()
             this.closeModal()
           }
@@ -766,11 +717,12 @@ export default {
     handleSubmitStickinessForm (e) {
       if (this.stickinessModalLoading) return
       this.stickinessModalLoading = true
-      e.preventDefault()
+      if (e) e.preventDefault()
       this.formRef.value.validate().then(() => {
         const formRaw = toRaw(this.form)
         const values = this.handleRemoveFields(formRaw)
         if (values.methodname === 'none') {
+          if (!this.selectedStickinessPolicy) { this.closeModal(); return }
           this.handleDeleteStickinessPolicy()
           return
         }
@@ -817,6 +769,23 @@ export default {
       this.stickinessPolicyMethod = e
       this.form.methodname = e
     },
+    prepareInstanceRemoval (record) {
+      this.pendingInstanceRemoval = { resourceId: this.resource.id, ruleId: this.currentRule?.id, key: record?.key }
+    },
+    confirmInstanceRemoval (record) {
+      const target = this.pendingInstanceRemoval
+      this.pendingInstanceRemoval = null
+      if (record && record.key !== target?.key) {
+        this.$message.warning(this.$t('message.autoscale.selection.stale'))
+        return
+      }
+      const selected = this.ruleInstances.find(item => item.key === target?.key)
+      if (this.loading || target?.resourceId !== this.resource.id || target?.ruleId !== this.currentRule?.id || !selected) {
+        this.$message.warning(this.$t('message.autoscale.selection.stale'))
+        return
+      }
+      return this.handleDeleteInstanceFromRule(selected.instance, this.currentRule, selected.ip)
+    },
     handleDeleteInstanceFromRule (instance, rule, ip) {
       this.loading = true
       postAPI('removeFromLoadBalancerRule', {
@@ -850,7 +819,7 @@ export default {
       this.editRuleModalVisible = true
       this.editRuleDetails.name = this.selectedRule.name
       this.editRuleDetails.algorithm = this.selectedRule.algorithm
-      this.editRuleDetails.protocol = this.selectedRule.protocol
+      this.editRuleDetails.protocol = this.selectedRule.protocol || 'tcp'
     },
     handleSubmitEditForm () {
       if (this.editRuleModalLoading) return
@@ -864,13 +833,13 @@ export default {
           jobId: response.updateloadbalancerruleresponse.jobid,
           successMessage: this.$t('message.success.edit.rule'),
           successMethod: () => {
-            this.parentToggleLoading()
+            this.parentFetchData()
             this.fetchData()
             this.closeModal()
           },
           errorMessage: this.$t('message.edit.rule.failed'),
           errorMethod: () => {
-            this.parentToggleLoading()
+            this.parentFetchData()
             this.fetchData()
             this.closeModal()
           },
@@ -878,7 +847,7 @@ export default {
           catchMessage: this.$t('error.fetching.async.job.result'),
           catchMethod: () => {
             this.parentFetchData()
-            this.parentToggleLoading()
+            this.parentFetchData()
             this.fetchData()
             this.closeModal()
           }
@@ -886,6 +855,7 @@ export default {
       }).catch(error => {
         this.$notifyError(error)
         this.loading = false
+        this.editRuleModalLoading = false
       })
     },
     closeModal () {
@@ -952,19 +922,19 @@ export default {
 
     &__required {
       margin-right: 5px;
-      color: red;
+      color: var(--ui-error-text);
     }
 
     .error-text {
       display: none;
-      color: red;
+      color: var(--ui-error-text);
       font-size: 0.8rem;
     }
 
     .error {
 
       input {
-        border-color: red;
+        border-color: var(--ui-error-text);
       }
 
       .error-text {

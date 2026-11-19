@@ -34,6 +34,7 @@ import com.cloud.network.Network;
 import com.cloud.network.Network.GuestType;
 import com.cloud.network.Network.Service;
 import com.cloud.network.NetworkModel;
+import com.cloud.network.as.AutoScaleManager;
 import com.cloud.network.dao.IPAddressDao;
 import com.cloud.network.dao.IPAddressVO;
 import com.cloud.network.dao.NetworkDao;
@@ -145,6 +146,10 @@ public class UserVmManagerTest {
     @Mock
     private UserVmDao _vmDao;
     @Mock
+    private AutoScaleManager autoScaleManager;
+    @Mock
+    private com.cloud.host.dao.HostDao _hostDao;
+    @Mock
     private VMInstanceDao _vmInstanceDao;
     @Mock
     private VMTemplateDao _templateDao;
@@ -214,6 +219,55 @@ public class UserVmManagerTest {
     private NetworkOfferingVO _networkOfferingMock;
     @Mock
     private NetworkOrchestrationService _networkMgr;
+
+    @Test
+    public void testRebootRejectsManagedAutoScaleVmBeforeGuestOrStorageOperations() throws Exception {
+        assertAutoScaleRebootRejected(false);
+    }
+
+    @Test
+    public void testForcedRebootCannotBypassAutoScaleVmProtection() throws Exception {
+        assertAutoScaleRebootRejected(true);
+    }
+
+    private void assertAutoScaleRebootRejected(boolean forced) throws Exception {
+        org.apache.cloudstack.api.command.user.vm.RebootVMCmd cmd = mock(org.apache.cloudstack.api.command.user.vm.RebootVMCmd.class);
+        when(cmd.getId()).thenReturn(314L);
+        lenient().when(cmd.isForced()).thenReturn(forced);
+        when(_vmDao.findById(314L)).thenReturn(_vmMock);
+        when(_vmMock.getState()).thenReturn(VirtualMachine.State.Running);
+        Mockito.doNothing().when(_userVmMgr).checkFastCloneOperationAllowed(314L, "reboot");
+        doThrow(new InvalidParameterValueException("AutoScale VM operation is pending")).when(autoScaleManager).checkIfVmActionAllowed(314L);
+        CallContext.register(_userMock, _accountMock);
+        try {
+            InvalidParameterValueException error = Assert.assertThrows(InvalidParameterValueException.class, () -> _userVmMgr.rebootVirtualMachine(cmd));
+            Assert.assertEquals("AutoScale VM operation is pending", error.getMessage());
+            verify(autoScaleManager).checkIfVmActionAllowed(314L);
+            Mockito.verifyNoInteractions(_offeringDao, _itMgr, _storageMgr);
+        } finally {
+            CallContext.unregister();
+        }
+    }
+
+    @Test
+    public void testAllowedRebootContinuesToOfferingValidation() throws Exception {
+        when(_hostDao.findById(anyLong())).thenReturn(mock(com.cloud.host.HostVO.class));
+        org.apache.cloudstack.api.command.user.vm.RebootVMCmd cmd = mock(org.apache.cloudstack.api.command.user.vm.RebootVMCmd.class);
+        when(cmd.getId()).thenReturn(314L);
+        when(_vmDao.findById(314L)).thenReturn(_vmMock);
+        when(_vmMock.getState()).thenReturn(VirtualMachine.State.Running);
+        Mockito.doNothing().when(_userVmMgr).checkFastCloneOperationAllowed(314L, "reboot");
+        CallContext.register(_userMock, _accountMock);
+        try {
+            InvalidParameterValueException error = Assert.assertThrows(InvalidParameterValueException.class, () -> _userVmMgr.rebootVirtualMachine(cmd));
+            Assert.assertTrue(error.getMessage().startsWith("Unable to find service offering:"));
+            verify(autoScaleManager).checkIfVmActionAllowed(314L);
+            verify(_offeringDao).findById(314L, 0L);
+            Mockito.verifyNoInteractions(_itMgr, _storageMgr);
+        } finally {
+            CallContext.unregister();
+        }
+    }
 
     @Before
     public void setup() {

@@ -1,0 +1,666 @@
+{
+  "groups": {
+    "count": 26,
+    "affinitygroup": [
+      {
+        "id": "b2425532-f2bb-4511-86f5-917f6a4f1869",
+        "name": "qa-ag05-target",
+        "description": "AG05 disposable UI fixture",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domain": "ROOT",
+        "domainpath": "ROOT",
+        "type": "host affinity",
+        "virtualmachineIds": [
+          "ebf7db49-ea07-4dba-be8a-78fc915b19ec",
+          "204ec92d-c477-4be2-9a94-de42398bc680",
+          "579b1439-136d-4280-b2bb-b10613496d20"
+        ]
+      },
+      {
+        "id": "92d3963c-f878-48a5-a830-cbfd902acaf2",
+        "name": "qa-ag05-other",
+        "description": "AG05 disposable UI fixture",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domain": "ROOT",
+        "domainpath": "ROOT",
+        "type": "host affinity",
+        "virtualmachineIds": [
+          "ebf7db49-ea07-4dba-be8a-78fc915b19ec",
+          "204ec92d-c477-4be2-9a94-de42398bc680",
+          "579b1439-136d-4280-b2bb-b10613496d20"
+        ]
+      },
+      {
+        "id": "7da71834-fcf6-4094-931b-22301413bf40",
+        "name": "qa-ag05-empty",
+        "description": "AG05 disposable UI fixture",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domain": "ROOT",
+        "domainpath": "ROOT",
+        "type": "host affinity"
+      },
+      {
+        "id": "e29d7772-33d9-4ffb-8907-13eeca8c2452",
+        "name": "qa-ag05-page-01",
+        "description": "AG05 disposable UI fixture",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domain": "ROOT",
+        "domainpath": "ROOT",
+        "type": "non-strict host anti-affinity"
+      },
+      {
+        "id": "bccaa571-4d2f-4692-8d75-4dde592740ab",
+        "name": "qa-ag05-page-02",
+        "description": "AG05 disposable UI fixture",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domain": "ROOT",
+        "domainpath": "ROOT",
+        "type": "host affinity"
+      },
+      {
+        "id": "32b7f0b8-4c64-474f-a292-bc237277ff2e",
+        "name": "qa-ag05-page-03",
+        "description": "AG05 disposable UI fixture",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domain": "ROOT",
+        "domainpath": "ROOT",
+        "type": "host anti-affinity"
+      },
+      {
+        "id": "204658b7-912d-42a2-a818-182d943aa041",
+        "name": "qa-ag05-page-04",
+        "description": "AG05 disposable UI fixture",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domain": "ROOT",
+        "domainpath": "ROOT",
+        "type": "non-strict host affinity"
+      },
+      {
+        "id": "e65ca6ff-b4b8-44db-85c4-dc17c9f14f7c",
+        "name": "qa-ag05-page-05",
+        "description": "AG05 disposable UI fixture",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domain": "ROOT",
+        "domainpath": "ROOT",
+        "type": "non-strict host anti-affinity"
+      },
+      {
+        "id": "36198778-56c0-42c0-8cce-3be82b4ce3cb",
+        "name": "qa-ag05-page-06",
+        "description": "AG05 disposable UI fixture",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domain": "ROOT",
+        "domainpath": "ROOT",
+        "type": "host affinity"
+      },
+      {
+        "id": "650975ad-a32d-44af-b761-8a31d0cef4fd",
+        "name": "qa-ag05-page-07",
+        "description": "AG05 disposable UI fixture",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domain": "ROOT",
+        "domainpath": "ROOT",
+        "type": "host anti-affinity"
+      },
+      {
+        "id": "a1a86ee4-e0b7-429d-bb74-c55f06b97755",
+        "name": "qa-ag05-page-08",
+        "description": "AG05 disposable UI fixture",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domain": "ROOT",
+        "domainpath": "ROOT",
+        "type": "non-strict host affinity"
+      },
+      {
+        "id": "1bef6fc3-f8c5-4abd-b783-07f2c5deb761",
+        "name": "qa-ag05-page-09",
+        "description": "AG05 disposable UI fixture",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domain": "ROOT",
+        "domainpath": "ROOT",
+        "type": "non-strict host anti-affinity"
+      },
+      {
+        "id": "1ddd15c1-e178-49af-83ba-443fe38e61f4",
+        "name": "qa-ag05-page-10",
+        "description": "AG05 disposable UI fixture",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domain": "ROOT",
+        "domainpath": "ROOT",
+        "type": "host affinity",
+        "virtualmachineIds": [
+          "579b1439-136d-4280-b2bb-b10613496d20"
+        ]
+      },
+      {
+        "id": "0a6c96bc-00dd-400c-b06b-3707059feb54",
+        "name": "qa-ag05-page-11",
+        "description": "AG05 disposable UI fixture",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domain": "ROOT",
+        "domainpath": "ROOT",
+        "type": "host anti-affinity"
+      },
+      {
+        "id": "79d64134-efea-446a-9ce1-d565cdca06b4",
+        "name": "qa-ag05-page-12",
+        "description": "AG05 disposable UI fixture",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domain": "ROOT",
+        "domainpath": "ROOT",
+        "type": "non-strict host affinity"
+      },
+      {
+        "id": "6c106327-f7f7-4a11-abdb-5a99ee18ec37",
+        "name": "qa-ag05-page-13",
+        "description": "AG05 disposable UI fixture",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domain": "ROOT",
+        "domainpath": "ROOT",
+        "type": "non-strict host anti-affinity"
+      },
+      {
+        "id": "43c92315-4657-47d0-a40c-6423c25b17bd",
+        "name": "qa-ag05-page-14",
+        "description": "AG05 disposable UI fixture",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domain": "ROOT",
+        "domainpath": "ROOT",
+        "type": "host affinity"
+      },
+      {
+        "id": "e5e0791c-23aa-4c19-91b4-6dea707d3502",
+        "name": "qa-ag05-page-15",
+        "description": "AG05 disposable UI fixture",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domain": "ROOT",
+        "domainpath": "ROOT",
+        "type": "host anti-affinity"
+      },
+      {
+        "id": "03b71498-789f-4d05-bcd0-cab6564230b8",
+        "name": "qa-ag05-page-16",
+        "description": "AG05 disposable UI fixture",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domain": "ROOT",
+        "domainpath": "ROOT",
+        "type": "non-strict host affinity"
+      },
+      {
+        "id": "ec6d1a53-8de4-4950-886a-ea6a2e4ab6b0",
+        "name": "qa-ag05-page-17",
+        "description": "AG05 disposable UI fixture",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domain": "ROOT",
+        "domainpath": "ROOT",
+        "type": "non-strict host anti-affinity"
+      },
+      {
+        "id": "d8b3f981-eb89-40ae-bb92-db0a6b37de98",
+        "name": "qa-ag05-long-긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름",
+        "description": "긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domain": "ROOT",
+        "domainpath": "ROOT",
+        "type": "host affinity"
+      },
+      {
+        "id": "b156547b-7ff4-46f6-9a17-9d482d688f4e",
+        "name": "qa-ag05-user-target",
+        "account": "qa-ag05-user",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domain": "ROOT",
+        "domainpath": "ROOT",
+        "type": "host affinity",
+        "virtualmachineIds": [
+          "292d3eb8-d903-4fd9-b8dc-9e53fc5f67b0"
+        ]
+      },
+      {
+        "id": "f83fd883-7520-4025-bdf3-a9f9b442901d",
+        "name": "qa-ag05-user-other",
+        "account": "qa-ag05-user",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domain": "ROOT",
+        "domainpath": "ROOT",
+        "type": "host affinity",
+        "virtualmachineIds": [
+          "292d3eb8-d903-4fd9-b8dc-9e53fc5f67b0"
+        ]
+      },
+      {
+        "id": "b8169613-41ad-4a34-a0ab-8f91804aed9b",
+        "name": "qa-ag05-project-target",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domain": "ROOT",
+        "domainpath": "ROOT",
+        "projectid": "6d077125-d983-4ed7-9473-93f629196980",
+        "project": "qa-ag05-project",
+        "type": "host affinity",
+        "virtualmachineIds": [
+          "40f55791-b61a-4721-92aa-47ab1e608fe8"
+        ]
+      },
+      {
+        "id": "61182226-0b35-4b3f-80e4-1f6c204ff419",
+        "name": "qa-ag05-project-other",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domain": "ROOT",
+        "domainpath": "ROOT",
+        "projectid": "6d077125-d983-4ed7-9473-93f629196980",
+        "project": "qa-ag05-project",
+        "type": "host affinity",
+        "virtualmachineIds": [
+          "40f55791-b61a-4721-92aa-47ab1e608fe8"
+        ]
+      },
+      {
+        "id": "555b7bb4-24d6-45f5-9480-72c2fd813bf6",
+        "name": "qa-ag05-ui-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "description": "DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domain": "ROOT",
+        "domainpath": "ROOT",
+        "type": "host affinity"
+      }
+    ]
+  },
+  "vms": {
+    "count": 5,
+    "virtualmachine": [
+      {
+        "id": "579b1439-136d-4280-b2bb-b10613496d20",
+        "name": "qa-ag05-vm-01",
+        "displayname": "qa-ag05-vm-01",
+        "account": "admin",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "username": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domain": "ROOT",
+        "domainpath": "ROOT",
+        "created": "2026-10-19T13:23:45+0900",
+        "state": "Stopped",
+        "haenable": false,
+        "zoneid": "7013f5a1-de59-4cea-a596-f4f58815f31c",
+        "zonename": "Zone",
+        "volumemutationblockedreason": "",
+        "guestosid": "9708b6ac-b253-11f1-a895-0024814c313f",
+        "securitygroup": [],
+        "nic": [
+          {
+            "id": "19d99191-8dda-46d8-9831-066f986bd26d",
+            "networkid": "ae274fff-3d8e-4285-ac73-26a767c1fea7",
+            "networkname": "E1335-VM-Origin-L2",
+            "isolationuri": "vlan://3135",
+            "broadcasturi": "vlan://3135",
+            "traffictype": "Guest",
+            "type": "L2",
+            "isdefault": true,
+            "macaddress": "02:1f:01:04:00:31",
+            "secondaryip": [],
+            "extradhcpoption": [],
+            "deviceid": "0",
+            "enabled": true
+          }
+        ],
+        "hypervisor": "KVM",
+        "instancename": "i-2-664-VM",
+        "details": {
+          "deployvm": "true",
+          "tpmversion": "NONE",
+          "rootDiskController": "osdefault"
+        },
+        "clonefastsourcepowerallowed": false,
+        "clonefastpowerallowed": false,
+        "affinitygroup": [
+          {
+            "id": "1ddd15c1-e178-49af-83ba-443fe38e61f4",
+            "name": "qa-ag05-page-10",
+            "description": "AG05 disposable UI fixture",
+            "account": "admin"
+          },
+          {
+            "id": "92d3963c-f878-48a5-a830-cbfd902acaf2",
+            "name": "qa-ag05-other",
+            "description": "AG05 disposable UI fixture",
+            "account": "admin"
+          },
+          {
+            "id": "b2425532-f2bb-4511-86f5-917f6a4f1869",
+            "name": "qa-ag05-target",
+            "description": "AG05 disposable UI fixture",
+            "account": "admin"
+          }
+        ],
+        "displayvm": true,
+        "isdynamicallyscalable": true,
+        "deleteprotection": false,
+        "ostypeid": "9708b6ac-b253-11f1-a895-0024814c313f",
+        "osdisplayname": "Rocky Linux 9",
+        "receivedbytes": 0,
+        "sentbytes": 0,
+        "vbmcport": "None",
+        "kvdoenable": false,
+        "kvdoinuse": false,
+        "arch": "x86_64",
+        "vbmcstatus": "Unallocated",
+        "tags": [],
+        "hasannotations": false
+      },
+      {
+        "id": "ebf7db49-ea07-4dba-be8a-78fc915b19ec",
+        "name": "qa-ag05-vm-02",
+        "displayname": "qa-ag05-vm-02",
+        "account": "admin",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "username": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domain": "ROOT",
+        "domainpath": "ROOT",
+        "created": "2026-10-19T13:23:47+0900",
+        "state": "Stopped",
+        "haenable": false,
+        "zoneid": "7013f5a1-de59-4cea-a596-f4f58815f31c",
+        "zonename": "Zone",
+        "volumemutationblockedreason": "",
+        "guestosid": "9708b6ac-b253-11f1-a895-0024814c313f",
+        "securitygroup": [],
+        "nic": [
+          {
+            "id": "742427d5-4782-4ff8-a040-29751443103a",
+            "networkid": "ae274fff-3d8e-4285-ac73-26a767c1fea7",
+            "networkname": "E1335-VM-Origin-L2",
+            "isolationuri": "vlan://3135",
+            "broadcasturi": "vlan://3135",
+            "traffictype": "Guest",
+            "type": "L2",
+            "isdefault": true,
+            "macaddress": "02:1f:01:04:00:32",
+            "secondaryip": [],
+            "extradhcpoption": [],
+            "deviceid": "0",
+            "enabled": true
+          }
+        ],
+        "hypervisor": "KVM",
+        "instancename": "i-2-665-VM",
+        "details": {
+          "deployvm": "true",
+          "tpmversion": "NONE",
+          "rootDiskController": "osdefault"
+        },
+        "clonefastsourcepowerallowed": false,
+        "clonefastpowerallowed": false,
+        "affinitygroup": [
+          {
+            "id": "b2425532-f2bb-4511-86f5-917f6a4f1869",
+            "name": "qa-ag05-target",
+            "description": "AG05 disposable UI fixture",
+            "account": "admin"
+          },
+          {
+            "id": "92d3963c-f878-48a5-a830-cbfd902acaf2",
+            "name": "qa-ag05-other",
+            "description": "AG05 disposable UI fixture",
+            "account": "admin"
+          }
+        ],
+        "displayvm": true,
+        "isdynamicallyscalable": true,
+        "deleteprotection": false,
+        "ostypeid": "9708b6ac-b253-11f1-a895-0024814c313f",
+        "osdisplayname": "Rocky Linux 9",
+        "receivedbytes": 0,
+        "sentbytes": 0,
+        "vbmcport": "None",
+        "kvdoenable": false,
+        "kvdoinuse": false,
+        "arch": "x86_64",
+        "vbmcstatus": "Unallocated",
+        "tags": [],
+        "hasannotations": false
+      },
+      {
+        "id": "204ec92d-c477-4be2-9a94-de42398bc680",
+        "name": "qa-ag05-vm-03",
+        "displayname": "qa-ag05-vm-03-긴표시이름검증-긴표시이름검증-긴표시이름검증-긴표시이름검증-긴표시이름검증-긴표시이름검증-긴표시이름검증-긴표시이름검증",
+        "account": "admin",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "username": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domain": "ROOT",
+        "domainpath": "ROOT",
+        "created": "2026-10-19T13:23:49+0900",
+        "state": "Stopped",
+        "haenable": false,
+        "zoneid": "7013f5a1-de59-4cea-a596-f4f58815f31c",
+        "zonename": "Zone",
+        "volumemutationblockedreason": "",
+        "guestosid": "9708b6ac-b253-11f1-a895-0024814c313f",
+        "securitygroup": [],
+        "nic": [
+          {
+            "id": "ff9b1ded-6faa-472b-bcc8-2118fc9c1a99",
+            "networkid": "ae274fff-3d8e-4285-ac73-26a767c1fea7",
+            "networkname": "E1335-VM-Origin-L2",
+            "isolationuri": "vlan://3135",
+            "broadcasturi": "vlan://3135",
+            "traffictype": "Guest",
+            "type": "L2",
+            "isdefault": true,
+            "macaddress": "02:1f:01:04:00:33",
+            "secondaryip": [],
+            "extradhcpoption": [],
+            "deviceid": "0",
+            "enabled": true
+          }
+        ],
+        "hypervisor": "KVM",
+        "instancename": "i-2-666-VM",
+        "details": {
+          "deployvm": "true",
+          "tpmversion": "NONE",
+          "rootDiskController": "osdefault"
+        },
+        "clonefastsourcepowerallowed": false,
+        "clonefastpowerallowed": false,
+        "affinitygroup": [
+          {
+            "id": "b2425532-f2bb-4511-86f5-917f6a4f1869",
+            "name": "qa-ag05-target",
+            "description": "AG05 disposable UI fixture",
+            "account": "admin"
+          },
+          {
+            "id": "92d3963c-f878-48a5-a830-cbfd902acaf2",
+            "name": "qa-ag05-other",
+            "description": "AG05 disposable UI fixture",
+            "account": "admin"
+          }
+        ],
+        "displayvm": true,
+        "isdynamicallyscalable": true,
+        "deleteprotection": false,
+        "ostypeid": "9708b6ac-b253-11f1-a895-0024814c313f",
+        "osdisplayname": "Rocky Linux 9",
+        "receivedbytes": 0,
+        "sentbytes": 0,
+        "vbmcport": "None",
+        "kvdoenable": false,
+        "kvdoinuse": false,
+        "arch": "x86_64",
+        "vbmcstatus": "Unallocated",
+        "tags": [],
+        "hasannotations": false
+      },
+      {
+        "id": "292d3eb8-d903-4fd9-b8dc-9e53fc5f67b0",
+        "name": "qa-ag05-user-vm",
+        "displayname": "qa-ag05-user-vm",
+        "account": "qa-ag05-user",
+        "userid": "78e9e1c8-129f-4570-9023-92908923e7ae",
+        "username": "qa-ag05-user",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domain": "ROOT",
+        "domainpath": "ROOT",
+        "created": "2026-10-19T13:23:53+0900",
+        "state": "Stopped",
+        "haenable": false,
+        "zoneid": "7013f5a1-de59-4cea-a596-f4f58815f31c",
+        "zonename": "Zone",
+        "volumemutationblockedreason": "",
+        "guestosid": "9708b6ac-b253-11f1-a895-0024814c313f",
+        "securitygroup": [],
+        "nic": [
+          {
+            "id": "f76a28aa-b6fc-4db1-987d-cb992b22eac2",
+            "networkid": "4446b2c0-3306-42d9-bbb0-8ee215e41e27",
+            "networkname": "qa-ag05-user-L2",
+            "isolationuri": "vlan://3195",
+            "broadcasturi": "vlan://3195",
+            "traffictype": "Guest",
+            "type": "L2",
+            "isdefault": true,
+            "macaddress": "02:1f:01:4b:00:01",
+            "secondaryip": [],
+            "extradhcpoption": [],
+            "deviceid": "0",
+            "enabled": true
+          }
+        ],
+        "hypervisor": "KVM",
+        "instancename": "i-196-667-VM",
+        "details": {
+          "deployvm": "true",
+          "tpmversion": "NONE",
+          "rootDiskController": "osdefault"
+        },
+        "clonefastsourcepowerallowed": false,
+        "clonefastpowerallowed": false,
+        "affinitygroup": [
+          {
+            "id": "b156547b-7ff4-46f6-9a17-9d482d688f4e",
+            "name": "qa-ag05-user-target",
+            "account": "qa-ag05-user"
+          },
+          {
+            "id": "f83fd883-7520-4025-bdf3-a9f9b442901d",
+            "name": "qa-ag05-user-other",
+            "account": "qa-ag05-user"
+          }
+        ],
+        "displayvm": true,
+        "isdynamicallyscalable": true,
+        "deleteprotection": false,
+        "ostypeid": "9708b6ac-b253-11f1-a895-0024814c313f",
+        "osdisplayname": "Rocky Linux 9",
+        "receivedbytes": 0,
+        "sentbytes": 0,
+        "vbmcport": "None",
+        "kvdoenable": false,
+        "kvdoinuse": false,
+        "arch": "x86_64",
+        "vbmcstatus": "Unallocated",
+        "tags": [],
+        "hasannotations": false
+      },
+      {
+        "id": "40f55791-b61a-4721-92aa-47ab1e608fe8",
+        "name": "qa-ag05-project-vm",
+        "displayname": "qa-ag05-project-vm",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "username": "admin",
+        "projectid": "6d077125-d983-4ed7-9473-93f629196980",
+        "project": "qa-ag05-project",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domain": "ROOT",
+        "domainpath": "ROOT",
+        "created": "2026-10-19T13:23:55+0900",
+        "state": "Stopped",
+        "haenable": false,
+        "zoneid": "7013f5a1-de59-4cea-a596-f4f58815f31c",
+        "zonename": "Zone",
+        "volumemutationblockedreason": "",
+        "guestosid": "9708b6ac-b253-11f1-a895-0024814c313f",
+        "securitygroup": [],
+        "nic": [
+          {
+            "id": "0d250307-b4cf-450e-86a8-2ff9d28a4274",
+            "networkid": "40239c7f-600d-462c-bd23-f0a54b938c54",
+            "networkname": "qa-ag05-project-L2",
+            "isolationuri": "vlan://3196",
+            "broadcasturi": "vlan://3196",
+            "traffictype": "Guest",
+            "type": "L2",
+            "isdefault": true,
+            "macaddress": "02:1f:01:4c:00:01",
+            "secondaryip": [],
+            "extradhcpoption": [],
+            "deviceid": "0",
+            "enabled": true
+          }
+        ],
+        "hypervisor": "KVM",
+        "instancename": "i-197-668-VM",
+        "details": {
+          "deployvm": "true",
+          "tpmversion": "NONE",
+          "rootDiskController": "osdefault"
+        },
+        "clonefastsourcepowerallowed": false,
+        "clonefastpowerallowed": false,
+        "affinitygroup": [
+          {
+            "id": "b8169613-41ad-4a34-a0ab-8f91804aed9b",
+            "name": "qa-ag05-project-target",
+            "account": "PrjAcct-qa-ag05-project-1"
+          },
+          {
+            "id": "61182226-0b35-4b3f-80e4-1f6c204ff419",
+            "name": "qa-ag05-project-other",
+            "account": "PrjAcct-qa-ag05-project-1"
+          }
+        ],
+        "displayvm": true,
+        "isdynamicallyscalable": true,
+        "deleteprotection": false,
+        "ostypeid": "9708b6ac-b253-11f1-a895-0024814c313f",
+        "osdisplayname": "Rocky Linux 9",
+        "receivedbytes": 0,
+        "sentbytes": 0,
+        "vbmcport": "None",
+        "kvdoenable": false,
+        "kvdoinuse": false,
+        "arch": "x86_64",
+        "vbmcstatus": "Unallocated",
+        "tags": [],
+        "hasannotations": false
+      }
+    ]
+  },
+  "allMappingsMatch": true,
+  "otherMembershipsPreserved": true,
+  "targetCount": 3
+}

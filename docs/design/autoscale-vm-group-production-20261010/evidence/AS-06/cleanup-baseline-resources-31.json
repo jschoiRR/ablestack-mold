@@ -1,0 +1,82 @@
+{
+  "groups": [
+    {
+      "id": 1,
+      "kind": "group",
+      "name": "AS-PROD-31-AS01-PROJECT",
+      "uuid": "0ddcc917-8a80-409a-9d41-9cc81d1df7b4",
+      "state": "DISABLED",
+      "members": 1,
+      "profile": 2,
+      "removed": null,
+      "lbMembers": 1,
+      "operation": null,
+      "schedules": 0
+    },
+    {
+      "id": 3,
+      "kind": "group",
+      "name": "AS-PROD-31-AS02-RECOVERY",
+      "uuid": "3b532b36-1a5f-431f-976a-50caf26fb8ac",
+      "state": "DISABLED",
+      "members": 1,
+      "profile": 10,
+      "removed": null,
+      "lbMembers": 1,
+      "operation": null,
+      "schedules": 0
+    },
+    {
+      "id": 5,
+      "kind": "group",
+      "name": "AS-PROD-31-AS04-CONCURRENCY",
+      "uuid": "bf0f5385-ae2c-4da4-aec4-eb985dbdeba4",
+      "state": "DISABLED",
+      "members": 1,
+      "profile": 12,
+      "removed": null,
+      "lbMembers": 1,
+      "operation": null,
+      "schedules": 3
+    }
+  ],
+  "counters": [
+    {
+      "kind": "counter",
+      "type": "user_vm",
+      "value": 3,
+      "account": "PrjAcct-AS-PROD-31-AS01-project-1"
+    },
+    {
+      "kind": "counter",
+      "type": "volume",
+      "value": 3,
+      "account": "PrjAcct-AS-PROD-31-AS01-project-1"
+    },
+    {
+      "kind": "counter",
+      "type": "cpu",
+      "value": 6,
+      "account": "PrjAcct-AS-PROD-31-AS01-project-1"
+    },
+    {
+      "kind": "counter",
+      "type": "memory",
+      "value": 6144,
+      "account": "PrjAcct-AS-PROD-31-AS01-project-1"
+    },
+    {
+      "kind": "counter",
+      "type": "primary_storage",
+      "value": 322122547200,
+      "account": "PrjAcct-AS-PROD-31-AS01-project-1"
+    }
+  ],
+  "orphans": [
+    {
+      "kind": "orphans",
+      "vmMaps": 0,
+      "volumeRows": 0
+    }
+  ]
+}

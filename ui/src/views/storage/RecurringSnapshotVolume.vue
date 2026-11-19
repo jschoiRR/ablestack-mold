@@ -17,65 +17,60 @@
 
 <template>
   <div class="snapshot-layout">
-    <div v-if="!isVolumeResource" class="volume-selection">
-      <a-form layout="vertical">
-        <a-form-item :label="$t('label.volume')" required>
+    <a-alert v-if="volumesError || policyError" type="error" :message="volumesError || policyError" show-icon />
+    <a-button v-if="volumesError" @click="fetchVolumes">{{ $t('label.retry') }}</a-button>
+    <a-button v-if="policyError" @click="fetchData">{{ $t('label.retry') }}</a-button>
+    <div v-if="isVolumeResource" class="volume-operation-target">
+      <hdd-outlined aria-hidden="true" /><span>{{ currentVolumeResource.name }}</span><span class="operation-secondary">{{ currentVolumeResource.type }}</span>
+    </div>
+    <FormSchedule
+      :key="currentVolumeResource?.id || 'unselected'"
+      :loading="loading"
+      :disabled="!currentVolumeResource?.id || loading || !!policyError || (!isVolumeResource && (volumesLoading || !!volumesError))"
+      :resource="currentVolumeResource || {}"
+      :dataSource="dataSource"
+      resourceType="Volume"
+      @busy="busy = $event"
+      @close-action="closeAction"
+      @refresh="handleRefresh">
+      <template v-if="!isVolumeResource" #resource-selection>
+        <a-form-item :label="$t('label.volume')" html-for="policy-create-volume" required>
           <a-select
+            id="policy-create-volume"
             v-model:value="selectedVolumeId"
             :placeholder="$t('label.select.volume')"
             :loading="volumesLoading"
+            :disabled="busy || volumesLoading || !!volumesError"
+            :options="volumeOptions"
+            option-label-prop="label"
+            dropdown-class-name="snapshot-policy-volume-dropdown"
             show-search
             :filter-option="filterOption"
             @change="onVolumeChange"
           >
-            <a-select-option
-              v-for="volume in volumes"
-              :key="volume.id"
-              :value="volume.id"
-            >
-              {{ volume.name }} ({{ (volume.size / 1024 / 1024 / 1024).toFixed(2) }} GB)
-            </a-select-option>
+            <template #option="{ label, description }">
+              <div class="snapshot-policy-volume-option">
+                <div>{{ label }}</div>
+                <div class="operation-secondary">{{ description }}</div>
+              </div>
+            </template>
           </a-select>
+          <template v-if="selectedVolume" #extra><p class="selected-volume-description">{{ volumeDescription(selectedVolume) }}</p></template>
         </a-form-item>
-      </a-form>
-    </div>
-    <a-tabs v-if="currentVolumeResource && currentVolumeResource.id" defaultActiveKey="1" :animated="false">
-      <a-tab-pane :tab="$t('label.schedule')" key="1">
-        <FormSchedule
-          :loading="loading"
-          :resource="currentVolumeResource"
-          :dataSource="dataSource"
-          :resourceType="'Volume'"
-          @close-action="closeAction"
-          @refresh="handleRefresh"/>
-      </a-tab-pane>
-      <a-tab-pane :tab="$t('label.action.recurring.snapshot')" key="2">
-        <ScheduledSnapshots
-          :loading="loading"
-          :resource="currentVolumeResource"
-          :dataSource="dataSource"
-          @refresh="handleRefresh"
-          @close-action="closeAction"/>
-      </a-tab-pane>
-    </a-tabs>
-    <div v-if="!currentVolumeResource || !currentVolumeResource.id" class="no-volume-selected">
-      <div class="empty-state">
-        <p>{{ $t('message.select.volume.to.continue') }}</p>
-      </div>
-    </div>
+      </template>
+    </FormSchedule>
   </div>
 </template>
 
 <script>
-import { getAPI } from '@/api'
+import { getAPI } from '@/utils/storageApi'
+import { readAllocationList } from '@/utils/volumeAllocation'
 import FormSchedule from '@/views/storage/FormSchedule'
-import ScheduledSnapshots from '@/views/storage/ScheduledSnapshots'
 
 export default {
   name: 'RecurringSnapshotVolume',
   components: {
-    FormSchedule,
-    ScheduledSnapshots
+    FormSchedule
   },
   props: {
     resource: {
@@ -88,14 +83,34 @@ export default {
   data () {
     return {
       loading: false,
+      busy: false,
       dataSource: [],
       volumes: [],
       volumesLoading: false,
       selectedVolumeId: null,
-      selectedVolume: null
+      selectedVolume: null,
+      volumesError: '',
+      policyError: '',
+      volumeVersion: 0,
+      policyVersion: 0,
+      disposed: false
     }
   },
   computed: {
+    ownerContext () { return JSON.stringify([this.$store.getters.userInfo?.id, this.$store.state?.user?.token, this.$store.getters.project?.id]) },
+    volumeOptions () {
+      return this.volumes.map(volume => {
+        const description = this.volumeDescription(volume)
+        const size = volume.size == null ? NaN : Number(volume.size)
+        const label = `${volume.name || volume.id} (${Number.isFinite(size) && size >= 0 ? (size / 1024 / 1024 / 1024).toFixed(2) + ' GiB' : '—'})`
+        return {
+          value: volume.id,
+          label,
+          description,
+          searchText: [label, description, volume.vmname, volume.vmdisplayname].filter(value => value != null).join(' ')
+        }
+      })
+    },
     resourceType () {
       if (!this.resource) return 'none'
       if (this.resource.type === 'ROOT' || this.resource.type === 'DATADISK' ||
@@ -129,12 +144,24 @@ export default {
       this.fetchVolumes()
     }
   },
+  watch: {
+    ownerContext () {
+      this.volumeVersion++; this.policyVersion++; this.dataSource = []; this.volumes = []; this.selectedVolumeId = null; this.selectedVolume = null
+      this.loading = false; this.volumesLoading = false; this.policyError = ''; this.volumesError = ''
+      if (this.isVolumeResource) this.fetchData(); else this.fetchVolumes()
+    },
+    'resource.id' () { this.policyVersion++; this.dataSource = []; this.policyError = ''; this.loading = false; this.fetchData() }
+  },
+  beforeUnmount () { this.disposed = true; this.volumeVersion++; this.policyVersion++ },
   methods: {
     async fetchVolumes () {
+      const version = ++this.volumeVersion; const context = this.ownerContext
+      const current = () => !this.disposed && version === this.volumeVersion && context === this.ownerContext
       this.volumesLoading = true
+      this.volumesError = ''
       try {
-        const response = await getAPI('listVolumes', { listAll: true })
-        const volumes = response.listvolumesresponse.volume || []
+        const volumes = await readAllocationList(getAPI, 'listVolumes', 'volume', { listall: true }, current)
+        if (!current()) return
         this.volumes = volumes.filter(volume => {
           return volume.state === 'Ready' &&
                 (volume.hypervisor !== 'KVM' ||
@@ -142,46 +169,42 @@ export default {
                   (this.$store.getters.features.kvmsnapshotenabled))
         })
       } catch (error) {
-        this.$message.error(this.$t('message.error.fetch.volumes'))
-        console.error('Error fetching volumes:', error)
+        if (current()) this.volumesError = this.failureText(error)
       } finally {
-        this.volumesLoading = false
+        if (current()) this.volumesLoading = false
       }
     },
     onVolumeChange (volumeId) {
+      if (this.busy) return
       const volume = this.volumes.find(v => v.id === volumeId)
-      if (volume) {
-        this.selectedVolume = volume
-        this.selectedVolumeId = volumeId
-        this.dataSource = []
-        this.fetchData()
-      }
+      this.policyVersion++
+      this.selectedVolume = volume || null
+      this.selectedVolumeId = volume?.id || null
+      this.dataSource = []
+      this.policyError = ''
+      this.loading = false
+      if (volume) this.fetchData()
     },
-    fetchData () {
+    failureText (error) { return Object.values(error?.response?.data || {}).find(value => value?.errortext)?.errortext || error?.message || this.$t('message.request.failed') },
+    async fetchData () {
       const volumeResource = this.currentVolumeResource
       if (!volumeResource || !volumeResource.id) {
         return
       }
 
+      const version = ++this.policyVersion; const context = this.ownerContext
+      const current = () => !this.disposed && version === this.policyVersion && context === this.ownerContext && this.currentVolumeResource?.id === volumeResource.id
       const params = {
         volumeid: volumeResource.id,
-        listAll: true
+        listall: true
       }
 
-      this.dataSource = []
       this.loading = true
-
-      getAPI('listSnapshotPolicies', params).then(json => {
-        this.loading = false
-        const listSnapshotPolicies = json.listsnapshotpoliciesresponse.snapshotpolicy
-        if (listSnapshotPolicies && listSnapshotPolicies.length > 0) {
-          this.dataSource = listSnapshotPolicies
-        }
-      }).catch(error => {
-        this.loading = false
-        this.$message.error(this.$t('message.error.fetch.snapshot.policies'))
-        console.error('Error fetching snapshot policies:', error)
-      })
+      this.policyError = ''
+      try {
+        const rows = await readAllocationList(getAPI, 'listSnapshotPolicies', 'snapshotpolicy', params, current)
+        if (current()) this.dataSource = rows
+      } catch (error) { if (current()) this.policyError = this.failureText(error) } finally { if (current()) this.loading = false }
     },
     handleRefresh () {
       this.fetchData()
@@ -192,38 +215,49 @@ export default {
       this.$emit('close-action')
     },
     filterOption (input, option) {
-      return option.children[0].children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+      return String(option?.searchText ?? option?.label ?? '').toLowerCase().includes(String(input ?? '').trim().toLowerCase())
+    },
+    volumeDescription (volume) {
+      const vm = volume.vmdisplayname || volume.vmname || volume.virtualmachineid
+      const project = volume.project || volume.projectid
+      const owner = project || volume.account
+      const domain = volume.domain || volume.domainid
+      const zone = volume.zonename || volume.zoneid
+      return [
+        vm && `${this.$t('label.virtualmachine')}: ${vm}`,
+        owner && `${this.$t(project ? 'label.project' : 'label.account')}: ${owner}`,
+        domain && `${this.$t('label.domain')}: ${domain}`,
+        zone && `${this.$t('label.zone')}: ${zone}`,
+        `${this.$t('label.id')}: ${volume.id}`
+      ].filter(Boolean).join(' · ')
     }
   }
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
+@import '@/style/volume-operation-dialog';
 .snapshot-layout {
-  max-width: 800px;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
 
-  .volume-selection {
-    margin-bottom: 20px;
-    padding: 16px;
-    border: 1px solid #d9d9d9;
-    border-radius: 6px;
-    background-color: #fafafa;
-    .ant-form-item {
-      margin-bottom: 0;
-      .ant-select {
-        width: 100%;
-        min-width: 400px;
-      }
-    }
+  .selected-volume-description {
+    overflow-wrap: anywhere;
+    margin: 0;
+    color: var(--ui-text-secondary);
   }
+}
+</style>
 
-  .current-volume-info {
-    margin-bottom: 16px;
-  }
+<style lang="scss">
+.snapshot-policy-volume-dropdown .snapshot-policy-volume-option {
+  white-space: normal;
+  overflow-wrap: anywhere;
 
-  .no-volume-selected {
-    text-align: center;
-    padding: 40px 20px;
+  .operation-secondary {
+    font-size: 12px;
+    color: var(--ui-text-secondary);
   }
 }
 </style>

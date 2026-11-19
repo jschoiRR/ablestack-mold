@@ -1,0 +1,18 @@
+{
+  "excluded_truncated_case": "cancel-no-delete-requests.json",
+  "qualified_cancel": "cancel-qualified-requests.json",
+  "initial_batch": "The first intentionally paused POST succeeded. A subsequent GET stayed paused until its lookup timeout; UI blocked only that row. Check current state then retry removed it without resending the first successful UUID.",
+  "in_progress_screens": [
+    "bulk-pending",
+    "bulk-first-attempt"
+  ],
+  "in_progress_screens_are_not_success_proof": true,
+  "permission_control": {
+    "http_status": 403,
+    "cloud_errorcode": 432,
+    "actual_readonly_api_errorcode": 432
+  },
+  "initial_inventory_scope": "after-mixed.json contains non-project entries only; subsequent API snapshots include the dedicated project and DB qualification covers all test UUIDs.",
+  "capture_sources": "All qualified captures receive an explicit source argument and record loaded script URLs.",
+  "request_case_correction": "lost-response-unknown was re-exported from cursor 6147 to exclude the preceding permission retry."
+}

@@ -1,0 +1,46 @@
+{
+  "id": "ee2f21dc-6281-439e-bbfb-11ad6013ec97",
+  "name": "UD1386-31-20261016-vr",
+  "instancename": "i-2-550-VM",
+  "state": "Stopped",
+  "hostid": null,
+  "hostname": null,
+  "userdata": "I2Nsb3VkLWNvbmZpZwp3cml0ZV9maWxlczoKICAtIHBhdGg6IC92YXIvdG1wL3VkMTM4Ni1wcm9vZgogICAgcGVybWlzc2lvbnM6ICIwNjQ0IgogICAgY29udGVudDogIlVEMTM4Ni1CIO2VnOq4gFxuIgpydW5jbWQ6CiAgLSBbc2gsIC1jLCAicHJpbnRmIFVEMTM4Ni1CLWV4ZWN1dGVkID4gL3Zhci90bXAvdWQxMzg2LWV4ZWN1dGVkIl0K",
+  "userdataid": "b4355df8-70bc-41c5-bc45-301d92433210",
+  "userdatadetails": "{TAG=최종 VR 한글}",
+  "nic": [
+    {
+      "id": "58441c83-0b10-4cc1-ab67-4ace5a0dc777",
+      "networkid": "5ebb9bc4-f9b0-4ef5-8588-adb6f0a12b61",
+      "networkname": "UD1386-31-20261016-vr",
+      "netmask": "255.255.255.0",
+      "gateway": "10.138.6.1",
+      "ipaddress": "10.138.6.107",
+      "isolationuri": "vlan://177",
+      "broadcasturi": "vlan://177",
+      "traffictype": "Guest",
+      "type": "Isolated",
+      "isdefault": true,
+      "macaddress": "02:1f:01:22:00:01",
+      "secondaryip": [],
+      "extradhcpoption": [],
+      "deviceid": "0",
+      "enabled": true
+    },
+    {
+      "id": "dd04bf13-f395-49b3-b5e8-05ad1abab8a9",
+      "networkid": "15b2f6b3-4cb6-4c19-82eb-237c4e6010c4",
+      "networkname": "UD1386-31-20261016-unsupported",
+      "isolationuri": "vlan://3984",
+      "broadcasturi": "vlan://3984",
+      "traffictype": "Guest",
+      "type": "L2",
+      "isdefault": false,
+      "macaddress": "02:1f:01:20:00:02",
+      "secondaryip": [],
+      "extradhcpoption": [],
+      "deviceid": "1",
+      "enabled": true
+    }
+  ]
+}

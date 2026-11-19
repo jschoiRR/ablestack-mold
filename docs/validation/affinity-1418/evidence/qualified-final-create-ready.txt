@@ -1,0 +1,334 @@
+Browser tab: 6, Title: "Affinity 그룹 - ABLESTACK-Mold", URL: "http://10.10.31.10:8080/client/#/affinitygroup".
+1 AXWebArea Affinity 그룹 - ABLESTACK-Mold, URL: 10.10.31.10:8080/client/#/affinitygroup
+	5 container
+		6 container
+			7 image
+			8 menu
+				9 dashboard 대시보드
+					10 link Description: dashboard 대시보드, Value: 10.10.31.10:8080/client/#/dashboard
+				11 container
+					12 image cloud
+					13 text 컴퓨트
+				14 content list sub_menu_1_$$_/compute-popup
+					15 cloud-server 가상머신
+						16 link Description: cloud-server 가상머신, Value: 10.10.31.10:8080/client/#/vm
+					17 camera VM 스냅샷
+						18 link Description: camera VM 스냅샷, Value: 10.10.31.10:8080/client/#/vmsnapshot
+					19 쿠버네티스
+						20 link Description: 쿠버네티스, Value: 10.10.31.10:8080/client/#/kubernetes
+					21 fullscreen 오토스케일 VM 그룹
+						22 link Description: fullscreen 오토스케일 VM 그룹, Value: 10.10.31.10:8080/client/#/autoscalevmgroup
+					23 gold 가상머신 그룹
+						24 link Description: gold 가상머신 그룹, Value: 10.10.31.10:8080/client/#/vmgroup
+					25 key SSH 키 쌍
+						26 link Description: key SSH 키 쌍, Value: 10.10.31.10:8080/client/#/ssh
+					27 solution 사용자 데이터 라이브러리
+						28 link Description: solution 사용자 데이터 라이브러리, Value: 10.10.31.10:8080/client/#/userdata
+					29 solution CNI 구성
+						30 link Description: solution CNI 구성, Value: 10.10.31.10:8080/client/#/cniconfiguration
+					31 swap Affinity 그룹
+						32 link Description: swap Affinity 그룹, Value: 10.10.31.10:8080/client/#/affinitygroup
+				33 container
+					34 image hdd
+					35 text 스토리지
+				36 container
+					37 image wifi
+					38 text 네트워크
+				39 container
+					40 image picture
+					41 text 이미지
+				42 container
+					43 image lock
+					44 text 키 관리
+				45 schedule 이벤트
+					46 link Description: schedule 이벤트, Value: 10.10.31.10:8080/client/#/event
+				47 project 프로젝트
+					48 link Description: project 프로젝트, Value: 10.10.31.10:8080/client/#/project
+				49 idcard 역할
+					50 link Description: idcard 역할, Value: 10.10.31.10:8080/client/#/role
+				51 team 계정
+					52 link Description: team 계정, Value: 10.10.31.10:8080/client/#/account
+				53 block 도메인
+					54 link Description: block 도메인, Value: 10.10.31.10:8080/client/#/domain
+				55 container
+					56 image bank
+					57 text 인프라스트럭쳐
+				58 container
+					59 image shopping
+					60 text 서비스 오퍼링
+				61 container
+					62 image setting
+					63 text 구성
+				64 appstore-add 확장
+					65 link Description: appstore-add 확장, Value: 10.10.31.10:8080/client/#/extension
+				66 container
+					67 image tool
+					68 text 도구
+				69 read API 문서
+					70 link Description: read API 문서, Value: 10.10.31.10:8080/client/#/apidocs/
+		71 container
+			72 text 페이지 스타일 설정
+			73 button 닫기
+				74 image close
+			75 heading 페이지 스타일 설정, Value: 3
+				76 text 페이지 스타일 설정
+			77 container
+				78 container
+					79 image
+					80 container
+						81 radio button (settable, integer) Description:  , Value: 0
+				82 container
+					83 image
+					84 container
+						85 radio button (settable, integer) Description:  , Value: 1
+					86 image check
+			87 heading 테마 색상, Value: 3
+				88 text 테마 색상
+			89 container
+				90 container
+					91 radio button (settable, integer) Description:  , Value: 0
+					92 image check
+				93 container
+					94 radio button (settable, integer) Description:  , Value: 0
+				95 container
+					96 radio button (settable, integer) Description:  , Value: 0
+				97 container
+					98 radio button (settable, integer) Description:  , Value: 0
+				99 container
+					100 radio button (settable, integer) Description:  , Value: 0
+				101 container
+					102 radio button (settable, integer) Description:  , Value: 0
+				103 container
+					104 radio button (settable, integer) Description:  , Value: 0
+				105 container
+					106 radio button (settable, integer) Description:  , Value: 0
+			107 heading 네비게이션 설정, Value: 3
+				108 text 네비게이션 설정
+			109 container
+				110 container
+					111 text 배경색
+					112 color well (disabled, settable) #ffffff
+				113 container
+					114 text 텍스트 색상
+					115 color well (disabled, settable) #000000
+			116 container
+				117 image exclamation-circle
+				118 text 설정은 현재 브라우저에서만 볼 수 있습니다. 설정을 적용하려면 JSON 파일을 다운로드하고 경로 `/public/config.json` 아래의 `config.json` 파일의 `theme` 섹션에서 해당 콘텐츠를 교체하세요.
+			119 button download 세팅값 다운로드(json)
+				120 image download
+				121 text 세팅값 다운로드(json)
+			122 button undo 기본값으로 재설정
+				123 image undo
+				124 text 기본값으로 재설정
+		125 container
+			126 image menu-fold
+			127 container
+				128 combo box (settable) rc_select_0
+				129 image project
+				130 text 기본 보기
+			131 button 생성 down
+				132 text 생성
+				133 image down
+			134 image translation
+			135 image bell
+			136 container
+				137 text AC admin cloud
+		138 container
+			139 container
+				140 container
+					141 link Description: home, Value: 10.10.31.10:8080/client/#/
+					142 text /
+					143 link Description: Affinity 그룹, Value: 10.10.31.10:8080/client/#/affinitygroup
+					144 link Description: question-circle, Value: docs.ablecloud.io/latest/adminguide/virtual_machines.html#affinity-groups
+					145 button reload 업데이트
+						146 image reload
+						147 text 업데이트
+					148 switch 프로젝트, Value: 0
+						149 text 프로젝트
+				150 button 새 Affinity 그룹 추가
+					151 image plus
+					152 text 새 Affinity 그룹 추가
+				153 container
+					154 button 고급 검색
+						155 image filter
+					156 text field (settable)
+					157 button search
+						158 image search
+			159 table
+				160 row
+					161 cell
+						162 container
+							163 checkbox (settable, integer) Description:  , Value: 0
+					164 cell
+						165 container
+							166 text 이름
+							167 image caret-up
+							168 image caret-down
+					169 cell
+						170 container
+							171 text 유형
+							172 image caret-up
+							173 image caret-down
+					174 cell
+						175 container
+							176 text 연결 VM 수
+							177 image caret-up
+							178 image caret-down
+					179 cell
+						180 container
+							181 text 설명
+							182 image caret-up
+							183 image caret-down
+					184 cell
+						185 container
+							186 text 계정
+							187 image caret-up
+							188 image caret-down
+					189 cell
+						190 container
+							191 text 도메인
+							192 image caret-up
+							193 image caret-down
+					194 cell
+						195 button filter
+							196 image filter
+				197 row
+					198 cell
+						199 container
+							200 checkbox (settable, integer) Description:  , Value: 0
+					201 cell
+						202 link Description: rt1230-r17-ha-control-spread, Value: 10.10.31.10:8080/client/#/affinitygroup/ac508d0e-c80b-4c66-9bd0-8cbb896ca7e0
+					203 cell
+						204 text 다른 호스트 분산 · 엄격
+					205 cell
+						206 text 0
+					207 cell
+						208 text Cloud #1230 isolated r17 HA controls across three hosts
+					209 cell
+						210 link Description: k1230-20261006, Value: 10.10.31.10:8080/client/#/account?name=k1230-20261006&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&dataView=true
+					211 cell
+						212 link Description: ROOT, Value: 10.10.31.10:8080/client/#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details
+				213 row
+					214 cell
+						215 container
+							216 checkbox (settable, integer) Description:  , Value: 0
+					217 cell
+						218 link Description: rt1230-r18-control-spread, Value: 10.10.31.10:8080/client/#/affinitygroup/966bf870-a046-4c76-bfce-7c78f62c0ecb
+					219 cell
+						220 text 다른 호스트 분산 · 엄격
+					221 cell
+						222 text 0
+					223 cell
+						224 text Cloud #1230 isolated r18 control across hosts
+					225 cell
+						226 link Description: k1230-20261006, Value: 10.10.31.10:8080/client/#/account?name=k1230-20261006&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&dataView=true
+					227 cell
+						228 link Description: ROOT, Value: 10.10.31.10:8080/client/#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details
+				229 row
+					230 cell
+						231 container
+							232 checkbox (settable, integer) Description:  , Value: 0
+					233 cell
+						234 link Description: rt1230-r18-etcd-spread, Value: 10.10.31.10:8080/client/#/affinitygroup/42f65110-108a-4831-8403-14500cc7f5fa
+					235 cell
+						236 text 다른 호스트 분산 · 엄격
+					237 cell
+						238 text 0
+					239 cell
+						240 text Cloud #1230 isolated r18 etcd across hosts
+					241 cell
+						242 link Description: k1230-20261006, Value: 10.10.31.10:8080/client/#/account?name=k1230-20261006&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&dataView=true
+					243 cell
+						244 link Description: ROOT, Value: 10.10.31.10:8080/client/#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details
+				245 row
+					246 cell
+						247 container
+							248 checkbox (settable, integer) Description:  , Value: 0
+					249 cell
+						250 link Description: qa-ag05-visual-target, Value: 10.10.31.10:8080/client/#/affinitygroup/299e546a-b031-4678-8765-7650157c952f
+					251 cell
+						252 text 같은 호스트 배치 · 엄격
+					253 cell
+						254 text 3
+					255 cell
+						256 text 긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명
+					257 cell
+						258 link Description: admin, Value: 10.10.31.10:8080/client/#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&dataView=true
+					259 cell
+						260 link Description: ROOT, Value: 10.10.31.10:8080/client/#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details
+				261 row
+					262 cell
+						263 container
+							264 checkbox (settable, integer) Description:  , Value: 0
+					265 cell
+						266 link Value: 10.10.31.10:8080/client/#/affinitygroup/a86b2817-9d3e-49b2-bffa-6c914d39d9a9, Description: qa-ag05-visual-long-긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름
+					267 cell
+						268 text 같은 호스트 배치 · 엄격
+					269 cell
+						270 text 0
+					271 cell
+						272 text 긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명
+					273 cell
+						274 link Description: admin, Value: 10.10.31.10:8080/client/#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&dataView=true
+					275 cell
+						276 link Description: ROOT, Value: 10.10.31.10:8080/client/#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details
+			277 content list
+				278 text 전체 5 개 항목 중 1-5 표시
+				279 container 이전 페이지
+					280 button (disabled) left
+						281 image left
+				282 text 1
+				283 container 다음 페이지
+					284 button (disabled) right
+						285 image right
+				286 container
+					287 combo box (settable) rc_select_1
+					288 text 20 / 쪽
+	289 container
+		290 image info-circle
+		291 text Wall 모니터링을 사용할 수 없습니다. 기존 알림은 최신 정보가 아닐 수 있으며 Mold는 계속 사용할 수 있습니다. 비활성
+	292 container
+		293 container 새 Affinity 그룹 추가 도움말
+			294 container
+				295 button Close
+					296 image close
+				297 container vcDialogTitle0
+					298 text 새 Affinity 그룹 추가
+					299 link Description: 도움말, Value: docs.ablecloud.io/latest/adminguide/virtual_machines.html#creating-a-new-affinity-group
+				300 text 앞뒤 공백은 제거됩니다. 이름은 1~191자, 설명은 255자까지 입력할 수 있습니다.
+				301 container
+					302 text * 이름
+				303 text field (settable) * 이름, Value: qa-ag05-final-ui, ID: form_item_name
+				304 text 설명
+				305 text entry area (settable) 설명, ID: form_item_description
+				306 container
+					307 text * 유형
+				338 container
+					339 text host affinity
+					340 combo box (collapsed, settable) * 유형, ID: form_item_type, Secondary Actions: Expand
+					341 text 같은 호스트 배치 · 엄격
+				342 container
+					343 text 같은 호스트 배치 · 엄격
+					344 text 같은 그룹의 VM을 같은 호스트에 배치합니다. 조건을 만족하지 못하면 배치가 실패합니다.
+				309 container
+					310 text 소유자 유형
+					311 container 소유자 유형
+						312 container
+							313 combo box (settable) rc_select_3
+							314 text 계정
+					315 container
+						316 text * 도메인
+					317 container 도메인
+						318 container
+							319 combo box (settable) rc_select_4
+							320 text ROOT
+					321 container
+						322 text * 계정
+					323 container 계정
+						324 container
+							325 combo box (settable) rc_select_5
+							326 text admin
+				327 button 취소
+				328 button 확인
+
+The focused UI element is 340 combo box (collapsed, settable) * 유형, ID: form_item_type, Secondary Actions: Expand

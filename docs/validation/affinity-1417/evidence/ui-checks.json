@@ -1,0 +1,849 @@
+[
+  {
+    "name": "detail-count-zero",
+    "result": "pass",
+    "expected": [
+      "연결 VM 수",
+      "text 0"
+    ],
+    "time": "2026-10-18T23:22:53.796Z",
+    "source": "64a85bf975fa59e720119cbcb9d21dfce67a813e"
+  },
+  {
+    "name": "members-empty",
+    "result": "pass",
+    "expected": [
+      "연결 VM 수: 0 · 조회 결과: 0",
+      "조회된 연결 가상머신이 없습니다."
+    ],
+    "time": "2026-10-18T23:22:58.450Z",
+    "source": "64a85bf975fa59e720119cbcb9d21dfce67a813e"
+  },
+  {
+    "name": "candidate-page2-selected-eleven",
+    "result": "pass",
+    "expected": [
+      "선택: 11",
+      "qa-ag04-vm-11",
+      "i-2-661-VM"
+    ],
+    "time": "2026-10-18T23:23:12.807Z",
+    "source": "64a85bf975fa59e720119cbcb9d21dfce67a813e"
+  },
+  {
+    "name": "candidate-page1-selection-retained",
+    "result": "pass",
+    "expected": [
+      "선택: 11",
+      "qa-ag04-vm-01",
+      "i-2-651-VM"
+    ],
+    "time": "2026-10-18T23:23:17.539Z",
+    "source": "64a85bf975fa59e720119cbcb9d21dfce67a813e"
+  },
+  {
+    "name": "batch-partial-and-query-unknown",
+    "result": "pass",
+    "expected": [
+      "확인 이후 VM의 연결이 변경되었습니다.",
+      "21174cc2-d55a-4e33-a7de-b7c6475ca587",
+      "변경 요청은 자동으로 다시 보내지 않습니다.",
+      "최신 상태 확인 후 실패만 재시도"
+    ],
+    "time": "2026-10-18T23:24:13.722Z",
+    "source": "64a85bf975fa59e720119cbcb9d21dfce67a813e"
+  },
+  {
+    "name": "batch-reopened-receipts",
+    "result": "pass",
+    "expected": [
+      "21174cc2-d55a-4e33-a7de-b7c6475ca587",
+      "확인 이후 VM의 연결이 변경되었습니다."
+    ],
+    "time": "2026-10-18T23:24:19.570Z",
+    "source": "64a85bf975fa59e720119cbcb9d21dfce67a813e"
+  },
+  {
+    "name": "same-job-recheck-succeeded",
+    "result": "pass",
+    "expected": [
+      "21174cc2-d55a-4e33-a7de-b7c6475ca587",
+      "확인 이후 VM의 연결이 변경되었습니다."
+    ],
+    "time": "2026-10-18T23:24:28.337Z",
+    "source": "64a85bf975fa59e720119cbcb9d21dfce67a813e"
+  },
+  {
+    "name": "batch-all-eleven-succeeded",
+    "result": "pass",
+    "expected": [
+      "966ab9d9-89f7-4ea4-8747-abd606f53965",
+      "21174cc2-d55a-4e33-a7de-b7c6475ca587"
+    ],
+    "time": "2026-10-18T23:24:38.877Z",
+    "source": "64a85bf975fa59e720119cbcb9d21dfce67a813e"
+  },
+  {
+    "name": "members-eleven-page1",
+    "result": "pass",
+    "expected": [
+      "연결 VM 수: 11 · 조회 결과: 11",
+      "qa-ag04-vm-01",
+      "i-2-651-VM"
+    ],
+    "time": "2026-10-18T23:24:47.616Z",
+    "source": "64a85bf975fa59e720119cbcb9d21dfce67a813e"
+  },
+  {
+    "name": "members-eleven-page2",
+    "result": "pass",
+    "expected": [
+      "연결 VM 수: 11 · 조회 결과: 11",
+      "qa-ag04-vm-11"
+    ],
+    "time": "2026-10-18T23:24:52.019Z",
+    "source": "64a85bf975fa59e720119cbcb9d21dfce67a813e"
+  },
+  {
+    "name": "member-search-one",
+    "result": "pass",
+    "expected": [
+      "연결 VM 수: 11 · 조회 결과: 1",
+      "qa-ag04-vm-11"
+    ],
+    "time": "2026-10-18T23:24:55.593Z",
+    "source": "64a85bf975fa59e720119cbcb9d21dfce67a813e"
+  },
+  {
+    "name": "member-search-empty-total-preserved",
+    "result": "pass",
+    "expected": [
+      "연결 VM 수: 11 · 조회 결과: 0",
+      "조회된 연결 가상머신이 없습니다."
+    ],
+    "time": "2026-10-18T23:25:00.215Z",
+    "source": "64a85bf975fa59e720119cbcb9d21dfce67a813e"
+  },
+  {
+    "name": "member-lookup-failure-retains-data-selection",
+    "result": "pass",
+    "expected": [
+      "연결 VM 수: 11 · 조회 결과: 11",
+      "Network Error",
+      "선택 연결 해제 (1)",
+      "qa-ag04-vm-01"
+    ],
+    "time": "2026-10-18T23:25:19.361Z",
+    "source": "64a85bf975fa59e720119cbcb9d21dfce67a813e"
+  },
+  {
+    "name": "member-lookup-retry-restores-selection",
+    "result": "pass",
+    "expected": [
+      "연결 VM 수: 11 · 조회 결과: 11",
+      "선택 연결 해제 (1)",
+      "qa-ag04-vm-01"
+    ],
+    "time": "2026-10-18T23:25:24.057Z",
+    "source": "64a85bf975fa59e720119cbcb9d21dfce67a813e"
+  },
+  {
+    "name": "unlink-target-only-success",
+    "result": "pass",
+    "expected": [
+      "5c02dcee-a2ba-49cd-9ed4-a78d1908a07a",
+      "Affinity 그룹 변경이 완료되었습니다."
+    ],
+    "time": "2026-10-18T23:25:49.672Z",
+    "source": "64a85bf975fa59e720119cbcb9d21dfce67a813e"
+  },
+  {
+    "name": "last-page-clamped-after-unlink",
+    "result": "pass",
+    "expected": [
+      "연결 VM 수: 10 · 조회 결과: 10",
+      "qa-ag04-vm-01"
+    ],
+    "time": "2026-10-18T23:25:50.353Z",
+    "source": "64a85bf975fa59e720119cbcb9d21dfce67a813e"
+  },
+  {
+    "name": "single-vm-readd-succeeded",
+    "result": "pass",
+    "expected": [
+      "4e91b989-e02f-44ef-acf6-0a1015a1b8be",
+      "Affinity 그룹 변경이 완료되었습니다."
+    ],
+    "time": "2026-10-18T23:26:36.710Z",
+    "source": "64a85bf975fa59e720119cbcb9d21dfce67a813e"
+  },
+  {
+    "name": "group-to-vm-detail-preserves-other-groups",
+    "result": "pass",
+    "expected": [
+      "heading qa-ag04-vm-01",
+      "qa-ag04-other",
+      "qa-ag04-target",
+      "qa-ag04-external"
+    ],
+    "time": "2026-10-18T23:26:40.831Z",
+    "source": "64a85bf975fa59e720119cbcb9d21dfce67a813e"
+  },
+  {
+    "name": "navigation-before-fix-back-lost-tab",
+    "result": "reproduced",
+    "expected": "instances tab after Back",
+    "observed": "details tab; tab query lost",
+    "source": "64a85bf975fa59e720119cbcb9d21dfce67a813e",
+    "time": "2026-10-18T23:28:42.198Z"
+  },
+  {
+    "name": "running-vm-disabled-with-host-reason",
+    "result": "pass",
+    "expected": [
+      "qa-ag04-vm-11",
+      "ablecube31-2",
+      "정지된 일반 VM에서 사용할 수 있습니다."
+    ],
+    "time": "2026-10-18T23:29:43.572Z",
+    "source": "64a85bf975fa59e720119cbcb9d21dfce67a813e"
+  },
+  {
+    "name": "user-owner-empty",
+    "result": "pass",
+    "expected": [
+      "qa-ag04-user-target",
+      "연결 VM 수: 0 · 조회 결과: 0"
+    ],
+    "time": "2026-10-18T23:30:50.622Z",
+    "source": "64a85bf975fa59e720119cbcb9d21dfce67a813e"
+  },
+  {
+    "name": "user-candidate-owner-scoped",
+    "result": "pass",
+    "expected": [
+      "qa-ag04-user-vm",
+      "qa-ag04-user-target"
+    ],
+    "time": "2026-10-18T23:31:06.557Z",
+    "source": "64a85bf975fa59e720119cbcb9d21dfce67a813e"
+  },
+  {
+    "name": "user-link-succeeded",
+    "result": "pass",
+    "expected": [
+      "17b3ade9-e000-4c6f-b17f-3c2452ffd4c4",
+      "Affinity 그룹 변경이 완료되었습니다."
+    ],
+    "time": "2026-10-18T23:31:26.575Z",
+    "source": "64a85bf975fa59e720119cbcb9d21dfce67a813e"
+  },
+  {
+    "name": "user-member-one",
+    "result": "pass",
+    "expected": [
+      "연결 VM 수: 1 · 조회 결과: 1",
+      "qa-ag04-user-vm"
+    ],
+    "time": "2026-10-18T23:31:27.105Z",
+    "source": "64a85bf975fa59e720119cbcb9d21dfce67a813e"
+  },
+  {
+    "name": "project-candidate-scope",
+    "result": "pass",
+    "expected": [
+      "qa-ag04-project-vm",
+      "qa-ag04-project"
+    ],
+    "time": "2026-10-18T23:31:36.811Z",
+    "source": "64a85bf975fa59e720119cbcb9d21dfce67a813e"
+  },
+  {
+    "name": "project-link-succeeded",
+    "result": "pass",
+    "expected": [
+      "5d8a000a-bf20-4481-a8ce-8640069276e8",
+      "Affinity 그룹 변경이 완료되었습니다."
+    ],
+    "time": "2026-10-18T23:31:55.007Z",
+    "source": "64a85bf975fa59e720119cbcb9d21dfce67a813e"
+  },
+  {
+    "name": "project-member-one",
+    "result": "pass",
+    "expected": [
+      "연결 VM 수: 1 · 조회 결과: 1",
+      "qa-ag04-project-vm"
+    ],
+    "time": "2026-10-18T23:31:55.496Z",
+    "source": "64a85bf975fa59e720119cbcb9d21dfce67a813e"
+  },
+  {
+    "name": "restricted-vm-list-keeps-full-count",
+    "result": "pass",
+    "expected": [
+      "연결 VM 수: 1 · 조회 결과: 0",
+      "일부 또는 전체 가상머신의 상세 정보에 접근할 수 없습니다."
+    ],
+    "time": "2026-10-18T23:32:49.036Z",
+    "source": "64a85bf975fa59e720119cbcb9d21dfce67a813e"
+  },
+  {
+    "name": "shared-restricted-count-three-before-route-fix",
+    "result": "pass",
+    "expected": [
+      "qa-ag04-shared",
+      "연결 VM 수: 3 · 조회 결과: 0",
+      "일부 또는 전체 가상머신의 상세 정보에 접근할 수 없습니다."
+    ],
+    "time": "2026-10-18T23:37:51.206Z",
+    "source": "64a85bf975fa59e720119cbcb9d21dfce67a813e"
+  },
+  {
+    "name": "final-shared-restricted-full-count",
+    "result": "pass",
+    "expected": [
+      "qa-ag04-shared",
+      "연결 VM 수: 3 · 조회 결과: 0",
+      "일부 또는 전체 가상머신의 상세 정보에 접근할 수 없습니다."
+    ],
+    "time": "2026-10-18T23:37:57.086Z",
+    "source": "a2701d84c985ad50c35b61cfb675cb86168153a9"
+  },
+  {
+    "name": "final-shared-partial-visibility",
+    "result": "pass",
+    "expected": [
+      "연결 VM 수: 3 · 조회 결과: 2",
+      "qa-ag04-user-vm",
+      "qa-ag04-project-vm",
+      "일부 또는 전체 가상머신의 상세 정보에 접근할 수 없습니다."
+    ],
+    "time": "2026-10-18T23:38:24.016Z",
+    "source": "a2701d84c985ad50c35b61cfb675cb86168153a9"
+  },
+  {
+    "name": "final-user-shared-unlink-success",
+    "result": "pass",
+    "expected": [
+      "81a78de8-ed23-4aa3-9681-cc127563e94e",
+      "Affinity 그룹 변경이 완료되었습니다."
+    ],
+    "time": "2026-10-18T23:38:38.483Z",
+    "source": "a2701d84c985ad50c35b61cfb675cb86168153a9"
+  },
+  {
+    "name": "final-shared-count-after-user-unlink",
+    "result": "pass",
+    "expected": [
+      "연결 VM 수: 2 · 조회 결과: 1",
+      "qa-ag04-project-vm"
+    ],
+    "time": "2026-10-18T23:38:38.985Z",
+    "source": "a2701d84c985ad50c35b61cfb675cb86168153a9"
+  },
+  {
+    "name": "final-user-shared-readd-success",
+    "result": "pass",
+    "expected": [
+      "48a727d5-f8a4-4279-a7db-733a8d47bd20",
+      "Affinity 그룹 변경이 완료되었습니다."
+    ],
+    "time": "2026-10-18T23:39:03.262Z",
+    "source": "a2701d84c985ad50c35b61cfb675cb86168153a9"
+  },
+  {
+    "name": "final-project-members-tab",
+    "result": "pass",
+    "expected": [
+      "연결 VM 수: 1 · 조회 결과: 1",
+      "qa-ag04-project-vm"
+    ],
+    "time": "2026-10-18T23:39:07.949Z",
+    "source": "a2701d84c985ad50c35b61cfb675cb86168153a9"
+  },
+  {
+    "name": "final-project-vm-detail-other-groups",
+    "result": "pass",
+    "expected": [
+      "heading qa-ag04-project-vm",
+      "qa-ag04-project-target",
+      "qa-ag04-project-other",
+      "qa-ag04-shared"
+    ],
+    "time": "2026-10-18T23:39:13.095Z",
+    "source": "a2701d84c985ad50c35b61cfb675cb86168153a9"
+  },
+  {
+    "name": "final-project-back-keeps-member-tab",
+    "result": "pass",
+    "expected": [
+      "tab (selected, settable, boolean) 가상머신",
+      "연결 VM 수: 1 · 조회 결과: 1"
+    ],
+    "time": "2026-10-18T23:39:44.528Z",
+    "source": "a2701d84c985ad50c35b61cfb675cb86168153a9"
+  },
+  {
+    "name": "final-project-unlink-success",
+    "result": "pass",
+    "expected": [
+      "7b5bee95-e87f-4a05-b915-41efda99b3d0",
+      "Affinity 그룹 변경이 완료되었습니다."
+    ],
+    "time": "2026-10-18T23:39:58.476Z",
+    "source": "a2701d84c985ad50c35b61cfb675cb86168153a9"
+  },
+  {
+    "name": "final-project-empty-after-unlink",
+    "result": "pass",
+    "expected": [
+      "연결 VM 수: 0 · 조회 결과: 0",
+      "조회된 연결 가상머신이 없습니다."
+    ],
+    "time": "2026-10-18T23:39:58.975Z",
+    "source": "a2701d84c985ad50c35b61cfb675cb86168153a9"
+  },
+  {
+    "name": "final-project-readd-success",
+    "result": "pass",
+    "expected": [
+      "374bf074-caac-4431-897d-fe442b1fb1a9",
+      "Affinity 그룹 변경이 완료되었습니다."
+    ],
+    "time": "2026-10-18T23:40:21.927Z",
+    "source": "a2701d84c985ad50c35b61cfb675cb86168153a9"
+  },
+  {
+    "name": "final-detail-count-eleven",
+    "result": "pass",
+    "expected": [
+      "연결 VM 수",
+      "text 11"
+    ],
+    "time": "2026-10-18T23:40:49.804Z",
+    "source": "a2701d84c985ad50c35b61cfb675cb86168153a9"
+  },
+  {
+    "name": "final-root-members-eleven",
+    "result": "pass",
+    "expected": [
+      "연결 VM 수: 11 · 조회 결과: 11",
+      "i-2-651-VM"
+    ],
+    "time": "2026-10-18T23:40:50.460Z",
+    "source": "a2701d84c985ad50c35b61cfb675cb86168153a9"
+  },
+  {
+    "name": "before-refresh-fix-dialog-reset",
+    "result": "reproduced",
+    "source": "a2701d84c985ad50c35b61cfb675cb86168153a9",
+    "observed": "parent reload closed results after first tab-scoped batch",
+    "time": "2026-10-18T23:42:58.368Z"
+  },
+  {
+    "name": "a270-failed-only-retry-recovered",
+    "result": "pass",
+    "expected": [
+      "b9539c0a-6e48-4daf-86ec-b86a9c027369",
+      "5052a688-cd26-46a5-a3d8-ad798ba92cb6",
+      "Affinity 그룹 변경이 완료되었습니다."
+    ],
+    "time": "2026-10-18T23:45:00.682Z",
+    "source": "a2701d84c985ad50c35b61cfb675cb86168153a9"
+  },
+  {
+    "name": "a270-already-linked-disabled",
+    "result": "pass",
+    "expected": [
+      "선택: 2",
+      "이미 연결됨"
+    ],
+    "time": "2026-10-18T23:45:13.405Z",
+    "source": "a2701d84c985ad50c35b61cfb675cb86168153a9"
+  },
+  {
+    "name": "candidate-readd-two-succeeded",
+    "result": "pass",
+    "expected": [
+      "3c745466-3d7d-419c-b7de-710e02797729",
+      "5af723a4-62f8-4fde-b594-4e680a75e98e"
+    ],
+    "time": "2026-10-19T00:07:52.239Z",
+    "source": "a2701d84c985ad50c35b61cfb675cb86168153a9"
+  },
+  {
+    "name": "qualified-members-eleven",
+    "result": "pass",
+    "expected": [
+      "연결 VM 수: 11 · 조회 결과: 11",
+      "i-2-651-VM"
+    ],
+    "time": "2026-10-19T00:17:48.005Z",
+    "source": "56955af91402f518a1b7911a338a77faaf8bf885"
+  },
+  {
+    "name": "qualified-unknown-keeps-results-and-clamps-page",
+    "result": "pass",
+    "expected": [
+      "VM별 작업 결과",
+      "571d0841-5268-4dd4-89c0-b1b07f5139c3",
+      "연결 VM 수: 10 · 조회 결과: 8"
+    ],
+    "time": "2026-10-19T00:18:30.757Z",
+    "source": "56955af91402f518a1b7911a338a77faaf8bf885"
+  },
+  {
+    "name": "qualified-cross-group-unknown-blocked",
+    "result": "pass",
+    "expected": [
+      "이전 VM 작업 확인",
+      "새 연결 변경은 제출하지 않았습니다.",
+      "571d0841-5268-4dd4-89c0-b1b07f5139c3"
+    ],
+    "time": "2026-10-19T00:18:43.546Z",
+    "source": "56955af91402f518a1b7911a338a77faaf8bf885"
+  },
+  {
+    "name": "qualified-previous-success-is-not-new-goal",
+    "result": "pass",
+    "expected": [
+      "이전 VM 작업 확인",
+      "새 연결 변경은 제출하지 않았습니다.",
+      "이전 VM 작업 확인: Affinity 그룹 변경이 완료되었습니다.",
+      "연결 VM 수: 3 · 조회 결과: 3"
+    ],
+    "time": "2026-10-19T00:18:44.139Z",
+    "source": "56955af91402f518a1b7911a338a77faaf8bf885"
+  },
+  {
+    "name": "qualified-new-shared-goal-completed",
+    "result": "pass",
+    "expected": [
+      "연결 VM 수: 4 · 조회 결과: 4",
+      "0e6f3771-36bc-415f-966e-1d020f28008f",
+      "Affinity 그룹 변경이 완료되었습니다."
+    ],
+    "time": "2026-10-19T00:19:11.315Z",
+    "source": "56955af91402f518a1b7911a338a77faaf8bf885"
+  },
+  {
+    "name": "qualified-original-batch-receipt-immutable",
+    "result": "pass",
+    "expected": [
+      "571d0841-5268-4dd4-89c0-b1b07f5139c3",
+      "Affinity 그룹 변경이 완료되었습니다."
+    ],
+    "time": "2026-10-19T00:19:12.695Z",
+    "source": "56955af91402f518a1b7911a338a77faaf8bf885"
+  },
+  {
+    "name": "qualified-readd-preserves-new-shared-membership",
+    "result": "pass",
+    "expected": [
+      "연결 VM 수: 11 · 조회 결과: 11",
+      "94dc0a63-3f75-4468-ba25-39190d327266",
+      "Affinity 그룹 변경이 완료되었습니다."
+    ],
+    "time": "2026-10-19T00:19:33.641Z",
+    "source": "56955af91402f518a1b7911a338a77faaf8bf885"
+  },
+  {
+    "name": "qualified-partial-external-change",
+    "result": "pass",
+    "expected": [
+      "확인 이후 VM의 연결이 변경되었습니다.",
+      "57eca02f-dd15-490f-abd0-b9205a4c73aa",
+      "Affinity 그룹 변경이 완료되었습니다.",
+      "연결 VM 수: 10 · 조회 결과: 10"
+    ],
+    "time": "2026-10-19T00:19:49.447Z",
+    "source": "56955af91402f518a1b7911a338a77faaf8bf885"
+  },
+  {
+    "name": "qualified-vm-editor-preflight-failure-keeps-three",
+    "result": "pass",
+    "expected": [
+      "전체 선택: 3",
+      "qa-ag04-other",
+      "qa-ag04-target",
+      "qa-ag04-shared"
+    ],
+    "time": "2026-10-19T00:20:07.462Z",
+    "source": "56955af91402f518a1b7911a338a77faaf8bf885"
+  },
+  {
+    "name": "qualified-failed-only-retry",
+    "result": "pass",
+    "expected": [
+      "05d4c9fa-bfee-41a0-961e-b08234e0414e",
+      "57eca02f-dd15-490f-abd0-b9205a4c73aa",
+      "연결 VM 수: 9 · 조회 결과: 9",
+      "Affinity 그룹 변경이 완료되었습니다."
+    ],
+    "time": "2026-10-19T00:20:24.628Z",
+    "source": "56955af91402f518a1b7911a338a77faaf8bf885"
+  },
+  {
+    "name": "qualified-batch-readd-two",
+    "result": "pass",
+    "expected": [
+      "연결 VM 수: 11 · 조회 결과: 11",
+      "Affinity 그룹 변경이 완료되었습니다.",
+      "qa-ag04-vm-03",
+      "qa-ag04-vm-04"
+    ],
+    "time": "2026-10-19T00:20:44.835Z",
+    "source": "56955af91402f518a1b7911a338a77faaf8bf885"
+  },
+  {
+    "name": "qualified-vm-editor-after-group-success-keeps-fresh-four",
+    "result": "pass",
+    "expected": [
+      "전체 선택: 4",
+      "qa-ag04-external",
+      "qa-ag04-shared"
+    ],
+    "time": "2026-10-19T00:20:50.992Z",
+    "source": "56955af91402f518a1b7911a338a77faaf8bf885"
+  },
+  {
+    "name": "qualified-back-retains-member-tab",
+    "result": "pass",
+    "expected": [
+      "연결 VM 수: 11 · 조회 결과: 11"
+    ],
+    "time": "2026-10-19T00:20:55.631Z",
+    "source": "56955af91402f518a1b7911a338a77faaf8bf885"
+  },
+  {
+    "name": "qualified-running-disabled-host-reason",
+    "result": "pass",
+    "expected": [
+      "qa-ag04-vm-11",
+      "ablecube31-2",
+      "Affinity 그룹 변경은 정지된 일반 VM"
+    ],
+    "time": "2026-10-19T00:21:02.876Z",
+    "source": "56955af91402f518a1b7911a338a77faaf8bf885"
+  },
+  {
+    "name": "qualified-search-one-full-count",
+    "result": "pass",
+    "expected": [
+      "연결 VM 수: 11 · 조회 결과: 1",
+      "qa-ag04-vm-03"
+    ],
+    "time": "2026-10-19T00:21:03.261Z",
+    "source": "56955af91402f518a1b7911a338a77faaf8bf885"
+  },
+  {
+    "name": "qualified-lookup-error-retains-selection",
+    "result": "pass",
+    "expected": [
+      "연결 VM 수: 11 · 조회 결과: 1",
+      "qa-ag04-vm-03",
+      "선택 연결 해제 (1)",
+      "재시도"
+    ],
+    "time": "2026-10-19T00:21:28.487Z",
+    "source": "56955af91402f518a1b7911a338a77faaf8bf885"
+  },
+  {
+    "name": "qualified-lookup-retry-retains-selection",
+    "result": "pass",
+    "expected": [
+      "연결 VM 수: 11 · 조회 결과: 1",
+      "선택 연결 해제 (1)"
+    ],
+    "time": "2026-10-19T00:21:29.073Z",
+    "source": "56955af91402f518a1b7911a338a77faaf8bf885"
+  },
+  {
+    "name": "qualified-search-zero-full-count",
+    "result": "pass",
+    "expected": [
+      "연결 VM 수: 11 · 조회 결과: 0"
+    ],
+    "time": "2026-10-19T00:21:33.693Z",
+    "source": "56955af91402f518a1b7911a338a77faaf8bf885"
+  },
+  {
+    "name": "qualified-empty-detail-count",
+    "result": "pass",
+    "expected": [
+      "qa-ag04-empty",
+      "연결 VM 수"
+    ],
+    "time": "2026-10-19T00:21:34.427Z",
+    "source": "56955af91402f518a1b7911a338a77faaf8bf885"
+  },
+  {
+    "name": "qualified-empty-members",
+    "result": "pass",
+    "expected": [
+      "연결 VM 수: 0 · 조회 결과: 0"
+    ],
+    "time": "2026-10-19T00:21:35.003Z",
+    "source": "56955af91402f518a1b7911a338a77faaf8bf885"
+  },
+  {
+    "name": "qualified-no-receipt-no-resubmit",
+    "result": "pass",
+    "expected": [
+      "VM별 작업 결과",
+      "작업 ID를 받지 못했습니다.",
+      "연결 VM 수: 0 · 조회 결과: 0"
+    ],
+    "time": "2026-10-19T00:21:48.533Z",
+    "source": "56955af91402f518a1b7911a338a77faaf8bf885"
+  },
+  {
+    "name": "qualified-no-receipt-reopened",
+    "result": "pass",
+    "expected": [
+      "작업 ID를 받지 못했습니다.",
+      "VM과 Cloud 작업 상태를 확인하기 전"
+    ],
+    "time": "2026-10-19T00:21:49.410Z",
+    "source": "56955af91402f518a1b7911a338a77faaf8bf885"
+  },
+  {
+    "name": "qualified-no-receipt-blocks-another-group",
+    "result": "pass",
+    "expected": [
+      "이전 VM 작업 확인",
+      "작업 ID를 받지 못했습니다.",
+      "새 연결 변경은 제출하지 않았습니다.",
+      "연결 VM 수: 4 · 조회 결과: 4"
+    ],
+    "time": "2026-10-19T00:21:54.863Z",
+    "source": "56955af91402f518a1b7911a338a77faaf8bf885"
+  },
+  {
+    "name": "qualified-list-whole-member-counts",
+    "result": "pass",
+    "expected": [
+      "연결 VM 수",
+      "qa-ag04-target",
+      "qa-ag04-empty"
+    ],
+    "time": "2026-10-19T00:22:12.930Z",
+    "source": "56955af91402f518a1b7911a338a77faaf8bf885"
+  },
+  {
+    "name": "qualified-delete-queue-initial-impact",
+    "result": "pass",
+    "expected": [
+      "1 / 2",
+      "qa-ag04-target",
+      "admin / ROOT",
+      "VM 자체와 다른 그룹 연결은 보존됩니다."
+    ],
+    "time": "2026-10-19T00:22:33.296Z",
+    "source": "56955af91402f518a1b7911a338a77faaf8bf885"
+  },
+  {
+    "name": "qualified-delete-impact-changed-no-post",
+    "result": "pass",
+    "expected": [
+      "연결 VM 구성이 변경되어 최신 삭제 영향을 다시 표시했습니다.",
+      "1 / 2"
+    ],
+    "time": "2026-10-19T00:22:38.059Z",
+    "source": "56955af91402f518a1b7911a338a77faaf8bf885"
+  },
+  {
+    "name": "qualified-delete-next-group-cancel",
+    "result": "pass",
+    "expected": [
+      "2 / 2",
+      "qa-ag04-empty",
+      "VM 자체와 다른 그룹 연결은 보존됩니다."
+    ],
+    "time": "2026-10-19T00:22:42.432Z",
+    "source": "56955af91402f518a1b7911a338a77faaf8bf885"
+  },
+  {
+    "name": "qualified-delete-cancel-keeps-unsubmitted-group",
+    "result": "pass",
+    "expected": [
+      "qa-ag04-empty",
+      "1개 선택"
+    ],
+    "time": "2026-10-19T00:22:57.448Z",
+    "source": "56955af91402f518a1b7911a338a77faaf8bf885"
+  },
+  {
+    "name": "qualified-delete-empty-impact-zero",
+    "result": "pass",
+    "expected": [
+      "1 / 1",
+      "qa-ag04-empty",
+      "연결 VM 수"
+    ],
+    "time": "2026-10-19T00:23:00.992Z",
+    "source": "56955af91402f518a1b7911a338a77faaf8bf885"
+  },
+  {
+    "name": "qualified-user-shared-partial-visibility",
+    "result": "pass",
+    "expected": [
+      "연결 VM 수: 4 · 조회 결과: 2",
+      "qa-ag04-user-vm",
+      "qa-ag04-project-vm"
+    ],
+    "time": "2026-10-19T00:23:18.529Z",
+    "source": "56955af91402f518a1b7911a338a77faaf8bf885"
+  },
+  {
+    "name": "qualified-project-members-one",
+    "result": "pass",
+    "expected": [
+      "연결 VM 수: 1 · 조회 결과: 1",
+      "qa-ag04-project-vm"
+    ],
+    "time": "2026-10-19T00:23:29.834Z",
+    "source": "56955af91402f518a1b7911a338a77faaf8bf885"
+  },
+  {
+    "name": "qualified-project-vm-other-groups",
+    "result": "pass",
+    "expected": [
+      "qa-ag04-project-target",
+      "qa-ag04-project-other",
+      "qa-ag04-shared"
+    ],
+    "time": "2026-10-19T00:23:30.560Z",
+    "source": "56955af91402f518a1b7911a338a77faaf8bf885"
+  },
+  {
+    "name": "qualified-project-back-member-tab",
+    "result": "pass",
+    "expected": [
+      "연결 VM 수: 1 · 조회 결과: 1",
+      "qa-ag04-project-vm"
+    ],
+    "time": "2026-10-19T00:23:36.067Z",
+    "source": "56955af91402f518a1b7911a338a77faaf8bf885"
+  },
+  {
+    "name": "qualified-restricted-full-count-four",
+    "result": "pass",
+    "expected": [
+      "연결 VM 수: 4 · 조회 결과: 0",
+      "일부 또는 전체 가상머신의 상세 정보에 접근할 수 없습니다."
+    ],
+    "time": "2026-10-19T00:23:53.730Z",
+    "source": "56955af91402f518a1b7911a338a77faaf8bf885"
+  },
+  {
+    "name": "qualified-cleanup-restores-original-list",
+    "result": "pass",
+    "expected": [
+      "Affinity 그룹"
+    ],
+    "time": "2026-10-19T00:26:56.530Z",
+    "source": "56955af91402f518a1b7911a338a77faaf8bf885"
+  }
+]

@@ -1,0 +1,424 @@
+- generic: 페이지 스타일 설정
+- button "닫기":
+  - img "close":
+- heading "페이지 스타일 설정" [level=3]
+- radio
+- radio [checked]
+- img "check":
+- heading "테마 색상" [level=3]
+- radio
+- img "check"
+- radio
+- radio
+- radio
+- radio
+- radio
+- radio
+- radio
+- separator
+- heading "네비게이션 설정" [level=3]
+- generic: 배경색
+- textbox [disabled]: "#ffffff"
+- generic: 텍스트 색상
+- textbox [disabled]: "#000000"
+- separator
+- alert:
+  - img "exclamation-circle":
+  - generic: "설정은 현재 브라우저에서만 볼 수 있습니다. 설정을 적용하려면 JSON 파일을 다운로드하고 경로 `/public/config.json` 아래의 `config.json` 파일의 `theme` 섹션에서 해당 콘텐츠를 교체하세요."
+- button "download 세팅값 다운로드(json)":
+  - img "download":
+  - generic: 세팅값 다운로드(json)
+- button "undo 기본값으로 재설정":
+  - img "undo":
+  - generic: 기본값으로 재설정
+- img "menu-unfold":
+- combobox
+- img "project":
+- text: 기본 보기
+- img "translation":
+- img "bell":
+- generic: AC
+- generic: admin cloud
+- main:
+  - link "home":
+    - /url: "#/"
+    - img "home":
+  - text: /
+  - link "사용자 데이터 라이브러리":
+    - /url: "#/userdata"
+  - link "question-circle":
+    - /url: http://docs.ablecloud.io/latest/adminguide/virtual_machines.html#user-data-and-meta-data
+    - img "question-circle":
+  - button "reload 업데이트":
+    - img "reload":
+    - generic: 업데이트
+  - switch "프로젝트":
+    - generic: 프로젝트
+  - button "사용자 데이터 등록":
+    - img "plus":
+    - generic: 사용자 데이터 등록
+  - button "filter":
+    - img "filter":
+  - textbox "검색"
+  - button "search":
+    - img "search":
+  - paragraph: "검색창: 이름 포함 검색 또는 정확한 UUID. 필터: UUID·정확한 이름·도메인·소유 계정. 프로젝트는 상단 공통 보기를 선택하세요. 열 정렬은 현재 페이지에만 적용됩니다."
+  - table:
+    - rowgroup:
+      - row "이름 caret-up caret-down 아이디 caret-up caret-down 계정 caret-up caret-down 도메인 caret-up caret-down filter":
+        - columnheader:
+          - checkbox
+        - columnheader "이름 caret-up caret-down":
+          - generic: 이름
+          - img "caret-up":
+          - img "caret-down":
+        - columnheader "아이디 caret-up caret-down":
+          - generic: 아이디
+          - img "caret-up":
+          - img "caret-down":
+        - columnheader "계정 caret-up caret-down":
+          - generic: 계정
+          - img "caret-up":
+          - img "caret-down":
+        - columnheader "도메인 caret-up caret-down":
+          - generic: 도메인
+          - img "caret-up":
+          - img "caret-down":
+        - columnheader "filter":
+          - button "filter":
+            - img "filter":
+    - rowgroup:
+      - row "UD1392-31-20261016-ui-domainadmin 00e415af-0a76-4de2-8de1-d30d77ba59b5 ud1392-31-20261016-domainadmin ud1392-31-20261016":
+        - cell:
+          - checkbox
+        - cell "UD1392-31-20261016-ui-domainadmin":
+          - link "UD1392-31-20261016-ui-domainadmin":
+            - /url: "#/userdata/00e415af-0a76-4de2-8de1-d30d77ba59b5"
+        - cell "00e415af-0a76-4de2-8de1-d30d77ba59b5"
+        - cell "ud1392-31-20261016-domainadmin":
+          - link "ud1392-31-20261016-domainadmin":
+            - /url: "#/account?name=ud1392-31-20261016-domainadmin&domainid=0fb393fe-50e4-41de-9f8d-6da09f29edff&dataView=true"
+        - cell "ud1392-31-20261016":
+          - link "ud1392-31-20261016":
+            - /url: "#/domain/0fb393fe-50e4-41de-9f8d-6da09f29edff?tab=details"
+        - cell
+      - row "UD1392-31-20261016-ui-user f33729e5-fe78-4863-94ad-596c6d626e4d ud1392-31-20261016-user ud1392-31-20261016":
+        - cell:
+          - checkbox
+        - cell "UD1392-31-20261016-ui-user":
+          - link "UD1392-31-20261016-ui-user":
+            - /url: "#/userdata/f33729e5-fe78-4863-94ad-596c6d626e4d"
+        - cell "f33729e5-fe78-4863-94ad-596c6d626e4d"
+        - cell "ud1392-31-20261016-user":
+          - link "ud1392-31-20261016-user":
+            - /url: "#/account?name=ud1392-31-20261016-user&domainid=0fb393fe-50e4-41de-9f8d-6da09f29edff&dataView=true"
+        - cell "ud1392-31-20261016":
+          - link "ud1392-31-20261016":
+            - /url: "#/domain/0fb393fe-50e4-41de-9f8d-6da09f29edff?tab=details"
+        - cell
+      - row "UD1392-31-20261016-final-plain 32234fb8-9c5d-43e4-8afb-9c7968260906 admin ROOT":
+        - cell:
+          - checkbox
+        - cell "UD1392-31-20261016-final-plain":
+          - link "UD1392-31-20261016-final-plain":
+            - /url: "#/userdata/32234fb8-9c5d-43e4-8afb-9c7968260906"
+        - cell "32234fb8-9c5d-43e4-8afb-9c7968260906"
+        - cell "admin":
+          - link "admin":
+            - /url: "#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&dataView=true"
+        - cell "ROOT":
+          - link "ROOT":
+            - /url: "#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details"
+        - cell
+      - row "UD1392-31-20261016-seed-13 11b83c0c-0637-4a11-9802-23ff00a5773e admin ROOT":
+        - cell:
+          - checkbox
+        - cell "UD1392-31-20261016-seed-13":
+          - link "UD1392-31-20261016-seed-13":
+            - /url: "#/userdata/11b83c0c-0637-4a11-9802-23ff00a5773e"
+        - cell "11b83c0c-0637-4a11-9802-23ff00a5773e"
+        - cell "admin":
+          - link "admin":
+            - /url: "#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&dataView=true"
+        - cell "ROOT":
+          - link "ROOT":
+            - /url: "#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details"
+        - cell
+      - row "UD1392-31-20261016-seed-12 231d3f9b-cf0c-4aa7-a39f-1af6aa5ea53c admin ROOT":
+        - cell:
+          - checkbox
+        - cell "UD1392-31-20261016-seed-12":
+          - link "UD1392-31-20261016-seed-12":
+            - /url: "#/userdata/231d3f9b-cf0c-4aa7-a39f-1af6aa5ea53c"
+        - cell "231d3f9b-cf0c-4aa7-a39f-1af6aa5ea53c"
+        - cell "admin":
+          - link "admin":
+            - /url: "#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&dataView=true"
+        - cell "ROOT":
+          - link "ROOT":
+            - /url: "#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details"
+        - cell
+      - row "UD1392-31-20261016-seed-11 dbb69b38-25e2-4a91-a6f4-5cf9bd477e18 admin ROOT":
+        - cell:
+          - checkbox
+        - cell "UD1392-31-20261016-seed-11":
+          - link "UD1392-31-20261016-seed-11":
+            - /url: "#/userdata/dbb69b38-25e2-4a91-a6f4-5cf9bd477e18"
+        - cell "dbb69b38-25e2-4a91-a6f4-5cf9bd477e18"
+        - cell "admin":
+          - link "admin":
+            - /url: "#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&dataView=true"
+        - cell "ROOT":
+          - link "ROOT":
+            - /url: "#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details"
+        - cell
+      - row "UD1392-31-20261016-seed-10 2d75ec9d-9cf8-42c0-a436-1fe2194b3ed3 admin ROOT":
+        - cell:
+          - checkbox
+        - cell "UD1392-31-20261016-seed-10":
+          - link "UD1392-31-20261016-seed-10":
+            - /url: "#/userdata/2d75ec9d-9cf8-42c0-a436-1fe2194b3ed3"
+        - cell "2d75ec9d-9cf8-42c0-a436-1fe2194b3ed3"
+        - cell "admin":
+          - link "admin":
+            - /url: "#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&dataView=true"
+        - cell "ROOT":
+          - link "ROOT":
+            - /url: "#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details"
+        - cell
+      - row "UD1392-31-20261016-seed-9 a7cb0eec-34e7-44dc-bb5f-8ac6b5316d6f admin ROOT":
+        - cell:
+          - checkbox
+        - cell "UD1392-31-20261016-seed-9":
+          - link "UD1392-31-20261016-seed-9":
+            - /url: "#/userdata/a7cb0eec-34e7-44dc-bb5f-8ac6b5316d6f"
+        - cell "a7cb0eec-34e7-44dc-bb5f-8ac6b5316d6f"
+        - cell "admin":
+          - link "admin":
+            - /url: "#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&dataView=true"
+        - cell "ROOT":
+          - link "ROOT":
+            - /url: "#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details"
+        - cell
+      - row "UD1392-31-20261016-seed-8 e566ca37-2d1b-40ea-9362-73feff472c1a admin ROOT":
+        - cell:
+          - checkbox
+        - cell "UD1392-31-20261016-seed-8":
+          - link "UD1392-31-20261016-seed-8":
+            - /url: "#/userdata/e566ca37-2d1b-40ea-9362-73feff472c1a"
+        - cell "e566ca37-2d1b-40ea-9362-73feff472c1a"
+        - cell "admin":
+          - link "admin":
+            - /url: "#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&dataView=true"
+        - cell "ROOT":
+          - link "ROOT":
+            - /url: "#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details"
+        - cell
+      - row "UD1392-31-20261016-ui-text-v2 message b9a08c3a-137c-4c33-839c-0ab5f123873b admin ROOT":
+        - cell:
+          - checkbox
+        - cell "UD1392-31-20261016-ui-text-v2 message":
+          - link "UD1392-31-20261016-ui-text-v2":
+            - /url: "#/userdata/b9a08c3a-137c-4c33-839c-0ab5f123873b"
+          - link "message":
+            - /url: "#/userdata/b9a08c3a-137c-4c33-839c-0ab5f123873b?tab=comments"
+            - img "message":
+        - cell "b9a08c3a-137c-4c33-839c-0ab5f123873b"
+        - cell "admin":
+          - link "admin":
+            - /url: "#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&dataView=true"
+        - cell "ROOT":
+          - link "ROOT":
+            - /url: "#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details"
+        - cell
+      - row "UD1392-31-20261016-b64-가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라 f9790241-a4fb-4d46-9735-5d6170629503 admin ROOT":
+        - cell:
+          - checkbox
+        - cell "UD1392-31-20261016-b64-가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라":
+          - link "UD1392-31-20261016-b64-가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라":
+            - /url: "#/userdata/f9790241-a4fb-4d46-9735-5d6170629503"
+        - cell "f9790241-a4fb-4d46-9735-5d6170629503"
+        - cell "admin":
+          - link "admin":
+            - /url: "#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&dataView=true"
+        - cell "ROOT":
+          - link "ROOT":
+            - /url: "#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details"
+        - cell
+      - row "UD1392-31-20261016-outsider 4c590676-71ba-4786-a19f-23ecfaf9a9a4 ud1392-31-20261016-outsider ud1392-31-20261016":
+        - cell:
+          - checkbox
+        - cell "UD1392-31-20261016-outsider":
+          - link "UD1392-31-20261016-outsider":
+            - /url: "#/userdata/4c590676-71ba-4786-a19f-23ecfaf9a9a4"
+        - cell "4c590676-71ba-4786-a19f-23ecfaf9a9a4"
+        - cell "ud1392-31-20261016-outsider":
+          - link "ud1392-31-20261016-outsider":
+            - /url: "#/account?name=ud1392-31-20261016-outsider&domainid=0fb393fe-50e4-41de-9f8d-6da09f29edff&dataView=true"
+        - cell "ud1392-31-20261016":
+          - link "ud1392-31-20261016":
+            - /url: "#/domain/0fb393fe-50e4-41de-9f8d-6da09f29edff?tab=details"
+        - cell
+      - row "UD1392-31-20261016-ui-text 0817ee26-99f2-47b9-a0c4-028e68ace786 admin ROOT":
+        - cell:
+          - checkbox
+        - cell "UD1392-31-20261016-ui-text":
+          - link "UD1392-31-20261016-ui-text":
+            - /url: "#/userdata/0817ee26-99f2-47b9-a0c4-028e68ace786"
+        - cell "0817ee26-99f2-47b9-a0c4-028e68ace786"
+        - cell "admin":
+          - link "admin":
+            - /url: "#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&dataView=true"
+        - cell "ROOT":
+          - link "ROOT":
+            - /url: "#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details"
+        - cell
+      - row "UD1392-31-20261016-seed-7 0cb344c3-9385-4bad-8491-bee03c1f2b71 admin ROOT":
+        - cell:
+          - checkbox
+        - cell "UD1392-31-20261016-seed-7":
+          - link "UD1392-31-20261016-seed-7":
+            - /url: "#/userdata/0cb344c3-9385-4bad-8491-bee03c1f2b71"
+        - cell "0cb344c3-9385-4bad-8491-bee03c1f2b71"
+        - cell "admin":
+          - link "admin":
+            - /url: "#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&dataView=true"
+        - cell "ROOT":
+          - link "ROOT":
+            - /url: "#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details"
+        - cell
+      - row "UD1392-31-20261016-seed-6 fe69670a-1990-483b-8ffe-248ffa275106 admin ROOT":
+        - cell:
+          - checkbox
+        - cell "UD1392-31-20261016-seed-6":
+          - link "UD1392-31-20261016-seed-6":
+            - /url: "#/userdata/fe69670a-1990-483b-8ffe-248ffa275106"
+        - cell "fe69670a-1990-483b-8ffe-248ffa275106"
+        - cell "admin":
+          - link "admin":
+            - /url: "#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&dataView=true"
+        - cell "ROOT":
+          - link "ROOT":
+            - /url: "#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details"
+        - cell
+      - row "UD1392-31-20261016-seed-5 47509f3d-b3e3-4ffa-a9f6-2d829cd4535b admin ROOT":
+        - cell:
+          - checkbox
+        - cell "UD1392-31-20261016-seed-5":
+          - link "UD1392-31-20261016-seed-5":
+            - /url: "#/userdata/47509f3d-b3e3-4ffa-a9f6-2d829cd4535b"
+        - cell "47509f3d-b3e3-4ffa-a9f6-2d829cd4535b"
+        - cell "admin":
+          - link "admin":
+            - /url: "#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&dataView=true"
+        - cell "ROOT":
+          - link "ROOT":
+            - /url: "#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details"
+        - cell
+      - row "UD1392-31-20261016-seed-4 b362d322-aee3-4b3d-bb48-102b59e5bc3f admin ROOT":
+        - cell:
+          - checkbox
+        - cell "UD1392-31-20261016-seed-4":
+          - link "UD1392-31-20261016-seed-4":
+            - /url: "#/userdata/b362d322-aee3-4b3d-bb48-102b59e5bc3f"
+        - cell "b362d322-aee3-4b3d-bb48-102b59e5bc3f"
+        - cell "admin":
+          - link "admin":
+            - /url: "#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&dataView=true"
+        - cell "ROOT":
+          - link "ROOT":
+            - /url: "#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details"
+        - cell
+      - row "UD1392-31-20261016-seed-3 c0146bc6-e3ec-44ab-82d7-533fd6679411 admin ROOT":
+        - cell:
+          - checkbox
+        - cell "UD1392-31-20261016-seed-3":
+          - link "UD1392-31-20261016-seed-3":
+            - /url: "#/userdata/c0146bc6-e3ec-44ab-82d7-533fd6679411"
+        - cell "c0146bc6-e3ec-44ab-82d7-533fd6679411"
+        - cell "admin":
+          - link "admin":
+            - /url: "#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&dataView=true"
+        - cell "ROOT":
+          - link "ROOT":
+            - /url: "#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details"
+        - cell
+      - row "UD1392-31-20261016-seed-2 b9617543-c8a3-4ca7-869b-b52422d487e3 admin ROOT":
+        - cell:
+          - checkbox
+        - cell "UD1392-31-20261016-seed-2":
+          - link "UD1392-31-20261016-seed-2":
+            - /url: "#/userdata/b9617543-c8a3-4ca7-869b-b52422d487e3"
+        - cell "b9617543-c8a3-4ca7-869b-b52422d487e3"
+        - cell "admin":
+          - link "admin":
+            - /url: "#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&dataView=true"
+        - cell "ROOT":
+          - link "ROOT":
+            - /url: "#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details"
+        - cell
+      - row "UD1392-31-20261016-domainadmin 6082dcd6-47df-4ec5-8710-ca83705803e5 ud1392-31-20261016-domainadmin ud1392-31-20261016":
+        - cell:
+          - checkbox
+        - cell "UD1392-31-20261016-domainadmin":
+          - link "UD1392-31-20261016-domainadmin":
+            - /url: "#/userdata/6082dcd6-47df-4ec5-8710-ca83705803e5"
+        - cell "6082dcd6-47df-4ec5-8710-ca83705803e5"
+        - cell "ud1392-31-20261016-domainadmin":
+          - link "ud1392-31-20261016-domainadmin":
+            - /url: "#/account?name=ud1392-31-20261016-domainadmin&domainid=0fb393fe-50e4-41de-9f8d-6da09f29edff&dataView=true"
+        - cell "ud1392-31-20261016":
+          - link "ud1392-31-20261016":
+            - /url: "#/domain/0fb393fe-50e4-41de-9f8d-6da09f29edff?tab=details"
+        - cell
+  - list:
+    - listitem: 전체 25 개 항목 중 1-20 표시
+    - listitem "이전 페이지":
+      - button "left" [disabled]:
+        - img "left":
+    - listitem "1":
+      - generic: "1"
+    - listitem "2":
+      - generic: "2"
+    - listitem "다음 페이지":
+      - button "right":
+        - img "right":
+    - combobox
+    - generic: 20 / 쪽
+    - text: 이동하기
+    - textbox
+- alert:
+  - img "info-circle":
+  - generic: Wall 모니터링을 사용할 수 없습니다. 기존 알림은 최신 정보가 아닐 수 있으며 Mold는 계속 사용할 수 있습니다. 비활성
+- dialog "사용자 데이터 등록 도움말":
+  - document:
+    - button "Close":
+      - img "close":
+    - text: 사용자 데이터 등록
+    - link "도움말":
+      - /url: http://docs.ablecloud.io/latest/adminguide/virtual_machines.html#user-data-and-meta-data
+      - img "question-circle":
+    - paragraph: 사용자 데이터를 등록하려면 다음 데이터를 입력하십시오.
+    - text: "*"
+    - text: 이름
+    - img "info-circle":
+    - textbox "* 이름 info-circle" [active]:
+      - /placeholder: Name of the user data
+    - text: "*"
+    - text: 사용자 데이터
+    - img "info-circle":
+    - textbox "* 사용자 데이터 info-circle":
+      - /placeholder: 사용자 데이터를 일반 텍스트 또는 Base64 인코딩으로 입력하세요. 기본적으로 최대 32KB의 Base64 인코딩 사용자 데이터를 전송할 수 있습니다. 설정 vm.userdata.max.length를 사용하여 최대 1MB까지 제한을 늘릴 수 있습니다.
+    - generic "Base64 인코드"
+    - checkbox "Base64 인코드"
+    - text: 사용자 데이터 매개변수
+    - img "info-circle":
+    - combobox "사용자 데이터 매개변수 info-circle"
+    - generic: comma separated list of variables declared in user data content
+    - text: 도메인 아이디
+    - img "info-circle":
+    - combobox
+    - button "취소":
+      - generic: 취소
+    - button "등록":
+      - generic: 등록

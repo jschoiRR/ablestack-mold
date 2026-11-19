@@ -1,0 +1,501 @@
+{
+  "start": 3434,
+  "cursor": 3610,
+  "truncated": false,
+  "events": [
+    {
+      "sequence": 3435,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.1875",
+      "type": "XHR",
+      "params": {
+        "command": "readyForShutdown"
+      }
+    },
+    {
+      "sequence": 3438,
+      "method": "Network.responseReceived",
+      "requestId": "23116.1875",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "readyForShutdown"
+      }
+    },
+    {
+      "sequence": 3442,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.1876",
+      "type": "XHR",
+      "params": {
+        "command": "listUserData",
+        "name": "UD1389-31-20261016-main",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "sequence": 3445,
+      "method": "Network.responseReceived",
+      "requestId": "23116.1876",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listUserData",
+        "name": "UD1389-31-20261016-main",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "sequence": 3462,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.1877",
+      "type": "XHR",
+      "params": {
+        "command": "listUserData",
+        "id": "1fc463a9-c04b-4a1d-b1d3-75a9ac8c0e3c",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "sequence": 3464,
+      "method": "Network.responseReceived",
+      "requestId": "23116.1877",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listUserData",
+        "id": "1fc463a9-c04b-4a1d-b1d3-75a9ac8c0e3c",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "sequence": 3466,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.1878",
+      "type": "XHR",
+      "params": {
+        "command": "listResourceIcon"
+      }
+    },
+    {
+      "sequence": 3467,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.1879",
+      "type": "XHR",
+      "params": {
+        "command": "listAccounts",
+        "name": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f"
+      }
+    },
+    {
+      "sequence": 3474,
+      "method": "Network.responseReceived",
+      "requestId": "23116.1878",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listResourceIcon"
+      }
+    },
+    {
+      "sequence": 3478,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.1880",
+      "type": "XHR",
+      "params": {
+        "command": "readyForShutdown"
+      }
+    },
+    {
+      "sequence": 3479,
+      "method": "Network.responseReceived",
+      "requestId": "23116.1879",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listAccounts",
+        "name": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f"
+      }
+    },
+    {
+      "sequence": 3485,
+      "method": "Network.responseReceived",
+      "requestId": "23116.1880",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "readyForShutdown"
+      }
+    },
+    {
+      "sequence": 3490,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.1881",
+      "type": "XHR",
+      "params": {
+        "command": "readyForShutdown"
+      }
+    },
+    {
+      "sequence": 3493,
+      "method": "Network.responseReceived",
+      "requestId": "23116.1881",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "readyForShutdown"
+      }
+    },
+    {
+      "sequence": 3497,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.1882",
+      "type": "XHR",
+      "params": {
+        "command": "listHostsMetrics"
+      }
+    },
+    {
+      "sequence": 3500,
+      "method": "Network.responseReceived",
+      "requestId": "23116.1882",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listHostsMetrics"
+      }
+    },
+    {
+      "sequence": 3504,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.1883",
+      "type": "XHR",
+      "params": {
+        "command": "readyForShutdown"
+      }
+    },
+    {
+      "sequence": 3507,
+      "method": "Network.responseReceived",
+      "requestId": "23116.1883",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "readyForShutdown"
+      }
+    },
+    {
+      "sequence": 3511,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.1884",
+      "type": "XHR",
+      "params": {
+        "command": "getWallAlertAvailability"
+      }
+    },
+    {
+      "sequence": 3514,
+      "method": "Network.responseReceived",
+      "requestId": "23116.1884",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "getWallAlertAvailability"
+      }
+    },
+    {
+      "sequence": 3518,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.1885",
+      "type": "XHR",
+      "params": {
+        "command": "readyForShutdown"
+      }
+    },
+    {
+      "sequence": 3521,
+      "method": "Network.responseReceived",
+      "requestId": "23116.1885",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "readyForShutdown"
+      }
+    },
+    {
+      "sequence": 3526,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.1886",
+      "type": "XHR",
+      "params": {
+        "command": "listUserData",
+        "id": "1fc463a9-c04b-4a1d-b1d3-75a9ac8c0e3c",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "2"
+      }
+    },
+    {
+      "sequence": 3540,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.1887",
+      "type": "XHR",
+      "params": {
+        "command": "listUserData",
+        "id": "1fc463a9-c04b-4a1d-b1d3-75a9ac8c0e3c",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "sequence": 3541,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.1888",
+      "type": "XHR",
+      "params": {
+        "command": "listResourceIcon"
+      }
+    },
+    {
+      "sequence": 3542,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.1889",
+      "type": "XHR",
+      "params": {
+        "command": "listAccounts",
+        "name": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f"
+      }
+    },
+    {
+      "sequence": 3544,
+      "method": "Network.responseReceived",
+      "requestId": "23116.1886",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listUserData",
+        "id": "1fc463a9-c04b-4a1d-b1d3-75a9ac8c0e3c",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "2"
+      }
+    },
+    {
+      "sequence": 3548,
+      "method": "Network.responseReceived",
+      "requestId": "23116.1888",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listResourceIcon"
+      }
+    },
+    {
+      "sequence": 3557,
+      "method": "Network.responseReceived",
+      "requestId": "23116.1887",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listUserData",
+        "id": "1fc463a9-c04b-4a1d-b1d3-75a9ac8c0e3c",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "sequence": 3559,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.1890",
+      "type": "XHR",
+      "params": {
+        "command": "listUserData",
+        "id": "1fc463a9-c04b-4a1d-b1d3-75a9ac8c0e3c",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "2"
+      }
+    },
+    {
+      "sequence": 3560,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.1891",
+      "type": "XHR",
+      "params": {
+        "command": "listResourceIcon"
+      }
+    },
+    {
+      "sequence": 3561,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.1892",
+      "type": "XHR",
+      "params": {
+        "command": "listAccounts",
+        "name": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f"
+      }
+    },
+    {
+      "sequence": 3562,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.1893",
+      "type": "XHR",
+      "params": {
+        "command": "listUserData",
+        "id": "1fc463a9-c04b-4a1d-b1d3-75a9ac8c0e3c",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "2"
+      }
+    },
+    {
+      "sequence": 3565,
+      "method": "Network.responseReceived",
+      "requestId": "23116.1889",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listAccounts",
+        "name": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f"
+      }
+    },
+    {
+      "sequence": 3572,
+      "method": "Network.responseReceived",
+      "requestId": "23116.1891",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listResourceIcon"
+      }
+    },
+    {
+      "sequence": 3574,
+      "method": "Network.responseReceived",
+      "requestId": "23116.1890",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listUserData",
+        "id": "1fc463a9-c04b-4a1d-b1d3-75a9ac8c0e3c",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "2"
+      }
+    },
+    {
+      "sequence": 3576,
+      "method": "Network.responseReceived",
+      "requestId": "23116.1892",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listAccounts",
+        "name": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f"
+      }
+    },
+    {
+      "sequence": 3586,
+      "method": "Network.responseReceived",
+      "requestId": "23116.1893",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "listUserData",
+        "id": "1fc463a9-c04b-4a1d-b1d3-75a9ac8c0e3c",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "listall": "true",
+        "page": "1",
+        "pagesize": "2"
+      }
+    },
+    {
+      "sequence": 3590,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.1894",
+      "type": "XHR",
+      "params": {
+        "command": "readyForShutdown"
+      }
+    },
+    {
+      "sequence": 3593,
+      "method": "Network.responseReceived",
+      "requestId": "23116.1894",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "readyForShutdown"
+      }
+    },
+    {
+      "sequence": 3597,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.1895",
+      "type": "XHR",
+      "params": {
+        "command": "readyForShutdown"
+      }
+    },
+    {
+      "sequence": 3600,
+      "method": "Network.responseReceived",
+      "requestId": "23116.1895",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "readyForShutdown"
+      }
+    },
+    {
+      "sequence": 3604,
+      "method": "Network.requestWillBeSent",
+      "requestId": "23116.1896",
+      "type": "XHR",
+      "params": {
+        "command": "readyForShutdown"
+      }
+    },
+    {
+      "sequence": 3607,
+      "method": "Network.responseReceived",
+      "requestId": "23116.1896",
+      "type": "XHR",
+      "status": 200,
+      "params": {
+        "command": "readyForShutdown"
+      }
+    }
+  ]
+}

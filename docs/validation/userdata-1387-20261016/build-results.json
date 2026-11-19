@@ -1,0 +1,34 @@
+{
+  "issue": 1387,
+  "source": "1a9553261a7d45a3acf079f21d0ba7db360492f6",
+  "ui_unique_tests": 292,
+  "ui_suites": 9,
+  "final_delete_tests": 29,
+  "tests": {
+    "initial_tests": [
+      "Test Suites: 5 passed, 5 total",
+      "Tests:       137 passed, 137 total"
+    ],
+    "shell_tests": [
+      "Test Suites: 4 passed, 4 total",
+      "Tests:       155 passed, 155 total"
+    ],
+    "final_delete_tests": [
+      "Test Suites: 1 passed, 1 total",
+      "Tests:       29 passed, 29 total"
+    ]
+  },
+  "lint_pass": true,
+  "production_build_pass": true,
+  "warnings": [
+    "WARNING  Compiled with 2 warnings11:06:07 AM",
+    "warning",
+    "asset size limit: The following asset(s) exceed the recommended size limit (244 KiB).",
+    "warning",
+    "entrypoint size limit: The following entrypoint(s) combined asset size exceeds the recommended limit (244 KiB). This can impact web performance."
+  ],
+  "toolchain": "Node 14.21.3 / npm 6 / WSL ext4",
+  "server_source_unchanged": true,
+  "full_cloud_build": false,
+  "full_ci": false
+}

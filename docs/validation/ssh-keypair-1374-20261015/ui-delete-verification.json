@@ -1,0 +1,46 @@
+{
+  "passed": 2,
+  "total": 2,
+  "tests": [
+    {
+      "label": "ui-single-delete-original-name-scope",
+      "id": "31849434-ba94-4e64-ad2f-b11dc0eefb07",
+      "name": "SSH1374-20261015-MiXeD",
+      "passed": true
+    },
+    {
+      "label": "ui-bulk-delete-original-names-and-scopes",
+      "names": [
+        "SSH1374-키_혼합+공백 /%?#&",
+        "label.cancel"
+      ],
+      "ids": [
+        "5da1a188-f51d-465e-8ad0-315658101efe",
+        "680640b7-88d9-457b-9d57-bdb3b319a7fd"
+      ],
+      "passed": true,
+      "confirmation_and_response_assertions": "Passed before post-action hidden-dialog selector error",
+      "completion_verified_in_fresh_ui_and_api": true
+    }
+  ],
+  "requests": [
+    {
+      "params": {
+        "name": "SSH1374-20261015-MiXeD",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f"
+      },
+      "status": 200
+    }
+  ],
+  "post_delete_ui": {
+    "removed_ids": [
+      "31849434-ba94-4e64-ad2f-b11dc0eefb07",
+      "5da1a188-f51d-465e-8ad0-315658101efe",
+      "680640b7-88d9-457b-9d57-bdb3b319a7fd"
+    ],
+    "same_name_user_id_preserved": "e4c990d7-4d48-41b0-8412-3c1c5cdb7aff",
+    "remaining_default_count": 6,
+    "passed": true
+  }
+}

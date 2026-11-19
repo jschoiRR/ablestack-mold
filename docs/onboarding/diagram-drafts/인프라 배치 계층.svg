@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="981" viewBox="0 0 1800 981">
+<rect width="100%" height="100%" fill="white"/>
+<text x="72" y="48" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="52" font-weight="700" fill="#172B45">인프라스트럭처의 배치 계층</text>
+<text x="72" y="127" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="36" font-weight="400" fill="#506378">Zone은 인프라스트럭처 메뉴 안에 있는 구성 항목입니다</text>
+<rect x="72" y="208" width="1656" height="142" rx="20" fill="#F0F7FF" stroke="none" stroke-width="2"/>
+<rect x="96" y="238" width="48" height="48" rx="24" fill="#146CBA" stroke="none" stroke-width="2"/>
+<text x="110" y="248" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="29" font-weight="700" fill="white">1</text>
+<text x="170" y="238" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="42" font-weight="700" fill="#172B45">Zone</text>
+<polyline points="610,232 610,326" fill="none" stroke="#D7E1EB" stroke-width="2"/>
+<text x="646" y="236" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="40" font-weight="400" fill="#506378">가장 큰 배치 영역</text>
+<polyline points="900,355 900,390" fill="none" stroke="#146CBA" stroke-width="4"/>
+<polygon points="900,390 908.0,374.0 892.0,374.0" fill="#146CBA"/>
+<rect x="72" y="396" width="1656" height="142" rx="20" fill="#F5F2FF" stroke="none" stroke-width="2"/>
+<rect x="96" y="426" width="48" height="48" rx="24" fill="#6554B7" stroke="none" stroke-width="2"/>
+<text x="110" y="436" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="29" font-weight="700" fill="white">2</text>
+<text x="170" y="426" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="42" font-weight="700" fill="#172B45">Pod</text>
+<polyline points="610,420 610,514" fill="none" stroke="#D7E1EB" stroke-width="2"/>
+<text x="646" y="424" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="40" font-weight="400" fill="#506378">Zone 안의 서버 배치 단위</text>
+<polyline points="900,543 900,578" fill="none" stroke="#6554B7" stroke-width="4"/>
+<polygon points="900,578 908.0,562.0 892.0,562.0" fill="#6554B7"/>
+<rect x="72" y="584" width="1656" height="142" rx="20" fill="#EFF9F6" stroke="none" stroke-width="2"/>
+<rect x="96" y="614" width="48" height="48" rx="24" fill="#008878" stroke="none" stroke-width="2"/>
+<text x="110" y="624" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="29" font-weight="700" fill="white">3</text>
+<text x="170" y="614" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="42" font-weight="700" fill="#172B45">클러스터</text>
+<polyline points="610,608 610,702" fill="none" stroke="#D7E1EB" stroke-width="2"/>
+<text x="646" y="612" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="40" font-weight="400" fill="#506378">같은 배치 그룹으로 관리하는 호스트</text>
+<polyline points="900,731 900,766" fill="none" stroke="#008878" stroke-width="4"/>
+<polygon points="900,766 908.0,750.0 892.0,750.0" fill="#008878"/>
+<rect x="72" y="772" width="1656" height="142" rx="20" fill="#F0F7FF" stroke="none" stroke-width="2"/>
+<rect x="96" y="802" width="48" height="48" rx="24" fill="#146CBA" stroke="none" stroke-width="2"/>
+<text x="110" y="812" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="29" font-weight="700" fill="white">4</text>
+<text x="170" y="802" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="42" font-weight="700" fill="#172B45">호스트</text>
+<polyline points="610,796 610,890" fill="none" stroke="#D7E1EB" stroke-width="2"/>
+<text x="646" y="800" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="40" font-weight="400" fill="#506378">VM을 실행하는 KVM 물리 호스트</text>
+</svg>

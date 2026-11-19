@@ -15,14 +15,16 @@
 // specific language governing permissions and limitations
 // under the License.
 
-import { getAPI } from '@/api'
+import { getAPI, login, oauthlogin } from '@/api'
+import { createWallBannerDismissal } from '@/utils/wallAvailability'
 import { discoverOptional, hasDiscoveryApi } from '@/utils/optionalDiscovery'
 import user from '@/store/modules/user'
 import store from '@/store'
 import { vueProps } from '@/vue-app'
 import UserMenu from '@/components/header/UserMenu.vue'
+import { applyCustomGuiTheme } from '@/utils/guiTheme'
 
-jest.mock('@/api', () => ({ getAPI: jest.fn(), logout: jest.fn(() => Promise.resolve({})) }))
+jest.mock('@/api', () => ({ getAPI: jest.fn(), login: jest.fn(), oauthlogin: jest.fn(), logout: jest.fn(() => Promise.resolve({})) }))
 jest.mock('@/vue-app', () => ({ vueProps: { $localStorage: { get: jest.fn((key, fallback) => fallback), set: jest.fn(), remove: jest.fn() } } }))
 jest.mock('@/store', () => ({ getters: { loginFlag: true, addRouters: [] }, dispatch: jest.fn(() => Promise.resolve()) }))
 jest.mock('@/router', () => ({ addRoute: jest.fn() }))
@@ -55,10 +57,21 @@ const reply = (apis) => name => {
 
 beforeEach(() => {
   jest.clearAllMocks()
+  sessionStorage.clear()
   vueProps.$localStorage.get.mockImplementation((key, fallback) => fallback)
   store.getters.loginFlag = true
 })
 afterEach(() => { jest.useRealTimers() })
+
+test.each([true, false])('theme lookup waits for fresh permissions after a faster user reply (allowed=%s)', async allowed => {
+  let release
+  const apis = [...baseApis, ...(allowed ? ['listGuiThemes'] : [])]
+  getAPI.mockImplementation(name => name === 'listApis' ? new Promise(resolve => { release = resolve }) : reply(apis)(name))
+  const pending = user.actions.GetInfo(context()); await flush()
+  expect(applyCustomGuiTheme).not.toHaveBeenCalled()
+  release({ listapisresponse: { api: apis.map(name => ({ name })) } }); await pending; await flush()
+  expect(applyCustomGuiTheme).toHaveBeenCalledWith(undefined, undefined, allowed)
+})
 
 test.each([
   ['ordinary user', baseApis],
@@ -176,4 +189,40 @@ test('allowed favicon values are applied and only one timer is owned', async () 
   expect(jest.getTimerCount()).toBe(1)
   UserMenu.beforeUnmount.call(vm)
   expect(jest.getTimerCount()).toBe(0)
+})
+
+test('refresh with a valid session and empty API cache discovers permissions even without the in-memory login flag', async () => {
+  store.getters.loginFlag = false
+  getAPI.mockImplementation(reply(baseApis))
+  await expect(user.actions.GetInfo(context())).resolves.toHaveProperty('listUsers')
+  expect(getAPI).toHaveBeenCalledWith('listApis')
+}, 1500)
+
+test('empty-cache refresh rejects an expired session instead of remaining pending', async () => {
+  store.getters.loginFlag = false
+  getAPI.mockImplementation(name => name === 'listApis' ? Promise.reject(new Error('session expired')) : reply(baseApis)(name))
+  await expect(user.actions.GetInfo(context())).rejects.toThrow('session expired')
+}, 1500)
+
+test.each([['Login', login], ['OauthLogin', oauthlogin]])('%s starts with a fresh Wall banner dismissal state', async (action, authenticate) => {
+  const dismissal = createWallBannerDismissal('previous-session')
+  dismissal.dismiss()
+  authenticate.mockRejectedValue(new Error('authentication failed'))
+  await expect(user.actions[action](context(), {})).rejects.toThrow('authentication failed')
+  expect(dismissal.dismissed).toBe(false)
+})
+
+test('logout clears the dismissed Wall banner before the logout request completes', async () => {
+  const dismissal = createWallBannerDismissal('previous-session')
+  dismissal.dismiss()
+  const pending = user.actions.Logout(context())
+  expect(dismissal.dismissed).toBe(false)
+  await pending
+})
+
+test('discovery reset alone preserves dismissal during domain switches', () => {
+  const dismissal = createWallBannerDismissal('same-session')
+  dismissal.dismiss()
+  context().commit('RESET_DISCOVERY')
+  expect(dismissal.dismissed).toBe(true)
 })

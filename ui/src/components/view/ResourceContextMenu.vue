@@ -33,6 +33,7 @@
         :selectedItems="selectedItems"
         :show-resource-title="true"
         :titleOverride="titleOverride"
+        :titleSuffix="titleSuffix"
         size="default"
         @exec-action="$emit('exec-action', $event)" />
     </div>
@@ -53,11 +54,12 @@ export default {
     position: { type: Object, default: () => ({ x: 0, y: 0 }) },
     selectedRowKeys: { type: Array, default: () => [] },
     selectedItems: { type: Array, default: () => [] },
-    titleOverride: { type: String, default: '' }
+    titleOverride: { type: String, default: '' },
+    titleSuffix: { type: String, default: '' }
   },
   emits: ['close', 'exec-action'],
   data () {
-    return { resolvedPosition: { ...this.position } }
+    return { resolvedPosition: { ...this.position }, previousFocus: null }
   },
   computed: {
     menuStyle () {
@@ -68,13 +70,19 @@ export default {
     }
   },
   mounted () {
+    this.previousFocus = document.activeElement
     document.addEventListener('pointerdown', this.handleDocumentPointerDown, true)
     document.addEventListener('keydown', this.handleKeydown)
     window.addEventListener('resize', this.close)
     window.addEventListener('scroll', this.handleWindowScroll, true)
-    this.$nextTick(this.clampToViewport)
+    this.$nextTick(() => {
+      this.clampToViewport()
+      const first = this.$refs.menu?.querySelector('[role="menuitem"]:not([aria-disabled="true"])')
+      if (first) first.focus()
+    })
   },
   beforeUnmount () {
+    if (this.previousFocus?.isConnected) this.previousFocus.focus()
     document.removeEventListener('pointerdown', this.handleDocumentPointerDown, true)
     document.removeEventListener('keydown', this.handleKeydown)
     window.removeEventListener('resize', this.close)
@@ -105,8 +113,8 @@ export default {
       if (!menu) return
       const rect = menu.getBoundingClientRect()
       this.resolvedPosition = {
-        x: Math.max(VIEWPORT_PADDING, Math.min(this.position.x, window.innerWidth - rect.width - VIEWPORT_PADDING)),
-        y: Math.max(VIEWPORT_PADDING, Math.min(this.position.y, window.innerHeight - rect.height - VIEWPORT_PADDING))
+        x: Math.max(VIEWPORT_PADDING, Math.min(this.position.x, (document.documentElement.clientWidth || window.innerWidth) - rect.width - VIEWPORT_PADDING)),
+        y: Math.max(VIEWPORT_PADDING, Math.min(this.position.y, (document.documentElement.clientHeight || window.innerHeight) - rect.height - VIEWPORT_PADDING))
       }
     }
   }

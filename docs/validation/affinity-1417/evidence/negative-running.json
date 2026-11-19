@@ -1,0 +1,182 @@
+{
+  "before": {
+    "id": "23476cc1-92f7-4deb-8a44-ce8037ef3806",
+    "name": "qa-ag04-vm-11",
+    "displayname": "qa-ag04-vm-11",
+    "account": "admin",
+    "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+    "username": "admin",
+    "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+    "domain": "ROOT",
+    "domainpath": "ROOT",
+    "created": "2026-10-19T07:56:19+0900",
+    "lastupdated": "2026-10-19T08:29:20+0900",
+    "state": "Running",
+    "haenable": false,
+    "zoneid": "7013f5a1-de59-4cea-a596-f4f58815f31c",
+    "zonename": "Zone",
+    "hostid": "3fb147f3-aea4-4f65-b8c6-e7192ea26138",
+    "hostname": "ablecube31-2",
+    "hostcontrolstate": "Enabled",
+    "volumemutationblockedreason": "",
+    "guestosid": "9708b6ac-b253-11f1-a895-0024814c313f",
+    "securitygroup": [],
+    "nic": [
+      {
+        "id": "390b6c76-1f1b-462d-a272-ea70810e9691",
+        "networkid": "ae274fff-3d8e-4285-ac73-26a767c1fea7",
+        "networkname": "E1335-VM-Origin-L2",
+        "isolationuri": "vlan://3135",
+        "broadcasturi": "vlan://3135",
+        "traffictype": "Guest",
+        "type": "L2",
+        "isdefault": true,
+        "macaddress": "02:1f:01:04:00:30",
+        "secondaryip": [],
+        "extradhcpoption": [],
+        "deviceid": "0",
+        "enabled": true
+      }
+    ],
+    "hypervisor": "KVM",
+    "instancename": "i-2-661-VM",
+    "details": {
+      "tpmversion": "NONE",
+      "rootDiskController": "osdefault"
+    },
+    "clonefastsourcepowerallowed": false,
+    "clonefastpowerallowed": false,
+    "affinitygroup": [
+      {
+        "id": "1c095737-9254-414b-a045-e87ba2fdb87f",
+        "name": "qa-ag04-other",
+        "account": "admin"
+      },
+      {
+        "id": "22ee18c3-4a24-4617-84ed-dde3fe7b592a",
+        "name": "qa-ag04-target",
+        "account": "admin"
+      }
+    ],
+    "displayvm": true,
+    "isdynamicallyscalable": true,
+    "deleteprotection": false,
+    "ostypeid": "9708b6ac-b253-11f1-a895-0024814c313f",
+    "osdisplayname": "Rocky Linux 9",
+    "pooltype": "SharedMountPoint",
+    "receivedbytes": 0,
+    "sentbytes": 0,
+    "vbmcport": "None",
+    "qemuagentversion": "8.2.0",
+    "kvdoenable": false,
+    "kvdoinuse": false,
+    "arch": "x86_64",
+    "vbmcstatus": "Unallocated",
+    "tags": [],
+    "hasannotations": false
+  },
+  "job": {
+    "jobid": "c137cf58-59b3-45ab-9a5e-872368fdb028"
+  },
+  "result": {
+    "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+    "account": "admin",
+    "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+    "domainpath": "ROOT",
+    "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+    "cmd": "org.apache.cloudstack.api.command.admin.affinitygroup.UpdateVMAffinityGroupCmdByAdmin",
+    "jobprocstatus": 0,
+    "jobresultcode": 431,
+    "jobresulttype": "object",
+    "jobresult": {
+      "errorcode": 431,
+      "errortext": "Unable update affinity groups of the virtual machine VM instance {\"id\":661,\"instanceName\":\"i-2-661-VM\",\"state\":\"Running\",\"type\":\"User\",\"uuid\":\"23476cc1-92f7-4deb-8a44-ce8037ef3806\"} in state Running; make sure the virtual machine is stopped and not in an error state before updating."
+    },
+    "created": "2026-10-19T08:29:34+0900",
+    "completed": "2026-10-19T08:29:34+0900",
+    "jobid": "c137cf58-59b3-45ab-9a5e-872368fdb028",
+    "jobstatus": 2
+  },
+  "after": {
+    "id": "23476cc1-92f7-4deb-8a44-ce8037ef3806",
+    "name": "qa-ag04-vm-11",
+    "displayname": "qa-ag04-vm-11",
+    "account": "admin",
+    "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+    "username": "admin",
+    "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+    "domain": "ROOT",
+    "domainpath": "ROOT",
+    "created": "2026-10-19T07:56:19+0900",
+    "lastupdated": "2026-10-19T08:29:20+0900",
+    "state": "Running",
+    "haenable": false,
+    "zoneid": "7013f5a1-de59-4cea-a596-f4f58815f31c",
+    "zonename": "Zone",
+    "hostid": "3fb147f3-aea4-4f65-b8c6-e7192ea26138",
+    "hostname": "ablecube31-2",
+    "hostcontrolstate": "Enabled",
+    "volumemutationblockedreason": "",
+    "guestosid": "9708b6ac-b253-11f1-a895-0024814c313f",
+    "securitygroup": [],
+    "nic": [
+      {
+        "id": "390b6c76-1f1b-462d-a272-ea70810e9691",
+        "networkid": "ae274fff-3d8e-4285-ac73-26a767c1fea7",
+        "networkname": "E1335-VM-Origin-L2",
+        "isolationuri": "vlan://3135",
+        "broadcasturi": "vlan://3135",
+        "traffictype": "Guest",
+        "type": "L2",
+        "isdefault": true,
+        "macaddress": "02:1f:01:04:00:30",
+        "secondaryip": [],
+        "extradhcpoption": [],
+        "deviceid": "0",
+        "enabled": true
+      }
+    ],
+    "hypervisor": "KVM",
+    "instancename": "i-2-661-VM",
+    "details": {
+      "tpmversion": "NONE",
+      "rootDiskController": "osdefault"
+    },
+    "clonefastsourcepowerallowed": false,
+    "clonefastpowerallowed": false,
+    "affinitygroup": [
+      {
+        "id": "1c095737-9254-414b-a045-e87ba2fdb87f",
+        "name": "qa-ag04-other",
+        "account": "admin"
+      },
+      {
+        "id": "22ee18c3-4a24-4617-84ed-dde3fe7b592a",
+        "name": "qa-ag04-target",
+        "account": "admin"
+      }
+    ],
+    "displayvm": true,
+    "isdynamicallyscalable": true,
+    "deleteprotection": false,
+    "ostypeid": "9708b6ac-b253-11f1-a895-0024814c313f",
+    "osdisplayname": "Rocky Linux 9",
+    "pooltype": "SharedMountPoint",
+    "receivedbytes": 0,
+    "sentbytes": 0,
+    "vbmcport": "None",
+    "qemuagentversion": "8.2.0",
+    "kvdoenable": false,
+    "kvdoinuse": false,
+    "arch": "x86_64",
+    "vbmcstatus": "Unallocated",
+    "tags": [],
+    "hasannotations": false
+  },
+  "host": {
+    "id": "3fb147f3-aea4-4f65-b8c6-e7192ea26138",
+    "name": "ablecube31-2",
+    "ipaddress": "10.10.31.2",
+    "state": "Up"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "issue": 1355,
+  "ui": {
+    "source": "cd4221a3c7a5169cc56fdaa7442170ecce750af4",
+    "tests": 266,
+    "suites": 13,
+    "lint": "PASS",
+    "productionBuild": "PASS"
+  },
+  "java": {
+    "source": "ef14275a2ad2e700ad6f9606268cbb001db5d020",
+    "apiTests": 13,
+    "serverTests": 165,
+    "changedModules": [
+      "api",
+      "server"
+    ],
+    "moduleBuild": "PASS",
+    "checkstyle": "PASS",
+    "moduleRAT": "PASS"
+  },
+  "fullCloudBuild": false,
+  "fullCI": false,
+  "longSoak": "deferred to #1354 final stage",
+  "ui01to10": "PASS within documented scope",
+  "listContrastMinimum": {
+    "31": 5.19,
+    "32": 5.19
+  },
+  "testGroupsDeleted": true,
+  "baselineGroups": [
+    3,
+    4
+  ]
+}

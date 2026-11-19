@@ -55,6 +55,9 @@ public class UpdateResourceScheduleCmd extends BaseCmd {
     @Parameter(name = ApiConstants.END_DATE, type = CommandType.DATE, required = false, description = "End date after which the schedule becomes inactive.")
     private Date endDate;
 
+    @Parameter(name = "clearenddate", type = CommandType.BOOLEAN, description = "Explicitly remove the schedule end date; an omitted enddate otherwise remains unchanged.")
+    private Boolean clearEndDate;
+
     @Parameter(name = ApiConstants.ENABLED, type = CommandType.BOOLEAN, required = false, description = "Enable or disable the schedule.")
     private Boolean enabled;
 
@@ -98,7 +101,7 @@ public class UpdateResourceScheduleCmd extends BaseCmd {
         resourceScheduleManager.checkVmScheduleApiAccess("updateVMSchedule", null, getId(),
                 getFullUrlParams() == null ? null : getFullUrlParams().get(ApiConstants.API_KEY));
         ResourceScheduleResponse response = resourceScheduleManager.updateSchedule(getId(), getDescription(), getSchedule(),
-                getTimeZone(), getStartDate(), getEndDate(), getEnabled(), getDetails());
+                getTimeZone(), getStartDate(), getEndDate(), getEnabled(), getDetails(), Boolean.TRUE.equals(clearEndDate));
         response.setResponseName(getCommandName());
         setResponseObject(response);
     }

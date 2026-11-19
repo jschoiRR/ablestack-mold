@@ -1,0 +1,317 @@
+Browser tab: 6, Title: "Affinity 그룹 - ABLESTACK-Mold", URL: "http://10.10.31.10:8080/client/#/affinitygroup?page=2&pagesize=20".
+1 AXWebArea Affinity 그룹 - ABLESTACK-Mold, URL: 10.10.31.10:8080/client/#/affinitygroup?page=2&pagesize=20
+	2 container
+		1836 container
+			1837 image
+			1838 menu
+				1839 dashboard 대시보드
+					1840 link Description: dashboard 대시보드, Value: 10.10.31.10:8080/client/#/dashboard
+				1841 container
+					1842 image cloud
+					1843 text 컴퓨트
+				1844 content list sub_menu_181_$$_/compute-popup
+					1845 cloud-server 가상머신
+						1846 link Description: cloud-server 가상머신, Value: 10.10.31.10:8080/client/#/vm
+					1847 camera VM 스냅샷
+						1848 link Description: camera VM 스냅샷, Value: 10.10.31.10:8080/client/#/vmsnapshot
+					1849 쿠버네티스
+						1850 link Description: 쿠버네티스, Value: 10.10.31.10:8080/client/#/kubernetes
+					1851 fullscreen 오토스케일 VM 그룹
+						1852 link Description: fullscreen 오토스케일 VM 그룹, Value: 10.10.31.10:8080/client/#/autoscalevmgroup
+					1853 gold 가상머신 그룹
+						1854 link Description: gold 가상머신 그룹, Value: 10.10.31.10:8080/client/#/vmgroup
+					1855 key SSH 키 쌍
+						1856 link Description: key SSH 키 쌍, Value: 10.10.31.10:8080/client/#/ssh
+					1857 solution 사용자 데이터 라이브러리
+						1858 link Description: solution 사용자 데이터 라이브러리, Value: 10.10.31.10:8080/client/#/userdata
+					1859 solution CNI 구성
+						1860 link Description: solution CNI 구성, Value: 10.10.31.10:8080/client/#/cniconfiguration
+					1861 swap Affinity 그룹
+						1862 link Description: swap Affinity 그룹, Value: 10.10.31.10:8080/client/#/affinitygroup
+				1863 container
+					1864 image hdd
+					1865 text 스토리지
+				1866 container
+					1867 image wifi
+					1868 text 네트워크
+				1869 container
+					1870 image picture
+					1871 text 이미지
+				1872 container
+					1873 image lock
+					1874 text 키 관리
+				1875 schedule 이벤트
+					1876 link Description: schedule 이벤트, Value: 10.10.31.10:8080/client/#/event
+				1877 project 프로젝트
+					1878 link Description: project 프로젝트, Value: 10.10.31.10:8080/client/#/project
+				1879 idcard 역할
+					1880 link Description: idcard 역할, Value: 10.10.31.10:8080/client/#/role
+				1881 team 계정
+					1882 link Description: team 계정, Value: 10.10.31.10:8080/client/#/account
+				1883 block 도메인
+					1884 link Description: block 도메인, Value: 10.10.31.10:8080/client/#/domain
+				1885 container
+					1886 image bank
+					1887 text 인프라스트럭쳐
+				1888 container
+					1889 image shopping
+					1890 text 서비스 오퍼링
+				1891 container
+					1892 image setting
+					1893 text 구성
+				1894 appstore-add 확장
+					1895 link Description: appstore-add 확장, Value: 10.10.31.10:8080/client/#/extension
+				1896 container
+					1897 image tool
+					1898 text 도구
+				1899 read API 문서
+					1900 link Description: read API 문서, Value: 10.10.31.10:8080/client/#/apidocs/
+		68 container
+			69 text 페이지 스타일 설정
+			70 button 닫기
+				71 image close
+			662 heading 페이지 스타일 설정, Value: 3
+				663 text 페이지 스타일 설정
+			664 container
+				665 container
+					666 image
+					667 container
+						668 radio button (settable, integer) Description:  , Value: 1
+					669 image check
+				670 container
+					671 image
+					672 container
+						673 radio button (settable, integer) Description:  , Value: 0
+			674 heading 테마 색상, Value: 3
+				675 text 테마 색상
+			676 container
+				677 container
+					678 radio button (settable, integer) Description:  , Value: 0
+					679 image check
+				680 container
+					681 radio button (settable, integer) Description:  , Value: 0
+				682 container
+					683 radio button (settable, integer) Description:  , Value: 0
+				684 container
+					685 radio button (settable, integer) Description:  , Value: 0
+				686 container
+					687 radio button (settable, integer) Description:  , Value: 0
+				688 container
+					689 radio button (settable, integer) Description:  , Value: 0
+				690 container
+					691 radio button (settable, integer) Description:  , Value: 0
+				692 container
+					693 radio button (settable, integer) Description:  , Value: 0
+			694 heading 네비게이션 설정, Value: 3
+				695 text 네비게이션 설정
+			696 container
+				697 container
+					698 text 배경색
+					699 color well (settable) #ffffff
+				700 container
+					701 text 텍스트 색상
+					702 color well (settable) #000000
+			703 container
+				704 image exclamation-circle
+				705 text 설정은 현재 브라우저에서만 볼 수 있습니다. 설정을 적용하려면 JSON 파일을 다운로드하고 경로 `/public/config.json` 아래의 `config.json` 파일의 `theme` 섹션에서 해당 콘텐츠를 교체하세요.
+			706 button download 세팅값 다운로드(json)
+				707 image download
+				708 text 세팅값 다운로드(json)
+			709 button undo 기본값으로 재설정
+				710 image undo
+				711 text 기본값으로 재설정
+		122 container
+			1901 image menu-fold
+			124 container
+				125 combo box (settable) rc_select_0
+				126 image project
+				127 text 기본 보기
+			1902 button 생성 down
+				1903 text 생성
+				1904 image down
+			131 image translation
+			132 image bell
+			133 container
+				134 text AC admin cloud
+		135 container
+			1179 container
+				1180 container
+					1181 link Description: home, Value: 10.10.31.10:8080/client/#/
+					1182 text /
+					1183 link Description: Affinity 그룹, Value: 10.10.31.10:8080/client/#/affinitygroup
+					1253 link Description: question-circle, Value: docs.ablecloud.io/latest/adminguide/virtual_machines.html#affinity-groups
+					1254 button reload 업데이트
+						1728 image reload
+						1256 text 업데이트
+					1257 switch 프로젝트, Value: 0
+						1258 text 프로젝트
+				1259 button 새 Affinity 그룹 추가
+					1260 image plus
+					1261 text 새 Affinity 그룹 추가
+				1262 container
+					1263 button 고급 검색
+						1264 image filter
+					1265 text field (settable)
+					1266 button search
+						1267 image search
+			1268 table
+				1269 row
+					1270 cell
+						1271 container
+							1272 checkbox (settable, integer) Description:  , Value: 0
+					1273 cell
+						1274 container
+							1275 text 이름
+							1276 image caret-up
+							1277 image caret-down
+					1278 cell
+						1279 container
+							1280 text 유형
+							1281 image caret-up
+							1282 image caret-down
+					1283 cell
+						1284 container
+							1285 text 연결 VM 수
+							1286 image caret-up
+							1287 image caret-down
+					1288 cell
+						1289 container
+							1290 text 설명
+							1291 image caret-up
+							1292 image caret-down
+					1293 cell
+						1294 container
+							1295 text 계정
+							1296 image caret-up
+							1297 image caret-down
+					1298 cell
+						1299 container
+							1300 text 도메인
+							1301 image caret-up
+							1302 image caret-down
+					1303 cell
+						1304 button filter
+							1305 image filter
+				1729 row
+					1730 cell
+						1731 container
+							1732 checkbox (settable, integer) Description:  , Value: 0
+					1733 cell
+						1734 link Description: qa-ag05-page-15, Value: 10.10.31.10:8080/client/#/affinitygroup/e5e0791c-23aa-4c19-91b4-6dea707d3502
+					1735 cell
+						1736 text 다른 호스트 분산 · 엄격
+						1737 text host anti-affinity
+					1738 cell
+						1739 text 0
+					1740 cell
+						1741 text AG05 disposable UI fixture
+					1742 cell
+						1743 link Description: admin, Value: 10.10.31.10:8080/client/#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&dataView=true
+					1744 cell
+						1745 link Description: ROOT, Value: 10.10.31.10:8080/client/#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details
+				1746 row
+					1747 cell
+						1748 container
+							1749 checkbox (settable, integer) Description:  , Value: 0
+					1750 cell
+						1751 link Description: qa-ag05-page-16, Value: 10.10.31.10:8080/client/#/affinitygroup/03b71498-789f-4d05-bcd0-cab6564230b8
+					1752 cell
+						1753 text 같은 호스트 우선 · 선호
+						1754 text non-strict host affinity
+					1755 cell
+						1756 text 0
+					1757 cell
+						1758 text AG05 disposable UI fixture
+					1759 cell
+						1760 link Description: admin, Value: 10.10.31.10:8080/client/#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&dataView=true
+					1761 cell
+						1762 link Description: ROOT, Value: 10.10.31.10:8080/client/#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details
+				1763 row
+					1764 cell
+						1765 container
+							1766 checkbox (settable, integer) Description:  , Value: 0
+					1767 cell
+						1768 link Description: qa-ag05-page-17, Value: 10.10.31.10:8080/client/#/affinitygroup/ec6d1a53-8de4-4950-886a-ea6a2e4ab6b0
+					1769 cell
+						1770 text 다른 호스트 분산 우선 · 선호
+						1771 text non-strict host anti-affinity
+					1772 cell
+						1773 text 0
+					1774 cell
+						1775 text AG05 disposable UI fixture
+					1776 cell
+						1777 link Description: admin, Value: 10.10.31.10:8080/client/#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&dataView=true
+					1778 cell
+						1779 link Description: ROOT, Value: 10.10.31.10:8080/client/#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details
+				1780 row
+					1781 cell
+						1782 container
+							1783 checkbox (settable, integer) Description:  , Value: 0
+					1784 cell
+						1785 link Value: 10.10.31.10:8080/client/#/affinitygroup/d8b3f981-eb89-40ae-bb92-db0a6b37de98, Description: qa-ag05-long-긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름
+					1786 cell
+						1787 text 같은 호스트 배치 · 엄격
+						1788 text host affinity
+					1789 cell
+						1790 text 0
+					1791 cell
+						1792 text 긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명표시검증긴설명
+					1793 cell
+						1794 link Description: admin, Value: 10.10.31.10:8080/client/#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&dataView=true
+					1795 cell
+						1796 link Description: ROOT, Value: 10.10.31.10:8080/client/#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details
+				1797 row
+					1798 cell
+						1799 container
+							1800 checkbox (settable, integer) Description:  , Value: 0
+					1801 cell
+						1802 link Description: qa-ag05-user-target, Value: 10.10.31.10:8080/client/#/affinitygroup/b156547b-7ff4-46f6-9a17-9d482d688f4e
+					1803 cell
+						1804 text 같은 호스트 배치 · 엄격
+						1805 text host affinity
+					1806 cell
+						1807 text 1
+					1808 cell
+						1809 text —
+					1810 cell
+						1811 link Description: qa-ag05-user, Value: 10.10.31.10:8080/client/#/account?name=qa-ag05-user&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&dataView=true
+					1812 cell
+						1813 link Description: ROOT, Value: 10.10.31.10:8080/client/#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details
+				1814 row
+					1815 cell
+						1816 container
+							1817 checkbox (settable, integer) Description:  , Value: 0
+					1818 cell
+						1819 link Description: qa-ag05-user-other, Value: 10.10.31.10:8080/client/#/affinitygroup/f83fd883-7520-4025-bdf3-a9f9b442901d
+					1820 cell
+						1821 text 같은 호스트 배치 · 엄격
+						1822 text host affinity
+					1823 cell
+						1824 text 1
+					1825 cell
+						1826 text —
+					1827 cell
+						1828 link Description: qa-ag05-user, Value: 10.10.31.10:8080/client/#/account?name=qa-ag05-user&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&dataView=true
+					1829 cell
+						1830 link Description: ROOT, Value: 10.10.31.10:8080/client/#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details
+			1646 content list
+				1647 text 전체 26 개 항목 중 21-26 표시
+				1648 container 이전 페이지
+					1649 button left
+						1650 image left
+				1831 text 1
+				1832 text 2
+				1653 container 다음 페이지
+					1654 button (disabled) right
+						1655 image right
+				1656 container
+					1657 container
+						1658 combo box (settable) rc_select_7
+						1905 text 20 / 쪽
+					1834 text 이동하기
+					1835 text field (settable)
+	265 container
+		266 image info-circle
+		267 text Wall 모니터링을 사용할 수 없습니다. 기존 알림은 최신 정보가 아닐 수 있으며 Mold는 계속 사용할 수 있습니다. 비활성
+
+The focused UI element is 1 AXWebArea Affinity 그룹 - ABLESTACK-Mold, URL: 10.10.31.10:8080/client/#/affinitygroup?page=2&pagesize=20

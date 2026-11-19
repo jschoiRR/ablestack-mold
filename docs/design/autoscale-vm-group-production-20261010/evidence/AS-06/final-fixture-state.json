@@ -1,0 +1,717 @@
+{
+  "31": {
+    "group": {
+      "id": "bf0f5385-ae2c-4da4-aec4-eb985dbdeba4",
+      "name": "AS-PROD-31-AS04-CONCURRENCY",
+      "lbruleid": "806cf32a-f632-4dc0-be52-0f85c19c7070",
+      "associatednetworkname": "AS-PROD-31-AS01-projectNetwork",
+      "associatednetworkid": "797d8d5e-efff-4364-a53c-c2ac90596fe8",
+      "lbprovider": "VirtualRouter",
+      "publicipid": "67ede107-b283-4b65-b16a-d675f7709aa4",
+      "publicip": "10.10.31.104",
+      "publicport": "8084",
+      "privateport": "8080",
+      "vmprofileid": "13090328-2f59-4121-9316-bbb30da24c9b",
+      "minmembers": 1,
+      "maxmembers": 3,
+      "availablevirtualmachinecount": 1,
+      "interval": 10,
+      "state": "DISABLED",
+      "scaleuppolicies": [
+        {
+          "id": "36d98f38-55e0-473d-8a6b-e009f50ae757",
+          "name": "ScaleUpPolicy-0",
+          "action": "SCALEUP",
+          "duration": 60,
+          "quiettime": 10,
+          "conditions": [
+            {
+              "id": "a20fc96c-640b-4858-a9e1-d13ff10575cc",
+              "threshold": 20,
+              "relationaloperator": "GT",
+              "counterid": "978ac6cb-b253-11f1-a895-0024814c313f",
+              "countername": "VM CPU - average percentage",
+              "counter": {
+                "id": "978ac6cb-b253-11f1-a895-0024814c313f",
+                "name": "VM CPU - average percentage",
+                "source": "CPU",
+                "value": "vm.cpu.average.percentage",
+                "provider": "VirtualRouter"
+              },
+              "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+              "domain": "ROOT",
+              "domainpath": "ROOT",
+              "projectid": "fb318714-bc01-4be5-9e33-0f49a7013127",
+              "project": "AS-PROD-31-AS01-project"
+            }
+          ],
+          "projectid": "fb318714-bc01-4be5-9e33-0f49a7013127",
+          "project": "AS-PROD-31-AS01-project",
+          "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+          "domain": "ROOT",
+          "domainpath": "ROOT"
+        }
+      ],
+      "scaledownpolicies": [
+        {
+          "id": "64cfc4bd-7665-4670-bf99-1c93b742f66a",
+          "name": "ScaleDownPolicy-0",
+          "action": "SCALEDOWN",
+          "duration": 60,
+          "quiettime": 10,
+          "conditions": [
+            {
+              "id": "f638d3ce-f6be-41b5-9b08-e36ccacf7817",
+              "threshold": 10,
+              "relationaloperator": "LT",
+              "counterid": "978ac6cb-b253-11f1-a895-0024814c313f",
+              "countername": "VM CPU - average percentage",
+              "counter": {
+                "id": "978ac6cb-b253-11f1-a895-0024814c313f",
+                "name": "VM CPU - average percentage",
+                "source": "CPU",
+                "value": "vm.cpu.average.percentage",
+                "provider": "VirtualRouter"
+              },
+              "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+              "domain": "ROOT",
+              "domainpath": "ROOT",
+              "projectid": "fb318714-bc01-4be5-9e33-0f49a7013127",
+              "project": "AS-PROD-31-AS01-project"
+            }
+          ],
+          "projectid": "fb318714-bc01-4be5-9e33-0f49a7013127",
+          "project": "AS-PROD-31-AS01-project",
+          "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+          "domain": "ROOT",
+          "domainpath": "ROOT"
+        }
+      ],
+      "projectid": "fb318714-bc01-4be5-9e33-0f49a7013127",
+      "project": "AS-PROD-31-AS01-project",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "domain": "ROOT",
+      "domainpath": "ROOT",
+      "fordisplay": true,
+      "created": "2026-10-11T10:19:39+0900",
+      "operationinprogress": false,
+      "evaluation": {
+        "evaluatedat": 1791720066131,
+        "cooldownuntil": 1791710722946,
+        "policies": [
+          {
+            "id": "36d98f38-55e0-473d-8a6b-e009f50ae757",
+            "action": "SCALEUP",
+            "duration": 60,
+            "conditions": [
+              {
+                "id": "a20fc96c-640b-4858-a9e1-d13ff10575cc",
+                "countername": "VM CPU - average percentage",
+                "source": "CPU",
+                "unit": "%",
+                "operator": "GT",
+                "threshold": 20,
+                "samples": 0,
+                "resources": 3,
+                "reason": "NO_SAMPLES",
+                "matched": false
+              }
+            ],
+            "status": "BLOCKED",
+            "reason": "MEMBERS_CHANGED"
+          },
+          {
+            "id": "e973efc0-0303-4ef2-bae2-ad1d1671e127",
+            "action": "SCALEUP",
+            "duration": 60,
+            "conditions": [
+              {
+                "id": "51f8ca0a-f5c5-451d-b30b-f9d5d00180ea",
+                "countername": "VM Memory - average percentage",
+                "source": "MEMORY",
+                "unit": "%",
+                "operator": "LT",
+                "threshold": 0,
+                "samples": 0,
+                "resources": 3,
+                "reason": "NO_SAMPLES",
+                "matched": false
+              }
+            ],
+            "status": "BLOCKED",
+            "reason": "MEMBERS_CHANGED"
+          },
+          {
+            "id": "64cfc4bd-7665-4670-bf99-1c93b742f66a",
+            "action": "SCALEDOWN",
+            "duration": 60,
+            "conditions": [
+              {
+                "id": "f638d3ce-f6be-41b5-9b08-e36ccacf7817",
+                "countername": "VM CPU - average percentage",
+                "source": "CPU",
+                "unit": "%",
+                "operator": "LT",
+                "threshold": 10,
+                "samples": 0,
+                "resources": 3,
+                "reason": "NO_SAMPLES",
+                "matched": false
+              }
+            ],
+            "status": "BLOCKED",
+            "reason": "MEMBERS_CHANGED"
+          }
+        ],
+        "status": "WAITING"
+      },
+      "hasannotations": false
+    },
+    "members": [
+      {
+        "id": "bc00f070-797a-40b0-9785-c965dc50fc63",
+        "name": "autoScaleVm-AS-PROD-31-AS04-CONCURRENCY-1-rvajox",
+        "instancename": "i-35-397-VM",
+        "state": "Running",
+        "templateid": "c8ee6ff0-154e-4aed-a8b3-e0cfba8421fe",
+        "serviceofferingid": "39c3aa33-5632-4dea-bd84-ba794d292c87",
+        "keypair": null,
+        "affinitygroup": [],
+        "volumes": [
+          {
+            "id": "7d97eaef-5619-494b-92a4-ddddb13cfa11",
+            "type": "ROOT",
+            "size": 107374182400,
+            "state": "Ready",
+            "storage": "Primary",
+            "provisioningtype": "sparse",
+            "diskofferingid": null
+          }
+        ]
+      }
+    ],
+    "lbMembers": [
+      {
+        "id": "bc00f070-797a-40b0-9785-c965dc50fc63",
+        "name": "autoScaleVm-AS-PROD-31-AS04-CONCURRENCY-1-rvajox",
+        "displayname": "autoScaleVm-AS-PROD-31-AS04-CONCURRENCY-1-rvajox",
+        "userid": "a75c8202-b253-11f1-a895-0024814c313f",
+        "username": "system",
+        "projectid": "fb318714-bc01-4be5-9e33-0f49a7013127",
+        "project": "AS-PROD-31-AS01-project",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domain": "ROOT",
+        "domainpath": "ROOT",
+        "created": "2026-10-11T10:19:49+0900",
+        "lastupdated": "2026-10-11T10:20:12+0900",
+        "state": "Running",
+        "haenable": false,
+        "zoneid": "7013f5a1-de59-4cea-a596-f4f58815f31c",
+        "zonename": "Zone",
+        "hostcontrolstate": "Enabled",
+        "templateid": "c8ee6ff0-154e-4aed-a8b3-e0cfba8421fe",
+        "templatename": "AS-PROD-31-AS04-PROJECT-HTTP8080",
+        "templatetype": "USER",
+        "templateformat": "QCOW2",
+        "templatedisplaytext": "AS04 \uae30\ub2a5 \uac80\uc99d\uc6a9 Ubuntu HTTP8080",
+        "passwordenabled": false,
+        "isos": [],
+        "isomaxcount": 2,
+        "serviceofferingid": "39c3aa33-5632-4dea-bd84-ba794d292c87",
+        "serviceofferingname": "AS-PROD-31-AS01-2C2G-Sparse",
+        "volumemutationblockedreason": "",
+        "cpunumber": 2,
+        "cpuspeed": 2000,
+        "memory": 2048,
+        "statslastsampled": 1791720306000,
+        "statscollectionstatus": "FRESH",
+        "cpuused": "0.23%",
+        "networkkbsread": 7,
+        "networkkbswrite": 2,
+        "diskkbsread": 0,
+        "diskkbswrite": 272,
+        "memorykbs": 2097152,
+        "memoryintfreekbs": 1503968,
+        "memorytargetkbs": 2097152,
+        "memoryintusablekbs": 0,
+        "diskioread": 0,
+        "diskiowrite": 46,
+        "guestosid": "9b0a775a-b253-11f1-a895-0024814c313f",
+        "rootdeviceid": 0,
+        "rootdevicetype": "ROOT",
+        "securitygroup": [],
+        "nic": [
+          {
+            "id": "d441703d-3017-4abc-8a5b-97dcfa92abc7",
+            "networkid": "797d8d5e-efff-4364-a53c-c2ac90596fe8",
+            "networkname": "AS-PROD-31-AS01-projectNetwork",
+            "netmask": "255.255.255.0",
+            "gateway": "172.29.31.1",
+            "ipaddress": "172.29.31.184",
+            "isolationuri": "vlan://183",
+            "broadcasturi": "vlan://183",
+            "traffictype": "Guest",
+            "type": "Isolated",
+            "isdefault": true,
+            "macaddress": "02:1f:01:09:00:04",
+            "secondaryip": [],
+            "extradhcpoption": [],
+            "deviceid": "0",
+            "enabled": true
+          }
+        ],
+        "hypervisor": "KVM",
+        "ipaddress": "172.29.31.184",
+        "details": {
+          "cpuNumber": "2",
+          "memory": "4096",
+          "UEFI": "LEGACY",
+          "Message.ReservedCapacityFreed.Flag": "false",
+          "video.hardware": "virtio",
+          "video.ram": "16384",
+          "io.policy": "io_uring",
+          "rootdisksize": "100",
+          "tpmversion": "NONE"
+        },
+        "clonefastsourcepowerallowed": false,
+        "clonefastpowerallowed": false,
+        "affinitygroup": [],
+        "displayvm": true,
+        "isdynamicallyscalable": false,
+        "deleteprotection": false,
+        "ostypeid": "9b0a775a-b253-11f1-a895-0024814c313f",
+        "osdisplayname": "Ubuntu 24.04 LTS",
+        "bootmode": "legacy",
+        "boottype": "Uefi",
+        "pooltype": "SharedMountPoint",
+        "receivedbytes": 0,
+        "sentbytes": 0,
+        "autoscalevmgroupid": "bf0f5385-ae2c-4da4-aec4-eb985dbdeba4",
+        "autoscalevmgroupname": "AS-PROD-31-AS04-CONCURRENCY",
+        "vbmcport": "None",
+        "kvdoenable": false,
+        "kvdoinuse": false,
+        "vbmcstatus": "Unallocated",
+        "tags": [],
+        "hasannotations": false
+      }
+    ],
+    "schedules": [
+      {
+        "id": "7302e4d0-1336-4c42-a854-0c8828aed1bf",
+        "resourcetype": "AutoScaleVmGroup",
+        "resourceid": "bf0f5385-ae2c-4da4-aec4-eb985dbdeba4",
+        "description": "AS06-31-ENABLED",
+        "schedule": "24 9 * * *",
+        "timezone": "UTC",
+        "action": "UPDATE",
+        "enabled": false,
+        "startdate": "2026-10-11T18:20:43+0900",
+        "details": {
+          "minmembers": "3",
+          "maxmembers": "3"
+        },
+        "created": "2026-10-11T18:19:43+0900"
+      },
+      {
+        "id": "62255cda-45c1-46c6-8948-4f7b89b405d6",
+        "resourcetype": "AutoScaleVmGroup",
+        "resourceid": "bf0f5385-ae2c-4da4-aec4-eb985dbdeba4",
+        "description": "AS06-31-KST-CONFLICT",
+        "schedule": "14 18 11 10 *",
+        "timezone": "Asia/Seoul",
+        "action": "UPDATE",
+        "enabled": false,
+        "startdate": "2026-10-11T18:10:44+0900",
+        "details": {
+          "minmembers": "2",
+          "maxmembers": "3"
+        },
+        "created": "2026-10-11T18:09:44+0900"
+      },
+      {
+        "id": "1b5b9e3a-4b72-418f-bcdd-ad3e14fc7bee",
+        "resourcetype": "AutoScaleVmGroup",
+        "resourceid": "bf0f5385-ae2c-4da4-aec4-eb985dbdeba4",
+        "description": "AS06-31-UTC-EARLIEST",
+        "schedule": "14 9 11 10 *",
+        "timezone": "UTC",
+        "action": "UPDATE",
+        "enabled": false,
+        "startdate": "2026-10-11T18:10:36+0900",
+        "details": {
+          "minmembers": "3",
+          "maxmembers": "3"
+        },
+        "created": "2026-10-11T18:09:36+0900"
+      }
+    ],
+    "profileOriginalEquality": {
+      "templateid": true,
+      "serviceofferingid": true,
+      "destroyvmgraceperiod": true,
+      "otherdeployparams": true,
+      "userdataid": true,
+      "userdata": true,
+      "userdatadetails": true,
+      "counterparams": true
+    },
+    "http": {
+      "200": 20,
+      "failure": 0
+    },
+    "httpErrors": []
+  },
+  "32": {
+    "group": {
+      "id": "18bef25a-4053-4454-bc85-f6d777b9391d",
+      "name": "AS-PROD-32-AS04-CONCURRENCY",
+      "lbruleid": "d75900b6-4d7c-4082-97c5-f2b7d32e2826",
+      "associatednetworkname": "AS-PROD-32-AS01-userNetwork",
+      "associatednetworkid": "f889cc7d-02c5-490b-b256-a289b73ff824",
+      "lbprovider": "VirtualRouter",
+      "publicipid": "d82e3f23-29e2-4b44-a85c-6c8821f2a4f6",
+      "publicip": "10.10.32.169",
+      "publicport": "8084",
+      "privateport": "8080",
+      "vmprofileid": "9cf4661f-7eea-4445-b9dd-90ddd6f07f7b",
+      "minmembers": 1,
+      "maxmembers": 3,
+      "availablevirtualmachinecount": 1,
+      "interval": 10,
+      "state": "DISABLED",
+      "scaleuppolicies": [
+        {
+          "id": "37417d80-35d9-41d4-b751-5d46fc6af23a",
+          "name": "ScaleUpPolicy-0",
+          "action": "SCALEUP",
+          "duration": 60,
+          "quiettime": 10,
+          "conditions": [
+            {
+              "id": "4a8fdf72-6fee-4a24-80a0-c0544651c5ea",
+              "threshold": 5,
+              "relationaloperator": "GT",
+              "counterid": "58eefbed-b23b-11f1-990e-0024811f8935",
+              "countername": "VM CPU - average percentage",
+              "counter": {
+                "id": "58eefbed-b23b-11f1-990e-0024811f8935",
+                "name": "VM CPU - average percentage",
+                "source": "CPU",
+                "value": "vm.cpu.average.percentage",
+                "provider": "VirtualRouter"
+              },
+              "domainid": "2246448b-b23b-11f1-990e-0024811f8935",
+              "domain": "ROOT",
+              "domainpath": "ROOT",
+              "account": "epic1346-as01-user32"
+            }
+          ],
+          "account": "epic1346-as01-user32",
+          "domainid": "2246448b-b23b-11f1-990e-0024811f8935",
+          "domain": "ROOT",
+          "domainpath": "ROOT"
+        }
+      ],
+      "scaledownpolicies": [
+        {
+          "id": "7639559c-63ad-4235-bbb4-462dfaba5261",
+          "name": "ScaleDownPolicy-0",
+          "action": "SCALEDOWN",
+          "duration": 60,
+          "quiettime": 10,
+          "conditions": [
+            {
+              "id": "2ec799ba-1c5f-4a5b-9ac5-709d10ddde48",
+              "threshold": 1,
+              "relationaloperator": "LT",
+              "counterid": "58eefbed-b23b-11f1-990e-0024811f8935",
+              "countername": "VM CPU - average percentage",
+              "counter": {
+                "id": "58eefbed-b23b-11f1-990e-0024811f8935",
+                "name": "VM CPU - average percentage",
+                "source": "CPU",
+                "value": "vm.cpu.average.percentage",
+                "provider": "VirtualRouter"
+              },
+              "domainid": "2246448b-b23b-11f1-990e-0024811f8935",
+              "domain": "ROOT",
+              "domainpath": "ROOT",
+              "account": "epic1346-as01-user32"
+            }
+          ],
+          "account": "epic1346-as01-user32",
+          "domainid": "2246448b-b23b-11f1-990e-0024811f8935",
+          "domain": "ROOT",
+          "domainpath": "ROOT"
+        }
+      ],
+      "account": "epic1346-as01-user32",
+      "domainid": "2246448b-b23b-11f1-990e-0024811f8935",
+      "domain": "ROOT",
+      "domainpath": "ROOT",
+      "fordisplay": true,
+      "created": "2026-10-11T10:19:26+0900",
+      "operationinprogress": false,
+      "evaluation": {
+        "evaluatedat": 1791710932846,
+        "cooldownuntil": 1791710709635,
+        "policies": [
+          {
+            "id": "37417d80-35d9-41d4-b751-5d46fc6af23a",
+            "action": "SCALEUP",
+            "duration": 60,
+            "conditions": [
+              {
+                "id": "4a8fdf72-6fee-4a24-80a0-c0544651c5ea",
+                "countername": "VM CPU - average percentage",
+                "source": "CPU",
+                "unit": "%",
+                "operator": "GT",
+                "threshold": 100,
+                "value": 0.16258834193175237,
+                "samples": 21,
+                "resources": 3,
+                "collectedat": 1791710925000,
+                "matched": false
+              }
+            ],
+            "status": "NOT_MATCHED"
+          },
+          {
+            "id": "7639559c-63ad-4235-bbb4-462dfaba5261",
+            "action": "SCALEDOWN",
+            "duration": 60,
+            "conditions": [
+              {
+                "id": "2ec799ba-1c5f-4a5b-9ac5-709d10ddde48",
+                "countername": "VM CPU - average percentage",
+                "source": "CPU",
+                "unit": "%",
+                "operator": "LT",
+                "threshold": 0,
+                "value": 0.16258834193175237,
+                "samples": 21,
+                "resources": 3,
+                "collectedat": 1791710925000,
+                "matched": false
+              }
+            ],
+            "status": "NOT_MATCHED"
+          },
+          {
+            "id": "84ffe912-243e-4b98-ad56-0090ee1873df",
+            "action": "SCALEDOWN",
+            "duration": 60,
+            "conditions": [
+              {
+                "id": "00f04628-569f-43f6-9c3a-82632857409d",
+                "countername": "VM Memory - average percentage",
+                "source": "MEMORY",
+                "unit": "%",
+                "operator": "LT",
+                "threshold": 0,
+                "value": 39.51854705810547,
+                "samples": 21,
+                "resources": 3,
+                "collectedat": 1791710925000,
+                "matched": false
+              }
+            ],
+            "status": "NOT_MATCHED"
+          }
+        ],
+        "collectedat": 1791710925000,
+        "status": "NO_ACTION"
+      },
+      "hasannotations": false
+    },
+    "members": [
+      {
+        "id": "6f9bd71b-1745-48c5-9c88-cc0cccd9d1ff",
+        "name": "autoScaleVm-AS-PROD-32-AS04-CONCURRENCY-1-zoqdbs",
+        "instancename": "i-6-73-VM",
+        "state": "Running",
+        "templateid": "b31d2c92-67b9-40c4-a137-4ff9778c6b0d",
+        "serviceofferingid": "b02ac1bf-2da7-46e1-8961-d94d76dad9ab",
+        "keypair": null,
+        "affinitygroup": [],
+        "volumes": [
+          {
+            "id": "d38a9172-aa7f-4ab5-80c8-cff68a74ab28",
+            "type": "ROOT",
+            "size": 107374182400,
+            "state": "Ready",
+            "storage": "Primary",
+            "provisioningtype": "thin",
+            "diskofferingid": null
+          }
+        ]
+      }
+    ],
+    "lbMembers": [
+      {
+        "id": "6f9bd71b-1745-48c5-9c88-cc0cccd9d1ff",
+        "name": "autoScaleVm-AS-PROD-32-AS04-CONCURRENCY-1-zoqdbs",
+        "displayname": "autoScaleVm-AS-PROD-32-AS04-CONCURRENCY-1-zoqdbs",
+        "account": "epic1346-as01-user32",
+        "userid": "fda15514-2a87-4d8f-ba76-9e1342a461ac",
+        "username": "epic1346-as01-user32",
+        "domainid": "2246448b-b23b-11f1-990e-0024811f8935",
+        "domain": "ROOT",
+        "domainpath": "ROOT",
+        "created": "2026-10-11T10:19:36+0900",
+        "lastupdated": "2026-10-11T10:19:44+0900",
+        "state": "Running",
+        "haenable": false,
+        "zoneid": "991d2f57-0f37-4445-b956-09773d064816",
+        "zonename": "Zone",
+        "hostcontrolstate": "Enabled",
+        "templateid": "b31d2c92-67b9-40c4-a137-4ff9778c6b0d",
+        "templatename": "Rocky-Linux-9-5-x86-64-Server-Cloud-Image.qcow2",
+        "templatetype": "USER",
+        "templateformat": "QCOW2",
+        "templatedisplaytext": "Rocky-Linux-9-5-x86-64-Server-Cloud-Image.qcow2",
+        "passwordenabled": false,
+        "isos": [],
+        "isomaxcount": 2,
+        "serviceofferingid": "b02ac1bf-2da7-46e1-8961-d94d76dad9ab",
+        "serviceofferingname": "AS-PROD-32-AS01-2C2G",
+        "volumemutationblockedreason": "",
+        "cpunumber": 2,
+        "cpuspeed": 2000,
+        "memory": 2048,
+        "statslastsampled": 1791720332000,
+        "statscollectionstatus": "FRESH",
+        "cpuused": "0.11%",
+        "networkkbsread": 6,
+        "networkkbswrite": 2,
+        "diskkbsread": 0,
+        "diskkbswrite": 1,
+        "memorykbs": 2097152,
+        "memoryintfreekbs": 1270260,
+        "memorytargetkbs": 2097152,
+        "memoryintusablekbs": 0,
+        "diskioread": 0,
+        "diskiowrite": 2,
+        "guestosid": "574c7ceb-b23b-11f1-990e-0024811f8935",
+        "rootdeviceid": 0,
+        "rootdevicetype": "ROOT",
+        "securitygroup": [],
+        "nic": [
+          {
+            "id": "c59be8ca-7589-4d22-8d36-e3896f2fad1f",
+            "networkid": "f889cc7d-02c5-490b-b256-a289b73ff824",
+            "networkname": "AS-PROD-32-AS01-userNetwork",
+            "netmask": "255.255.255.0",
+            "gateway": "172.28.32.1",
+            "ipaddress": "172.28.32.160",
+            "isolationuri": "vlan://197",
+            "broadcasturi": "vlan://197",
+            "traffictype": "Guest",
+            "type": "Isolated",
+            "isdefault": true,
+            "macaddress": "02:01:00:d2:00:04",
+            "secondaryip": [],
+            "extradhcpoption": [],
+            "deviceid": "0",
+            "enabled": true
+          }
+        ],
+        "hypervisor": "KVM",
+        "ipaddress": "172.28.32.160",
+        "details": {
+          "tpmversion": "NONE",
+          "rootDiskController": "osdefault"
+        },
+        "clonefastsourcepowerallowed": false,
+        "clonefastpowerallowed": false,
+        "affinitygroup": [],
+        "displayvm": true,
+        "isdynamicallyscalable": true,
+        "deleteprotection": false,
+        "ostypeid": "574c7ceb-b23b-11f1-990e-0024811f8935",
+        "osdisplayname": "Rocky Linux 9",
+        "pooltype": "RBD",
+        "receivedbytes": 0,
+        "sentbytes": 0,
+        "autoscalevmgroupid": "18bef25a-4053-4454-bc85-f6d777b9391d",
+        "autoscalevmgroupname": "AS-PROD-32-AS04-CONCURRENCY",
+        "userdataid": "f985396e-7c73-4093-8901-25f97f7fb1de",
+        "userdataname": "AS-PROD-32-AS01-scoped-HTTP",
+        "vbmcport": "None",
+        "qemuagentversion": "9.0.0",
+        "kvdoenable": false,
+        "kvdoinuse": false,
+        "vbmcstatus": "Unallocated",
+        "tags": [],
+        "hasannotations": false
+      }
+    ],
+    "schedules": [
+      {
+        "id": "1161f705-d9ce-4c75-837e-64dc0d53026d",
+        "resourcetype": "AutoScaleVmGroup",
+        "resourceid": "18bef25a-4053-4454-bc85-f6d777b9391d",
+        "description": "AS06-32-ENABLED",
+        "schedule": "24 9 * * *",
+        "timezone": "UTC",
+        "action": "UPDATE",
+        "enabled": false,
+        "startdate": "2026-10-11T18:20:44+0900",
+        "details": {
+          "minmembers": "3",
+          "maxmembers": "3"
+        },
+        "created": "2026-10-11T18:19:44+0900"
+      },
+      {
+        "id": "db7bc07d-5da7-4963-9c1a-a50ee9475d2b",
+        "resourcetype": "AutoScaleVmGroup",
+        "resourceid": "18bef25a-4053-4454-bc85-f6d777b9391d",
+        "description": "AS06-32-KST-CONFLICT",
+        "schedule": "14 18 11 10 *",
+        "timezone": "Asia/Seoul",
+        "action": "UPDATE",
+        "enabled": false,
+        "startdate": "2026-10-11T18:10:56+0900",
+        "details": {
+          "minmembers": "2",
+          "maxmembers": "3"
+        },
+        "created": "2026-10-11T18:09:56+0900"
+      },
+      {
+        "id": "ae128ecc-7d34-4e61-ad3f-40dbf3ac1809",
+        "resourcetype": "AutoScaleVmGroup",
+        "resourceid": "18bef25a-4053-4454-bc85-f6d777b9391d",
+        "description": "AS06-32-UTC-EARLIEST",
+        "schedule": "14 9 11 10 *",
+        "timezone": "UTC",
+        "action": "UPDATE",
+        "enabled": false,
+        "startdate": "2026-10-11T18:10:54+0900",
+        "details": {
+          "minmembers": "3",
+          "maxmembers": "3"
+        },
+        "created": "2026-10-11T18:09:54+0900"
+      }
+    ],
+    "profileOriginalEquality": {
+      "templateid": true,
+      "serviceofferingid": true,
+      "destroyvmgraceperiod": true,
+      "otherdeployparams": true,
+      "userdataid": true,
+      "userdata": true,
+      "userdatadetails": true,
+      "counterparams": true
+    },
+    "http": {
+      "200": 20,
+      "failure": 0
+    },
+    "httpErrors": []
+  }
+}

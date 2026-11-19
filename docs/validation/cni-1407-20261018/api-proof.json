@@ -1,0 +1,131 @@
+{
+  "owner_cni_count": 55,
+  "all_fixture_cni_count": 59,
+  "account_family_uuids": [
+    "12475398-087d-4ba7-9eb3-e8bd49bb9537",
+    "150d72e4-c12c-491a-9554-a812263ad8b7",
+    "15f1c292-07a0-49c1-8379-c4987984724f",
+    "20e431ce-9b55-4642-810a-4040cc7bf708",
+    "3e3c15fa-1d32-46d6-ad72-54810454ee93",
+    "596d4836-928d-4136-aa9e-51f42bcf0252",
+    "5cd35867-2d1f-4431-9d11-299f267f9488",
+    "671ab10b-1cf3-4b1d-9197-f8cd4ee8481c",
+    "70e631e5-856a-4372-a11b-53af0cbc87fe",
+    "7133d71f-40cb-47e1-ade0-b66f01eb6bc6",
+    "7d86ac10-e354-483a-9548-1b52051967f0",
+    "8a93b31e-6043-4458-b28b-1d6ee881fb09",
+    "8d51ce28-5dd3-4918-bcda-6b74c8c447c4",
+    "9d924ac9-837a-4cfc-83be-b771f4e73152",
+    "b7e60325-860e-495c-8551-05555a0b5a53",
+    "cbe6e227-90c1-49c8-8a96-fb01251695fa",
+    "ce8109c0-d43f-4ade-b81f-08282dcc4219",
+    "dc078569-3c48-44be-a4e7-6e4abf2f56eb",
+    "dcb3f490-7795-4152-9b7c-414fb8e0adf2",
+    "e961a10e-15a1-45c6-af78-7dce8ea73c53",
+    "ed83cbc1-2c24-4e16-8259-a87535c7f05a",
+    "fe5dcc5f-9ca1-4af7-b8c5-9ee676f993a3",
+    "feb5db11-0c1c-42e8-a738-8d1af0b7110f"
+  ],
+  "project_family_uuids": [
+    "3c6fd3b0-c4ef-4e09-89ba-b5a086d9d2dd",
+    "9aed54d8-5dca-4ccd-834a-d1343f802dd2",
+    "af24e8e3-4a7f-41ff-827f-ad844a973b91"
+  ],
+  "clones": [
+    {
+      "id": "dcb3f490-7795-4152-9b7c-414fb8e0adf2",
+      "source": "12475398-087d-4ba7-9eb3-e8bd49bb9537",
+      "name": "cni1407-ui-v1",
+      "owner": {
+        "domainid": "8eb393ec-522d-41d5-a864-93bfcb73a799",
+        "account": "cni1407-a"
+      },
+      "body_bytes": 70,
+      "body_sha256": "868941d37b11a4a92160b82f872059fb1942537bd480196ed9bd5b7aa67ac737",
+      "params": "NEW,KEEP",
+      "relation": {
+        "version": 1,
+        "sourceid": "12475398-087d-4ba7-9eb3-e8bd49bb9537",
+        "targetid": "dcb3f490-7795-4152-9b7c-414fb8e0adf2",
+        "owner": {
+          "domainid": "8eb393ec-522d-41d5-a864-93bfcb73a799",
+          "account": "cni1407-a"
+        },
+        "before": 73,
+        "after": 70
+      }
+    },
+    {
+      "id": "3e3c15fa-1d32-46d6-ad72-54810454ee93",
+      "source": "dcb3f490-7795-4152-9b7c-414fb8e0adf2",
+      "name": "cni1407-ui-v2",
+      "owner": {
+        "domainid": "8eb393ec-522d-41d5-a864-93bfcb73a799",
+        "account": "cni1407-a"
+      },
+      "body_bytes": 70,
+      "body_sha256": "868941d37b11a4a92160b82f872059fb1942537bd480196ed9bd5b7aa67ac737",
+      "params": "NEXT,KEEP",
+      "relation": {
+        "version": 1,
+        "sourceid": "dcb3f490-7795-4152-9b7c-414fb8e0adf2",
+        "targetid": "3e3c15fa-1d32-46d6-ad72-54810454ee93",
+        "owner": {
+          "domainid": "8eb393ec-522d-41d5-a864-93bfcb73a799",
+          "account": "cni1407-a"
+        },
+        "before": 70,
+        "after": 70
+      }
+    },
+    {
+      "id": "9aed54d8-5dca-4ccd-834a-d1343f802dd2",
+      "source": "af24e8e3-4a7f-41ff-827f-ad844a973b91",
+      "name": "cni1407-project-v1",
+      "owner": {
+        "domainid": "8eb393ec-522d-41d5-a864-93bfcb73a799",
+        "projectid": "e4480be5-edff-4ae7-8c3e-0d9e35b88c91"
+      },
+      "body_bytes": 73,
+      "body_sha256": "7e552411cf07e3d48199c35a25ba50946041c684b9d7a7963caf47ff4644439d",
+      "params": "OLD,KEEP",
+      "relation": {
+        "version": 1,
+        "sourceid": "af24e8e3-4a7f-41ff-827f-ad844a973b91",
+        "targetid": "9aed54d8-5dca-4ccd-834a-d1343f802dd2",
+        "owner": {
+          "domainid": "8eb393ec-522d-41d5-a864-93bfcb73a799",
+          "projectid": "e4480be5-edff-4ae7-8c3e-0d9e35b88c91"
+        },
+        "before": 73,
+        "after": 73
+      }
+    },
+    {
+      "id": "3c6fd3b0-c4ef-4e09-89ba-b5a086d9d2dd",
+      "source": "9aed54d8-5dca-4ccd-834a-d1343f802dd2",
+      "name": "cni1407-project-v2",
+      "owner": {
+        "domainid": "8eb393ec-522d-41d5-a864-93bfcb73a799",
+        "projectid": "e4480be5-edff-4ae7-8c3e-0d9e35b88c91"
+      },
+      "body_bytes": 70,
+      "body_sha256": "868941d37b11a4a92160b82f872059fb1942537bd480196ed9bd5b7aa67ac737",
+      "params": "OLD,KEEP",
+      "relation": {
+        "version": 1,
+        "sourceid": "9aed54d8-5dca-4ccd-834a-d1343f802dd2",
+        "targetid": "3c6fd3b0-c4ef-4e09-89ba-b5a086d9d2dd",
+        "owner": {
+          "domainid": "8eb393ec-522d-41d5-a864-93bfcb73a799",
+          "projectid": "e4480be5-edff-4ae7-8c3e-0d9e35b88c91"
+        },
+        "before": 73,
+        "after": 70
+      }
+    }
+  ],
+  "root_annotation_pages": 3,
+  "root_annotations": 203,
+  "all_data_sha256": "4e25cb610137fa40b399ceda5a676445403b8378bd19ad899350d124ff5763f9"
+}

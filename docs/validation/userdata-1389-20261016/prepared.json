@@ -1,0 +1,232 @@
+{
+  "prefix": "UD1389-31-20261016",
+  "accounts": [
+    {
+      "id": "41e74df2-c66d-412e-baf2-3d96957f71c2",
+      "username": "ud1389-31-20261016-user",
+      "suffix": "user"
+    },
+    {
+      "id": "5ecc2d04-5cfb-4acf-aaa5-45a9819b442d",
+      "username": "ud1389-31-20261016-domainadmin",
+      "suffix": "domainadmin"
+    },
+    {
+      "id": "cc799b82-ea6c-4566-8b0e-278dc8b929d8",
+      "username": "ud1389-31-20261016-outsider",
+      "suffix": "outsider"
+    }
+  ],
+  "vms": [
+    "f7912d0f-d093-4677-9df4-ded9de010e85"
+  ],
+  "networks": [
+    "a7c15b50-0b57-43d1-95d6-09060ad2d20d"
+  ],
+  "templates": [
+    "467c63f5-7a20-4a93-b706-784a78532266"
+  ],
+  "isos": [
+    "63a65451-f02c-40fe-b422-6b82cf8423dc"
+  ],
+  "domain_id": "6cb61eee-eff1-4007-b6ea-bcb7f4d94be7",
+  "project_id": "4bac1248-9871-4e0b-ba78-8d3073b8bfe6",
+  "zone_id": "7013f5a1-de59-4cea-a596-f4f58815f31c",
+  "paging_prepared": true,
+  "roles": [
+    "9dde1009-432e-4469-bf68-f88efd566885"
+  ],
+  "userdata": {
+    "main": {
+      "id": "1fc463a9-c04b-4a1d-b1d3-75a9ac8c0e3c",
+      "name": "UD1389-31-20261016-main",
+      "account": "admin",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "domain": "ROOT",
+      "domainpath": "ROOT",
+      "params": "hostname,QA_KEY",
+      "hasannotations": false
+    },
+    "binary": {
+      "id": "cd2544db-5b1f-4af1-a9bc-6b541553a956",
+      "name": "UD1389-31-20261016-binary",
+      "account": "admin",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "domain": "ROOT",
+      "domainpath": "ROOT",
+      "hasannotations": false
+    },
+    "user": {
+      "id": "b234e5ec-6ccf-4a27-9ad8-05081d7a78a9",
+      "name": "UD1389-31-20261016-user",
+      "account": "ud1389-31-20261016-user",
+      "domainid": "6cb61eee-eff1-4007-b6ea-bcb7f4d94be7",
+      "domain": "ud1389-31-20261016",
+      "domainpath": "ROOT/ud1389-31-20261016",
+      "hasannotations": false
+    },
+    "project": {
+      "id": "9f5810e1-4356-49fd-a9fd-efd9636a580d",
+      "name": "UD1389-31-20261016-project",
+      "projectid": "4bac1248-9871-4e0b-ba78-8d3073b8bfe6",
+      "project": "UD1389-31-20261016-project",
+      "domainid": "6cb61eee-eff1-4007-b6ea-bcb7f4d94be7",
+      "domain": "ud1389-31-20261016",
+      "domainpath": "ROOT/ud1389-31-20261016",
+      "hasannotations": false
+    },
+    "page0": {
+      "id": "ad558eca-d0e1-4368-8b15-385d925eeb24",
+      "name": "UD1389-31-20261016-page0",
+      "account": "admin",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "domain": "ROOT",
+      "domainpath": "ROOT",
+      "hasannotations": false
+    },
+    "page1": {
+      "id": "f9a0d62f-549d-4601-96c4-c571b6048e3e",
+      "name": "UD1389-31-20261016-page1",
+      "account": "admin",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "domain": "ROOT",
+      "domainpath": "ROOT",
+      "hasannotations": false
+    },
+    "page2": {
+      "id": "4e1b554f-f042-42b8-b3b3-df9abc3e5363",
+      "name": "UD1389-31-20261016-page2",
+      "account": "admin",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "domain": "ROOT",
+      "domainpath": "ROOT",
+      "hasannotations": false
+    },
+    "page3": {
+      "id": "f10e25b1-eb40-4d0c-bf1c-2253a9534420",
+      "name": "UD1389-31-20261016-page3",
+      "account": "admin",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "domain": "ROOT",
+      "domainpath": "ROOT",
+      "hasannotations": false
+    },
+    "page4": {
+      "id": "a4575c82-b02e-439f-ae30-dd920698aea7",
+      "name": "UD1389-31-20261016-page4",
+      "account": "admin",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "domain": "ROOT",
+      "domainpath": "ROOT",
+      "hasannotations": false
+    },
+    "page5": {
+      "id": "972eea17-a374-48e9-aa86-0ae8abaf37f7",
+      "name": "UD1389-31-20261016-page5",
+      "account": "admin",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "domain": "ROOT",
+      "domainpath": "ROOT",
+      "hasannotations": false
+    },
+    "page6": {
+      "id": "3bbe0e61-be7c-4116-a2a8-0651649a02f6",
+      "name": "UD1389-31-20261016-page6",
+      "account": "admin",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "domain": "ROOT",
+      "domainpath": "ROOT",
+      "hasannotations": false
+    },
+    "page7": {
+      "id": "c8b2b579-339c-4a12-b30d-6646f7e210ae",
+      "name": "UD1389-31-20261016-page7",
+      "account": "admin",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "domain": "ROOT",
+      "domainpath": "ROOT",
+      "hasannotations": false
+    },
+    "page8": {
+      "id": "362d852e-a449-49cd-8b40-92a222af5e9f",
+      "name": "UD1389-31-20261016-page8",
+      "account": "admin",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "domain": "ROOT",
+      "domainpath": "ROOT",
+      "hasannotations": false
+    },
+    "page9": {
+      "id": "dd5739c1-4aaa-4a23-8ecf-6a510f083f64",
+      "name": "UD1389-31-20261016-page9",
+      "account": "admin",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "domain": "ROOT",
+      "domainpath": "ROOT",
+      "hasannotations": false
+    },
+    "page10": {
+      "id": "939ffcde-8266-4ddf-b882-22db0df333c0",
+      "name": "UD1389-31-20261016-page10",
+      "account": "admin",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "domain": "ROOT",
+      "domainpath": "ROOT",
+      "hasannotations": false
+    },
+    "page11": {
+      "id": "5749c8e3-8dc7-4f30-a711-5f7168c43555",
+      "name": "UD1389-31-20261016-page11",
+      "account": "admin",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "domain": "ROOT",
+      "domainpath": "ROOT",
+      "hasannotations": false
+    },
+    "page12": {
+      "id": "d2cd59b4-8cd8-4c95-86e6-403f2bc5e117",
+      "name": "UD1389-31-20261016-page12",
+      "account": "admin",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "domain": "ROOT",
+      "domainpath": "ROOT",
+      "hasannotations": false
+    },
+    "page13": {
+      "id": "b06b7f38-b526-4fb5-a892-864111ae2b71",
+      "name": "UD1389-31-20261016-page13",
+      "account": "admin",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "domain": "ROOT",
+      "domainpath": "ROOT",
+      "hasannotations": false
+    },
+    "page14": {
+      "id": "c1df5da9-f42b-41d7-b3fd-865999f3203c",
+      "name": "UD1389-31-20261016-page14",
+      "account": "admin",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "domain": "ROOT",
+      "domainpath": "ROOT",
+      "hasannotations": false
+    },
+    "page15": {
+      "id": "a89d5c6d-e777-4511-add6-a907cc18d7b8",
+      "name": "UD1389-31-20261016-page15",
+      "account": "admin",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "domain": "ROOT",
+      "domainpath": "ROOT",
+      "hasannotations": false
+    },
+    "page16": {
+      "id": "350e9a10-df96-4a9d-ad15-0b95fc88b291",
+      "name": "UD1389-31-20261016-page16",
+      "account": "admin",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "domain": "ROOT",
+      "domainpath": "ROOT",
+      "hasannotations": false
+    }
+  }
+}

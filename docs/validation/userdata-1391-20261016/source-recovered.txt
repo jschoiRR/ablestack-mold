@@ -1,0 +1,240 @@
+Browser tab: 6, Title: "사용자 데이터 라이브러리 - ABLESTACK-Mold", URL: "http://10.10.31.10:8080/client/#/userdata/c0be9be6-7c13-41a9-8e7b-7e1fca043b47".
+1 AXWebArea 사용자 데이터 라이브러리 - ABLESTACK-Mold, URL: 10.10.31.10:8080/client/#/userdata/c0be9be6-7c13-41a9-8e7b-7e1fca043b47
+	2 container
+		785 container
+			786 image
+			787 menu
+				788 dashboard 대시보드
+					789 link Description: dashboard 대시보드, Value: 10.10.31.10:8080/client/#/dashboard
+				790 container
+					791 image cloud
+					792 text 컴퓨트
+				793 content list sub_menu_89_$$_/compute-popup
+					794 cloud-server 가상머신
+						795 link Description: cloud-server 가상머신, Value: 10.10.31.10:8080/client/#/vm
+					796 camera VM 스냅샷
+						797 link Description: camera VM 스냅샷, Value: 10.10.31.10:8080/client/#/vmsnapshot
+					798 쿠버네티스
+						799 link Description: 쿠버네티스, Value: 10.10.31.10:8080/client/#/kubernetes
+					800 fullscreen 오토스케일 VM 그룹
+						801 link Description: fullscreen 오토스케일 VM 그룹, Value: 10.10.31.10:8080/client/#/autoscalevmgroup
+					802 gold 가상머신 그룹
+						803 link Description: gold 가상머신 그룹, Value: 10.10.31.10:8080/client/#/vmgroup
+					804 key SSH 키 쌍
+						805 link Description: key SSH 키 쌍, Value: 10.10.31.10:8080/client/#/ssh
+					806 solution 사용자 데이터 라이브러리
+						807 link Description: solution 사용자 데이터 라이브러리, Value: 10.10.31.10:8080/client/#/userdata
+					808 solution CNI 구성
+						809 link Description: solution CNI 구성, Value: 10.10.31.10:8080/client/#/cniconfiguration
+					810 swap Affinity 그룹
+						811 link Description: swap Affinity 그룹, Value: 10.10.31.10:8080/client/#/affinitygroup
+				812 container
+					813 image hdd
+					814 text 스토리지
+				815 container
+					816 image wifi
+					817 text 네트워크
+				818 container
+					819 image picture
+					820 text 이미지
+				821 container
+					822 image lock
+					823 text 키 관리
+				824 schedule 이벤트
+					825 link Description: schedule 이벤트, Value: 10.10.31.10:8080/client/#/event
+				826 project 프로젝트
+					827 link Description: project 프로젝트, Value: 10.10.31.10:8080/client/#/project
+				828 idcard 역할
+					829 link Description: idcard 역할, Value: 10.10.31.10:8080/client/#/role
+				830 team 계정
+					831 link Description: team 계정, Value: 10.10.31.10:8080/client/#/account
+				832 block 도메인
+					833 link Description: block 도메인, Value: 10.10.31.10:8080/client/#/domain
+				834 container
+					835 image bank
+					836 text 인프라스트럭쳐
+				837 container
+					838 image shopping
+					839 text 서비스 오퍼링
+				840 container
+					841 image setting
+					842 text 구성
+				843 appstore-add 확장
+					844 link Description: appstore-add 확장, Value: 10.10.31.10:8080/client/#/extension
+				845 container
+					846 image tool
+					847 text 도구
+				848 read API 문서
+					849 link Description: read API 문서, Value: 10.10.31.10:8080/client/#/apidocs/
+		781 container
+			782 text 페이지 스타일 설정
+			783 button 닫기
+				784 image close
+			850 heading 페이지 스타일 설정, Value: 3
+				851 text 페이지 스타일 설정
+			852 container
+				853 container
+					854 image
+					855 container
+						856 radio button (settable, integer) Description:  , Value: 0
+				857 container
+					858 image
+					859 container
+						860 radio button (settable, integer) Description:  , Value: 1
+					861 image check
+			862 heading 테마 색상, Value: 3
+				863 text 테마 색상
+			864 container
+				865 container
+					866 radio button (settable, integer) Description:  , Value: 0
+					867 image check
+				868 container
+					869 radio button (settable, integer) Description:  , Value: 0
+				870 container
+					871 radio button (settable, integer) Description:  , Value: 0
+				872 container
+					873 radio button (settable, integer) Description:  , Value: 0
+				874 container
+					875 radio button (settable, integer) Description:  , Value: 0
+				876 container
+					877 radio button (settable, integer) Description:  , Value: 0
+				878 container
+					879 radio button (settable, integer) Description:  , Value: 0
+				880 container
+					881 radio button (settable, integer) Description:  , Value: 0
+			882 heading 네비게이션 설정, Value: 3
+				883 text 네비게이션 설정
+			884 container
+				885 container
+					886 text 배경색
+					887 color well (disabled, settable) #ffffff
+				888 container
+					889 text 텍스트 색상
+					890 color well (disabled, settable) #000000
+			891 container
+				892 image exclamation-circle
+				893 text 설정은 현재 브라우저에서만 볼 수 있습니다. 설정을 적용하려면 JSON 파일을 다운로드하고 경로 `/public/config.json` 아래의 `config.json` 파일의 `theme` 섹션에서 해당 콘텐츠를 교체하세요.
+			894 button download 세팅값 다운로드(json)
+				895 image download
+				896 text 세팅값 다운로드(json)
+			897 button undo 기본값으로 재설정
+				898 image undo
+				899 text 기본값으로 재설정
+		122 container
+			900 image menu-fold
+			124 container
+				125 combo box (settable) rc_select_1
+				126 image project
+				127 text 기본 보기
+			901 button 생성 down
+				902 text 생성
+				903 image down
+			131 image translation
+			132 image bell
+			133 container
+				134 text AC admin cloud
+		135 container
+			904 container
+				905 link Description: home, Value: 10.10.31.10:8080/client/#/
+				906 text /
+				907 link Description: 사용자 데이터 라이브러리, Value: 10.10.31.10:8080/client/#/userdata
+				908 text / UD1391-31-20261016-binary
+				909 link Description: question-circle, Value: docs.ablecloud.io/latest/adminguide/virtual_machines.html#user-data-and-meta-data
+				910 button reload 업데이트
+					916 image reload
+					912 text 업데이트
+			913 button down 작업
+				914 image down
+				915 text 작업
+			917 container
+				918 image solution
+				919 heading UD1391-31-20261016-binary, Value: 4
+					920 text UD1391-31-20261016-binary
+				921 text 아이디
+				922 button barcode
+					923 image barcode
+				924 link Description: c0be9be6-7c13-41a9-8e7b-7e1fca043b47 , Value: javascript:;
+				925 text 계정
+				926 image user
+				927 link Description: admin, Value: 10.10.31.10:8080/client/#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f
+				928 text 도메인
+				929 image block
+				930 link Description: ROOT, Value: 10.10.31.10:8080/client/#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details
+				931 link Description: cloud-server 가상머신 보기, Value: 10.10.31.10:8080/client/#/vm?userdataid=c0be9be6-7c13-41a9-8e7b-7e1fca043b47
+			932 container
+				933 tab group
+					934 container
+						935 tab (selected, settable, boolean) 상세, Value: 1, ID: rc-tabs-9-tab-details
+						936 tab (selectable, settable, boolean) 사용자 데이터 본문, Value: 0, ID: rc-tabs-9-tab-userdata.content
+						937 tab (selectable, settable, boolean) 버전·변경 정책, Value: 0, ID: rc-tabs-9-tab-userdata.versions
+						938 tab (selectable, settable, boolean) 사용 가상머신, Value: 0, ID: rc-tabs-9-tab-userdata.usage.vms
+						939 tab (selectable, settable, boolean) 연결 템플릿, Value: 0, ID: rc-tabs-9-tab-userdata.usage.templates
+						940 tab (selectable, settable, boolean) 연결 ISO, Value: 0, ID: rc-tabs-9-tab-userdata.usage.isos
+						941 tab (selectable, settable, boolean) 코멘트, Value: 0, ID: rc-tabs-9-tab-comments
+				942 container Description: 상세, ID: rc-tabs-9-panel-details
+					943 content list
+						944 container
+							945 text 아이디
+							946 text c0be9be6-7c13-41a9-8e7b-7e1fca043b47
+						947 container
+							948 text 이름
+							949 text UD1391-31-20261016-binary
+						950 container
+							951 text 계정
+							952 text admin
+						953 container
+							954 text 도메인
+							955 text ROOT
+	187 container
+		188 image info-circle
+		189 text Wall 모니터링을 사용할 수 없습니다. 기존 알림은 최신 정보가 아닐 수 있으며 Mold는 계속 사용할 수 있습니다. 비활성
+	956 container
+		957 container 복제하여 새 버전 등록
+			958 container
+				974 button Close
+					975 image close
+				961 text 복제하여 새 버전 등록
+				962 container
+					963 image info-circle
+					964 text 원본의 이름·본문·변수를 재사용해 같은 소유 범위에 새 데이터를 만듭니다. 기존 VM·템플릿·ISO에는 자동 적용되지 않습니다.
+					976 text 복제 원본: UD1391-31-20261016-binary (c0be9be6-7c13-41a9-8e7b-7e1fca043b47)
+					977 text admin / ROOT
+					978 link Description: 사용 가상머신, Value: 10.10.31.10:8080/client/#/userdata/c0be9be6-7c13-41a9-8e7b-7e1fca043b47?tab=userdata.usage.vms
+					979 link Description: 연결 템플릿, Value: 10.10.31.10:8080/client/#/userdata/c0be9be6-7c13-41a9-8e7b-7e1fca043b47?tab=userdata.usage.templates
+					980 link Description: 연결 ISO, Value: 10.10.31.10:8080/client/#/userdata/c0be9be6-7c13-41a9-8e7b-7e1fca043b47?tab=userdata.usage.isos
+					966 button (collapsed) 적용 범위·참조 전환·되돌리기 안내, Secondary Actions: Expand
+						967 text 적용 범위·참조 전환·되돌리기 안내
+					981 container userdata-registration-form
+						982 container
+							1011 text * 이름
+							984 image info-circle
+						985 text field (settable) * 이름 info-circle, Value: UD1391-31-20261016-binary-v2, ID: form_item_name
+						986 container
+							1012 text * 사용자 데이터
+							988 image info-circle
+						989 text entry area (settable) * 사용자 데이터 info-circle, Value: /wAB/g==, ID: form_item_userdata
+						990 text Base64 인코드
+						991 container
+							992 checkbox (settable, integer) Base64 인코드  , Value: 1, ID: form_item_isbase64
+							993 text 처음에는 원본 바이트를 보존하는 Base64로 채웁니다. UTF-8 본문은 원문 편집을 선택할 수 있습니다. 아래 미리보기에서 변경 내용을 확인하세요.
+							994 button (disabled) 원문으로 편집
+						995 container
+							996 text 사용자 데이터 매개변수
+							997 image info-circle
+						998 container
+							999 combo box (settable) 사용자 데이터 매개변수 info-circle, ID: form_item_params
+							1000 text comma separated list of variables declared in user data content
+						1001 container
+							1002 image exclamation-circle
+							1003 text 본문이 원본과 같습니다. 이름·변수만 바꾸는 버전은 같은 소유자의 동일 본문 중복 금지 정책에 따라 등록할 수 없습니다.
+						1004 container
+							1005 text 원본 4바이트 → 새 버전 4바이트 · 최초 차이 바이트 위치: -
+							1006 text 사용자 데이터 매개변수: - → -
+						1007 button (collapsed) 원본 본문 확인, Secondary Actions: Expand
+							1008 text 원본 본문 확인
+						1009 button (collapsed) 새 버전 본문 미리보기, Secondary Actions: Expand
+							1010 text 새 버전 본문 미리보기
+				970 button 취소
+				971 button 새 버전 등록
+
+The focused UI element is 985 text field (settable) * 이름 info-circle, Value: UD1391-31-20261016-binary-v2, ID: form_item_name

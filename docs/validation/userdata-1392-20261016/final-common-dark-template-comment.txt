@@ -1,0 +1,155 @@
+- generic: 페이지 스타일 설정
+- button "닫기":
+  - img "close":
+- heading "페이지 스타일 설정" [level=3]
+- radio
+- radio [checked]
+- img "check":
+- heading "테마 색상" [level=3]
+- radio
+- img "check"
+- radio
+- radio
+- radio
+- radio
+- radio
+- radio
+- radio
+- separator
+- heading "네비게이션 설정" [level=3]
+- generic: 배경색
+- textbox [disabled]: "#ffffff"
+- generic: 텍스트 색상
+- textbox [disabled]: "#000000"
+- separator
+- alert:
+  - img "exclamation-circle":
+  - generic: "설정은 현재 브라우저에서만 볼 수 있습니다. 설정을 적용하려면 JSON 파일을 다운로드하고 경로 `/public/config.json` 아래의 `config.json` 파일의 `theme` 섹션에서 해당 콘텐츠를 교체하세요."
+- button "download 세팅값 다운로드(json)":
+  - img "download":
+  - generic: 세팅값 다운로드(json)
+- button "undo 기본값으로 재설정":
+  - img "undo":
+  - generic: 기본값으로 재설정
+- img "menu-unfold":
+- combobox
+- img "project":
+- text: 기본 보기
+- img "translation":
+- img "bell":
+- superscript:
+  - paragraph: "1"
+- generic: AC
+- generic: admin cloud
+- main:
+  - link "home":
+    - /url: "#/"
+    - img "home":
+  - text: /
+  - link "템플릿":
+    - /url: "#/template"
+  - text: /
+  - generic: UD1392-31-20261016-templates-0
+  - link "question-circle":
+    - /url: http://docs.ablecloud.io/latest/adminguide/templates.html
+    - img "question-circle":
+  - button "reload 업데이트":
+    - img "reload":
+    - generic: 업데이트
+  - button "down 작업":
+    - img "down":
+    - generic: 작업
+  - img "edit":
+  - heading "UD1392-31-20261016-templates-0" [level=4]
+  - generic: x86_64
+  - generic: KVM
+  - separator
+  - generic: 상태
+  - generic: 사용 가능
+  - generic: 아이디
+  - button "barcode":
+    - img "barcode":
+  - link "b2307bbc-6804-48bb-8209-05d2620ff14a":
+    - /url: javascript:;
+  - generic: OS 유형
+  - generic: Rocky Linux 9
+  - generic: 사용자 데이터
+  - img "solution":
+  - link "UD1392-31-20261016-B":
+    - /url: "#/userdata/6ab285d3-d90d-4da1-98dc-652ac5c17f14"
+  - generic: 계정
+  - img "user":
+  - link "admin":
+    - /url: "#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f"
+  - generic: 도메인
+  - img "block":
+  - link "ROOT":
+    - /url: "#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details"
+  - separator
+  - link "cloud-server 가상머신 보기":
+    - /url: "#/vm?templateid=b2307bbc-6804-48bb-8209-05d2620ff14a"
+    - button "cloud-server 가상머신 보기":
+      - img "cloud-server":
+      - generic: 가상머신 보기
+  - button "rocket 가상머신 생성":
+    - img "rocket":
+    - generic: 가상머신 생성
+  - button "down":
+    - img "down":
+  - separator
+  - generic: 태그
+  - img "plus":
+  - text: 새 태그
+  - tablist:
+    - tab "상세"
+    - tab "Zone"
+    - tab "설정"
+    - tab "이벤트"
+    - tab "코멘트" [selected]
+    - button:
+  - tabpanel "코멘트":
+    - button "보내기" [disabled]:
+      - generic: 보내기
+    - button "reload 업데이트":
+      - img "reload":
+      - generic: 업데이트
+    - img "edit":
+    - textbox "메모 추가"
+    - checkbox "관리자만 표시"
+    - generic: 관리자만 표시
+    - generic: 코멘트 (2)
+    - separator
+    - list:
+      - img "message":
+      - generic: admin
+      - generic: 2026. 10. 16. 오후 11:30:56
+      - generic: UD1392-31-20261016 dark template common
+      - list:
+        - img "eye":
+        - text: 모든 사람에게 표시
+      - list:
+        - button "delete":
+          - img "delete":
+      - img "message":
+      - generic: admin
+      - generic: 2026. 10. 16. 오후 11:30:48
+      - generic: UD1392-31-20261016 light template common
+      - list:
+        - img "eye":
+        - text: 모든 사람에게 표시
+      - list:
+        - button "delete":
+          - img "delete":
+    - list:
+      - listitem: 전체 2 개 항목 중 1-2 표시
+      - listitem "이전 페이지":
+        - button "left" [disabled]:
+          - img "left":
+      - listitem "1":
+        - generic: "1"
+      - listitem "다음 페이지":
+        - button "right" [disabled]:
+          - img "right":
+- alert:
+  - img "info-circle":
+  - generic: Wall 모니터링을 사용할 수 없습니다. 기존 알림은 최신 정보가 아닐 수 있으며 Mold는 계속 사용할 수 있습니다. 비활성

@@ -1,0 +1,79 @@
+[
+  {
+    "id": "192a2804-f31f-4de9-9400-dcd3c1243c8a",
+    "name": "UD1383-31-20261015-admin",
+    "account": "admin",
+    "domain": "ROOT",
+    "projectid": null,
+    "decoded": "# UD1383 관리자 등록\n",
+    "params": "VAR1",
+    "payload_exact_match": true,
+    "owner_verified": true
+  },
+  {
+    "id": "6d8622b0-60ac-4dfd-a26a-11dce5e158c4",
+    "name": "UD1383-31-20261015-recovery",
+    "account": "admin",
+    "domain": "ROOT",
+    "projectid": null,
+    "decoded": "# UD1383 복구 등록\n",
+    "params": "VAR2,VAR3",
+    "payload_exact_match": true,
+    "owner_verified": true
+  },
+  {
+    "id": "7e91e062-6f8a-4031-803e-95ea4f3b6ed1",
+    "name": "UD1383-31-20261015-user",
+    "account": "ud1383-31-20261015-user",
+    "domain": "UD1383-31-20261015-domain",
+    "projectid": null,
+    "decoded": "# UD1383 ordinary user UI",
+    "params": null,
+    "payload_exact_match": true,
+    "owner_verified": true
+  },
+  {
+    "id": "b15c519a-c59c-454e-9c65-8f8c83671308",
+    "name": "UD1383-31-20261015-domainadmin",
+    "account": "ud1383-31-20261015-domainadmin",
+    "domain": "UD1383-31-20261015-domain",
+    "projectid": null,
+    "decoded": "# UD1383 domain admin UI",
+    "params": null,
+    "payload_exact_match": true,
+    "owner_verified": true
+  },
+  {
+    "id": "c63bd372-3373-444a-b669-ba82fa603242",
+    "name": "UD1383-31-20261015-dark-recovery",
+    "account": "admin",
+    "domain": "ROOT",
+    "projectid": null,
+    "decoded": "# UD1383 dark recovery",
+    "params": "VAR2",
+    "payload_exact_match": true,
+    "owner_verified": true
+  },
+  {
+    "id": "40420780-8b04-4e1a-b765-dc5f85743f78",
+    "name": "UD1383-31-20261015-project",
+    "account": null,
+    "domain": "ROOT",
+    "projectid": "7539b359-78db-40f0-a1a9-57b34570ec44",
+    "decoded": "# UD1383 project UI",
+    "params": null,
+    "payload_exact_match": true,
+    "owner_verified": true
+  },
+  {
+    "id": "454374ee-4eca-40b7-b0c5-8e1b77dfd896",
+    "name": "UD1383-31-20261015-cni",
+    "account": "admin",
+    "domain": "ROOT",
+    "projectid": null,
+    "decoded": "{\"cniVersion\":\"0.3.1\",\"name\":\"UD1383-cni\",\"type\":\"bridge\"}",
+    "params": null,
+    "payload_exact_match": true,
+    "owner_verified": true
+  }
+]

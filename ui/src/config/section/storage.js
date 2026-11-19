@@ -17,11 +17,15 @@
 
 import { shallowRef, defineAsyncComponent } from 'vue'
 import store from '@/store'
+import { getAblestackBackupOfferingRemovalMessage, isAblestackBackupProvider, isAblestackOriginalVmUnavailable, isKbossBackupProvider } from '@/utils/ablestackBackupPolicy'
 import { isZoneCreated } from '@/utils/zone'
 import { isAdmin } from '@/role'
+import { canDeleteVolume, volumeDeleteReason } from '@/utils/volumeEdit'
+import { assignmentReason } from '@/utils/storageManagement'
+import { canEditPolicy, canManagePolicy } from '@/utils/snapshotPolicyEditing'
+import { canDeletePolicy } from '@/utils/snapshotPolicyDeletion'
 
 const activeFastCloneFlattenStatuses = ['pending', 'running']
-const runningFastCloneFlattenStatuses = ['running']
 
 const isFastCloneFlattenActive = (record) => {
   return activeFastCloneFlattenStatuses.includes(
@@ -29,10 +33,45 @@ const isFastCloneFlattenActive = (record) => {
   )
 }
 
-const isFastCloneFlattenRunning = (record) => {
-  return runningFastCloneFlattenStatuses.includes(
-    String(record?.clonefastflattenstatus || record?.details?.['clone.fast.flatten.status'] || '').toLowerCase()
-  )
+const isBackupSourceControlClosed = (record) => {
+  return ['COMPLETED', 'FAILED', 'CANCELED', 'CANCELLED', 'INTERRUPTED', 'CANCEL_PENDING'].includes(String(record?.backupjobstate || '').toUpperCase()) ||
+    String(record?.backupjobstep || '').toUpperCase() === 'FINALIZING'
+}
+
+const hasBackupCapability = (record, capability) => {
+  if (['cancel', 'live-bandwidth'].includes(capability) && isBackupSourceControlClosed(record)) return false
+  return String(record?.capabilities ?? record?.backupjobcapabilities ?? '')
+    .split(',')
+    .map(item => item.trim())
+    .includes(capability)
+}
+
+const isLiveBandwidthBackup = (record) => {
+  return hasBackupCapability(record, 'live-bandwidth')
+}
+
+const isVolumeBackup = (record) => {
+  return (record?.vmdetails?.['thirdparty.staging.mode'] ?? record?.details?.['thirdparty.staging.mode']) === 'VOLUME'
+}
+
+const hasSubmittedCommvaultJob = (record) => {
+  if (String(record?.provider || '').toLowerCase() !== 'ablestack-commvault') return false
+  if (isVolumeBackup(record)) return false
+  const externalId = String(record?.externalid || '')
+  const separator = externalId.lastIndexOf(',')
+  return separator >= 0 && !!externalId.substring(separator + 1).trim()
+}
+
+const isBackupOperationInProgress = (record) => {
+  const restoreState = String(record?.restorejobstate || '').toLowerCase()
+  const restoreFinished = ['completed', 'failed', 'canceled', 'cancelled', 'interrupted'].includes(restoreState)
+  return record?.backupcancellationpending === true || ['backingup', 'restoring'].includes(String(record?.status || '').toLowerCase()) ||
+    record?.restoreoperationpending === true || ['starting', 'running'].includes(restoreState) ||
+    (!!record?.restorejobid && !restoreFinished)
+}
+
+const getBackupOperationActionTooltip = (record, defaultLabel) => {
+  return isBackupOperationInProgress(record) ? 'message.backup.operation.action.disabled' : defaultLabel
 }
 
 export default {
@@ -93,10 +132,20 @@ export default {
           component: shallowRef(defineAsyncComponent(() => import('@/components/view/DetailsTab.vue')))
         },
         {
+          name: 'snapshots',
+          component: shallowRef(defineAsyncComponent(() => import('@/views/storage/StorageRelatedResources.vue'))),
+          show: () => 'listSnapshots' in store.getters.apis
+        },
+        {
+          name: 'recurringsnapshots',
+          component: shallowRef(defineAsyncComponent(() => import('@/views/storage/VolumeSnapshotPolicies.vue'))),
+          show: () => 'listSnapshotPolicies' in store.getters.apis
+        },
+        {
           name: 'metrics',
           resourceType: 'Volume',
           component: shallowRef(defineAsyncComponent(() => import('@/components/view/StatsTab.vue'))),
-          show: (record) => { return store.getters.features.instancesdisksstatsretentionenabled }
+          show: (record) => { return store.getters.features.instancesdisksstatsretentionenabled && 'listVolumesUsageHistory' in store.getters.apis }
         },
         {
           name: 'events',
@@ -106,7 +155,8 @@ export default {
         },
         {
           name: 'comments',
-          component: shallowRef(defineAsyncComponent(() => import('@/components/view/AnnotationsTab.vue')))
+          component: shallowRef(defineAsyncComponent(() => import('@/components/view/AnnotationsTab.vue'))),
+          show: () => 'listAnnotations' in store.getters.apis
         }
       ],
       searchFilters: () => {
@@ -158,6 +208,8 @@ export default {
         },
         {
           api: 'detachVolume',
+          disabled: record => typeof record.volumemutationblockedreason !== 'string' || !!record.volumemutationblockedreason,
+          tooltip: record => typeof record.volumemutationblockedreason !== 'string' ? 'message.vmvolume.backup.unknown' : record.volumemutationblockedreason ? 'message.vmvolume.backup.blocked' : 'label.action.detach.disk',
           icon: 'link-outlined',
           label: 'label.action.detach.disk',
           message: 'message.detach.disk',
@@ -169,21 +221,24 @@ export default {
           }
         },
         {
+          api: 'assignVolume',
+          icon: 'swap-outlined',
+          label: 'label.volume.assign',
+          dataView: true,
+          popup: true,
+          show: () => ['Admin', 'DomainAdmin'].includes(store.getters.userInfo.roletype),
+          disabled: record => !!assignmentReason(record, store.getters.userInfo.roletype),
+          tooltip: record => assignmentReason(record, store.getters.userInfo.roletype) || 'label.volume.assign',
+          component: shallowRef(defineAsyncComponent(() => import('@/views/storage/AssignVolume.vue')))
+        },
+        {
           api: 'updateVolume',
           icon: 'edit-outlined',
           label: 'label.edit',
           dataView: true,
           popup: true,
           component: shallowRef(defineAsyncComponent(() => import('@/views/storage/UpdateVolume.vue'))),
-          args: ['name', 'deleteprotection'],
-          mapping: {
-            account: {
-              value: (record) => { return record.account }
-            },
-            domainid: {
-              value: (record) => { return record.domainid }
-            }
-          }
+          args: ['name', 'deleteprotection']
         },
         {
           api: 'updateCompressDedup',
@@ -210,6 +265,8 @@ export default {
           disabled: isFastCloneFlattenActive,
           tooltip: (record) => isFastCloneFlattenActive(record) ? 'message.sharedmountpoint.clone.flatten.in.progress' : 'label.action.take.snapshot',
           popup: true,
+          standardDialogSize: 'md',
+          snapshotStandardDialog: true,
           component: shallowRef(defineAsyncComponent(() => import('@/views/storage/TakeSnapshot.vue')))
         },
         {
@@ -300,7 +357,7 @@ export default {
           message: 'message.download.volume.confirm',
           dataView: true,
           show: (record) => { return record.state === 'Ready' && (record.vmstate === 'Stopped' || !record.virtualmachineid) },
-          disabled: isFastCloneFlattenActive,
+          disabled: record => isFastCloneFlattenActive(record),
           tooltip: (record) => isFastCloneFlattenActive(record) ? 'message.sharedmountpoint.clone.flatten.in.progress' : 'label.action.download.volume',
           args: ['zoneid', 'mode'],
           mapping: {
@@ -324,6 +381,8 @@ export default {
           disabled: isFastCloneFlattenActive,
           tooltip: (record) => isFastCloneFlattenActive(record) ? 'message.sharedmountpoint.clone.flatten.in.progress' : 'label.action.create.template.from.volume',
           popup: true,
+          standardDialogSize: 'md',
+          snapshotStandardDialog: true,
           component: shallowRef(defineAsyncComponent(() => import('@/views/storage/CreateTemplate.vue')))
         },
         {
@@ -350,8 +409,8 @@ export default {
             return !['Destroy', 'Destroyed', 'Expunging', 'Expunged', 'Migrating', 'Uploading', 'UploadError', 'Creating', 'Allocated', 'Uploaded'].includes(record.state) &&
               record.type !== 'ROOT' && !record.virtualmachineid
           },
-          disabled: isFastCloneFlattenRunning,
-          tooltip: (record) => isFastCloneFlattenRunning(record) ? 'message.sharedmountpoint.clone.flatten.in.progress' : 'label.action.destroy.volume'
+          disabled: (record, store, selection) => !!volumeDeleteReason(selection?.length ? selection : [record], store, 'destroyVolume'),
+          tooltip: (record, store, selection) => volumeDeleteReason(selection?.length ? selection : [record], store, 'destroyVolume') || 'label.action.destroy.volume'
         },
         {
           api: 'deleteVolume',
@@ -359,19 +418,11 @@ export default {
           label: 'label.action.delete.volume',
           message: 'message.action.delete.volume',
           dataView: true,
-          show: (record, store) => {
-            const isDetached = !record.virtualmachineid
-            const isDetachedAllocatedRoot = record.state === 'Allocated' && record.type === 'ROOT' && isDetached
-            return ['Expunging', 'Expunged', 'UploadError'].includes(record.state) ||
-              ['Allocated', 'Uploaded'].includes(record.state) && record.type !== 'ROOT' && isDetached ||
-              (record.state === 'Ready' && record.type !== 'ROOT' && isDetached) ||
-              isDetachedAllocatedRoot ||
-              ((['Admin', 'DomainAdmin'].includes(store.userInfo.roletype) || store.features.allowuserexpungerecovervolume) && record.state === 'Destroy')
-          },
+          show: canDeleteVolume,
           groupAction: true,
           popup: true,
-          disabled: isFastCloneFlattenRunning,
-          tooltip: (record) => isFastCloneFlattenRunning(record) ? 'message.sharedmountpoint.clone.flatten.in.progress' : 'label.action.delete.volume',
+          disabled: (record, store, selection) => !!volumeDeleteReason(selection?.length ? selection : [record], store),
+          tooltip: (record, store, selection) => volumeDeleteReason(selection?.length ? selection : [record], store) || 'label.action.delete.volume',
           groupMap: (selection) => { return selection.map(x => { return { id: x } }) }
         }
       ]
@@ -383,8 +434,9 @@ export default {
       docHelp: 'adminguide/storage.html#working-with-volume-snapshots',
       permission: ['listSnapshots'],
       resourceType: 'Snapshot',
-      columns: () => {
-        const fields = ['name', 'state', 'volumename', 'intervaltype', 'physicalsize', 'created']
+      columns: (getters, route) => {
+        const fields = ['name', 'state', 'volumename', 'intervaltype', 'physicalsize', 'virtualsize', 'created']
+        if (route?.query.showunique === 'false') fields.splice(1, 0, { field: 'copy', customTitle: 'snapshot.search.location' }, { field: 'datastorename', customTitle: 'storage' })
         if (store.getters.features.snapshotshowchainsize) {
           fields.splice(fields.indexOf('created'), 0, 'chainsize', 'parentname')
         }
@@ -410,7 +462,7 @@ export default {
       tabs: [
         {
           name: 'details',
-          component: shallowRef(defineAsyncComponent(() => import('@/components/view/DetailsTab.vue')))
+          component: shallowRef(defineAsyncComponent(() => import('@/views/storage/StorageSnapshotDetails.vue')))
         },
         {
           name: 'zones',
@@ -428,7 +480,7 @@ export default {
         }
       ],
       searchFilters: () => {
-        const filters = ['name', 'domainid', 'account', 'tags', 'zoneid']
+        const filters = ['name', 'volumeid', 'snapshottype', 'intervaltype', 'showunique', 'locationtype', 'domainid', 'account', 'tags', 'zoneid']
         if (['Admin', 'DomainAdmin'].includes(store.getters.userInfo.roletype)) {
           filters.push('storageid')
           filters.push('imagestoreid')
@@ -437,12 +489,24 @@ export default {
       },
       actions: [
         {
+          api: 'deleteSnapshot',
+          icon: 'tool-outlined',
+          label: 'label.snapshot.recovery',
+          listView: true,
+          popup: true,
+          standardDialogSize: 'md',
+          snapshotStandardDialog: true,
+          component: shallowRef(defineAsyncComponent(() => import('@/views/storage/SnapshotDeletionRecovery.vue')))
+        },
+        {
           api: 'createTemplate',
           icon: 'picture-outlined',
           label: 'label.create.template',
           dataView: true,
           show: (record) => { return record.state === 'BackedUp' },
           popup: true,
+          standardDialogSize: 'md',
+          snapshotStandardDialog: true,
           component: shallowRef(defineAsyncComponent(() => import('@/views/storage/CreateTemplate.vue')))
         },
         {
@@ -452,10 +516,15 @@ export default {
           dataView: true,
           show: (record) => { return record.state === 'BackedUp' },
           popup: true,
+          standardDialogSize: 'md',
+          snapshotStandardDialog: true,
           component: shallowRef(defineAsyncComponent(() => import('@/views/storage/CreateVolume.vue')))
         },
         {
           api: 'revertSnapshot',
+          storageSnapshotMode: true,
+          selfManagedDialog: true,
+          component: shallowRef(defineAsyncComponent(() => import('@/views/storage/StorageSnapshotActionDialog.vue'))),
           icon: 'sync-outlined',
           label: 'label.action.revert.snapshot',
           message: 'message.action.revert.snapshot',
@@ -463,7 +532,20 @@ export default {
           show: (record) => { return record.state === 'BackedUp' && record.revertable }
         },
         {
+          api: 'archiveSnapshot',
+          storageSnapshotMode: true,
+          selfManagedDialog: true,
+          component: shallowRef(defineAsyncComponent(() => import('@/views/storage/StorageSnapshotActionDialog.vue'))),
+          icon: 'inbox-outlined',
+          label: 'label.action.archive.snapshot',
+          dataView: true,
+          show: record => ['BackedUp', 'CreatedOnPrimary', 'Error'].includes(record.state)
+        },
+        {
           api: 'extractSnapshot',
+          storageSnapshotMode: true,
+          selfManagedDialog: true,
+          component: shallowRef(defineAsyncComponent(() => import('@/views/storage/StorageSnapshotActionDialog.vue'))),
           icon: 'cloud-download-outlined',
           label: 'label.action.download.snapshot',
           message: 'message.action.download.snapshot',
@@ -473,19 +555,16 @@ export default {
               ((record.domainid === store.userInfo.domainid && record.account === store.userInfo.account) ||
                 (record.domainid === store.userInfo.domainid && record.projectid && store.project && store.project.id && record.projectid === store.project.id))) &&
               record.state === 'BackedUp'
-          },
-          args: ['zoneid'],
-          mapping: {
-            zoneid: {
-              value: (record) => { return record.zoneid }
-            }
-          },
-          response: (result) => { return `Please click <a href="${result.snapshot.url}" target="_blank">${result.snapshot.url}</a> to download.` }
+          }
         },
         {
           api: 'deleteSnapshot',
+          storageSnapshotMode: true,
+          selfManagedDialog: true,
+          component: shallowRef(defineAsyncComponent(() => import('@/views/storage/StorageSnapshotActionDialog.vue'))),
           icon: 'delete-outlined',
           label: 'label.action.delete.snapshot',
+          toolbarLabel: 'label.action.delete.snapshot',
           message: 'message.action.delete.snapshot',
           dataView: true,
           show: (record) => { return record.state !== 'Destroyed' },
@@ -502,13 +581,55 @@ export default {
       docHelp: 'adminguide/storage.html#working-with-volume-snapshots',
       permission: ['listSnapshotPolicies'],
       resourceType: 'SnapshotPolicy',
+      tabs: [
+        { name: 'details', component: shallowRef(defineAsyncComponent(() => import('@/views/storage/SnapshotPolicyDetails.vue'))) },
+        {
+          name: 'events',
+          resourceType: 'SnapshotPolicy',
+          component: shallowRef(defineAsyncComponent(() => import('@/components/view/EventsTab.vue'))),
+          show: () => { return 'listEvents' in store.getters.apis }
+        }
+      ],
       params: { listall: true },
       columns: () => {
-        var fields = ['intervaltype', 'maxsnaps', 'schedule', 'timezone', 'volumename']
+        var fields = ['intervaltype', 'maxsnaps', 'schedule', 'timezone', 'volumename', 'schedulingenabled']
         return fields
       },
       searchFilters: ['volumeid'],
       actions: [
+        {
+          api: 'createSnapshotPolicy',
+          icon: 'edit-outlined',
+          label: 'label.snapshot.policy.edit',
+          dataView: true,
+          show: record => !!record.id && canEditPolicy(store.getters.apis || {}),
+          selfManagedDialog: true,
+          popup: true,
+          policyMode: 'edit',
+          component: shallowRef(defineAsyncComponent(() => import('@/views/storage/SnapshotPolicyActionDialog.vue')))
+        },
+        {
+          api: 'updateSnapshotPolicy',
+          icon: 'pause-circle-outlined',
+          label: 'label.snapshot.policy.pause',
+          dataView: true,
+          show: record => record.fordisplay === true && canManagePolicy(store.getters),
+          selfManagedDialog: true,
+          popup: true,
+          policyMode: 'pause',
+          component: shallowRef(defineAsyncComponent(() => import('@/views/storage/SnapshotPolicyActionDialog.vue')))
+        },
+        {
+          api: 'updateSnapshotPolicy',
+          icon: 'play-circle-outlined',
+          label: 'label.snapshot.policy.resume',
+          dataView: true,
+          show: record => record.fordisplay === false && canManagePolicy(store.getters),
+          selfManagedDialog: true,
+          popup: true,
+          policyMode: 'resume',
+          component: shallowRef(defineAsyncComponent(() => import('@/views/storage/SnapshotPolicyActionDialog.vue')))
+        },
         {
           api: 'createSnapshotPolicy',
           icon: 'plus-outlined',
@@ -517,6 +638,8 @@ export default {
           listView: true,
           show: () => { return 'createSnapshotPolicy' in store.getters.apis },
           popup: true,
+          standardDialogSize: 'md',
+          snapshotStandardDialog: true,
           component: shallowRef(defineAsyncComponent(() => import('@/views/storage/RecurringSnapshotVolume.vue'))),
           mapping: {
             intervaltype: {
@@ -528,15 +651,16 @@ export default {
           api: 'deleteSnapshotPolicies',
           icon: 'delete-outlined',
           label: 'label.delete.snapshot.policy',
-          message: 'message.action.delete.snapshot.policy',
+          toolbarLabel: 'label.snapshot.policy.bulk.delete',
+          groupAction: true,
+          groupShow: (selection, getters) => selection.length > 0 && canDeletePolicy(getters.apis),
           dataView: true,
-          show: (record) => true,
-          args: ['id'],
-          mapping: {
-            id: {
-              value: (record) => record.id
-            }
-          }
+          show: record => !!record.id && canDeletePolicy(store.getters.apis),
+          popup: true,
+          selfManagedDialog: true,
+          snapshotStandardDialog: true,
+          policyDeleteDialog: true,
+          component: shallowRef(defineAsyncComponent(() => import('@/views/storage/SnapshotPolicyDeleteAction.vue')))
         }
       ]
     },
@@ -547,7 +671,7 @@ export default {
       permission: ['listBackups'],
       params: { listvmdetails: 'true' },
       columns: ['name', 'status', 'compressionstatus', 'validationstatus', 'size', 'virtualsize', 'virtualmachinename', 'backupofferingname', 'intervaltype', 'type', 'created', 'account', 'domain', 'zone'],
-      details: ['name', 'description', 'virtualmachinename', 'id', 'intervaltype', 'type', 'externalid', 'size', 'virtualsize', 'volumes', 'backupofferingname', 'zone', 'account', 'domain', 'created'],
+      details: ['name', 'description', 'virtualmachinename', 'id', 'intervaltype', 'type', 'externalid', 'size', 'virtualsize', 'volumes', 'backupofferingname', 'backupjobdetails', 'restorejobid', 'restorejobstate', 'restorejobdetails', 'restorejoblogpath', 'zone', 'account', 'domain', 'created'],
       searchFilters: () => {
         var filters = ['name', 'zoneid', 'domainid', 'account', 'backupofferingname', 'status']
         return filters
@@ -568,11 +692,19 @@ export default {
           icon: 'sync-outlined',
           docHelp: 'adminguide/virtual_machines.html#restoring-instance-backups',
           label: 'label.backup.restore',
+          successMessage: 'label.backup.restore.requested',
           message: 'message.backup.restore',
+          isFetchData: false,
           dataView: true,
-          show: (record) => { return record.status === 'BackedUp' },
-          args: () => {
-            const fields = ['quickrestore']
+          show: (record) => { return ['BackingUp', 'BackedUp', 'Restoring'].includes(record.status) },
+          disabled: (record) => { return isAblestackOriginalVmUnavailable(record) || record.restoreavailable === false || isBackupOperationInProgress(record) },
+          tooltip: (record) => isAblestackOriginalVmUnavailable(record)
+            ? 'message.backup.original.vm.unavailable'
+            : getBackupOperationActionTooltip(record, 'label.backup.restore'),
+          args: (record) => {
+            if (!isKbossBackupProvider(record)) return []
+            const fields = []
+            fields.push('quickrestore')
             if (isAdmin()) {
               fields.push('hostid')
             }
@@ -585,7 +717,9 @@ export default {
           label: 'label.backup.attach.restore',
           message: 'message.backup.attach.restore',
           dataView: true,
-          show: (record) => { return record.status === 'BackedUp' },
+          show: (record) => { return ['BackingUp', 'BackedUp', 'Restoring'].includes(record.status) },
+          disabled: (record) => { return record.restoreavailable === false || isBackupOperationInProgress(record) },
+          tooltip: (record) => getBackupOperationActionTooltip(record, 'label.backup.attach.restore'),
           popup: true,
           component: shallowRef(defineAsyncComponent(() => import('@/views/storage/RestoreAttachBackupVolume.vue')))
         },
@@ -597,20 +731,84 @@ export default {
           message: 'message.backup.restore',
           dataView: true,
           popup: true,
-          show: (record) => { return record.status === 'BackedUp' },
+          show: (record) => { return ['BackingUp', 'BackedUp', 'Restoring'].includes(record.status) },
+          disabled: (record) => { return record.restoreavailable === false || isBackupOperationInProgress(record) },
+          tooltip: (record) => getBackupOperationActionTooltip(record, 'label.create.instance.from.backup'),
           component: shallowRef(defineAsyncComponent(() => import('@/views/storage/CreateVMFromBackup.vue')))
+        },
+        {
+          api: 'updateBackupJobBandwidth',
+          disabled: record => record.backupcancellationpending === true,
+          icon: 'thunderbolt-outlined',
+          label: 'label.action.update.backup.bandwidth',
+          dataView: true,
+          popup: true,
+          show: (record) => { return record.status === 'BackingUp' && isLiveBandwidthBackup(record) && !hasSubmittedCommvaultJob(record) },
+          suppressErrorNotification: true,
+          args: ['id', 'bandwidthlimitmbps'],
+          mapping: {
+            id: {
+              value: (record) => { return record.id }
+            }
+          }
+        },
+        {
+          api: 'getBackupStagingInfo',
+          icon: 'tool-outlined',
+          label: 'label.backup.staging.management',
+          dataView: true,
+          popup: true,
+          show: (record) => isAdmin() && ['ablestack-commvault', 'ablestack-netbackup', 'ablestack-veeam'].includes(String(record.provider || '').toLowerCase()) && record.stagingmanagementrequired === true,
+          component: shallowRef(defineAsyncComponent(() => import('@/views/storage/BackupStagingManagement.vue')))
+        },
+        {
+          api: 'cancelBackupStagingJob',
+          icon: 'stop-outlined',
+          label: 'label.cancel',
+          message: 'message.confirm.cancel.backup',
+          dataView: true,
+          show: (record) => record?.stagingqueue?.state === 'WAITING',
+          args: ['id', 'operation', 'stagingjobid'],
+          mapping: {
+            id: { value: (record) => record.id },
+            operation: { value: (record) => record.stagingqueue.operation },
+            stagingjobid: { value: (record) => record.stagingqueue.stagingjobid }
+          }
+        },
+        {
+          api: 'cancelBackup',
+          successMessage: 'message.backup.cancellation.accepted',
+          disabled: record => record.backupcancellationpending === true,
+          icon: 'stop-outlined',
+          label: 'label.cancel',
+          message: 'message.confirm.cancel.backup',
+          dataView: true,
+          show: (record) => {
+            if (record.status !== 'BackingUp' || isBackupSourceControlClosed(record)) return false
+            if (record?.stagingqueue?.state === 'WAITING') return false
+            if (isVolumeBackup(record) || String(record.provider || '').toLowerCase() === 'ablestack-nas') return hasBackupCapability(record, 'cancel')
+            return !hasSubmittedCommvaultJob(record)
+          },
+          args: ['id'],
+          mapping: {
+            id: {
+              value: (record) => { return record.id }
+            }
+          }
         },
         {
           api: 'removeVirtualMachineFromBackupOffering',
           icon: 'scissor-outlined',
           label: 'label.backup.offering.remove',
-          message: 'message.backup.offering.remove',
+          message: getAblestackBackupOfferingRemovalMessage,
           dataView: true,
           show: (record) => { return record.state !== 'Destroyed' && record.vmbackupofferingremoved !== true },
+          disabled: (record) => { return isBackupOperationInProgress(record) },
+          tooltip: (record) => getBackupOperationActionTooltip(record, 'label.backup.offering.remove'),
           args: ['forced', 'virtualmachineid'],
           mapping: {
             forced: {
-              value: (record) => { return true }
+              value: (record) => !isAblestackBackupProvider(record)
             },
             virtualmachineid: {
               value: (record) => { return record.virtualmachineid }
@@ -619,15 +817,15 @@ export default {
         },
         {
           api: 'deleteBackup',
+          component: shallowRef(defineAsyncComponent(() => import('@/views/storage/DeleteBackup.vue'))),
+          dialogWidth: 720,
           icon: 'delete-outlined',
           label: 'label.delete.backup',
           message: 'message.delete.backup',
           dataView: true,
-          show: (record) => {
-            const provider = (record.provider || '').toLowerCase()
-            return record.state !== 'Destroyed' && provider !== 'netbackup' && provider !== 'ablestack-netbackup' &&
-              provider !== 'ablestack-veeam' && provider !== 'veeam'
-          },
+          show: (record) => { return record.state !== 'Destroyed' },
+          disabled: (record) => { return isBackupOperationInProgress(record) },
+          tooltip: (record) => getBackupOperationActionTooltip(record, 'label.delete.backup'),
           groupAction: true,
           popup: true,
           groupMap: (selection, values) => { return selection.map(x => { return { id: x, forced: values.forced } }) },
@@ -685,8 +883,9 @@ export default {
       title: 'label.buckets',
       icon: 'funnel-plot-outlined',
       permission: ['listBuckets'],
+      searchFilters: () => store.getters.project?.id || store.getters.listAllProjects ? ['name'] : ['name', 'domainid', 'account'],
       columns: ['name', 'state', 'objectstore', { field: 'size', customTitle: 'used.capacity' }, { field: 'quota', customTitle: 'total.allocated.capacity' }, 'account'],
-      details: ['id', 'name', 'state', 'objectstore', { field: 'size', customTitle: 'used.capacity' }, 'url', 'accesskey', 'usersecretkey', 'account', 'domain', 'created', { field: 'quota', customTitle: 'total.allocated.capacity' }, 'encryption', 'versioning', 'objectlocking', 'policy'],
+      details: ['id', 'name', 'state', 'objectstore', 'credentialstate', 'credentialchecked', 'quotaoperationtype', 'quotaoperationstate', 'quotaoperationid', 'quotaoperationupdated', 'usagestatus', 'usagelastupdated', 'usagelastattempt', { field: 'size', customTitle: 'used.capacity' }, 'url', 'credentialrevision', 'account', 'domain', 'created', { field: 'quota', customTitle: 'total.allocated.capacity' }, 'protectionverificationstate', 'protectionverifiedat', 'policy'],
       tabs: [
         {
           name: 'details',
@@ -700,6 +899,16 @@ export default {
 
         },
         {
+          name: 'protection',
+          component: shallowRef(defineAsyncComponent(() => import('@/views/storage/BucketProtection.vue'))),
+          show: record => !!store.getters.apis.getBucketProtection
+        },
+        {
+          name: 'versions',
+          component: shallowRef(defineAsyncComponent(() => import('@/views/storage/BucketVersions.vue'))),
+          show: record => record.provider === 'Glue' && !!store.getters.apis.listBucketObjectVersions
+        },
+        {
           name: 'events',
           resourceType: 'Bucket',
           component: shallowRef(defineAsyncComponent(() => import('@/components/view/EventsTab.vue'))),
@@ -709,6 +918,7 @@ export default {
       actions: [
         {
           api: 'createBucket',
+          dialogWidth: 'min(720px, calc(100vw - 32px))',
           icon: 'plus-outlined',
           docHelp: 'installguide/configuration.html#create-bucket',
           label: 'label.create.bucket',
@@ -717,7 +927,18 @@ export default {
           component: shallowRef(defineAsyncComponent(() => import('@/views/storage/CreateBucket.vue')))
         },
         {
+          api: 'getBucketCredentials',
+          icon: 'key-outlined',
+          label: 'label.bucket.credentials.manage',
+          dialogWidth: 'min(720px, calc(100vw - 32px))',
+          dataView: true,
+          popup: true,
+          component: shallowRef(defineAsyncComponent(() => import('@/views/storage/BucketCredentials.vue'))),
+          show: record => record.state === 'Created'
+        },
+        {
           api: 'updateBucket',
+          dialogWidth: 'min(720px, calc(100vw - 32px))',
           icon: 'edit-outlined',
           docHelp: 'adminguide/object_storage.html#update-bucket',
           label: 'label.bucket.update',
@@ -727,11 +948,32 @@ export default {
           show: (record) => { return record.state !== 'Destroyed' }
         },
         {
+          api: 'getBucketDeletionImpact',
+          icon: 'delete-outlined',
+          label: 'label.bucket.delete',
+          dataView: true,
+          popup: true,
+          dialogWidth: 'min(720px, calc(100vw - 32px))',
+          component: shallowRef(defineAsyncComponent(() => import('@/views/storage/BucketDeletion.vue'))),
+          show: record => record.provider === 'Glue'
+        },
+        {
+          api: 'purgeBucket',
+          icon: 'clear-outlined',
+          label: 'label.bucket.purge',
+          dataView: true,
+          popup: true,
+          dialogWidth: 'min(720px, calc(100vw - 32px))',
+          component: shallowRef(defineAsyncComponent(() => import('@/views/storage/PurgeBucket.vue'))),
+          show: record => record.provider === 'Glue'
+        },
+        {
           api: 'deleteBucket',
+          toolbarLabel: 'label.bucket.delete.empty',
           icon: 'delete-outlined',
           label: 'label.bucket.delete',
           message: 'message.bucket.delete',
-          dataView: true,
+          dataView: false,
           show: (record) => { return record.state !== 'Destroyed' },
           groupAction: true,
           popup: true,

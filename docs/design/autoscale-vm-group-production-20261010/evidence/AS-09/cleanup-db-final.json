@@ -1,0 +1,121 @@
+{
+  "at": 1791738483.6693008,
+  "clusters": {
+    "31": [
+      {
+        "id": 397,
+        "host": 1,
+        "kind": "vm",
+        "uuid": "bc00f070-797a-40b0-9785-c965dc50fc63",
+        "state": "Running",
+        "removed": null,
+        "instance": "i-35-397-VM"
+      },
+      {
+        "id": 479,
+        "host": null,
+        "kind": "vm",
+        "uuid": "a50f0049-0425-42a6-8616-187441645b3e",
+        "state": "Expunging",
+        "removed": "2026-10-11 17:02:58.000000",
+        "instance": "i-35-479-VM"
+      },
+      {
+        "id": 456,
+        "vm": 397,
+        "kind": "volume",
+        "path": "7d97eaef-5619-494b-92a4-ddddb13cfa11",
+        "pool": 1,
+        "size": 107374182400,
+        "uuid": "7d97eaef-5619-494b-92a4-ddddb13cfa11",
+        "state": "Ready",
+        "removed": null
+      },
+      {
+        "id": 540,
+        "vm": 479,
+        "kind": "volume",
+        "path": "ad23d97d-3e5c-408c-9481-c6bddfbd1831",
+        "pool": 1,
+        "size": 107374182400,
+        "uuid": "ad23d97d-3e5c-408c-9481-c6bddfbd1831",
+        "state": "Expunged",
+        "removed": "2026-10-11 17:02:58.000000"
+      },
+      {
+        "vm": 479,
+        "kind": "lb",
+        "revoke": 1,
+        "removed": "2026-10-11 17:02:51.000000"
+      },
+      {
+        "max": 1,
+        "min": 1,
+        "kind": "group",
+        "phase": null,
+        "state": "REVOKE",
+        "target": null,
+        "removed": "2026-10-11 17:03:00.000000",
+        "operation": false
+      }
+    ],
+    "32": [
+      {
+        "id": 73,
+        "host": 2,
+        "kind": "vm",
+        "uuid": "6f9bd71b-1745-48c5-9c88-cc0cccd9d1ff",
+        "state": "Running",
+        "removed": null,
+        "instance": "i-6-73-VM"
+      },
+      {
+        "id": 155,
+        "host": null,
+        "kind": "vm",
+        "uuid": "03852587-1741-4617-94a1-bf0b941b8b30",
+        "state": "Expunging",
+        "removed": "2026-10-11 17:03:02.000000",
+        "instance": "i-6-155-VM"
+      },
+      {
+        "id": 71,
+        "vm": 73,
+        "kind": "volume",
+        "path": "d38a9172-aa7f-4ab5-80c8-cff68a74ab28",
+        "pool": 3,
+        "size": 107374182400,
+        "uuid": "d38a9172-aa7f-4ab5-80c8-cff68a74ab28",
+        "state": "Ready",
+        "removed": null
+      },
+      {
+        "id": 155,
+        "vm": 155,
+        "kind": "volume",
+        "path": "1692c1a7-9a2f-43d8-95c0-c605ad70c7b5",
+        "pool": 3,
+        "size": 107374182400,
+        "uuid": "1692c1a7-9a2f-43d8-95c0-c605ad70c7b5",
+        "state": "Expunged",
+        "removed": "2026-10-11 17:03:02.000000"
+      },
+      {
+        "vm": 155,
+        "kind": "lb",
+        "revoke": 1,
+        "removed": "2026-10-11 17:02:51.000000"
+      },
+      {
+        "max": 1,
+        "min": 1,
+        "kind": "group",
+        "phase": null,
+        "state": "REVOKE",
+        "target": null,
+        "removed": "2026-10-11 17:03:05.000000",
+        "operation": false
+      }
+    ]
+  }
+}

@@ -1,0 +1,262 @@
+[
+  {
+    "test": "vms-uuid-count-page-search-zero",
+    "passed": true,
+    "count": 12,
+    "ids": [
+      "9fec78b2-39ef-40b5-896a-b428cad2876b",
+      "01b2ceac-f707-49d1-a524-6aeaf0287ee3",
+      "7378556c-dbd6-4f4e-a139-18471c66ab28",
+      "bbdc5bff-23e7-4101-abae-6633a96461a2",
+      "e59a0c2b-4346-41a5-9c61-c6ff281bed07",
+      "43c03270-81a6-4df8-862c-20e58c9b45a2",
+      "e9eb90cb-6bc0-417a-90ef-193193b5c9ae",
+      "d0ebc642-0e7c-42ae-8cfc-0114705b6230",
+      "5669685e-2a13-4364-9b46-aa3dca1bf3a6",
+      "c7b5411f-d46e-4a4f-baba-7696c6d43e66",
+      "6e89d25c-4d57-4313-acbe-b38447f0f324",
+      "fe75feb7-256b-48bc-9131-fc9f94fe46b6"
+    ],
+    "keyword": "UD1388-31-20261016-A-vm-01"
+  },
+  {
+    "test": "templates-uuid-count-page-search-zero",
+    "passed": true,
+    "count": 2,
+    "ids": [
+      "4f2929f1-2f18-410f-9afc-47cfabfc0c14",
+      "044cee26-fce8-4569-8ad8-83a1ad18fbdb"
+    ],
+    "keyword": "UD1388-31-20261016-templates-0"
+  },
+  {
+    "test": "templates-explicit-id-and-uuid-filter",
+    "passed": true
+  },
+  {
+    "test": "isos-uuid-count-page-search-zero",
+    "passed": true,
+    "count": 2,
+    "ids": [
+      "9058d365-e68c-4fe8-a681-b4dc0e9b1047",
+      "6811b872-a84a-4883-a19e-79501f745cc9"
+    ],
+    "keyword": "UD1388-31-20261016-isos-0"
+  },
+  {
+    "test": "isos-explicit-id-and-uuid-filter",
+    "passed": true
+  },
+  {
+    "test": "user-acl",
+    "passed": true,
+    "project_response": {
+      "count": 1,
+      "virtualmachine": [
+        {
+          "id": "ca16e9f3-7250-4e63-810b-d79859e601ee",
+          "name": "UD1388-31-20261016-project-vm-01",
+          "displayname": "UD1388-31-20261016-project-vm-01",
+          "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+          "username": "admin",
+          "projectid": "132ba8c1-0b26-45af-aa82-a6cd09001421",
+          "project": "UD1388-31-20261016-project",
+          "domainid": "b786efe9-1f31-4c5c-a9e5-05b5a78bf032",
+          "domain": "ud1388-31-20261016",
+          "domainpath": "ROOT/ud1388-31-20261016",
+          "created": "2026-10-16T11:35:03+0900",
+          "state": "Stopped",
+          "haenable": true,
+          "zoneid": "7013f5a1-de59-4cea-a596-f4f58815f31c",
+          "zonename": "Zone",
+          "templateid": "8d692729-7565-4e92-965b-ebaadc1efcb0",
+          "templatename": "Rocky-Linux-9-5-x86-64-Server-Cloud-Image.qcow2",
+          "templatetype": "USER",
+          "templateformat": "QCOW2",
+          "templatedisplaytext": "Rocky-Linux-9-5-x86-64-Server-Cloud-Image.qcow2",
+          "passwordenabled": false,
+          "isos": [],
+          "isomaxcount": 2,
+          "serviceofferingid": "cd928fb0-6e2b-4ec8-b02b-023aed55b2b1",
+          "serviceofferingname": "2Core 2GB",
+          "volumemutationblockedreason": "",
+          "cpunumber": 2,
+          "cpuspeed": 2000,
+          "memory": 2048,
+          "guestosid": "9708b6ac-b253-11f1-a895-0024814c313f",
+          "rootdeviceid": 0,
+          "rootdevicetype": "ROOT",
+          "securitygroup": [],
+          "nic": [
+            {
+              "id": "0146deb9-d892-43b7-938a-eb2e35201800",
+              "networkid": "6150d911-dc25-4e97-9b05-0043fa8f0e3b",
+              "networkname": "UD1388-31-20261016-project-cd",
+              "isolationuri": "vlan://3986",
+              "broadcasturi": "vlan://3986",
+              "traffictype": "Guest",
+              "type": "L2",
+              "isdefault": true,
+              "macaddress": "02:1f:01:2b:00:01",
+              "secondaryip": [],
+              "extradhcpoption": [],
+              "deviceid": "0",
+              "enabled": true
+            }
+          ],
+          "hypervisor": "KVM",
+          "details": {
+            "deployvm": "true",
+            "tpmversion": "NONE",
+            "rootDiskController": "osdefault"
+          },
+          "clonefastsourcepowerallowed": false,
+          "clonefastpowerallowed": false,
+          "readonlydetails": "dataDiskController, rootDiskController, backupValidationCommandTimeout, backupValidationScreenshotWait, backupValidationBootTimeout",
+          "affinitygroup": [],
+          "isdynamicallyscalable": true,
+          "deleteprotection": false,
+          "ostypeid": "9708b6ac-b253-11f1-a895-0024814c313f",
+          "osdisplayname": "Rocky Linux 9",
+          "receivedbytes": 0,
+          "sentbytes": 0,
+          "userdataid": "24bc6d38-0d34-4677-bc5d-ebc5321372bc",
+          "userdataname": "UD1388-31-20261016-project",
+          "vbmcport": "None",
+          "kvdoenable": false,
+          "kvdoinuse": false,
+          "guestnetwork": {
+            "status": "NOT_COLLECTED",
+            "ipv4addresses": [],
+            "ipv6addresses": [],
+            "interfacecount": 0
+          },
+          "vbmcstatus": "Unallocated",
+          "tags": [],
+          "hasannotations": false
+        }
+      ]
+    }
+  },
+  {
+    "test": "domainadmin-acl",
+    "passed": true,
+    "project_response": {
+      "count": 1,
+      "virtualmachine": [
+        {
+          "id": "ca16e9f3-7250-4e63-810b-d79859e601ee",
+          "name": "UD1388-31-20261016-project-vm-01",
+          "displayname": "UD1388-31-20261016-project-vm-01",
+          "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+          "username": "admin",
+          "projectid": "132ba8c1-0b26-45af-aa82-a6cd09001421",
+          "project": "UD1388-31-20261016-project",
+          "domainid": "b786efe9-1f31-4c5c-a9e5-05b5a78bf032",
+          "domain": "ud1388-31-20261016",
+          "domainpath": "ROOT/ud1388-31-20261016",
+          "created": "2026-10-16T11:35:03+0900",
+          "state": "Stopped",
+          "haenable": true,
+          "zoneid": "7013f5a1-de59-4cea-a596-f4f58815f31c",
+          "zonename": "Zone",
+          "templateid": "8d692729-7565-4e92-965b-ebaadc1efcb0",
+          "templatename": "Rocky-Linux-9-5-x86-64-Server-Cloud-Image.qcow2",
+          "templatetype": "USER",
+          "templateformat": "QCOW2",
+          "templatedisplaytext": "Rocky-Linux-9-5-x86-64-Server-Cloud-Image.qcow2",
+          "passwordenabled": false,
+          "isos": [],
+          "isomaxcount": 2,
+          "serviceofferingid": "cd928fb0-6e2b-4ec8-b02b-023aed55b2b1",
+          "serviceofferingname": "2Core 2GB",
+          "volumemutationblockedreason": "",
+          "cpunumber": 2,
+          "cpuspeed": 2000,
+          "memory": 2048,
+          "guestosid": "9708b6ac-b253-11f1-a895-0024814c313f",
+          "rootdeviceid": 0,
+          "rootdevicetype": "ROOT",
+          "securitygroup": [],
+          "nic": [
+            {
+              "id": "0146deb9-d892-43b7-938a-eb2e35201800",
+              "networkid": "6150d911-dc25-4e97-9b05-0043fa8f0e3b",
+              "networkname": "UD1388-31-20261016-project-cd",
+              "isolationuri": "vlan://3986",
+              "broadcasturi": "vlan://3986",
+              "traffictype": "Guest",
+              "type": "L2",
+              "isdefault": true,
+              "macaddress": "02:1f:01:2b:00:01",
+              "secondaryip": [],
+              "extradhcpoption": [],
+              "deviceid": "0",
+              "enabled": true
+            }
+          ],
+          "hypervisor": "KVM",
+          "details": {
+            "deployvm": "true",
+            "tpmversion": "NONE",
+            "rootDiskController": "osdefault"
+          },
+          "clonefastsourcepowerallowed": false,
+          "clonefastpowerallowed": false,
+          "readonlydetails": "dataDiskController, rootDiskController, backupValidationCommandTimeout, backupValidationScreenshotWait, backupValidationBootTimeout",
+          "affinitygroup": [],
+          "isdynamicallyscalable": true,
+          "deleteprotection": false,
+          "ostypeid": "9708b6ac-b253-11f1-a895-0024814c313f",
+          "osdisplayname": "Rocky Linux 9",
+          "receivedbytes": 0,
+          "sentbytes": 0,
+          "userdataid": "24bc6d38-0d34-4677-bc5d-ebc5321372bc",
+          "userdataname": "UD1388-31-20261016-project",
+          "vbmcport": "None",
+          "kvdoenable": false,
+          "kvdoinuse": false,
+          "guestnetwork": {
+            "status": "NOT_COLLECTED",
+            "ipv4addresses": [],
+            "ipv6addresses": [],
+            "interfacecount": 0
+          },
+          "vbmcstatus": "Unallocated",
+          "tags": [],
+          "hasannotations": false
+        }
+      ]
+    }
+  },
+  {
+    "test": "outsider-acl",
+    "passed": true,
+    "project_response": {
+      "uuidList": [],
+      "errorcode": 432,
+      "cserrorcode": 9999,
+      "errortext": "The API [listVirtualMachines] does not exist or is not available for this account/user in project [132ba8c1-0b26-45af-aa82-a6cd09001421]."
+    }
+  },
+  {
+    "test": "admin-cross-owner-reference-preserved",
+    "passed": true,
+    "vm_id": "bda83cf9-75a8-4bff-a803-c92c517815fa"
+  },
+  {
+    "test": "api-metadata-advertises-uuid-filter",
+    "passed": true
+  },
+  {
+    "test": "template-inheritance-has-no-uuid-and-is-excluded",
+    "passed": true,
+    "evidence": {
+      "id": "7b64b90f-2f58-43e5-8842-ff14c4f9dd5b",
+      "templateid": "4f2929f1-2f18-410f-9afc-47cfabfc0c14",
+      "userdataid": null,
+      "userdata": "I2Nsb3VkLWNvbmZpZwojIFVEMTM4OC0zMS0yMDI2MTAxNiBBCg==",
+      "state": "Stopped"
+    }
+  }
+]

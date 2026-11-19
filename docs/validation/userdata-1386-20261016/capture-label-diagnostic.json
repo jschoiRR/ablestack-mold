@@ -1,0 +1,1599 @@
+{
+  "reason": "Capture helper closed over the initial source label; final UI assets were deployed and observed, but the metadata label stayed stale. These preliminary records are preserved before fresh captures with an explicit source and loaded asset URLs.",
+  "preliminary_records": {
+    "qualified-dark-1280x720.json": {
+      "body": {
+        "bottom": 622,
+        "height": 534,
+        "left": 281,
+        "right": 999,
+        "top": 88,
+        "width": 718,
+        "x": 281,
+        "y": 88
+      },
+      "bodyOverflow": "auto",
+      "buttons": [
+        {
+          "background": "rgb(39, 46, 54)",
+          "border": "rgb(62, 70, 80)",
+          "color": "rgb(197, 204, 212)",
+          "disabled": false,
+          "fontSize": "14px",
+          "padding": "4px 15px",
+          "rect": {
+            "bottom": 671,
+            "height": 32,
+            "left": 839.46875,
+            "right": 897.234375,
+            "top": 639,
+            "width": 57.765625,
+            "x": 839.46875,
+            "y": 639
+          },
+          "text": "취소"
+        },
+        {
+          "background": "rgb(8, 86, 182)",
+          "border": "rgb(8, 86, 182)",
+          "color": "rgb(255, 255, 255)",
+          "disabled": false,
+          "fontSize": "14px",
+          "padding": "4px 15px",
+          "rect": {
+            "bottom": 671,
+            "height": 32,
+            "left": 913.234375,
+            "right": 971,
+            "top": 639,
+            "width": 57.765625,
+            "x": 913.234375,
+            "y": 639
+          },
+          "text": "확인"
+        }
+      ],
+      "footer": {
+        "bottom": 687,
+        "height": 65,
+        "left": 281,
+        "right": 999,
+        "top": 622,
+        "width": 718,
+        "x": 281,
+        "y": 622
+      },
+      "globalNotifications": 0,
+      "header": {
+        "bottom": 88,
+        "height": 55,
+        "left": 281,
+        "right": 999,
+        "top": 33,
+        "width": 718,
+        "x": 281,
+        "y": 33
+      },
+      "inputs": [
+        {
+          "background": "rgb(27, 33, 40)",
+          "border": "rgb(154, 164, 175)",
+          "color": "rgb(240, 243, 246)",
+          "fontSize": "14px",
+          "readonly": false,
+          "tag": "INPUT",
+          "value": ""
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "border": "rgb(197, 204, 212)",
+          "color": "rgb(197, 204, 212)",
+          "fontSize": "14px",
+          "readonly": true,
+          "tag": "INPUT",
+          "value": ""
+        },
+        {
+          "background": "rgb(27, 33, 40)",
+          "border": "rgb(154, 164, 175)",
+          "color": "rgb(240, 243, 246)",
+          "fontSize": "14px",
+          "readonly": false,
+          "tag": "INPUT",
+          "value": "최종 VR 한글"
+        }
+      ],
+      "modal": {
+        "bottom": 688,
+        "height": 656,
+        "left": 280,
+        "right": 1000,
+        "top": 32,
+        "width": 720,
+        "x": 280,
+        "y": 32
+      },
+      "switches": [
+        {
+          "checked": "true",
+          "disabled": false,
+          "label": "사용자 데이터 변경"
+        }
+      ],
+      "text": "User data reset failed; Cloud data and library references were not changed. Provider restoration could not be confirmed; retry before starting the instance.\n사용자 데이터 변경을 끄면 현재 설정을 유지하며 재설정 요청을 보내지 않습니다. 변경을 켜면 아래 설정을 적용합니다.\n지원하는 모든 NIC 공급자가 수락한 뒤 Cloud에 저장합니다. 미지원 NIC는 제외합니다. 게스트 수신은 별도이며 재설정만으로 cloud-init을 다시 실행하지 않습니다.\n\n현재 사용자 데이터: UD1386-31-20261016-B\n\nTAG\nB-value\n현재 저장된 본문(템플릿 포함)\n사용자 데이터 변경\n저장된 User Data\n수동 User Data 입력\n설정 안함은 라이브러리 연결과 사용자 지정 본문·변수값을 지웁니다. 취소하면 현재 설정을 유지합니다.\n설정 안함\n\n선택한 사용자 데이터: UD1386-31-20261016-B\n\n\t 사용자 데이터\t 계정\t 도메인\t\n \n\t\n \n\t\n \n\t\n \n\n\n\tUD1386-31-20261016-B\tadmin\tROOT\n\n\tUD1386-31-20261016-A\tadmin\tROOT\n\n\tAS-PROD-31-AS01-HTTP\tadmin\tROOT\n전체: 3\n1\n10 / 쪽\n키\t값\nTAG\t",
+      "theme": "dark-mode ant-scrolling-effect",
+      "url": "http://10.10.31.10:8080/client/#/vm/ee2f21dc-6281-439e-bbfb-11ad6013ec97",
+      "viewport": {
+        "height": 720,
+        "width": 1280
+      },
+      "source": "3b9dcd01b5fede2a761162dd24204a5b061154b4"
+    },
+    "qualified-dark-1440x1000.json": {
+      "body": {
+        "bottom": 850,
+        "height": 710,
+        "left": 361,
+        "right": 1079,
+        "top": 140,
+        "width": 718,
+        "x": 361,
+        "y": 140
+      },
+      "bodyOverflow": "auto",
+      "buttons": [
+        {
+          "background": "rgb(39, 46, 54)",
+          "border": "rgb(62, 70, 80)",
+          "color": "rgb(197, 204, 212)",
+          "disabled": false,
+          "fontSize": "14px",
+          "padding": "4px 15px",
+          "rect": {
+            "bottom": 899,
+            "height": 32,
+            "left": 919.46875,
+            "right": 977.234375,
+            "top": 867,
+            "width": 57.765625,
+            "x": 919.46875,
+            "y": 867
+          },
+          "text": "취소"
+        },
+        {
+          "background": "rgb(8, 86, 182)",
+          "border": "rgb(8, 86, 182)",
+          "color": "rgb(255, 255, 255)",
+          "disabled": false,
+          "fontSize": "14px",
+          "padding": "4px 15px",
+          "rect": {
+            "bottom": 899,
+            "height": 32,
+            "left": 993.234375,
+            "right": 1051,
+            "top": 867,
+            "width": 57.765625,
+            "x": 993.234375,
+            "y": 867
+          },
+          "text": "확인"
+        }
+      ],
+      "footer": {
+        "bottom": 915,
+        "height": 65,
+        "left": 361,
+        "right": 1079,
+        "top": 850,
+        "width": 718,
+        "x": 361,
+        "y": 850
+      },
+      "globalNotifications": 0,
+      "header": {
+        "bottom": 140,
+        "height": 55,
+        "left": 361,
+        "right": 1079,
+        "top": 85,
+        "width": 718,
+        "x": 361,
+        "y": 85
+      },
+      "inputs": [
+        {
+          "background": "rgb(27, 33, 40)",
+          "border": "rgb(154, 164, 175)",
+          "color": "rgb(240, 243, 246)",
+          "fontSize": "14px",
+          "readonly": false,
+          "tag": "INPUT",
+          "value": ""
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "border": "rgb(197, 204, 212)",
+          "color": "rgb(197, 204, 212)",
+          "fontSize": "14px",
+          "readonly": true,
+          "tag": "INPUT",
+          "value": ""
+        },
+        {
+          "background": "rgb(27, 33, 40)",
+          "border": "rgb(154, 164, 175)",
+          "color": "rgb(240, 243, 246)",
+          "fontSize": "14px",
+          "readonly": false,
+          "tag": "INPUT",
+          "value": "최종 VR 한글"
+        }
+      ],
+      "modal": {
+        "bottom": 916,
+        "height": 832,
+        "left": 360,
+        "right": 1080,
+        "top": 84,
+        "width": 720,
+        "x": 360,
+        "y": 84
+      },
+      "switches": [
+        {
+          "checked": "true",
+          "disabled": false,
+          "label": "사용자 데이터 변경"
+        }
+      ],
+      "text": "User data reset failed; Cloud data and library references were not changed. Provider restoration could not be confirmed; retry before starting the instance.\n사용자 데이터 변경을 끄면 현재 설정을 유지하며 재설정 요청을 보내지 않습니다. 변경을 켜면 아래 설정을 적용합니다.\n지원하는 모든 NIC 공급자가 수락한 뒤 Cloud에 저장합니다. 미지원 NIC는 제외합니다. 게스트 수신은 별도이며 재설정만으로 cloud-init을 다시 실행하지 않습니다.\n\n현재 사용자 데이터: UD1386-31-20261016-B\n\nTAG\nB-value\n현재 저장된 본문(템플릿 포함)\n사용자 데이터 변경\n저장된 User Data\n수동 User Data 입력\n설정 안함은 라이브러리 연결과 사용자 지정 본문·변수값을 지웁니다. 취소하면 현재 설정을 유지합니다.\n설정 안함\n\n선택한 사용자 데이터: UD1386-31-20261016-B\n\n\t 사용자 데이터\t 계정\t 도메인\t\n \n\t\n \n\t\n \n\t\n \n\n\n\tUD1386-31-20261016-B\tadmin\tROOT\n\n\tUD1386-31-20261016-A\tadmin\tROOT\n\n\tAS-PROD-31-AS01-HTTP\tadmin\tROOT\n전체: 3\n1\n10 / 쪽\n키\t값\nTAG\t",
+      "theme": "dark-mode ant-scrolling-effect",
+      "url": "http://10.10.31.10:8080/client/#/vm/ee2f21dc-6281-439e-bbfb-11ad6013ec97",
+      "viewport": {
+        "height": 1000,
+        "width": 1440
+      },
+      "source": "3b9dcd01b5fede2a761162dd24204a5b061154b4"
+    },
+    "qualified-dark-390x480.json": {
+      "body": {
+        "bottom": 402,
+        "height": 334,
+        "left": 13,
+        "right": 377,
+        "top": 68,
+        "width": 364,
+        "x": 13,
+        "y": 68
+      },
+      "bodyOverflow": "auto",
+      "buttons": [
+        {
+          "background": "rgb(39, 46, 54)",
+          "border": "rgb(62, 70, 80)",
+          "color": "rgb(197, 204, 212)",
+          "disabled": false,
+          "fontSize": "14px",
+          "padding": "4px 15px",
+          "rect": {
+            "bottom": 451,
+            "height": 32,
+            "left": 229.46875,
+            "right": 287.234375,
+            "top": 419,
+            "width": 57.765625,
+            "x": 229.46875,
+            "y": 419
+          },
+          "text": "취소"
+        },
+        {
+          "background": "rgb(8, 86, 182)",
+          "border": "rgb(8, 86, 182)",
+          "color": "rgb(255, 255, 255)",
+          "disabled": false,
+          "fontSize": "14px",
+          "padding": "4px 15px",
+          "rect": {
+            "bottom": 451,
+            "height": 32,
+            "left": 303.234375,
+            "right": 361,
+            "top": 419,
+            "width": 57.765625,
+            "x": 303.234375,
+            "y": 419
+          },
+          "text": "확인"
+        }
+      ],
+      "footer": {
+        "bottom": 467,
+        "height": 65,
+        "left": 13,
+        "right": 377,
+        "top": 402,
+        "width": 364,
+        "x": 13,
+        "y": 402
+      },
+      "globalNotifications": 0,
+      "header": {
+        "bottom": 68,
+        "height": 55,
+        "left": 13,
+        "right": 377,
+        "top": 13,
+        "width": 364,
+        "x": 13,
+        "y": 13
+      },
+      "inputs": [
+        {
+          "background": "rgb(27, 33, 40)",
+          "border": "rgb(154, 164, 175)",
+          "color": "rgb(240, 243, 246)",
+          "fontSize": "14px",
+          "readonly": false,
+          "tag": "INPUT",
+          "value": ""
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "border": "rgb(197, 204, 212)",
+          "color": "rgb(197, 204, 212)",
+          "fontSize": "14px",
+          "readonly": true,
+          "tag": "INPUT",
+          "value": ""
+        },
+        {
+          "background": "rgb(27, 33, 40)",
+          "border": "rgb(154, 164, 175)",
+          "color": "rgb(240, 243, 246)",
+          "fontSize": "14px",
+          "readonly": false,
+          "tag": "INPUT",
+          "value": "최종 VR 한글"
+        }
+      ],
+      "modal": {
+        "bottom": 468,
+        "height": 456,
+        "left": 12,
+        "right": 378,
+        "top": 12,
+        "width": 366,
+        "x": 12,
+        "y": 12
+      },
+      "switches": [
+        {
+          "checked": "true",
+          "disabled": false,
+          "label": "사용자 데이터 변경"
+        }
+      ],
+      "text": "User data reset failed; Cloud data and library references were not changed. Provider restoration could not be confirmed; retry before starting the instance.\n사용자 데이터 변경을 끄면 현재 설정을 유지하며 재설정 요청을 보내지 않습니다. 변경을 켜면 아래 설정을 적용합니다.\n지원하는 모든 NIC 공급자가 수락한 뒤 Cloud에 저장합니다. 미지원 NIC는 제외합니다. 게스트 수신은 별도이며 재설정만으로 cloud-init을 다시 실행하지 않습니다.\n\n현재 사용자 데이터: UD1386-31-20261016-B\n\nTAG\nB-value\n현재 저장된 본문(템플릿 포함)\n사용자 데이터 변경\n저장된 User Data\n수동 User Data 입력\n설정 안함은 라이브러리 연결과 사용자 지정 본문·변수값을 지웁니다. 취소하면 현재 설정을 유지합니다.\n설정 안함\n\n선택한 사용자 데이터: UD1386-31-20261016-B\n\n\t 사용자 데이터\t 계정\t 도메인\t\n \n\t\n \n\t\n \n\t\n \n\n\n\tUD1386-31-20261016-B\tadmin\tROOT\n\n\tUD1386-31-20261016-A\tadmin\tROOT\n\n\tAS-PROD-31-AS01-HTTP\tadmin\tROOT\n전체: 3\n1\n10 / 쪽\n키\t값\nTAG\t",
+      "theme": "dark-mode ant-scrolling-effect",
+      "url": "http://10.10.31.10:8080/client/#/vm/ee2f21dc-6281-439e-bbfb-11ad6013ec97",
+      "viewport": {
+        "height": 480,
+        "width": 390
+      },
+      "source": "3b9dcd01b5fede2a761162dd24204a5b061154b4"
+    },
+    "qualified-dark-390x844.json": {
+      "body": {
+        "bottom": 766,
+        "height": 698,
+        "left": 13,
+        "right": 377,
+        "top": 68,
+        "width": 364,
+        "x": 13,
+        "y": 68
+      },
+      "bodyOverflow": "auto",
+      "buttons": [
+        {
+          "background": "rgb(39, 46, 54)",
+          "border": "rgb(62, 70, 80)",
+          "color": "rgb(197, 204, 212)",
+          "disabled": false,
+          "fontSize": "14px",
+          "padding": "4px 15px",
+          "rect": {
+            "bottom": 815,
+            "height": 32,
+            "left": 229.46875,
+            "right": 287.234375,
+            "top": 783,
+            "width": 57.765625,
+            "x": 229.46875,
+            "y": 783
+          },
+          "text": "취소"
+        },
+        {
+          "background": "rgb(8, 86, 182)",
+          "border": "rgb(8, 86, 182)",
+          "color": "rgb(255, 255, 255)",
+          "disabled": false,
+          "fontSize": "14px",
+          "padding": "4px 15px",
+          "rect": {
+            "bottom": 815,
+            "height": 32,
+            "left": 303.234375,
+            "right": 361,
+            "top": 783,
+            "width": 57.765625,
+            "x": 303.234375,
+            "y": 783
+          },
+          "text": "확인"
+        }
+      ],
+      "footer": {
+        "bottom": 831,
+        "height": 65,
+        "left": 13,
+        "right": 377,
+        "top": 766,
+        "width": 364,
+        "x": 13,
+        "y": 766
+      },
+      "globalNotifications": 0,
+      "header": {
+        "bottom": 68,
+        "height": 55,
+        "left": 13,
+        "right": 377,
+        "top": 13,
+        "width": 364,
+        "x": 13,
+        "y": 13
+      },
+      "inputs": [
+        {
+          "background": "rgb(27, 33, 40)",
+          "border": "rgb(154, 164, 175)",
+          "color": "rgb(240, 243, 246)",
+          "fontSize": "14px",
+          "readonly": false,
+          "tag": "INPUT",
+          "value": ""
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "border": "rgb(197, 204, 212)",
+          "color": "rgb(197, 204, 212)",
+          "fontSize": "14px",
+          "readonly": true,
+          "tag": "INPUT",
+          "value": ""
+        },
+        {
+          "background": "rgb(27, 33, 40)",
+          "border": "rgb(154, 164, 175)",
+          "color": "rgb(240, 243, 246)",
+          "fontSize": "14px",
+          "readonly": false,
+          "tag": "INPUT",
+          "value": "최종 VR 한글"
+        }
+      ],
+      "modal": {
+        "bottom": 832,
+        "height": 820,
+        "left": 12,
+        "right": 378,
+        "top": 12,
+        "width": 366,
+        "x": 12,
+        "y": 12
+      },
+      "switches": [
+        {
+          "checked": "true",
+          "disabled": false,
+          "label": "사용자 데이터 변경"
+        }
+      ],
+      "text": "User data reset failed; Cloud data and library references were not changed. Provider restoration could not be confirmed; retry before starting the instance.\n사용자 데이터 변경을 끄면 현재 설정을 유지하며 재설정 요청을 보내지 않습니다. 변경을 켜면 아래 설정을 적용합니다.\n지원하는 모든 NIC 공급자가 수락한 뒤 Cloud에 저장합니다. 미지원 NIC는 제외합니다. 게스트 수신은 별도이며 재설정만으로 cloud-init을 다시 실행하지 않습니다.\n\n현재 사용자 데이터: UD1386-31-20261016-B\n\nTAG\nB-value\n현재 저장된 본문(템플릿 포함)\n사용자 데이터 변경\n저장된 User Data\n수동 User Data 입력\n설정 안함은 라이브러리 연결과 사용자 지정 본문·변수값을 지웁니다. 취소하면 현재 설정을 유지합니다.\n설정 안함\n\n선택한 사용자 데이터: UD1386-31-20261016-B\n\n\t 사용자 데이터\t 계정\t 도메인\t\n \n\t\n \n\t\n \n\t\n \n\n\n\tUD1386-31-20261016-B\tadmin\tROOT\n\n\tUD1386-31-20261016-A\tadmin\tROOT\n\n\tAS-PROD-31-AS01-HTTP\tadmin\tROOT\n전체: 3\n1\n10 / 쪽\n키\t값\nTAG\t",
+      "theme": "dark-mode ant-scrolling-effect",
+      "url": "http://10.10.31.10:8080/client/#/vm/ee2f21dc-6281-439e-bbfb-11ad6013ec97",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "source": "3b9dcd01b5fede2a761162dd24204a5b061154b4"
+    },
+    "qualified-dark-small-scrolled.json": {
+      "body": {
+        "bottom": 402,
+        "height": 334,
+        "left": 13,
+        "right": 377,
+        "top": 68,
+        "width": 364,
+        "x": 13,
+        "y": 68
+      },
+      "bodyOverflow": "auto",
+      "buttons": [
+        {
+          "background": "rgb(39, 46, 54)",
+          "border": "rgb(62, 70, 80)",
+          "color": "rgb(197, 204, 212)",
+          "disabled": false,
+          "fontSize": "14px",
+          "padding": "4px 15px",
+          "rect": {
+            "bottom": 451,
+            "height": 32,
+            "left": 229.46875,
+            "right": 287.234375,
+            "top": 419,
+            "width": 57.765625,
+            "x": 229.46875,
+            "y": 419
+          },
+          "text": "취소"
+        },
+        {
+          "background": "rgb(9, 105, 218)",
+          "border": "rgb(9, 105, 218)",
+          "color": "rgb(255, 255, 255)",
+          "disabled": false,
+          "fontSize": "14px",
+          "padding": "4px 15px",
+          "rect": {
+            "bottom": 451,
+            "height": 32,
+            "left": 303.234375,
+            "right": 361,
+            "top": 419,
+            "width": 57.765625,
+            "x": 303.234375,
+            "y": 419
+          },
+          "text": "확인"
+        }
+      ],
+      "footer": {
+        "bottom": 467,
+        "height": 65,
+        "left": 13,
+        "right": 377,
+        "top": 402,
+        "width": 364,
+        "x": 13,
+        "y": 402
+      },
+      "globalNotifications": 0,
+      "header": {
+        "bottom": 68,
+        "height": 55,
+        "left": 13,
+        "right": 377,
+        "top": 13,
+        "width": 364,
+        "x": 13,
+        "y": 13
+      },
+      "inputs": [
+        {
+          "background": "rgb(27, 33, 40)",
+          "border": "rgb(154, 164, 175)",
+          "color": "rgb(240, 243, 246)",
+          "fontSize": "14px",
+          "readonly": false,
+          "tag": "INPUT",
+          "value": ""
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "border": "rgb(197, 204, 212)",
+          "color": "rgb(197, 204, 212)",
+          "fontSize": "14px",
+          "readonly": true,
+          "tag": "INPUT",
+          "value": ""
+        },
+        {
+          "background": "rgb(27, 33, 40)",
+          "border": "rgb(105, 177, 255)",
+          "color": "rgb(240, 243, 246)",
+          "fontSize": "14px",
+          "readonly": false,
+          "tag": "INPUT",
+          "value": "최종 VR 한글"
+        }
+      ],
+      "modal": {
+        "bottom": 468,
+        "height": 456,
+        "left": 12,
+        "right": 378,
+        "top": 12,
+        "width": 366,
+        "x": 12,
+        "y": 12
+      },
+      "switches": [
+        {
+          "checked": "true",
+          "disabled": false,
+          "label": "사용자 데이터 변경"
+        }
+      ],
+      "text": "User data reset failed; Cloud data and library references were not changed. Provider restoration could not be confirmed; retry before starting the instance.\n사용자 데이터 변경을 끄면 현재 설정을 유지하며 재설정 요청을 보내지 않습니다. 변경을 켜면 아래 설정을 적용합니다.\n지원하는 모든 NIC 공급자가 수락한 뒤 Cloud에 저장합니다. 미지원 NIC는 제외합니다. 게스트 수신은 별도이며 재설정만으로 cloud-init을 다시 실행하지 않습니다.\n\n현재 사용자 데이터: UD1386-31-20261016-B\n\nTAG\nB-value\n현재 저장된 본문(템플릿 포함)\n사용자 데이터 변경\n저장된 User Data\n수동 User Data 입력\n설정 안함은 라이브러리 연결과 사용자 지정 본문·변수값을 지웁니다. 취소하면 현재 설정을 유지합니다.\n설정 안함\n\n선택한 사용자 데이터: UD1386-31-20261016-B\n\n\t 사용자 데이터\t 계정\t 도메인\t\n \n\t\n \n\t\n \n\t\n \n\n\n\tUD1386-31-20261016-B\tadmin\tROOT\n\n\tUD1386-31-20261016-A\tadmin\tROOT\n\n\tAS-PROD-31-AS01-HTTP\tadmin\tROOT\n전체: 3\n1\n10 / 쪽\n키\t값\nTAG\t",
+      "theme": "dark-mode ant-scrolling-effect",
+      "url": "http://10.10.31.10:8080/client/#/vm/ee2f21dc-6281-439e-bbfb-11ad6013ec97",
+      "viewport": {
+        "height": 480,
+        "width": 390
+      },
+      "source": "3b9dcd01b5fede2a761162dd24204a5b061154b4",
+      "before": {
+        "footer": {
+          "top": 402
+        },
+        "header": {
+          "top": 13
+        },
+        "scrollTop": 521
+      },
+      "after": {
+        "footer": {
+          "top": 402
+        },
+        "header": {
+          "top": 13
+        },
+        "scrollTop": 929
+      }
+    },
+    "qualified-light-1280x720.json": {
+      "body": {
+        "bottom": 622,
+        "height": 534,
+        "left": 281,
+        "right": 999,
+        "top": 88,
+        "width": 718,
+        "x": 281,
+        "y": 88
+      },
+      "bodyOverflow": "auto",
+      "buttons": [
+        {
+          "background": "rgb(255, 255, 255)",
+          "border": "rgb(217, 223, 231)",
+          "color": "rgb(75, 85, 99)",
+          "disabled": false,
+          "fontSize": "14px",
+          "padding": "4px 15px",
+          "rect": {
+            "bottom": 671,
+            "height": 32,
+            "left": 839.46875,
+            "right": 897.234375,
+            "top": 639,
+            "width": 57.765625,
+            "x": 839.46875,
+            "y": 639
+          },
+          "text": "취소"
+        },
+        {
+          "background": "rgb(8, 86, 182)",
+          "border": "rgb(8, 86, 182)",
+          "color": "rgb(255, 255, 255)",
+          "disabled": false,
+          "fontSize": "14px",
+          "padding": "4px 15px",
+          "rect": {
+            "bottom": 671,
+            "height": 32,
+            "left": 913.234375,
+            "right": 971,
+            "top": 639,
+            "width": 57.765625,
+            "x": 913.234375,
+            "y": 639
+          },
+          "text": "확인"
+        }
+      ],
+      "footer": {
+        "bottom": 687,
+        "height": 65,
+        "left": 281,
+        "right": 999,
+        "top": 622,
+        "width": 718,
+        "x": 281,
+        "y": 622
+      },
+      "globalNotifications": 0,
+      "header": {
+        "bottom": 88,
+        "height": 55,
+        "left": 281,
+        "right": 999,
+        "top": 33,
+        "width": 718,
+        "x": 281,
+        "y": 33
+      },
+      "inputs": [
+        {
+          "background": "rgb(255, 255, 255)",
+          "border": "rgb(102, 112, 133)",
+          "color": "rgb(31, 41, 55)",
+          "fontSize": "14px",
+          "readonly": false,
+          "tag": "INPUT",
+          "value": ""
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "border": "rgb(75, 85, 99)",
+          "color": "rgb(75, 85, 99)",
+          "fontSize": "14px",
+          "readonly": true,
+          "tag": "INPUT",
+          "value": ""
+        },
+        {
+          "background": "rgb(255, 255, 255)",
+          "border": "rgb(102, 112, 133)",
+          "color": "rgb(31, 41, 55)",
+          "fontSize": "14px",
+          "readonly": false,
+          "tag": "INPUT",
+          "value": "최종 VR 한글"
+        }
+      ],
+      "modal": {
+        "bottom": 688,
+        "height": 656,
+        "left": 280,
+        "right": 1000,
+        "top": 32,
+        "width": 720,
+        "x": 280,
+        "y": 32
+      },
+      "switches": [
+        {
+          "checked": "true",
+          "disabled": false,
+          "label": "사용자 데이터 변경"
+        }
+      ],
+      "text": "User data reset failed; Cloud data and library references were not changed. Provider restoration could not be confirmed; retry before starting the instance.\n사용자 데이터 변경을 끄면 현재 설정을 유지하며 재설정 요청을 보내지 않습니다. 변경을 켜면 아래 설정을 적용합니다.\n지원하는 모든 NIC 공급자가 수락한 뒤 Cloud에 저장합니다. 미지원 NIC는 제외합니다. 게스트 수신은 별도이며 재설정만으로 cloud-init을 다시 실행하지 않습니다.\n\n현재 사용자 데이터: UD1386-31-20261016-B\n\nTAG\nB-value\n현재 저장된 본문(템플릿 포함)\n사용자 데이터 변경\n저장된 User Data\n수동 User Data 입력\n설정 안함은 라이브러리 연결과 사용자 지정 본문·변수값을 지웁니다. 취소하면 현재 설정을 유지합니다.\n설정 안함\n\n선택한 사용자 데이터: UD1386-31-20261016-B\n\n\t 사용자 데이터\t 계정\t 도메인\t\n \n\t\n \n\t\n \n\t\n \n\n\n\tUD1386-31-20261016-B\tadmin\tROOT\n\n\tUD1386-31-20261016-A\tadmin\tROOT\n\n\tAS-PROD-31-AS01-HTTP\tadmin\tROOT\n전체: 3\n1\n10 / 쪽\n키\t값\nTAG\t",
+      "theme": "ant-scrolling-effect",
+      "url": "http://10.10.31.10:8080/client/#/vm/ee2f21dc-6281-439e-bbfb-11ad6013ec97",
+      "viewport": {
+        "height": 720,
+        "width": 1280
+      },
+      "source": "3b9dcd01b5fede2a761162dd24204a5b061154b4"
+    },
+    "qualified-light-1440x1000.json": {
+      "body": {
+        "bottom": 850,
+        "height": 710,
+        "left": 361,
+        "right": 1079,
+        "top": 140,
+        "width": 718,
+        "x": 361,
+        "y": 140
+      },
+      "bodyOverflow": "auto",
+      "buttons": [
+        {
+          "background": "rgb(255, 255, 255)",
+          "border": "rgb(217, 223, 231)",
+          "color": "rgb(75, 85, 99)",
+          "disabled": false,
+          "fontSize": "14px",
+          "padding": "4px 15px",
+          "rect": {
+            "bottom": 899,
+            "height": 32,
+            "left": 919.46875,
+            "right": 977.234375,
+            "top": 867,
+            "width": 57.765625,
+            "x": 919.46875,
+            "y": 867
+          },
+          "text": "취소"
+        },
+        {
+          "background": "rgb(8, 86, 182)",
+          "border": "rgb(8, 86, 182)",
+          "color": "rgb(255, 255, 255)",
+          "disabled": false,
+          "fontSize": "14px",
+          "padding": "4px 15px",
+          "rect": {
+            "bottom": 899,
+            "height": 32,
+            "left": 993.234375,
+            "right": 1051,
+            "top": 867,
+            "width": 57.765625,
+            "x": 993.234375,
+            "y": 867
+          },
+          "text": "확인"
+        }
+      ],
+      "footer": {
+        "bottom": 915,
+        "height": 65,
+        "left": 361,
+        "right": 1079,
+        "top": 850,
+        "width": 718,
+        "x": 361,
+        "y": 850
+      },
+      "globalNotifications": 0,
+      "header": {
+        "bottom": 140,
+        "height": 55,
+        "left": 361,
+        "right": 1079,
+        "top": 85,
+        "width": 718,
+        "x": 361,
+        "y": 85
+      },
+      "inputs": [
+        {
+          "background": "rgb(255, 255, 255)",
+          "border": "rgb(102, 112, 133)",
+          "color": "rgb(31, 41, 55)",
+          "fontSize": "14px",
+          "readonly": false,
+          "tag": "INPUT",
+          "value": ""
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "border": "rgb(75, 85, 99)",
+          "color": "rgb(75, 85, 99)",
+          "fontSize": "14px",
+          "readonly": true,
+          "tag": "INPUT",
+          "value": ""
+        },
+        {
+          "background": "rgb(255, 255, 255)",
+          "border": "rgb(102, 112, 133)",
+          "color": "rgb(31, 41, 55)",
+          "fontSize": "14px",
+          "readonly": false,
+          "tag": "INPUT",
+          "value": "최종 VR 한글"
+        }
+      ],
+      "modal": {
+        "bottom": 916,
+        "height": 832,
+        "left": 360,
+        "right": 1080,
+        "top": 84,
+        "width": 720,
+        "x": 360,
+        "y": 84
+      },
+      "switches": [
+        {
+          "checked": "true",
+          "disabled": false,
+          "label": "사용자 데이터 변경"
+        }
+      ],
+      "text": "User data reset failed; Cloud data and library references were not changed. Provider restoration could not be confirmed; retry before starting the instance.\n사용자 데이터 변경을 끄면 현재 설정을 유지하며 재설정 요청을 보내지 않습니다. 변경을 켜면 아래 설정을 적용합니다.\n지원하는 모든 NIC 공급자가 수락한 뒤 Cloud에 저장합니다. 미지원 NIC는 제외합니다. 게스트 수신은 별도이며 재설정만으로 cloud-init을 다시 실행하지 않습니다.\n\n현재 사용자 데이터: UD1386-31-20261016-B\n\nTAG\nB-value\n현재 저장된 본문(템플릿 포함)\n사용자 데이터 변경\n저장된 User Data\n수동 User Data 입력\n설정 안함은 라이브러리 연결과 사용자 지정 본문·변수값을 지웁니다. 취소하면 현재 설정을 유지합니다.\n설정 안함\n\n선택한 사용자 데이터: UD1386-31-20261016-B\n\n\t 사용자 데이터\t 계정\t 도메인\t\n \n\t\n \n\t\n \n\t\n \n\n\n\tUD1386-31-20261016-B\tadmin\tROOT\n\n\tUD1386-31-20261016-A\tadmin\tROOT\n\n\tAS-PROD-31-AS01-HTTP\tadmin\tROOT\n전체: 3\n1\n10 / 쪽\n키\t값\nTAG\t",
+      "theme": "ant-scrolling-effect",
+      "url": "http://10.10.31.10:8080/client/#/vm/ee2f21dc-6281-439e-bbfb-11ad6013ec97",
+      "viewport": {
+        "height": 1000,
+        "width": 1440
+      },
+      "source": "3b9dcd01b5fede2a761162dd24204a5b061154b4"
+    },
+    "qualified-light-390x480.json": {
+      "body": {
+        "bottom": 402,
+        "height": 334,
+        "left": 13,
+        "right": 377,
+        "top": 68,
+        "width": 364,
+        "x": 13,
+        "y": 68
+      },
+      "bodyOverflow": "auto",
+      "buttons": [
+        {
+          "background": "rgb(255, 255, 255)",
+          "border": "rgb(217, 223, 231)",
+          "color": "rgb(75, 85, 99)",
+          "disabled": false,
+          "fontSize": "14px",
+          "padding": "4px 15px",
+          "rect": {
+            "bottom": 451,
+            "height": 32,
+            "left": 229.46875,
+            "right": 287.234375,
+            "top": 419,
+            "width": 57.765625,
+            "x": 229.46875,
+            "y": 419
+          },
+          "text": "취소"
+        },
+        {
+          "background": "rgb(8, 86, 182)",
+          "border": "rgb(8, 86, 182)",
+          "color": "rgb(255, 255, 255)",
+          "disabled": false,
+          "fontSize": "14px",
+          "padding": "4px 15px",
+          "rect": {
+            "bottom": 451,
+            "height": 32,
+            "left": 303.234375,
+            "right": 361,
+            "top": 419,
+            "width": 57.765625,
+            "x": 303.234375,
+            "y": 419
+          },
+          "text": "확인"
+        }
+      ],
+      "footer": {
+        "bottom": 467,
+        "height": 65,
+        "left": 13,
+        "right": 377,
+        "top": 402,
+        "width": 364,
+        "x": 13,
+        "y": 402
+      },
+      "globalNotifications": 0,
+      "header": {
+        "bottom": 68,
+        "height": 55,
+        "left": 13,
+        "right": 377,
+        "top": 13,
+        "width": 364,
+        "x": 13,
+        "y": 13
+      },
+      "inputs": [
+        {
+          "background": "rgb(255, 255, 255)",
+          "border": "rgb(102, 112, 133)",
+          "color": "rgb(31, 41, 55)",
+          "fontSize": "14px",
+          "readonly": false,
+          "tag": "INPUT",
+          "value": ""
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "border": "rgb(75, 85, 99)",
+          "color": "rgb(75, 85, 99)",
+          "fontSize": "14px",
+          "readonly": true,
+          "tag": "INPUT",
+          "value": ""
+        },
+        {
+          "background": "rgb(255, 255, 255)",
+          "border": "rgb(102, 112, 133)",
+          "color": "rgb(31, 41, 55)",
+          "fontSize": "14px",
+          "readonly": false,
+          "tag": "INPUT",
+          "value": "최종 VR 한글"
+        }
+      ],
+      "modal": {
+        "bottom": 468,
+        "height": 456,
+        "left": 12,
+        "right": 378,
+        "top": 12,
+        "width": 366,
+        "x": 12,
+        "y": 12
+      },
+      "switches": [
+        {
+          "checked": "true",
+          "disabled": false,
+          "label": "사용자 데이터 변경"
+        }
+      ],
+      "text": "User data reset failed; Cloud data and library references were not changed. Provider restoration could not be confirmed; retry before starting the instance.\n사용자 데이터 변경을 끄면 현재 설정을 유지하며 재설정 요청을 보내지 않습니다. 변경을 켜면 아래 설정을 적용합니다.\n지원하는 모든 NIC 공급자가 수락한 뒤 Cloud에 저장합니다. 미지원 NIC는 제외합니다. 게스트 수신은 별도이며 재설정만으로 cloud-init을 다시 실행하지 않습니다.\n\n현재 사용자 데이터: UD1386-31-20261016-B\n\nTAG\nB-value\n현재 저장된 본문(템플릿 포함)\n사용자 데이터 변경\n저장된 User Data\n수동 User Data 입력\n설정 안함은 라이브러리 연결과 사용자 지정 본문·변수값을 지웁니다. 취소하면 현재 설정을 유지합니다.\n설정 안함\n\n선택한 사용자 데이터: UD1386-31-20261016-B\n\n\t 사용자 데이터\t 계정\t 도메인\t\n \n\t\n \n\t\n \n\t\n \n\n\n\tUD1386-31-20261016-B\tadmin\tROOT\n\n\tUD1386-31-20261016-A\tadmin\tROOT\n\n\tAS-PROD-31-AS01-HTTP\tadmin\tROOT\n전체: 3\n1\n10 / 쪽\n키\t값\nTAG\t",
+      "theme": "ant-scrolling-effect",
+      "url": "http://10.10.31.10:8080/client/#/vm/ee2f21dc-6281-439e-bbfb-11ad6013ec97",
+      "viewport": {
+        "height": 480,
+        "width": 390
+      },
+      "source": "3b9dcd01b5fede2a761162dd24204a5b061154b4"
+    },
+    "qualified-light-390x844.json": {
+      "body": {
+        "bottom": 766,
+        "height": 698,
+        "left": 13,
+        "right": 377,
+        "top": 68,
+        "width": 364,
+        "x": 13,
+        "y": 68
+      },
+      "bodyOverflow": "auto",
+      "buttons": [
+        {
+          "background": "rgb(255, 255, 255)",
+          "border": "rgb(217, 223, 231)",
+          "color": "rgb(75, 85, 99)",
+          "disabled": false,
+          "fontSize": "14px",
+          "padding": "4px 15px",
+          "rect": {
+            "bottom": 815,
+            "height": 32,
+            "left": 229.46875,
+            "right": 287.234375,
+            "top": 783,
+            "width": 57.765625,
+            "x": 229.46875,
+            "y": 783
+          },
+          "text": "취소"
+        },
+        {
+          "background": "rgb(8, 86, 182)",
+          "border": "rgb(8, 86, 182)",
+          "color": "rgb(255, 255, 255)",
+          "disabled": false,
+          "fontSize": "14px",
+          "padding": "4px 15px",
+          "rect": {
+            "bottom": 815,
+            "height": 32,
+            "left": 303.234375,
+            "right": 361,
+            "top": 783,
+            "width": 57.765625,
+            "x": 303.234375,
+            "y": 783
+          },
+          "text": "확인"
+        }
+      ],
+      "footer": {
+        "bottom": 831,
+        "height": 65,
+        "left": 13,
+        "right": 377,
+        "top": 766,
+        "width": 364,
+        "x": 13,
+        "y": 766
+      },
+      "globalNotifications": 0,
+      "header": {
+        "bottom": 68,
+        "height": 55,
+        "left": 13,
+        "right": 377,
+        "top": 13,
+        "width": 364,
+        "x": 13,
+        "y": 13
+      },
+      "inputs": [
+        {
+          "background": "rgb(255, 255, 255)",
+          "border": "rgb(102, 112, 133)",
+          "color": "rgb(31, 41, 55)",
+          "fontSize": "14px",
+          "readonly": false,
+          "tag": "INPUT",
+          "value": ""
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "border": "rgb(75, 85, 99)",
+          "color": "rgb(75, 85, 99)",
+          "fontSize": "14px",
+          "readonly": true,
+          "tag": "INPUT",
+          "value": ""
+        },
+        {
+          "background": "rgb(255, 255, 255)",
+          "border": "rgb(102, 112, 133)",
+          "color": "rgb(31, 41, 55)",
+          "fontSize": "14px",
+          "readonly": false,
+          "tag": "INPUT",
+          "value": "최종 VR 한글"
+        }
+      ],
+      "modal": {
+        "bottom": 832,
+        "height": 820,
+        "left": 12,
+        "right": 378,
+        "top": 12,
+        "width": 366,
+        "x": 12,
+        "y": 12
+      },
+      "switches": [
+        {
+          "checked": "true",
+          "disabled": false,
+          "label": "사용자 데이터 변경"
+        }
+      ],
+      "text": "User data reset failed; Cloud data and library references were not changed. Provider restoration could not be confirmed; retry before starting the instance.\n사용자 데이터 변경을 끄면 현재 설정을 유지하며 재설정 요청을 보내지 않습니다. 변경을 켜면 아래 설정을 적용합니다.\n지원하는 모든 NIC 공급자가 수락한 뒤 Cloud에 저장합니다. 미지원 NIC는 제외합니다. 게스트 수신은 별도이며 재설정만으로 cloud-init을 다시 실행하지 않습니다.\n\n현재 사용자 데이터: UD1386-31-20261016-B\n\nTAG\nB-value\n현재 저장된 본문(템플릿 포함)\n사용자 데이터 변경\n저장된 User Data\n수동 User Data 입력\n설정 안함은 라이브러리 연결과 사용자 지정 본문·변수값을 지웁니다. 취소하면 현재 설정을 유지합니다.\n설정 안함\n\n선택한 사용자 데이터: UD1386-31-20261016-B\n\n\t 사용자 데이터\t 계정\t 도메인\t\n \n\t\n \n\t\n \n\t\n \n\n\n\tUD1386-31-20261016-B\tadmin\tROOT\n\n\tUD1386-31-20261016-A\tadmin\tROOT\n\n\tAS-PROD-31-AS01-HTTP\tadmin\tROOT\n전체: 3\n1\n10 / 쪽\n키\t값\nTAG\t",
+      "theme": "ant-scrolling-effect",
+      "url": "http://10.10.31.10:8080/client/#/vm/ee2f21dc-6281-439e-bbfb-11ad6013ec97",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "source": "3b9dcd01b5fede2a761162dd24204a5b061154b4"
+    },
+    "network-read-error.json": {
+      "body": {
+        "bottom": 427.5625,
+        "height": 145.140625,
+        "left": 281,
+        "right": 999,
+        "top": 282.421875,
+        "width": 718,
+        "x": 281,
+        "y": 282.421875
+      },
+      "bodyOverflow": "auto",
+      "buttons": [
+        {
+          "background": "rgb(39, 46, 54)",
+          "border": "rgb(62, 70, 80)",
+          "color": "rgb(197, 204, 212)",
+          "disabled": false,
+          "fontSize": "14px",
+          "padding": "4px 15px",
+          "rect": {
+            "bottom": 476.5625,
+            "height": 32,
+            "left": 839.46875,
+            "right": 897.234375,
+            "top": 444.5625,
+            "width": 57.765625,
+            "x": 839.46875,
+            "y": 444.5625
+          },
+          "text": "취소"
+        },
+        {
+          "background": "rgb(85, 85, 85)",
+          "border": "rgb(62, 70, 80)",
+          "color": "rgba(255, 255, 255, 0.65)",
+          "disabled": true,
+          "fontSize": "14px",
+          "padding": "4px 15px",
+          "rect": {
+            "bottom": 476.5625,
+            "height": 32,
+            "left": 913.234375,
+            "right": 971,
+            "top": 444.5625,
+            "width": 57.765625,
+            "x": 913.234375,
+            "y": 444.5625
+          },
+          "text": "확인"
+        }
+      ],
+      "footer": {
+        "bottom": 492.5625,
+        "height": 65,
+        "left": 281,
+        "right": 999,
+        "top": 427.5625,
+        "width": 718,
+        "x": 281,
+        "y": 427.5625
+      },
+      "globalNotifications": 0,
+      "header": {
+        "bottom": 282.421875,
+        "height": 55,
+        "left": 281,
+        "right": 999,
+        "top": 227.421875,
+        "width": 718,
+        "x": 281,
+        "y": 227.421875
+      },
+      "inputs": [],
+      "modal": {
+        "bottom": 493.5625,
+        "height": 267.140625,
+        "left": 280,
+        "right": 1000,
+        "top": 226.421875,
+        "width": 720,
+        "x": 280,
+        "y": 226.421875
+      },
+      "switches": [],
+      "text": "요청 실패\n업데이트",
+      "theme": "dark-mode ant-scrolling-effect",
+      "url": "http://10.10.31.10:8080/client/#/vm/9bb5a1c7-29b9-4051-ad2d-1ba5aaa851f7",
+      "viewport": {
+        "height": 720,
+        "width": 1280
+      },
+      "source": "3b9dcd01b5fede2a761162dd24204a5b061154b4",
+      "networkReadIntercepted": true
+    },
+    "network-read-retry.json": {
+      "body": {
+        "bottom": 543.5,
+        "height": 377,
+        "left": 281,
+        "right": 999,
+        "top": 166.5,
+        "width": 718,
+        "x": 281,
+        "y": 166.5
+      },
+      "bodyOverflow": "auto",
+      "buttons": [
+        {
+          "background": "rgb(39, 46, 54)",
+          "border": "rgb(62, 70, 80)",
+          "color": "rgb(197, 204, 212)",
+          "disabled": false,
+          "fontSize": "14px",
+          "padding": "4px 15px",
+          "rect": {
+            "bottom": 592.5,
+            "height": 32,
+            "left": 839.46875,
+            "right": 897.234375,
+            "top": 560.5,
+            "width": 57.765625,
+            "x": 839.46875,
+            "y": 560.5
+          },
+          "text": "취소"
+        },
+        {
+          "background": "rgb(9, 105, 218)",
+          "border": "rgb(9, 105, 218)",
+          "color": "rgb(255, 255, 255)",
+          "disabled": false,
+          "fontSize": "14px",
+          "padding": "4px 15px",
+          "rect": {
+            "bottom": 592.5,
+            "height": 32,
+            "left": 913.234375,
+            "right": 971,
+            "top": 560.5,
+            "width": 57.765625,
+            "x": 913.234375,
+            "y": 560.5
+          },
+          "text": "확인"
+        }
+      ],
+      "footer": {
+        "bottom": 608.5,
+        "height": 65,
+        "left": 281,
+        "right": 999,
+        "top": 543.5,
+        "width": 718,
+        "x": 281,
+        "y": 543.5
+      },
+      "globalNotifications": 0,
+      "header": {
+        "bottom": 166.5,
+        "height": 55,
+        "left": 281,
+        "right": 999,
+        "top": 111.5,
+        "width": 718,
+        "x": 281,
+        "y": 111.5
+      },
+      "inputs": [],
+      "modal": {
+        "bottom": 609.5,
+        "height": 499,
+        "left": 280,
+        "right": 1000,
+        "top": 110.5,
+        "width": 720,
+        "x": 280,
+        "y": 110.5
+      },
+      "switches": [
+        {
+          "checked": "false",
+          "disabled": false,
+          "label": "사용자 데이터 변경"
+        }
+      ],
+      "text": "사용자 데이터 변경을 끄면 현재 설정을 유지하며 재설정 요청을 보내지 않습니다. 변경을 켜면 아래 설정을 적용합니다.\n지금은 Cloud에 설정을 저장합니다. ConfigDrive는 다음 시작 시 다시 생성되며, 게스트의 수신·실행 완료를 의미하지 않습니다.\n\n현재 사용자 데이터: UD1386-31-20261016-B\n\nTAG\nB-value\n현재 저장된 본문(템플릿 포함)\n사용자 데이터 변경",
+      "theme": "dark-mode ant-scrolling-effect",
+      "url": "http://10.10.31.10:8080/client/#/vm/9bb5a1c7-29b9-4051-ad2d-1ba5aaa851f7",
+      "viewport": {
+        "height": 720,
+        "width": 1280
+      },
+      "source": "3b9dcd01b5fede2a761162dd24204a5b061154b4"
+    },
+    "transport-unknown.json": {
+      "body": {
+        "bottom": 622,
+        "height": 534,
+        "left": 281,
+        "right": 999,
+        "top": 88,
+        "width": 718,
+        "x": 281,
+        "y": 88
+      },
+      "bodyOverflow": "auto",
+      "buttons": [
+        {
+          "background": "rgb(39, 46, 54)",
+          "border": "rgb(62, 70, 80)",
+          "color": "rgb(197, 204, 212)",
+          "disabled": false,
+          "fontSize": "14px",
+          "padding": "4px 15px",
+          "rect": {
+            "bottom": 671,
+            "height": 32,
+            "left": 839.46875,
+            "right": 897.234375,
+            "top": 639,
+            "width": 57.765625,
+            "x": 839.46875,
+            "y": 639
+          },
+          "text": "취소"
+        },
+        {
+          "background": "rgb(8, 86, 182)",
+          "border": "rgb(8, 86, 182)",
+          "color": "rgb(255, 255, 255)",
+          "disabled": false,
+          "fontSize": "14px",
+          "padding": "4px 15px",
+          "rect": {
+            "bottom": 671,
+            "height": 32,
+            "left": 913.234375,
+            "right": 971,
+            "top": 639,
+            "width": 57.765625,
+            "x": 913.234375,
+            "y": 639
+          },
+          "text": "확인"
+        }
+      ],
+      "footer": {
+        "bottom": 687,
+        "height": 65,
+        "left": 281,
+        "right": 999,
+        "top": 622,
+        "width": 718,
+        "x": 281,
+        "y": 622
+      },
+      "globalNotifications": 0,
+      "header": {
+        "bottom": 88,
+        "height": 55,
+        "left": 281,
+        "right": 999,
+        "top": 33,
+        "width": 718,
+        "x": 281,
+        "y": 33
+      },
+      "inputs": [
+        {
+          "background": "rgb(27, 33, 40)",
+          "border": "rgb(154, 164, 175)",
+          "color": "rgb(240, 243, 246)",
+          "fontSize": "14px",
+          "readonly": false,
+          "tag": "INPUT",
+          "value": ""
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "border": "rgb(197, 204, 212)",
+          "color": "rgb(197, 204, 212)",
+          "fontSize": "14px",
+          "readonly": true,
+          "tag": "INPUT",
+          "value": ""
+        },
+        {
+          "background": "rgb(27, 33, 40)",
+          "border": "rgb(154, 164, 175)",
+          "color": "rgb(240, 243, 246)",
+          "fontSize": "14px",
+          "readonly": false,
+          "tag": "INPUT",
+          "value": "최종 ConfigDrive 한글"
+        }
+      ],
+      "modal": {
+        "bottom": 688,
+        "height": 656,
+        "left": 280,
+        "right": 1000,
+        "top": 32,
+        "width": 720,
+        "x": 280,
+        "y": 32
+      },
+      "switches": [
+        {
+          "checked": "true",
+          "disabled": false,
+          "label": "사용자 데이터 변경"
+        }
+      ],
+      "text": "응답을 받지 못해 성공·실패를 확정할 수 없습니다. 작업이 끝난 뒤 창을 다시 열어 저장값을 확인하고 재시도하세요.\n사용자 데이터 변경을 끄면 현재 설정을 유지하며 재설정 요청을 보내지 않습니다. 변경을 켜면 아래 설정을 적용합니다.\n지금은 Cloud에 설정을 저장합니다. ConfigDrive는 다음 시작 시 다시 생성되며, 게스트의 수신·실행 완료를 의미하지 않습니다.\n\n현재 사용자 데이터: UD1386-31-20261016-B\n\nTAG\nB-value\n현재 저장된 본문(템플릿 포함)\n사용자 데이터 변경\n저장된 User Data\n수동 User Data 입력\n설정 안함은 라이브러리 연결과 사용자 지정 본문·변수값을 지웁니다. 취소하면 현재 설정을 유지합니다.\n설정 안함\n\n선택한 사용자 데이터: UD1386-31-20261016-B\n\n\t 사용자 데이터\t 계정\t 도메인\t\n \n\t\n \n\t\n \n\t\n \n\n\n\tUD1386-31-20261016-B\tadmin\tROOT\n\n\tUD1386-31-20261016-A\tadmin\tROOT\n\n\tAS-PROD-31-AS01-HTTP\tadmin\tROOT\n전체: 3\n1\n10 / 쪽\n키\t값\nTAG\t",
+      "theme": "dark-mode ant-scrolling-effect",
+      "url": "http://10.10.31.10:8080/client/#/vm/9bb5a1c7-29b9-4051-ad2d-1ba5aaa851f7",
+      "viewport": {
+        "height": 720,
+        "width": 1280
+      },
+      "source": "3b9dcd01b5fede2a761162dd24204a5b061154b4",
+      "responseLossIntercepted": true
+    },
+    "transport-reopened.json": {
+      "body": {
+        "bottom": 543.5,
+        "height": 377,
+        "left": 281,
+        "right": 999,
+        "top": 166.5,
+        "width": 718,
+        "x": 281,
+        "y": 166.5
+      },
+      "bodyOverflow": "auto",
+      "buttons": [
+        {
+          "background": "rgb(39, 46, 54)",
+          "border": "rgb(62, 70, 80)",
+          "color": "rgb(197, 204, 212)",
+          "disabled": false,
+          "fontSize": "14px",
+          "padding": "4px 15px",
+          "rect": {
+            "bottom": 592.5,
+            "height": 32,
+            "left": 839.46875,
+            "right": 897.234375,
+            "top": 560.5,
+            "width": 57.765625,
+            "x": 839.46875,
+            "y": 560.5
+          },
+          "text": "취소"
+        },
+        {
+          "background": "rgb(9, 105, 218)",
+          "border": "rgb(9, 105, 218)",
+          "color": "rgb(255, 255, 255)",
+          "disabled": false,
+          "fontSize": "14px",
+          "padding": "4px 15px",
+          "rect": {
+            "bottom": 592.5,
+            "height": 32,
+            "left": 913.234375,
+            "right": 971,
+            "top": 560.5,
+            "width": 57.765625,
+            "x": 913.234375,
+            "y": 560.5
+          },
+          "text": "확인"
+        }
+      ],
+      "footer": {
+        "bottom": 608.5,
+        "height": 65,
+        "left": 281,
+        "right": 999,
+        "top": 543.5,
+        "width": 718,
+        "x": 281,
+        "y": 543.5
+      },
+      "globalNotifications": 0,
+      "header": {
+        "bottom": 166.5,
+        "height": 55,
+        "left": 281,
+        "right": 999,
+        "top": 111.5,
+        "width": 718,
+        "x": 281,
+        "y": 111.5
+      },
+      "inputs": [],
+      "modal": {
+        "bottom": 609.5,
+        "height": 499,
+        "left": 280,
+        "right": 1000,
+        "top": 110.5,
+        "width": 720,
+        "x": 280,
+        "y": 110.5
+      },
+      "switches": [
+        {
+          "checked": "false",
+          "disabled": false,
+          "label": "사용자 데이터 변경"
+        }
+      ],
+      "text": "사용자 데이터 변경을 끄면 현재 설정을 유지하며 재설정 요청을 보내지 않습니다. 변경을 켜면 아래 설정을 적용합니다.\n지금은 Cloud에 설정을 저장합니다. ConfigDrive는 다음 시작 시 다시 생성되며, 게스트의 수신·실행 완료를 의미하지 않습니다.\n\n현재 사용자 데이터: UD1386-31-20261016-B\n\nTAG\nB-value\n현재 저장된 본문(템플릿 포함)\n사용자 데이터 변경",
+      "theme": "dark-mode ant-scrolling-effect",
+      "url": "http://10.10.31.10:8080/client/#/vm/9bb5a1c7-29b9-4051-ad2d-1ba5aaa851f7",
+      "viewport": {
+        "height": 720,
+        "width": 1280
+      },
+      "source": "3b9dcd01b5fede2a761162dd24204a5b061154b4"
+    }
+  }
+}

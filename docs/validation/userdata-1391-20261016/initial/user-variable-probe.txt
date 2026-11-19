@@ -1,0 +1,150 @@
+Browser tab: 6, Title: "사용자 데이터 라이브러리 - ABLESTACK-Mold", URL: "http://10.10.31.10:8080/client/#/userdata/8157b6fd-ac4a-4c65-b98d-25e660548763".
+1 AXWebArea 사용자 데이터 라이브러리 - ABLESTACK-Mold, URL: 10.10.31.10:8080/client/#/userdata/8157b6fd-ac4a-4c65-b98d-25e660548763
+	2 container
+		3 container
+			4 image
+			5 menu
+				6 dashboard 대시보드
+					7 link Description: dashboard 대시보드, Value: 10.10.31.10:8080/client/#/dashboard
+				8 container
+					9 image cloud
+					10 text 컴퓨트
+				11 content list sub_menu_73_$$_/compute-popup
+					12 cloud-server 가상머신
+						13 link Description: cloud-server 가상머신, Value: 10.10.31.10:8080/client/#/vm
+					14 camera VM 스냅샷
+						15 link Description: camera VM 스냅샷, Value: 10.10.31.10:8080/client/#/vmsnapshot
+					16 쿠버네티스
+						17 link Description: 쿠버네티스, Value: 10.10.31.10:8080/client/#/kubernetes
+					18 fullscreen 오토스케일 VM 그룹
+						19 link Description: fullscreen 오토스케일 VM 그룹, Value: 10.10.31.10:8080/client/#/autoscalevmgroup
+					20 gold 가상머신 그룹
+						21 link Description: gold 가상머신 그룹, Value: 10.10.31.10:8080/client/#/vmgroup
+					22 key SSH 키 쌍
+						23 link Description: key SSH 키 쌍, Value: 10.10.31.10:8080/client/#/ssh
+					24 solution 사용자 데이터 라이브러리
+						25 link Description: solution 사용자 데이터 라이브러리, Value: 10.10.31.10:8080/client/#/userdata
+					26 solution CNI 구성
+						27 link Description: solution CNI 구성, Value: 10.10.31.10:8080/client/#/cniconfiguration
+					28 swap Affinity 그룹
+						29 link Description: swap Affinity 그룹, Value: 10.10.31.10:8080/client/#/affinitygroup
+				30 container
+					31 image hdd
+					32 text 스토리지
+				33 container
+					34 image wifi
+					35 text 네트워크
+				36 container
+					37 image picture
+					38 text 이미지
+				39 schedule 이벤트
+					40 link Description: schedule 이벤트, Value: 10.10.31.10:8080/client/#/event
+				41 project 프로젝트
+					42 link Description: project 프로젝트, Value: 10.10.31.10:8080/client/#/project
+				43 team 계정
+					44 link Description: team 계정, Value: 10.10.31.10:8080/client/#/account
+				45 global Zone
+					46 link Description: global Zone, Value: 10.10.31.10:8080/client/#/zones
+				47 container
+					48 image shopping
+					49 text 서비스 오퍼링
+				50 container
+					51 image tool
+					52 text 도구
+				53 read API 문서
+					54 link Description: read API 문서, Value: 10.10.31.10:8080/client/#/apidocs/
+		55 container
+			56 image menu-fold
+			57 container
+				58 combo box (settable) rc_select_4
+				59 image project
+				60 text 기본 보기
+			61 button 생성 down
+				62 text 생성
+				63 image down
+			64 image translation
+			65 image bell
+			66 container
+				67 text UU UD1391 user
+		68 container
+			69 container
+				70 container
+					71 link Description: home, Value: 10.10.31.10:8080/client/#/
+					72 text /
+					73 link Description: 사용자 데이터 라이브러리, Value: 10.10.31.10:8080/client/#/userdata
+					74 text / UD1391-31-20261016-user-vars
+					75 link Description: question-circle, Value: docs.ablecloud.io/latest/adminguide/virtual_machines.html#user-data-and-meta-data
+					76 button reload 업데이트
+						77 image reload
+						78 text 업데이트
+				79 button down 작업
+					80 image down
+					81 text 작업
+			82 container
+				83 image solution
+				84 heading UD1391-31-20261016-user-vars, Value: 4
+					85 text UD1391-31-20261016-user-vars
+				86 text 아이디
+				87 button barcode
+					88 image barcode
+				89 link Description: 8157b6fd-ac4a-4c65-b98d-25e660548763 , Value: javascript:;
+				90 text 계정
+				91 image user
+				92 text ud1391-31-20261016-user 도메인
+				93 image block
+				94 text ud1391-31-20261016
+				95 link Description: cloud-server 가상머신 보기, Value: 10.10.31.10:8080/client/#/vm?userdataid=8157b6fd-ac4a-4c65-b98d-25e660548763
+			96 container
+				97 tab group
+					98 container
+						99 tab (selected, settable, boolean) 상세, Value: 1, ID: rc-tabs-4-tab-details
+						100 tab (selectable, settable, boolean) 사용자 데이터 본문, Value: 0, ID: rc-tabs-4-tab-userdata.content
+						101 tab (selectable, settable, boolean) 버전·변경 정책, Value: 0, ID: rc-tabs-4-tab-userdata.versions
+						102 tab (selectable, settable, boolean) 사용 가상머신, Value: 0, ID: rc-tabs-4-tab-userdata.usage.vms
+						103 tab (selectable, settable, boolean) 연결 템플릿, Value: 0, ID: rc-tabs-4-tab-userdata.usage.templates
+						104 tab (selectable, settable, boolean) 연결 ISO, Value: 0, ID: rc-tabs-4-tab-userdata.usage.isos
+						105 tab (selectable, settable, boolean) 코멘트, Value: 0, ID: rc-tabs-4-tab-comments
+				106 container Description: 상세, ID: rc-tabs-4-panel-details
+					107 content list
+						108 container
+							109 text 아이디
+							110 text 8157b6fd-ac4a-4c65-b98d-25e660548763
+						111 container
+							112 text 이름
+							113 text UD1391-31-20261016-user-vars
+						114 container
+							115 text 계정
+							116 text ud1391-31-20261016-user
+						117 container
+							118 text 도메인
+							119 text ud1391-31-20261016
+						120 container
+							121 text 동적 파라미터 키
+							122 text SOURCE_VAR
+	126 container
+		127 container 복제하여 새 버전 등록
+			128 container
+				173 button Close
+					174 image close
+				131 text 복제하여 새 버전 등록
+				175 container
+					176 image info-circle
+					177 text 원본의 이름·본문·변수를 재사용해 같은 소유 범위에 새 데이터를 만듭니다. 기존 VM·템플릿·ISO에는 자동 적용되지 않습니다.
+				178 container
+					179 text 복제 원본: UD1391-31-20261016-user-vars (8157b6fd-ac4a-4c65-b98d-25e660548763)
+					180 text ud1391-31-20261016-user / ud1391-31-20261016
+				181 link Description: 사용 가상머신, Value: 10.10.31.10:8080/client/#/userdata/8157b6fd-ac4a-4c65-b98d-25e660548763?tab=userdata.usage.vms
+				182 link Description: 연결 템플릿, Value: 10.10.31.10:8080/client/#/userdata/8157b6fd-ac4a-4c65-b98d-25e660548763?tab=userdata.usage.templates
+				183 link Description: 연결 ISO, Value: 10.10.31.10:8080/client/#/userdata/8157b6fd-ac4a-4c65-b98d-25e660548763?tab=userdata.usage.isos
+				184 button (collapsed) 적용 범위·참조 전환·되돌리기 안내, Secondary Actions: Expand
+					185 text 적용 범위·참조 전환·되돌리기 안내
+				186 container
+					187 image check-circle
+					188 text 새 버전이 확인되었습니다. 기존 참조는 유지됩니다. 적용은 대상별로 별도 진행하세요.
+				189 link Description: UD1391-31-20261016-user-probe (d00dc58e-7e53-4882-a042-64d16ea2db55), Value: 10.10.31.10:8080/client/#/userdata/d00dc58e-7e53-4882-a042-64d16ea2db55?tab=userdata.versions
+				190 container
+					191 image check-circle
+					192 text 출처 메모가 저장되었습니다. 새 버전의 버전·변경 정책 탭에서 다시 확인할 수 있습니다.
+				172 button 닫기
+
+The focused UI element is 172 button 닫기

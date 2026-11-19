@@ -1,0 +1,2913 @@
+{
+  "visualCaptureReliable": false,
+  "note": "IAB CDP capture had stale and tiled render surfaces; DOM and API evidence retained.",
+  "checks": [
+    {
+      "name": "before-affinity-list-dark",
+      "source": "56955af91402f518a1b7911a338a77faaf8bf885",
+      "view": {
+        "width": 1440,
+        "height": 900
+      },
+      "theme": "dark",
+      "result": "observed",
+      "expected": [
+        "Affinity 그룹"
+      ],
+      "time": "2026-10-19T04:24:54.715Z"
+    },
+    {
+      "name": "vm-reference-list-dark",
+      "source": "56955af91402f518a1b7911a338a77faaf8bf885",
+      "view": {
+        "width": 1440,
+        "height": 900
+      },
+      "theme": "dark",
+      "result": "reference",
+      "expected": [
+        "가상머신"
+      ],
+      "time": "2026-10-19T04:25:06.321Z"
+    },
+    {
+      "name": "vm-reference-detail-dark",
+      "source": "56955af91402f518a1b7911a338a77faaf8bf885",
+      "view": {
+        "width": 1440,
+        "height": 900
+      },
+      "theme": "dark",
+      "result": "reference",
+      "expected": [
+        "qa-ag05-vm-01",
+        "qa-ag05-target",
+        "qa-ag05-other"
+      ],
+      "time": "2026-10-19T04:25:11.597Z"
+    },
+    {
+      "name": "vm-reference-tab-content-dark",
+      "source": "56955af91402f518a1b7911a338a77faaf8bf885",
+      "view": {
+        "width": 1440,
+        "height": 900
+      },
+      "theme": "dark",
+      "result": "reference",
+      "expected": [
+        "볼륨"
+      ],
+      "time": "2026-10-19T04:25:12.193Z"
+    },
+    {
+      "name": "vm-reference-dialog-dark",
+      "source": "56955af91402f518a1b7911a338a77faaf8bf885",
+      "view": {
+        "width": 1440,
+        "height": 900
+      },
+      "theme": "dark",
+      "result": "reference",
+      "expected": [
+        "ISO",
+        "취소"
+      ],
+      "time": "2026-10-19T04:25:18.233Z"
+    },
+    {
+      "name": "before-affinity-detail-dark",
+      "source": "56955af91402f518a1b7911a338a77faaf8bf885",
+      "view": {
+        "width": 1440,
+        "height": 900
+      },
+      "theme": "dark",
+      "result": "observed",
+      "expected": [
+        "qa-ag05-target",
+        "연결 VM 수"
+      ],
+      "time": "2026-10-19T04:26:44.132Z"
+    },
+    {
+      "name": "before-untranslated-affinity-chip",
+      "source": "56955af91402f518a1b7911a338a77faaf8bf885",
+      "view": {
+        "width": 1440,
+        "height": 900
+      },
+      "theme": "dark",
+      "result": "reproduced",
+      "expected": [
+        "label.affinitygroupid"
+      ],
+      "time": "2026-10-19T04:26:45.120Z"
+    },
+    {
+      "name": "before-members-layout-dark",
+      "source": "56955af91402f518a1b7911a338a77faaf8bf885",
+      "view": {
+        "width": 1440,
+        "height": 900
+      },
+      "theme": "dark",
+      "result": "observed",
+      "expected": [
+        "연결 VM 수: 3 · 조회 결과: 3"
+      ],
+      "time": "2026-10-19T04:26:45.752Z"
+    },
+    {
+      "name": "before-members-mobile",
+      "source": "56955af91402f518a1b7911a338a77faaf8bf885",
+      "view": {
+        "width": 390,
+        "height": 480
+      },
+      "theme": "dark",
+      "result": "pass",
+      "expected": [
+        "연결 VM 수: 3"
+      ],
+      "time": "2026-10-19T04:27:14.330Z"
+    },
+    {
+      "name": "before-members-dialog-mobile",
+      "source": "56955af91402f518a1b7911a338a77faaf8bf885",
+      "view": {
+        "width": 390,
+        "height": 480
+      },
+      "theme": "dark",
+      "result": "pass",
+      "expected": [
+        "가상머신 연결"
+      ],
+      "time": "2026-10-19T04:27:15.017Z"
+    },
+    {
+      "name": "before-long-detail-mobile",
+      "source": "56955af91402f518a1b7911a338a77faaf8bf885",
+      "view": {
+        "width": 390,
+        "height": 480
+      },
+      "theme": "dark",
+      "result": "pass",
+      "expected": [
+        "qa-ag05-long-긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름"
+      ],
+      "time": "2026-10-19T04:31:00.891Z"
+    },
+    {
+      "name": "vm-reference-detail-light",
+      "source": "56955af91402f518a1b7911a338a77faaf8bf885",
+      "view": {
+        "width": 1440,
+        "height": 900
+      },
+      "theme": "light",
+      "result": "pass",
+      "expected": [
+        "qa-ag05-vm-01"
+      ],
+      "time": "2026-10-19T04:32:29.809Z"
+    },
+    {
+      "name": "vm-reference-dialog-light-mobile",
+      "source": "56955af91402f518a1b7911a338a77faaf8bf885",
+      "view": {
+        "width": 390,
+        "height": 480
+      },
+      "theme": "light",
+      "result": "pass",
+      "expected": [
+        "ISO",
+        "취소"
+      ],
+      "time": "2026-10-19T04:33:02.217Z"
+    },
+    {
+      "name": "vm-reference-detail-light-clean",
+      "source": "56955af91402f518a1b7911a338a77faaf8bf885",
+      "view": {
+        "width": 1440,
+        "height": 900
+      },
+      "theme": "light",
+      "result": "pass",
+      "expected": [
+        "qa-ag05-vm-01"
+      ],
+      "time": "2026-10-19T04:33:03.503Z"
+    },
+    {
+      "name": "qualified-change-dialog-light-desktop",
+      "source": "e8f16c8f03f9b64664f79f3d17ad27094e33e83e",
+      "theme": "light",
+      "view": {
+        "height": 900,
+        "width": 1440
+      },
+      "result": "pass",
+      "expected": [
+        "Affinity 변경",
+        "전체 선택: 2",
+        "같은 호스트 배치 · 엄격",
+        "취소"
+      ],
+      "time": "2026-10-19T04:40:21.192Z"
+    },
+    {
+      "name": "qualified-change-cross-page-selection",
+      "source": "e8f16c8f03f9b64664f79f3d17ad27094e33e83e",
+      "theme": "light",
+      "view": {
+        "height": 900,
+        "width": 1440
+      },
+      "result": "pass",
+      "expected": [
+        "전체 선택: 3",
+        "qa-ag05-page-10",
+        "qa-ag05-target",
+        "qa-ag05-other"
+      ],
+      "time": "2026-10-19T04:41:00.895Z"
+    },
+    {
+      "name": "qualified-change-light-mobile-tall",
+      "source": "e8f16c8f03f9b64664f79f3d17ad27094e33e83e",
+      "theme": "light",
+      "view": {
+        "height": 844,
+        "width": 390
+      },
+      "result": "pass",
+      "expected": [
+        "전체 선택: 3",
+        "취소",
+        "확인"
+      ],
+      "time": "2026-10-19T04:41:01.750Z"
+    },
+    {
+      "name": "qualified-change-light-mobile-short",
+      "source": "e8f16c8f03f9b64664f79f3d17ad27094e33e83e",
+      "theme": "light",
+      "view": {
+        "height": 480,
+        "width": 390
+      },
+      "result": "pass",
+      "expected": [
+        "전체 선택: 3",
+        "취소",
+        "확인"
+      ],
+      "time": "2026-10-19T04:41:02.429Z"
+    },
+    {
+      "name": "qualified-change-saved-three-groups",
+      "source": "e8f16c8f03f9b64664f79f3d17ad27094e33e83e",
+      "theme": "light",
+      "view": {
+        "height": 480,
+        "width": 390
+      },
+      "result": "pass",
+      "expected": [
+        "qa-ag05-target",
+        "qa-ag05-other",
+        "qa-ag05-page-10"
+      ],
+      "time": "2026-10-19T04:41:11.856Z"
+    },
+    {
+      "name": "qualified-detail-light-desktop",
+      "source": "e8f16c8f03f9b64664f79f3d17ad27094e33e83e",
+      "theme": "light",
+      "view": {
+        "height": 900,
+        "width": 1440
+      },
+      "result": "pass",
+      "expected": [
+        "같은 호스트 배치 · 엄격",
+        "같은 그룹의 VM을 같은 호스트에 배치합니다.",
+        "연결 VM 수",
+        "admin",
+        "ROOT"
+      ],
+      "time": "2026-10-19T04:41:13.120Z"
+    },
+    {
+      "name": "qualified-affinity-chip-name",
+      "source": "e8f16c8f03f9b64664f79f3d17ad27094e33e83e",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "light",
+      "view": {
+        "height": 900,
+        "width": 1440
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "Affinity 그룹 : qa-ag05-target"
+      ],
+      "time": "2026-10-19T04:42:01.596Z"
+    },
+    {
+      "name": "qualified-chip-tooltip-keeps-uuid",
+      "source": "e8f16c8f03f9b64664f79f3d17ad27094e33e83e",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "light",
+      "view": {
+        "height": 900,
+        "width": 1440
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "Affinity 그룹: qa-ag05-target (b2425532-f2bb-4511-86f5-917f6a4f1869)"
+      ],
+      "time": "2026-10-19T04:42:13.473Z"
+    },
+    {
+      "name": "qualified-chip-name-lookup-failure",
+      "source": "e8f16c8f03f9b64664f79f3d17ad27094e33e83e",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "light",
+      "view": {
+        "height": 900,
+        "width": 1440
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "Affinity 그룹 : b2425532-f2bb-4"
+      ],
+      "time": "2026-10-19T04:42:26.940Z"
+    },
+    {
+      "name": "vm-reference-full-list-light",
+      "source": "e8f16c8f03f9b64664f79f3d17ad27094e33e83e",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "light",
+      "view": {
+        "height": 900,
+        "width": 1440
+      },
+      "capture": "PNG full viewport",
+      "result": "reference",
+      "expected": [
+        "가상머신"
+      ],
+      "time": "2026-10-19T04:43:26.630Z"
+    },
+    {
+      "name": "vm-reference-full-detail-light",
+      "source": "e8f16c8f03f9b64664f79f3d17ad27094e33e83e",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "light",
+      "view": {
+        "height": 900,
+        "width": 1440
+      },
+      "capture": "PNG full viewport",
+      "result": "reference",
+      "expected": [
+        "qa-ag05-vm-01"
+      ],
+      "time": "2026-10-19T04:43:27.848Z"
+    },
+    {
+      "name": "vm-reference-full-tab-content-light",
+      "source": "e8f16c8f03f9b64664f79f3d17ad27094e33e83e",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "light",
+      "view": {
+        "height": 900,
+        "width": 1440
+      },
+      "capture": "PNG full viewport",
+      "result": "reference",
+      "expected": [
+        "볼륨"
+      ],
+      "time": "2026-10-19T04:43:28.623Z"
+    },
+    {
+      "name": "vm-reference-full-dialog-light",
+      "source": "e8f16c8f03f9b64664f79f3d17ad27094e33e83e",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "light",
+      "view": {
+        "height": 900,
+        "width": 1440
+      },
+      "capture": "PNG full viewport",
+      "result": "reference",
+      "expected": [
+        "ISO",
+        "취소"
+      ],
+      "time": "2026-10-19T04:43:30.888Z"
+    },
+    {
+      "name": "qualified-list-light-desktop",
+      "source": "e8f16c8f03f9b64664f79f3d17ad27094e33e83e",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "light",
+      "view": {
+        "height": 900,
+        "width": 1440
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "같은 호스트 배치 · 엄격",
+        "연결 VM 수"
+      ],
+      "time": "2026-10-19T04:44:30.039Z"
+    },
+    {
+      "name": "qualified-list-page-two-long-values",
+      "source": "e8f16c8f03f9b64664f79f3d17ad27094e33e83e",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "light",
+      "view": {
+        "height": 900,
+        "width": 1440
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "qa-ag05-long-"
+      ],
+      "time": "2026-10-19T04:44:31.582Z"
+    },
+    {
+      "name": "reproduced-list-policy-duplicate",
+      "source": "e8f16c8f03f9b64664f79f3d17ad27094e33e83e",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "light",
+      "view": {
+        "height": 900,
+        "width": 1440
+      },
+      "capture": "PNG full viewport",
+      "result": "reproduced",
+      "expected": [
+        "같은 호스트 배치 · 엄격",
+        "host affinity"
+      ],
+      "time": "2026-10-19T04:45:39.549Z"
+    },
+    {
+      "name": "candidate-list-light-mobile-tall",
+      "source": "e8f16c8f03f9b64664f79f3d17ad27094e33e83e",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "light",
+      "view": {
+        "height": 844,
+        "width": 390
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "Affinity 그룹"
+      ],
+      "time": "2026-10-19T04:45:40.338Z"
+    },
+    {
+      "name": "candidate-list-light-mobile-short",
+      "source": "e8f16c8f03f9b64664f79f3d17ad27094e33e83e",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "light",
+      "view": {
+        "height": 480,
+        "width": 390
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "Affinity 그룹"
+      ],
+      "time": "2026-10-19T04:45:40.849Z"
+    },
+    {
+      "name": "candidate-long-detail-light-mobile-short",
+      "source": "e8f16c8f03f9b64664f79f3d17ad27094e33e83e",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "light",
+      "view": {
+        "height": 480,
+        "width": 390
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "qa-ag05-long-긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름"
+      ],
+      "time": "2026-10-19T04:45:41.319Z"
+    },
+    {
+      "name": "candidate-long-detail-light-mobile-tall",
+      "source": "e8f16c8f03f9b64664f79f3d17ad27094e33e83e",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "light",
+      "view": {
+        "height": 844,
+        "width": 390
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "qa-ag05-long-긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름정책검증긴이름"
+      ],
+      "time": "2026-10-19T04:45:41.835Z"
+    },
+    {
+      "name": "candidate-members-light-desktop",
+      "source": "e8f16c8f03f9b64664f79f3d17ad27094e33e83e",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "light",
+      "view": {
+        "height": 900,
+        "width": 1440
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "연결 VM 수: 3 · 조회 결과: 3",
+        "정지"
+      ],
+      "time": "2026-10-19T04:45:51.301Z"
+    },
+    {
+      "name": "candidate-members-light-mobile-tall",
+      "source": "e8f16c8f03f9b64664f79f3d17ad27094e33e83e",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "light",
+      "view": {
+        "height": 844,
+        "width": 390
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "연결 VM 수: 3 · 조회 결과: 3"
+      ],
+      "time": "2026-10-19T04:45:52.333Z"
+    },
+    {
+      "name": "candidate-members-light-mobile-short",
+      "source": "e8f16c8f03f9b64664f79f3d17ad27094e33e83e",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "light",
+      "view": {
+        "height": 480,
+        "width": 390
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "연결 VM 수: 3 · 조회 결과: 3"
+      ],
+      "time": "2026-10-19T04:45:53.115Z"
+    },
+    {
+      "name": "candidate-create-light-desktop",
+      "source": "e8f16c8f03f9b64664f79f3d17ad27094e33e83e",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "light",
+      "view": {
+        "height": 900,
+        "width": 1440
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "같은 호스트 배치 · 엄격",
+        "조건을 만족하지 못하면 배치가 실패합니다.",
+        "취소"
+      ],
+      "time": "2026-10-19T04:48:59.572Z"
+    },
+    {
+      "name": "candidate-create-required-error",
+      "source": "e8f16c8f03f9b64664f79f3d17ad27094e33e83e",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "light",
+      "view": {
+        "height": 900,
+        "width": 1440
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "이름을 1~191자로 입력하세요."
+      ],
+      "time": "2026-10-19T04:49:16.431Z"
+    },
+    {
+      "name": "candidate-create-duplicate-retains-input",
+      "source": "e8f16c8f03f9b64664f79f3d17ad27094e33e83e",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "light",
+      "view": {
+        "height": 900,
+        "width": 1440
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "Affinity 그룹을 생성하지 못했습니다.",
+        "qa-ag05-target"
+      ],
+      "time": "2026-10-19T04:49:18.733Z"
+    },
+    {
+      "name": "candidate-create-light-mobile-tall",
+      "source": "e8f16c8f03f9b64664f79f3d17ad27094e33e83e",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "light",
+      "view": {
+        "height": 844,
+        "width": 390
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "qa-ag05-ui-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "취소",
+        "확인"
+      ],
+      "time": "2026-10-19T04:49:35.082Z"
+    },
+    {
+      "name": "candidate-create-light-mobile-short",
+      "source": "e8f16c8f03f9b64664f79f3d17ad27094e33e83e",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "light",
+      "view": {
+        "height": 480,
+        "width": 390
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "qa-ag05-ui-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "취소",
+        "확인"
+      ],
+      "time": "2026-10-19T04:49:36.004Z"
+    },
+    {
+      "name": "candidate-create-corrected-long-success",
+      "source": "e8f16c8f03f9b64664f79f3d17ad27094e33e83e",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "light",
+      "view": {
+        "height": 480,
+        "width": 390
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "Affinity 그룹"
+      ],
+      "time": "2026-10-19T04:49:36.725Z"
+    },
+    {
+      "name": "candidate-member-failure-keeps-selection",
+      "source": "e8f16c8f03f9b64664f79f3d17ad27094e33e83e",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "light",
+      "view": {
+        "height": 900,
+        "width": 1440
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "재시도",
+        "선택 연결 해제 (1)",
+        "연결 VM 수: 3 · 조회 결과: 3"
+      ],
+      "time": "2026-10-19T04:50:33.483Z"
+    },
+    {
+      "name": "candidate-member-retry-keeps-selection",
+      "source": "e8f16c8f03f9b64664f79f3d17ad27094e33e83e",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "light",
+      "view": {
+        "height": 900,
+        "width": 1440
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "선택 연결 해제 (1)",
+        "연결 VM 수: 3 · 조회 결과: 3"
+      ],
+      "time": "2026-10-19T04:50:34.697Z"
+    },
+    {
+      "name": "candidate-member-page-size-two",
+      "source": "e8f16c8f03f9b64664f79f3d17ad27094e33e83e",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "light",
+      "view": {
+        "height": 900,
+        "width": 1440
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "선택 연결 해제 (1)",
+        "연결 VM 수: 3 · 조회 결과: 3"
+      ],
+      "time": "2026-10-19T04:52:33.412Z"
+    },
+    {
+      "name": "candidate-member-page2-selection-preserved",
+      "source": "e8f16c8f03f9b64664f79f3d17ad27094e33e83e",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "light",
+      "view": {
+        "height": 900,
+        "width": 1440
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "선택 연결 해제 (1)",
+        "qa-ag05-vm-03"
+      ],
+      "time": "2026-10-19T04:52:34.847Z"
+    },
+    {
+      "name": "candidate-member-empty-search-full-count",
+      "source": "e8f16c8f03f9b64664f79f3d17ad27094e33e83e",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "light",
+      "view": {
+        "height": 900,
+        "width": 1440
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "연결 VM 수: 3 · 조회 결과: 0",
+        "선택 연결 해제 (1)"
+      ],
+      "time": "2026-10-19T04:52:35.658Z"
+    },
+    {
+      "name": "candidate-remove-confirm-light-mobile",
+      "source": "e8f16c8f03f9b64664f79f3d17ad27094e33e83e",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "light",
+      "view": {
+        "height": 844,
+        "width": 390
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "qa-ag05-vm-01",
+        "취소",
+        "확인"
+      ],
+      "time": "2026-10-19T04:52:37.271Z"
+    },
+    {
+      "name": "candidate-remove-confirm-light-short",
+      "source": "e8f16c8f03f9b64664f79f3d17ad27094e33e83e",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "light",
+      "view": {
+        "height": 480,
+        "width": 390
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "qa-ag05-vm-01",
+        "취소",
+        "확인"
+      ],
+      "time": "2026-10-19T04:52:37.792Z"
+    },
+    {
+      "name": "candidate-remove-receipt-unknown-light-short",
+      "source": "e8f16c8f03f9b64664f79f3d17ad27094e33e83e",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "light",
+      "view": {
+        "height": 480,
+        "width": 390
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "151366bb-2d6d-46a5-af53-089ee23f6313",
+        "작업 상태 다시 조회",
+        "작업 결과를 확인하지 못했습니다."
+      ],
+      "time": "2026-10-19T04:53:02.472Z"
+    },
+    {
+      "name": "candidate-result-reopen-preserves-receipt",
+      "source": "e8f16c8f03f9b64664f79f3d17ad27094e33e83e",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "light",
+      "view": {
+        "height": 480,
+        "width": 390
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "151366bb-2d6d-46a5-af53-089ee23f6313",
+        "작업 상태 다시 조회"
+      ],
+      "time": "2026-10-19T04:53:03.818Z"
+    },
+    {
+      "name": "candidate-remove-same-receipt-recheck-success",
+      "source": "e8f16c8f03f9b64664f79f3d17ad27094e33e83e",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "light",
+      "view": {
+        "height": 480,
+        "width": 390
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "151366bb-2d6d-46a5-af53-089ee23f6313",
+        "Affinity 그룹 변경이 완료되었습니다."
+      ],
+      "time": "2026-10-19T04:53:08.752Z"
+    },
+    {
+      "name": "candidate-add-success-light-desktop",
+      "source": "e8f16c8f03f9b64664f79f3d17ad27094e33e83e",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "light",
+      "view": {
+        "height": 900,
+        "width": 1440
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "Affinity 그룹 변경이 완료되었습니다.",
+        "4aee42d2-23e7-4f08-bc91-1a2ad929959c"
+      ],
+      "time": "2026-10-19T04:53:25.066Z"
+    },
+    {
+      "name": "candidate-running-disabled-state-text",
+      "source": "e8f16c8f03f9b64664f79f3d17ad27094e33e83e",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "light",
+      "view": {
+        "height": 900,
+        "width": 1440
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "GFS-TEST-VM",
+        "실행 중",
+        "Affinity 그룹 변경은 정지된 일반 VM에서"
+      ],
+      "time": "2026-10-19T04:53:27.850Z"
+    },
+    {
+      "name": "candidate-member-standard-dark",
+      "source": "e8f16c8f03f9b64664f79f3d17ad27094e33e83e",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "dark",
+      "view": {
+        "height": 900,
+        "width": 1440
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "연결 가상머신"
+      ],
+      "time": "2026-10-19T04:53:32.805Z"
+    },
+    {
+      "name": "candidate-user-create-dark-desktop",
+      "source": "e8f16c8f03f9b64664f79f3d17ad27094e33e83e",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "dark",
+      "view": {
+        "height": 900,
+        "width": 1440
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "소유 범위: qa-ag05-user / ROOT",
+        "다른 호스트 분산 우선 · 선호"
+      ],
+      "time": "2026-10-19T04:54:02.467Z"
+    },
+    {
+      "name": "candidate-user-create-dark-short",
+      "source": "e8f16c8f03f9b64664f79f3d17ad27094e33e83e",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "dark",
+      "view": {
+        "height": 480,
+        "width": 390
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "소유 범위: qa-ag05-user / ROOT",
+        "취소",
+        "확인"
+      ],
+      "time": "2026-10-19T04:54:03.035Z"
+    },
+    {
+      "name": "candidate-user-create-success",
+      "source": "e8f16c8f03f9b64664f79f3d17ad27094e33e83e",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "dark",
+      "view": {
+        "height": 480,
+        "width": 390
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "qa-ag05-user-ui"
+      ],
+      "time": "2026-10-19T04:54:03.757Z"
+    },
+    {
+      "name": "candidate-project-create-owner-name",
+      "source": "e8f16c8f03f9b64664f79f3d17ad27094e33e83e",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "dark",
+      "view": {
+        "height": 900,
+        "width": 1440
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "소유 범위: qa-ag05-project / ROOT",
+        "같은 호스트 우선 · 선호"
+      ],
+      "time": "2026-10-19T04:54:23.218Z"
+    },
+    {
+      "name": "candidate-project-create-success",
+      "source": "e8f16c8f03f9b64664f79f3d17ad27094e33e83e",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "dark",
+      "view": {
+        "height": 900,
+        "width": 1440
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "qa-ag05-project-ui"
+      ],
+      "time": "2026-10-19T04:54:24.437Z"
+    },
+    {
+      "name": "candidate-project-member-context",
+      "source": "e8f16c8f03f9b64664f79f3d17ad27094e33e83e",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "dark",
+      "view": {
+        "height": 900,
+        "width": 1440
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "qa-ag05-project",
+        "연결 VM 수: 1 · 조회 결과: 1"
+      ],
+      "time": "2026-10-19T04:54:26.224Z"
+    },
+    {
+      "name": "candidate-project-related-filter",
+      "source": "e8f16c8f03f9b64664f79f3d17ad27094e33e83e",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "dark",
+      "view": {
+        "height": 900,
+        "width": 1440
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "Affinity 그룹 : qa-ag05-project",
+        "qa-ag05-project-vm"
+      ],
+      "time": "2026-10-19T04:54:31.669Z"
+    },
+    {
+      "name": "candidate-project-back-member-tab",
+      "source": "e8f16c8f03f9b64664f79f3d17ad27094e33e83e",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "dark",
+      "view": {
+        "height": 900,
+        "width": 1440
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "연결 VM 수: 1 · 조회 결과: 1"
+      ],
+      "time": "2026-10-19T04:54:32.473Z"
+    },
+    {
+      "name": "vm-reference-full-list-dark",
+      "source": "e8f16c8f03f9b64664f79f3d17ad27094e33e83e",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "dark",
+      "view": {
+        "height": 900,
+        "width": 1440
+      },
+      "capture": "PNG full viewport",
+      "result": "reference",
+      "expected": [
+        "가상머신 추가"
+      ],
+      "time": "2026-10-19T04:55:20.479Z"
+    },
+    {
+      "name": "vm-reference-full-detail-dark",
+      "source": "e8f16c8f03f9b64664f79f3d17ad27094e33e83e",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "dark",
+      "view": {
+        "height": 900,
+        "width": 1440
+      },
+      "capture": "PNG full viewport",
+      "result": "reference",
+      "expected": [
+        "qa-ag05-vm-01",
+        "Affinity 그룹"
+      ],
+      "time": "2026-10-19T04:55:21.879Z"
+    },
+    {
+      "name": "vm-reference-full-tab-content-dark",
+      "source": "e8f16c8f03f9b64664f79f3d17ad27094e33e83e",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "dark",
+      "view": {
+        "height": 900,
+        "width": 1440
+      },
+      "capture": "PNG full viewport",
+      "result": "reference",
+      "expected": [
+        "볼륨"
+      ],
+      "time": "2026-10-19T04:55:23.203Z"
+    },
+    {
+      "name": "vm-reference-full-dialog-dark",
+      "source": "e8f16c8f03f9b64664f79f3d17ad27094e33e83e",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "dark",
+      "view": {
+        "height": 900,
+        "width": 1440
+      },
+      "capture": "PNG full viewport",
+      "result": "reference",
+      "expected": [
+        "ISO 연결",
+        "취소",
+        "확인"
+      ],
+      "time": "2026-10-19T04:55:26.419Z"
+    },
+    {
+      "name": "qualified-policy-single-render-dark",
+      "source": "9d698b6cd569dff740d42d13404209a0621bf6f7",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "dark",
+      "view": {
+        "height": 900,
+        "width": 1440
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "같은 호스트 배치 · 엄격"
+      ],
+      "time": "2026-10-19T04:58:33.867Z"
+    },
+    {
+      "name": "qualified-delete-context-dark-desktop",
+      "source": "9d698b6cd569dff740d42d13404209a0621bf6f7",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "dark",
+      "view": {
+        "height": 900,
+        "width": 1440
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "qa-ag05-target",
+        "admin / ROOT",
+        "연결 VM 수",
+        "3",
+        "취소"
+      ],
+      "time": "2026-10-19T04:58:47.349Z"
+    },
+    {
+      "name": "reproduced-short-affix-tab-hitbox",
+      "source": "9d698b6cd569dff740d42d13404209a0621bf6f7",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "light",
+      "view": {
+        "height": 480,
+        "width": 390
+      },
+      "capture": "PNG full viewport",
+      "result": "reproduced",
+      "expected": [
+        "qa-ag05-target",
+        "같은 호스트 배치 · 엄격"
+      ],
+      "time": "2026-10-19T05:04:14.668Z"
+    },
+    {
+      "name": "intermediate-user-delete-zero-context",
+      "source": "9d698b6cd569dff740d42d13404209a0621bf6f7",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "light",
+      "view": {
+        "height": 900,
+        "width": 1440
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "qa-ag05-user-ui",
+        "qa-ag05-user / ROOT",
+        "연결 VM 수",
+        "0"
+      ],
+      "time": "2026-10-19T05:05:02.968Z"
+    },
+    {
+      "name": "intermediate-user-delete-zero-short",
+      "source": "9d698b6cd569dff740d42d13404209a0621bf6f7",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "light",
+      "view": {
+        "height": 480,
+        "width": 390
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "qa-ag05-user-ui",
+        "취소",
+        "Affinity 그룹 삭제"
+      ],
+      "time": "2026-10-19T05:05:03.599Z"
+    },
+    {
+      "name": "intermediate-user-delete-zero-success",
+      "source": "9d698b6cd569dff740d42d13404209a0621bf6f7",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "light",
+      "view": {
+        "height": 480,
+        "width": 390
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "qa-ag05-user-target",
+        "qa-ag05-user-other"
+      ],
+      "time": "2026-10-19T05:05:04.377Z"
+    },
+    {
+      "name": "intermediate-project-delete-zero-context",
+      "source": "9d698b6cd569dff740d42d13404209a0621bf6f7",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "light",
+      "view": {
+        "height": 900,
+        "width": 1440
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "qa-ag05-project-ui",
+        "qa-ag05-project / ROOT",
+        "연결 VM 수"
+      ],
+      "time": "2026-10-19T05:05:15.778Z"
+    },
+    {
+      "name": "intermediate-project-delete-zero-mobile",
+      "source": "9d698b6cd569dff740d42d13404209a0621bf6f7",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "light",
+      "view": {
+        "height": 844,
+        "width": 390
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "qa-ag05-project-ui",
+        "취소",
+        "Affinity 그룹 삭제"
+      ],
+      "time": "2026-10-19T05:05:16.529Z"
+    },
+    {
+      "name": "intermediate-project-delete-zero-success",
+      "source": "9d698b6cd569dff740d42d13404209a0621bf6f7",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "light",
+      "view": {
+        "height": 844,
+        "width": 390
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "qa-ag05-project-target",
+        "qa-ag05-project-other"
+      ],
+      "time": "2026-10-19T05:05:17.419Z"
+    },
+    {
+      "name": "qualified-affix-pointer-light-short",
+      "source": "b67611fdb7decf4cfc821b6af0ce891c11bde9b8",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "light",
+      "view": {
+        "height": 480,
+        "width": 390
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "연결 VM 수:"
+      ],
+      "time": "2026-10-19T05:23:45.192Z"
+    },
+    {
+      "name": "qualified-long-pointer-light-short",
+      "source": "b67611fdb7decf4cfc821b6af0ce891c11bde9b8",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "light",
+      "view": {
+        "height": 480,
+        "width": 390
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "연결 VM 수:"
+      ],
+      "time": "2026-10-19T05:23:46.600Z"
+    },
+    {
+      "name": "qualified-long-members-light-short",
+      "source": "b67611fdb7decf4cfc821b6af0ce891c11bde9b8",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "light",
+      "view": {
+        "height": 480,
+        "width": 390
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "연결 VM 수: 0 · 조회 결과: 0"
+      ],
+      "time": "2026-10-19T05:23:47.005Z"
+    },
+    {
+      "name": "qualified-long-add-light-short",
+      "source": "b67611fdb7decf4cfc821b6af0ce891c11bde9b8",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "light",
+      "view": {
+        "height": 480,
+        "width": 390
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "qa-ag05-long-",
+        "취소"
+      ],
+      "time": "2026-10-19T05:23:48.415Z"
+    },
+    {
+      "name": "qualified-list-light-1440x900",
+      "source": "b67611fdb7decf4cfc821b6af0ce891c11bde9b8",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "light",
+      "view": {
+        "height": 900,
+        "width": 1440
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "같은 호스트 배치 · 엄격",
+        "연결 VM 수"
+      ],
+      "time": "2026-10-19T05:23:55.204Z"
+    },
+    {
+      "name": "qualified-create-light-1440x900",
+      "source": "b67611fdb7decf4cfc821b6af0ce891c11bde9b8",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "light",
+      "view": {
+        "height": 900,
+        "width": 1440
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "취소",
+        "확인",
+        "같은 호스트 우선 · 선호"
+      ],
+      "time": "2026-10-19T05:23:58.789Z"
+    },
+    {
+      "name": "qualified-long-detail-light-1440x900",
+      "source": "b67611fdb7decf4cfc821b6af0ce891c11bde9b8",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "light",
+      "view": {
+        "height": 900,
+        "width": 1440
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "qa-ag05-long-",
+        "연결 VM 수"
+      ],
+      "time": "2026-10-19T05:24:00.686Z"
+    },
+    {
+      "name": "qualified-detail-light-1440x900",
+      "source": "b67611fdb7decf4cfc821b6af0ce891c11bde9b8",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "light",
+      "view": {
+        "height": 900,
+        "width": 1440
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "같은 호스트 배치 · 엄격",
+        "같은 호스트에 배치합니다."
+      ],
+      "time": "2026-10-19T05:24:02.063Z"
+    },
+    {
+      "name": "qualified-members-light-1440x900",
+      "source": "b67611fdb7decf4cfc821b6af0ce891c11bde9b8",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "light",
+      "view": {
+        "height": 900,
+        "width": 1440
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "연결 VM 수: 3 · 조회 결과: 3",
+        "정지된 상태"
+      ],
+      "time": "2026-10-19T05:24:03.694Z"
+    },
+    {
+      "name": "qualified-add-light-1440x900",
+      "source": "b67611fdb7decf4cfc821b6af0ce891c11bde9b8",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "light",
+      "view": {
+        "height": 900,
+        "width": 1440
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "qa-ag05-vm-01",
+        "정지된 상태",
+        "취소"
+      ],
+      "time": "2026-10-19T05:24:05.880Z"
+    },
+    {
+      "name": "qualified-delete-light-1440x900",
+      "source": "b67611fdb7decf4cfc821b6af0ce891c11bde9b8",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "light",
+      "view": {
+        "height": 900,
+        "width": 1440
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "qa-ag05-target",
+        "admin / ROOT",
+        "취소",
+        "연결 VM 수"
+      ],
+      "time": "2026-10-19T05:24:08.128Z"
+    },
+    {
+      "name": "qualified-list-light-390x844",
+      "source": "b67611fdb7decf4cfc821b6af0ce891c11bde9b8",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "light",
+      "view": {
+        "height": 844,
+        "width": 390
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "같은 호스트 배치 · 엄격",
+        "연결 VM 수"
+      ],
+      "time": "2026-10-19T05:24:10.458Z"
+    },
+    {
+      "name": "qualified-create-light-390x844",
+      "source": "b67611fdb7decf4cfc821b6af0ce891c11bde9b8",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "light",
+      "view": {
+        "height": 844,
+        "width": 390
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "취소",
+        "확인",
+        "같은 호스트 우선 · 선호"
+      ],
+      "time": "2026-10-19T05:24:12.799Z"
+    },
+    {
+      "name": "qualified-long-detail-light-390x844",
+      "source": "b67611fdb7decf4cfc821b6af0ce891c11bde9b8",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "light",
+      "view": {
+        "height": 844,
+        "width": 390
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "qa-ag05-long-",
+        "연결 VM 수"
+      ],
+      "time": "2026-10-19T05:24:14.024Z"
+    },
+    {
+      "name": "qualified-detail-light-390x844",
+      "source": "b67611fdb7decf4cfc821b6af0ce891c11bde9b8",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "light",
+      "view": {
+        "height": 844,
+        "width": 390
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "같은 호스트 배치 · 엄격",
+        "같은 호스트에 배치합니다."
+      ],
+      "time": "2026-10-19T05:24:14.829Z"
+    },
+    {
+      "name": "qualified-members-light-390x844",
+      "source": "b67611fdb7decf4cfc821b6af0ce891c11bde9b8",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "light",
+      "view": {
+        "height": 844,
+        "width": 390
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "연결 VM 수: 3 · 조회 결과: 3",
+        "정지된 상태"
+      ],
+      "time": "2026-10-19T05:24:16.081Z"
+    },
+    {
+      "name": "qualified-add-light-390x844",
+      "source": "b67611fdb7decf4cfc821b6af0ce891c11bde9b8",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "light",
+      "view": {
+        "height": 844,
+        "width": 390
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "qa-ag05-vm-01",
+        "정지된 상태",
+        "취소"
+      ],
+      "time": "2026-10-19T05:24:17.587Z"
+    },
+    {
+      "name": "qualified-delete-light-390x844",
+      "source": "b67611fdb7decf4cfc821b6af0ce891c11bde9b8",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "light",
+      "view": {
+        "height": 844,
+        "width": 390
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "qa-ag05-target",
+        "admin / ROOT",
+        "취소",
+        "연결 VM 수"
+      ],
+      "time": "2026-10-19T05:24:19.081Z"
+    },
+    {
+      "name": "qualified-list-light-390x480",
+      "source": "b67611fdb7decf4cfc821b6af0ce891c11bde9b8",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "light",
+      "view": {
+        "height": 480,
+        "width": 390
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "같은 호스트 배치 · 엄격",
+        "연결 VM 수"
+      ],
+      "time": "2026-10-19T05:24:21.075Z"
+    },
+    {
+      "name": "qualified-create-light-390x480",
+      "source": "b67611fdb7decf4cfc821b6af0ce891c11bde9b8",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "light",
+      "view": {
+        "height": 480,
+        "width": 390
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "취소",
+        "확인",
+        "같은 호스트 우선 · 선호"
+      ],
+      "time": "2026-10-19T05:24:23.381Z"
+    },
+    {
+      "name": "qualified-long-detail-light-390x480",
+      "source": "b67611fdb7decf4cfc821b6af0ce891c11bde9b8",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "light",
+      "view": {
+        "height": 480,
+        "width": 390
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "qa-ag05-long-",
+        "연결 VM 수"
+      ],
+      "time": "2026-10-19T05:24:24.502Z"
+    },
+    {
+      "name": "qualified-detail-light-390x480",
+      "source": "b67611fdb7decf4cfc821b6af0ce891c11bde9b8",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "light",
+      "view": {
+        "height": 480,
+        "width": 390
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "같은 호스트 배치 · 엄격",
+        "같은 호스트에 배치합니다."
+      ],
+      "time": "2026-10-19T05:24:25.222Z"
+    },
+    {
+      "name": "qualified-members-light-390x480",
+      "source": "b67611fdb7decf4cfc821b6af0ce891c11bde9b8",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "light",
+      "view": {
+        "height": 480,
+        "width": 390
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "연결 VM 수: 3 · 조회 결과: 3",
+        "정지된 상태"
+      ],
+      "time": "2026-10-19T05:24:26.354Z"
+    },
+    {
+      "name": "qualified-add-light-390x480",
+      "source": "b67611fdb7decf4cfc821b6af0ce891c11bde9b8",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "light",
+      "view": {
+        "height": 480,
+        "width": 390
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "qa-ag05-vm-01",
+        "정지된 상태",
+        "취소"
+      ],
+      "time": "2026-10-19T05:24:28.034Z"
+    },
+    {
+      "name": "qualified-delete-light-390x480",
+      "source": "b67611fdb7decf4cfc821b6af0ce891c11bde9b8",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "light",
+      "view": {
+        "height": 480,
+        "width": 390
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "qa-ag05-target",
+        "admin / ROOT",
+        "취소",
+        "연결 VM 수"
+      ],
+      "time": "2026-10-19T05:24:29.441Z"
+    },
+    {
+      "name": "qualified-list-dark-1440x900",
+      "source": "b67611fdb7decf4cfc821b6af0ce891c11bde9b8",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "dark",
+      "view": {
+        "height": 900,
+        "width": 1440
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "같은 호스트 배치 · 엄격",
+        "연결 VM 수"
+      ],
+      "time": "2026-10-19T05:24:41.364Z"
+    },
+    {
+      "name": "qualified-create-dark-1440x900",
+      "source": "b67611fdb7decf4cfc821b6af0ce891c11bde9b8",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "dark",
+      "view": {
+        "height": 900,
+        "width": 1440
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "취소",
+        "확인",
+        "같은 호스트 우선 · 선호"
+      ],
+      "time": "2026-10-19T05:24:45.072Z"
+    },
+    {
+      "name": "qualified-long-detail-dark-1440x900",
+      "source": "b67611fdb7decf4cfc821b6af0ce891c11bde9b8",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "dark",
+      "view": {
+        "height": 900,
+        "width": 1440
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "qa-ag05-long-",
+        "연결 VM 수"
+      ],
+      "time": "2026-10-19T05:24:47.065Z"
+    },
+    {
+      "name": "qualified-detail-dark-1440x900",
+      "source": "b67611fdb7decf4cfc821b6af0ce891c11bde9b8",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "dark",
+      "view": {
+        "height": 900,
+        "width": 1440
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "같은 호스트 배치 · 엄격",
+        "같은 호스트에 배치합니다."
+      ],
+      "time": "2026-10-19T05:24:48.502Z"
+    },
+    {
+      "name": "qualified-members-dark-1440x900",
+      "source": "b67611fdb7decf4cfc821b6af0ce891c11bde9b8",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "dark",
+      "view": {
+        "height": 900,
+        "width": 1440
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "연결 VM 수: 3 · 조회 결과: 3",
+        "정지된 상태"
+      ],
+      "time": "2026-10-19T05:24:50.196Z"
+    },
+    {
+      "name": "qualified-add-dark-1440x900",
+      "source": "b67611fdb7decf4cfc821b6af0ce891c11bde9b8",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "dark",
+      "view": {
+        "height": 900,
+        "width": 1440
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "qa-ag05-vm-01",
+        "정지된 상태",
+        "취소"
+      ],
+      "time": "2026-10-19T05:24:52.381Z"
+    },
+    {
+      "name": "qualified-delete-dark-1440x900",
+      "source": "b67611fdb7decf4cfc821b6af0ce891c11bde9b8",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "dark",
+      "view": {
+        "height": 900,
+        "width": 1440
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "qa-ag05-target",
+        "admin / ROOT",
+        "취소",
+        "연결 VM 수"
+      ],
+      "time": "2026-10-19T05:24:54.641Z"
+    },
+    {
+      "name": "qualified-list-dark-390x844",
+      "source": "b67611fdb7decf4cfc821b6af0ce891c11bde9b8",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "dark",
+      "view": {
+        "height": 844,
+        "width": 390
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "같은 호스트 배치 · 엄격",
+        "연결 VM 수"
+      ],
+      "time": "2026-10-19T05:24:57.022Z"
+    },
+    {
+      "name": "qualified-create-dark-390x844",
+      "source": "b67611fdb7decf4cfc821b6af0ce891c11bde9b8",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "dark",
+      "view": {
+        "height": 844,
+        "width": 390
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "취소",
+        "확인",
+        "같은 호스트 우선 · 선호"
+      ],
+      "time": "2026-10-19T05:24:59.467Z"
+    },
+    {
+      "name": "qualified-long-detail-dark-390x844",
+      "source": "b67611fdb7decf4cfc821b6af0ce891c11bde9b8",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "dark",
+      "view": {
+        "height": 844,
+        "width": 390
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "qa-ag05-long-",
+        "연결 VM 수"
+      ],
+      "time": "2026-10-19T05:25:00.742Z"
+    },
+    {
+      "name": "qualified-detail-dark-390x844",
+      "source": "b67611fdb7decf4cfc821b6af0ce891c11bde9b8",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "dark",
+      "view": {
+        "height": 844,
+        "width": 390
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "같은 호스트 배치 · 엄격",
+        "같은 호스트에 배치합니다."
+      ],
+      "time": "2026-10-19T05:25:01.612Z"
+    },
+    {
+      "name": "qualified-members-dark-390x844",
+      "source": "b67611fdb7decf4cfc821b6af0ce891c11bde9b8",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "dark",
+      "view": {
+        "height": 844,
+        "width": 390
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "연결 VM 수: 3 · 조회 결과: 3",
+        "정지된 상태"
+      ],
+      "time": "2026-10-19T05:25:02.927Z"
+    },
+    {
+      "name": "qualified-add-dark-390x844",
+      "source": "b67611fdb7decf4cfc821b6af0ce891c11bde9b8",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "dark",
+      "view": {
+        "height": 844,
+        "width": 390
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "qa-ag05-vm-01",
+        "정지된 상태",
+        "취소"
+      ],
+      "time": "2026-10-19T05:25:04.400Z"
+    },
+    {
+      "name": "qualified-delete-dark-390x844",
+      "source": "b67611fdb7decf4cfc821b6af0ce891c11bde9b8",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "dark",
+      "view": {
+        "height": 844,
+        "width": 390
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "qa-ag05-target",
+        "admin / ROOT",
+        "취소",
+        "연결 VM 수"
+      ],
+      "time": "2026-10-19T05:25:05.958Z"
+    },
+    {
+      "name": "qualified-list-dark-390x480",
+      "source": "b67611fdb7decf4cfc821b6af0ce891c11bde9b8",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "dark",
+      "view": {
+        "height": 480,
+        "width": 390
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "같은 호스트 배치 · 엄격",
+        "연결 VM 수"
+      ],
+      "time": "2026-10-19T05:25:08.037Z"
+    },
+    {
+      "name": "qualified-create-dark-390x480",
+      "source": "b67611fdb7decf4cfc821b6af0ce891c11bde9b8",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "dark",
+      "view": {
+        "height": 480,
+        "width": 390
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "취소",
+        "확인",
+        "같은 호스트 우선 · 선호"
+      ],
+      "time": "2026-10-19T05:25:10.348Z"
+    },
+    {
+      "name": "qualified-long-detail-dark-390x480",
+      "source": "b67611fdb7decf4cfc821b6af0ce891c11bde9b8",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "dark",
+      "view": {
+        "height": 480,
+        "width": 390
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "qa-ag05-long-",
+        "연결 VM 수"
+      ],
+      "time": "2026-10-19T05:25:11.477Z"
+    },
+    {
+      "name": "qualified-detail-dark-390x480",
+      "source": "b67611fdb7decf4cfc821b6af0ce891c11bde9b8",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "dark",
+      "view": {
+        "height": 480,
+        "width": 390
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "같은 호스트 배치 · 엄격",
+        "같은 호스트에 배치합니다."
+      ],
+      "time": "2026-10-19T05:25:12.223Z"
+    },
+    {
+      "name": "qualified-members-dark-390x480",
+      "source": "b67611fdb7decf4cfc821b6af0ce891c11bde9b8",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "dark",
+      "view": {
+        "height": 480,
+        "width": 390
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "연결 VM 수: 3 · 조회 결과: 3",
+        "정지된 상태"
+      ],
+      "time": "2026-10-19T05:25:13.380Z"
+    },
+    {
+      "name": "qualified-add-dark-390x480",
+      "source": "b67611fdb7decf4cfc821b6af0ce891c11bde9b8",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "dark",
+      "view": {
+        "height": 480,
+        "width": 390
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "qa-ag05-vm-01",
+        "정지된 상태",
+        "취소"
+      ],
+      "time": "2026-10-19T05:25:15.070Z"
+    },
+    {
+      "name": "qualified-delete-dark-390x480",
+      "source": "b67611fdb7decf4cfc821b6af0ce891c11bde9b8",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "dark",
+      "view": {
+        "height": 480,
+        "width": 390
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "qa-ag05-target",
+        "admin / ROOT",
+        "취소",
+        "연결 VM 수"
+      ],
+      "time": "2026-10-19T05:25:16.506Z"
+    },
+    {
+      "name": "qualified-change-dark-desktop",
+      "source": "b67611fdb7decf4cfc821b6af0ce891c11bde9b8",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "dark",
+      "view": {
+        "height": 900,
+        "width": 1440
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "전체 선택: 3",
+        "qa-ag05-page-10",
+        "qa-ag05-other",
+        "qa-ag05-target"
+      ],
+      "time": "2026-10-19T05:26:14.394Z"
+    },
+    {
+      "name": "qualified-change-dark-mobile",
+      "source": "b67611fdb7decf4cfc821b6af0ce891c11bde9b8",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "dark",
+      "view": {
+        "height": 844,
+        "width": 390
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "전체 선택: 2",
+        "취소",
+        "확인"
+      ],
+      "time": "2026-10-19T05:26:16.434Z"
+    },
+    {
+      "name": "qualified-change-dark-short",
+      "source": "b67611fdb7decf4cfc821b6af0ce891c11bde9b8",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "dark",
+      "view": {
+        "height": 480,
+        "width": 390
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "전체 선택: 2",
+        "취소",
+        "확인"
+      ],
+      "time": "2026-10-19T05:26:17.502Z"
+    },
+    {
+      "name": "qualified-vm-change-success-two",
+      "source": "b67611fdb7decf4cfc821b6af0ce891c11bde9b8",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "dark",
+      "view": {
+        "height": 480,
+        "width": 390
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "qa-ag05-target",
+        "qa-ag05-other"
+      ],
+      "time": "2026-10-19T05:26:18.628Z"
+    },
+    {
+      "name": "qualified-change-filter-preserves-other-selections",
+      "source": "b67611fdb7decf4cfc821b6af0ce891c11bde9b8",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "dark",
+      "view": {
+        "height": 900,
+        "width": 1440
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "전체 선택: 3",
+        "qa-ag05-other",
+        "qa-ag05-target"
+      ],
+      "time": "2026-10-19T05:26:22.753Z"
+    },
+    {
+      "name": "qualified-vm-change-success-three",
+      "source": "b67611fdb7decf4cfc821b6af0ce891c11bde9b8",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "dark",
+      "view": {
+        "height": 900,
+        "width": 1440
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "qa-ag05-target",
+        "qa-ag05-other",
+        "qa-ag05-page-10"
+      ],
+      "time": "2026-10-19T05:26:24.481Z"
+    },
+    {
+      "name": "qualified-affix-pointer-dark-short",
+      "source": "b67611fdb7decf4cfc821b6af0ce891c11bde9b8",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "dark",
+      "view": {
+        "height": 480,
+        "width": 390
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "연결 VM 수:"
+      ],
+      "time": "2026-10-19T05:26:46.319Z"
+    },
+    {
+      "name": "qualified-long-pointer-dark-short",
+      "source": "b67611fdb7decf4cfc821b6af0ce891c11bde9b8",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "dark",
+      "view": {
+        "height": 480,
+        "width": 390
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "연결 VM 수:"
+      ],
+      "time": "2026-10-19T05:26:47.752Z"
+    },
+    {
+      "name": "qualified-long-members-dark-short",
+      "source": "b67611fdb7decf4cfc821b6af0ce891c11bde9b8",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "dark",
+      "view": {
+        "height": 480,
+        "width": 390
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "연결 VM 수: 0 · 조회 결과: 0"
+      ],
+      "time": "2026-10-19T05:26:48.164Z"
+    },
+    {
+      "name": "qualified-long-add-dark-short",
+      "source": "b67611fdb7decf4cfc821b6af0ce891c11bde9b8",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "dark",
+      "view": {
+        "height": 480,
+        "width": 390
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "qa-ag05-long-",
+        "취소"
+      ],
+      "time": "2026-10-19T05:26:49.664Z"
+    },
+    {
+      "name": "qualified-remove-confirm-dark",
+      "source": "b67611fdb7decf4cfc821b6af0ce891c11bde9b8",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "dark",
+      "view": {
+        "height": 900,
+        "width": 1440
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "qa-ag05-vm-01",
+        "취소",
+        "확인"
+      ],
+      "time": "2026-10-19T05:27:10.180Z"
+    },
+    {
+      "name": "qualified-remove-unknown-dark-short",
+      "source": "b67611fdb7decf4cfc821b6af0ce891c11bde9b8",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "dark",
+      "view": {
+        "height": 480,
+        "width": 390
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "20eaa4a9-020d-436c-a271-fe852cafd40a",
+        "작업 상태 다시 조회"
+      ],
+      "time": "2026-10-19T05:27:22.027Z"
+    },
+    {
+      "name": "qualified-result-reopened-same-receipt",
+      "source": "b67611fdb7decf4cfc821b6af0ce891c11bde9b8",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "dark",
+      "view": {
+        "height": 480,
+        "width": 390
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "20eaa4a9-020d-436c-a271-fe852cafd40a",
+        "작업 상태 다시 조회"
+      ],
+      "time": "2026-10-19T05:27:23.091Z"
+    },
+    {
+      "name": "qualified-result-recheck-same-job-success",
+      "source": "b67611fdb7decf4cfc821b6af0ce891c11bde9b8",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "dark",
+      "view": {
+        "height": 480,
+        "width": 390
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "20eaa4a9-020d-436c-a271-fe852cafd40a",
+        "Affinity 그룹 변경이 완료되었습니다."
+      ],
+      "time": "2026-10-19T05:27:23.904Z"
+    },
+    {
+      "name": "qualified-add-eligible-selected-dark-mobile",
+      "source": "b67611fdb7decf4cfc821b6af0ce891c11bde9b8",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "dark",
+      "view": {
+        "height": 844,
+        "width": 390
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "qa-ag05-vm-01",
+        "선택: 1",
+        "다음"
+      ],
+      "time": "2026-10-19T05:27:35.459Z"
+    },
+    {
+      "name": "qualified-add-confirm-dark-short",
+      "source": "b67611fdb7decf4cfc821b6af0ce891c11bde9b8",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "dark",
+      "view": {
+        "height": 480,
+        "width": 390
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "qa-ag05-vm-01",
+        "취소",
+        "확인"
+      ],
+      "time": "2026-10-19T05:27:36.443Z"
+    },
+    {
+      "name": "qualified-add-result-success-dark-short",
+      "source": "b67611fdb7decf4cfc821b6af0ce891c11bde9b8",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "dark",
+      "view": {
+        "height": 480,
+        "width": 390
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "Affinity 그룹 변경이 완료되었습니다.",
+        "작업 ID"
+      ],
+      "time": "2026-10-19T05:27:37.253Z"
+    },
+    {
+      "name": "qualified-delete-before-external-change",
+      "source": "b67611fdb7decf4cfc821b6af0ce891c11bde9b8",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "dark",
+      "view": {
+        "height": 900,
+        "width": 1440
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "qa-ag05-target",
+        "admin / ROOT",
+        "3"
+      ],
+      "time": "2026-10-19T05:27:40.695Z"
+    },
+    {
+      "name": "qualified-delete-reconfirmation-latest-two",
+      "source": "b67611fdb7decf4cfc821b6af0ce891c11bde9b8",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "dark",
+      "view": {
+        "height": 480,
+        "width": 390
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "연결 VM 구성이 변경되어 최신 삭제 영향을 다시 표시했습니다.",
+        "2",
+        "취소"
+      ],
+      "time": "2026-10-19T05:28:25.035Z"
+    },
+    {
+      "name": "qualified-delete-target-success",
+      "source": "b67611fdb7decf4cfc821b6af0ce891c11bde9b8",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "dark",
+      "view": {
+        "height": 480,
+        "width": 390
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "Affinity 그룹"
+      ],
+      "time": "2026-10-19T05:28:26.542Z"
+    },
+    {
+      "name": "qualified-delete-empty-zero-short",
+      "source": "b67611fdb7decf4cfc821b6af0ce891c11bde9b8",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "dark",
+      "view": {
+        "height": 480,
+        "width": 390
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "qa-ag05-empty",
+        "연결 VM 수",
+        "0"
+      ],
+      "time": "2026-10-19T05:28:29.909Z"
+    },
+    {
+      "name": "qualified-delete-empty-success",
+      "source": "b67611fdb7decf4cfc821b6af0ce891c11bde9b8",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "dark",
+      "view": {
+        "height": 480,
+        "width": 390
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "Affinity 그룹"
+      ],
+      "time": "2026-10-19T05:28:31.411Z"
+    },
+    {
+      "name": "qualified-delete-long-zero-mobile",
+      "source": "b67611fdb7decf4cfc821b6af0ce891c11bde9b8",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "dark",
+      "view": {
+        "height": 844,
+        "width": 390
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "qa-ag05-ui-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "연결 VM 수",
+        "0"
+      ],
+      "time": "2026-10-19T05:28:34.958Z"
+    },
+    {
+      "name": "qualified-delete-long-zero-short",
+      "source": "b67611fdb7decf4cfc821b6af0ce891c11bde9b8",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "dark",
+      "view": {
+        "height": 480,
+        "width": 390
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "qa-ag05-ui-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "취소"
+      ],
+      "time": "2026-10-19T05:28:35.627Z"
+    },
+    {
+      "name": "qualified-delete-long-success",
+      "source": "b67611fdb7decf4cfc821b6af0ce891c11bde9b8",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "dark",
+      "view": {
+        "height": 480,
+        "width": 390
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "Affinity 그룹"
+      ],
+      "time": "2026-10-19T05:28:37.197Z"
+    },
+    {
+      "name": "qualified-delete-preserves-vm-other-memberships",
+      "source": "b67611fdb7decf4cfc821b6af0ce891c11bde9b8",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "theme": "dark",
+      "view": {
+        "height": 900,
+        "width": 1440
+      },
+      "capture": "PNG full viewport",
+      "result": "pass",
+      "expected": [
+        "qa-ag05-vm-01",
+        "정지된 상태",
+        "qa-ag05-other",
+        "qa-ag05-page-10"
+      ],
+      "time": "2026-10-19T05:28:53.384Z"
+    }
+  ]
+}

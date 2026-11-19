@@ -1,0 +1,4853 @@
+[
+  {
+    "command": "listCapabilities",
+    "method": "GET",
+    "params": {}
+  },
+  {
+    "command": "listGuiThemes",
+    "method": "GET",
+    "params": {}
+  },
+  {
+    "command": "listGuiThemes",
+    "method": "GET",
+    "params": {
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f"
+    }
+  },
+  {
+    "command": "listHSMProfiles",
+    "method": "GET",
+    "params": {}
+  },
+  {
+    "command": "listNetworkServiceProviders",
+    "method": "GET",
+    "params": {
+      "name": "SecurityGroupProvider"
+    }
+  },
+  {
+    "command": "listLdapConfigurations",
+    "method": "GET",
+    "params": {}
+  },
+  {
+    "command": "cloudianIsEnabled",
+    "method": "GET",
+    "params": {}
+  },
+  {
+    "command": "listUsers",
+    "method": "GET",
+    "params": {
+      "id": "a75cdd55-b253-11f1-a895-0024814c313f"
+    }
+  },
+  {
+    "command": "listConfigurations",
+    "method": "GET",
+    "params": {
+      "name": "favicon.state.interval"
+    }
+  },
+  {
+    "command": "listConfigurations",
+    "method": "GET",
+    "params": {
+      "name": "favicon.state.yellow.capacity"
+    }
+  },
+  {
+    "command": "listConfigurations",
+    "method": "GET",
+    "params": {
+      "name": "favicon.state.red.capacity"
+    }
+  },
+  {
+    "command": "listCniConfiguration",
+    "method": "GET",
+    "params": {
+      "id": "dcb3f490-7795-4152-9b7c-414fb8e0adf2",
+      "page": "1",
+      "pagesize": "20"
+    }
+  },
+  {
+    "command": "getWallAlertAvailability",
+    "method": "GET",
+    "params": {}
+  },
+  {
+    "command": "listProjects",
+    "method": "GET",
+    "params": {
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listGuiThemes",
+    "method": "GET",
+    "params": {}
+  },
+  {
+    "command": "listResourceIcon",
+    "method": "GET",
+    "params": {}
+  },
+  {
+    "command": "listAccounts",
+    "method": "GET",
+    "params": {
+      "name": "cni1407-a",
+      "domainid": "8eb393ec-522d-41d5-a864-93bfcb73a799"
+    }
+  },
+  {
+    "command": "listGuiThemes",
+    "method": "GET",
+    "params": {}
+  },
+  {
+    "command": "readyForShutdown",
+    "method": "GET",
+    "params": {}
+  },
+  {
+    "command": "readyForShutdown",
+    "method": "GET",
+    "params": {}
+  },
+  {
+    "command": "readyForShutdown",
+    "method": "GET",
+    "params": {}
+  },
+  {
+    "command": "listApis",
+    "method": "GET",
+    "params": {
+      "projectid": "e4480be5-edff-4ae7-8c3e-0d9e35b88c91"
+    }
+  },
+  {
+    "command": "listConfigurations",
+    "method": "GET",
+    "params": {
+      "name": "favicon.state.interval"
+    }
+  },
+  {
+    "command": "listConfigurations",
+    "method": "GET",
+    "params": {
+      "name": "favicon.state.yellow.capacity"
+    }
+  },
+  {
+    "command": "listConfigurations",
+    "method": "GET",
+    "params": {
+      "name": "favicon.state.red.capacity"
+    }
+  },
+  {
+    "command": "readyForShutdown",
+    "method": "GET",
+    "params": {
+      "projectid": "e4480be5-edff-4ae7-8c3e-0d9e35b88c91"
+    }
+  },
+  {
+    "command": "listResourceIcon",
+    "method": "GET",
+    "params": {
+      "projectid": "e4480be5-edff-4ae7-8c3e-0d9e35b88c91"
+    }
+  },
+  {
+    "command": "listAccounts",
+    "method": "GET",
+    "params": {
+      "name": "cni1407-a",
+      "domainid": "8eb393ec-522d-41d5-a864-93bfcb73a799",
+      "projectid": "e4480be5-edff-4ae7-8c3e-0d9e35b88c91"
+    }
+  },
+  {
+    "command": "listZones",
+    "method": "GET",
+    "params": {
+      "projectid": "e4480be5-edff-4ae7-8c3e-0d9e35b88c91"
+    }
+  },
+  {
+    "command": "listZones",
+    "method": "GET",
+    "params": {
+      "projectid": "e4480be5-edff-4ae7-8c3e-0d9e35b88c91"
+    }
+  },
+  {
+    "command": "listAlerts",
+    "method": "GET",
+    "params": {
+      "page": "1",
+      "pagesize": "8",
+      "projectid": "e4480be5-edff-4ae7-8c3e-0d9e35b88c91"
+    }
+  },
+  {
+    "command": "listEvents",
+    "method": "GET",
+    "params": {
+      "page": "1",
+      "pagesize": "8",
+      "projectid": "e4480be5-edff-4ae7-8c3e-0d9e35b88c91"
+    }
+  },
+  {
+    "command": "listProjects",
+    "method": "GET",
+    "params": {
+      "id": "e4480be5-edff-4ae7-8c3e-0d9e35b88c91",
+      "projectid": "e4480be5-edff-4ae7-8c3e-0d9e35b88c91"
+    }
+  },
+  {
+    "command": "listVirtualMachines",
+    "method": "GET",
+    "params": {
+      "page": "1",
+      "pagesize": "1",
+      "projectid": "e4480be5-edff-4ae7-8c3e-0d9e35b88c91"
+    }
+  },
+  {
+    "command": "listVirtualMachines",
+    "method": "GET",
+    "params": {
+      "page": "1",
+      "pagesize": "1",
+      "projectid": "e4480be5-edff-4ae7-8c3e-0d9e35b88c91"
+    }
+  },
+  {
+    "command": "listVirtualMachines",
+    "method": "GET",
+    "params": {
+      "page": "1",
+      "pagesize": "1",
+      "projectid": "e4480be5-edff-4ae7-8c3e-0d9e35b88c91"
+    }
+  },
+  {
+    "command": "listEvents",
+    "method": "GET",
+    "params": {
+      "page": "1",
+      "pagesize": "8",
+      "projectid": "e4480be5-edff-4ae7-8c3e-0d9e35b88c91"
+    }
+  },
+  {
+    "command": "listKubernetesClusters",
+    "method": "GET",
+    "params": {
+      "page": "1",
+      "pagesize": "1",
+      "projectid": "e4480be5-edff-4ae7-8c3e-0d9e35b88c91"
+    }
+  },
+  {
+    "command": "listVolumes",
+    "method": "GET",
+    "params": {
+      "page": "1",
+      "pagesize": "1",
+      "projectid": "e4480be5-edff-4ae7-8c3e-0d9e35b88c91"
+    }
+  },
+  {
+    "command": "listSnapshots",
+    "method": "GET",
+    "params": {
+      "page": "1",
+      "pagesize": "1",
+      "projectid": "e4480be5-edff-4ae7-8c3e-0d9e35b88c91"
+    }
+  },
+  {
+    "command": "listNetworks",
+    "method": "GET",
+    "params": {
+      "page": "1",
+      "pagesize": "1",
+      "projectid": "e4480be5-edff-4ae7-8c3e-0d9e35b88c91"
+    }
+  },
+  {
+    "command": "listVPCs",
+    "method": "GET",
+    "params": {
+      "page": "1",
+      "pagesize": "1",
+      "projectid": "e4480be5-edff-4ae7-8c3e-0d9e35b88c91"
+    }
+  },
+  {
+    "command": "listPublicIpAddresses",
+    "method": "GET",
+    "params": {
+      "page": "1",
+      "pagesize": "1",
+      "projectid": "e4480be5-edff-4ae7-8c3e-0d9e35b88c91"
+    }
+  },
+  {
+    "command": "listTemplates",
+    "method": "GET",
+    "params": {
+      "page": "1",
+      "pagesize": "1",
+      "projectid": "e4480be5-edff-4ae7-8c3e-0d9e35b88c91"
+    }
+  },
+  {
+    "command": "readyForShutdown",
+    "method": "GET",
+    "params": {
+      "projectid": "e4480be5-edff-4ae7-8c3e-0d9e35b88c91"
+    }
+  },
+  {
+    "command": "listCniConfiguration",
+    "method": "GET",
+    "params": {
+      "id": "af24e8e3-4a7f-41ff-827f-ad844a973b91",
+      "page": "1",
+      "pagesize": "20",
+      "projectid": "e4480be5-edff-4ae7-8c3e-0d9e35b88c91"
+    }
+  },
+  {
+    "command": "listResourceIcon",
+    "method": "GET",
+    "params": {
+      "projectid": "e4480be5-edff-4ae7-8c3e-0d9e35b88c91"
+    }
+  },
+  {
+    "command": "listResourceIcon",
+    "method": "GET",
+    "params": {
+      "projectid": "e4480be5-edff-4ae7-8c3e-0d9e35b88c91"
+    }
+  },
+  {
+    "command": "listCniConfiguration",
+    "method": "GET",
+    "params": {
+      "id": "af24e8e3-4a7f-41ff-827f-ad844a973b91",
+      "projectid": "e4480be5-edff-4ae7-8c3e-0d9e35b88c91",
+      "page": "1",
+      "pagesize": "2"
+    }
+  },
+  {
+    "command": "listCapabilities",
+    "method": "GET",
+    "params": {
+      "projectid": "e4480be5-edff-4ae7-8c3e-0d9e35b88c91"
+    }
+  },
+  {
+    "command": "readyForShutdown",
+    "method": "GET",
+    "params": {
+      "projectid": "e4480be5-edff-4ae7-8c3e-0d9e35b88c91"
+    }
+  },
+  {
+    "command": "listCniConfiguration",
+    "method": "GET",
+    "params": {
+      "id": "af24e8e3-4a7f-41ff-827f-ad844a973b91",
+      "projectid": "e4480be5-edff-4ae7-8c3e-0d9e35b88c91",
+      "page": "1",
+      "pagesize": "2"
+    }
+  },
+  {
+    "command": "listCniConfiguration",
+    "method": "GET",
+    "params": {
+      "projectid": "e4480be5-edff-4ae7-8c3e-0d9e35b88c91",
+      "name": "cni1407-project-v1",
+      "page": "1",
+      "pagesize": "500"
+    }
+  },
+  {
+    "command": "registerCniConfiguration",
+    "method": "POST",
+    "params": {
+      "projectid": "e4480be5-edff-4ae7-8c3e-0d9e35b88c91",
+      "name": "cni1407-project-v1",
+      "params": "OLD,KEEP"
+    }
+  },
+  {
+    "command": "listCniConfiguration",
+    "method": "GET",
+    "params": {
+      "projectid": "e4480be5-edff-4ae7-8c3e-0d9e35b88c91",
+      "name": "cni1407-project-v1",
+      "page": "1",
+      "pagesize": "500"
+    }
+  },
+  {
+    "command": "listCniConfiguration",
+    "method": "GET",
+    "params": {
+      "id": "af24e8e3-4a7f-41ff-827f-ad844a973b91",
+      "page": "1",
+      "pagesize": "20",
+      "projectid": "e4480be5-edff-4ae7-8c3e-0d9e35b88c91"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "9aed54d8-5dca-4ccd-834a-d1343f802dd2",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "500",
+      "projectid": "e4480be5-edff-4ae7-8c3e-0d9e35b88c91"
+    }
+  },
+  {
+    "command": "listCniConfiguration",
+    "method": "GET",
+    "params": {
+      "id": "9aed54d8-5dca-4ccd-834a-d1343f802dd2",
+      "projectid": "e4480be5-edff-4ae7-8c3e-0d9e35b88c91",
+      "page": "1",
+      "pagesize": "2"
+    }
+  },
+  {
+    "command": "addAnnotation",
+    "method": "POST",
+    "params": {
+      "entityid": "9aed54d8-5dca-4ccd-834a-d1343f802dd2",
+      "entitytype": "USER_DATA",
+      "projectid": "e4480be5-edff-4ae7-8c3e-0d9e35b88c91"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "9aed54d8-5dca-4ccd-834a-d1343f802dd2",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "500",
+      "projectid": "e4480be5-edff-4ae7-8c3e-0d9e35b88c91"
+    }
+  },
+  {
+    "command": "listCniConfiguration",
+    "method": "GET",
+    "params": {
+      "id": "9aed54d8-5dca-4ccd-834a-d1343f802dd2",
+      "projectid": "e4480be5-edff-4ae7-8c3e-0d9e35b88c91",
+      "page": "1",
+      "pagesize": "2"
+    }
+  },
+  {
+    "command": "addAnnotation",
+    "method": "POST",
+    "params": {
+      "entityid": "9aed54d8-5dca-4ccd-834a-d1343f802dd2",
+      "entitytype": "USER_DATA",
+      "projectid": "e4480be5-edff-4ae7-8c3e-0d9e35b88c91"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "9aed54d8-5dca-4ccd-834a-d1343f802dd2",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "500",
+      "projectid": "e4480be5-edff-4ae7-8c3e-0d9e35b88c91"
+    }
+  },
+  {
+    "command": "listCniConfiguration",
+    "method": "GET",
+    "params": {
+      "id": "9aed54d8-5dca-4ccd-834a-d1343f802dd2",
+      "projectid": "e4480be5-edff-4ae7-8c3e-0d9e35b88c91",
+      "page": "1",
+      "pagesize": "2"
+    }
+  },
+  {
+    "command": "addAnnotation",
+    "method": "POST",
+    "params": {
+      "entityid": "9aed54d8-5dca-4ccd-834a-d1343f802dd2",
+      "entitytype": "USER_DATA",
+      "projectid": "e4480be5-edff-4ae7-8c3e-0d9e35b88c91"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "9aed54d8-5dca-4ccd-834a-d1343f802dd2",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "500",
+      "projectid": "e4480be5-edff-4ae7-8c3e-0d9e35b88c91"
+    }
+  },
+  {
+    "command": "readyForShutdown",
+    "method": "GET",
+    "params": {
+      "projectid": "e4480be5-edff-4ae7-8c3e-0d9e35b88c91"
+    }
+  },
+  {
+    "command": "readyForShutdown",
+    "method": "GET",
+    "params": {
+      "projectid": "e4480be5-edff-4ae7-8c3e-0d9e35b88c91"
+    }
+  },
+  {
+    "command": "listCniConfiguration",
+    "method": "GET",
+    "params": {
+      "id": "9aed54d8-5dca-4ccd-834a-d1343f802dd2",
+      "page": "1",
+      "pagesize": "20",
+      "projectid": "e4480be5-edff-4ae7-8c3e-0d9e35b88c91"
+    }
+  },
+  {
+    "command": "listResourceIcon",
+    "method": "GET",
+    "params": {
+      "projectid": "e4480be5-edff-4ae7-8c3e-0d9e35b88c91"
+    }
+  },
+  {
+    "command": "listResourceIcon",
+    "method": "GET",
+    "params": {
+      "projectid": "e4480be5-edff-4ae7-8c3e-0d9e35b88c91"
+    }
+  },
+  {
+    "command": "listResourceIcon",
+    "method": "GET",
+    "params": {
+      "projectid": "e4480be5-edff-4ae7-8c3e-0d9e35b88c91"
+    }
+  },
+  {
+    "command": "listResourceIcon",
+    "method": "GET",
+    "params": {
+      "projectid": "e4480be5-edff-4ae7-8c3e-0d9e35b88c91"
+    }
+  },
+  {
+    "command": "listCniConfiguration",
+    "method": "GET",
+    "params": {
+      "id": "9aed54d8-5dca-4ccd-834a-d1343f802dd2",
+      "projectid": "e4480be5-edff-4ae7-8c3e-0d9e35b88c91",
+      "page": "1",
+      "pagesize": "2"
+    }
+  },
+  {
+    "command": "listCapabilities",
+    "method": "GET",
+    "params": {
+      "projectid": "e4480be5-edff-4ae7-8c3e-0d9e35b88c91"
+    }
+  },
+  {
+    "command": "listCniConfiguration",
+    "method": "GET",
+    "params": {
+      "id": "9aed54d8-5dca-4ccd-834a-d1343f802dd2",
+      "projectid": "e4480be5-edff-4ae7-8c3e-0d9e35b88c91",
+      "page": "1",
+      "pagesize": "2"
+    }
+  },
+  {
+    "command": "listCniConfiguration",
+    "method": "GET",
+    "params": {
+      "projectid": "e4480be5-edff-4ae7-8c3e-0d9e35b88c91",
+      "name": "cni1407-project-v2",
+      "page": "1",
+      "pagesize": "500"
+    }
+  },
+  {
+    "command": "registerCniConfiguration",
+    "method": "POST",
+    "params": {
+      "projectid": "e4480be5-edff-4ae7-8c3e-0d9e35b88c91",
+      "name": "cni1407-project-v2",
+      "params": "OLD,KEEP"
+    }
+  },
+  {
+    "command": "listCniConfiguration",
+    "method": "GET",
+    "params": {
+      "projectid": "e4480be5-edff-4ae7-8c3e-0d9e35b88c91",
+      "name": "cni1407-project-v2",
+      "page": "1",
+      "pagesize": "500"
+    }
+  },
+  {
+    "command": "listCniConfiguration",
+    "method": "GET",
+    "params": {
+      "id": "9aed54d8-5dca-4ccd-834a-d1343f802dd2",
+      "page": "1",
+      "pagesize": "20",
+      "projectid": "e4480be5-edff-4ae7-8c3e-0d9e35b88c91"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "3c6fd3b0-c4ef-4e09-89ba-b5a086d9d2dd",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "500",
+      "projectid": "e4480be5-edff-4ae7-8c3e-0d9e35b88c91"
+    }
+  },
+  {
+    "command": "listCniConfiguration",
+    "method": "GET",
+    "params": {
+      "id": "3c6fd3b0-c4ef-4e09-89ba-b5a086d9d2dd",
+      "projectid": "e4480be5-edff-4ae7-8c3e-0d9e35b88c91",
+      "page": "1",
+      "pagesize": "2"
+    }
+  },
+  {
+    "command": "addAnnotation",
+    "method": "POST",
+    "params": {
+      "entityid": "3c6fd3b0-c4ef-4e09-89ba-b5a086d9d2dd",
+      "entitytype": "USER_DATA",
+      "projectid": "e4480be5-edff-4ae7-8c3e-0d9e35b88c91"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "3c6fd3b0-c4ef-4e09-89ba-b5a086d9d2dd",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "500",
+      "projectid": "e4480be5-edff-4ae7-8c3e-0d9e35b88c91"
+    }
+  },
+  {
+    "command": "listCniConfiguration",
+    "method": "GET",
+    "params": {
+      "id": "3c6fd3b0-c4ef-4e09-89ba-b5a086d9d2dd",
+      "projectid": "e4480be5-edff-4ae7-8c3e-0d9e35b88c91",
+      "page": "1",
+      "pagesize": "2"
+    }
+  },
+  {
+    "command": "addAnnotation",
+    "method": "POST",
+    "params": {
+      "entityid": "3c6fd3b0-c4ef-4e09-89ba-b5a086d9d2dd",
+      "entitytype": "USER_DATA",
+      "projectid": "e4480be5-edff-4ae7-8c3e-0d9e35b88c91"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "3c6fd3b0-c4ef-4e09-89ba-b5a086d9d2dd",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "500",
+      "projectid": "e4480be5-edff-4ae7-8c3e-0d9e35b88c91"
+    }
+  },
+  {
+    "command": "listCniConfiguration",
+    "method": "GET",
+    "params": {
+      "id": "3c6fd3b0-c4ef-4e09-89ba-b5a086d9d2dd",
+      "projectid": "e4480be5-edff-4ae7-8c3e-0d9e35b88c91",
+      "page": "1",
+      "pagesize": "2"
+    }
+  },
+  {
+    "command": "addAnnotation",
+    "method": "POST",
+    "params": {
+      "entityid": "3c6fd3b0-c4ef-4e09-89ba-b5a086d9d2dd",
+      "entitytype": "USER_DATA",
+      "projectid": "e4480be5-edff-4ae7-8c3e-0d9e35b88c91"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "3c6fd3b0-c4ef-4e09-89ba-b5a086d9d2dd",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "500",
+      "projectid": "e4480be5-edff-4ae7-8c3e-0d9e35b88c91"
+    }
+  },
+  {
+    "command": "readyForShutdown",
+    "method": "GET",
+    "params": {
+      "projectid": "e4480be5-edff-4ae7-8c3e-0d9e35b88c91"
+    }
+  },
+  {
+    "command": "readyForShutdown",
+    "method": "GET",
+    "params": {
+      "projectid": "e4480be5-edff-4ae7-8c3e-0d9e35b88c91"
+    }
+  },
+  {
+    "command": "readyForShutdown",
+    "method": "GET",
+    "params": {}
+  },
+  {
+    "command": "readyForShutdown",
+    "method": "GET",
+    "params": {}
+  },
+  {
+    "command": "readyForShutdown",
+    "method": "GET",
+    "params": {}
+  },
+  {
+    "command": "listCniConfiguration",
+    "method": "GET",
+    "params": {
+      "id": "fe0a3d33-4411-47fe-b04d-fc9084ccc298",
+      "page": "1",
+      "pagesize": "20"
+    }
+  },
+  {
+    "command": "listCniConfiguration",
+    "method": "GET",
+    "params": {
+      "account": "cni1407-a",
+      "domainid": "8eb393ec-522d-41d5-a864-93bfcb73a799",
+      "id": "fe0a3d33-4411-47fe-b04d-fc9084ccc298",
+      "page": "1",
+      "pagesize": "2"
+    }
+  },
+  {
+    "command": "listCniConfiguration",
+    "method": "GET",
+    "params": {
+      "account": "cni1407-a",
+      "domainid": "8eb393ec-522d-41d5-a864-93bfcb73a799",
+      "page": "1",
+      "pagesize": "50"
+    }
+  },
+  {
+    "command": "listCniConfiguration",
+    "method": "GET",
+    "params": {
+      "account": "cni1407-a",
+      "domainid": "8eb393ec-522d-41d5-a864-93bfcb73a799",
+      "page": "2",
+      "pagesize": "50"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "64a8173e-ceca-4dd9-a0fb-ec2963c0dac3",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "3e3c15fa-1d32-46d6-ad72-54810454ee93",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "dcb3f490-7795-4152-9b7c-414fb8e0adf2",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "d8bcdee8-da14-4c7f-9a12-e2cd4f22701e",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "1122617e-ba5b-4180-8b55-31d621c7706c",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "fe0a3d33-4411-47fe-b04d-fc9084ccc298",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "b944fbeb-c8f4-4483-b418-439b48361a1b",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "e553b513-ded0-4af1-abce-ee5ddec8afcd",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "1a43ca64-9116-421a-95fa-fdc5d29302b1",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "ff7c9f1c-530b-41bf-8ced-87739a36cde1",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "a73018b1-df23-48b3-a86f-db62dd008486",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "defbc37e-6da2-42a5-b91b-6c8c99072d00",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "64a8173e-ceca-4dd9-a0fb-ec2963c0dac3",
+      "entitytype": "USER_DATA",
+      "page": "2",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "9671fa94-c8f6-4965-b843-90837058bbc7",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "4e070e59-121e-4d09-982a-5106b9db68c7",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "9cc8111d-9102-41d8-bb99-7a74972b160b",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "c565ed36-81e4-4bc1-b55a-cda923dbc616",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "8333bae5-204a-4b12-bbf0-028da5b162a9",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "6db220ed-7128-42f3-8e9f-26f447b2c1f1",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "179bf269-0880-499d-b94d-82150a8939c8",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "fe55572f-bd3f-415b-b382-34d96f5e51ca",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "ad23e4d8-1bd3-4952-a2ef-7399b614fd16",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "3928918c-1117-49c4-ab4a-663752dd2aee",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "28eda312-34a1-4402-b2a2-d2d43d1ebe7e",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "300a4bb5-6e26-48e3-8f2d-478fe3448ca4",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "64a8173e-ceca-4dd9-a0fb-ec2963c0dac3",
+      "entitytype": "USER_DATA",
+      "page": "3",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "b3bfdc73-1f4d-4dd5-8e81-3888d85ba6b1",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "ad06ca03-20af-42a4-80f1-2c68ba732e84",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "dd76b1c8-5dc0-4c1b-93a2-76aa34fd654b",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "9c0a46c9-3a1e-43ee-9180-1117a35f030a",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "d4a83405-af0e-4875-ae7e-cfefb7702876",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "2b492bde-09c6-4daf-af78-a8638f673ef4",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "0e58ff8a-9a2e-413b-93cf-fdb5205c2765",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "27fbcc21-f48f-457e-a104-7609070ceb45",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "99d83bc0-6553-45e8-9bf4-295e87c852a2",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "b18518a5-edff-435d-86e1-996e3c0f54ce",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "b7e60325-860e-495c-8551-05555a0b5a53",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "64a8173e-ceca-4dd9-a0fb-ec2963c0dac3",
+      "entitytype": "USER_DATA",
+      "page": "4",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "9d924ac9-837a-4cfc-83be-b771f4e73152",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "20e431ce-9b55-4642-810a-4040cc7bf708",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "5cd35867-2d1f-4431-9d11-299f267f9488",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "ce8109c0-d43f-4ade-b81f-08282dcc4219",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "596d4836-928d-4136-aa9e-51f42bcf0252",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "e961a10e-15a1-45c6-af78-7dce8ea73c53",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "cbe6e227-90c1-49c8-8a96-fb01251695fa",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "fe5dcc5f-9ca1-4af7-b8c5-9ee676f993a3",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "64a8173e-ceca-4dd9-a0fb-ec2963c0dac3",
+      "entitytype": "USER_DATA",
+      "page": "5",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "8a93b31e-6043-4458-b28b-1d6ee881fb09",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "7d86ac10-e354-483a-9548-1b52051967f0",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "8d51ce28-5dd3-4918-bcda-6b74c8c447c4",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "feb5db11-0c1c-42e8-a738-8d1af0b7110f",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "dc078569-3c48-44be-a4e7-6e4abf2f56eb",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "70e631e5-856a-4372-a11b-53af0cbc87fe",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "671ab10b-1cf3-4b1d-9197-f8cd4ee8481c",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "15f1c292-07a0-49c1-8379-c4987984724f",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "150d72e4-c12c-491a-9554-a812263ad8b7",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "7133d71f-40cb-47e1-ade0-b66f01eb6bc6",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "ed83cbc1-2c24-4e16-8259-a87535c7f05a",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "12475398-087d-4ba7-9eb3-e8bd49bb9537",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "12475398-087d-4ba7-9eb3-e8bd49bb9537",
+      "entitytype": "USER_DATA",
+      "page": "2",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "12475398-087d-4ba7-9eb3-e8bd49bb9537",
+      "entitytype": "USER_DATA",
+      "page": "3",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listCniConfiguration",
+    "method": "GET",
+    "params": {
+      "account": "cni1407-a",
+      "domainid": "8eb393ec-522d-41d5-a864-93bfcb73a799",
+      "id": "fe0a3d33-4411-47fe-b04d-fc9084ccc298",
+      "page": "1",
+      "pagesize": "2"
+    }
+  },
+  {
+    "command": "readyForShutdown",
+    "method": "GET",
+    "params": {}
+  },
+  {
+    "command": "readyForShutdown",
+    "method": "GET",
+    "params": {}
+  },
+  {
+    "command": "readyForShutdown",
+    "method": "GET",
+    "params": {}
+  },
+  {
+    "command": "getWallAlertAvailability",
+    "method": "GET",
+    "params": {}
+  },
+  {
+    "command": "readyForShutdown",
+    "method": "GET",
+    "params": {}
+  },
+  {
+    "command": "readyForShutdown",
+    "method": "GET",
+    "params": {}
+  },
+  {
+    "command": "readyForShutdown",
+    "method": "GET",
+    "params": {}
+  },
+  {
+    "command": "listCniConfiguration",
+    "method": "GET",
+    "params": {
+      "id": "fe0a3d33-4411-47fe-b04d-fc9084ccc298",
+      "page": "1",
+      "pagesize": "20"
+    }
+  },
+  {
+    "command": "listCniConfiguration",
+    "method": "GET",
+    "params": {
+      "account": "cni1407-a",
+      "domainid": "8eb393ec-522d-41d5-a864-93bfcb73a799",
+      "id": "fe0a3d33-4411-47fe-b04d-fc9084ccc298",
+      "page": "1",
+      "pagesize": "2"
+    }
+  },
+  {
+    "command": "listCniConfiguration",
+    "method": "GET",
+    "params": {
+      "account": "cni1407-a",
+      "domainid": "8eb393ec-522d-41d5-a864-93bfcb73a799",
+      "page": "1",
+      "pagesize": "50"
+    }
+  },
+  {
+    "command": "listCniConfiguration",
+    "method": "GET",
+    "params": {
+      "account": "cni1407-a",
+      "domainid": "8eb393ec-522d-41d5-a864-93bfcb73a799",
+      "page": "2",
+      "pagesize": "50"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "64a8173e-ceca-4dd9-a0fb-ec2963c0dac3",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "3e3c15fa-1d32-46d6-ad72-54810454ee93",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "dcb3f490-7795-4152-9b7c-414fb8e0adf2",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "d8bcdee8-da14-4c7f-9a12-e2cd4f22701e",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "1122617e-ba5b-4180-8b55-31d621c7706c",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "fe0a3d33-4411-47fe-b04d-fc9084ccc298",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "b944fbeb-c8f4-4483-b418-439b48361a1b",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "e553b513-ded0-4af1-abce-ee5ddec8afcd",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "1a43ca64-9116-421a-95fa-fdc5d29302b1",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "ff7c9f1c-530b-41bf-8ced-87739a36cde1",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "a73018b1-df23-48b3-a86f-db62dd008486",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "defbc37e-6da2-42a5-b91b-6c8c99072d00",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "9671fa94-c8f6-4965-b843-90837058bbc7",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "64a8173e-ceca-4dd9-a0fb-ec2963c0dac3",
+      "entitytype": "USER_DATA",
+      "page": "2",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "4e070e59-121e-4d09-982a-5106b9db68c7",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "9cc8111d-9102-41d8-bb99-7a74972b160b",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "c565ed36-81e4-4bc1-b55a-cda923dbc616",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "8333bae5-204a-4b12-bbf0-028da5b162a9",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "6db220ed-7128-42f3-8e9f-26f447b2c1f1",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "179bf269-0880-499d-b94d-82150a8939c8",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "fe55572f-bd3f-415b-b382-34d96f5e51ca",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "ad23e4d8-1bd3-4952-a2ef-7399b614fd16",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "3928918c-1117-49c4-ab4a-663752dd2aee",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "64a8173e-ceca-4dd9-a0fb-ec2963c0dac3",
+      "entitytype": "USER_DATA",
+      "page": "3",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "28eda312-34a1-4402-b2a2-d2d43d1ebe7e",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "300a4bb5-6e26-48e3-8f2d-478fe3448ca4",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "b3bfdc73-1f4d-4dd5-8e81-3888d85ba6b1",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "ad06ca03-20af-42a4-80f1-2c68ba732e84",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "dd76b1c8-5dc0-4c1b-93a2-76aa34fd654b",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "9c0a46c9-3a1e-43ee-9180-1117a35f030a",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "d4a83405-af0e-4875-ae7e-cfefb7702876",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "2b492bde-09c6-4daf-af78-a8638f673ef4",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "0e58ff8a-9a2e-413b-93cf-fdb5205c2765",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "27fbcc21-f48f-457e-a104-7609070ceb45",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "99d83bc0-6553-45e8-9bf4-295e87c852a2",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "b18518a5-edff-435d-86e1-996e3c0f54ce",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "64a8173e-ceca-4dd9-a0fb-ec2963c0dac3",
+      "entitytype": "USER_DATA",
+      "page": "4",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "b7e60325-860e-495c-8551-05555a0b5a53",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "9d924ac9-837a-4cfc-83be-b771f4e73152",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "20e431ce-9b55-4642-810a-4040cc7bf708",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "5cd35867-2d1f-4431-9d11-299f267f9488",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "ce8109c0-d43f-4ade-b81f-08282dcc4219",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "596d4836-928d-4136-aa9e-51f42bcf0252",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "e961a10e-15a1-45c6-af78-7dce8ea73c53",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "cbe6e227-90c1-49c8-8a96-fb01251695fa",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "fe5dcc5f-9ca1-4af7-b8c5-9ee676f993a3",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "64a8173e-ceca-4dd9-a0fb-ec2963c0dac3",
+      "entitytype": "USER_DATA",
+      "page": "5",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "8a93b31e-6043-4458-b28b-1d6ee881fb09",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "7d86ac10-e354-483a-9548-1b52051967f0",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "8d51ce28-5dd3-4918-bcda-6b74c8c447c4",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "feb5db11-0c1c-42e8-a738-8d1af0b7110f",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "dc078569-3c48-44be-a4e7-6e4abf2f56eb",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "70e631e5-856a-4372-a11b-53af0cbc87fe",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "671ab10b-1cf3-4b1d-9197-f8cd4ee8481c",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "15f1c292-07a0-49c1-8379-c4987984724f",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "150d72e4-c12c-491a-9554-a812263ad8b7",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "7133d71f-40cb-47e1-ade0-b66f01eb6bc6",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "ed83cbc1-2c24-4e16-8259-a87535c7f05a",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "12475398-087d-4ba7-9eb3-e8bd49bb9537",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "12475398-087d-4ba7-9eb3-e8bd49bb9537",
+      "entitytype": "USER_DATA",
+      "page": "2",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "12475398-087d-4ba7-9eb3-e8bd49bb9537",
+      "entitytype": "USER_DATA",
+      "page": "3",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listCniConfiguration",
+    "method": "GET",
+    "params": {
+      "account": "cni1407-a",
+      "domainid": "8eb393ec-522d-41d5-a864-93bfcb73a799",
+      "id": "fe0a3d33-4411-47fe-b04d-fc9084ccc298",
+      "page": "1",
+      "pagesize": "2"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "64a8173e-ceca-4dd9-a0fb-ec2963c0dac3",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "3e3c15fa-1d32-46d6-ad72-54810454ee93",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "dcb3f490-7795-4152-9b7c-414fb8e0adf2",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "d8bcdee8-da14-4c7f-9a12-e2cd4f22701e",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "1122617e-ba5b-4180-8b55-31d621c7706c",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "fe0a3d33-4411-47fe-b04d-fc9084ccc298",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "b944fbeb-c8f4-4483-b418-439b48361a1b",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "e553b513-ded0-4af1-abce-ee5ddec8afcd",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "1a43ca64-9116-421a-95fa-fdc5d29302b1",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "ff7c9f1c-530b-41bf-8ced-87739a36cde1",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "a73018b1-df23-48b3-a86f-db62dd008486",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "64a8173e-ceca-4dd9-a0fb-ec2963c0dac3",
+      "entitytype": "USER_DATA",
+      "page": "2",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "defbc37e-6da2-42a5-b91b-6c8c99072d00",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "9671fa94-c8f6-4965-b843-90837058bbc7",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "4e070e59-121e-4d09-982a-5106b9db68c7",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "9cc8111d-9102-41d8-bb99-7a74972b160b",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "c565ed36-81e4-4bc1-b55a-cda923dbc616",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "8333bae5-204a-4b12-bbf0-028da5b162a9",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "6db220ed-7128-42f3-8e9f-26f447b2c1f1",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "179bf269-0880-499d-b94d-82150a8939c8",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "fe55572f-bd3f-415b-b382-34d96f5e51ca",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "ad23e4d8-1bd3-4952-a2ef-7399b614fd16",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "3928918c-1117-49c4-ab4a-663752dd2aee",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "28eda312-34a1-4402-b2a2-d2d43d1ebe7e",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "64a8173e-ceca-4dd9-a0fb-ec2963c0dac3",
+      "entitytype": "USER_DATA",
+      "page": "3",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "300a4bb5-6e26-48e3-8f2d-478fe3448ca4",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "b3bfdc73-1f4d-4dd5-8e81-3888d85ba6b1",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "ad06ca03-20af-42a4-80f1-2c68ba732e84",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "dd76b1c8-5dc0-4c1b-93a2-76aa34fd654b",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "9c0a46c9-3a1e-43ee-9180-1117a35f030a",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "d4a83405-af0e-4875-ae7e-cfefb7702876",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "2b492bde-09c6-4daf-af78-a8638f673ef4",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "0e58ff8a-9a2e-413b-93cf-fdb5205c2765",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "27fbcc21-f48f-457e-a104-7609070ceb45",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "64a8173e-ceca-4dd9-a0fb-ec2963c0dac3",
+      "entitytype": "USER_DATA",
+      "page": "4",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "99d83bc0-6553-45e8-9bf4-295e87c852a2",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "b18518a5-edff-435d-86e1-996e3c0f54ce",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "b7e60325-860e-495c-8551-05555a0b5a53",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "9d924ac9-837a-4cfc-83be-b771f4e73152",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "20e431ce-9b55-4642-810a-4040cc7bf708",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "5cd35867-2d1f-4431-9d11-299f267f9488",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "ce8109c0-d43f-4ade-b81f-08282dcc4219",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "596d4836-928d-4136-aa9e-51f42bcf0252",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "e961a10e-15a1-45c6-af78-7dce8ea73c53",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "64a8173e-ceca-4dd9-a0fb-ec2963c0dac3",
+      "entitytype": "USER_DATA",
+      "page": "5",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "cbe6e227-90c1-49c8-8a96-fb01251695fa",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "fe5dcc5f-9ca1-4af7-b8c5-9ee676f993a3",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "8a93b31e-6043-4458-b28b-1d6ee881fb09",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "7d86ac10-e354-483a-9548-1b52051967f0",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "8d51ce28-5dd3-4918-bcda-6b74c8c447c4",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "feb5db11-0c1c-42e8-a738-8d1af0b7110f",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "dc078569-3c48-44be-a4e7-6e4abf2f56eb",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "70e631e5-856a-4372-a11b-53af0cbc87fe",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "671ab10b-1cf3-4b1d-9197-f8cd4ee8481c",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "15f1c292-07a0-49c1-8379-c4987984724f",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "150d72e4-c12c-491a-9554-a812263ad8b7",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "7133d71f-40cb-47e1-ade0-b66f01eb6bc6",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "ed83cbc1-2c24-4e16-8259-a87535c7f05a",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "12475398-087d-4ba7-9eb3-e8bd49bb9537",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "12475398-087d-4ba7-9eb3-e8bd49bb9537",
+      "entitytype": "USER_DATA",
+      "page": "2",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "12475398-087d-4ba7-9eb3-e8bd49bb9537",
+      "entitytype": "USER_DATA",
+      "page": "3",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listCniConfiguration",
+    "method": "GET",
+    "params": {
+      "account": "cni1407-a",
+      "domainid": "8eb393ec-522d-41d5-a864-93bfcb73a799",
+      "id": "fe0a3d33-4411-47fe-b04d-fc9084ccc298",
+      "page": "1",
+      "pagesize": "2"
+    }
+  },
+  {
+    "command": "readyForShutdown",
+    "method": "GET",
+    "params": {}
+  },
+  {
+    "command": "readyForShutdown",
+    "method": "GET",
+    "params": {}
+  },
+  {
+    "command": "readyForShutdown",
+    "method": "GET",
+    "params": {}
+  },
+  {
+    "command": "readyForShutdown",
+    "method": "GET",
+    "params": {}
+  },
+  {
+    "command": "readyForShutdown",
+    "method": "GET",
+    "params": {}
+  },
+  {
+    "command": "readyForShutdown",
+    "method": "GET",
+    "params": {}
+  },
+  {
+    "command": "listHostsMetrics",
+    "method": "GET",
+    "params": {}
+  },
+  {
+    "command": "listCniConfiguration",
+    "method": "GET",
+    "params": {
+      "id": "fe0a3d33-4411-47fe-b04d-fc9084ccc298",
+      "page": "1",
+      "pagesize": "20"
+    }
+  },
+  {
+    "command": "listCniConfiguration",
+    "method": "GET",
+    "params": {
+      "account": "cni1407-a",
+      "domainid": "8eb393ec-522d-41d5-a864-93bfcb73a799",
+      "id": "fe0a3d33-4411-47fe-b04d-fc9084ccc298",
+      "page": "1",
+      "pagesize": "2"
+    }
+  },
+  {
+    "command": "listCniConfiguration",
+    "method": "GET",
+    "params": {
+      "account": "cni1407-a",
+      "domainid": "8eb393ec-522d-41d5-a864-93bfcb73a799",
+      "page": "1",
+      "pagesize": "50"
+    }
+  },
+  {
+    "command": "listCniConfiguration",
+    "method": "GET",
+    "params": {
+      "account": "cni1407-a",
+      "domainid": "8eb393ec-522d-41d5-a864-93bfcb73a799",
+      "page": "2",
+      "pagesize": "50"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "64a8173e-ceca-4dd9-a0fb-ec2963c0dac3",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "3e3c15fa-1d32-46d6-ad72-54810454ee93",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "dcb3f490-7795-4152-9b7c-414fb8e0adf2",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "d8bcdee8-da14-4c7f-9a12-e2cd4f22701e",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "1122617e-ba5b-4180-8b55-31d621c7706c",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "fe0a3d33-4411-47fe-b04d-fc9084ccc298",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "b944fbeb-c8f4-4483-b418-439b48361a1b",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "e553b513-ded0-4af1-abce-ee5ddec8afcd",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "1a43ca64-9116-421a-95fa-fdc5d29302b1",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "ff7c9f1c-530b-41bf-8ced-87739a36cde1",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "a73018b1-df23-48b3-a86f-db62dd008486",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "64a8173e-ceca-4dd9-a0fb-ec2963c0dac3",
+      "entitytype": "USER_DATA",
+      "page": "2",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "defbc37e-6da2-42a5-b91b-6c8c99072d00",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "9671fa94-c8f6-4965-b843-90837058bbc7",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "4e070e59-121e-4d09-982a-5106b9db68c7",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "9cc8111d-9102-41d8-bb99-7a74972b160b",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "c565ed36-81e4-4bc1-b55a-cda923dbc616",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "8333bae5-204a-4b12-bbf0-028da5b162a9",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "6db220ed-7128-42f3-8e9f-26f447b2c1f1",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "179bf269-0880-499d-b94d-82150a8939c8",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "fe55572f-bd3f-415b-b382-34d96f5e51ca",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "64a8173e-ceca-4dd9-a0fb-ec2963c0dac3",
+      "entitytype": "USER_DATA",
+      "page": "3",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "ad23e4d8-1bd3-4952-a2ef-7399b614fd16",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "3928918c-1117-49c4-ab4a-663752dd2aee",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "28eda312-34a1-4402-b2a2-d2d43d1ebe7e",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "300a4bb5-6e26-48e3-8f2d-478fe3448ca4",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "b3bfdc73-1f4d-4dd5-8e81-3888d85ba6b1",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "ad06ca03-20af-42a4-80f1-2c68ba732e84",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "dd76b1c8-5dc0-4c1b-93a2-76aa34fd654b",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "9c0a46c9-3a1e-43ee-9180-1117a35f030a",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "d4a83405-af0e-4875-ae7e-cfefb7702876",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "2b492bde-09c6-4daf-af78-a8638f673ef4",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "0e58ff8a-9a2e-413b-93cf-fdb5205c2765",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "64a8173e-ceca-4dd9-a0fb-ec2963c0dac3",
+      "entitytype": "USER_DATA",
+      "page": "4",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "27fbcc21-f48f-457e-a104-7609070ceb45",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "99d83bc0-6553-45e8-9bf4-295e87c852a2",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "b18518a5-edff-435d-86e1-996e3c0f54ce",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "b7e60325-860e-495c-8551-05555a0b5a53",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "9d924ac9-837a-4cfc-83be-b771f4e73152",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "20e431ce-9b55-4642-810a-4040cc7bf708",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "5cd35867-2d1f-4431-9d11-299f267f9488",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "ce8109c0-d43f-4ade-b81f-08282dcc4219",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "596d4836-928d-4136-aa9e-51f42bcf0252",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "e961a10e-15a1-45c6-af78-7dce8ea73c53",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "64a8173e-ceca-4dd9-a0fb-ec2963c0dac3",
+      "entitytype": "USER_DATA",
+      "page": "5",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "cbe6e227-90c1-49c8-8a96-fb01251695fa",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "fe5dcc5f-9ca1-4af7-b8c5-9ee676f993a3",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "8a93b31e-6043-4458-b28b-1d6ee881fb09",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "7d86ac10-e354-483a-9548-1b52051967f0",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "8d51ce28-5dd3-4918-bcda-6b74c8c447c4",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "feb5db11-0c1c-42e8-a738-8d1af0b7110f",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "dc078569-3c48-44be-a4e7-6e4abf2f56eb",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "70e631e5-856a-4372-a11b-53af0cbc87fe",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "671ab10b-1cf3-4b1d-9197-f8cd4ee8481c",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "15f1c292-07a0-49c1-8379-c4987984724f",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "150d72e4-c12c-491a-9554-a812263ad8b7",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "7133d71f-40cb-47e1-ade0-b66f01eb6bc6",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "ed83cbc1-2c24-4e16-8259-a87535c7f05a",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "12475398-087d-4ba7-9eb3-e8bd49bb9537",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "12475398-087d-4ba7-9eb3-e8bd49bb9537",
+      "entitytype": "USER_DATA",
+      "page": "2",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "12475398-087d-4ba7-9eb3-e8bd49bb9537",
+      "entitytype": "USER_DATA",
+      "page": "3",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listCniConfiguration",
+    "method": "GET",
+    "params": {
+      "account": "cni1407-a",
+      "domainid": "8eb393ec-522d-41d5-a864-93bfcb73a799",
+      "id": "fe0a3d33-4411-47fe-b04d-fc9084ccc298",
+      "page": "1",
+      "pagesize": "2"
+    }
+  },
+  {
+    "command": "readyForShutdown",
+    "method": "GET",
+    "params": {}
+  },
+  {
+    "command": "readyForShutdown",
+    "method": "GET",
+    "params": {}
+  },
+  {
+    "command": "readyForShutdown",
+    "method": "GET",
+    "params": {}
+  },
+  {
+    "command": "readyForShutdown",
+    "method": "GET",
+    "params": {}
+  },
+  {
+    "command": "readyForShutdown",
+    "method": "GET",
+    "params": {}
+  },
+  {
+    "command": "readyForShutdown",
+    "method": "GET",
+    "params": {}
+  },
+  {
+    "command": "getWallAlertAvailability",
+    "method": "GET",
+    "params": {}
+  },
+  {
+    "command": "listCniConfiguration",
+    "method": "GET",
+    "params": {
+      "id": "fe0a3d33-4411-47fe-b04d-fc9084ccc298",
+      "page": "1",
+      "pagesize": "20"
+    }
+  },
+  {
+    "command": "listCniConfiguration",
+    "method": "GET",
+    "params": {
+      "account": "cni1407-a",
+      "domainid": "8eb393ec-522d-41d5-a864-93bfcb73a799",
+      "id": "fe0a3d33-4411-47fe-b04d-fc9084ccc298",
+      "page": "1",
+      "pagesize": "2"
+    }
+  },
+  {
+    "command": "listCniConfiguration",
+    "method": "GET",
+    "params": {
+      "account": "cni1407-a",
+      "domainid": "8eb393ec-522d-41d5-a864-93bfcb73a799",
+      "page": "1",
+      "pagesize": "50"
+    }
+  },
+  {
+    "command": "listCniConfiguration",
+    "method": "GET",
+    "params": {
+      "account": "cni1407-a",
+      "domainid": "8eb393ec-522d-41d5-a864-93bfcb73a799",
+      "page": "2",
+      "pagesize": "50"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "64a8173e-ceca-4dd9-a0fb-ec2963c0dac3",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "3e3c15fa-1d32-46d6-ad72-54810454ee93",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "dcb3f490-7795-4152-9b7c-414fb8e0adf2",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "d8bcdee8-da14-4c7f-9a12-e2cd4f22701e",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "1122617e-ba5b-4180-8b55-31d621c7706c",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "fe0a3d33-4411-47fe-b04d-fc9084ccc298",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "b944fbeb-c8f4-4483-b418-439b48361a1b",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "e553b513-ded0-4af1-abce-ee5ddec8afcd",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "1a43ca64-9116-421a-95fa-fdc5d29302b1",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "ff7c9f1c-530b-41bf-8ced-87739a36cde1",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "a73018b1-df23-48b3-a86f-db62dd008486",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "64a8173e-ceca-4dd9-a0fb-ec2963c0dac3",
+      "entitytype": "USER_DATA",
+      "page": "2",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "defbc37e-6da2-42a5-b91b-6c8c99072d00",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "9671fa94-c8f6-4965-b843-90837058bbc7",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "4e070e59-121e-4d09-982a-5106b9db68c7",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "9cc8111d-9102-41d8-bb99-7a74972b160b",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "c565ed36-81e4-4bc1-b55a-cda923dbc616",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "8333bae5-204a-4b12-bbf0-028da5b162a9",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "6db220ed-7128-42f3-8e9f-26f447b2c1f1",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "179bf269-0880-499d-b94d-82150a8939c8",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "fe55572f-bd3f-415b-b382-34d96f5e51ca",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "ad23e4d8-1bd3-4952-a2ef-7399b614fd16",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "3928918c-1117-49c4-ab4a-663752dd2aee",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "64a8173e-ceca-4dd9-a0fb-ec2963c0dac3",
+      "entitytype": "USER_DATA",
+      "page": "3",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "28eda312-34a1-4402-b2a2-d2d43d1ebe7e",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "300a4bb5-6e26-48e3-8f2d-478fe3448ca4",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "b3bfdc73-1f4d-4dd5-8e81-3888d85ba6b1",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "ad06ca03-20af-42a4-80f1-2c68ba732e84",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "dd76b1c8-5dc0-4c1b-93a2-76aa34fd654b",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "9c0a46c9-3a1e-43ee-9180-1117a35f030a",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "d4a83405-af0e-4875-ae7e-cfefb7702876",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "2b492bde-09c6-4daf-af78-a8638f673ef4",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "0e58ff8a-9a2e-413b-93cf-fdb5205c2765",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "64a8173e-ceca-4dd9-a0fb-ec2963c0dac3",
+      "entitytype": "USER_DATA",
+      "page": "4",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "27fbcc21-f48f-457e-a104-7609070ceb45",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "99d83bc0-6553-45e8-9bf4-295e87c852a2",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "b18518a5-edff-435d-86e1-996e3c0f54ce",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "b7e60325-860e-495c-8551-05555a0b5a53",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "9d924ac9-837a-4cfc-83be-b771f4e73152",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "20e431ce-9b55-4642-810a-4040cc7bf708",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "5cd35867-2d1f-4431-9d11-299f267f9488",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "ce8109c0-d43f-4ade-b81f-08282dcc4219",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "596d4836-928d-4136-aa9e-51f42bcf0252",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "64a8173e-ceca-4dd9-a0fb-ec2963c0dac3",
+      "entitytype": "USER_DATA",
+      "page": "5",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "e961a10e-15a1-45c6-af78-7dce8ea73c53",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "cbe6e227-90c1-49c8-8a96-fb01251695fa",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "fe5dcc5f-9ca1-4af7-b8c5-9ee676f993a3",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "8a93b31e-6043-4458-b28b-1d6ee881fb09",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "7d86ac10-e354-483a-9548-1b52051967f0",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "8d51ce28-5dd3-4918-bcda-6b74c8c447c4",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "feb5db11-0c1c-42e8-a738-8d1af0b7110f",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "dc078569-3c48-44be-a4e7-6e4abf2f56eb",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "70e631e5-856a-4372-a11b-53af0cbc87fe",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "671ab10b-1cf3-4b1d-9197-f8cd4ee8481c",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "15f1c292-07a0-49c1-8379-c4987984724f",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "150d72e4-c12c-491a-9554-a812263ad8b7",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "7133d71f-40cb-47e1-ade0-b66f01eb6bc6",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "ed83cbc1-2c24-4e16-8259-a87535c7f05a",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "12475398-087d-4ba7-9eb3-e8bd49bb9537",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "12475398-087d-4ba7-9eb3-e8bd49bb9537",
+      "entitytype": "USER_DATA",
+      "page": "2",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "12475398-087d-4ba7-9eb3-e8bd49bb9537",
+      "entitytype": "USER_DATA",
+      "page": "3",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listCniConfiguration",
+    "method": "GET",
+    "params": {
+      "account": "cni1407-a",
+      "domainid": "8eb393ec-522d-41d5-a864-93bfcb73a799",
+      "id": "fe0a3d33-4411-47fe-b04d-fc9084ccc298",
+      "page": "1",
+      "pagesize": "2"
+    }
+  },
+  {
+    "command": "readyForShutdown",
+    "method": "GET",
+    "params": {}
+  },
+  {
+    "command": "readyForShutdown",
+    "method": "GET",
+    "params": {}
+  },
+  {
+    "command": "readyForShutdown",
+    "method": "GET",
+    "params": {}
+  },
+  {
+    "command": "readyForShutdown",
+    "method": "GET",
+    "params": {}
+  },
+  {
+    "command": "readyForShutdown",
+    "method": "GET",
+    "params": {}
+  },
+  {
+    "command": "readyForShutdown",
+    "method": "GET",
+    "params": {}
+  },
+  {
+    "command": "listHostsMetrics",
+    "method": "GET",
+    "params": {}
+  },
+  {
+    "command": "listCniConfiguration",
+    "method": "GET",
+    "params": {
+      "id": "fe0a3d33-4411-47fe-b04d-fc9084ccc298",
+      "page": "1",
+      "pagesize": "20"
+    }
+  },
+  {
+    "command": "listCniConfiguration",
+    "method": "GET",
+    "params": {
+      "account": "cni1407-a",
+      "domainid": "8eb393ec-522d-41d5-a864-93bfcb73a799",
+      "id": "fe0a3d33-4411-47fe-b04d-fc9084ccc298",
+      "page": "1",
+      "pagesize": "2"
+    }
+  },
+  {
+    "command": "listCniConfiguration",
+    "method": "GET",
+    "params": {
+      "account": "cni1407-a",
+      "domainid": "8eb393ec-522d-41d5-a864-93bfcb73a799",
+      "page": "1",
+      "pagesize": "50"
+    }
+  },
+  {
+    "command": "listCniConfiguration",
+    "method": "GET",
+    "params": {
+      "account": "cni1407-a",
+      "domainid": "8eb393ec-522d-41d5-a864-93bfcb73a799",
+      "page": "2",
+      "pagesize": "50"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "64a8173e-ceca-4dd9-a0fb-ec2963c0dac3",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "3e3c15fa-1d32-46d6-ad72-54810454ee93",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "dcb3f490-7795-4152-9b7c-414fb8e0adf2",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "d8bcdee8-da14-4c7f-9a12-e2cd4f22701e",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "1122617e-ba5b-4180-8b55-31d621c7706c",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "fe0a3d33-4411-47fe-b04d-fc9084ccc298",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "b944fbeb-c8f4-4483-b418-439b48361a1b",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "e553b513-ded0-4af1-abce-ee5ddec8afcd",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "1a43ca64-9116-421a-95fa-fdc5d29302b1",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "ff7c9f1c-530b-41bf-8ced-87739a36cde1",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "64a8173e-ceca-4dd9-a0fb-ec2963c0dac3",
+      "entitytype": "USER_DATA",
+      "page": "2",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "a73018b1-df23-48b3-a86f-db62dd008486",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "defbc37e-6da2-42a5-b91b-6c8c99072d00",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "9671fa94-c8f6-4965-b843-90837058bbc7",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "4e070e59-121e-4d09-982a-5106b9db68c7",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "9cc8111d-9102-41d8-bb99-7a74972b160b",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "c565ed36-81e4-4bc1-b55a-cda923dbc616",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "8333bae5-204a-4b12-bbf0-028da5b162a9",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "6db220ed-7128-42f3-8e9f-26f447b2c1f1",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "179bf269-0880-499d-b94d-82150a8939c8",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "64a8173e-ceca-4dd9-a0fb-ec2963c0dac3",
+      "entitytype": "USER_DATA",
+      "page": "3",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "fe55572f-bd3f-415b-b382-34d96f5e51ca",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "ad23e4d8-1bd3-4952-a2ef-7399b614fd16",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "3928918c-1117-49c4-ab4a-663752dd2aee",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "28eda312-34a1-4402-b2a2-d2d43d1ebe7e",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "300a4bb5-6e26-48e3-8f2d-478fe3448ca4",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "b3bfdc73-1f4d-4dd5-8e81-3888d85ba6b1",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "ad06ca03-20af-42a4-80f1-2c68ba732e84",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "dd76b1c8-5dc0-4c1b-93a2-76aa34fd654b",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "9c0a46c9-3a1e-43ee-9180-1117a35f030a",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "d4a83405-af0e-4875-ae7e-cfefb7702876",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "64a8173e-ceca-4dd9-a0fb-ec2963c0dac3",
+      "entitytype": "USER_DATA",
+      "page": "4",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "2b492bde-09c6-4daf-af78-a8638f673ef4",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "0e58ff8a-9a2e-413b-93cf-fdb5205c2765",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "27fbcc21-f48f-457e-a104-7609070ceb45",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "99d83bc0-6553-45e8-9bf4-295e87c852a2",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "b18518a5-edff-435d-86e1-996e3c0f54ce",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "b7e60325-860e-495c-8551-05555a0b5a53",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "9d924ac9-837a-4cfc-83be-b771f4e73152",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "20e431ce-9b55-4642-810a-4040cc7bf708",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "64a8173e-ceca-4dd9-a0fb-ec2963c0dac3",
+      "entitytype": "USER_DATA",
+      "page": "5",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "5cd35867-2d1f-4431-9d11-299f267f9488",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "ce8109c0-d43f-4ade-b81f-08282dcc4219",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "596d4836-928d-4136-aa9e-51f42bcf0252",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "e961a10e-15a1-45c6-af78-7dce8ea73c53",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "cbe6e227-90c1-49c8-8a96-fb01251695fa",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "fe5dcc5f-9ca1-4af7-b8c5-9ee676f993a3",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "8a93b31e-6043-4458-b28b-1d6ee881fb09",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "7d86ac10-e354-483a-9548-1b52051967f0",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "8d51ce28-5dd3-4918-bcda-6b74c8c447c4",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "feb5db11-0c1c-42e8-a738-8d1af0b7110f",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "dc078569-3c48-44be-a4e7-6e4abf2f56eb",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "70e631e5-856a-4372-a11b-53af0cbc87fe",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "671ab10b-1cf3-4b1d-9197-f8cd4ee8481c",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "15f1c292-07a0-49c1-8379-c4987984724f",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "150d72e4-c12c-491a-9554-a812263ad8b7",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "7133d71f-40cb-47e1-ade0-b66f01eb6bc6",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "ed83cbc1-2c24-4e16-8259-a87535c7f05a",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "12475398-087d-4ba7-9eb3-e8bd49bb9537",
+      "entitytype": "USER_DATA",
+      "page": "1",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "12475398-087d-4ba7-9eb3-e8bd49bb9537",
+      "entitytype": "USER_DATA",
+      "page": "2",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listAnnotations",
+    "method": "GET",
+    "params": {
+      "entityid": "12475398-087d-4ba7-9eb3-e8bd49bb9537",
+      "entitytype": "USER_DATA",
+      "page": "3",
+      "pagesize": "100"
+    }
+  },
+  {
+    "command": "listCniConfiguration",
+    "method": "GET",
+    "params": {
+      "account": "cni1407-a",
+      "domainid": "8eb393ec-522d-41d5-a864-93bfcb73a799",
+      "id": "fe0a3d33-4411-47fe-b04d-fc9084ccc298",
+      "page": "1",
+      "pagesize": "2"
+    }
+  },
+  {
+    "command": "readyForShutdown",
+    "method": "GET",
+    "params": {}
+  },
+  {
+    "command": "readyForShutdown",
+    "method": "GET",
+    "params": {}
+  },
+  {
+    "command": "readyForShutdown",
+    "method": "GET",
+    "params": {}
+  }
+]

@@ -1,0 +1,168 @@
+{
+  "time": "2026-10-19T16:21:33+0900",
+  "api": [
+    {
+      "id": "49dc24b7-abc3-4779-8d11-508da9d52f46",
+      "name": "qa-ag06-vm-02",
+      "instancename": "i-2-672-VM",
+      "state": "Stopped",
+      "hostid": null,
+      "hostname": null,
+      "affinitygroup": [
+        {
+          "id": "15610aff-43d1-425b-838b-535c7b5f3f04",
+          "name": "qa-ag06-prefer-anti",
+          "description": "AG06 disposable integrated qualification",
+          "account": "admin"
+        },
+        {
+          "id": "4e33c710-abc0-4f9b-9323-e41baadee3a1",
+          "name": "qa-ag06-ui-recovered",
+          "description": "중복 오류 후 입력 보존 검증",
+          "account": "admin"
+        }
+      ]
+    },
+    {
+      "id": "50fa357f-c6dc-4bdf-a6ee-fd2a66e51d74",
+      "name": "qa-ag06-vm-03",
+      "instancename": "i-2-673-VM",
+      "state": "Stopped",
+      "hostid": null,
+      "hostname": null,
+      "affinitygroup": [
+        {
+          "id": "15610aff-43d1-425b-838b-535c7b5f3f04",
+          "name": "qa-ag06-prefer-anti",
+          "description": "AG06 disposable integrated qualification",
+          "account": "admin"
+        },
+        {
+          "id": "4e33c710-abc0-4f9b-9323-e41baadee3a1",
+          "name": "qa-ag06-ui-recovered",
+          "description": "중복 오류 후 입력 보존 검증",
+          "account": "admin"
+        }
+      ]
+    },
+    {
+      "id": "bcdc6a91-6ee1-4d96-8931-7e46a3ddfc82",
+      "name": "qa-ag06-vm-04",
+      "instancename": "i-2-674-VM",
+      "state": "Stopped",
+      "hostid": null,
+      "hostname": null,
+      "affinitygroup": [
+        {
+          "id": "15610aff-43d1-425b-838b-535c7b5f3f04",
+          "name": "qa-ag06-prefer-anti",
+          "description": "AG06 disposable integrated qualification",
+          "account": "admin"
+        }
+      ]
+    },
+    {
+      "id": "612124f9-66e0-4a3a-8a01-dadee3c0d45b",
+      "name": "qa-ag06-cold-vm-01",
+      "instancename": "i-2-679-VM",
+      "state": "Running",
+      "hostid": "384871b9-7c75-4717-a673-e96a76abeb71",
+      "hostname": "ablecube31-3",
+      "affinitygroup": [
+        {
+          "id": "d26506c1-bd02-4665-8542-58f9bcc35f6e",
+          "name": "qa-ag06-cold-prefer-anti",
+          "account": "admin"
+        }
+      ]
+    },
+    {
+      "id": "0ab52c7b-6099-4aff-ae76-6bfbe81908d0",
+      "name": "qa-ag06-cold-vm-02",
+      "instancename": "i-2-680-VM",
+      "state": "Running",
+      "hostid": "3fb147f3-aea4-4f65-b8c6-e7192ea26138",
+      "hostname": "ablecube31-2",
+      "affinitygroup": [
+        {
+          "id": "d26506c1-bd02-4665-8542-58f9bcc35f6e",
+          "name": "qa-ag06-cold-prefer-anti",
+          "account": "admin"
+        }
+      ]
+    },
+    {
+      "id": "cccf1866-e607-4053-bbc7-481deb376d86",
+      "name": "qa-ag06-ui-vm-01",
+      "instancename": "i-2-675-VM",
+      "state": "Stopped",
+      "hostid": null,
+      "hostname": null,
+      "affinitygroup": [
+        {
+          "id": "15610aff-43d1-425b-838b-535c7b5f3f04",
+          "name": "qa-ag06-prefer-anti",
+          "description": "AG06 disposable integrated qualification",
+          "account": "admin"
+        }
+      ]
+    },
+    {
+      "id": "972b6f1f-924d-41ff-b1f2-af12020eb6b2",
+      "name": "qa-ag06-user-vm",
+      "instancename": "i-198-676-VM",
+      "state": "Stopped",
+      "hostid": null,
+      "hostname": null,
+      "affinitygroup": [
+        {
+          "id": "f020c858-f8c5-4ccc-aa67-161272106965",
+          "name": "qa-ag06-user-target",
+          "account": "qa-ag06-user"
+        }
+      ]
+    },
+    {
+      "id": "459a97a6-3a30-42a9-a4db-94a8a843a12b",
+      "name": "qa-ag06-project-vm",
+      "instancename": "i-201-677-VM",
+      "state": "Stopped",
+      "hostid": null,
+      "hostname": null,
+      "affinitygroup": []
+    },
+    {
+      "id": "816a9d43-fcc8-451f-9a77-b4d2a60fb155",
+      "name": "qa-ag06-domainadmin-vm",
+      "instancename": "i-199-678-VM",
+      "state": "Stopped",
+      "hostid": null,
+      "hostname": null,
+      "affinitygroup": []
+    }
+  ],
+  "db": "49dc24b7-abc3-4779-8d11-508da9d52f46\ti-2-672-VM\tStopped\tNULL\tNULL\t15610aff-43d1-425b-838b-535c7b5f3f04,4e33c710-abc0-4f9b-9323-e41baadee3a1\n50fa357f-c6dc-4bdf-a6ee-fd2a66e51d74\ti-2-673-VM\tStopped\tNULL\tNULL\t15610aff-43d1-425b-838b-535c7b5f3f04,4e33c710-abc0-4f9b-9323-e41baadee3a1\nbcdc6a91-6ee1-4d96-8931-7e46a3ddfc82\ti-2-674-VM\tStopped\tNULL\tNULL\t15610aff-43d1-425b-838b-535c7b5f3f04\ncccf1866-e607-4053-bbc7-481deb376d86\ti-2-675-VM\tStopped\tNULL\tNULL\t15610aff-43d1-425b-838b-535c7b5f3f04\n972b6f1f-924d-41ff-b1f2-af12020eb6b2\ti-198-676-VM\tStopped\tNULL\tNULL\tf020c858-f8c5-4ccc-aa67-161272106965\n459a97a6-3a30-42a9-a4db-94a8a843a12b\ti-201-677-VM\tStopped\tNULL\tNULL\tNULL\n816a9d43-fcc8-451f-9a77-b4d2a60fb155\ti-199-678-VM\tStopped\tNULL\tNULL\tNULL\n612124f9-66e0-4a3a-8a01-dadee3c0d45b\ti-2-679-VM\tRunning\t384871b9-7c75-4717-a673-e96a76abeb71\tablecube31-3\td26506c1-bd02-4665-8542-58f9bcc35f6e\n0ab52c7b-6099-4aff-ae76-6bfbe81908d0\ti-2-680-VM\tRunning\t3fb147f3-aea4-4f65-b8c6-e7192ea26138\tablecube31-2\td26506c1-bd02-4665-8542-58f9bcc35f6e\n",
+  "hypervisor": {
+    "159baf9a-89ad-4a94-91dc-e7395a670bf4": {
+      "name": "ablecube31-1",
+      "address": "10.10.31.1",
+      "running": []
+    },
+    "3fb147f3-aea4-4f65-b8c6-e7192ea26138": {
+      "name": "ablecube31-2",
+      "address": "10.10.31.2",
+      "running": [
+        "i-2-680-VM"
+      ]
+    },
+    "384871b9-7c75-4717-a673-e96a76abeb71": {
+      "name": "ablecube31-3",
+      "address": "10.10.31.3",
+      "running": [
+        "i-2-679-VM"
+      ]
+    }
+  },
+  "apiDbHostAgreement": true,
+  "domainAdminDeleteVmPreserved": true
+}

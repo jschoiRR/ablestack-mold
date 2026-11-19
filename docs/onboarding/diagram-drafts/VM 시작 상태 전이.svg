@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="820" viewBox="0 0 1800 820">
+<rect width="100%" height="100%" fill="white"/>
+<text x="72" y="48" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="52" font-weight="700" fill="#172B45">VM 시작의 상태 전이</text>
+<text x="72" y="127" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="36" font-weight="400" fill="#506378">Job 결과와 DB 상태, 호스트 도메인 상태를 같은 시각의 자료로 비교합니다.</text>
+<rect x="72" y="263" width="450" height="164" rx="20" fill="#F0F7FF" stroke="none" stroke-width="2"/>
+<text x="147" y="315" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="52" font-weight="700" fill="#146CBA">Stopped</text>
+<rect x="675" y="263" width="450" height="164" rx="20" fill="#F5F2FF" stroke="none" stroke-width="2"/>
+<text x="750" y="315" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="52" font-weight="700" fill="#6554B7">Starting</text>
+<rect x="1278" y="263" width="450" height="164" rx="20" fill="#EFF9F6" stroke="none" stroke-width="2"/>
+<text x="1353" y="315" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="52" font-weight="700" fill="#008878">Running</text>
+<polyline points="530,345 665,345" fill="none" stroke="#146CBA" stroke-width="4"/>
+<polygon points="665,345 649.0,337.0 649.0,353.0" fill="#146CBA"/>
+<text x="545" y="278" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="32" font-weight="700" fill="#146CBA">시작 요청</text>
+<polyline points="1133,345 1265,345" fill="none" stroke="#008878" stroke-width="4"/>
+<polygon points="1265,345 1249.0,337.0 1249.0,353.0" fill="#008878"/>
+<text x="1145" y="278" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="32" font-weight="700" fill="#008878">시작 성공</text>
+<polyline points="900,435 900,565 295,565" fill="none" stroke="#B63D46" stroke-width="4"/>
+<polyline points="295,565 295,435" fill="none" stroke="#B63D46" stroke-width="4"/>
+<polygon points="295,435 287.0,451.0 303.0,451.0" fill="#B63D46"/>
+<text x="335" y="503" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="38" font-weight="700" fill="#B63D46">시작 실패  ·  Starting에서 Stopped로 복귀</text>
+<text x="72" y="653" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="36" font-weight="700" fill="#172B45">실패한 단계와 자원 정리·재시도 여부를 관리 서버와 Agent 로그로 확인합니다.</text>
+<text x="72" y="718" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="35" font-weight="400" fill="#506378">Running은 VM 실행 상태입니다. 게스트 OS·네트워크·앱 준비 완료는 별도로 확인합니다.</text>
+</svg>

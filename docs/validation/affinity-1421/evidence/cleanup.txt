@@ -1,0 +1,42 @@
+destroyVirtualMachine 5e5b0e53-fb34-4775-b456-ab859dd74932
+destroyVirtualMachine 5967795b-10e1-40ac-8535-8d20f83bf56f
+destroyVirtualMachine c0f255cf-5f0c-476d-b48e-4953010b2852
+deleteAffinityGroup 880b5855-d129-4f8d-8a6a-7b32e366f6d5
+deleteAffinityGroup 709aaeed-122d-4e0c-80cc-6013578c8051
+deleteAffinityGroup b79b9a82-6925-452f-b03b-74e3d69df79b
+deleteAffinityGroup ada0808c-1039-465f-b0c7-389808c110cf
+deleteAffinityGroup 4fbacc33-d386-438c-8d49-b7f9c54e4b81
+deleteAffinityGroup 6059e56e-7dd6-40cb-9c25-dc1fe9d6ec85
+deleteAffinityGroup b2f43d25-4852-4499-888b-9a8b316e4377
+deleteAffinityGroup 13b59359-2a34-415d-9c01-8f3638cab5b2
+deleteAffinityGroup 9c7e5394-4b92-4e12-ae18-bebd2f52cfab
+deleteAffinityGroup d9c12b5e-9bf6-41b8-a0dc-3b1324cedc42
+deleteAffinityGroup f84fd92e-8718-4478-b3fa-e711fb72d8ec
+deleteAffinityGroup d0342e94-72c6-49d1-b32a-6f2ba915f621
+deleteAffinityGroup 40b5dae1-f95b-43c8-a586-e8b6aa7446e6
+deleteAffinityGroup 55f1ab83-ac96-4378-8c8f-5bb80d73973e
+deleteAffinityGroup 9cb6286d-7d05-4c2c-9fdf-6b8ff00e88b1
+deleteAffinityGroup 2a03323a-d434-4010-adf7-cb2cf1d8bdc6
+deleteAffinityGroup a992af0e-22a1-432f-b7da-dca85728226d
+deleteAffinityGroup 866d26eb-36d2-4786-a177-5046dd4b2623
+deleteAffinityGroup 8e133995-1b12-4ad5-a62c-e6c1543219d1
+deleteAffinityGroup 9253f433-45b7-4ce8-aa48-ee7ccd4b3558
+deleteAffinityGroup 949245cf-bb39-46ea-8fbb-3696e5a0f6f9
+deleteAffinityGroup 59b2b9e6-d669-4c5b-806c-1d74d0345e6f
+deleteAffinityGroup 2915bb88-0acf-40b3-8925-421e22a77590
+deleteAffinityGroup 714b84b7-3b51-4146-a8c5-00b051870141
+deleteAffinityGroup b9725385-4956-4585-8793-63db5e986542
+deleteAffinityGroup 4a7287a2-a248-406d-9de5-fd81d769ccdd
+deleteAffinityGroup 43bc8088-dbe2-4831-8858-d689a504dba2
+deleteAffinityGroup 5f7ddf6b-e244-4e04-8683-c7d77087ab3c
+deleteAffinityGroup e3642020-9c1d-4900-ba1d-8e2e644d337e
+deleteAffinityGroup b7462c0e-f2d2-4a44-8690-94d029971892
+deleteNetwork 9f4e3f19-170f-40c4-bb2e-08f07f6b89c1
+Traceback (most recent call last):
+  File "/home/ablecloud/work/affinity-1421-20261019/cleanup.py", line 16, in <module>
+    if api('listProjects',id=f['project']['id'],listall=True).get('project'):done('deleteProject',id=f['project']['id'])
+  File "/home/ablecloud/work/affinity-1421-20261019/cleanup.py", line 5, in done
+    r=wait(api(cmd,**kw));out.append(dict(command=cmd,params=kw,result=r));pathlib.Path('cleanup-actions.json').write_text(json.dumps(out,indent=2));print(cmd,next(iter(kw.values())),flush=True)
+  File "/home/ablecloud/work/affinity-1421-20261019/client.py", line 26, in wait
+    if r.get('jobstatus')==2:raise RuntimeError(str(r))
+RuntimeError: {'accountid': 'a75c97c6-b253-11f1-a895-0024814c313f', 'account': 'admin', 'domainid': '7ef6b29a-b253-11f1-a895-0024814c313f', 'domainpath': 'ROOT', 'userid': 'a75cdd55-b253-11f1-a895-0024814c313f', 'cmd': 'org.apache.cloudstack.api.command.user.project.DeleteProjectCmd', 'jobprocstatus': 0, 'jobresultcode': 530, 'jobresulttype': 'object', 'jobresult': {'errorcode': 530, 'errortext': "Can't delete the project yet because it has 1 Network to clean up"}, 'created': '2026-10-19T17:46:33+0900', 'completed': '2026-10-19T17:46:33+0900', 'jobid': 'd2ba6cf1-ab61-4add-b399-d2a071bef589', 'jobstatus': 2}

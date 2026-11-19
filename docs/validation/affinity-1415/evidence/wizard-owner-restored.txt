@@ -1,0 +1,1089 @@
+Browser tab: 4, Title: "가상머신 - ABLESTACK-Mold", URL: "http://10.10.31.10:8080/client/#/action/deployVirtualMachine".
+1 AXWebArea 가상머신 - ABLESTACK-Mold, URL: 10.10.31.10:8080/client/#/action/deployVirtualMachine
+	2 container
+		3 container
+			4 image
+			5 menu
+				6 dashboard 대시보드
+					7 link Description: dashboard 대시보드, Value: 10.10.31.10:8080/client/#/dashboard
+				8 container
+					9 image cloud
+					10 text 컴퓨트
+				11 content list sub_menu_1_$$_/compute-popup
+					12 cloud-server 가상머신
+						13 link Description: cloud-server 가상머신, Value: 10.10.31.10:8080/client/#/vm
+					14 camera VM 스냅샷
+						15 link Description: camera VM 스냅샷, Value: 10.10.31.10:8080/client/#/vmsnapshot
+					16 쿠버네티스
+						17 link Description: 쿠버네티스, Value: 10.10.31.10:8080/client/#/kubernetes
+					18 fullscreen 오토스케일 VM 그룹
+						19 link Description: fullscreen 오토스케일 VM 그룹, Value: 10.10.31.10:8080/client/#/autoscalevmgroup
+					20 gold 가상머신 그룹
+						21 link Description: gold 가상머신 그룹, Value: 10.10.31.10:8080/client/#/vmgroup
+					22 key SSH 키 쌍
+						23 link Description: key SSH 키 쌍, Value: 10.10.31.10:8080/client/#/ssh
+					24 solution 사용자 데이터 라이브러리
+						25 link Description: solution 사용자 데이터 라이브러리, Value: 10.10.31.10:8080/client/#/userdata
+					26 solution CNI 구성
+						27 link Description: solution CNI 구성, Value: 10.10.31.10:8080/client/#/cniconfiguration
+					28 swap Affinity 그룹
+						29 link Description: swap Affinity 그룹, Value: 10.10.31.10:8080/client/#/affinitygroup
+				30 container
+					31 image hdd
+					32 text 스토리지
+				33 container
+					34 image wifi
+					35 text 네트워크
+				36 container
+					37 image picture
+					38 text 이미지
+				39 container
+					40 image lock
+					41 text 키 관리
+				42 schedule 이벤트
+					43 link Description: schedule 이벤트, Value: 10.10.31.10:8080/client/#/event
+				44 project 프로젝트
+					45 link Description: project 프로젝트, Value: 10.10.31.10:8080/client/#/project
+				46 idcard 역할
+					47 link Description: idcard 역할, Value: 10.10.31.10:8080/client/#/role
+				48 team 계정
+					49 link Description: team 계정, Value: 10.10.31.10:8080/client/#/account
+				50 block 도메인
+					51 link Description: block 도메인, Value: 10.10.31.10:8080/client/#/domain
+				52 container
+					53 image bank
+					54 text 인프라스트럭쳐
+				55 container
+					56 image shopping
+					57 text 서비스 오퍼링
+				58 container
+					59 image setting
+					60 text 구성
+				61 appstore-add 확장
+					62 link Description: appstore-add 확장, Value: 10.10.31.10:8080/client/#/extension
+				63 container
+					64 image tool
+					65 text 도구
+				66 read API 문서
+					67 link Description: read API 문서, Value: 10.10.31.10:8080/client/#/apidocs/
+		68 container
+			69 text 페이지 스타일 설정
+			70 button 닫기
+				71 image close
+			72 container
+				73 heading 페이지 스타일 설정, Value: 3
+					74 text 페이지 스타일 설정
+				75 container
+					76 image
+					77 container
+						78 radio button (settable, integer) Description:  , Value: 0
+				79 container
+					80 image
+					81 container
+						82 radio button (settable, integer) Description:  , Value: 1
+					83 image check
+				84 heading 테마 색상, Value: 3
+					85 text 테마 색상
+				86 container
+					87 radio button (settable, integer) Description:  , Value: 0
+					88 image check
+				89 container
+					90 radio button (settable, integer) Description:  , Value: 0
+				91 container
+					92 radio button (settable, integer) Description:  , Value: 0
+				93 container
+					94 radio button (settable, integer) Description:  , Value: 0
+				95 container
+					96 radio button (settable, integer) Description:  , Value: 0
+				97 container
+					98 radio button (settable, integer) Description:  , Value: 0
+				99 container
+					100 radio button (settable, integer) Description:  , Value: 0
+				101 container
+					102 radio button (settable, integer) Description:  , Value: 0
+				103 heading 네비게이션 설정, Value: 3
+					104 text 네비게이션 설정
+				105 container
+					106 container
+						107 text 배경색
+						108 color well (disabled, settable) #ffffff
+					109 container
+						110 text 텍스트 색상
+						111 color well (disabled, settable) #000000
+				112 image exclamation-circle
+				113 text 설정은 현재 브라우저에서만 볼 수 있습니다. 설정을 적용하려면 JSON 파일을 다운로드하고 경로 `/public/config.json` 아래의 `config.json` 파일의 `theme` 섹션에서 해당 콘텐츠를 교체하세요.
+				114 button download 세팅값 다운로드(json)
+					115 image download
+					116 text 세팅값 다운로드(json)
+				117 button undo 기본값으로 재설정
+					118 image undo
+					119 text 기본값으로 재설정
+		120 container
+			121 image menu-fold
+			122 container
+				123 combo box (settable) rc_select_0
+				124 image project
+				125 text 기본 보기
+			126 button 생성 down
+				127 text 생성
+				128 image down
+			129 image translation
+			130 image bell
+			131 container
+				132 text AC admin cloud
+		133 container
+			267 container
+				268 text 새 가상머신
+				269 container 새 가상머신
+					270 button 1 다른 계정에 가상머신 할당 생성할 가상머신을 특정 계정에 할당할 수 있습니다.
+						271 text 1
+						272 text 다른 계정에 가상머신 할당
+						273 text 생성할 가상머신을 특정 계정에 할당할 수 있습니다.
+						274 container
+							275 text 소유자 유형
+							276 container
+								277 combo box (settable) rc_select_3
+								278 text 계정
+							279 container
+								280 text * 도메인
+							281 container
+								282 combo box (settable) rc_select_4
+								283 image block
+								284 text  ROOT
+							285 container
+								286 text * 계정
+							1256 container
+								1259 text admin
+								1258 combo box (collapsed, settable) ID: rc_select_5, Secondary Actions: Expand
+								1260 image team
+								1261 text  admin
+					288 button 2 배포 인프라 선택 Zone은 원래 단일 데이터 센터에 해당합니다. 다수의 Zone을 설정하고 물리적으로 분리하는 방법으로 클라우드의 신뢰성을 높일 수 있습니다. * Zone global Zone Pod 클러스터 호스트
+						289 text 2
+						290 text 배포 인프라 선택
+						291 text Zone은 원래 단일 데이터 센터에 해당합니다. 다수의 Zone을 설정하고 물리적으로 분리하는 방법으로 클라우드의 신뢰성을 높일 수 있습니다.
+						292 container
+							293 text * Zone
+						1262 container
+							1263 radio button (settable, integer) Description: global Zone, Value: 1
+							1264 image global
+							1265 text  Zone
+						297 text Pod
+						298 combo box (settable) Pod, ID: form_item_podid
+						299 text 클러스터
+						300 combo box (settable) 클러스터, ID: form_item_clusterid
+						301 text 호스트
+						302 combo box (settable) 호스트, ID: form_item_hostid
+					303 button 3 이미지 유형 템플릿 ISO 볼륨 스냅샷 VM의 시작에 사용할 수 있는 OS 이미지 운영체제 Ubuntu Debian Rocky Linux Windows 사용자
+						304 text 3
+						305 text 이미지
+						1266 text 유형
+						1267 container
+							1268 container form_item_imagetype
+								1269 container
+									1270 radio button (settable, integer) Description: 템플릿, Value: 1
+									1271 text 템플릿
+								1272 container
+									1273 radio button (settable, integer) Description: ISO, Value: 0
+									1274 text ISO
+								1275 container
+									1276 radio button (settable, integer) Description: 볼륨, Value: 0
+									1277 text 볼륨
+								1278 container
+									1279 radio button (settable, integer) Description: 스냅샷, Value: 0
+									1280 text 스냅샷
+							1281 text VM의 시작에 사용할 수 있는 OS 이미지
+						1282 text 운영체제
+						1283 container form_item_guestoscategoryid
+							1284 container
+								1285 radio button (settable, integer) Description: Ubuntu, Value: 1
+								1286 text Ubuntu
+							1287 container
+								1288 radio button (settable, integer) Description: Debian, Value: 0
+								1289 text Debian
+							1290 container
+								1291 radio button (settable, integer) Description: Rocky Linux, Value: 0
+								1292 text Rocky Linux
+							1293 container
+								1294 radio button (settable, integer) Description: Windows, Value: 0
+								1295 text Windows
+							1296 container
+								1297 radio button (settable, integer) Description: 사용자, Value: 0
+								1298 text 사용자
+						1299 container
+							1300 container
+								1301 combo box (settable) rc_select_38
+								1302 text 필터링 기준
+							1303 container
+								1304 text field (settable)
+								1305 button search
+									1306 image search
+							1307 container
+								1308 content list
+									1309 container
+										1310 radio button (settable, integer) Description:   Ubuntu 26.04 Server Base Install (without QGA) arrows-alt 추천 공개 HVM  , Value: 1
+										1311 text    Ubuntu 26.04 Server Base Install (without QGA)
+										1312 image arrows-alt
+										1313 text 추천 공개 HVM
+									1314 container
+										1315 radio button (settable, integer) Description:   Ubuntu 24.04 Server Base Install (without QGA) arrows-alt 추천 공개 HVM  , Value: 0
+										1316 text    Ubuntu 24.04 Server Base Install (without QGA)
+										1317 image arrows-alt
+										1318 text 추천 공개 HVM
+									1319 container
+										1320 radio button (settable, integer) Description:   Ubuntu 22.04 Server Base Install (without QGA) arrows-alt 추천 공개 HVM  , Value: 0
+										1321 text    Ubuntu 22.04 Server Base Install (without QGA)
+										1322 image arrows-alt
+										1323 text 추천 공개 HVM
+									1324 container
+										1325 radio button (settable, integer) Description:   AS04 기능 검증용 Ubuntu HTTP8080 HVM  , Value: 0
+										1326 text    AS04 기능 검증용 Ubuntu HTTP8080  HVM
+								1327 content list
+									1328 text 전체 4 개 항목
+									1329 container 이전 페이지
+										1330 button (disabled) left
+											1331 image left
+									1332 text 1
+									1333 container 다음 페이지
+										1334 button (disabled) right
+											1335 image right
+									1336 container
+										1337 combo box (settable) rc_select_39
+										1338 text 10 / 쪽
+					326 button 4 컴퓨트 오퍼링 검색 search 전체 15 개 항목 left 1 2 right 10 / 쪽 CPU 코어 1 Increase Value Decrease Value 1 메모리(MB) 1024 Increase Value Decrease Value 1024
+						327 text 4
+						328 text 컴퓨트 오퍼링
+						1339 container
+							1340 text field (settable)
+							1341 button search
+								1342 image search
+						1343 container
+							1344 table
+								1345 row
+									1346 cell
+										1347 text 컴퓨트 오퍼링
+									1348 cell
+										1349 image appstore
+										1350 text  CPU
+									1351 cell
+										1352 image bulb
+										1353 text  메모리
+									1354 cell
+										1355 image appstore
+										1356 text  압축/중복제거
+									1357 cell
+										1358 image tag
+										1359 text  스토리지 태그
+							1360 table
+								1361 row
+									1362 cell
+										1363 container
+											1364 radio button (settable, integer) Description:  , Value: 1
+									1365 cell
+										1366 text 1C1GB-TO-64C128GB-FR-GFS-None
+									1367 cell
+										1368 text 1-64 CPU x 2.00 Ghz
+									1369 cell
+										1370 text 1024-131072 MB
+									1371 cell
+										1372 text 비활성화
+								1373 row
+									1374 cell
+										1375 container
+											1376 radio button (settable, integer) Description:  , Value: 0
+									1377 cell
+										1378 text 1C1GB-TO-64C128GB-FR-GFS
+									1379 cell
+										1380 text 1-64 CPU x 2.00 Ghz
+									1381 cell
+										1382 text 1024-131072 MB
+									1383 cell
+										1384 text 비활성화
+									1385 cell
+										1386 text glue-gfs
+								1387 row
+									1388 cell
+										1389 container
+											1390 radio button (settable, integer) Description:  , Value: 0
+									1391 cell
+										1392 text 1C1GB-TO-64C128GB-FR-CLVM
+									1393 cell
+										1394 text 1-64 CPU x 2.00 Ghz
+									1395 cell
+										1396 text 1024-131072 MB
+									1397 cell
+										1398 text 비활성화
+									1399 cell
+										1400 text clvm
+								1401 row
+									1402 cell
+										1403 container
+											1404 radio button (settable, integer) Description:  , Value: 0
+									1405 cell
+										1406 text 1C1GB-TO-64C128GB-FR-CLVM-NG
+									1407 cell
+										1408 text 1-64 CPU x 2.00 Ghz
+									1409 cell
+										1410 text 1024-131072 MB
+									1411 cell
+										1412 text 비활성화
+									1413 cell
+										1414 text clvm-ng
+								1415 row
+									1416 cell
+										1417 container
+											1418 radio button (settable, integer) Description:  , Value: 0
+									1419 cell
+										1420 text 1C1GB-TO-32C64GB-thin-wb-ha
+									1421 cell
+										1422 text 1-32 CPU x 2.00 Ghz
+									1423 cell
+										1424 text 1024-32768 MB
+									1425 cell
+										1426 text 비활성화
+									1427 cell
+										1428 text glue-gfs
+								1429 row
+									1430 cell
+										1431 container
+											1432 radio button (settable, integer) Description:  , Value: 0
+									1433 cell
+										1434 text 8Core-16GB-Fixed-Offering
+									1435 cell
+										1436 text 8 CPU x 2.00 Ghz
+									1437 cell
+										1438 text 16384 MB
+									1439 cell
+										1440 text 비활성화
+									1441 cell
+										1442 text glue-gfs
+								1443 row
+									1444 cell
+										1445 container
+											1446 radio button (settable, integer) Description:  , Value: 0
+									1447 cell
+										1448 text 4Core 8GB
+									1449 cell
+										1450 text 4 CPU x 2.00 Ghz
+									1451 cell
+										1452 text 8192 MB
+									1453 cell
+										1454 text 비활성화
+								1455 row
+									1456 cell
+										1457 container
+											1458 radio button (settable, integer) Description:  , Value: 0
+									1459 cell
+										1460 text 2Core 2GB
+									1461 cell
+										1462 text 2 CPU x 2.00 Ghz
+									1463 cell
+										1464 text 2048 MB
+									1465 cell
+										1466 text 비활성화
+									1467 cell
+										1468 text glue-gfs
+								1469 row
+									1470 cell
+										1471 container
+											1472 radio button (settable, integer) Description:  , Value: 0
+									1473 cell
+										1474 text 2C-4GB-GFS
+									1475 cell
+										1476 text 2 CPU x 2.00 Ghz
+									1477 cell
+										1478 text 4096 MB
+									1479 cell
+										1480 text 비활성화
+									1481 cell
+										1482 text glue-gfs
+								1483 row
+									1484 cell
+										1485 container
+											1486 radio button (settable, integer) Description:  , Value: 0
+									1487 cell
+										1488 text RT1230-GFS2-4C8G
+									1489 cell
+										1490 text 4 CPU x 2.00 Ghz
+									1491 cell
+										1492 text 8192 MB
+									1493 cell
+										1494 text 비활성화
+									1495 cell
+										1496 text glue-gfs
+						1497 content list
+							1498 text 전체 15 개 항목
+							1499 container 이전 페이지
+								1500 button (disabled) left
+									1501 image left
+							1502 text 1
+							1503 text 2
+							1504 container 다음 페이지
+								1505 button right
+									1506 image right
+							1507 container
+								1508 combo box (settable) rc_select_40
+								1509 text 10 / 쪽
+						1510 container
+							1511 text CPU 코어
+							1512 container
+								1513 container
+									1514 slider 1
+								1515 container
+									1516 button Increase Value
+										1517 image up
+									1518 button (disabled) Decrease Value
+										1519 image down
+									1520 stepper (settable, integer) 1
+							1521 text 메모리(MB)
+							1522 container
+								1523 container
+									1524 slider 1024
+								1525 container
+									1526 button Increase Value
+										1527 image up
+									1528 button (disabled) Decrease Value
+										1529 image down
+									1530 stepper (settable, integer) 1024
+					336 button 5 루트 디스크 1 루트 디스크 오퍼링 루트 디스크 오퍼링 무시 다른 디스크 오퍼링을 선택해 루트 디스크를 구성합니다. 1C1GB-TO-64C128GB-FR-GFS-None 컴퓨트 오퍼링 기본값 2 루트 디스크 용량 100 GB 루트 디스크 크기 무시 현재 루트 디스크 오퍼링을 유지하고 용량만 변경합니다. 3 루트 디스크의 기본 스토리지 reload 업데이트 검색 search 자동 선택   할당 용량에는 예약 용량이 포함됩니다. 물리 여유와 추가 할당 가능 용량은 서로 다를 수 있습니다. · 오전 6:23:20
+						337 text 5
+						338 text 루트 디스크
+						1531 container
+							1532 heading 1 루트 디스크 오퍼링, Value: 4
+								1533 text 1 루트 디스크 오퍼링
+							1534 text 루트 디스크 오퍼링 무시
+							1535 container
+								1536 switch 0
+								1537 text 다른 디스크 오퍼링을 선택해 루트 디스크를 구성합니다.
+							1538 text 1C1GB-TO-64C128GB-FR-GFS-None 컴퓨트 오퍼링 기본값
+						1539 container
+							1540 heading 2 루트 디스크 용량, Value: 4
+								1541 text 2 루트 디스크 용량
+							1542 text 100 GB
+							1543 text 루트 디스크 크기 무시
+							1544 container
+								1545 switch 0
+								1546 text 현재 루트 디스크 오퍼링을 유지하고 용량만 변경합니다.
+						1547 container
+							1548 text 3 3 루트 디스크의 기본 스토리지
+						1549 button reload 업데이트
+							1550 image reload
+							1551 text 업데이트
+						1552 container
+							1553 text field (settable)
+							1554 button search
+								1555 image search
+						1556 container
+							1557 radio button (settable, integer) Description: 자동 선택  , Value: 1
+							1558 text 자동 선택
+						1559 table
+							1560 row
+								1561 cell
+									1562 text 스토리지
+								1563 cell
+									1564 text 총 용량
+								1565 cell
+									1566 text 할당 용량
+								1567 cell
+									1568 text 물리 여유
+								1569 cell
+									1570 text 추가 할당 가능
+								1571 cell
+									1572 text 필요 용량
+							1573 row
+								1574 cell
+									1575 container
+										1576 radio button 0
+						1577 container
+							1578 text 할당 용량에는 예약 용량이 포함됩니다. 물리 여유와 추가 할당 가능 용량은 서로 다를 수 있습니다.  · 오전 6:23:20
+					339 button 6 데이터 디스크 검색 search 전체 7 개 항목 left 1 right 10 / 쪽
+						340 text 6
+						341 text 데이터 디스크
+						1579 container
+							1580 text field (settable)
+							1581 button search
+								1582 image search
+						1583 container
+							1584 table
+								1585 row
+									1586 cell
+										1587 text 디스크 오퍼링
+									1588 cell
+										1589 image hdd
+										1590 text  디스크 크기(GB 단위)
+									1591 cell
+										1592 image rocket
+										1593 text  최소 IOPS/최대 IOPS
+							1594 table
+								1595 row
+									1596 cell
+										1597 container
+											1598 radio button (settable, integer) Description:  , Value: 1
+									1599 cell
+										1600 text 설정 안함
+									1601 cell
+										1602 text -
+									1603 cell
+										1604 text -
+								1605 row
+									1606 cell
+										1607 container
+											1608 radio button (settable, integer) Description:  , Value: 0
+									1609 cell
+										1610 text FTCTL Internal Root Disk
+									1611 cell
+										1612 text 사용자지정 디스크 크기
+									1613 cell
+										1614 text -
+								1615 row
+									1616 cell
+										1617 container
+											1618 radio button (settable, integer) Description:  , Value: 0
+									1619 cell
+										1620 text FTCTL Internal Data Disk
+									1621 cell
+										1622 text 사용자지정 디스크 크기
+									1623 cell
+										1624 text -
+								1625 row
+									1626 cell
+										1627 container
+											1628 radio button (settable, integer) Description:  , Value: 0
+									1629 cell
+										1630 text Custom-GFS-Sparse
+									1631 cell
+										1632 text 사용자지정 디스크 크기
+									1633 cell
+										1634 text -
+								1635 row
+									1636 cell
+										1637 container
+											1638 radio button (settable, integer) Description:  , Value: 0
+									1639 cell
+										1640 text E1335-31-QoS-10GiB-500-1000
+									1641 cell
+										1642 text 10 GB
+									1643 cell
+										1644 text 500 - 1000
+								1645 row
+									1646 cell
+										1647 container
+											1648 radio button (settable, integer) Description:  , Value: 0
+									1649 cell
+										1650 text AS-PROD-31-AS05-NO-POOL
+									1651 cell
+										1652 text 100 GB
+									1653 cell
+										1654 text -
+								1655 row
+									1656 cell
+										1657 container
+											1658 radio button (settable, integer) Description:  , Value: 0
+									1659 cell
+										1660 text Custom-GFS-Thin-wb
+									1661 cell
+										1662 text 사용자지정 디스크 크기
+									1663 cell
+										1664 text -
+								1665 row
+									1666 cell
+										1667 container
+											1668 radio button (settable, integer) Description:  , Value: 0
+									1669 cell
+										1670 text Custom-GFS-Thin-none
+									1671 cell
+										1672 text 사용자지정 디스크 크기
+									1673 cell
+										1674 text -
+						1675 content list
+							1676 text 전체 7 개 항목
+							1677 container 이전 페이지
+								1678 button (disabled) left
+									1679 image left
+							1680 text 1
+							1681 container 다음 페이지
+								1682 button (disabled) right
+									1683 image right
+							1684 container
+								1685 combo box (settable) rc_select_41
+								1686 text 10 / 쪽
+					356 button 7 네트워크 인스턴스를 연결할 네트워크를 하나 이상 선택하세요. 여기에서 새 네트워크를 만들 수도 있습니다. 여기에서 새 네트워크를 생성할 수도 있습니다. 검색 search 새로운 네트워크 생성 전체 6 개 항목 left 1 right 10 / 쪽
+						357 text 7
+						358 text 네트워크
+						1687 text 인스턴스를 연결할 네트워크를 하나 이상 선택하세요. 여기에서 새 네트워크를 만들 수도 있습니다. 여기에서 새 네트워크를 생성할 수도 있습니다.
+						1688 container
+							1689 text field (settable)
+							1690 button search
+								1691 image search
+						1692 button 새로운 네트워크 생성
+						1693 container
+							1694 table
+								1695 row
+									1696 cell
+										1697 container
+											1698 checkbox (settable, integer) Description:  , Value: 0
+									1699 cell
+										1700 text 네트워크
+									1701 cell
+										1702 text 게스트 유형
+									1703 cell
+										1704 text VPC
+									1705 cell
+										1706 text VM 오토스케일링 지원
+							1707 table
+								1708 row
+									1709 cell
+										1710 button Expand row
+									1711 cell
+										1712 container
+											1713 checkbox (settable, integer) Description:  , Value: 0
+									1714 cell
+										1715 image apartment
+										1716 text  AS-PROD-31-AS01-net
+									1717 cell
+										1718 text Isolated
+									1719 cell
+										1720 text Yes
+								1721 row
+									1722 cell
+										1723 button Expand row
+									1724 cell
+										1725 container
+											1726 checkbox (settable, integer) Description:  , Value: 0
+									1727 cell
+										1728 image apartment
+										1729 text  E1335-VM-Origin-L2
+									1730 cell
+										1731 text L2
+									1732 cell
+										1733 text No
+								1734 row
+									1735 cell
+										1736 button Expand row
+									1737 cell
+										1738 container
+											1739 checkbox (settable, integer) Description:  , Value: 0
+									1740 cell
+										1741 image apartment
+										1742 text  k8s-ui1330-gfs2-net
+									1743 cell
+										1744 text Isolated
+									1745 cell
+										1746 text No
+								1747 row
+									1748 cell
+										1749 button Expand row
+									1750 cell
+										1751 container
+											1752 checkbox (settable, integer) Description:  , Value: 0
+									1753 cell
+										1754 image apartment
+										1755 text  Admin-Isoloated-Net
+									1756 cell
+										1757 text Isolated
+									1758 cell
+										1759 text Yes
+								1760 row
+									1761 cell
+										1762 button Expand row
+									1763 cell
+										1764 container
+											1765 checkbox (settable, integer) Description:  , Value: 0
+									1766 cell
+										1767 image apartment
+										1768 text  L2-Test
+									1769 cell
+										1770 text L2
+									1771 cell
+										1772 text No
+								1773 row
+									1774 cell
+										1775 button Expand row
+									1776 cell
+										1777 container
+											1778 checkbox (settable, integer) Description:  , Value: 0
+									1779 cell
+										1780 image apartment
+										1781 text  ADMIN-L2-Network
+									1782 cell
+										1783 text L2
+									1784 cell
+										1785 text No
+						1786 content list
+							1787 text 전체 6 개 항목
+							1788 container 이전 페이지
+								1789 button (disabled) left
+									1790 image left
+							1791 text 1
+							1792 container 다음 페이지
+								1793 button (disabled) right
+									1794 image right
+							1795 container
+								1796 combo box (settable) rc_select_42
+								1797 text 10 / 쪽
+					373 button 8 SSH 키 쌍 검색 search 전체 3 개 항목 left 1 right 10 / 쪽
+						374 text 8
+						375 text SSH 키 쌍
+						1798 container
+							1799 text field (settable)
+							1800 button search
+								1801 image search
+						1802 container
+							1803 table
+								1804 row
+									1805 cell
+										1806 container
+											1807 checkbox (settable, integer) Description:  , Value: 0
+									1808 cell
+										1809 text SSH 키 쌍
+									1810 cell
+										1811 image user
+										1812 text  계정
+									1813 cell
+										1814 image block
+										1815 text  도메인
+							1816 table
+								1817 row
+									1818 cell
+										1819 container
+											1820 checkbox (settable, integer) Description:  , Value: 0
+									1821 cell
+										1822 text ssh-test-dhslove
+									1823 cell
+										1824 text admin
+									1825 cell
+										1826 text ROOT
+								1827 row
+									1828 cell
+										1829 container
+											1830 checkbox (settable, integer) Description:  , Value: 0
+									1831 cell
+										1832 text k1230-20261006
+									1833 cell
+										1834 text admin
+									1835 cell
+										1836 text ROOT
+								1837 row
+									1838 cell
+										1839 container
+											1840 checkbox (settable, integer) Description:  , Value: 0
+									1841 cell
+										1842 text k8s-1
+									1843 cell
+										1844 text admin
+									1845 cell
+										1846 text ROOT
+						1847 content list
+							1848 text 전체 3 개 항목
+							1849 container 이전 페이지
+								1850 button (disabled) left
+									1851 image left
+							1852 text 1
+							1853 container 다음 페이지
+								1854 button (disabled) right
+									1855 image right
+							1856 container
+								1857 combo box (settable) rc_select_43
+								1858 text 10 / 쪽
+					390 button 9 확장 모드 고급 설정 표시 부팅 유형 UEFI 부팅 모드 LEGACY FT 호환성 info-circle 일반 호환성 TPM 활성화 템플릿 설정 사용 (미지정 시 사용 안 함) Dynamic Scaling 활성화 info-circle 사용자 데이터
+						391 text 9
+						392 text 확장 모드
+						1859 text 고급 설정 표시
+						1860 switch 1
+						1861 text 부팅 유형
+						1862 container
+							1863 combo box (settable) 부팅 유형, ID: form_item_boottype
+							1864 text UEFI
+						1865 text 부팅 모드
+						1866 container
+							1867 combo box (settable) 부팅 모드, ID: form_item_bootmode
+							1868 text LEGACY
+						1869 container
+							1870 text FT 호환성
+							1871 image info-circle
+						1872 container
+							1873 combo box (settable) FT 호환성 info-circle, ID: form_item_machinecompatibility
+							1874 text 일반 호환성
+						1875 text TPM 활성화
+						1876 container
+							1877 combo box (settable) TPM 활성화, ID: form_item_tpmversion
+							1878 text 템플릿 설정 사용 (미지정 시 사용 안 함)
+						1879 container
+							1880 text Dynamic Scaling 활성화
+							1881 image info-circle
+						1882 switch Description: Dynamic Scaling 활성화 info-circle, Value: 1, ID: form_item_dynamicscalingenabled
+						1883 text 사용자 데이터
+						1884 container
+							1885 container
+								1886 tab group
+									1887 container
+										1888 tab (selected, settable, boolean) 저장된 User Data, Value: 1, ID: rc-tabs-3-tab-userdataregistered
+										1889 tab (selectable, settable, boolean) 수동 User Data 입력, Value: 0, ID: rc-tabs-3-tab-userdatatext
+								1890 container Description: 저장된 User Data, ID: rc-tabs-3-panel-userdataregistered
+								1891 container
+									1892 radio button (settable, integer) Description: 설정 안함  , Value: 1
+									1893 text 설정 안함
+									1894 text field (settable) 사용자 데이터 검색
+									1895 button search
+										1896 image search
+									1897 container
+										1898 table
+											1899 row
+												1900 cell
+													1901 image solution
+													1902 text  사용자 데이터
+												1903 cell
+													1904 image user
+													1905 text  계정
+												1906 cell
+													1907 image block
+													1908 text  도메인
+										1909 table
+											1910 row
+												1911 cell
+													1912 container
+														1913 radio button (settable, integer) Description:  , Value: 0
+												1914 cell
+													1915 text AS-PROD-31-AS01-HTTP
+												1916 cell
+													1917 text admin
+												1918 cell
+													1919 text ROOT
+										1920 content list
+											1921 text 전체: 1
+											1922 container 이전 페이지
+												1923 button (disabled) left
+													1924 image left
+											1925 text 1
+											1926 container 다음 페이지
+												1927 button (disabled) right
+													1928 image right
+											1929 container
+												1930 combo box (settable) rc_select_52
+												1931 text 10 / 쪽
+						1932 container
+							1933 text 추가 설정
+							1934 image info-circle
+						1935 text entry area (settable) 추가 설정 info-circle, ID: form_item_extraconfig
+						1936 text Affinity 그룹
+						1937 container
+							1938 text 이 VM이 속할 Affinity 그룹을 선택하십시오.
+							1939 text field (settable)
+							1940 button search
+								1941 image search
+							1942 container 전체 선택
+								1943 text 전체 선택: 0
+								1944 button (disabled) 모든 페이지 선택 해제
+								1945 text 표 머리글의 체크박스는 현재 페이지에만 적용됩니다. 검색·페이지를 바꿔도 전체 선택은 유지되며, 아래 항목에서 개별 해제할 수 있습니다.
+							1946 container
+								1947 table
+									1948 row
+										1949 cell
+											1950 container
+												1951 checkbox (settable, integer) Description:  , Value: 0
+										1952 cell
+											1953 text Affinity 그룹
+										1954 cell
+											1955 text 유형
+										1956 cell
+											1957 text 설명
+								1958 table
+									1959 row
+										1960 cell
+											1961 container
+												1962 checkbox (settable, integer) Description:  , Value: 0
+										1963 cell
+											1964 text qa-ag02-20261019-01
+										1965 cell
+											1966 text host anti-affinity
+										1967 cell
+											1968 text AG02 disposable selection fixture
+									1969 row
+										1970 cell
+											1971 container
+												1972 checkbox (settable, integer) Description:  , Value: 0
+										1973 cell
+											1974 text qa-ag02-20261019-02
+										1975 cell
+											1976 text host anti-affinity
+										1977 cell
+											1978 text AG02 disposable selection fixture
+									1979 row
+										1980 cell
+											1981 container
+												1982 checkbox (settable, integer) Description:  , Value: 0
+										1983 cell
+											1984 text qa-ag02-20261019-03
+										1985 cell
+											1986 text host anti-affinity
+										1987 cell
+											1988 text AG02 disposable selection fixture
+									1989 row
+										1990 cell
+											1991 container
+												1992 checkbox (settable, integer) Description:  , Value: 0
+										1993 cell
+											1994 text qa-ag02-20261019-04
+										1995 cell
+											1996 text host anti-affinity
+										1997 cell
+											1998 text AG02 disposable selection fixture
+									1999 row
+										2000 cell
+											2001 container
+												2002 checkbox (settable, integer) Description:  , Value: 0
+										2003 cell
+											2004 text qa-ag02-20261019-05
+										2005 cell
+											2006 text host anti-affinity
+										2007 cell
+											2008 text AG02 disposable selection fixture
+									2009 row
+										2010 cell
+											2011 container
+												2012 checkbox (settable, integer) Description:  , Value: 0
+										2013 cell
+											2014 text qa-ag02-20261019-06
+										2015 cell
+											2016 text host anti-affinity
+										2017 cell
+											2018 text AG02 disposable selection fixture
+									2019 row
+										2020 cell
+											2021 container
+												2022 checkbox (settable, integer) Description:  , Value: 0
+										2023 cell
+											2024 text qa-ag02-20261019-07
+										2025 cell
+											2026 text host anti-affinity
+										2027 cell
+											2028 text AG02 disposable selection fixture
+									2029 row
+										2030 cell
+											2031 container
+												2032 checkbox (settable, integer) Description:  , Value: 0
+										2033 cell
+											2034 text qa-ag02-20261019-08
+										2035 cell
+											2036 text host anti-affinity
+										2037 cell
+											2038 text AG02 disposable selection fixture
+									2039 row
+										2040 cell
+											2041 container
+												2042 checkbox (settable, integer) Description:  , Value: 0
+										2043 cell
+											2044 text qa-ag02-20261019-09
+										2045 cell
+											2046 text host anti-affinity
+										2047 cell
+											2048 text AG02 disposable selection fixture
+									2049 row
+										2050 cell
+											2051 container
+												2052 checkbox (settable, integer) Description:  , Value: 0
+										2053 cell
+											2054 text qa-ag02-20261019-10
+										2055 cell
+											2056 text host anti-affinity
+										2057 cell
+											2058 text AG02 disposable selection fixture
+							2059 content list
+								2060 text 전체 14 개 항목
+								2061 container 이전 페이지
+									2062 button (disabled) left
+										2063 image left
+								2064 text 1
+								2065 text 2
+								2066 container 다음 페이지
+									2067 button right
+										2068 image right
+								2069 container
+									2070 combo box (settable) rc_select_46
+									2071 text 10 / 쪽
+						2072 container
+							2073 text NIC multiqueue 수
+							2074 image info-circle
+						2075 container
+							2076 button Increase Value
+								2077 image up
+							2078 button Decrease Value
+								2079 image down
+							2080 stepper (settable, integer) 0
+						2081 container
+							2082 text NIC 압축 virtqueues 활성화
+							2083 image info-circle
+						2084 switch Description: NIC 압축 virtqueues 활성화 info-circle, Value: 0, ID: form_item_nicpackedvirtqueuesenabled
+						2085 container
+							2086 text IOThreads
+							2087 image info-circle
+						2088 switch Description: IOThreads info-circle, Value: 0, ID: form_item_iothreadsenabled
+						2089 container
+							2090 text IO 드라이버 정책
+							2091 image info-circle
+						2092 container
+							2093 combo box (settable) IO 드라이버 정책 info-circle, ID: form_item_iodriverpolicy
+							2094 text io_uring
+					396 button 10 상세 가상머신을 생성하기 전에 다음 설정을 확인해 주세요. 이름(옵션) 그룹(옵션) 업데이트 키보드 언어 생성할 가상머신 수 Increase Value Decrease Value 1 가상머신 생성 후 바로 시작 가상머신을 생성하고 중지 상태로 유지합니다. 생성 후 상세 화면에서 시작할 수 있습니다.
+						397 text 10
+						398 text 상세
+						2095 text 가상머신을 생성하기 전에 다음 설정을 확인해 주세요.
+						2096 text 이름(옵션)
+						2097 text field (settable) 이름(옵션), ID: form_item_name
+						2098 text 그룹(옵션)
+						2099 container
+							2100 combo box (settable) 그룹(옵션), ID: form_item_group
+							2101 text 대상 소유 범위에 그룹이 없습니다. 새 이름을 입력하면 해당 소유 범위에 생성합니다.
+							2102 button 업데이트
+						2103 text 키보드 언어
+						2104 combo box (settable) 키보드 언어, ID: form_item_keyboard
+						2105 text 생성할 가상머신 수
+						2106 container
+							2107 button Increase Value
+								2108 image up
+							2109 button (disabled) Decrease Value
+								2110 image down
+							2111 stepper (settable, integer) 1
+						2112 text 가상머신 생성 후 바로 시작
+						2113 container
+							2114 switch Description: 가상머신 생성 후 바로 시작, Value: 0, ID: form_item_startvm
+							2115 text 가상머신을 생성하고 중지 상태로 유지합니다. 생성 후 상세 화면에서 시작할 수 있습니다.
+			409 container
+				410 text 귀하의 가상머신
+				412 heading 4
+				1236 text KVM
+				2116 text OS 유형
+				2117 text Ubuntu 26.04 (64-bit)
+				1239 text CPU
+				1240 text 1 CPU x 2.00 GHz
+				1241 image question-circle
+				1242 text 메모리
+				1243 text 1024 MB 메모리
+				2118 text 디스크 크기(GB 단위)
+				2119 image database
+				2120 text 100 GB (Root)
+				1247 container
+					1248 text 루트 디스크의 기본 스토리지
+					1249 text 자동 선택 · 100 GB
+				2121 text 템플릿
+				2122 image save
+				2123 link Description: Ubuntu 26.04 Server Base Install (without QGA), Value: 10.10.31.10:8080/client/#/template/c86d655a-e460-4c24-9589-f435934d71c4
+				1253 text 컴퓨트 오퍼링
+				1254 image cloud
+				1255 link Description: 1C1GB-TO-64C128GB-FR-GFS-None, Value: 10.10.31.10:8080/client/#/computeoffering/e0b40823-d63b-4d55-a607-98ea93041dd6
+				2124 text Zone
+				2125 image global
+				2126 link Description: Zone, Value: 10.10.31.10:8080/client/#/zone/7013f5a1-de59-4cea-a596-f4f58815f31c
+				2127 text 부팅 유형
+				2128 text UEFI
+				2129 text 부팅 모드
+				2130 text LEGACY
+				413 button rocket 가상머신 생성
+					414 image rocket
+					415 text 가상머신 생성
+				416 button down
+					417 image down
+	264 container
+		265 image info-circle
+		266 text Wall 모니터링을 사용할 수 없습니다. 기존 알림은 최신 정보가 아닐 수 있으며 Mold는 계속 사용할 수 있습니다. 비활성
+
+The focused UI element is 1258 combo box (collapsed, settable) ID: rc_select_5, Secondary Actions: Expand

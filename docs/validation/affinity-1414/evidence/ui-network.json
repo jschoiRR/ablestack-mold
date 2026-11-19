@@ -1,0 +1,3440 @@
+[
+  {
+    "label": "admin-attach",
+    "requestId": "44672.1457",
+    "params": {
+      "listall": "true",
+      "command": "listAffinityGroups",
+      "response": "json"
+    },
+    "response": {
+      "listaffinitygroupsresponse": {
+        "count": 6,
+        "affinitygroup": [
+          {
+            "id": "ac508d0e-c80b-4c66-9bd0-8cbb896ca7e0",
+            "name": "rt1230-r17-ha-control-spread",
+            "description": "Cloud #1230 isolated r17 HA controls across three hosts",
+            "account": "k1230-20261006",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "966bf870-a046-4c76-bfce-7c78f62c0ecb",
+            "name": "rt1230-r18-control-spread",
+            "description": "Cloud #1230 isolated r18 control across hosts",
+            "account": "k1230-20261006",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "42f65110-108a-4831-8403-14500cc7f5fa",
+            "name": "rt1230-r18-etcd-spread",
+            "description": "Cloud #1230 isolated r18 etcd across hosts",
+            "account": "k1230-20261006",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "8fcf1f7b-b366-4096-8708-97c902e17762",
+            "name": "qa-ag01-20261019-admin",
+            "description": "AG01 disposable admin",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "4c73af99-934b-472d-97eb-e80d10556c70",
+            "name": "qa-ag01-20261019-user",
+            "description": "AG01 disposable user",
+            "account": "qa-ag01-1019",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "19c27a5d-fa81-4599-bd42-29a3c154d07c",
+            "name": "qa-ag01-20261019-shared",
+            "description": "AG01 empty domain-wide group; no host dedication",
+            "account": "system",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "ExplicitDedication"
+          }
+        ]
+      }
+    },
+    "uiSource": "0918c1453d214b454ec150fe6d6b5a8f34418bc6"
+  },
+  {
+    "label": "admin-attach",
+    "requestId": "44672.1458",
+    "params": {
+      "keyword": "",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "account": "admin",
+      "page": "1",
+      "pageSize": "10",
+      "response": "json",
+      "command": "listAffinityGroups"
+    },
+    "response": {
+      "listaffinitygroupsresponse": {
+        "count": 2,
+        "affinitygroup": [
+          {
+            "id": "8fcf1f7b-b366-4096-8708-97c902e17762",
+            "name": "qa-ag01-20261019-admin",
+            "description": "AG01 disposable admin",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "19c27a5d-fa81-4599-bd42-29a3c154d07c",
+            "name": "qa-ag01-20261019-shared",
+            "description": "AG01 empty domain-wide group; no host dedication",
+            "account": "system",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "ExplicitDedication"
+          }
+        ]
+      }
+    },
+    "uiSource": "0918c1453d214b454ec150fe6d6b5a8f34418bc6"
+  },
+  {
+    "label": "admin-attach",
+    "requestId": "44672.1463",
+    "params": {
+      "id": "8fcf1f7b-b366-4096-8708-97c902e17762",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "account": "admin",
+      "command": "listAffinityGroups",
+      "response": "json"
+    },
+    "response": {
+      "listaffinitygroupsresponse": {
+        "count": 1,
+        "affinitygroup": [
+          {
+            "id": "8fcf1f7b-b366-4096-8708-97c902e17762",
+            "name": "qa-ag01-20261019-admin",
+            "description": "AG01 disposable admin",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          }
+        ]
+      }
+    },
+    "uiSource": "0918c1453d214b454ec150fe6d6b5a8f34418bc6"
+  },
+  {
+    "label": "admin-attach",
+    "requestId": "44672.1464",
+    "params": {
+      "id": "19c27a5d-fa81-4599-bd42-29a3c154d07c",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "account": "admin",
+      "command": "listAffinityGroups",
+      "response": "json"
+    },
+    "response": {
+      "listaffinitygroupsresponse": {
+        "count": 1,
+        "affinitygroup": [
+          {
+            "id": "19c27a5d-fa81-4599-bd42-29a3c154d07c",
+            "name": "qa-ag01-20261019-shared",
+            "description": "AG01 empty domain-wide group; no host dedication",
+            "account": "system",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "ExplicitDedication"
+          }
+        ]
+      }
+    },
+    "uiSource": "0918c1453d214b454ec150fe6d6b5a8f34418bc6"
+  },
+  {
+    "label": "admin-attach",
+    "requestId": "44672.1465",
+    "params": {
+      "command": "updateVMAffinityGroup",
+      "response": "json",
+      "id": "3a173569-034b-40ba-b402-63c189f48ac2",
+      "affinitygroupids": "8fcf1f7b-b366-4096-8708-97c902e17762,19c27a5d-fa81-4599-bd42-29a3c154d07c"
+    },
+    "response": {
+      "updatevirtualmachineresponse": {
+        "jobid": "ec2b4cc5-eb5b-4593-9987-c8d63d4c81b0"
+      }
+    },
+    "uiSource": "0918c1453d214b454ec150fe6d6b5a8f34418bc6"
+  },
+  {
+    "label": "admin-attach",
+    "requestId": "44672.1466",
+    "params": {
+      "jobid": "ec2b4cc5-eb5b-4593-9987-c8d63d4c81b0",
+      "command": "queryAsyncJobResult",
+      "response": "json"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.admin.affinitygroup.UpdateVMAffinityGroupCmdByAdmin",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "virtualmachine": {
+            "id": "3a173569-034b-40ba-b402-63c189f48ac2",
+            "name": "qa-ag01-20261019-admin",
+            "displayname": "qa-ag01-20261019-admin",
+            "account": "admin",
+            "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+            "username": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "created": "2026-10-19T01:23:49+0900",
+            "state": "Stopped",
+            "haenable": false,
+            "zoneid": "7013f5a1-de59-4cea-a596-f4f58815f31c",
+            "zonename": "Zone",
+            "volumemutationblockedreason": "",
+            "guestosid": "9708b6ac-b253-11f1-a895-0024814c313f",
+            "securitygroup": [],
+            "nic": [
+              {
+                "id": "a1643d53-f75c-42f6-95db-e7e74d3e86ec",
+                "networkid": "ae274fff-3d8e-4285-ac73-26a767c1fea7",
+                "networkname": "E1335-VM-Origin-L2",
+                "isolationuri": "vlan://3135",
+                "broadcasturi": "vlan://3135",
+                "traffictype": "Guest",
+                "type": "L2",
+                "isdefault": true,
+                "macaddress": "02:1f:01:04:00:24",
+                "secondaryip": [],
+                "extradhcpoption": [],
+                "deviceid": "0",
+                "enabled": true
+              }
+            ],
+            "hypervisor": "KVM",
+            "instancename": "i-2-647-VM",
+            "details": {
+              "deployvm": "true",
+              "tpmversion": "NONE",
+              "rootDiskController": "osdefault"
+            },
+            "clonefastsourcepowerallowed": false,
+            "clonefastpowerallowed": false,
+            "affinitygroup": [
+              {
+                "id": "8fcf1f7b-b366-4096-8708-97c902e17762",
+                "name": "qa-ag01-20261019-admin",
+                "description": "AG01 disposable admin",
+                "account": "admin"
+              },
+              {
+                "id": "19c27a5d-fa81-4599-bd42-29a3c154d07c",
+                "name": "qa-ag01-20261019-shared",
+                "description": "AG01 empty domain-wide group; no host dedication",
+                "account": "admin"
+              }
+            ],
+            "displayvm": true,
+            "isdynamicallyscalable": true,
+            "deleteprotection": false,
+            "ostypeid": "9708b6ac-b253-11f1-a895-0024814c313f",
+            "osdisplayname": "Rocky Linux 9",
+            "receivedbytes": 0,
+            "sentbytes": 0,
+            "vbmcport": "None",
+            "kvdoenable": false,
+            "kvdoinuse": false,
+            "arch": "x86_64",
+            "vbmcstatus": "Unallocated",
+            "tags": [],
+            "hasannotations": false
+          }
+        },
+        "created": "2026-10-19T01:38:37+0900",
+        "completed": "2026-10-19T01:38:37+0900",
+        "jobid": "ec2b4cc5-eb5b-4593-9987-c8d63d4c81b0",
+        "jobstatus": 1
+      }
+    },
+    "uiSource": "0918c1453d214b454ec150fe6d6b5a8f34418bc6"
+  },
+  {
+    "label": "admin-clear",
+    "requestId": "44672.1479",
+    "params": {
+      "listall": "true",
+      "command": "listAffinityGroups",
+      "response": "json"
+    },
+    "response": {
+      "listaffinitygroupsresponse": {
+        "count": 6,
+        "affinitygroup": [
+          {
+            "id": "ac508d0e-c80b-4c66-9bd0-8cbb896ca7e0",
+            "name": "rt1230-r17-ha-control-spread",
+            "description": "Cloud #1230 isolated r17 HA controls across three hosts",
+            "account": "k1230-20261006",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "966bf870-a046-4c76-bfce-7c78f62c0ecb",
+            "name": "rt1230-r18-control-spread",
+            "description": "Cloud #1230 isolated r18 control across hosts",
+            "account": "k1230-20261006",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "42f65110-108a-4831-8403-14500cc7f5fa",
+            "name": "rt1230-r18-etcd-spread",
+            "description": "Cloud #1230 isolated r18 etcd across hosts",
+            "account": "k1230-20261006",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "8fcf1f7b-b366-4096-8708-97c902e17762",
+            "name": "qa-ag01-20261019-admin",
+            "description": "AG01 disposable admin",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity",
+            "virtualmachineIds": [
+              "3a173569-034b-40ba-b402-63c189f48ac2"
+            ]
+          },
+          {
+            "id": "4c73af99-934b-472d-97eb-e80d10556c70",
+            "name": "qa-ag01-20261019-user",
+            "description": "AG01 disposable user",
+            "account": "qa-ag01-1019",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "19c27a5d-fa81-4599-bd42-29a3c154d07c",
+            "name": "qa-ag01-20261019-shared",
+            "description": "AG01 empty domain-wide group; no host dedication",
+            "account": "system",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "ExplicitDedication",
+            "virtualmachineIds": [
+              "3a173569-034b-40ba-b402-63c189f48ac2"
+            ]
+          }
+        ]
+      }
+    },
+    "uiSource": "0918c1453d214b454ec150fe6d6b5a8f34418bc6"
+  },
+  {
+    "label": "admin-clear",
+    "requestId": "44672.1480",
+    "params": {
+      "keyword": "",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "account": "admin",
+      "page": "1",
+      "pageSize": "10",
+      "response": "json",
+      "command": "listAffinityGroups"
+    },
+    "response": {
+      "listaffinitygroupsresponse": {
+        "count": 2,
+        "affinitygroup": [
+          {
+            "id": "8fcf1f7b-b366-4096-8708-97c902e17762",
+            "name": "qa-ag01-20261019-admin",
+            "description": "AG01 disposable admin",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity",
+            "virtualmachineIds": [
+              "3a173569-034b-40ba-b402-63c189f48ac2"
+            ]
+          },
+          {
+            "id": "19c27a5d-fa81-4599-bd42-29a3c154d07c",
+            "name": "qa-ag01-20261019-shared",
+            "description": "AG01 empty domain-wide group; no host dedication",
+            "account": "system",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "ExplicitDedication",
+            "virtualmachineIds": [
+              "3a173569-034b-40ba-b402-63c189f48ac2"
+            ]
+          }
+        ]
+      }
+    },
+    "uiSource": "0918c1453d214b454ec150fe6d6b5a8f34418bc6"
+  },
+  {
+    "label": "admin-clear",
+    "requestId": "44672.1482",
+    "params": {
+      "command": "updateVMAffinityGroup",
+      "response": "json",
+      "id": "3a173569-034b-40ba-b402-63c189f48ac2",
+      "affinitygroupids": ""
+    },
+    "response": {
+      "updatevirtualmachineresponse": {
+        "jobid": "633f0fae-7490-451b-9268-578b0ecf89de"
+      }
+    },
+    "uiSource": "0918c1453d214b454ec150fe6d6b5a8f34418bc6"
+  },
+  {
+    "label": "admin-clear",
+    "requestId": "44672.1483",
+    "params": {
+      "jobid": "633f0fae-7490-451b-9268-578b0ecf89de",
+      "command": "queryAsyncJobResult",
+      "response": "json"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.admin.affinitygroup.UpdateVMAffinityGroupCmdByAdmin",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "virtualmachine": {
+            "id": "3a173569-034b-40ba-b402-63c189f48ac2",
+            "name": "qa-ag01-20261019-admin",
+            "displayname": "qa-ag01-20261019-admin",
+            "account": "admin",
+            "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+            "username": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "created": "2026-10-19T01:23:49+0900",
+            "state": "Stopped",
+            "haenable": false,
+            "zoneid": "7013f5a1-de59-4cea-a596-f4f58815f31c",
+            "zonename": "Zone",
+            "volumemutationblockedreason": "",
+            "guestosid": "9708b6ac-b253-11f1-a895-0024814c313f",
+            "securitygroup": [],
+            "nic": [],
+            "hypervisor": "KVM",
+            "instancename": "i-2-647-VM",
+            "details": {
+              "deployvm": "true",
+              "tpmversion": "NONE",
+              "rootDiskController": "osdefault"
+            },
+            "clonefastsourcepowerallowed": false,
+            "clonefastpowerallowed": false,
+            "affinitygroup": [],
+            "displayvm": true,
+            "isdynamicallyscalable": true,
+            "deleteprotection": false,
+            "ostypeid": "9708b6ac-b253-11f1-a895-0024814c313f",
+            "osdisplayname": "Rocky Linux 9",
+            "receivedbytes": 0,
+            "sentbytes": 0,
+            "vbmcport": "None",
+            "kvdoenable": false,
+            "kvdoinuse": false,
+            "arch": "x86_64",
+            "vbmcstatus": "Unallocated",
+            "tags": [],
+            "hasannotations": false
+          }
+        },
+        "created": "2026-10-19T01:38:53+0900",
+        "completed": "2026-10-19T01:38:53+0900",
+        "jobid": "633f0fae-7490-451b-9268-578b0ecf89de",
+        "jobstatus": 1
+      }
+    },
+    "uiSource": "0918c1453d214b454ec150fe6d6b5a8f34418bc6"
+  },
+  {
+    "label": "permission-failure",
+    "requestId": "44672.1496",
+    "params": {
+      "listall": "true",
+      "command": "listAffinityGroups",
+      "response": "json"
+    },
+    "response": {
+      "listaffinitygroupsresponse": {
+        "count": 6,
+        "affinitygroup": [
+          {
+            "id": "ac508d0e-c80b-4c66-9bd0-8cbb896ca7e0",
+            "name": "rt1230-r17-ha-control-spread",
+            "description": "Cloud #1230 isolated r17 HA controls across three hosts",
+            "account": "k1230-20261006",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "966bf870-a046-4c76-bfce-7c78f62c0ecb",
+            "name": "rt1230-r18-control-spread",
+            "description": "Cloud #1230 isolated r18 control across hosts",
+            "account": "k1230-20261006",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "42f65110-108a-4831-8403-14500cc7f5fa",
+            "name": "rt1230-r18-etcd-spread",
+            "description": "Cloud #1230 isolated r18 etcd across hosts",
+            "account": "k1230-20261006",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "8fcf1f7b-b366-4096-8708-97c902e17762",
+            "name": "qa-ag01-20261019-admin",
+            "description": "AG01 disposable admin",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "4c73af99-934b-472d-97eb-e80d10556c70",
+            "name": "qa-ag01-20261019-user",
+            "description": "AG01 disposable user",
+            "account": "qa-ag01-1019",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "19c27a5d-fa81-4599-bd42-29a3c154d07c",
+            "name": "qa-ag01-20261019-shared",
+            "description": "AG01 empty domain-wide group; no host dedication",
+            "account": "system",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "ExplicitDedication"
+          }
+        ]
+      }
+    },
+    "uiSource": "0918c1453d214b454ec150fe6d6b5a8f34418bc6"
+  },
+  {
+    "label": "permission-failure",
+    "requestId": "44672.1497",
+    "params": {
+      "keyword": "",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "account": "admin",
+      "page": "1",
+      "pageSize": "10",
+      "response": "json",
+      "command": "listAffinityGroups"
+    },
+    "response": {
+      "listaffinitygroupsresponse": {
+        "count": 2,
+        "affinitygroup": [
+          {
+            "id": "8fcf1f7b-b366-4096-8708-97c902e17762",
+            "name": "qa-ag01-20261019-admin",
+            "description": "AG01 disposable admin",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "19c27a5d-fa81-4599-bd42-29a3c154d07c",
+            "name": "qa-ag01-20261019-shared",
+            "description": "AG01 empty domain-wide group; no host dedication",
+            "account": "system",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "ExplicitDedication"
+          }
+        ]
+      }
+    },
+    "uiSource": "0918c1453d214b454ec150fe6d6b5a8f34418bc6"
+  },
+  {
+    "label": "permission-failure",
+    "requestId": "44672.1501",
+    "params": {
+      "id": "8fcf1f7b-b366-4096-8708-97c902e17762",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "account": "admin",
+      "command": "listAffinityGroups",
+      "response": "json"
+    },
+    "response": {
+      "listaffinitygroupsresponse": {
+        "count": 1,
+        "affinitygroup": [
+          {
+            "id": "8fcf1f7b-b366-4096-8708-97c902e17762",
+            "name": "qa-ag01-20261019-admin",
+            "description": "AG01 disposable admin",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          }
+        ]
+      }
+    },
+    "uiSource": "0918c1453d214b454ec150fe6d6b5a8f34418bc6"
+  },
+  {
+    "label": "permission-failure",
+    "requestId": "44672.1502",
+    "params": {
+      "command": "updateVMAffinityGroup",
+      "response": "json",
+      "id": "3a173569-034b-40ba-b402-63c189f48ac2",
+      "affinitygroupids": "8fcf1f7b-b366-4096-8708-97c902e17762"
+    },
+    "response": {
+      "updatevirtualmachineresponse": {
+        "jobid": "162d76ef-c210-4d05-b9a4-c55b05a03501"
+      }
+    },
+    "uiSource": "0918c1453d214b454ec150fe6d6b5a8f34418bc6"
+  },
+  {
+    "label": "permission-failure",
+    "requestId": "44672.1503",
+    "params": {
+      "jobid": "162d76ef-c210-4d05-b9a4-c55b05a03501",
+      "command": "queryAsyncJobResult",
+      "response": "json"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.admin.affinitygroup.UpdateVMAffinityGroupCmdByAdmin",
+        "jobprocstatus": 0,
+        "jobresultcode": 530,
+        "jobresulttype": "object",
+        "jobresult": {
+          "errorcode": 530,
+          "errortext": "Entity AffinityGroup {\"id\":30,\"name\":\"qa-ag01-20261019-user\",\"uuid\":\"4c73af99-934b-472d-97eb-e80d10556c70\"} and entity Account [{\"accountName\":\"admin\",\"id\":2,\"uuid\":\"a75c97c6-b253-11f1-a895-0024814c313f\"}] belong to different accounts"
+        },
+        "created": "2026-10-19T01:39:11+0900",
+        "completed": "2026-10-19T01:39:11+0900",
+        "jobid": "162d76ef-c210-4d05-b9a4-c55b05a03501",
+        "jobstatus": 2
+      }
+    },
+    "uiSource": "0918c1453d214b454ec150fe6d6b5a8f34418bc6"
+  },
+  {
+    "label": "failure-manual-retry",
+    "requestId": "44672.1509",
+    "params": {
+      "id": "8fcf1f7b-b366-4096-8708-97c902e17762",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "account": "admin",
+      "command": "listAffinityGroups",
+      "response": "json"
+    },
+    "response": {
+      "listaffinitygroupsresponse": {
+        "count": 1,
+        "affinitygroup": [
+          {
+            "id": "8fcf1f7b-b366-4096-8708-97c902e17762",
+            "name": "qa-ag01-20261019-admin",
+            "description": "AG01 disposable admin",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          }
+        ]
+      }
+    },
+    "uiSource": "0918c1453d214b454ec150fe6d6b5a8f34418bc6"
+  },
+  {
+    "label": "failure-manual-retry",
+    "requestId": "44672.1510",
+    "params": {
+      "command": "updateVMAffinityGroup",
+      "response": "json",
+      "id": "3a173569-034b-40ba-b402-63c189f48ac2",
+      "affinitygroupids": "8fcf1f7b-b366-4096-8708-97c902e17762"
+    },
+    "response": {
+      "updatevirtualmachineresponse": {
+        "jobid": "929a2c0a-17a7-4197-a32f-5daa550e8c55"
+      }
+    },
+    "uiSource": "0918c1453d214b454ec150fe6d6b5a8f34418bc6"
+  },
+  {
+    "label": "failure-manual-retry",
+    "requestId": "44672.1511",
+    "params": {
+      "jobid": "929a2c0a-17a7-4197-a32f-5daa550e8c55",
+      "command": "queryAsyncJobResult",
+      "response": "json"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.admin.affinitygroup.UpdateVMAffinityGroupCmdByAdmin",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "virtualmachine": {
+            "id": "3a173569-034b-40ba-b402-63c189f48ac2",
+            "name": "qa-ag01-20261019-admin",
+            "displayname": "qa-ag01-20261019-admin",
+            "account": "admin",
+            "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+            "username": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "created": "2026-10-19T01:23:49+0900",
+            "state": "Stopped",
+            "haenable": false,
+            "zoneid": "7013f5a1-de59-4cea-a596-f4f58815f31c",
+            "zonename": "Zone",
+            "volumemutationblockedreason": "",
+            "guestosid": "9708b6ac-b253-11f1-a895-0024814c313f",
+            "securitygroup": [],
+            "nic": [],
+            "hypervisor": "KVM",
+            "instancename": "i-2-647-VM",
+            "details": {
+              "deployvm": "true",
+              "tpmversion": "NONE",
+              "rootDiskController": "osdefault"
+            },
+            "clonefastsourcepowerallowed": false,
+            "clonefastpowerallowed": false,
+            "affinitygroup": [
+              {
+                "id": "8fcf1f7b-b366-4096-8708-97c902e17762",
+                "name": "qa-ag01-20261019-admin",
+                "description": "AG01 disposable admin",
+                "account": "admin"
+              }
+            ],
+            "displayvm": true,
+            "isdynamicallyscalable": true,
+            "deleteprotection": false,
+            "ostypeid": "9708b6ac-b253-11f1-a895-0024814c313f",
+            "osdisplayname": "Rocky Linux 9",
+            "receivedbytes": 0,
+            "sentbytes": 0,
+            "vbmcport": "None",
+            "kvdoenable": false,
+            "kvdoinuse": false,
+            "arch": "x86_64",
+            "vbmcstatus": "Unallocated",
+            "tags": [],
+            "hasannotations": false
+          }
+        },
+        "created": "2026-10-19T01:39:25+0900",
+        "completed": "2026-10-19T01:39:25+0900",
+        "jobid": "929a2c0a-17a7-4197-a32f-5daa550e8c55",
+        "jobstatus": 1
+      }
+    },
+    "uiSource": "0918c1453d214b454ec150fe6d6b5a8f34418bc6"
+  },
+  {
+    "label": "retry-clear",
+    "requestId": "44672.1521",
+    "params": {
+      "listall": "true",
+      "command": "listAffinityGroups",
+      "response": "json"
+    },
+    "response": {
+      "listaffinitygroupsresponse": {
+        "count": 6,
+        "affinitygroup": [
+          {
+            "id": "ac508d0e-c80b-4c66-9bd0-8cbb896ca7e0",
+            "name": "rt1230-r17-ha-control-spread",
+            "description": "Cloud #1230 isolated r17 HA controls across three hosts",
+            "account": "k1230-20261006",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "966bf870-a046-4c76-bfce-7c78f62c0ecb",
+            "name": "rt1230-r18-control-spread",
+            "description": "Cloud #1230 isolated r18 control across hosts",
+            "account": "k1230-20261006",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "42f65110-108a-4831-8403-14500cc7f5fa",
+            "name": "rt1230-r18-etcd-spread",
+            "description": "Cloud #1230 isolated r18 etcd across hosts",
+            "account": "k1230-20261006",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "8fcf1f7b-b366-4096-8708-97c902e17762",
+            "name": "qa-ag01-20261019-admin",
+            "description": "AG01 disposable admin",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity",
+            "virtualmachineIds": [
+              "3a173569-034b-40ba-b402-63c189f48ac2"
+            ]
+          },
+          {
+            "id": "4c73af99-934b-472d-97eb-e80d10556c70",
+            "name": "qa-ag01-20261019-user",
+            "description": "AG01 disposable user",
+            "account": "qa-ag01-1019",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "19c27a5d-fa81-4599-bd42-29a3c154d07c",
+            "name": "qa-ag01-20261019-shared",
+            "description": "AG01 empty domain-wide group; no host dedication",
+            "account": "system",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "ExplicitDedication"
+          }
+        ]
+      }
+    },
+    "uiSource": "0918c1453d214b454ec150fe6d6b5a8f34418bc6"
+  },
+  {
+    "label": "retry-clear",
+    "requestId": "44672.1522",
+    "params": {
+      "keyword": "",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "account": "admin",
+      "page": "1",
+      "pageSize": "10",
+      "response": "json",
+      "command": "listAffinityGroups"
+    },
+    "response": {
+      "listaffinitygroupsresponse": {
+        "count": 2,
+        "affinitygroup": [
+          {
+            "id": "8fcf1f7b-b366-4096-8708-97c902e17762",
+            "name": "qa-ag01-20261019-admin",
+            "description": "AG01 disposable admin",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity",
+            "virtualmachineIds": [
+              "3a173569-034b-40ba-b402-63c189f48ac2"
+            ]
+          },
+          {
+            "id": "19c27a5d-fa81-4599-bd42-29a3c154d07c",
+            "name": "qa-ag01-20261019-shared",
+            "description": "AG01 empty domain-wide group; no host dedication",
+            "account": "system",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "ExplicitDedication"
+          }
+        ]
+      }
+    },
+    "uiSource": "0918c1453d214b454ec150fe6d6b5a8f34418bc6"
+  },
+  {
+    "label": "retry-clear",
+    "requestId": "44672.1525",
+    "params": {
+      "command": "updateVMAffinityGroup",
+      "response": "json",
+      "id": "3a173569-034b-40ba-b402-63c189f48ac2",
+      "affinitygroupids": ""
+    },
+    "response": {
+      "updatevirtualmachineresponse": {
+        "jobid": "964ba60f-a5d2-4c02-8467-72c8d22275d7"
+      }
+    },
+    "uiSource": "0918c1453d214b454ec150fe6d6b5a8f34418bc6"
+  },
+  {
+    "label": "retry-clear",
+    "requestId": "44672.1526",
+    "params": {
+      "jobid": "964ba60f-a5d2-4c02-8467-72c8d22275d7",
+      "command": "queryAsyncJobResult",
+      "response": "json"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.admin.affinitygroup.UpdateVMAffinityGroupCmdByAdmin",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "virtualmachine": {
+            "id": "3a173569-034b-40ba-b402-63c189f48ac2",
+            "name": "qa-ag01-20261019-admin",
+            "displayname": "qa-ag01-20261019-admin",
+            "account": "admin",
+            "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+            "username": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "created": "2026-10-19T01:23:49+0900",
+            "state": "Stopped",
+            "haenable": false,
+            "zoneid": "7013f5a1-de59-4cea-a596-f4f58815f31c",
+            "zonename": "Zone",
+            "volumemutationblockedreason": "",
+            "guestosid": "9708b6ac-b253-11f1-a895-0024814c313f",
+            "securitygroup": [],
+            "nic": [],
+            "hypervisor": "KVM",
+            "instancename": "i-2-647-VM",
+            "details": {
+              "deployvm": "true",
+              "tpmversion": "NONE",
+              "rootDiskController": "osdefault"
+            },
+            "clonefastsourcepowerallowed": false,
+            "clonefastpowerallowed": false,
+            "affinitygroup": [],
+            "displayvm": true,
+            "isdynamicallyscalable": true,
+            "deleteprotection": false,
+            "ostypeid": "9708b6ac-b253-11f1-a895-0024814c313f",
+            "osdisplayname": "Rocky Linux 9",
+            "receivedbytes": 0,
+            "sentbytes": 0,
+            "vbmcport": "None",
+            "kvdoenable": false,
+            "kvdoinuse": false,
+            "arch": "x86_64",
+            "vbmcstatus": "Unallocated",
+            "tags": [],
+            "hasannotations": false
+          }
+        },
+        "created": "2026-10-19T01:39:31+0900",
+        "completed": "2026-10-19T01:39:31+0900",
+        "jobid": "964ba60f-a5d2-4c02-8467-72c8d22275d7",
+        "jobstatus": 1
+      }
+    },
+    "uiSource": "0918c1453d214b454ec150fe6d6b5a8f34418bc6"
+  },
+  {
+    "label": "project-attach",
+    "requestId": "44672.1553",
+    "params": {
+      "listall": "true",
+      "command": "listAffinityGroups",
+      "response": "json"
+    },
+    "response": {
+      "listaffinitygroupsresponse": {
+        "count": 6,
+        "affinitygroup": [
+          {
+            "id": "ac508d0e-c80b-4c66-9bd0-8cbb896ca7e0",
+            "name": "rt1230-r17-ha-control-spread",
+            "description": "Cloud #1230 isolated r17 HA controls across three hosts",
+            "account": "k1230-20261006",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "966bf870-a046-4c76-bfce-7c78f62c0ecb",
+            "name": "rt1230-r18-control-spread",
+            "description": "Cloud #1230 isolated r18 control across hosts",
+            "account": "k1230-20261006",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "42f65110-108a-4831-8403-14500cc7f5fa",
+            "name": "rt1230-r18-etcd-spread",
+            "description": "Cloud #1230 isolated r18 etcd across hosts",
+            "account": "k1230-20261006",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "8fcf1f7b-b366-4096-8708-97c902e17762",
+            "name": "qa-ag01-20261019-admin",
+            "description": "AG01 disposable admin",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "4c73af99-934b-472d-97eb-e80d10556c70",
+            "name": "qa-ag01-20261019-user",
+            "description": "AG01 disposable user",
+            "account": "qa-ag01-1019",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "19c27a5d-fa81-4599-bd42-29a3c154d07c",
+            "name": "qa-ag01-20261019-shared",
+            "description": "AG01 empty domain-wide group; no host dedication",
+            "account": "system",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "ExplicitDedication"
+          }
+        ]
+      }
+    },
+    "uiSource": "0918c1453d214b454ec150fe6d6b5a8f34418bc6"
+  },
+  {
+    "label": "project-attach",
+    "requestId": "44672.1554",
+    "params": {
+      "keyword": "",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "projectid": "f6e37ad7-95e7-4216-8420-f99270ca9987",
+      "page": "1",
+      "pageSize": "10",
+      "response": "json",
+      "command": "listAffinityGroups"
+    },
+    "response": {
+      "listaffinitygroupsresponse": {
+        "count": 2,
+        "affinitygroup": [
+          {
+            "id": "4bcb0048-38f6-46e4-b79c-61e4833d84ad",
+            "name": "qa-ag01-20261019-project",
+            "description": "AG01 disposable project",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "projectid": "f6e37ad7-95e7-4216-8420-f99270ca9987",
+            "project": "qa-ag01-20261019-project",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "19c27a5d-fa81-4599-bd42-29a3c154d07c",
+            "name": "qa-ag01-20261019-shared",
+            "description": "AG01 empty domain-wide group; no host dedication",
+            "account": "system",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "ExplicitDedication"
+          }
+        ]
+      }
+    },
+    "uiSource": "0918c1453d214b454ec150fe6d6b5a8f34418bc6"
+  },
+  {
+    "label": "project-attach",
+    "requestId": "44672.1557",
+    "params": {
+      "id": "4bcb0048-38f6-46e4-b79c-61e4833d84ad",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "projectid": "f6e37ad7-95e7-4216-8420-f99270ca9987",
+      "command": "listAffinityGroups",
+      "response": "json"
+    },
+    "response": {
+      "listaffinitygroupsresponse": {
+        "count": 1,
+        "affinitygroup": [
+          {
+            "id": "4bcb0048-38f6-46e4-b79c-61e4833d84ad",
+            "name": "qa-ag01-20261019-project",
+            "description": "AG01 disposable project",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "projectid": "f6e37ad7-95e7-4216-8420-f99270ca9987",
+            "project": "qa-ag01-20261019-project",
+            "type": "host anti-affinity"
+          }
+        ]
+      }
+    },
+    "uiSource": "0918c1453d214b454ec150fe6d6b5a8f34418bc6"
+  },
+  {
+    "label": "project-attach",
+    "requestId": "44672.1558",
+    "params": {
+      "id": "19c27a5d-fa81-4599-bd42-29a3c154d07c",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "projectid": "f6e37ad7-95e7-4216-8420-f99270ca9987",
+      "command": "listAffinityGroups",
+      "response": "json"
+    },
+    "response": {
+      "listaffinitygroupsresponse": {
+        "count": 1,
+        "affinitygroup": [
+          {
+            "id": "19c27a5d-fa81-4599-bd42-29a3c154d07c",
+            "name": "qa-ag01-20261019-shared",
+            "description": "AG01 empty domain-wide group; no host dedication",
+            "account": "system",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "ExplicitDedication"
+          }
+        ]
+      }
+    },
+    "uiSource": "0918c1453d214b454ec150fe6d6b5a8f34418bc6"
+  },
+  {
+    "label": "project-attach",
+    "requestId": "44672.1559",
+    "params": {
+      "command": "updateVMAffinityGroup",
+      "response": "json",
+      "id": "cbc05477-a671-4ae2-ae1b-c2d8bd60dcd9",
+      "affinitygroupids": "4bcb0048-38f6-46e4-b79c-61e4833d84ad,19c27a5d-fa81-4599-bd42-29a3c154d07c"
+    },
+    "response": {
+      "updatevirtualmachineresponse": {
+        "jobid": "fdaeeb94-649c-4f3f-8714-c989a897819b"
+      }
+    },
+    "uiSource": "0918c1453d214b454ec150fe6d6b5a8f34418bc6"
+  },
+  {
+    "label": "project-attach",
+    "requestId": "44672.1560",
+    "params": {
+      "jobid": "fdaeeb94-649c-4f3f-8714-c989a897819b",
+      "command": "queryAsyncJobResult",
+      "response": "json"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.admin.affinitygroup.UpdateVMAffinityGroupCmdByAdmin",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "virtualmachine": {
+            "id": "cbc05477-a671-4ae2-ae1b-c2d8bd60dcd9",
+            "name": "qa-ag01-20261019-project",
+            "displayname": "qa-ag01-20261019-project",
+            "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+            "username": "admin",
+            "projectid": "f6e37ad7-95e7-4216-8420-f99270ca9987",
+            "project": "qa-ag01-20261019-project",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "created": "2026-10-19T01:23:52+0900",
+            "state": "Stopped",
+            "haenable": false,
+            "zoneid": "7013f5a1-de59-4cea-a596-f4f58815f31c",
+            "zonename": "Zone",
+            "volumemutationblockedreason": "",
+            "guestosid": "9708b6ac-b253-11f1-a895-0024814c313f",
+            "securitygroup": [],
+            "nic": [
+              {
+                "id": "851bdcfb-f169-4a1f-b05c-27053fc276fd",
+                "networkid": "08e5248d-b5bf-4c2e-8e94-2dce46441117",
+                "networkname": "qa-ag01-20261019-project-L2",
+                "isolationuri": "vlan://3149",
+                "broadcasturi": "vlan://3149",
+                "traffictype": "Guest",
+                "type": "L2",
+                "isdefault": true,
+                "macaddress": "02:1f:01:48:00:01",
+                "secondaryip": [],
+                "extradhcpoption": [],
+                "deviceid": "0",
+                "enabled": true
+              }
+            ],
+            "hypervisor": "KVM",
+            "instancename": "i-190-649-VM",
+            "details": {
+              "deployvm": "true",
+              "tpmversion": "NONE",
+              "rootDiskController": "osdefault"
+            },
+            "clonefastsourcepowerallowed": false,
+            "clonefastpowerallowed": false,
+            "affinitygroup": [
+              {
+                "id": "4bcb0048-38f6-46e4-b79c-61e4833d84ad",
+                "name": "qa-ag01-20261019-project",
+                "description": "AG01 disposable project",
+                "account": "PrjAcct-qa-ag01-20261019-project-1"
+              },
+              {
+                "id": "19c27a5d-fa81-4599-bd42-29a3c154d07c",
+                "name": "qa-ag01-20261019-shared",
+                "description": "AG01 empty domain-wide group; no host dedication",
+                "account": "PrjAcct-qa-ag01-20261019-project-1"
+              }
+            ],
+            "displayvm": true,
+            "isdynamicallyscalable": true,
+            "deleteprotection": false,
+            "ostypeid": "9708b6ac-b253-11f1-a895-0024814c313f",
+            "osdisplayname": "Rocky Linux 9",
+            "receivedbytes": 0,
+            "sentbytes": 0,
+            "vbmcport": "None",
+            "kvdoenable": false,
+            "kvdoinuse": false,
+            "arch": "x86_64",
+            "vbmcstatus": "Unallocated",
+            "tags": [],
+            "hasannotations": false
+          }
+        },
+        "created": "2026-10-19T01:39:41+0900",
+        "completed": "2026-10-19T01:39:41+0900",
+        "jobid": "fdaeeb94-649c-4f3f-8714-c989a897819b",
+        "jobstatus": 1
+      }
+    },
+    "uiSource": "0918c1453d214b454ec150fe6d6b5a8f34418bc6"
+  },
+  {
+    "label": "project-clear",
+    "requestId": "44672.1573",
+    "params": {
+      "listall": "true",
+      "command": "listAffinityGroups",
+      "response": "json"
+    },
+    "response": {
+      "listaffinitygroupsresponse": {
+        "count": 6,
+        "affinitygroup": [
+          {
+            "id": "ac508d0e-c80b-4c66-9bd0-8cbb896ca7e0",
+            "name": "rt1230-r17-ha-control-spread",
+            "description": "Cloud #1230 isolated r17 HA controls across three hosts",
+            "account": "k1230-20261006",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "966bf870-a046-4c76-bfce-7c78f62c0ecb",
+            "name": "rt1230-r18-control-spread",
+            "description": "Cloud #1230 isolated r18 control across hosts",
+            "account": "k1230-20261006",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "42f65110-108a-4831-8403-14500cc7f5fa",
+            "name": "rt1230-r18-etcd-spread",
+            "description": "Cloud #1230 isolated r18 etcd across hosts",
+            "account": "k1230-20261006",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "8fcf1f7b-b366-4096-8708-97c902e17762",
+            "name": "qa-ag01-20261019-admin",
+            "description": "AG01 disposable admin",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "4c73af99-934b-472d-97eb-e80d10556c70",
+            "name": "qa-ag01-20261019-user",
+            "description": "AG01 disposable user",
+            "account": "qa-ag01-1019",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "19c27a5d-fa81-4599-bd42-29a3c154d07c",
+            "name": "qa-ag01-20261019-shared",
+            "description": "AG01 empty domain-wide group; no host dedication",
+            "account": "system",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "ExplicitDedication",
+            "virtualmachineIds": [
+              "cbc05477-a671-4ae2-ae1b-c2d8bd60dcd9"
+            ]
+          }
+        ]
+      }
+    },
+    "uiSource": "0918c1453d214b454ec150fe6d6b5a8f34418bc6"
+  },
+  {
+    "label": "project-clear",
+    "requestId": "44672.1574",
+    "params": {
+      "keyword": "",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "projectid": "f6e37ad7-95e7-4216-8420-f99270ca9987",
+      "page": "1",
+      "pageSize": "10",
+      "response": "json",
+      "command": "listAffinityGroups"
+    },
+    "response": {
+      "listaffinitygroupsresponse": {
+        "count": 2,
+        "affinitygroup": [
+          {
+            "id": "4bcb0048-38f6-46e4-b79c-61e4833d84ad",
+            "name": "qa-ag01-20261019-project",
+            "description": "AG01 disposable project",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "projectid": "f6e37ad7-95e7-4216-8420-f99270ca9987",
+            "project": "qa-ag01-20261019-project",
+            "type": "host anti-affinity",
+            "virtualmachineIds": [
+              "cbc05477-a671-4ae2-ae1b-c2d8bd60dcd9"
+            ]
+          },
+          {
+            "id": "19c27a5d-fa81-4599-bd42-29a3c154d07c",
+            "name": "qa-ag01-20261019-shared",
+            "description": "AG01 empty domain-wide group; no host dedication",
+            "account": "system",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "ExplicitDedication",
+            "virtualmachineIds": [
+              "cbc05477-a671-4ae2-ae1b-c2d8bd60dcd9"
+            ]
+          }
+        ]
+      }
+    },
+    "uiSource": "0918c1453d214b454ec150fe6d6b5a8f34418bc6"
+  },
+  {
+    "label": "project-clear",
+    "requestId": "44672.1576",
+    "params": {
+      "command": "updateVMAffinityGroup",
+      "response": "json",
+      "id": "cbc05477-a671-4ae2-ae1b-c2d8bd60dcd9",
+      "affinitygroupids": ""
+    },
+    "response": {
+      "updatevirtualmachineresponse": {
+        "jobid": "6e2a1e2d-ca2c-4519-b8e9-1878fa09db47"
+      }
+    },
+    "uiSource": "0918c1453d214b454ec150fe6d6b5a8f34418bc6"
+  },
+  {
+    "label": "project-clear",
+    "requestId": "44672.1577",
+    "params": {
+      "jobid": "6e2a1e2d-ca2c-4519-b8e9-1878fa09db47",
+      "command": "queryAsyncJobResult",
+      "response": "json"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.admin.affinitygroup.UpdateVMAffinityGroupCmdByAdmin",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "virtualmachine": {
+            "id": "cbc05477-a671-4ae2-ae1b-c2d8bd60dcd9",
+            "name": "qa-ag01-20261019-project",
+            "displayname": "qa-ag01-20261019-project",
+            "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+            "username": "admin",
+            "projectid": "f6e37ad7-95e7-4216-8420-f99270ca9987",
+            "project": "qa-ag01-20261019-project",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "created": "2026-10-19T01:23:52+0900",
+            "state": "Stopped",
+            "haenable": false,
+            "zoneid": "7013f5a1-de59-4cea-a596-f4f58815f31c",
+            "zonename": "Zone",
+            "volumemutationblockedreason": "",
+            "guestosid": "9708b6ac-b253-11f1-a895-0024814c313f",
+            "securitygroup": [],
+            "nic": [],
+            "hypervisor": "KVM",
+            "instancename": "i-190-649-VM",
+            "details": {
+              "deployvm": "true",
+              "tpmversion": "NONE",
+              "rootDiskController": "osdefault"
+            },
+            "clonefastsourcepowerallowed": false,
+            "clonefastpowerallowed": false,
+            "affinitygroup": [],
+            "displayvm": true,
+            "isdynamicallyscalable": true,
+            "deleteprotection": false,
+            "ostypeid": "9708b6ac-b253-11f1-a895-0024814c313f",
+            "osdisplayname": "Rocky Linux 9",
+            "receivedbytes": 0,
+            "sentbytes": 0,
+            "vbmcport": "None",
+            "kvdoenable": false,
+            "kvdoinuse": false,
+            "arch": "x86_64",
+            "vbmcstatus": "Unallocated",
+            "tags": [],
+            "hasannotations": false
+          }
+        },
+        "created": "2026-10-19T01:39:55+0900",
+        "completed": "2026-10-19T01:39:55+0900",
+        "jobid": "6e2a1e2d-ca2c-4519-b8e9-1878fa09db47",
+        "jobstatus": 1
+      }
+    },
+    "uiSource": "0918c1453d214b454ec150fe6d6b5a8f34418bc6"
+  },
+  {
+    "label": "user-attach",
+    "requestId": "44672.1651",
+    "params": {
+      "listall": "true",
+      "command": "listAffinityGroups",
+      "response": "json"
+    },
+    "response": {
+      "listaffinitygroupsresponse": {
+        "count": 2,
+        "affinitygroup": [
+          {
+            "id": "4c73af99-934b-472d-97eb-e80d10556c70",
+            "name": "qa-ag01-20261019-user",
+            "description": "AG01 disposable user",
+            "account": "qa-ag01-1019",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "19c27a5d-fa81-4599-bd42-29a3c154d07c",
+            "name": "qa-ag01-20261019-shared",
+            "description": "AG01 empty domain-wide group; no host dedication",
+            "account": "system",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "ExplicitDedication"
+          }
+        ]
+      }
+    },
+    "uiSource": "0918c1453d214b454ec150fe6d6b5a8f34418bc6"
+  },
+  {
+    "label": "user-attach",
+    "requestId": "44672.1652",
+    "params": {
+      "keyword": "",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "account": "qa-ag01-1019",
+      "page": "1",
+      "pageSize": "10",
+      "response": "json",
+      "command": "listAffinityGroups"
+    },
+    "response": {
+      "listaffinitygroupsresponse": {
+        "count": 2,
+        "affinitygroup": [
+          {
+            "id": "4c73af99-934b-472d-97eb-e80d10556c70",
+            "name": "qa-ag01-20261019-user",
+            "description": "AG01 disposable user",
+            "account": "qa-ag01-1019",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "19c27a5d-fa81-4599-bd42-29a3c154d07c",
+            "name": "qa-ag01-20261019-shared",
+            "description": "AG01 empty domain-wide group; no host dedication",
+            "account": "system",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "ExplicitDedication"
+          }
+        ]
+      }
+    },
+    "uiSource": "0918c1453d214b454ec150fe6d6b5a8f34418bc6"
+  },
+  {
+    "label": "user-attach",
+    "requestId": "44672.1654",
+    "params": {
+      "id": "4c73af99-934b-472d-97eb-e80d10556c70",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "account": "qa-ag01-1019",
+      "command": "listAffinityGroups",
+      "response": "json"
+    },
+    "response": {
+      "listaffinitygroupsresponse": {
+        "count": 1,
+        "affinitygroup": [
+          {
+            "id": "4c73af99-934b-472d-97eb-e80d10556c70",
+            "name": "qa-ag01-20261019-user",
+            "description": "AG01 disposable user",
+            "account": "qa-ag01-1019",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          }
+        ]
+      }
+    },
+    "uiSource": "0918c1453d214b454ec150fe6d6b5a8f34418bc6"
+  },
+  {
+    "label": "user-attach",
+    "requestId": "44672.1655",
+    "params": {
+      "id": "19c27a5d-fa81-4599-bd42-29a3c154d07c",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "account": "qa-ag01-1019",
+      "command": "listAffinityGroups",
+      "response": "json"
+    },
+    "response": {
+      "listaffinitygroupsresponse": {
+        "count": 1,
+        "affinitygroup": [
+          {
+            "id": "19c27a5d-fa81-4599-bd42-29a3c154d07c",
+            "name": "qa-ag01-20261019-shared",
+            "description": "AG01 empty domain-wide group; no host dedication",
+            "account": "system",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "ExplicitDedication"
+          }
+        ]
+      }
+    },
+    "uiSource": "0918c1453d214b454ec150fe6d6b5a8f34418bc6"
+  },
+  {
+    "label": "user-attach",
+    "requestId": "44672.1656",
+    "params": {
+      "command": "updateVMAffinityGroup",
+      "response": "json",
+      "id": "2c861d94-08ff-4811-81c0-fb6f705d565b",
+      "affinitygroupids": "4c73af99-934b-472d-97eb-e80d10556c70,19c27a5d-fa81-4599-bd42-29a3c154d07c"
+    },
+    "response": {
+      "updatevirtualmachineresponse": {
+        "jobid": "dba9df10-3fdc-4686-a57f-3a9ded1a40df"
+      }
+    },
+    "uiSource": "0918c1453d214b454ec150fe6d6b5a8f34418bc6"
+  },
+  {
+    "label": "user-attach",
+    "requestId": "44672.1657",
+    "params": {
+      "jobid": "dba9df10-3fdc-4686-a57f-3a9ded1a40df",
+      "command": "queryAsyncJobResult",
+      "response": "json"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "334c1abc-6048-4331-95b5-358e4974898f",
+        "account": "qa-ag01-1019",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "bf41bee4-985e-4075-9d86-85bc1fc11d9e",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.UpdateVMAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "managementserverid": "716fb21e-86f3-4f8c-b34d-11c8d0220230",
+        "managementservername": "ccvm-mngt",
+        "created": "2026-10-19T01:40:32+0900",
+        "jobid": "dba9df10-3fdc-4686-a57f-3a9ded1a40df",
+        "jobstatus": 0
+      }
+    },
+    "uiSource": "0918c1453d214b454ec150fe6d6b5a8f34418bc6"
+  },
+  {
+    "label": "user-attach-final",
+    "requestId": "44672.1658",
+    "params": {
+      "jobid": "dba9df10-3fdc-4686-a57f-3a9ded1a40df",
+      "command": "queryAsyncJobResult",
+      "response": "json"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "334c1abc-6048-4331-95b5-358e4974898f",
+        "account": "qa-ag01-1019",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "bf41bee4-985e-4075-9d86-85bc1fc11d9e",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.UpdateVMAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "virtualmachine": {
+            "id": "2c861d94-08ff-4811-81c0-fb6f705d565b",
+            "name": "qa-ag01-20261019-user",
+            "displayname": "qa-ag01-20261019-user",
+            "account": "qa-ag01-1019",
+            "userid": "bf41bee4-985e-4075-9d86-85bc1fc11d9e",
+            "username": "qa-ag01-1019",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "created": "2026-10-19T01:23:50+0900",
+            "state": "Stopped",
+            "haenable": false,
+            "zoneid": "7013f5a1-de59-4cea-a596-f4f58815f31c",
+            "zonename": "Zone",
+            "volumemutationblockedreason": "",
+            "guestosid": "9708b6ac-b253-11f1-a895-0024814c313f",
+            "securitygroup": [],
+            "nic": [
+              {
+                "id": "8551b319-86a2-4591-9a56-15a4925ff1df",
+                "networkid": "6c9b8d97-2586-4532-ad0a-ddf6a788779f",
+                "networkname": "qa-ag01-20261019-user-L2",
+                "isolationuri": "vlan://3148",
+                "broadcasturi": "vlan://3148",
+                "traffictype": "Guest",
+                "type": "L2",
+                "isdefault": true,
+                "macaddress": "02:1f:01:47:00:01",
+                "secondaryip": [],
+                "extradhcpoption": [],
+                "deviceid": "0",
+                "enabled": true
+              }
+            ],
+            "hypervisor": "KVM",
+            "details": {
+              "deployvm": "true",
+              "tpmversion": "NONE",
+              "rootDiskController": "osdefault"
+            },
+            "clonefastsourcepowerallowed": false,
+            "clonefastpowerallowed": false,
+            "readonlydetails": "dataDiskController, rootDiskController, backupValidationCommandTimeout, backupValidationScreenshotWait, backupValidationBootTimeout",
+            "affinitygroup": [
+              {
+                "id": "4c73af99-934b-472d-97eb-e80d10556c70",
+                "name": "qa-ag01-20261019-user",
+                "description": "AG01 disposable user",
+                "account": "qa-ag01-1019"
+              },
+              {
+                "id": "19c27a5d-fa81-4599-bd42-29a3c154d07c",
+                "name": "qa-ag01-20261019-shared",
+                "description": "AG01 empty domain-wide group; no host dedication",
+                "account": "qa-ag01-1019"
+              }
+            ],
+            "isdynamicallyscalable": true,
+            "deleteprotection": false,
+            "ostypeid": "9708b6ac-b253-11f1-a895-0024814c313f",
+            "osdisplayname": "Rocky Linux 9",
+            "receivedbytes": 0,
+            "sentbytes": 0,
+            "vbmcport": "None",
+            "kvdoenable": false,
+            "kvdoinuse": false,
+            "vbmcstatus": "Unallocated",
+            "tags": [],
+            "hasannotations": false
+          }
+        },
+        "created": "2026-10-19T01:40:32+0900",
+        "completed": "2026-10-19T01:40:32+0900",
+        "jobid": "dba9df10-3fdc-4686-a57f-3a9ded1a40df",
+        "jobstatus": 1
+      }
+    },
+    "uiSource": "0918c1453d214b454ec150fe6d6b5a8f34418bc6"
+  },
+  {
+    "label": "user-clear",
+    "requestId": "44672.1668",
+    "params": {
+      "listall": "true",
+      "command": "listAffinityGroups",
+      "response": "json"
+    },
+    "response": {
+      "listaffinitygroupsresponse": {
+        "count": 2,
+        "affinitygroup": [
+          {
+            "id": "4c73af99-934b-472d-97eb-e80d10556c70",
+            "name": "qa-ag01-20261019-user",
+            "description": "AG01 disposable user",
+            "account": "qa-ag01-1019",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity",
+            "virtualmachineIds": [
+              "2c861d94-08ff-4811-81c0-fb6f705d565b"
+            ]
+          },
+          {
+            "id": "19c27a5d-fa81-4599-bd42-29a3c154d07c",
+            "name": "qa-ag01-20261019-shared",
+            "description": "AG01 empty domain-wide group; no host dedication",
+            "account": "system",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "ExplicitDedication",
+            "virtualmachineIds": [
+              "2c861d94-08ff-4811-81c0-fb6f705d565b"
+            ]
+          }
+        ]
+      }
+    },
+    "uiSource": "0918c1453d214b454ec150fe6d6b5a8f34418bc6"
+  },
+  {
+    "label": "user-clear",
+    "requestId": "44672.1669",
+    "params": {
+      "keyword": "",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "account": "qa-ag01-1019",
+      "page": "1",
+      "pageSize": "10",
+      "response": "json",
+      "command": "listAffinityGroups"
+    },
+    "response": {
+      "listaffinitygroupsresponse": {
+        "count": 2,
+        "affinitygroup": [
+          {
+            "id": "4c73af99-934b-472d-97eb-e80d10556c70",
+            "name": "qa-ag01-20261019-user",
+            "description": "AG01 disposable user",
+            "account": "qa-ag01-1019",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity",
+            "virtualmachineIds": [
+              "2c861d94-08ff-4811-81c0-fb6f705d565b"
+            ]
+          },
+          {
+            "id": "19c27a5d-fa81-4599-bd42-29a3c154d07c",
+            "name": "qa-ag01-20261019-shared",
+            "description": "AG01 empty domain-wide group; no host dedication",
+            "account": "system",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "ExplicitDedication",
+            "virtualmachineIds": [
+              "2c861d94-08ff-4811-81c0-fb6f705d565b"
+            ]
+          }
+        ]
+      }
+    },
+    "uiSource": "0918c1453d214b454ec150fe6d6b5a8f34418bc6"
+  },
+  {
+    "label": "user-clear",
+    "requestId": "44672.1671",
+    "params": {
+      "command": "updateVMAffinityGroup",
+      "response": "json",
+      "id": "2c861d94-08ff-4811-81c0-fb6f705d565b",
+      "affinitygroupids": ""
+    },
+    "response": {
+      "updatevirtualmachineresponse": {
+        "jobid": "7d394ab1-310a-415c-9497-a416a8b4f7f2"
+      }
+    },
+    "uiSource": "0918c1453d214b454ec150fe6d6b5a8f34418bc6"
+  },
+  {
+    "label": "user-clear",
+    "requestId": "44672.1672",
+    "params": {
+      "jobid": "7d394ab1-310a-415c-9497-a416a8b4f7f2",
+      "command": "queryAsyncJobResult",
+      "response": "json"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "334c1abc-6048-4331-95b5-358e4974898f",
+        "account": "qa-ag01-1019",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "bf41bee4-985e-4075-9d86-85bc1fc11d9e",
+        "cmd": "org.apache.cloudstack.api.command.user.affinitygroup.UpdateVMAffinityGroupCmd",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "virtualmachine": {
+            "id": "2c861d94-08ff-4811-81c0-fb6f705d565b",
+            "name": "qa-ag01-20261019-user",
+            "displayname": "qa-ag01-20261019-user",
+            "account": "qa-ag01-1019",
+            "userid": "bf41bee4-985e-4075-9d86-85bc1fc11d9e",
+            "username": "qa-ag01-1019",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "created": "2026-10-19T01:23:50+0900",
+            "state": "Stopped",
+            "haenable": false,
+            "zoneid": "7013f5a1-de59-4cea-a596-f4f58815f31c",
+            "zonename": "Zone",
+            "volumemutationblockedreason": "",
+            "guestosid": "9708b6ac-b253-11f1-a895-0024814c313f",
+            "securitygroup": [],
+            "nic": [],
+            "hypervisor": "KVM",
+            "details": {
+              "deployvm": "true",
+              "tpmversion": "NONE",
+              "rootDiskController": "osdefault"
+            },
+            "clonefastsourcepowerallowed": false,
+            "clonefastpowerallowed": false,
+            "readonlydetails": "dataDiskController, rootDiskController, backupValidationCommandTimeout, backupValidationScreenshotWait, backupValidationBootTimeout",
+            "affinitygroup": [],
+            "isdynamicallyscalable": true,
+            "deleteprotection": false,
+            "ostypeid": "9708b6ac-b253-11f1-a895-0024814c313f",
+            "osdisplayname": "Rocky Linux 9",
+            "receivedbytes": 0,
+            "sentbytes": 0,
+            "vbmcport": "None",
+            "kvdoenable": false,
+            "kvdoinuse": false,
+            "vbmcstatus": "Unallocated",
+            "tags": [],
+            "hasannotations": false
+          }
+        },
+        "created": "2026-10-19T01:40:46+0900",
+        "completed": "2026-10-19T01:40:46+0900",
+        "jobid": "7d394ab1-310a-415c-9497-a416a8b4f7f2",
+        "jobstatus": 1
+      }
+    },
+    "uiSource": "0918c1453d214b454ec150fe6d6b5a8f34418bc6"
+  },
+  {
+    "label": "query-exhausted",
+    "requestId": "44672.1742",
+    "params": {
+      "listall": "true",
+      "command": "listAffinityGroups",
+      "response": "json"
+    },
+    "response": {
+      "listaffinitygroupsresponse": {
+        "count": 6,
+        "affinitygroup": [
+          {
+            "id": "ac508d0e-c80b-4c66-9bd0-8cbb896ca7e0",
+            "name": "rt1230-r17-ha-control-spread",
+            "description": "Cloud #1230 isolated r17 HA controls across three hosts",
+            "account": "k1230-20261006",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "966bf870-a046-4c76-bfce-7c78f62c0ecb",
+            "name": "rt1230-r18-control-spread",
+            "description": "Cloud #1230 isolated r18 control across hosts",
+            "account": "k1230-20261006",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "42f65110-108a-4831-8403-14500cc7f5fa",
+            "name": "rt1230-r18-etcd-spread",
+            "description": "Cloud #1230 isolated r18 etcd across hosts",
+            "account": "k1230-20261006",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "8fcf1f7b-b366-4096-8708-97c902e17762",
+            "name": "qa-ag01-20261019-admin",
+            "description": "AG01 disposable admin",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "4c73af99-934b-472d-97eb-e80d10556c70",
+            "name": "qa-ag01-20261019-user",
+            "description": "AG01 disposable user",
+            "account": "qa-ag01-1019",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "19c27a5d-fa81-4599-bd42-29a3c154d07c",
+            "name": "qa-ag01-20261019-shared",
+            "description": "AG01 empty domain-wide group; no host dedication",
+            "account": "system",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "ExplicitDedication"
+          }
+        ]
+      }
+    },
+    "uiSource": "0918c1453d214b454ec150fe6d6b5a8f34418bc6"
+  },
+  {
+    "label": "query-exhausted",
+    "requestId": "44672.1743",
+    "params": {
+      "keyword": "",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "account": "admin",
+      "page": "1",
+      "pageSize": "10",
+      "response": "json",
+      "command": "listAffinityGroups"
+    },
+    "response": {
+      "listaffinitygroupsresponse": {
+        "count": 2,
+        "affinitygroup": [
+          {
+            "id": "8fcf1f7b-b366-4096-8708-97c902e17762",
+            "name": "qa-ag01-20261019-admin",
+            "description": "AG01 disposable admin",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "19c27a5d-fa81-4599-bd42-29a3c154d07c",
+            "name": "qa-ag01-20261019-shared",
+            "description": "AG01 empty domain-wide group; no host dedication",
+            "account": "system",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "ExplicitDedication"
+          }
+        ]
+      }
+    },
+    "uiSource": "0918c1453d214b454ec150fe6d6b5a8f34418bc6"
+  },
+  {
+    "label": "query-exhausted",
+    "requestId": "44672.1745",
+    "params": {
+      "id": "8fcf1f7b-b366-4096-8708-97c902e17762",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "account": "admin",
+      "command": "listAffinityGroups",
+      "response": "json"
+    },
+    "response": {
+      "listaffinitygroupsresponse": {
+        "count": 1,
+        "affinitygroup": [
+          {
+            "id": "8fcf1f7b-b366-4096-8708-97c902e17762",
+            "name": "qa-ag01-20261019-admin",
+            "description": "AG01 disposable admin",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          }
+        ]
+      }
+    },
+    "uiSource": "0918c1453d214b454ec150fe6d6b5a8f34418bc6"
+  },
+  {
+    "label": "query-exhausted",
+    "requestId": "44672.1746",
+    "params": {
+      "command": "updateVMAffinityGroup",
+      "response": "json",
+      "id": "3a173569-034b-40ba-b402-63c189f48ac2",
+      "affinitygroupids": "8fcf1f7b-b366-4096-8708-97c902e17762"
+    },
+    "response": {
+      "updatevirtualmachineresponse": {
+        "jobid": "a8f39bdd-82bc-4cb6-a524-51347a85e36a"
+      }
+    },
+    "uiSource": "0918c1453d214b454ec150fe6d6b5a8f34418bc6"
+  },
+  {
+    "label": "query-exhausted",
+    "requestId": "44672.1747",
+    "params": {
+      "jobid": "a8f39bdd-82bc-4cb6-a524-51347a85e36a",
+      "command": "queryAsyncJobResult",
+      "response": "json"
+    },
+    "response": {
+      "unavailable": true
+    },
+    "uiSource": "0918c1453d214b454ec150fe6d6b5a8f34418bc6"
+  },
+  {
+    "label": "query-exhausted",
+    "requestId": "44672.1748",
+    "params": {
+      "jobid": "a8f39bdd-82bc-4cb6-a524-51347a85e36a",
+      "command": "queryAsyncJobResult",
+      "response": "json"
+    },
+    "response": {
+      "unavailable": true
+    },
+    "uiSource": "0918c1453d214b454ec150fe6d6b5a8f34418bc6"
+  },
+  {
+    "label": "query-exhausted",
+    "requestId": "44672.1750",
+    "params": {
+      "listall": "true",
+      "command": "listAffinityGroups",
+      "response": "json"
+    },
+    "response": {
+      "listaffinitygroupsresponse": {
+        "count": 6,
+        "affinitygroup": [
+          {
+            "id": "ac508d0e-c80b-4c66-9bd0-8cbb896ca7e0",
+            "name": "rt1230-r17-ha-control-spread",
+            "description": "Cloud #1230 isolated r17 HA controls across three hosts",
+            "account": "k1230-20261006",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "966bf870-a046-4c76-bfce-7c78f62c0ecb",
+            "name": "rt1230-r18-control-spread",
+            "description": "Cloud #1230 isolated r18 control across hosts",
+            "account": "k1230-20261006",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "42f65110-108a-4831-8403-14500cc7f5fa",
+            "name": "rt1230-r18-etcd-spread",
+            "description": "Cloud #1230 isolated r18 etcd across hosts",
+            "account": "k1230-20261006",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "8fcf1f7b-b366-4096-8708-97c902e17762",
+            "name": "qa-ag01-20261019-admin",
+            "description": "AG01 disposable admin",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity",
+            "virtualmachineIds": [
+              "3a173569-034b-40ba-b402-63c189f48ac2"
+            ]
+          },
+          {
+            "id": "4c73af99-934b-472d-97eb-e80d10556c70",
+            "name": "qa-ag01-20261019-user",
+            "description": "AG01 disposable user",
+            "account": "qa-ag01-1019",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "19c27a5d-fa81-4599-bd42-29a3c154d07c",
+            "name": "qa-ag01-20261019-shared",
+            "description": "AG01 empty domain-wide group; no host dedication",
+            "account": "system",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "ExplicitDedication"
+          }
+        ]
+      }
+    },
+    "uiSource": "0918c1453d214b454ec150fe6d6b5a8f34418bc6"
+  },
+  {
+    "label": "query-exhausted",
+    "requestId": "44672.1751",
+    "params": {
+      "keyword": "",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "account": "admin",
+      "page": "1",
+      "pageSize": "10",
+      "response": "json",
+      "command": "listAffinityGroups"
+    },
+    "response": {
+      "listaffinitygroupsresponse": {
+        "count": 2,
+        "affinitygroup": [
+          {
+            "id": "8fcf1f7b-b366-4096-8708-97c902e17762",
+            "name": "qa-ag01-20261019-admin",
+            "description": "AG01 disposable admin",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity",
+            "virtualmachineIds": [
+              "3a173569-034b-40ba-b402-63c189f48ac2"
+            ]
+          },
+          {
+            "id": "19c27a5d-fa81-4599-bd42-29a3c154d07c",
+            "name": "qa-ag01-20261019-shared",
+            "description": "AG01 empty domain-wide group; no host dedication",
+            "account": "system",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "ExplicitDedication"
+          }
+        ]
+      }
+    },
+    "uiSource": "0918c1453d214b454ec150fe6d6b5a8f34418bc6"
+  },
+  {
+    "label": "query-exhausted",
+    "requestId": "44672.1753",
+    "params": {
+      "jobid": "a8f39bdd-82bc-4cb6-a524-51347a85e36a",
+      "command": "queryAsyncJobResult",
+      "response": "json"
+    },
+    "response": {
+      "unavailable": true
+    },
+    "uiSource": "0918c1453d214b454ec150fe6d6b5a8f34418bc6"
+  },
+  {
+    "label": "query-exhausted",
+    "requestId": "44672.1755",
+    "params": {
+      "jobid": "a8f39bdd-82bc-4cb6-a524-51347a85e36a",
+      "command": "queryAsyncJobResult",
+      "response": "json"
+    },
+    "response": {
+      "unavailable": true
+    },
+    "uiSource": "0918c1453d214b454ec150fe6d6b5a8f34418bc6"
+  },
+  {
+    "label": "final-clean-start",
+    "requestId": "44672.2512",
+    "params": {
+      "listall": "true",
+      "command": "listAffinityGroups",
+      "response": "json"
+    },
+    "response": {
+      "listaffinitygroupsresponse": {
+        "count": 5,
+        "affinitygroup": [
+          {
+            "id": "ac508d0e-c80b-4c66-9bd0-8cbb896ca7e0",
+            "name": "rt1230-r17-ha-control-spread",
+            "description": "Cloud #1230 isolated r17 HA controls across three hosts",
+            "account": "k1230-20261006",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "966bf870-a046-4c76-bfce-7c78f62c0ecb",
+            "name": "rt1230-r18-control-spread",
+            "description": "Cloud #1230 isolated r18 control across hosts",
+            "account": "k1230-20261006",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "42f65110-108a-4831-8403-14500cc7f5fa",
+            "name": "rt1230-r18-etcd-spread",
+            "description": "Cloud #1230 isolated r18 etcd across hosts",
+            "account": "k1230-20261006",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "8fcf1f7b-b366-4096-8708-97c902e17762",
+            "name": "qa-ag01-20261019-admin",
+            "description": "AG01 disposable admin",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity",
+            "virtualmachineIds": [
+              "3a173569-034b-40ba-b402-63c189f48ac2"
+            ]
+          },
+          {
+            "id": "19c27a5d-fa81-4599-bd42-29a3c154d07c",
+            "name": "qa-ag01-20261019-shared",
+            "description": "AG01 empty domain-wide group; no host dedication",
+            "account": "system",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "ExplicitDedication"
+          }
+        ]
+      }
+    },
+    "uiSource": "6fe17d92db015f530b3db66eb525a020111a26f8"
+  },
+  {
+    "label": "final-clean-start",
+    "requestId": "44672.2513",
+    "params": {
+      "keyword": "",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "account": "admin",
+      "page": "1",
+      "pageSize": "10",
+      "response": "json",
+      "command": "listAffinityGroups"
+    },
+    "response": {
+      "listaffinitygroupsresponse": {
+        "count": 2,
+        "affinitygroup": [
+          {
+            "id": "8fcf1f7b-b366-4096-8708-97c902e17762",
+            "name": "qa-ag01-20261019-admin",
+            "description": "AG01 disposable admin",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity",
+            "virtualmachineIds": [
+              "3a173569-034b-40ba-b402-63c189f48ac2"
+            ]
+          },
+          {
+            "id": "19c27a5d-fa81-4599-bd42-29a3c154d07c",
+            "name": "qa-ag01-20261019-shared",
+            "description": "AG01 empty domain-wide group; no host dedication",
+            "account": "system",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "ExplicitDedication"
+          }
+        ]
+      }
+    },
+    "uiSource": "6fe17d92db015f530b3db66eb525a020111a26f8"
+  },
+  {
+    "label": "final-clean-start",
+    "requestId": "44672.2517",
+    "params": {
+      "command": "updateVMAffinityGroup",
+      "response": "json",
+      "id": "3a173569-034b-40ba-b402-63c189f48ac2",
+      "affinitygroupids": ""
+    },
+    "response": {
+      "updatevirtualmachineresponse": {
+        "jobid": "9ed2a533-cb8f-4942-bf01-52fb4f0e338a"
+      }
+    },
+    "uiSource": "6fe17d92db015f530b3db66eb525a020111a26f8"
+  },
+  {
+    "label": "final-clean-start",
+    "requestId": "44672.2518",
+    "params": {
+      "jobid": "9ed2a533-cb8f-4942-bf01-52fb4f0e338a",
+      "command": "queryAsyncJobResult",
+      "response": "json"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.admin.affinitygroup.UpdateVMAffinityGroupCmdByAdmin",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "virtualmachine": {
+            "id": "3a173569-034b-40ba-b402-63c189f48ac2",
+            "name": "qa-ag01-20261019-admin",
+            "displayname": "qa-ag01-20261019-admin",
+            "account": "admin",
+            "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+            "username": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "created": "2026-10-19T01:23:49+0900",
+            "state": "Stopped",
+            "haenable": false,
+            "zoneid": "7013f5a1-de59-4cea-a596-f4f58815f31c",
+            "zonename": "Zone",
+            "volumemutationblockedreason": "",
+            "guestosid": "9708b6ac-b253-11f1-a895-0024814c313f",
+            "securitygroup": [],
+            "nic": [],
+            "hypervisor": "KVM",
+            "instancename": "i-2-647-VM",
+            "details": {
+              "deployvm": "true",
+              "tpmversion": "NONE",
+              "rootDiskController": "osdefault"
+            },
+            "clonefastsourcepowerallowed": false,
+            "clonefastpowerallowed": false,
+            "affinitygroup": [],
+            "displayvm": true,
+            "isdynamicallyscalable": true,
+            "deleteprotection": false,
+            "ostypeid": "9708b6ac-b253-11f1-a895-0024814c313f",
+            "osdisplayname": "Rocky Linux 9",
+            "receivedbytes": 0,
+            "sentbytes": 0,
+            "vbmcport": "None",
+            "kvdoenable": false,
+            "kvdoinuse": false,
+            "arch": "x86_64",
+            "vbmcstatus": "Unallocated",
+            "tags": [],
+            "hasannotations": false
+          }
+        },
+        "created": "2026-10-19T01:52:30+0900",
+        "completed": "2026-10-19T01:52:30+0900",
+        "jobid": "9ed2a533-cb8f-4942-bf01-52fb4f0e338a",
+        "jobstatus": 1
+      }
+    },
+    "uiSource": "6fe17d92db015f530b3db66eb525a020111a26f8"
+  },
+  {
+    "label": "final-query-exhausted",
+    "requestId": "44672.2528",
+    "params": {
+      "listall": "true",
+      "command": "listAffinityGroups",
+      "response": "json"
+    },
+    "response": {
+      "listaffinitygroupsresponse": {
+        "count": 5,
+        "affinitygroup": [
+          {
+            "id": "ac508d0e-c80b-4c66-9bd0-8cbb896ca7e0",
+            "name": "rt1230-r17-ha-control-spread",
+            "description": "Cloud #1230 isolated r17 HA controls across three hosts",
+            "account": "k1230-20261006",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "966bf870-a046-4c76-bfce-7c78f62c0ecb",
+            "name": "rt1230-r18-control-spread",
+            "description": "Cloud #1230 isolated r18 control across hosts",
+            "account": "k1230-20261006",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "42f65110-108a-4831-8403-14500cc7f5fa",
+            "name": "rt1230-r18-etcd-spread",
+            "description": "Cloud #1230 isolated r18 etcd across hosts",
+            "account": "k1230-20261006",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "8fcf1f7b-b366-4096-8708-97c902e17762",
+            "name": "qa-ag01-20261019-admin",
+            "description": "AG01 disposable admin",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "19c27a5d-fa81-4599-bd42-29a3c154d07c",
+            "name": "qa-ag01-20261019-shared",
+            "description": "AG01 empty domain-wide group; no host dedication",
+            "account": "system",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "ExplicitDedication"
+          }
+        ]
+      }
+    },
+    "uiSource": "6fe17d92db015f530b3db66eb525a020111a26f8"
+  },
+  {
+    "label": "final-query-exhausted",
+    "requestId": "44672.2529",
+    "params": {
+      "keyword": "",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "account": "admin",
+      "page": "1",
+      "pageSize": "10",
+      "response": "json",
+      "command": "listAffinityGroups"
+    },
+    "response": {
+      "listaffinitygroupsresponse": {
+        "count": 2,
+        "affinitygroup": [
+          {
+            "id": "8fcf1f7b-b366-4096-8708-97c902e17762",
+            "name": "qa-ag01-20261019-admin",
+            "description": "AG01 disposable admin",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "19c27a5d-fa81-4599-bd42-29a3c154d07c",
+            "name": "qa-ag01-20261019-shared",
+            "description": "AG01 empty domain-wide group; no host dedication",
+            "account": "system",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "ExplicitDedication"
+          }
+        ]
+      }
+    },
+    "uiSource": "6fe17d92db015f530b3db66eb525a020111a26f8"
+  },
+  {
+    "label": "final-query-exhausted",
+    "requestId": "44672.2532",
+    "params": {
+      "id": "8fcf1f7b-b366-4096-8708-97c902e17762",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "account": "admin",
+      "command": "listAffinityGroups",
+      "response": "json"
+    },
+    "response": {
+      "listaffinitygroupsresponse": {
+        "count": 1,
+        "affinitygroup": [
+          {
+            "id": "8fcf1f7b-b366-4096-8708-97c902e17762",
+            "name": "qa-ag01-20261019-admin",
+            "description": "AG01 disposable admin",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          }
+        ]
+      }
+    },
+    "uiSource": "6fe17d92db015f530b3db66eb525a020111a26f8"
+  },
+  {
+    "label": "final-query-exhausted",
+    "requestId": "44672.2533",
+    "params": {
+      "id": "19c27a5d-fa81-4599-bd42-29a3c154d07c",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "account": "admin",
+      "command": "listAffinityGroups",
+      "response": "json"
+    },
+    "response": {
+      "listaffinitygroupsresponse": {
+        "count": 1,
+        "affinitygroup": [
+          {
+            "id": "19c27a5d-fa81-4599-bd42-29a3c154d07c",
+            "name": "qa-ag01-20261019-shared",
+            "description": "AG01 empty domain-wide group; no host dedication",
+            "account": "system",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "ExplicitDedication"
+          }
+        ]
+      }
+    },
+    "uiSource": "6fe17d92db015f530b3db66eb525a020111a26f8"
+  },
+  {
+    "label": "final-query-exhausted",
+    "requestId": "44672.2534",
+    "params": {
+      "command": "updateVMAffinityGroup",
+      "response": "json",
+      "id": "3a173569-034b-40ba-b402-63c189f48ac2",
+      "affinitygroupids": "8fcf1f7b-b366-4096-8708-97c902e17762,19c27a5d-fa81-4599-bd42-29a3c154d07c"
+    },
+    "response": {
+      "updatevirtualmachineresponse": {
+        "jobid": "5dcc2a4f-8d23-411d-bfe9-9254678623a5"
+      }
+    },
+    "uiSource": "6fe17d92db015f530b3db66eb525a020111a26f8"
+  },
+  {
+    "label": "final-query-exhausted",
+    "requestId": "44672.2535",
+    "params": {
+      "jobid": "5dcc2a4f-8d23-411d-bfe9-9254678623a5",
+      "command": "queryAsyncJobResult",
+      "response": "json"
+    },
+    "response": {
+      "unavailable": true
+    },
+    "uiSource": "6fe17d92db015f530b3db66eb525a020111a26f8"
+  },
+  {
+    "label": "final-query-exhausted",
+    "requestId": "44672.2536",
+    "params": {
+      "jobid": "5dcc2a4f-8d23-411d-bfe9-9254678623a5",
+      "command": "queryAsyncJobResult",
+      "response": "json"
+    },
+    "response": {
+      "unavailable": true
+    },
+    "uiSource": "6fe17d92db015f530b3db66eb525a020111a26f8"
+  },
+  {
+    "label": "final-query-exhausted",
+    "requestId": "44672.2538",
+    "params": {
+      "listall": "true",
+      "command": "listAffinityGroups",
+      "response": "json"
+    },
+    "response": {
+      "listaffinitygroupsresponse": {
+        "count": 5,
+        "affinitygroup": [
+          {
+            "id": "ac508d0e-c80b-4c66-9bd0-8cbb896ca7e0",
+            "name": "rt1230-r17-ha-control-spread",
+            "description": "Cloud #1230 isolated r17 HA controls across three hosts",
+            "account": "k1230-20261006",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "966bf870-a046-4c76-bfce-7c78f62c0ecb",
+            "name": "rt1230-r18-control-spread",
+            "description": "Cloud #1230 isolated r18 control across hosts",
+            "account": "k1230-20261006",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "42f65110-108a-4831-8403-14500cc7f5fa",
+            "name": "rt1230-r18-etcd-spread",
+            "description": "Cloud #1230 isolated r18 etcd across hosts",
+            "account": "k1230-20261006",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "8fcf1f7b-b366-4096-8708-97c902e17762",
+            "name": "qa-ag01-20261019-admin",
+            "description": "AG01 disposable admin",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity",
+            "virtualmachineIds": [
+              "3a173569-034b-40ba-b402-63c189f48ac2"
+            ]
+          },
+          {
+            "id": "19c27a5d-fa81-4599-bd42-29a3c154d07c",
+            "name": "qa-ag01-20261019-shared",
+            "description": "AG01 empty domain-wide group; no host dedication",
+            "account": "system",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "ExplicitDedication",
+            "virtualmachineIds": [
+              "3a173569-034b-40ba-b402-63c189f48ac2"
+            ]
+          }
+        ]
+      }
+    },
+    "uiSource": "6fe17d92db015f530b3db66eb525a020111a26f8"
+  },
+  {
+    "label": "final-query-exhausted",
+    "requestId": "44672.2539",
+    "params": {
+      "keyword": "",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "account": "admin",
+      "page": "1",
+      "pageSize": "10",
+      "response": "json",
+      "command": "listAffinityGroups"
+    },
+    "response": {
+      "listaffinitygroupsresponse": {
+        "count": 2,
+        "affinitygroup": [
+          {
+            "id": "8fcf1f7b-b366-4096-8708-97c902e17762",
+            "name": "qa-ag01-20261019-admin",
+            "description": "AG01 disposable admin",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity",
+            "virtualmachineIds": [
+              "3a173569-034b-40ba-b402-63c189f48ac2"
+            ]
+          },
+          {
+            "id": "19c27a5d-fa81-4599-bd42-29a3c154d07c",
+            "name": "qa-ag01-20261019-shared",
+            "description": "AG01 empty domain-wide group; no host dedication",
+            "account": "system",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "ExplicitDedication",
+            "virtualmachineIds": [
+              "3a173569-034b-40ba-b402-63c189f48ac2"
+            ]
+          }
+        ]
+      }
+    },
+    "uiSource": "6fe17d92db015f530b3db66eb525a020111a26f8"
+  },
+  {
+    "label": "final-query-exhausted",
+    "requestId": "44672.2541",
+    "params": {
+      "jobid": "5dcc2a4f-8d23-411d-bfe9-9254678623a5",
+      "command": "queryAsyncJobResult",
+      "response": "json"
+    },
+    "response": {
+      "unavailable": true
+    },
+    "uiSource": "6fe17d92db015f530b3db66eb525a020111a26f8"
+  },
+  {
+    "label": "final-query-exhausted",
+    "requestId": "44672.2543",
+    "params": {
+      "jobid": "5dcc2a4f-8d23-411d-bfe9-9254678623a5",
+      "command": "queryAsyncJobResult",
+      "response": "json"
+    },
+    "response": {
+      "unavailable": true
+    },
+    "uiSource": "6fe17d92db015f530b3db66eb525a020111a26f8"
+  },
+  {
+    "label": "final-manual-recheck",
+    "requestId": "44672.2545",
+    "params": {
+      "jobid": "5dcc2a4f-8d23-411d-bfe9-9254678623a5",
+      "command": "queryAsyncJobResult",
+      "response": "json"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.admin.affinitygroup.UpdateVMAffinityGroupCmdByAdmin",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "virtualmachine": {
+            "id": "3a173569-034b-40ba-b402-63c189f48ac2",
+            "name": "qa-ag01-20261019-admin",
+            "displayname": "qa-ag01-20261019-admin",
+            "account": "admin",
+            "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+            "username": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "created": "2026-10-19T01:23:49+0900",
+            "state": "Stopped",
+            "haenable": false,
+            "zoneid": "7013f5a1-de59-4cea-a596-f4f58815f31c",
+            "zonename": "Zone",
+            "volumemutationblockedreason": "",
+            "guestosid": "9708b6ac-b253-11f1-a895-0024814c313f",
+            "securitygroup": [],
+            "nic": [
+              {
+                "id": "a1643d53-f75c-42f6-95db-e7e74d3e86ec",
+                "networkid": "ae274fff-3d8e-4285-ac73-26a767c1fea7",
+                "networkname": "E1335-VM-Origin-L2",
+                "isolationuri": "vlan://3135",
+                "broadcasturi": "vlan://3135",
+                "traffictype": "Guest",
+                "type": "L2",
+                "isdefault": true,
+                "macaddress": "02:1f:01:04:00:24",
+                "secondaryip": [],
+                "extradhcpoption": [],
+                "deviceid": "0",
+                "enabled": true
+              }
+            ],
+            "hypervisor": "KVM",
+            "instancename": "i-2-647-VM",
+            "details": {
+              "deployvm": "true",
+              "tpmversion": "NONE",
+              "rootDiskController": "osdefault"
+            },
+            "clonefastsourcepowerallowed": false,
+            "clonefastpowerallowed": false,
+            "affinitygroup": [
+              {
+                "id": "8fcf1f7b-b366-4096-8708-97c902e17762",
+                "name": "qa-ag01-20261019-admin",
+                "description": "AG01 disposable admin",
+                "account": "admin"
+              },
+              {
+                "id": "19c27a5d-fa81-4599-bd42-29a3c154d07c",
+                "name": "qa-ag01-20261019-shared",
+                "description": "AG01 empty domain-wide group; no host dedication",
+                "account": "admin"
+              }
+            ],
+            "displayvm": true,
+            "isdynamicallyscalable": true,
+            "deleteprotection": false,
+            "ostypeid": "9708b6ac-b253-11f1-a895-0024814c313f",
+            "osdisplayname": "Rocky Linux 9",
+            "receivedbytes": 0,
+            "sentbytes": 0,
+            "vbmcport": "None",
+            "kvdoenable": false,
+            "kvdoinuse": false,
+            "arch": "x86_64",
+            "vbmcstatus": "Unallocated",
+            "tags": [],
+            "hasannotations": false
+          }
+        },
+        "created": "2026-10-19T01:52:33+0900",
+        "completed": "2026-10-19T01:52:33+0900",
+        "jobid": "5dcc2a4f-8d23-411d-bfe9-9254678623a5",
+        "jobstatus": 1
+      }
+    },
+    "uiSource": "6fe17d92db015f530b3db66eb525a020111a26f8"
+  },
+  {
+    "label": "final-clear",
+    "requestId": "44672.2559",
+    "params": {
+      "listall": "true",
+      "command": "listAffinityGroups",
+      "response": "json"
+    },
+    "response": {
+      "listaffinitygroupsresponse": {
+        "count": 5,
+        "affinitygroup": [
+          {
+            "id": "ac508d0e-c80b-4c66-9bd0-8cbb896ca7e0",
+            "name": "rt1230-r17-ha-control-spread",
+            "description": "Cloud #1230 isolated r17 HA controls across three hosts",
+            "account": "k1230-20261006",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "966bf870-a046-4c76-bfce-7c78f62c0ecb",
+            "name": "rt1230-r18-control-spread",
+            "description": "Cloud #1230 isolated r18 control across hosts",
+            "account": "k1230-20261006",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "42f65110-108a-4831-8403-14500cc7f5fa",
+            "name": "rt1230-r18-etcd-spread",
+            "description": "Cloud #1230 isolated r18 etcd across hosts",
+            "account": "k1230-20261006",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "8fcf1f7b-b366-4096-8708-97c902e17762",
+            "name": "qa-ag01-20261019-admin",
+            "description": "AG01 disposable admin",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity",
+            "virtualmachineIds": [
+              "3a173569-034b-40ba-b402-63c189f48ac2"
+            ]
+          },
+          {
+            "id": "19c27a5d-fa81-4599-bd42-29a3c154d07c",
+            "name": "qa-ag01-20261019-shared",
+            "description": "AG01 empty domain-wide group; no host dedication",
+            "account": "system",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "ExplicitDedication",
+            "virtualmachineIds": [
+              "3a173569-034b-40ba-b402-63c189f48ac2"
+            ]
+          }
+        ]
+      }
+    },
+    "uiSource": "6fe17d92db015f530b3db66eb525a020111a26f8"
+  },
+  {
+    "label": "final-clear",
+    "requestId": "44672.2560",
+    "params": {
+      "keyword": "",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "account": "admin",
+      "page": "1",
+      "pageSize": "10",
+      "response": "json",
+      "command": "listAffinityGroups"
+    },
+    "response": {
+      "listaffinitygroupsresponse": {
+        "count": 2,
+        "affinitygroup": [
+          {
+            "id": "8fcf1f7b-b366-4096-8708-97c902e17762",
+            "name": "qa-ag01-20261019-admin",
+            "description": "AG01 disposable admin",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity",
+            "virtualmachineIds": [
+              "3a173569-034b-40ba-b402-63c189f48ac2"
+            ]
+          },
+          {
+            "id": "19c27a5d-fa81-4599-bd42-29a3c154d07c",
+            "name": "qa-ag01-20261019-shared",
+            "description": "AG01 empty domain-wide group; no host dedication",
+            "account": "system",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "ExplicitDedication",
+            "virtualmachineIds": [
+              "3a173569-034b-40ba-b402-63c189f48ac2"
+            ]
+          }
+        ]
+      }
+    },
+    "uiSource": "6fe17d92db015f530b3db66eb525a020111a26f8"
+  },
+  {
+    "label": "final-clear",
+    "requestId": "44672.2563",
+    "params": {
+      "command": "updateVMAffinityGroup",
+      "response": "json",
+      "id": "3a173569-034b-40ba-b402-63c189f48ac2",
+      "affinitygroupids": ""
+    },
+    "response": {
+      "updatevirtualmachineresponse": {
+        "jobid": "277b375f-a79a-4781-8f13-b169ec4c8c7d"
+      }
+    },
+    "uiSource": "6fe17d92db015f530b3db66eb525a020111a26f8"
+  },
+  {
+    "label": "final-clear",
+    "requestId": "44672.2564",
+    "params": {
+      "jobid": "277b375f-a79a-4781-8f13-b169ec4c8c7d",
+      "command": "queryAsyncJobResult",
+      "response": "json"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.admin.affinitygroup.UpdateVMAffinityGroupCmdByAdmin",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "virtualmachine": {
+            "id": "3a173569-034b-40ba-b402-63c189f48ac2",
+            "name": "qa-ag01-20261019-admin",
+            "displayname": "qa-ag01-20261019-admin",
+            "account": "admin",
+            "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+            "username": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "created": "2026-10-19T01:23:49+0900",
+            "state": "Stopped",
+            "haenable": false,
+            "zoneid": "7013f5a1-de59-4cea-a596-f4f58815f31c",
+            "zonename": "Zone",
+            "volumemutationblockedreason": "",
+            "guestosid": "9708b6ac-b253-11f1-a895-0024814c313f",
+            "securitygroup": [],
+            "nic": [],
+            "hypervisor": "KVM",
+            "instancename": "i-2-647-VM",
+            "details": {
+              "deployvm": "true",
+              "tpmversion": "NONE",
+              "rootDiskController": "osdefault"
+            },
+            "clonefastsourcepowerallowed": false,
+            "clonefastpowerallowed": false,
+            "affinitygroup": [],
+            "displayvm": true,
+            "isdynamicallyscalable": true,
+            "deleteprotection": false,
+            "ostypeid": "9708b6ac-b253-11f1-a895-0024814c313f",
+            "osdisplayname": "Rocky Linux 9",
+            "receivedbytes": 0,
+            "sentbytes": 0,
+            "vbmcport": "None",
+            "kvdoenable": false,
+            "kvdoinuse": false,
+            "arch": "x86_64",
+            "vbmcstatus": "Unallocated",
+            "tags": [],
+            "hasannotations": false
+          }
+        },
+        "created": "2026-10-19T01:53:13+0900",
+        "completed": "2026-10-19T01:53:13+0900",
+        "jobid": "277b375f-a79a-4781-8f13-b169ec4c8c7d",
+        "jobstatus": 1
+      }
+    },
+    "uiSource": "6fe17d92db015f530b3db66eb525a020111a26f8"
+  },
+  {
+    "label": "final-lookup-retry",
+    "requestId": "44672.2574",
+    "params": {
+      "listall": "true",
+      "command": "listAffinityGroups",
+      "response": "json"
+    },
+    "response": {
+      "listaffinitygroupsresponse": {
+        "count": 5,
+        "affinitygroup": [
+          {
+            "id": "ac508d0e-c80b-4c66-9bd0-8cbb896ca7e0",
+            "name": "rt1230-r17-ha-control-spread",
+            "description": "Cloud #1230 isolated r17 HA controls across three hosts",
+            "account": "k1230-20261006",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "966bf870-a046-4c76-bfce-7c78f62c0ecb",
+            "name": "rt1230-r18-control-spread",
+            "description": "Cloud #1230 isolated r18 control across hosts",
+            "account": "k1230-20261006",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "42f65110-108a-4831-8403-14500cc7f5fa",
+            "name": "rt1230-r18-etcd-spread",
+            "description": "Cloud #1230 isolated r18 etcd across hosts",
+            "account": "k1230-20261006",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "8fcf1f7b-b366-4096-8708-97c902e17762",
+            "name": "qa-ag01-20261019-admin",
+            "description": "AG01 disposable admin",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "19c27a5d-fa81-4599-bd42-29a3c154d07c",
+            "name": "qa-ag01-20261019-shared",
+            "description": "AG01 empty domain-wide group; no host dedication",
+            "account": "system",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "ExplicitDedication"
+          }
+        ]
+      }
+    },
+    "uiSource": "6fe17d92db015f530b3db66eb525a020111a26f8"
+  },
+  {
+    "label": "final-lookup-retry",
+    "requestId": "44672.2575",
+    "params": {
+      "keyword": "",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "account": "admin",
+      "page": "1",
+      "pageSize": "10",
+      "response": "json",
+      "command": "listAffinityGroups"
+    },
+    "response": {
+      "listaffinitygroupsresponse": {
+        "count": 2,
+        "affinitygroup": [
+          {
+            "id": "8fcf1f7b-b366-4096-8708-97c902e17762",
+            "name": "qa-ag01-20261019-admin",
+            "description": "AG01 disposable admin",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "19c27a5d-fa81-4599-bd42-29a3c154d07c",
+            "name": "qa-ag01-20261019-shared",
+            "description": "AG01 empty domain-wide group; no host dedication",
+            "account": "system",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "ExplicitDedication"
+          }
+        ]
+      }
+    },
+    "uiSource": "6fe17d92db015f530b3db66eb525a020111a26f8"
+  },
+  {
+    "label": "final-lookup-retry",
+    "requestId": "44672.2576",
+    "params": {
+      "keyword": "qa-ag01",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "account": "admin",
+      "page": "1",
+      "pageSize": "10",
+      "response": "json",
+      "command": "listAffinityGroups"
+    },
+    "response": {
+      "unavailable": true
+    },
+    "uiSource": "6fe17d92db015f530b3db66eb525a020111a26f8"
+  },
+  {
+    "label": "final-lookup-retry",
+    "requestId": "44672.2579",
+    "params": {
+      "keyword": "qa-ag01",
+      "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+      "account": "admin",
+      "page": "1",
+      "pageSize": "10",
+      "response": "json",
+      "command": "listAffinityGroups"
+    },
+    "response": {
+      "listaffinitygroupsresponse": {
+        "count": 2,
+        "affinitygroup": [
+          {
+            "id": "8fcf1f7b-b366-4096-8708-97c902e17762",
+            "name": "qa-ag01-20261019-admin",
+            "description": "AG01 disposable admin",
+            "account": "admin",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "19c27a5d-fa81-4599-bd42-29a3c154d07c",
+            "name": "qa-ag01-20261019-shared",
+            "description": "AG01 empty domain-wide group; no host dedication",
+            "account": "system",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "ExplicitDedication"
+          }
+        ]
+      }
+    },
+    "uiSource": "6fe17d92db015f530b3db66eb525a020111a26f8"
+  },
+  {
+    "label": "final-original-list",
+    "requestId": "44672.2608",
+    "params": {
+      "listall": "true",
+      "page": "1",
+      "pagesize": "20",
+      "command": "listAffinityGroups",
+      "response": "json"
+    },
+    "response": {
+      "listaffinitygroupsresponse": {
+        "count": 3,
+        "affinitygroup": [
+          {
+            "id": "ac508d0e-c80b-4c66-9bd0-8cbb896ca7e0",
+            "name": "rt1230-r17-ha-control-spread",
+            "description": "Cloud #1230 isolated r17 HA controls across three hosts",
+            "account": "k1230-20261006",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "966bf870-a046-4c76-bfce-7c78f62c0ecb",
+            "name": "rt1230-r18-control-spread",
+            "description": "Cloud #1230 isolated r18 control across hosts",
+            "account": "k1230-20261006",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          },
+          {
+            "id": "42f65110-108a-4831-8403-14500cc7f5fa",
+            "name": "rt1230-r18-etcd-spread",
+            "description": "Cloud #1230 isolated r18 etcd across hosts",
+            "account": "k1230-20261006",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "type": "host anti-affinity"
+          }
+        ]
+      }
+    },
+    "uiSource": "6fe17d92db015f530b3db66eb525a020111a26f8"
+  }
+]

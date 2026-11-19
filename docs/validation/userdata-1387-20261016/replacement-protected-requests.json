@@ -1,0 +1,50 @@
+{
+  "label": "replacement-protected",
+  "requests": [
+    {
+      "id": "34440.1583",
+      "command": "listUserData",
+      "params": {
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "id": "34440.1585",
+      "command": "listUserData",
+      "params": {
+        "page": "1",
+        "pagesize": "20"
+      }
+    },
+    {
+      "id": "34440.1588",
+      "command": "listUserData",
+      "params": {
+        "id": "f25287e2-1e8b-484c-8388-3f62989e7e9d",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "page": "1",
+        "pagesize": "2"
+      }
+    }
+  ],
+  "responses": [
+    {
+      "id": "34440.1583",
+      "status": 200
+    },
+    {
+      "id": "34440.1585",
+      "status": 200
+    },
+    {
+      "id": "34440.1588",
+      "status": 200
+    }
+  ],
+  "exceptions": [],
+  "truncated": false,
+  "hasMore": false,
+  "cursor": 6286
+}

@@ -1,0 +1,371 @@
+{
+  "passed": 31,
+  "total": 31,
+  "tests": [
+    {
+      "label": "root_a_single_multi",
+      "command": "listVirtualMachines",
+      "status": 200,
+      "count": 2,
+      "ids": [
+        "7d0dfff1-b0f2-490b-990f-ae159a8ec832",
+        "370e3886-fb69-4326-9183-df8f62ce623f"
+      ],
+      "expected_ids": [
+        "7d0dfff1-b0f2-490b-990f-ae159a8ec832",
+        "370e3886-fb69-4326-9183-df8f62ce623f"
+      ],
+      "passed": true
+    },
+    {
+      "label": "root_b_single_multi",
+      "command": "listVirtualMachines",
+      "status": 200,
+      "count": 2,
+      "ids": [
+        "370e3886-fb69-4326-9183-df8f62ce623f",
+        "e5404ead-17bd-4dee-8501-059e737c8758"
+      ],
+      "expected_ids": [
+        "370e3886-fb69-4326-9183-df8f62ce623f",
+        "e5404ead-17bd-4dee-8501-059e737c8758"
+      ],
+      "passed": true
+    },
+    {
+      "label": "unused_literal_name",
+      "command": "listVirtualMachines",
+      "status": 200,
+      "count": 0,
+      "ids": [],
+      "expected_ids": [],
+      "passed": true
+    },
+    {
+      "label": "missing_key",
+      "command": "listVirtualMachines",
+      "status": 200,
+      "count": 0,
+      "ids": [],
+      "expected_ids": [],
+      "passed": true
+    },
+    {
+      "label": "key_without_ssh_vm",
+      "command": "listVirtualMachines",
+      "status": 200,
+      "count": 0,
+      "ids": [],
+      "expected_ids": [],
+      "passed": true
+    },
+    {
+      "label": "other_key_vm_excluded",
+      "command": "listVirtualMachines",
+      "status": 200,
+      "count": 0,
+      "ids": [],
+      "expected_ids": [],
+      "passed": true
+    },
+    {
+      "label": "id_intersection_match",
+      "command": "listVirtualMachines",
+      "status": 200,
+      "count": 1,
+      "ids": [
+        "370e3886-fb69-4326-9183-df8f62ce623f"
+      ],
+      "expected_ids": [
+        "370e3886-fb69-4326-9183-df8f62ce623f"
+      ],
+      "passed": true
+    },
+    {
+      "label": "ids_intersection",
+      "command": "listVirtualMachines",
+      "status": 200,
+      "count": 1,
+      "ids": [
+        "370e3886-fb69-4326-9183-df8f62ce623f"
+      ],
+      "expected_ids": [
+        "370e3886-fb69-4326-9183-df8f62ce623f"
+      ],
+      "passed": true
+    },
+    {
+      "label": "keyword_matches",
+      "command": "listVirtualMachines",
+      "status": 200,
+      "count": 1,
+      "ids": [
+        "370e3886-fb69-4326-9183-df8f62ce623f"
+      ],
+      "expected_ids": [
+        "370e3886-fb69-4326-9183-df8f62ce623f"
+      ],
+      "passed": true
+    },
+    {
+      "label": "keyword_no_match",
+      "command": "listVirtualMachines",
+      "status": 200,
+      "count": 0,
+      "ids": [],
+      "expected_ids": [],
+      "passed": true
+    },
+    {
+      "label": "state_stopped",
+      "command": "listVirtualMachines",
+      "status": 200,
+      "count": 2,
+      "ids": [
+        "7d0dfff1-b0f2-490b-990f-ae159a8ec832",
+        "370e3886-fb69-4326-9183-df8f62ce623f"
+      ],
+      "expected_ids": [
+        "7d0dfff1-b0f2-490b-990f-ae159a8ec832",
+        "370e3886-fb69-4326-9183-df8f62ce623f"
+      ],
+      "passed": true
+    },
+    {
+      "label": "state_running",
+      "command": "listVirtualMachines",
+      "status": 200,
+      "count": 0,
+      "ids": [],
+      "expected_ids": [],
+      "passed": true
+    },
+    {
+      "label": "page_1",
+      "command": "listVirtualMachines",
+      "status": 200,
+      "count": 2,
+      "ids": [
+        "7d0dfff1-b0f2-490b-990f-ae159a8ec832"
+      ],
+      "expected_ids": [
+        "7d0dfff1-b0f2-490b-990f-ae159a8ec832"
+      ],
+      "passed": true
+    },
+    {
+      "label": "page_2",
+      "command": "listVirtualMachines",
+      "status": 200,
+      "count": 2,
+      "ids": [
+        "370e3886-fb69-4326-9183-df8f62ce623f"
+      ],
+      "expected_ids": [
+        "370e3886-fb69-4326-9183-df8f62ce623f"
+      ],
+      "passed": true
+    },
+    {
+      "label": "page_3",
+      "command": "listVirtualMachines",
+      "status": 200,
+      "count": 2,
+      "ids": [],
+      "expected_ids": [],
+      "passed": true
+    },
+    {
+      "label": "same_public_user_owner",
+      "command": "listVirtualMachines",
+      "status": 200,
+      "count": 1,
+      "ids": [
+        "f67c1868-4455-478e-8a31-5b1ba7a94622"
+      ],
+      "expected_ids": [
+        "f67c1868-4455-478e-8a31-5b1ba7a94622"
+      ],
+      "passed": true
+    },
+    {
+      "label": "same_public_project_owner",
+      "command": "listVirtualMachines",
+      "status": 200,
+      "count": 1,
+      "ids": [
+        "70ae72c9-513a-4a07-8d27-87178e57e2f7"
+      ],
+      "expected_ids": [
+        "70ae72c9-513a-4a07-8d27-87178e57e2f7"
+      ],
+      "passed": true
+    },
+    {
+      "label": "child_domain_scope",
+      "command": "listVirtualMachines",
+      "status": 200,
+      "count": 1,
+      "ids": [
+        "f67c1868-4455-478e-8a31-5b1ba7a94622"
+      ],
+      "expected_ids": [
+        "f67c1868-4455-478e-8a31-5b1ba7a94622"
+      ],
+      "passed": true
+    },
+    {
+      "label": "default_namespace",
+      "command": "listVirtualMachines",
+      "status": 200,
+      "count": 3,
+      "ids": [
+        "7d0dfff1-b0f2-490b-990f-ae159a8ec832",
+        "370e3886-fb69-4326-9183-df8f62ce623f",
+        "f67c1868-4455-478e-8a31-5b1ba7a94622"
+      ],
+      "expected_ids": [
+        "7d0dfff1-b0f2-490b-990f-ae159a8ec832",
+        "370e3886-fb69-4326-9183-df8f62ce623f",
+        "f67c1868-4455-478e-8a31-5b1ba7a94622"
+      ],
+      "passed": true
+    },
+    {
+      "label": "all_projects_namespace",
+      "command": "listVirtualMachines",
+      "status": 200,
+      "count": 4,
+      "ids": [
+        "7d0dfff1-b0f2-490b-990f-ae159a8ec832",
+        "370e3886-fb69-4326-9183-df8f62ce623f",
+        "f67c1868-4455-478e-8a31-5b1ba7a94622",
+        "70ae72c9-513a-4a07-8d27-87178e57e2f7"
+      ],
+      "expected_ids": [
+        "7d0dfff1-b0f2-490b-990f-ae159a8ec832",
+        "370e3886-fb69-4326-9183-df8f62ce623f",
+        "f67c1868-4455-478e-8a31-5b1ba7a94622",
+        "70ae72c9-513a-4a07-8d27-87178e57e2f7"
+      ],
+      "passed": true
+    },
+    {
+      "label": "no_ssh_list_regression",
+      "command": "listVirtualMachines",
+      "status": 200,
+      "count": 1,
+      "ids": [
+        "f481575c-9e05-4fee-85a8-86b6c1f3a732"
+      ],
+      "expected_ids": [
+        "f481575c-9e05-4fee-85a8-86b6c1f3a732"
+      ],
+      "passed": true
+    },
+    {
+      "label": "user_own",
+      "command": "listVirtualMachines",
+      "status": 200,
+      "count": 1,
+      "ids": [
+        "f67c1868-4455-478e-8a31-5b1ba7a94622"
+      ],
+      "expected_ids": [
+        "f67c1868-4455-478e-8a31-5b1ba7a94622"
+      ],
+      "passed": true
+    },
+    {
+      "label": "user_other_id",
+      "command": "listVirtualMachines",
+      "status": 200,
+      "count": 0,
+      "ids": [],
+      "expected_ids": [],
+      "passed": true
+    },
+    {
+      "label": "user_other_account",
+      "command": "listVirtualMachines",
+      "status": 531,
+      "count": 0,
+      "ids": [],
+      "expected_ids": [],
+      "passed": true
+    },
+    {
+      "label": "user_project_denied",
+      "command": "listVirtualMachines",
+      "status": 432,
+      "count": 0,
+      "ids": [],
+      "expected_ids": [],
+      "passed": true
+    },
+    {
+      "label": "domain_admin_child",
+      "command": "listVirtualMachines",
+      "status": 200,
+      "count": 1,
+      "ids": [
+        "f67c1868-4455-478e-8a31-5b1ba7a94622"
+      ],
+      "expected_ids": [
+        "f67c1868-4455-478e-8a31-5b1ba7a94622"
+      ],
+      "passed": true
+    },
+    {
+      "label": "domain_admin_root_denied",
+      "command": "listVirtualMachines",
+      "status": 531,
+      "count": 0,
+      "ids": [],
+      "expected_ids": [],
+      "passed": true
+    },
+    {
+      "label": "metrics_scoped",
+      "command": "listVirtualMachinesMetrics",
+      "status": 200,
+      "count": 2,
+      "ids": [
+        "7d0dfff1-b0f2-490b-990f-ae159a8ec832",
+        "370e3886-fb69-4326-9183-df8f62ce623f"
+      ],
+      "expected_ids": [
+        "7d0dfff1-b0f2-490b-990f-ae159a8ec832",
+        "370e3886-fb69-4326-9183-df8f62ce623f"
+      ],
+      "passed": true
+    },
+    {
+      "label": "existing_material_owner_6d6cf53f-881e-41bf-b7e1-92031ba9d891",
+      "command": "listVirtualMachines",
+      "status": 200,
+      "count": 0,
+      "ids": [],
+      "expected_ids": [],
+      "passed": true
+    },
+    {
+      "label": "existing_material_owner_54dace93-f746-463d-8592-c796712c3004",
+      "command": "listVirtualMachines",
+      "status": 200,
+      "count": 0,
+      "ids": [],
+      "expected_ids": [],
+      "passed": true
+    },
+    {
+      "label": "existing_material_owner_879f7484-e0da-41f2-8ac1-5c23d354c3a2",
+      "command": "listVirtualMachines",
+      "status": 200,
+      "count": 0,
+      "ids": [],
+      "expected_ids": [],
+      "passed": true
+    }
+  ]
+}

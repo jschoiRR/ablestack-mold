@@ -1,0 +1,36 @@
+{
+  "observations": [
+    {
+      "cluster": 31,
+      "observations": 1089,
+      "states": {
+        "SCALING": 384,
+        "ENABLED": 520,
+        "DISABLED": 185
+      },
+      "vmCounts": {
+        "2": 444,
+        "3": 436,
+        "1": 209
+      },
+      "integrityViolations": 0
+    },
+    {
+      "cluster": 32,
+      "observations": 1049,
+      "states": {
+        "SCALING": 305,
+        "ENABLED": 599,
+        "DISABLED": 145
+      },
+      "vmCounts": {
+        "3": 367,
+        "2": 387,
+        "1": 295
+      },
+      "integrityViolations": 0
+    }
+  ],
+  "collectorEventsFile": "as04-collector-events.jsonl",
+  "samplerExit": 0
+}

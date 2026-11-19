@@ -1,0 +1,190 @@
+[
+  {
+    "request": {
+      "command": "queryAsyncJobResult",
+      "jobid": "fdaeeb94-649c-4f3f-8714-c989a897819b"
+    },
+    "response": {
+      "queryasyncjobresultresponse": {
+        "accountid": "a75c97c6-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "domainpath": "ROOT",
+        "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+        "cmd": "org.apache.cloudstack.api.command.admin.affinitygroup.UpdateVMAffinityGroupCmdByAdmin",
+        "jobprocstatus": 0,
+        "jobresultcode": 0,
+        "jobresulttype": "object",
+        "jobresult": {
+          "virtualmachine": {
+            "id": "cbc05477-a671-4ae2-ae1b-c2d8bd60dcd9",
+            "name": "qa-ag01-20261019-project",
+            "displayname": "qa-ag01-20261019-project",
+            "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+            "username": "admin",
+            "projectid": "f6e37ad7-95e7-4216-8420-f99270ca9987",
+            "project": "qa-ag01-20261019-project",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "created": "2026-10-19T01:23:52+0900",
+            "state": "Stopped",
+            "haenable": false,
+            "zoneid": "7013f5a1-de59-4cea-a596-f4f58815f31c",
+            "zonename": "Zone",
+            "volumemutationblockedreason": "",
+            "guestosid": "9708b6ac-b253-11f1-a895-0024814c313f",
+            "securitygroup": [],
+            "nic": [
+              {
+                "id": "851bdcfb-f169-4a1f-b05c-27053fc276fd",
+                "networkid": "08e5248d-b5bf-4c2e-8e94-2dce46441117",
+                "networkname": "qa-ag01-20261019-project-L2",
+                "isolationuri": "vlan://3149",
+                "broadcasturi": "vlan://3149",
+                "traffictype": "Guest",
+                "type": "L2",
+                "isdefault": true,
+                "macaddress": "02:1f:01:48:00:01",
+                "secondaryip": [],
+                "extradhcpoption": [],
+                "deviceid": "0",
+                "enabled": true
+              }
+            ],
+            "hypervisor": "KVM",
+            "instancename": "i-190-649-VM",
+            "details": {
+              "deployvm": "true",
+              "tpmversion": "NONE",
+              "rootDiskController": "osdefault"
+            },
+            "clonefastsourcepowerallowed": false,
+            "clonefastpowerallowed": false,
+            "affinitygroup": [
+              {
+                "id": "4bcb0048-38f6-46e4-b79c-61e4833d84ad",
+                "name": "qa-ag01-20261019-project",
+                "description": "AG01 disposable project",
+                "account": "PrjAcct-qa-ag01-20261019-project-1"
+              },
+              {
+                "id": "19c27a5d-fa81-4599-bd42-29a3c154d07c",
+                "name": "qa-ag01-20261019-shared",
+                "description": "AG01 empty domain-wide group; no host dedication",
+                "account": "PrjAcct-qa-ag01-20261019-project-1"
+              }
+            ],
+            "displayvm": true,
+            "isdynamicallyscalable": true,
+            "deleteprotection": false,
+            "ostypeid": "9708b6ac-b253-11f1-a895-0024814c313f",
+            "osdisplayname": "Rocky Linux 9",
+            "receivedbytes": 0,
+            "sentbytes": 0,
+            "vbmcport": "None",
+            "kvdoenable": false,
+            "kvdoinuse": false,
+            "arch": "x86_64",
+            "vbmcstatus": "Unallocated",
+            "tags": [],
+            "hasannotations": false
+          }
+        },
+        "created": "2026-10-19T01:39:41+0900",
+        "completed": "2026-10-19T01:39:41+0900",
+        "jobid": "fdaeeb94-649c-4f3f-8714-c989a897819b",
+        "jobstatus": 1
+      }
+    }
+  },
+  {
+    "request": {
+      "command": "listVirtualMachines",
+      "id": "cbc05477-a671-4ae2-ae1b-c2d8bd60dcd9",
+      "projectid": "f6e37ad7-95e7-4216-8420-f99270ca9987",
+      "details": "min,affgrp"
+    },
+    "response": {
+      "listvirtualmachinesresponse": {
+        "count": 1,
+        "virtualmachine": [
+          {
+            "id": "cbc05477-a671-4ae2-ae1b-c2d8bd60dcd9",
+            "name": "qa-ag01-20261019-project",
+            "displayname": "qa-ag01-20261019-project",
+            "userid": "a75cdd55-b253-11f1-a895-0024814c313f",
+            "username": "admin",
+            "projectid": "f6e37ad7-95e7-4216-8420-f99270ca9987",
+            "project": "qa-ag01-20261019-project",
+            "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+            "domain": "ROOT",
+            "domainpath": "ROOT",
+            "created": "2026-10-19T01:23:52+0900",
+            "state": "Stopped",
+            "haenable": false,
+            "zoneid": "7013f5a1-de59-4cea-a596-f4f58815f31c",
+            "zonename": "Zone",
+            "volumemutationblockedreason": "",
+            "guestosid": "9708b6ac-b253-11f1-a895-0024814c313f",
+            "securitygroup": [],
+            "nic": [
+              {
+                "id": "851bdcfb-f169-4a1f-b05c-27053fc276fd",
+                "networkid": "08e5248d-b5bf-4c2e-8e94-2dce46441117",
+                "networkname": "qa-ag01-20261019-project-L2",
+                "isolationuri": "vlan://3149",
+                "broadcasturi": "vlan://3149",
+                "traffictype": "Guest",
+                "type": "L2",
+                "isdefault": true,
+                "macaddress": "02:1f:01:48:00:01",
+                "secondaryip": [],
+                "extradhcpoption": [],
+                "deviceid": "0",
+                "enabled": true
+              }
+            ],
+            "hypervisor": "KVM",
+            "instancename": "i-190-649-VM",
+            "details": {
+              "deployvm": "true",
+              "tpmversion": "NONE",
+              "rootDiskController": "osdefault"
+            },
+            "clonefastsourcepowerallowed": false,
+            "clonefastpowerallowed": false,
+            "affinitygroup": [
+              {
+                "id": "4bcb0048-38f6-46e4-b79c-61e4833d84ad",
+                "name": "qa-ag01-20261019-project",
+                "description": "AG01 disposable project",
+                "account": "PrjAcct-qa-ag01-20261019-project-1"
+              },
+              {
+                "id": "19c27a5d-fa81-4599-bd42-29a3c154d07c",
+                "name": "qa-ag01-20261019-shared",
+                "description": "AG01 empty domain-wide group; no host dedication",
+                "account": "PrjAcct-qa-ag01-20261019-project-1"
+              }
+            ],
+            "displayvm": true,
+            "isdynamicallyscalable": true,
+            "deleteprotection": false,
+            "ostypeid": "9708b6ac-b253-11f1-a895-0024814c313f",
+            "osdisplayname": "Rocky Linux 9",
+            "receivedbytes": 0,
+            "sentbytes": 0,
+            "vbmcport": "None",
+            "kvdoenable": false,
+            "kvdoinuse": false,
+            "arch": "x86_64",
+            "vbmcstatus": "Unallocated",
+            "tags": [],
+            "hasannotations": false
+          }
+        ]
+      }
+    }
+  }
+]

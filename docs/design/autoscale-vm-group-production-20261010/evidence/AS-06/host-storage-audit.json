@@ -1,0 +1,156 @@
+[
+  {
+    "cluster": 31,
+    "vmid": "62328050-c733-4e5c-940f-77f2dfa0e837",
+    "instance": "i-35-475-VM",
+    "host": "10.10.31.1",
+    "exitCode": 0,
+    "disks": [
+      {
+        "target": {
+          "dev": "sda",
+          "bus": "scsi"
+        },
+        "diskType": "file",
+        "driver": {
+          "name": "qemu",
+          "type": "qcow2",
+          "cache": "none",
+          "io": "io_uring",
+          "discard": "unmap"
+        },
+        "source": "/mnt/glue-gfs/394275d7-9e31-402b-9a58-33f44431e5bf",
+        "qemuInfo": {
+          "children": [
+            {
+              "name": "file",
+              "info": {
+                "children": [],
+                "virtual-size": 128868941824,
+                "filename": "/mnt/glue-gfs/394275d7-9e31-402b-9a58-33f44431e5bf",
+                "format": "file",
+                "actual-size": 3589292032,
+                "format-specific": {
+                  "type": "file",
+                  "data": {}
+                },
+                "dirty-flag": false
+              }
+            }
+          ],
+          "virtual-size": 128849018880,
+          "filename": "/mnt/glue-gfs/394275d7-9e31-402b-9a58-33f44431e5bf",
+          "cluster-size": 65536,
+          "format": "qcow2",
+          "actual-size": 3589292032,
+          "format-specific": {
+            "type": "qcow2",
+            "data": {
+              "compat": "1.1",
+              "compression-type": "zlib",
+              "lazy-refcounts": false,
+              "refcount-bits": 16,
+              "corrupt": false,
+              "extended-l2": false
+            }
+          },
+          "dirty-flag": false
+        },
+        "mount": "gfs2   /dev/mapper/vg_glue-lv_glue"
+      },
+      {
+        "target": {
+          "dev": "sdb",
+          "bus": "scsi"
+        },
+        "diskType": "file",
+        "driver": {
+          "name": "qemu",
+          "type": "qcow2",
+          "cache": "none",
+          "io": "io_uring",
+          "discard": "unmap"
+        },
+        "source": "/mnt/glue-gfs/74741763-1ac6-4558-8661-7210001d582a",
+        "qemuInfo": {
+          "children": [
+            {
+              "name": "file",
+              "info": {
+                "children": [],
+                "virtual-size": 10739318784,
+                "filename": "/mnt/glue-gfs/74741763-1ac6-4558-8661-7210001d582a",
+                "format": "file",
+                "actual-size": 1982464,
+                "format-specific": {
+                  "type": "file",
+                  "data": {}
+                },
+                "dirty-flag": false
+              }
+            }
+          ],
+          "virtual-size": 10737418240,
+          "filename": "/mnt/glue-gfs/74741763-1ac6-4558-8661-7210001d582a",
+          "cluster-size": 65536,
+          "format": "qcow2",
+          "actual-size": 1982464,
+          "format-specific": {
+            "type": "qcow2",
+            "data": {
+              "compat": "1.1",
+              "compression-type": "zlib",
+              "lazy-refcounts": false,
+              "refcount-bits": 16,
+              "corrupt": false,
+              "extended-l2": false
+            }
+          },
+          "dirty-flag": false
+        },
+        "mount": "gfs2   /dev/mapper/vg_glue-lv_glue"
+      }
+    ],
+    "stderr": ""
+  },
+  {
+    "cluster": 32,
+    "vmid": "35c8594c-027a-4f6b-bbee-c372e9b22e76",
+    "instance": "i-6-151-VM",
+    "host": "10.10.32.1",
+    "exitCode": 0,
+    "disks": [
+      {
+        "target": {
+          "dev": "sda",
+          "bus": "scsi"
+        },
+        "diskType": "block",
+        "driver": {
+          "name": "qemu",
+          "type": "raw",
+          "cache": "none",
+          "discard": "unmap"
+        },
+        "source": "/dev/rbd/rbd/7be7aa59-ee84-41bc-b23a-5252a307d981",
+        "blockBytes": "128849018880"
+      },
+      {
+        "target": {
+          "dev": "sdb",
+          "bus": "scsi"
+        },
+        "diskType": "block",
+        "driver": {
+          "name": "qemu",
+          "type": "raw",
+          "cache": "none",
+          "discard": "unmap"
+        },
+        "source": "/dev/rbd/rbd/2e74a7ed-7a54-44a2-8c05-d503accaf85a",
+        "blockBytes": "10737418240"
+      }
+    ],
+    "stderr": ""
+  }
+]

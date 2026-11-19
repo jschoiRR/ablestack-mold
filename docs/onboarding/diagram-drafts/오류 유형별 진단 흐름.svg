@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1260" viewBox="0 0 1800 1260">
+<rect width="100%" height="100%" fill="white"/>
+<text x="72" y="48" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="52" font-weight="700" fill="#172B45">오류 유형별 확인 순서</text>
+<text x="72" y="127" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="36" font-weight="400" fill="#506378">증상에 맞는 경로 하나를 선택합니다. 네 경로를 순서대로 모두 실행하는 것은 아닙니다.</text>
+<rect x="72" y="225" width="804" height="423" rx="20" fill="#F0F7FF" stroke="none" stroke-width="2"/>
+<text x="100" y="253" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="44" font-weight="700" fill="#172B45">의존성 설치 오류</text>
+<text x="102" y="337" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="38" font-weight="400" fill="#506378">1  Node·npm·CPU 확인</text>
+<polyline points="477,402 477,424" fill="none" stroke="#146CBA" stroke-width="3"/>
+<polygon points="477,424 485.0,408.0 469.0,408.0" fill="#146CBA"/>
+<text x="102" y="428" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="38" font-weight="400" fill="#506378">2  실패한 패키지와 설치 로그</text>
+<polyline points="477,493 477,515" fill="none" stroke="#146CBA" stroke-width="3"/>
+<polygon points="477,515 485.0,499.0 469.0,499.0" fill="#146CBA"/>
+<text x="102" y="519" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="38" font-weight="400" fill="#506378">3  CLT·같은 SHA의 CI 결과</text>
+<rect x="922" y="225" width="804" height="423" rx="20" fill="#F5F2FF" stroke="none" stroke-width="2"/>
+<text x="950" y="253" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="44" font-weight="700" fill="#172B45">로그인·API 오류</text>
+<text x="952" y="337" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="38" font-weight="400" fill="#506378">1  프록시 설정·포트 연결</text>
+<polyline points="1327,402 1327,424" fill="none" stroke="#6554B7" stroke-width="3"/>
+<polygon points="1327,424 1335.0,408.0 1319.0,408.0" fill="#6554B7"/>
+<text x="952" y="428" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="38" font-weight="400" fill="#506378">2  HTTP 응답·쿠키·세션</text>
+<polyline points="1327,493 1327,515" fill="none" stroke="#6554B7" stroke-width="3"/>
+<polygon points="1327,515 1335.0,499.0 1319.0,499.0" fill="#6554B7"/>
+<text x="952" y="519" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="38" font-weight="400" fill="#506378">3  계정 Domain·Role 확인</text>
+<rect x="72" y="695" width="804" height="423" rx="20" fill="#EFF9F6" stroke="none" stroke-width="2"/>
+<text x="100" y="723" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="44" font-weight="700" fill="#172B45">SSH 키 불일치</text>
+<text x="102" y="807" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="38" font-weight="400" fill="#506378">1  대상 IP·재설치 이력</text>
+<polyline points="477,872 477,894" fill="none" stroke="#008878" stroke-width="3"/>
+<polygon points="477,894 485.0,878.0 469.0,878.0" fill="#008878"/>
+<text x="102" y="898" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="38" font-weight="400" fill="#506378">2  새 호스트 키 지문 대조</text>
+<polyline points="477,963 477,985" fill="none" stroke="#008878" stroke-width="3"/>
+<polygon points="477,985 485.0,969.0 469.0,969.0" fill="#008878"/>
+<text x="102" y="989" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="38" font-weight="400" fill="#506378">3  확인 후 해당 키만 갱신</text>
+<rect x="922" y="695" width="804" height="423" rx="20" fill="#F0F7FF" stroke="none" stroke-width="2"/>
+<text x="950" y="723" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="44" font-weight="700" fill="#172B45">화면 변경이 안 보임</text>
+<text x="952" y="807" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="38" font-weight="400" fill="#506378">1  접속 URL·소스 폴더</text>
+<polyline points="1327,872 1327,894" fill="none" stroke="#146CBA" stroke-width="3"/>
+<polygon points="1327,894 1335.0,878.0 1319.0,878.0" fill="#146CBA"/>
+<text x="952" y="898" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="38" font-weight="400" fill="#506378">2  한국어·번역 파일 응답</text>
+<polyline points="1327,963 1327,985" fill="none" stroke="#146CBA" stroke-width="3"/>
+<polygon points="1327,985 1335.0,969.0 1319.0,969.0" fill="#146CBA"/>
+<text x="952" y="989" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="38" font-weight="400" fill="#506378">3  번역 키 사용 위치·새로고침</text>
+<text x="72" y="1174" dominant-baseline="text-before-edge" font-family="NanumSquare" font-size="38" font-weight="700" fill="#172B45">실패한 명령과 첫 오류를 기록하고 원인을 해결한 뒤 다시 확인합니다.</text>
+</svg>

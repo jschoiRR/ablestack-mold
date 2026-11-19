@@ -1,0 +1,40 @@
+{
+  "start": 14433,
+  "cursor": 14448,
+  "truncated": false,
+  "events": [
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 14435,
+      "requestId": "27600.2726",
+      "api": "listVirtualMachines",
+      "id": "cf208e56-a2c4-4aef-9299-bd59dd902ff0",
+      "virtualmachineid": null,
+      "projectid": null
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 14437,
+      "requestId": "27600.2726",
+      "api": "listVirtualMachines",
+      "status": 200
+    },
+    {
+      "method": "Network.requestWillBeSent",
+      "sequence": 14439,
+      "requestId": "27600.2727",
+      "api": "getVirtualMachineUserData",
+      "id": null,
+      "virtualmachineid": "cf208e56-a2c4-4aef-9299-bd59dd902ff0",
+      "projectid": null
+    },
+    {
+      "method": "Network.responseReceived",
+      "sequence": 14445,
+      "requestId": "27600.2727",
+      "api": "getVirtualMachineUserData",
+      "status": 403
+    }
+  ],
+  "exceptions": 0
+}

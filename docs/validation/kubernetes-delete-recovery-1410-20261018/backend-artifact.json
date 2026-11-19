@@ -1,0 +1,18 @@
+{
+  "before_sha256": "3b9bc6d9e6b766938e46ecde613ea00d073a08a435fc864c89e9827f560a36eb",
+  "final_sha256": "9d3108fcee6c38a69a0714b7d7f21cf5dbd4e0758717945097b1740fce9abdf3",
+  "fault_sha256": "30b0cee3684197dc8433d9f15c8353e0dacf6b19b0a35f89ede132a6a78ee034",
+  "entries": 3,
+  "changed_entries": {
+    "com/cloud/kubernetes/cluster/actionworkers/KubernetesClusterStartWorker.class": "a08ce6392eff4f7357745b80e18e398b509e7b74c8dec41db3eb41e526de0cf8",
+    "com/cloud/kubernetes/cluster/actionworkers/KubernetesClusterDestroyWorker.class": "87e71b4130a1af4aae4803bd717cf808af9bd7b767f982be0047d82c015438a7",
+    "com/cloud/kubernetes/cluster/actionworkers/KubernetesClusterDestroyWorker$1.class": "0d0a64ce769cd0593ea8394b56ed691ec69e5a037fabb57a85c35d80f4ec1deb"
+  },
+  "unchanged_entries": 204497,
+  "temporary_fault_entries": [
+    "com/cloud/kubernetes/cluster/actionworkers/KubernetesClusterStartWorker.class",
+    "com/cloud/network/NetworkModelImpl.class",
+    "com/cloud/network/router/CommandSetupHelper.class"
+  ],
+  "previous_fault_sha256": "0b671b71eb1bbc8405bcf61b6e53bf261d0e8d5bbecd92dec2550342bf2ee34c"
+}

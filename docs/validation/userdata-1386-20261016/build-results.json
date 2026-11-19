@@ -1,0 +1,51 @@
+{
+  "issue": 1386,
+  "ui_source": "11a14231351ed3963b8e1c1b6cae7993bf2325d0",
+  "server_source": "f89387ef67b3b07ca89b1ec7cf38e38c99930af7",
+  "repository": "/home/ablecloud/work/dhslove/cloud-epic-1381",
+  "ui_tests": {
+    "command": "npm run test:unit -- --runInBand --coverage=false --runTestsByPath tests/unit/views/compute/ResetUserData.spec.js tests/unit/views/compute/UserDataSelection.spec.js tests/unit/views/compute/AutoScaleCreationPreflight.spec.js tests/unit/views/compute/AutoScaleEditing.spec.js tests/unit/views/compute/RegisterUserData.spec.js",
+    "suites": 5,
+    "passed": 160,
+    "elapsed_seconds": 18.185,
+    "log": "/home/ablecloud/work/ud1386-tests-final.log"
+  },
+  "lint": {
+    "result": "PASS --no-fix",
+    "files": [
+      "src/views/compute/ResetUserData.vue",
+      "src/utils/userDataReset.js",
+      "tests/unit/views/compute/ResetUserData.spec.js"
+    ],
+    "log": "/home/ablecloud/work/ud1386-lint-final.log"
+  },
+  "server_tests": {
+    "command": "mvn -pl server -Dtest=UserVmUserDataResetTest,UserdataToRouterRulesTest,UserVmManagerTest,UserVmJoinDaoImplTest -DfailIfNoTests=false -Dcheckstyle.skip -Drat.skip=true test",
+    "passed": 46,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "checkstyle_executed": false,
+    "rat_executed": false,
+    "log": "/home/ablecloud/work/ud1386-maven-final.log"
+  },
+  "server_package": {
+    "command": "mvn -pl server -DskipTests -Dcheckstyle.skip -Drat.skip=true package",
+    "result": "BUILD SUCCESS",
+    "log": "/home/ablecloud/work/ud1386-package-final.log"
+  },
+  "ui_build": {
+    "command": "NODE_OPTIONS=--max-old-space-size=6144 npm run build",
+    "result": "PASS",
+    "warnings": [
+      "asset size limit",
+      "entrypoint size limit"
+    ],
+    "advisory": "Browserslist caniuse-lite is outdated",
+    "log": "/home/ablecloud/work/ud1386-build-final.log"
+  },
+  "full_cloud_build": false,
+  "manual_github_actions": false,
+  "qemu_build": false,
+  "pr_merge": false
+}

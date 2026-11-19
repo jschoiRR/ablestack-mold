@@ -1,0 +1,14 @@
+PASS root-all 30 groups
+PASS root-parent 27 groups
+PASS root-owner 5 groups
+PASS root-project 2 groups
+PASS domainadmin 27 groups
+PASS domainadmin-projects 20 groups
+PASS domainadmin-nonrecursive 26 groups
+PASS normal 5 groups
+PASS normal-project 2 groups
+PASS other-owner 2 groups
+PASS child 2 groups
+PASS restricted 2 groups
+PASS peer 2 groups
+Verified 208 pagination/filter cases plus full VM-map preservation

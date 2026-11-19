@@ -232,7 +232,12 @@ public class ApiServer extends ManagerBase implements HttpRequestHandler, ApiSer
     @Inject
     private APIAuthenticationManager authManager;
     @Inject
+    private com.cloud.network.as.AutoScaleCreationRequestManager autoScaleCreationRequests;
+    @Inject private com.cloud.vm.VmCloneBatchManager vmCloneBatches;
+    @Inject
     private ApiDispatcher dispatcher;
+    @Inject
+    private org.apache.cloudstack.framework.jobs.dao.AsyncJobDao storageSnapshotJobDao;
     @Inject
     private AsyncJobManager asyncMgr;
     @Inject
@@ -856,6 +861,19 @@ public class ApiServer extends ManagerBase implements HttpRequestHandler, ApiSer
 
     @Override
     public AsyncCmdResult processAsyncCmd(BaseAsyncCmd asyncCmd, Map<String, String> params, CallContext ctx, Long callerUserId, Account caller) throws Exception {
+        if (asyncCmd instanceof org.apache.cloudstack.api.command.user.vm.CloneVMCmd) {
+            return vmCloneBatches.submit(asyncCmd, params, () -> processAsyncCmdInternal(asyncCmd, params, ctx, callerUserId, caller));
+        }
+        if (com.cloud.storage.snapshot.StorageSnapshotRequestManager.supports(asyncCmd, params) && params.get(ApiConstants.CUSTOM_JOB_ID) != null) {
+            return new com.cloud.storage.snapshot.StorageSnapshotRequestManager(storageSnapshotJobDao).submit(asyncCmd, params, callerUserId, caller.getId(), () -> processAsyncCmdInternal(asyncCmd, params, ctx, callerUserId, caller));
+        }
+        if (com.cloud.network.as.AutoScaleCreationRequestManager.supports(asyncCmd) && params.get(ApiConstants.CUSTOM_JOB_ID) != null) {
+            return autoScaleCreationRequests.submit(asyncCmd, params, () -> processAsyncCmdInternal(asyncCmd, params, ctx, callerUserId, caller));
+        }
+        return processAsyncCmdInternal(asyncCmd, params, ctx, callerUserId, caller);
+    }
+
+    protected AsyncCmdResult processAsyncCmdInternal(BaseAsyncCmd asyncCmd, Map<String, String> params, CallContext ctx, Long callerUserId, Account caller) throws Exception {
         if (!asyncMgr.isAsyncJobsEnabled()) {
             String msg = "Maintenance or Shutdown has been initiated on this management server. Can not accept new jobs";
             logger.warn(msg);
@@ -868,6 +886,16 @@ public class ApiServer extends ManagerBase implements HttpRequestHandler, ApiSer
             dispatcher.dispatchCreateCmd(createCmd, params);
             objectId = createCmd.getEntityId();
             objectUuid = createCmd.getEntityUuid();
+            if (com.cloud.network.as.AutoScaleCreationRequestManager.supports(asyncCmd) && asyncCmd.getInjectedJobId() != null) {
+                org.apache.cloudstack.framework.jobs.impl.AsyncJobVO existing = autoScaleCreationRequests.submittedJob(asyncCmd, objectId, callerUserId, caller.getId());
+                if (existing != null) {
+                    return new AsyncCmdResult(objectId, objectUuid, asyncCmd, existing.getId());
+                }
+            }
+            if (asyncCmd instanceof org.apache.cloudstack.api.command.user.vm.CloneVMCmd) {
+                org.apache.cloudstack.framework.jobs.impl.AsyncJobVO existing = vmCloneBatches.submitted((org.apache.cloudstack.api.command.user.vm.CloneVMCmd)asyncCmd, callerUserId, caller.getId());
+                if (existing != null) { return new AsyncCmdResult(objectId, objectUuid, asyncCmd, existing.getId()); }
+            }
             params.put("id", objectId.toString());
             Class entityClass = EventTypes.getEntityClassForEvent(createCmd.getEventType());
             if (entityClass != null)
@@ -970,7 +998,7 @@ public class ApiServer extends ManagerBase implements HttpRequestHandler, ApiSer
             return;
         }
         auditTrailSb.append(" " + HttpServletResponse.SC_OK + " ");
-        if (command.equals("createSSHKeyPair")) {
+        if (command.equals("createSSHKeyPair") || command.equalsIgnoreCase("getBucketCredentials") || command.equalsIgnoreCase("rotateBucketCredentials") || java.util.Set.of("getbucketobjectmetadata", "checkobjectstoragepool", "getbucketdeletionimpact", "listbucketobjectversions", "managebucketobjectversion", "purgebucket", "getbucketpurgestatus").contains(command.toLowerCase(java.util.Locale.ROOT))) {
             auditTrailSb.append("This result was not logged because it contains sensitive data.");
         } else {
             auditTrailSb.append(result);

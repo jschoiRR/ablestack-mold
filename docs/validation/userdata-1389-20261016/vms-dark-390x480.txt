@@ -1,0 +1,177 @@
+Browser tab: 4, Title: "사용자 데이터 라이브러리 - ABLESTACK-Mold", URL: "http://10.10.31.10:8080/client/#/userdata/1fc463a9-c04b-4a1d-b1d3-75a9ac8c0e3c?tab=userdata.usage.vms".
+1 AXWebArea 사용자 데이터 라이브러리 - ABLESTACK-Mold, URL: 10.10.31.10:8080/client/#/userdata/1fc463a9-c04b-4a1d-b1d3-75a9ac8c0e3c?tab=userdata.usage.vms
+	2 container
+		600 container
+			601 text 페이지 스타일 설정
+			602 button 닫기
+				603 image close
+			905 container
+				906 heading 페이지 스타일 설정, Value: 3
+					907 text 페이지 스타일 설정
+				908 container
+					909 image
+					910 container
+						911 radio button (settable, integer) Description:  , Value: 0
+				912 container
+					913 image
+					914 container
+						915 radio button (settable, integer) Description:  , Value: 1
+					916 image check
+				917 heading 테마 색상, Value: 3
+					918 text 테마 색상
+				919 container
+					920 radio button (settable, integer) Description:  , Value: 0
+					921 image check
+				922 container
+					923 radio button (settable, integer) Description:  , Value: 0
+				924 container
+					925 radio button (settable, integer) Description:  , Value: 0
+				926 container
+					927 radio button (settable, integer) Description:  , Value: 0
+				928 container
+					929 radio button (settable, integer) Description:  , Value: 0
+				930 container
+					931 radio button (settable, integer) Description:  , Value: 0
+				932 container
+					933 radio button (settable, integer) Description:  , Value: 0
+				934 container
+					935 radio button (settable, integer) Description:  , Value: 0
+				936 heading 네비게이션 설정, Value: 3
+					937 text 네비게이션 설정
+				938 container
+					939 container
+						940 text 배경색
+						941 color well (disabled, settable) #ffffff
+					942 container
+						943 text 텍스트 색상
+						944 color well (disabled, settable) #000000
+				945 image exclamation-circle
+				946 text 설정은 현재 브라우저에서만 볼 수 있습니다. 설정을 적용하려면 JSON 파일을 다운로드하고 경로 `/public/config.json` 아래의 `config.json` 파일의 `theme` 섹션에서 해당 콘텐츠를 교체하세요.
+				947 button download 세팅값 다운로드(json)
+					948 image download
+					949 text 세팅값 다운로드(json)
+				950 button undo 기본값으로 재설정
+					951 image undo
+					952 text 기본값으로 재설정
+		122 container
+			904 image menu-unfold
+			124 container
+				125 combo box (settable) rc_select_0
+				126 image project
+				127 text 기본 보기
+			131 image translation
+			132 image bell
+			133 container
+				134 text AC admin cloud
+		135 container
+			953 container
+				954 container
+					955 link Description: home, Value: 10.10.31.10:8080/client/#/
+					956 text /
+					957 link Description: 사용자 데이터 라이브러리, Value: 10.10.31.10:8080/client/#/userdata
+					958 text / UD1389-31-20261016-main
+					959 link Description: question-circle, Value: docs.ablecloud.io/latest/adminguide/virtual_machines.html#user-data-and-meta-data
+					960 button reload 업데이트
+						981 image reload
+						962 text 업데이트
+				963 button down 작업
+					964 image down
+					965 text 작업
+			966 container
+				967 image solution
+				968 heading UD1389-31-20261016-main, Value: 4
+					982 text UD1389-31-20261016-main
+				983 text 아이디
+				984 button barcode
+					985 image barcode
+				986 link Description: 1fc463a9-c04b-4a1d-b1d3-75a9ac8c0e3c , Value: javascript:;
+				987 text 계정
+				988 image user
+				989 link Description: admin, Value: 10.10.31.10:8080/client/#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f
+				990 text 도메인
+				991 image block
+				992 link Description: ROOT, Value: 10.10.31.10:8080/client/#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details
+				980 link Description: cloud-server 가상머신 보기, Value: 10.10.31.10:8080/client/#/vm?userdataid=1fc463a9-c04b-4a1d-b1d3-75a9ac8c0e3c
+			993 container
+				994 tab group
+					995 container
+						996 tab (selectable, settable, boolean) 상세, Value: 0, ID: rc-tabs-44-tab-details
+						997 tab (selectable, settable, boolean) 사용자 데이터 본문, Value: 0, ID: rc-tabs-44-tab-userdata.content
+						998 tab (selected, settable, boolean) 사용 가상머신, Value: 1, ID: rc-tabs-44-tab-userdata.usage.vms
+						999 tab (selectable, settable, boolean) 연결 템플릿, Value: 0, ID: rc-tabs-44-tab-userdata.usage.templates
+						1000 tab (selectable, settable, boolean) 연결 ISO, Value: 0, ID: rc-tabs-44-tab-userdata.usage.isos
+						1001 tab (selectable, settable, boolean) 코멘트, Value: 0, ID: rc-tabs-44-tab-comments
+				1002 container Description: 사용 가상머신, ID: rc-tabs-44-panel-userdata.usage.vms
+					1003 container 참조 정보
+						1004 button reload 업데이트
+							1005 image reload
+							1006 text 업데이트
+						1007 container
+							1008 text field (settable) 검색
+							1009 button search
+								1010 image search
+						1011 text 저장된 사용자 데이터 UUID의 연결 관계입니다. 본문 복사·템플릿 상속 본문·게스트 실행 여부는 포함하지 않습니다.
+						1012 text 검색·페이지 이동은 서버에서 처리합니다. 열 정렬과 상태 집계는 현재 페이지에만 적용됩니다.
+						1013 text 조회 프로젝트: - (없으면 기본 보기). 접근 가능한 참조만 표시합니다. 다른 프로젝트는 보기를 전환하여 확인하세요.
+						1014 container
+							1015 text 현재 페이지 상태:   정지된 VM 1
+						1016 table
+							1017 row
+								1018 cell
+									1019 container
+										1020 text VM 표시 명
+										1021 image caret-up
+										1022 image caret-down
+								1023 cell
+									1024 container
+										1025 text 아이디
+										1026 image caret-up
+										1027 image caret-down
+								1028 cell
+									1029 container
+										1030 text 상태
+										1031 image caret-up
+										1032 image caret-down
+								1033 cell
+									1034 container
+										1035 text 계정
+										1036 image caret-up
+										1037 image caret-down
+								1038 cell
+									1039 container
+										1040 text 프로젝트
+										1041 image caret-up
+										1042 image caret-down
+								1043 cell
+									1044 container
+										1045 text 도메인
+										1046 image caret-up
+										1047 image caret-down
+							1048 row
+								1049 cell
+									1050 link Description: UD1389-31-20261016-vm, Value: 10.10.31.10:8080/client/#/vm/f7912d0f-d093-4677-9df4-ded9de010e85
+								1051 cell
+									1052 text f7912d0f-d093-4677-9df4-ded9de010e85
+								1053 cell
+									1054 text 정지된 상태
+								1055 cell
+									1056 link Description: admin, Value: 10.10.31.10:8080/client/#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&dataView=true
+								1057 cell
+									1058 link Description: ROOT, Value: 10.10.31.10:8080/client/#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details
+						1059 content list
+							1060 text 총 1개
+							1061 container 이전 페이지
+								1062 button (disabled) left
+									1063 image left
+							1064 text 1
+							1065 container 다음 페이지
+								1066 button (disabled) right
+									1067 image right
+							1068 container
+								1069 combo box (settable) rc_select_29
+								1070 text 20 / 쪽
+	197 container
+		198 image info-circle
+		199 text Wall 모니터링을 사용할 수 없습니다. 기존 알림은 최신 정보가 아닐 수 있으며 Mold는 계속 사용할 수 있습니다. 비활성
+
+The focused UI element is 1 AXWebArea 사용자 데이터 라이브러리 - ABLESTACK-Mold, URL: 10.10.31.10:8080/client/#/userdata/1fc463a9-c04b-4a1d-b1d3-75a9ac8c0e3c?tab=userdata.usage.vms

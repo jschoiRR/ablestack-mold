@@ -16,6 +16,7 @@
 // under the License.
 
 import Cookies from 'js-cookie'
+import { clearBucketS3Sessions } from '@/utils/bucketCredentialMemory'
 import { axios, sourceToken } from '@/utils/request'
 import { message, notification } from 'ant-design-vue'
 import { vueProps } from '@/vue-app'
@@ -45,7 +46,7 @@ function hasSessionKey () {
   return !!getSessionKey()
 }
 
-export function getAPI (command, args = {}, { optionalDiscovery = false, timeout, backgroundJob = false } = {}) {
+export function getAPI (command, args = {}, { optionalDiscovery = false, timeout, backgroundJob = false, preserveOnFailure = false } = {}) {
   args.command = command
   args.response = 'json'
 
@@ -62,7 +63,8 @@ export function getAPI (command, args = {}, { optionalDiscovery = false, timeout
     method: 'GET',
     ...(optionalDiscovery ? { optionalDiscovery: true, timeout: 15000 } : {}),
     ...(timeout ? { timeout } : {}),
-    ...(backgroundJob ? { backgroundJob: true } : {})
+    ...(backgroundJob ? { backgroundJob: true } : {}),
+    ...(preserveOnFailure || command === 'listVMSnapshot' ? { preserveOnFailure: true } : {})
   })
 }
 
@@ -75,7 +77,7 @@ export function appendApiData (params, data = {}) {
   return params
 }
 
-export function postAPI (command, data = {}) {
+export function postAPI (command, data = {}, { preserveOnFailure = false, timeout, backgroundJob = false } = {}) {
   const params = new URLSearchParams()
   params.append('command', command)
   params.append('response', 'json')
@@ -88,17 +90,24 @@ export function postAPI (command, data = {}) {
   return axios({
     url: '/',
     method: 'POST',
+    ...(timeout ? { timeout } : {}),
+    ...(backgroundJob ? { backgroundJob: true } : {}),
+    ...((preserveOnFailure || ['createVMSnapshot', 'revertToVMSnapshot', 'deleteVMSnapshot', 'createSnapshotFromVMSnapshot'].includes(command) ||
+      (['deployVirtualMachine', 'deployVirtualMachineForVolume'].includes(command) && (data.volumeid || data.snapshotid)))
+      ? { preserveOnFailure: true } : {}),
     data: params
   })
 }
 
 export function callAPI (command, args = {}) {
+  if (['checkobjectstoragepool', 'getbucketobjectmetadata', 'getbucketprotection', 'reconcilebucketprotection', 'getbucketdeletionimpact', 'listbucketobjectversions', 'managebucketobjectversion', 'purgebucket', 'getbucketpurgestatus', 'deletebucket', 'getbucketcredentials', 'rotatebucketcredentials', 'addobjectstoragepool', 'updateobjectstoragepool'].includes(command.toLowerCase())) return postAPI(command, args)
   const isGetAPICommand = getAPICommandsRegex.test(command) || additionalGetAPICommandsList.includes(command.toLowerCase())
   const call = isGetAPICommand ? getAPI : postAPI
   return call(command, args)
 }
 
 export function login (arg) {
+  clearBucketS3Sessions()
   if (!sourceToken.checkExistSource()) {
     sourceToken.init()
   }
@@ -125,6 +134,7 @@ export function login (arg) {
 }
 
 export async function logout (sessionkey) {
+  clearBucketS3Sessions()
   if (!getSessionKey(sessionkey)) {
     sourceToken.cancel()
     message.destroy()

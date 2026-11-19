@@ -18,19 +18,59 @@
 import fs from 'fs'
 import path from 'path'
 import { mount, flushPromises } from '@vue/test-utils'
-import { defineAsyncComponent, h, markRaw } from 'vue'
+import { defineAsyncComponent, h, markRaw, reactive } from 'vue'
+import { createRouter, createMemoryHistory } from 'vue-router'
+import { mixinDevice } from '@/utils/mixin'
 import ResourceView from '@/components/view/ResourceView'
+import InfoCard from '@/components/view/InfoCard'
 import AutogenView from '@/views/AutogenView'
 
 jest.mock('@/components/view/InfoCard', () => ({ render: () => null }))
+jest.mock('@/components/view/DetailsTab', () => ({ render: () => null }))
 jest.mock('@/api', () => ({ getAPI: jest.fn() }))
-jest.mock('@/utils/mixin.js', () => ({ mixinDevice: {} }))
 
 function context (query = {}, tabs = [{ name: 'details' }, { name: 'events' }]) {
   return { tabs, $route: { query }, historyTab: '', showTab: tab => !tab.hidden }
 }
 
+test.each([{ capabilities: '' }, { backupcancellationpending: true }, { restoreoperationpending: false, restorejobstate: 'COMPLETED' }])('forwards backup control changes %j from the detail card to the resource owner', patch => {
+  const resource = { id: 'backup-1', status: 'BackingUp', capabilities: 'cancel' }
+  const wrapper = mount(ResourceView, {
+    props: { resource, tabs: [] },
+    global: {
+      mocks: { $route: { path: '/backup/backup-1', query: {} }, $t: key => key, $store: { state: { app: { device: 'desktop' } }, getters: { userInfo: {} } } },
+      stubs: {
+        ResourceLayout: { render () { return h('div', this.$slots.left()) } }
+      }
+    }
+  })
+  wrapper.findComponent(InfoCard).vm.$emit('backup-controls-change', patch)
+  expect(wrapper.emitted('backup-controls-change')).toEqual([[patch]])
+  expect(resource.capabilities).toBe('cancel')
+  wrapper.unmount()
+})
+
 describe('ResourceView resource navigation', () => {
+  it('returns from VM detail to the affinity member tab through real router history', async () => {
+    const component = { render: () => null }
+    const router = createRouter({ history: createMemoryHistory(), routes: [{ path: '/affinitygroup/:id', component, meta: { name: 'affinitygroup' } }, { path: '/vm/:id', component }] })
+    await router.push('/affinitygroup/group?keyword=kept')
+    const vm = { $route: router.currentRoute.value, $router: router, $emit: jest.fn() }
+    ResourceView.methods.onTabChange.call(vm, 'instances'); await flushPromises()
+    expect(router.currentRoute.value.query).toEqual({ keyword: 'kept', tab: 'instances' })
+    await router.push('/vm/vm'); router.back(); await flushPromises()
+    expect(router.currentRoute.value.path).toBe('/affinitygroup/group')
+    expect(router.currentRoute.value.query).toEqual({ keyword: 'kept', tab: 'instances' })
+  })
+  it('affinity tab-only navigation preserves loaded data and selection but owner changes requery', () => {
+    const vm = { resetSelection: jest.fn(), clearAutoRefresh: jest.fn(), fetchData: jest.fn(), scheduleAutoRefresh: jest.fn() }
+    const from = { path: '/affinitygroup/group', fullPath: '/affinitygroup/group', params: { id: 'group' }, meta: { name: 'affinitygroup' }, query: {} }
+    const to = { ...from, fullPath: from.path + '?tab=instances', query: { tab: 'instances' } }
+    AutogenView.watch.$route.call(vm, to, from)
+    expect(vm.fetchData).not.toHaveBeenCalled(); expect(vm.resetSelection).not.toHaveBeenCalled()
+    AutogenView.watch.$route.call(vm, { ...to, fullPath: to.fullPath + '&domainid=other', query: { ...to.query, domainid: 'other' } }, to)
+    expect(vm.fetchData).toHaveBeenCalledTimes(1)
+  })
   it.each([
     ['/customaction/2', {}, true],
     ['/customaction/3', { tab: 'events' }, true],
@@ -50,9 +90,9 @@ describe('ResourceView resource navigation', () => {
     expect(vm.fetchData).toHaveBeenCalledTimes(refresh ? 1 : 0)
   })
 
-  it('isolates detail instances by path, not tab query or delayed API resource ID', () => {
+  it('isolates general detail by path and SSH or snapshot detail by verified identity scope', () => {
     const source = fs.readFileSync(path.resolve(__dirname, '../../../../src/views/AutogenView.vue'), 'utf8')
-    expect(source).toMatch(/<resource-view\s+v-else\s+:key="\$route.path"/)
+    expect(source).toMatch(/<resource-view\s+v-else(?:-if="[^"]*")?\s+:key="isSshKeyPairDetail \|\| isSnapshotDetail \|\| isPolicyDetail \? listScope\(\) : \$route.path"/)
   })
 
   it.each([
@@ -104,7 +144,7 @@ describe('ResourceView resource navigation', () => {
       render () { return h(ResourceView, { key: this.routePath, resource: this.resource, tabs: this.tabs }) }
     }, {
       global: {
-        mocks: { $route: { query: {} }, $t: key => key, $store: { getters: { userInfo: {} } } },
+        mocks: { $route: { query: {} }, $t: key => key, $store: { state: { app: { device: 'desktop' } }, getters: { userInfo: {} } } },
         stubs: { ResourceLayout: layout, ACard: slot, ATabs: slot, ATabPane: slot },
         config: { errorHandler: error => errors.push(error) }
       }
@@ -123,4 +163,94 @@ describe('ResourceView resource navigation', () => {
     expect(unmounted).toHaveBeenCalled()
     expect(errors).toEqual([])
   })
+})
+
+describe('ResourceView standard tab layout', () => {
+  const slot = { render () { return h('div', this.$slots.default()) } }
+  const layout = { render () { return h('div', this.$slots.right()) } }
+  const details = markRaw({ props: ['resource'], render () { return h('span', `snapshot:${this.resource.id}`) } })
+  const comments = markRaw({
+    data: () => ({ draft: '' }),
+    render () { return h('input', { value: this.draft, onInput: event => { this.draft = event.target.value } }) }
+  })
+  const tabs = [{ name: 'details', component: details }, { name: 'comments', component: comments }]
+  function mountLayout (device = 'desktop', extra = {}, meta = {}) {
+    return mount(ResourceView, {
+      props: { resource: { id: 'snapshot-1' }, tabs, ...extra },
+      global: {
+        mocks: { $route: { path: '/vmsnapshot/snapshot-1', query: {}, meta }, $t: key => key, $store: reactive({ state: { app: { device } }, getters: { userInfo: {} } }) },
+        stubs: { ResourceLayout: layout, ACard: slot }
+      }
+    })
+  }
+
+  it.each(['desktop', 'mobile'])('shows the policy details tab with the VM tab positioning on %s', device => {
+    const wrapper = mountLayout(device, { tabs: [tabs[0]] }, { name: 'snapshotpolicy' })
+    expect(wrapper.find('.ant-tabs-' + (device === 'mobile' ? 'top' : 'left')).exists()).toBe(true)
+    expect(wrapper.findAll('[role="tab"]').map(tab => tab.text())).toEqual(['label.details'])
+    expect(wrapper.text()).toContain('snapshot:snapshot-1')
+    wrapper.unmount()
+  })
+
+  it('uses shared vertical layout by default and preserves single-tab content without a tab bar', async () => {
+    const wrapper = mountLayout()
+    expect(wrapper.find('.ant-tabs-left').exists()).toBe(true)
+    expect(wrapper.get('.ant-tabs').element.style.marginTop).toBe('0px')
+    await wrapper.setProps({ tabs: [tabs[0]] })
+    expect(wrapper.find('.ant-tabs').exists()).toBe(false)
+    expect(wrapper.text()).toContain('snapshot:snapshot-1')
+    wrapper.unmount()
+  })
+
+  it('uses VM-standard left tabs on desktop/tablet and top tabs on mobile without losing the selected tab or input', async () => {
+    const wrapper = mountLayout()
+    expect(wrapper.find('.ant-tabs-left').exists()).toBe(true)
+    expect(wrapper.get('.ant-tabs').element.style.marginTop).toBe('0px')
+    await wrapper.findAll('[role="tab"]').find(tab => tab.text() === 'label.comments').trigger('click')
+    await wrapper.get('input').setValue('draft survives layout changes')
+    for (const device of ['tablet', 'mobile', 'desktop']) {
+      wrapper.vm.$store.state.app.device = device
+      await flushPromises()
+      expect(wrapper.find(device === 'mobile' ? '.ant-tabs-top' : '.ant-tabs-left').exists()).toBe(true)
+      expect(wrapper.get('[role="tab"][aria-selected="true"]').text()).toBe('label.comments')
+      expect(wrapper.get('input').element.value).toBe('draft survives layout changes')
+    }
+    await wrapper.findAll('[role="tab"]').find(tab => tab.text() === 'label.details').trigger('click')
+    await wrapper.findAll('[role="tab"]').find(tab => tab.text() === 'label.comments').trigger('click')
+    expect(wrapper.get('input').element.value).toBe('draft survives layout changes')
+    expect(wrapper.emitted('onTabChange').map(event => event[0])).toEqual(['comments', 'details', 'comments'])
+    wrapper.unmount()
+  })
+
+  it('keeps permission-hidden tabs out of the vertical navigation', () => {
+    const wrapper = mountLayout('desktop', { tabs: [...tabs, { name: 'events', component: details, show: () => false }] })
+    expect(wrapper.findAll('[role="tab"]').map(tab => tab.text())).toEqual(['label.details', 'label.comments'])
+    wrapper.unmount()
+  })
+
+  it.each(['desktop', 'tablet', 'mobile'])('shares the existing VM tab position policy for %s', device => {
+    expect(mixinDevice.computed.resourceTabPosition.call({ device })).toBe(device === 'mobile' ? 'top' : 'left')
+  })
+})
+
+test('userdata invalid or hidden deep links replace the URL with the visible fallback without dropping filters', () => {
+  for (const tab of ['invalid', 'hidden']) {
+    const vm = { $route: { meta: { name: 'userdata' }, path: '/userdata/id', query: { tab, vmskeyword: 'kept' } }, $router: { replace: jest.fn() }, tabs: [{ name: 'details' }, { name: 'hidden', hidden: true }], showTab: tab => !tab.hidden }
+    ResourceView.methods.setActiveTab.call(vm)
+    expect(vm.activeTab).toBe('details')
+    expect(vm.$router.replace).toHaveBeenCalledWith({ path: '/userdata/id', query: { tab: 'details', vmskeyword: 'kept' } })
+  }
+})
+
+test('departing VM or image views cannot rewrite a valid destination library tab before unmount', () => {
+  const libraryTabs = [{ name: 'details' }, { name: 'userdata.content' }, { name: 'userdata.usage.vms' }]
+  for (const tabs of [[{ name: 'details' }, { name: 'volumes' }], [{ name: 'details' }, { name: 'comments' }]]) {
+    const vm = { $route: { meta: { name: 'userdata', tabs: libraryTabs }, path: '/userdata/id', query: { tab: 'userdata.usage.vms', vmspage: '2' } }, $router: { replace: jest.fn() }, tabs, showTab: () => true }
+    ResourceView.methods.setActiveTab.call(vm)
+    expect(vm.$router.replace).not.toHaveBeenCalled()
+    vm.tabs = libraryTabs
+    ResourceView.methods.setActiveTab.call(vm)
+    expect(vm.activeTab).toBe('userdata.usage.vms')
+    expect(vm.$router.replace).not.toHaveBeenCalled()
+  }
 })

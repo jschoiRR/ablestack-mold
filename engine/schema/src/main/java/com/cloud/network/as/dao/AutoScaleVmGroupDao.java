@@ -17,6 +17,7 @@
 package com.cloud.network.as.dao;
 
 import java.util.List;
+import java.util.Date;
 
 import com.cloud.network.as.AutoScaleVmGroup;
 import com.cloud.network.as.AutoScaleVmGroupVO;
@@ -28,6 +29,22 @@ public interface AutoScaleVmGroupDao extends GenericDao<AutoScaleVmGroupVO, Long
     boolean isProfileInUse(long profileId);
 
     boolean isAutoScaleLoadBalancer(Long loadBalancerId);
+
+    boolean beginOperation(long groupId, String token, String action);
+
+    boolean beginCleanupOperation(long groupId, String token);
+
+    boolean checkpointOperation(long groupId, String token, String phase, Long vmId, java.util.Date deadline);
+
+    boolean finishOperation(long groupId, String token);
+
+    boolean updateEvaluation(long groupId, String evaluation, Date timestamp);
+
+    boolean updateLastScaled(long groupId, Date timestamp);
+
+    boolean updateLastInterval(long groupId, java.util.Date interval);
+
+    boolean updateNextVmSeq(long groupId, long sequence);
 
     boolean updateState(long groupId, AutoScaleVmGroup.State oldState, AutoScaleVmGroup.State newState);
 

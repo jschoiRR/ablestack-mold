@@ -1,0 +1,195 @@
+Browser tab: 6, Title: "가상머신 - ABLESTACK-Mold", URL: "http://10.10.31.10:8080/client/#/vm/ba74e59a-2834-45e8-aa60-778d4bc86bde".
+1 AXWebArea 가상머신 - ABLESTACK-Mold, URL: 10.10.31.10:8080/client/#/vm/ba74e59a-2834-45e8-aa60-778d4bc86bde
+	2 container
+		3 container
+			4 image
+			5 menu
+				6 dashboard 대시보드
+					7 link Description: dashboard 대시보드, Value: 10.10.31.10:8080/client/#/dashboard
+				8 container
+					9 image cloud
+					10 text 컴퓨트
+				11 content list sub_menu_13_$$_/compute-popup
+					12 cloud-server 가상머신
+						13 link Description: cloud-server 가상머신, Value: 10.10.31.10:8080/client/#/vm
+					14 camera VM 스냅샷
+						15 link Description: camera VM 스냅샷, Value: 10.10.31.10:8080/client/#/vmsnapshot
+					16 쿠버네티스
+						17 link Description: 쿠버네티스, Value: 10.10.31.10:8080/client/#/kubernetes
+					18 fullscreen 오토스케일 VM 그룹
+						19 link Description: fullscreen 오토스케일 VM 그룹, Value: 10.10.31.10:8080/client/#/autoscalevmgroup
+					20 gold 가상머신 그룹
+						21 link Description: gold 가상머신 그룹, Value: 10.10.31.10:8080/client/#/vmgroup
+					22 key SSH 키 쌍
+						23 link Description: key SSH 키 쌍, Value: 10.10.31.10:8080/client/#/ssh
+					24 solution 사용자 데이터 라이브러리
+						25 link Description: solution 사용자 데이터 라이브러리, Value: 10.10.31.10:8080/client/#/userdata
+					26 solution CNI 구성
+						27 link Description: solution CNI 구성, Value: 10.10.31.10:8080/client/#/cniconfiguration
+					28 swap Affinity 그룹
+						29 link Description: swap Affinity 그룹, Value: 10.10.31.10:8080/client/#/affinitygroup
+				30 container
+					31 image hdd
+					32 text 스토리지
+				33 container
+					34 image wifi
+					35 text 네트워크
+				36 container
+					37 image picture
+					38 text 이미지
+				39 schedule 이벤트
+					40 link Description: schedule 이벤트, Value: 10.10.31.10:8080/client/#/event
+				41 project 프로젝트
+					42 link Description: project 프로젝트, Value: 10.10.31.10:8080/client/#/project
+				43 team 계정
+					44 link Description: team 계정, Value: 10.10.31.10:8080/client/#/account
+				45 global Zone
+					46 link Description: global Zone, Value: 10.10.31.10:8080/client/#/zones
+				47 container
+					48 image shopping
+					49 text 서비스 오퍼링
+				50 container
+					51 image tool
+					52 text 도구
+				53 read API 문서
+					54 link Description: read API 문서, Value: 10.10.31.10:8080/client/#/apidocs/
+		55 container
+			56 image menu-fold
+			57 container
+				58 combo box (settable) rc_select_2
+				82 image project
+				83 text qa-ag04-project
+			61 button 생성 down
+				62 text 생성
+				63 image down
+			64 image translation
+			65 image bell
+			66 container
+				67 text AQ AG04 QA
+		68 container
+			69 container
+				70 container
+					71 link Description: home, Value: 10.10.31.10:8080/client/#/
+					72 text /
+					73 link Description: 가상머신, Value: 10.10.31.10:8080/client/#/vm
+					74 text / qa-ag04-project-vm
+					75 link Description: question-circle, Value: docs.ablecloud.io/latest/adminguide/virtual_machines.html
+					76 button reload 업데이트
+						84 image reload
+						78 text 업데이트
+				79 button down 작업
+					80 image down
+					81 text 작업
+			85 container
+				86 image edit
+				87 heading qa-ag04-project-vm, Value: 4
+					88 text qa-ag04-project-vm
+				89 text KVM 동적으로 확장 가능
+				90 link code
+					121 button (disabled) code
+						122 image code
+				123 text 상태 정지된 상태 아이디
+				91 button barcode
+					92 image barcode
+				93 link Description: ba74e59a-2834-45e8-aa60-778d4bc86bde , Value: javascript:;
+				124 text CPU 2 CPU x 2.00 GHz
+				95 image question-circle
+				125 text 메모리 2048 MB 메모리 네트워크
+				97 image wifi
+				126 text 1 NIC(s)
+				127 text eth0
+				98 link Description:  , Value: javascript:;
+				128 text 기본
+				99 image apartment
+				100 link Description: qa-ag04-project-L2, Value: 10.10.31.10:8080/client/#/guestnetwork/c3f97654-f8b6-4f62-876d-eaa29a2e9f5b
+				129 text 프로젝트
+				101 image project
+				102 link Description: qa-ag04-project, Value: 10.10.31.10:8080/client/#/project/78a38450-86a1-483c-b607-e23f862fe320
+				130 text Affinity 그룹
+				103 image swap
+				104 link Description: qa-ag04-project-target, Value: 10.10.31.10:8080/client/#/affinitygroup/10b5658f-effa-4d28-9e25-a04b8d9041e2
+				105 text ,
+				106 link Description: qa-ag04-project-other, Value: 10.10.31.10:8080/client/#/affinitygroup/23d3082b-1abe-4e57-b789-81ec4d8baed9
+				107 text ,
+				108 link Description: qa-ag04-shared, Value: 10.10.31.10:8080/client/#/affinitygroup/89de064c-3036-44f1-8b78-8dbaec2b84a1
+				131 text 템플릿
+				109 image save
+				132 link Description: rocky-9-4-minimal.qcow22, Value: 10.10.31.10:8080/client/#/template/e3d8677e-70f0-44bd-917e-6068636b97a8
+				133 text 컴퓨트 오퍼링
+				111 image cloud
+				112 link Description: AS-PROD-31-AS01-2C2G-Sparse, Value: 10.10.31.10:8080/client/#/computeoffering/39c3aa33-5632-4dea-bd84-ba794d292c87
+				134 text Zone
+				113 image global
+				114 link Description: Zone, Value: 10.10.31.10:8080/client/#/zone/7013f5a1-de59-4cea-a596-f4f58815f31c
+				135 text 도메인
+				115 image block
+				116 text ROOT 생성일
+				117 image calendar
+				118 text 2026. 10. 19. 오전 7:56:56
+				119 container
+					120 text 태그
+					136 container
+						137 image plus
+						138 text  새 태그
+			139 container
+				140 tab group
+					141 container
+						142 tab (selected, settable, boolean) 상세, Value: 1, ID: rc-tabs-4-tab-details
+						143 tab (selectable, settable, boolean) IP 구성, Value: 0, ID: rc-tabs-4-tab-guestnetwork
+						144 tab (selectable, settable, boolean) 메트릭, Value: 0, ID: rc-tabs-4-tab-stats
+						145 tab (selectable, settable, boolean) 프로세스, Value: 0, ID: rc-tabs-4-tab-processes
+						146 tab (selectable, settable, boolean) 스케줄, Value: 0, ID: rc-tabs-4-tab-schedules
+						147 tab (selectable, settable, boolean) ISO, Value: 0, ID: rc-tabs-4-tab-cdrom
+						148 tab (selectable, settable, boolean) 볼륨, Value: 0, ID: rc-tabs-4-tab-volumes
+						149 tab (selectable, settable, boolean) NIC, Value: 0, ID: rc-tabs-4-tab-nics
+						150 tab (selectable, settable, boolean) 설정, Value: 0, ID: rc-tabs-4-tab-settings
+						151 tab (selectable, settable, boolean) 호스트 장치, Value: 0, ID: rc-tabs-4-tab-hostdevices
+						152 tab (selectable, settable, boolean) VM 스냅샷, Value: 0, ID: rc-tabs-4-tab-vmsnapshots
+						153 tab (selectable, settable, boolean) 이벤트, Value: 0, ID: rc-tabs-4-tab-events
+						154 tab (selectable, settable, boolean) 코멘트, Value: 0, ID: rc-tabs-4-tab-comments
+				155 container Description: 상세, ID: rc-tabs-4-panel-details
+					156 content list
+						157 container
+							158 text VM 호스트 명
+							159 text qa-ag04-project-vm
+						160 container
+							161 text VM 표시 명
+							162 text qa-ag04-project-vm
+						163 container
+							164 text 아이디
+							165 text ba74e59a-2834-45e8-aa60-778d4bc86bde
+						166 container
+							167 text 상태
+							168 text Stopped
+						169 container
+							170 text 템플릿
+							171 text rocky-9-4-minimal.qcow22
+						172 container
+							173 text 템플릿 형식
+							174 text USER
+						175 container
+							176 text 컴퓨트 오퍼링
+							177 text AS-PROD-31-AS01-2C2G-Sparse
+						178 container
+							179 text 동적으로 확장 가능
+							180 text true
+						181 container
+							182 text HA 활성화
+							183 text false
+						184 container
+							185 text 하이퍼바이저
+							186 text KVM
+						187 container
+							188 text 도메인
+							189 text ROOT
+						190 container
+							191 text Zone
+							192 text Zone
+						193 container
+							194 text VBMC 포트
+							195 text 미할당
+						196 container
+							197 text 삭제 보호
+							198 text false
+
+The focused UI element is 1 AXWebArea 가상머신 - ABLESTACK-Mold, URL: 10.10.31.10:8080/client/#/vm/ba74e59a-2834-45e8-aa60-778d4bc86bde

@@ -16,18 +16,19 @@
 // under the License.
 
 import { discoverOptional } from '@/utils/optionalDiscovery'
+import { resetWallBannerDismissal } from '@/utils/wallAvailability'
 import Cookies from 'js-cookie'
 import message from 'ant-design-vue/es/message'
 import notification from 'ant-design-vue/es/notification'
-import semver from 'semver'
+// import semver from 'semver'
 
 import { vueProps } from '@/vue-app'
 import router from '@/router'
 import store from '@/store'
 import { oauthlogin, login, logout, getAPI } from '@/api'
 import { i18n } from '@/locales'
-import { axios } from '../../utils/request'
-import { getParsedVersion } from '@/utils/util'
+// import { axios } from '../../utils/request'
+// import { getParsedVersion } from '@/utils/util'
 
 import {
   ACCESS_TOKEN,
@@ -233,6 +234,7 @@ const user = {
       commit('SET_PROJECT', project)
     },
     Login ({ commit }, userInfo) {
+      resetWallBannerDismissal()
       commit('RESET_DISCOVERY')
       return new Promise((resolve, reject) => {
         login(userInfo).then(response => {
@@ -297,6 +299,7 @@ const user = {
     },
 
     OauthLogin ({ commit }, userInfo) {
+      resetWallBannerDismissal()
       commit('RESET_DISCOVERY')
       return new Promise((resolve, reject) => {
         oauthlogin(userInfo).then(response => {
@@ -370,6 +373,7 @@ const user = {
         const msId = vueProps.$localStorage.get(MS_ID, false) || Cookies.get('managementserverid') || ''
         const latestVersion = vueProps.$localStorage.get(LATEST_CS_VERSION, { version: '', fetchedTs: 0 })
         const hasAuth = Object.keys(cachedApis).length > 0
+        let themePermissions = Promise.resolve(cachedApis)
 
         commit('SET_DOMAIN_STORE', domainStore)
         commit('SET_DARK_MODE', darkMode)
@@ -388,6 +392,9 @@ const user = {
           Promise.all([
             ['listHSMProfiles', { listall: true }, json => {
               commit('SET_FEATURES', { ...state.features, hashsmprofiles: json.listhsmprofilesresponse?.count > 0 })
+            }],
+            ['listConfigurations', { name: 'backup.framework.provider.plugin' }, json => {
+              commit('SET_FEATURES', { ...state.features, backupProviderPlugins: json.listconfigurationsresponse?.configuration?.[0]?.value || '' })
             }],
             ['listNetworkServiceProviders', { name: 'SecurityGroupProvider', state: 'Enabled' }, json => {
               commit('SET_SHOW_SECURITY_GROUPS', json.listnetworkserviceprovidersresponse?.count > 0)
@@ -434,7 +441,10 @@ const user = {
           }).catch(error => {
             reject(error)
           })
-        } else if (store.getters.loginFlag) {
+        } else {
+          // A page reload can retain the session while losing the API cache and
+          // in-memory login flag. Discover through the authenticated API so the
+          // promise always resolves or rejects; never leave the router pending.
           const hide = message.loading(i18n.global.t('message.discovering.feature'), 0)
           getAPI('listZones').then(json => {
             const zones = json.listzonesresponse.zone || []
@@ -442,7 +452,7 @@ const user = {
           }).catch(error => {
             reject(error)
           })
-          getAPI('listApis').then(response => {
+          themePermissions = getAPI('listApis').then(response => {
             if (!current()) { hide(); resolve({}); return }
             const apis = {}
             const apiList = response.listapisresponse.api
@@ -470,8 +480,10 @@ const user = {
               hide()
               message.success(i18n.global.t('message.sussess.discovering.feature'))
             })
+            return apis
           }).catch(error => {
             reject(error)
+            return {}
           })
 
           getAPI('listNetworks', { restartrequired: true, forvpc: false }).then(response => {
@@ -508,7 +520,9 @@ const user = {
         getAPI('listUsers', { id: Cookies.get('userid'), showicon: true }).then(response => {
           const result = response.listusersresponse.user[0]
           if (!current()) return
-          applyCustomGuiTheme(result.accountid, result.domainid).catch(() => {})
+          themePermissions.then(apis => {
+            if (current()) return applyCustomGuiTheme(result.accountid, result.domainid, 'listGuiThemes' in (apis || {}))
+          }).catch(() => {})
           commit('SET_INFO', result)
           commit('SET_NAME', result.firstname + ' ' + result.lastname)
           commit('SET_AVATAR', result.icon?.base64image || '')
@@ -520,6 +534,7 @@ const user = {
     },
 
     Logout ({ commit, state }, payload) {
+      resetWallBannerDismissal()
       return new Promise((resolve) => {
         var cloudianUrl = null
         const sessionKey = state.token || vueProps.$localStorage.get(ACCESS_TOKEN) || Cookies.get('sessionkey') || ''
@@ -636,6 +651,12 @@ const user = {
       if (state.discoveryGeneration !== generation || state.apis !== apis) return
       const value = json?.listconfigurationsresponse?.configuration?.[0]?.value
       if (value) commit('SET_CUSTOM_HYPERVISOR_NAME', value)
+      const backupProviderJson = await discoverOptional(apis, 'listConfigurations', { name: 'backup.framework.provider.plugin' })
+      if (state.discoveryGeneration !== generation || state.apis !== apis) return
+      commit('SET_FEATURES', {
+        ...state.features,
+        backupProviderPlugins: backupProviderJson?.listconfigurationsresponse?.configuration?.[0]?.value || ''
+      })
       return result
     },
     async UpdateConfiguration ({ commit, state }) {
@@ -646,7 +667,10 @@ const user = {
     SetDomainStore ({ commit }, domainStore) {
       commit('SET_DOMAIN_STORE', domainStore)
     },
-    SetCsLatestVersion ({ commit }, rolename) {
+    SetCsLatestVersion (/* { commit }, rolename */) {
+      // 폐쇄망 및 외부 네트워크 차단 환경에서 GitHub API 호출 실패 시
+      // request.js 인터셉터에 의해 강제 로그아웃(세션 종료)되는 문제를 방지하기 위해 주석 처리
+      /*
       if (!vueProps.$config.notifyLatestCSVersion) {
         return
       }
@@ -671,6 +695,7 @@ const user = {
           }
         }).catch(ignored => {})
       }
+      */
     },
     SetDarkMode ({ commit }, darkMode) {
       commit('SET_DARK_MODE', darkMode)

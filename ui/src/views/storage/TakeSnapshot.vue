@@ -16,15 +16,16 @@
 // under the License.
 
 <template>
-  <div class="take-snapshot" v-ctrl-enter="handleSubmit">
+  <div class="take-snapshot snapshot-dialog-content" @keydown.ctrl.enter.prevent="handleSubmit">
     <a-spin :spinning="loading || actionLoading">
-      <a-alert type="warning">
+    <StorageSnapshotSafety compact :pending="snapshotSafetyPending" v-if="snapshotSafetyTarget" :context="snapshotSafetyContext" :loading="snapshotSafetyLoading" :error="snapshotSafetyError" @refresh="refreshSnapshotSafety" />
+      <a-alert type="info" show-icon>
         <template #message>
           <div v-html="$t('label.header.volume.take.snapshot')" />
         </template>
       </a-alert>
       <a-form
-        class="form"
+        class="form snapshot-dialog-form"
         :ref="formRef"
         :model="form"
         :rules="rules"
@@ -34,10 +35,10 @@
         <a-form-item :label="$t('label.name')" name="name" ref="name">
           <a-input
             v-model:value="form.name"
-            :placeholder="apiParams.name.description"
+            :placeholder="$t('label.snapshot.name')"
             v-focus="true" />
         </a-form-item>
-        <a-form-item ref="zoneids" name="zoneids" :required="(!isAdmin && form.useStorageReplication)">
+        <a-form-item ref="zoneids" name="zoneids" >
           <template #label>
             <tooltip-label :title="$t('label.zones')" :tooltip="''"/>
           </template>
@@ -56,6 +57,8 @@
               return  option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0
             }"
             :loading="zoneLoading"
+                  :disabled="zoneLoading || zoneError"
+                  :notFoundContent="$t('message.snapshot.zones.empty')"
             :placeholder="''">
             <a-select-option v-for="opt in zones" :key="opt.id" :label="opt.name || opt.description">
               <span>
@@ -65,36 +68,9 @@
               </span>
             </a-select-option>
           </a-select>
-        </a-form-item>
-        <a-form-item name="useStorageReplication" ref="useStorageReplication">
-          <template #label>
-            <tooltip-label :title="$t('label.usestoragereplication')" :tooltip="apiParams.usestoragereplication.description" />
-          </template>
-          <a-switch v-model:checked="form.useStorageReplication" />
-        </a-form-item>
-        <a-form-item v-if="isAdmin && form.useStorageReplication" ref="storageids" name="storageids">
-          <template #label>
-            <tooltip-label :title="$t('label.storagepools')" :tooltip="''"/>
-          </template>
-          <a-select
-            id="storagepool-selection"
-            v-model:value="form.storageids"
-            mode="multiple"
-            showSearch
-            optionFilterProp="label"
-            :filterOption="(input, option) => {
-              return  option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0
-            }"
-            :loading="storagePoolLoading"
-            :placeholder="''">
-            <a-select-option v-for="opt in storagePools" :key="opt.id" :label="opt.name || opt.description">
-              <span>
-                <resource-icon v-if="opt.icon" :image="opt.icon.base64image" size="1x" style="margin-right: 5px"/>
-                <global-outlined v-else style="margin-right: 5px" />
-                {{ opt.name || opt.description }}
-              </span>
-            </a-select-option>
-          </a-select>
+          <a-alert v-if="zoneError" type="error" show-icon :message="$t('message.snapshot.zones.failed')">
+            <template #description><a-button size="small" @click="fetchZoneData">{{ $t('label.retry') }}</a-button></template>
+          </a-alert>
         </a-form-item>
           <a-form-item name="asyncbackup" ref="asyncbackup" v-if="!supportsStorageSnapshot">
             <template #label>
@@ -109,7 +85,7 @@
         <div class="tagsTitle">{{ $t('label.tags') }}</div>
         <div>
           <div v-for="(tag, index) in tags" :key="index">
-            <a-tag :key="index" :closable="true">
+            <a-tag :key="index" :closable="!actionLoading" @close="removeTag(index)">
               {{ tag.key }} = {{ tag.value }}
             </a-tag>
           </div>
@@ -117,8 +93,8 @@
             <a-input-group
               type="text"
               size="small"
-              @blur="handleInputConfirm"
-              @keyup.enter="handleInputConfirm"
+              class="snapshot-dialog-tag-input"
+              @keydown.enter.prevent.stop="handleInputConfirm"
               compact>
               <a-input ref="input" :value="inputKey" @change="handleKeyChange" style="width: 100px; text-align: center" :placeholder="$t('label.key')" />
               <a-input
@@ -128,37 +104,41 @@
                 disabled />
               <a-input :value="inputValue" @change="handleValueChange" style="width: 100px; text-align: center; border-left: 0" :placeholder="$t('label.value')" />
               <tooltip-button :tooltip="$t('label.ok')" icon="check-outlined" size="small" @onClick="handleInputConfirm" />
-              <tooltip-button :tooltip="$t('label.cancel')" icon="close-outlined" size="small" @onClick="inputVisible=false" />
+              <tooltip-button :tooltip="$t('label.cancel')" icon="close-outlined" size="small" @onClick="cancelTagInput" />
             </a-input-group>
           </div>
-          <a-tag v-else @click="showInput" class="btn-add-tag" style="borderStyle: dashed;">
+          <a-button v-else ref="tagAdd" type="dashed" size="small" @click="showInput" class="btn-add-tag">
             <plus-outlined /> {{ $t('label.new.tag') }}
-          </a-tag>
+          </a-button>
         </div>
-        <div :span="24" class="action-button">
+        <MoldDialogActions :span="24" :busy="actionLoading">
           <a-button
-            :loading="actionLoading"
+            :disabled="actionLoading"
             @click="closeAction">
             {{ $t('label.cancel') }}
           </a-button>
           <a-button
             v-if="handleShowButton()"
+            :disabled="snapshotSafetyBlocked"
             :loading="actionLoading"
             type="primary"
             ref="submit"
             @click="handleSubmit">
-            {{ $t('label.ok') }}
+            {{ $t('label.action.take.snapshot') }}
           </a-button>
-        </div>
+        </MoldDialogActions>
       </a-form>
     </a-spin>
   </div>
 </template>
 
 <script>
+import { storageSnapshotSafety } from '@/utils/storageSnapshotSafety'
+import storageDialogContext from '@/utils/storageDialogContext'
+import MoldDialogActions from '@/components/view/MoldDialogActions'
+import snapshotZones from '@/utils/snapshotZones'
 import { ref, reactive, toRaw } from 'vue'
-import { getAPI, postAPI } from '@/api'
-import { isAdmin } from '@/role'
+import { postAPI } from '@/api'
 import { mixinForm } from '@/utils/mixin'
 import TooltipButton from '@/components/widgets/TooltipButton'
 import TooltipLabel from '@/components/widgets/TooltipLabel'
@@ -166,8 +146,9 @@ import ResourceIcon from '@/components/view/ResourceIcon'
 
 export default {
   name: 'TakeSnapshot',
-  mixins: [mixinForm],
+  mixins: [storageDialogContext, storageSnapshotSafety('createSnapshot', 'volume', () => true), mixinForm, snapshotZones],
   components: {
+    MoldDialogActions,
     TooltipButton,
     TooltipLabel,
     ResourceIcon
@@ -191,10 +172,6 @@ export default {
       inputValue: '',
       inputKey: '',
       inputVisible: '',
-      zones: [],
-      zoneLoading: false,
-      storagePools: [],
-      storagePoolLoading: false,
       tags: [],
       dataSource: []
     }
@@ -210,14 +187,11 @@ export default {
     }
 
     this.supportsStorageSnapshot = this.resource.supportsstoragesnapshot
-    this.fetchData()
+    this.fetchZoneData()
   },
   computed: {
     formattedAdditionalZoneMessage () {
       return `${this.$t('message.snapshot.additional.zones').replace('%x', this.resource.zonename)}`
-    },
-    isAdmin () {
-      return isAdmin()
     }
   },
   methods: {
@@ -225,50 +199,16 @@ export default {
       this.formRef = ref()
       this.form = reactive({
         name: undefined,
-        useStorageReplication: false,
         asyncbackup: undefined,
         quiescevm: false
       })
       this.rules = reactive({})
     },
-    fetchData () {
-      this.fetchZoneData()
-      if (isAdmin()) {
-        this.fetchStoragePoolData()
-      }
-    },
-    fetchZoneData () {
-      const params = {}
-      params.showicon = true
-      this.zoneLoading = true
-      getAPI('listZones', params).then(json => {
-        const listZones = json.listzonesresponse.zone
-        if (listZones) {
-          this.zones = listZones
-          this.zones = this.zones.filter(zone => zone.type !== 'Edge' && zone.id !== this.resource.zoneid)
-        }
-      }).finally(() => {
-        this.zoneLoading = false
-      })
-    },
-    fetchStoragePoolData () {
-      const params = {}
-      params.showicon = true
-      this.storagePoolsLoading = true
-      getAPI('listStoragePools', params).then(json => {
-        const listStoragePools = json.liststoragepoolsresponse.storagepool
-        if (listStoragePools) {
-          this.storagePools = listStoragePools
-          this.storagePools = this.storagePools.filter(pool => pool.storagecapabilities.CAN_COPY_SNAPSHOT_BETWEEN_ZONES_AND_SAME_POOL_TYPE && pool.zoneid !== this.resource.zoneid)
-        }
-      }).finally(() => {
-        this.storagePoolsLoading = false
-      })
-    },
     handleSubmit (e) {
-      e.preventDefault()
-      if (this.actionLoading) return
-      this.formRef.value.validate().then(() => {
+      if (e && e.preventDefault) e.preventDefault()
+      if (this.actionLoading || this.snapshotSafetyBlocked) return
+      this.formRef.value.validate().then(async () => {
+        if (this.actionLoading || (this.dialogCurrent && !this.dialogCurrent())) return
         const formRaw = toRaw(this.form)
         const values = this.handleRemoveFields(formRaw)
 
@@ -278,9 +218,6 @@ export default {
           params.name = values.name
         }
         params.useStorageReplication = false
-        if (values.useStorageReplication) {
-          params.useStorageReplication = values.useStorageReplication
-        }
         params.asyncBackup = false
         if (values.asyncbackup) {
           params.asyncBackup = values.asyncbackup
@@ -291,9 +228,6 @@ export default {
         }
         if (values.zoneids && values.zoneids.length > 0) {
           params.zoneids = values.zoneids.join()
-        }
-        if (values.storageids && values.storageids.length > 0) {
-          params.storageids = values.storageids.join()
         }
         for (let i = 0; i < this.tags.length; i++) {
           const formattedTagData = {}
@@ -306,6 +240,13 @@ export default {
         this.actionLoading = true
         const title = this.$t('label.action.take.snapshot')
         const description = this.$t('label.volume') + ' ' + this.resource.id
+        if (this.snapshotSafetyTarget) {
+          try {
+            const operation = await this.submitSnapshotSafely(params)
+            if (operation.jobid && this.dialogCurrent()) this.closeAction()
+          } finally { this.actionLoading = false }
+          return
+        }
         postAPI('createSnapshot', params).then(json => {
           const jobId = json.createsnapshotresponse.jobid
           if (jobId) {
@@ -325,7 +266,8 @@ export default {
           this.actionLoading = false
         })
       }).catch((error) => {
-        this.formRef.value.scrollToField(error.errorFields[0].name)
+        if (error.errorFields?.length) this.formRef.value.scrollToField(error.errorFields[0].name)
+        else this.$notifyError(error)
       })
     },
     handleVisibleInterval (intervalType) {
@@ -355,6 +297,7 @@ export default {
       this.inputValue = e.target.value
     },
     handleInputConfirm () {
+      if (this.actionLoading || !this.inputKey.trim()) return
       this.tags.push({
         key: this.inputKey,
         value: this.inputValue
@@ -362,7 +305,17 @@ export default {
       this.inputVisible = false
       this.inputKey = ''
       this.inputValue = ''
+      this.focusTagAdd()
     },
+    focusTagAdd () {
+      this.$nextTick(() => {
+        if (!this.dialogCurrent()) return
+        const target = this.$refs.tagAdd?.$el
+        if (target) target.focus({ preventScroll: true })
+      })
+    },
+    removeTag (index) { this.tags.splice(index, 1); this.focusTagAdd() },
+    cancelTagInput () { this.inputVisible = false; this.focusTagAdd() },
     showInput () {
       this.inputVisible = true
       this.$nextTick(function () {

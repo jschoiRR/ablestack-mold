@@ -1,0 +1,68 @@
+Browser tab: 4, Title: "사용자 데이터 라이브러리 - ABLESTACK-Mold", URL: "http://10.10.31.10:8080/client/#/userdata/1fc463a9-c04b-4a1d-b1d3-75a9ac8c0e3c?tab=userdata.usage.templates".
+The following is a diff from the previous accessibility tree with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+Removed element IDs: 256-311
+~0 AXWebArea 사용자 데이터 라이브러리 - ABLESTACK-Mold, URL: 10.10.31.10:8080/client/#/userdata/1fc463a9-c04b-4a1d-b1d3-75a9ac8c0e3c?tab=userdata.usage.templates
+~						237 tab (selectable, settable, boolean) 상세, Value: 0, ID: rc-tabs-4-tab-details
+~						238 tab (selectable, settable, boolean) 사용자 데이터 본문, Value: 0, ID: rc-tabs-4-tab-userdata.content
+~						239 tab (selectable, settable, boolean) 사용 가상머신, Value: 0, ID: rc-tabs-4-tab-userdata.usage.vms
+~						240 tab (selected, settable, boolean) 연결 템플릿, Value: 1, ID: rc-tabs-4-tab-userdata.usage.templates
+~						241 tab (selectable, settable, boolean) 연결 ISO, Value: 0, ID: rc-tabs-4-tab-userdata.usage.isos
+~						242 tab (selectable, settable, boolean) 코멘트, Value: 0, ID: rc-tabs-4-tab-comments
+~				243 container Description: 연결 템플릿, ID: rc-tabs-4-panel-userdata.usage.templates
+~						255 text 상세 링크에서 사용자 데이터 연결을 변경·해제할 수 있습니다. 정책은 템플릿·ISO의 정책입니다.
++						256 table
++							257 row
++								258 cell
++									259 container
++										260 text 이름
++										261 image caret-up
++										262 image caret-down
++								263 cell
++									264 container
++										265 text 아이디
++										266 image caret-up
++										267 image caret-down
++								268 cell
++									269 container
++										270 text 사용자 데이터 정책
++										271 image caret-up
++										272 image caret-down
++								273 cell
++									274 container
++										275 text 계정
++										276 image caret-up
++										277 image caret-down
++								278 cell
++									279 container
++										280 text 프로젝트
++										281 image caret-up
++										282 image caret-down
++								283 cell
++									284 container
++										285 text 도메인
++										286 image caret-up
++										287 image caret-down
++							288 row
++								289 cell
++									290 link Description: UD1389-31-20261016-templates, Value: 10.10.31.10:8080/client/#/template/467c63f5-7a20-4a93-b706-784a78532266
++								291 cell
++									292 text 467c63f5-7a20-4a93-b706-784a78532266
++								293 cell
++									294 text ALLOWOVERRIDE
++								295 cell
++									296 link Description: admin, Value: 10.10.31.10:8080/client/#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f&dataView=true
++								297 cell
++									298 link Description: ROOT, Value: 10.10.31.10:8080/client/#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details
++						299 content list
++							300 text 총 1개
++							301 container 이전 페이지
++								302 button (disabled) left
++									303 image left
++							304 text 1
++							305 container 다음 페이지
++								306 button (disabled) right
++									307 image right
++							308 container
++								309 combo box (settable) rc_select_6
++								310 text 20 / 쪽
+The focused UI element is 0 AXWebArea 사용자 데이터 라이브러리 - ABLESTACK-Mold, URL: 10.10.31.10:8080/client/#/userdata/1fc463a9-c04b-4a1d-b1d3-75a9ac8c0e3c?tab=userdata.usage.templates

@@ -56,6 +56,10 @@ public class ListSSHKeyPairsCmd extends BaseListProjectAndAccountResourcesCmd {
     /////////////////////////////////////////////////////
     /////////////////// Accessors ///////////////////////
     /////////////////////////////////////////////////////
+    public Long getId() {
+        return id;
+    }
+
     public String getName() {
         return name;
     }

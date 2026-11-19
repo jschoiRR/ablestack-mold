@@ -1,0 +1,355 @@
+{
+  "uiSource": "0542a6dee55ffc0df5cdf51517377c380162b3b4",
+  "cases": [
+    {
+      "case": "read-only-list-allowed-registration-hidden",
+      "passed": true
+    },
+    {
+      "case": "required-light-first-error-focus-no-request",
+      "passed": true
+    },
+    {
+      "case": "layout-light-1440x1000",
+      "passed": true,
+      "header": {
+        "bottom": 223,
+        "height": 55,
+        "right": 1079,
+        "width": 718,
+        "x": 361,
+        "y": 168
+      },
+      "footer": {
+        "bottom": 832,
+        "height": 75,
+        "right": 1079,
+        "width": 718,
+        "x": 361,
+        "y": 757
+      }
+    },
+    {
+      "case": "layout-light-1280x720",
+      "passed": true,
+      "header": {
+        "bottom": 88,
+        "height": 55,
+        "right": 999,
+        "width": 718,
+        "x": 281,
+        "y": 33
+      },
+      "footer": {
+        "bottom": 687,
+        "height": 75,
+        "right": 999,
+        "width": 718,
+        "x": 281,
+        "y": 612
+      }
+    },
+    {
+      "case": "layout-light-390x844",
+      "passed": true,
+      "header": {
+        "bottom": 142,
+        "height": 55,
+        "right": 377,
+        "width": 364,
+        "x": 13,
+        "y": 87
+      },
+      "footer": {
+        "bottom": 757,
+        "height": 75,
+        "right": 377,
+        "width": 364,
+        "x": 13,
+        "y": 682
+      }
+    },
+    {
+      "case": "layout-light-390x480",
+      "passed": true,
+      "header": {
+        "bottom": 68,
+        "height": 55,
+        "right": 377,
+        "width": 364,
+        "x": 13,
+        "y": 13
+      },
+      "footer": {
+        "bottom": 467,
+        "height": 75,
+        "right": 377,
+        "width": 364,
+        "x": 13,
+        "y": 392
+      }
+    },
+    {
+      "case": "invalid-base64-light",
+      "passed": true
+    },
+    {
+      "case": "oversize-light",
+      "passed": true
+    },
+    {
+      "case": "duplicate-431-light-exact-state-restored",
+      "passed": true,
+      "beforeScroll": 174,
+      "afterScroll": 174,
+      "focus": "form_item_account",
+      "measurement": "stable field layout; native key without refocus"
+    },
+    {
+      "case": "cancel-return-focus",
+      "passed": true
+    },
+    {
+      "case": "reopen-resets-complete-form",
+      "passed": true
+    },
+    {
+      "case": "pending-light-lock-close-navigation",
+      "passed": true,
+      "header": {
+        "bottom": 68,
+        "height": 55,
+        "right": 377,
+        "width": 364,
+        "x": 13,
+        "y": 13
+      },
+      "footer": {
+        "bottom": 467,
+        "height": 75,
+        "right": 377,
+        "width": 364,
+        "x": 13,
+        "y": 392
+      }
+    },
+    {
+      "case": "controlled-503-light-retains-form-one-request",
+      "passed": true,
+      "beforeScroll": 174,
+      "afterScroll": 174,
+      "requests": 1
+    },
+    {
+      "case": "network-error-light-retains-form",
+      "passed": true,
+      "requests": 1,
+      "scroll": 174
+    },
+    {
+      "case": "deleted-owner-failure-retains-selection",
+      "passed": true,
+      "error": [
+        "Unable to find account by name ud1383-31-20261015-deleted in domain with specified id"
+      ]
+    },
+    {
+      "case": "textarea-tags-enter-preserve-meaning",
+      "passed": true
+    },
+    {
+      "case": "correct-retry-delayed-success-once-refresh-close",
+      "passed": true,
+      "requests": 1
+    },
+    {
+      "case": "required-dark-first-error-focus",
+      "passed": true
+    },
+    {
+      "case": "layout-dark-1440x1000",
+      "passed": true,
+      "header": {
+        "bottom": 223,
+        "height": 55,
+        "right": 1079,
+        "width": 718,
+        "x": 361,
+        "y": 168
+      },
+      "footer": {
+        "bottom": 832,
+        "height": 75,
+        "right": 1079,
+        "width": 718,
+        "x": 361,
+        "y": 757
+      }
+    },
+    {
+      "case": "layout-dark-1280x720",
+      "passed": true,
+      "header": {
+        "bottom": 88,
+        "height": 55,
+        "right": 999,
+        "width": 718,
+        "x": 281,
+        "y": 33
+      },
+      "footer": {
+        "bottom": 687,
+        "height": 75,
+        "right": 999,
+        "width": 718,
+        "x": 281,
+        "y": 612
+      }
+    },
+    {
+      "case": "layout-dark-390x844",
+      "passed": true,
+      "header": {
+        "bottom": 142,
+        "height": 55,
+        "right": 377,
+        "width": 364,
+        "x": 13,
+        "y": 87
+      },
+      "footer": {
+        "bottom": 757,
+        "height": 75,
+        "right": 377,
+        "width": 364,
+        "x": 13,
+        "y": 682
+      }
+    },
+    {
+      "case": "layout-dark-390x480",
+      "passed": true,
+      "header": {
+        "bottom": 68,
+        "height": 55,
+        "right": 377,
+        "width": 364,
+        "x": 13,
+        "y": 13
+      },
+      "footer": {
+        "bottom": 467,
+        "height": 75,
+        "right": 377,
+        "width": 364,
+        "x": 13,
+        "y": 392
+      }
+    },
+    {
+      "case": "body-only-scroll-dark-short",
+      "passed": true,
+      "bodyScroll": 216,
+      "headerY": 13,
+      "footerY": 392
+    },
+    {
+      "case": "invalid-base64-dark",
+      "passed": true
+    },
+    {
+      "case": "multibyte-oversize-dark",
+      "passed": true
+    },
+    {
+      "case": "duplicate-431-dark-exact-state-restored",
+      "passed": true,
+      "beforeScroll": 174,
+      "afterScroll": 174,
+      "focus": "form_item_account"
+    },
+    {
+      "case": "pending-dark-lock-close-navigation",
+      "passed": true
+    },
+    {
+      "case": "controlled-503-dark-retains-form",
+      "passed": true
+    },
+    {
+      "case": "network-error-dark-retains-form",
+      "passed": true,
+      "requests": 1
+    },
+    {
+      "case": "dialog-title-modal-and-keyboard-trap",
+      "passed": true,
+      "aria": {
+        "modal": "true",
+        "title": "사용자 데이터 등록 "
+      },
+      "forward": true,
+      "backward": true
+    },
+    {
+      "case": "dark-recovery-success-refresh-close",
+      "passed": true
+    },
+    {
+      "case": "ordinary-user-owner-fields-absent",
+      "passed": true
+    },
+    {
+      "case": "ordinary-user-real-registration",
+      "passed": true
+    },
+    {
+      "case": "domainadmin-domain-field-present",
+      "passed": true
+    },
+    {
+      "case": "domainadmin-real-registration",
+      "passed": true
+    },
+    {
+      "case": "project-real-registration",
+      "passed": true
+    },
+    {
+      "case": "cni-shared-form-field-and-title",
+      "passed": true
+    },
+    {
+      "case": "cni-real-registration",
+      "passed": true
+    },
+    {
+      "case": "light-tooltip-visible-themed",
+      "passed": true
+    },
+    {
+      "case": "body-only-scroll-light-short",
+      "passed": true,
+      "scroll": 128
+    },
+    {
+      "case": "cleanup-ui-original-library-only-dark-restored",
+      "passed": true
+    },
+    {
+      "case": "beforeunload-reload-cancel-preserves-pending-form",
+      "passed": true,
+      "event": "beforeunload",
+      "reloadCancelled": true,
+      "browserHandling": "in-app browser dismissed the warning"
+    }
+  ],
+  "passed": 42,
+  "all_attempts": "ui-attempts.json",
+  "measurement_notes": [
+    "Final scroll comparisons use a settled field layout and native keys without locator refocus.",
+    "Early 196-to-174 comparisons included an asynchronous 22px field explanation collapse before submission.",
+    "Reopen assertion was narrowed to variable tags: the default domain has an empty selected span.",
+    "Role visibility assertions require a visible dialog and name input; empty DOM is not accepted."
+  ]
+}

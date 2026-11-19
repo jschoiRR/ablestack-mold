@@ -1,0 +1,62 @@
+{
+  "issue": 1421,
+  "source": "a469372cc8273233392fb99722fe39d8e10f8f5e",
+  "uiSource": "23b1613fd8067c95f0dc465e55296c4980986653",
+  "base": "8c5a92a4d9978229221613f4ff3e36e2df54daeb",
+  "uiTests": {
+    "suites": 23,
+    "tests": 318,
+    "passed": true
+  },
+  "serverTests": {
+    "tests": 46,
+    "passed": true,
+    "newTests": 11,
+    "existingTests": 35
+  },
+  "api": {
+    "scopeOracles": 13,
+    "paginationCases": 52,
+    "filterCases": 156,
+    "passed": true,
+    "fullVmMappingsPreserved": true
+  },
+  "defaultCheckstyle": {
+    "passed": false,
+    "preexistingWildcardImports": 15,
+    "unrelatedFiles": 7
+  },
+  "changedJavaCheckstyle": {
+    "violations": 0,
+    "passed": true
+  },
+  "fullCloudBuild": false,
+  "fullCI": false,
+  "cleanup": {
+    "groups": 4,
+    "vms": 119,
+    "before": "5120684f8c94fd68c44dac2e745a79857b4218fc53530daaa99a0c4f037f094a",
+    "after": "5120684f8c94fd68c44dac2e745a79857b4218fc53530daaa99a0c4f037f094a",
+    "unchanged": true,
+    "actions": 46
+  },
+  "deployment": {
+    "source": "a469372cc8273233392fb99722fe39d8e10f8f5e",
+    "time": "2026-10-19T17:34:22+0900",
+    "finished": "2026-10-19T17:34:56+0900",
+    "jar": "9265dca2a9a810252a38d58d17ddcfbfd867f894db0064e9a5dd6bd1f74fb07f",
+    "queryClass": "b766f483a8dac0c305021cdbb60415bbf037adac560b46b049be2f62672ea9e4",
+    "oldPid": "1765167",
+    "pid": "1934377",
+    "service": "active",
+    "http": "200",
+    "classPathIncludesActiveLib": true,
+    "otherEightJarsPreserved": true,
+    "rollback": false,
+    "backup": "/root/ag07-deploy-20261019/jar-backup/cloudstack-4.23.0.0-ABLESTACK.Mold.jar",
+    "logFilesObserved": [
+      "/var/log/cloudstack/management/management-server.log",
+      "/var/log/mold/management/management-server.log"
+    ]
+  }
+}

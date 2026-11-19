@@ -16,91 +16,42 @@
 // under the License.
 
 <template>
-  <div>
+  <div class="autoscale-tab">
+    <a-space wrap class="autoscale-toolbar">
+      <a-button type="primary" @click="addPolicyModalVisible = true" :disabled="saving || loading || resource.state !== 'DISABLED' || resource.operationinprogress || !('createAutoScalePolicy' in $store.getters.apis)"><template #icon><plus-outlined /></template>{{ $t('label.add.policy') }}</a-button>
+      <a-button @click="fetchInitData" :disabled="saving" :loading="loading || policiesRefreshing"><template #icon><reload-outlined /></template>{{ $t('label.refresh') }}</a-button>
+    </a-space>
+    <a-alert v-if="affectedGroups.length > 1" type="warning" show-icon :message="$t('message.autoscale.edit.shared', { groups: affectedGroups.join(', ') })" />
+    <a-alert v-if="mutationError" type="error" show-icon :message="mutationError" />
+    <a-alert v-if="retainedResources" type="warning" show-icon :message="$t('message.autoscale.edit.retained', { ids: retainedResources })" />
     <p v-if="listRefreshFailed" role="status">{{ $t('message.list.refresh.stale') }}</p>
     <div>
-      <a-alert type="info" v-if="resource.state !== 'DISABLED'">
+      <a-alert type="info" v-if="(resource.state !== 'DISABLED' || resource.operationinprogress)">
         <template #message>
           <div
-            v-html="$t('message.autoscale.policies.update')" />
+            v-html="$t(resource.operationinprogress ? 'message.autoscale.operation.wait' : 'message.autoscale.policies.update')" />
         </template>
       </a-alert>
 
       <a-divider/>
-      <div class="form">
-        <strong>{{ $t('label.scaleup.policy') }} &nbsp;&nbsp;&nbsp;</strong>
-        <a-select
-          style="width: 320px"
-          v-model:value="selectedPolicyId"
-          @change="switchPolicy()"
-          :placeholder="$t('label.scaleup.policy')"
-          showSearch
-          optionFilterProp="label"
-          :filterOption="(input, option) => {
-                      return option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                    }" >
-          <a-select-option
-            v-for="(scalepolicy, index) in this.policies"
-            :value="scalepolicy.id"
-            :key="index"
-            :label="scalepolicy.displaytext || scalepolicy.name">
-            {{ scalepolicy.name || scalepolicy.id }}
-          </a-select-option>
-        </a-select>
-        <a-button style="margin-left: 10px" ref="submit" type="primary" @click="addPolicyModalVisible = true" :disabled="!('createAutoScalePolicy' in $store.getters.apis) || resource.state !== 'DISABLED'">
-          <template #icon><plus-outlined /></template>
-          {{ $t('label.add.policy') }}
-        </a-button>
-        <a-popconfirm
-          :title="$t('label.remove.policy') + '?'"
-          @confirm="removeScalePolicyFromGroup"
-          :okText="$t('label.yes')"
-          :cancelText="$t('label.no')"
-        >
-          <a-button style="margin-left: 10px" ref="submit" type="primary" :danger="true" :disabled="!('updateAutoScaleVmGroup' in $store.getters.apis) || resource.state !== 'DISABLED'">
-            <template #icon><delete-outlined /></template>
-            {{ $t('label.remove.policy') }}
-          </a-button>
-        </a-popconfirm>
-
-      </div>
-
-      <a-divider/>
-      <div class="form">
-        <div class="form__item">
-          <div class="form__label">
-            <tooltip-label :title="$t('label.name')" :tooltip="createAutoScalePolicyApiParams.name.description"/>
-          </div>
-          <a-input v-model:value="policy.name" :disabled="!this.isEditable"></a-input>
-        </div>
-        <div class="form__item">
-          <div class="form__label">
-            <span class="form__required">*</span>
-            <tooltip-label :title="$t('label.duration')" :tooltip="createAutoScalePolicyApiParams.duration.description"/>
-          </div>
-          <a-input v-model:value="policy.duration" type="number" :disabled="!this.isEditable"></a-input>
-        </div>
-        <div class="form__item">
-          <div class="form__label">
-            <span class="form__required">*</span>
-            <tooltip-label :title="$t('label.quiettime')" :tooltip="createAutoScalePolicyApiParams.quiettime.description"/>
-          </div>
-          <a-input v-model:value="policy.quiettime" type="number" :disabled="!this.isEditable"></a-input>
-        </div>
-        <div class="form__item">
-          <div class="form__label">{{ $t('label.action') }}</div>
-          <a-button ref="submit" :disabled="!('updateAutoScalePolicy' in $store.getters.apis) || resource.state !== 'DISABLED'" type="primary" @click="updateAutoScalePolicy(null, null)">
-            <template #icon><edit-outlined /></template>
-            {{ isEditOrApply() }}
-          </a-button>
-        </div>
-      </div>
+      <a-table :columns="policyColumns" :data-source="policies" row-key="id" :pagination="false" :loading="loading" :scroll="{ x: 760 }" size="small">
+        <template #bodyCell="{ column, record }">
+          <template v-if="column.key === 'name'"><a-button type="link" @click="selectPolicy(record)">{{ record.name || record.id }}</a-button><a-tag v-if="record.id === selectedPolicyId">{{ $t('label.autoscale.policy.selected') }}</a-tag></template>
+          <template v-else-if="column.key === 'actions'"><div class="autoscale-row-actions">
+            <a-dropdown :trigger="['click']" placement="bottomRight" overlay-class-name="autoscale-row-menu"><a-button size="small" :aria-label="$t('label.actions')"><template #icon><down-outlined /></template></a-button><template #overlay><a-menu>
+              <a-menu-item key="edit" :disabled="saving || loading || resource.state !== 'DISABLED' || resource.operationinprogress || !('updateAutoScalePolicy' in $store.getters.apis)" @click="selectPolicy(record); openPolicyModal()">{{ $t('label.autoscale.policy.edit') }}</a-menu-item>
+              <a-menu-item key="add-condition" :disabled="saving || loading || resource.state !== 'DISABLED' || resource.operationinprogress || !('createCondition' in $store.getters.apis)" @click="selectPolicy(record); openAddConditionModal()">{{ $t('label.autoscale.condition.add') }}</a-menu-item>
+              <a-menu-item key="delete" danger :disabled="saving || loading || resource.state !== 'DISABLED' || resource.operationinprogress || policies.length < 2 || !('updateAutoScaleVmGroup' in $store.getters.apis)" @click="selectPolicy(record); preparePolicyRemoval()">{{ $t('label.autoscale.policy.remove') }}</a-menu-item>
+            </a-menu></template></a-dropdown>
+          </div></template>
+        </template>
+      </a-table>
     </div>
 
     <a-divider/>
     <div class="title">
       <div class="form__label">
-        <tooltip-label :title="$t('label.conditions')" :tooltip="createAutoScalePolicyApiParams.conditionids.description"/>
+        <tooltip-label :title="$t('label.conditions')" :tooltip="(createAutoScalePolicyApiParams.conditionids || {}).description"/>
       </div>
     </div>
     <a-table
@@ -110,30 +61,59 @@
       :columns="columns"
       :dataSource="policy.conditions"
       :pagination="false"
-      :rowKey="record => record.id">
+      :rowKey="record => record.id"
+      :scroll="{ x: 720 }">
       <template #bodyCell="{ column, record }">
+        <template v-if="column.dataIndex === 'countername'">{{ counterLabel(record.countername) }}</template>
         <template v-if="column.key === 'relationaloperator'">
         {{ getOperator(record.relationaloperator) }}
         </template>
-        <template v-if="column.key === 'actions'">
-          <tooltip-button
-            :tooltip="$t('label.edit')"
-            :disabled="!('updateCondition' in $store.getters.apis) || resource.state !== 'DISABLED'"
-            icon="edit-outlined"
-            @onClick="() => openUpdateConditionModal(record)" />
-          <tooltip-button
-            :tooltip="$t('label.delete')"
-            :disabled="!('deleteCondition' in $store.getters.apis) || resource.state !== 'DISABLED'"
-            type="primary"
-            :danger="true"
-            icon="delete-outlined"
-            @onClick="deleteConditionFromAutoScalePolicy(record.id)" />
-        </template>
+        <template v-if="column.key === 'actions'"><div class="autoscale-row-actions">
+          <a-dropdown :trigger="['click']" placement="bottomRight" overlay-class-name="autoscale-row-menu"><a-button size="small" :aria-label="$t('label.actions')"><template #icon><down-outlined /></template></a-button><template #overlay><a-menu>
+            <a-menu-item key="edit" :disabled="saving || loading || resource.state !== 'DISABLED' || resource.operationinprogress || !('updateCondition' in $store.getters.apis)" @click="openUpdateConditionModal(record)">{{ $t('label.autoscale.condition.edit') }}</a-menu-item>
+            <a-menu-item key="delete" danger :disabled="saving || loading || resource.state !== 'DISABLED' || resource.operationinprogress || (policy.conditions || []).length < 2 || !('updateAutoScalePolicy' in $store.getters.apis)" @click="prepareConditionRemoval(record)">{{ $t('label.autoscale.condition.remove') }}</a-menu-item>
+          </a-menu></template></a-dropdown>
+        </div></template>
+
       </template>
     </a-table>
 
-    <div>
-      <a-divider/>
+    <a-modal
+class="mold-dialog autoscale-dialog"
+centered
+:width="520"
+:visible="!!pendingPolicyRemoval"
+:title="$t('label.autoscale.policy.remove')"
+:ok-text="$t('label.delete')"
+      :ok-button-props="{ danger: true, disabled: loading || saving }"
+      @ok="confirmPolicyRemoval({ id: pendingPolicyRemoval?.policyId })"
+      @cancel="pendingPolicyRemoval = null">
+      <a-descriptions bordered :column="1" size="small"><a-descriptions-item :label="$t('label.name')">{{ pendingPolicyRemoval?.name }}</a-descriptions-item><a-descriptions-item :label="$t('label.id')">{{ pendingPolicyRemoval?.policyId }}</a-descriptions-item></a-descriptions>
+    </a-modal>
+    <a-modal
+class="mold-dialog autoscale-dialog"
+centered
+:width="520"
+:visible="!!pendingConditionRemoval"
+:title="$t('label.autoscale.condition.remove')"
+:ok-text="$t('label.delete')"
+      :ok-button-props="{ danger: true, disabled: loading || saving }"
+      @ok="confirmConditionRemoval({ id: pendingConditionRemoval?.id })"
+      @cancel="pendingConditionRemoval = null">
+      <a-descriptions bordered :column="1" size="small"><a-descriptions-item :label="$t('label.counter')">{{ counterLabel(pendingConditionRemoval?.name) }}</a-descriptions-item><a-descriptions-item :label="$t('label.id')">{{ pendingConditionRemoval?.id }}</a-descriptions-item></a-descriptions>
+    </a-modal>
+
+<a-modal
+class="mold-dialog autoscale-dialog"
+centered
+:width="760"
+:title="$t('label.autoscale.condition.add')"
+:visible="addConditionModalVisible"
+:mask-closable="false"
+:closable="!saving"
+:destroy-on-close="true"
+@cancel="!saving && closeModal()">
+      <a-alert v-if="mutationError" type="error" show-icon :message="mutationError" />
       <div class="form" v-ctrl-enter="addConditionToPolicy">
         <div class="form__item" ref="newConditionCounterId">
           <div class="form__label">
@@ -153,8 +133,8 @@
               v-for="(counter, index) in countersList"
               :value="counter.id"
               :key="index"
-              :label="counter.name">>
-              {{ counter.name }}
+              :label="counterLabel(counter.name)">
+              {{ counterLabel(counter.name) }}
             </a-select-option>
           </a-select>
           <span class="error-text">{{ $t('label.required') }}</span>
@@ -162,7 +142,7 @@
         <div class="form__item" ref="newConditionRelationalOperator">
           <div class="form__label">
             <span class="form__required">*</span>
-            <tooltip-label :title="$t('label.relationaloperator')" :tooltip="createConditionApiParams.relationaloperator.description"/>
+            <tooltip-label :title="$t('label.relationaloperator')" :tooltip="(createConditionApiParams.relationaloperator || {}).description"/>
           </div>
           <a-select
             v-model:value="newCondition.relationaloperator"
@@ -171,7 +151,7 @@
             :filterOption="(input, option) => {
               return option.value.toLowerCase().indexOf(input.toLowerCase()) >= 0
             }" >
-            <a-select-option value="GT">{{ getOperator('GT') }}</a-select-option>
+            <a-select-option v-for="operator in operators" :key="operator" :value="operator">{{ getOperator(operator) }}</a-select-option>
           </a-select>
           <span class="error-text">{{ $t('label.required') }}</span>
         </div>
@@ -183,24 +163,56 @@
           <a-input v-model:value="newCondition.threshold" type="number"></a-input>
           <span class="error-text">{{ $t('label.required') }}</span>
         </div>
+      </div>
+      <template #footer><div class="action-button"><a-button :disabled="saving" @click="!saving && closeModal()">{{ $t('label.cancel') }}</a-button><a-button type="primary" :loading="saving" @click="addConditionToPolicy">{{ $t('label.ok') }}</a-button></div></template>
+    </a-modal>
+    <a-modal
+class="mold-dialog autoscale-dialog"
+centered
+:width="760"
+:title="$t('label.autoscale.policy.edit')"
+:visible="editPolicyModalVisible"
+:mask-closable="false"
+:closable="!saving"
+:destroy-on-close="true"
+@cancel="!saving && closeModal()">
+      <a-alert v-if="mutationError" type="error" show-icon :message="mutationError" />
+            <div class="form">
         <div class="form__item">
-          <div class="form__label">{{ $t('label.action') }}</div>
-          <a-button ref="submit" :disabled="!('createCondition' in $store.getters.apis) || resource.state !== 'DISABLED'" type="primary" @click="addConditionToPolicy">
-            <template #icon><plus-outlined /></template>
-            {{ $t('label.add.condition') }}
-          </a-button>
+          <div class="form__label">
+            <tooltip-label :title="$t('label.name')" :tooltip="(createAutoScalePolicyApiParams.name || {}).description"/>
+          </div>
+          <a-input v-model:value="policyDraft.name" :disabled="saving"></a-input>
+        </div>
+        <div class="form__item">
+          <div class="form__label">
+            <span class="form__required">*</span>
+            <tooltip-label :title="$t('label.duration')" :tooltip="(createAutoScalePolicyApiParams.duration || {}).description"/>
+          </div>
+          <a-input v-model:value="policyDraft.duration" type="number" :disabled="saving"></a-input>
+        </div>
+        <div class="form__item">
+          <div class="form__label">
+            <span class="form__required">*</span>
+            <tooltip-label :title="$t('label.autoscale.cooldown.seconds')" :tooltip="(createAutoScalePolicyApiParams.quiettime || {}).description"/>
+          </div>
+          <a-input v-model:value="policyDraft.quiettime" type="number" :disabled="saving"></a-input>
         </div>
       </div>
-    </div>
-
+      <template #footer><div class="action-button"><a-button :disabled="saving" @click="!saving && closeModal()">{{ $t('label.cancel') }}</a-button><a-button type="primary" :loading="saving" @click="updateAutoScalePolicy(null, null)">{{ $t('label.ok') }}</a-button></div></template>
+    </a-modal>
     <a-modal
+class="mold-dialog autoscale-dialog"
+centered
+:width="760"
       :title="$t('label.update.condition')"
       :visible="updateConditionModalVisible"
       :afterClose="closeModal"
       :maskClosable="false"
       :closable="true"
-      :footer="null"
-      @cancel="updateConditionModalVisible = false">
+
+      @cancel="!saving && closeModal()">
+      <a-alert v-if="affectedConditionGroups.length > 1" type="warning" show-icon :message="$t('message.autoscale.edit.shared', { groups: affectedConditionGroups.join(', ') })" />
       <span v-show="updateConditionModalLoading" class="modal-loading">
         <loading-outlined />
       </span>
@@ -208,12 +220,12 @@
       <div class="update-condition" v-if="selectedCondition" v-ctrl-enter="handleSubmitUpdateConditionForm">
         <div class="update-condition__item">
           <p class="update-condition__label"><span class="form__required">*</span>{{ $t('label.counter') }}</p>
-          {{ updateConditionDetails.countername }}
+          {{ counterLabel(updateConditionDetails.countername) }}
         </div>
         <div class="update-condition__item">
           <div class="update-condition__label">
             <span class="form__required">*</span>
-            <tooltip-label :title="$t('label.relationaloperator')" :tooltip="createConditionApiParams.relationaloperator.description"/>
+            <tooltip-label :title="$t('label.relationaloperator')" :tooltip="(createConditionApiParams.relationaloperator || {}).description"/>
           </div>
           <a-select
             v-model:value="updateConditionDetails.relationaloperator"
@@ -222,7 +234,7 @@
             :filterOption="(input, option) => {
               return option.value.toLowerCase().indexOf(input.toLowerCase()) >= 0
             }" >
-            <a-select-option value="GT">{{ getOperator('GT') }}</a-select-option>
+            <a-select-option v-for="operator in operators" :key="operator" :value="operator">{{ getOperator(operator) }}</a-select-option>
           </a-select>
         </div>
         <div class="update-condition__item">
@@ -232,40 +244,46 @@
           </div>
           <a-input v-focus="true" v-model:value="updateConditionDetails.threshold" type="number" />
         </div>
-        <div :span="24" class="action-button">
-          <a-button @click="() => updateConditionModalVisible = false">{{ $t('label.cancel') }}</a-button>
-          <a-button type="primary" @click="handleSubmitUpdateConditionForm">{{ $t('label.ok') }}</a-button>
-        </div>
+
       </div>
+      <template #footer>
+        <div :span="24" class="action-button">
+          <a-button @click="!saving && closeModal()">{{ $t('label.cancel') }}</a-button>
+          <a-button type="primary" :loading="saving" @click="handleSubmitUpdateConditionForm">{{ $t('label.ok') }}</a-button>
+        </div>
+      </template>
     </a-modal>
 
     <a-modal
+class="mold-dialog autoscale-dialog"
+centered
+:width="760"
       :title="$t('label.add.policy')"
       :visible="addPolicyModalVisible"
       :afterClose="closeModal"
       :maskClosable="false"
       :closable="true"
-      :footer="null"
-      @cancel="addPolicyModalVisible = false">
+
+      @cancel="!saving && closeModal()">
 
       <div class="update-condition">
         <div class="update-condition__item">
           <div class="update-condition__label">
-            <tooltip-label :title="$t('label.name')" :tooltip="createAutoScalePolicyApiParams.name.description"/>
+            <tooltip-label :title="$t('label.name')" :tooltip="(createAutoScalePolicyApiParams.name || {}).description"/>
           </div>
           <a-input v-model:value="newPolicy.name" v-focus="true"></a-input>
         </div>
         <div class="update-condition__item">
           <div class="update-condition__label">
             <span class="form__required">*</span>
-            <tooltip-label :title="$t('label.duration')" :tooltip="createAutoScalePolicyApiParams.duration.description"/>
+            <tooltip-label :title="$t('label.duration')" :tooltip="(createAutoScalePolicyApiParams.duration || {}).description"/>
           </div>
           <a-input v-model:value="newPolicy.duration" type="number"></a-input>
         </div>
         <div class="update-condition__item">
           <div class="update-condition__label">
             <span class="form__required">*</span>
-            <tooltip-label :title="$t('label.quiettime')" :tooltip="createAutoScalePolicyApiParams.quiettime.description"/>
+            <tooltip-label :title="$t('label.autoscale.cooldown.seconds')" :tooltip="(createAutoScalePolicyApiParams.quiettime || {}).description"/>
           </div>
           <a-input v-model:value="newPolicy.quiettime" type="number"></a-input>
         </div>
@@ -286,15 +304,15 @@
               v-for="(counter, index) in countersList"
               :value="counter.id"
               :key="index"
-              :label="counter.name">
-              {{ counter.name }}
+              :label="counterLabel(counter.name)">
+              {{ counterLabel(counter.name) }}
             </a-select-option>
           </a-select>
         </div>
         <div class="update-condition__item">
           <div class="update-condition__label">
             <span class="form__required">*</span>
-            <tooltip-label :title="$t('label.relationaloperator')" :tooltip="createConditionApiParams.relationaloperator.description"/>
+            <tooltip-label :title="$t('label.relationaloperator')" :tooltip="(createConditionApiParams.relationaloperator || {}).description"/>
           </div>
           <a-select
             v-model:value="newPolicy.relationaloperator"
@@ -303,7 +321,7 @@
             :filterOption="(input, option) => {
               return option.value.toLowerCase().indexOf(input.toLowerCase()) >= 0
             }" >
-            <a-select-option value="GT">{{ getOperator('GT') }}</a-select-option>
+            <a-select-option v-for="operator in operators" :key="operator" :value="operator">{{ getOperator(operator) }}</a-select-option>
           </a-select>
         </div>
         <div class="update-condition__item">
@@ -314,21 +332,28 @@
           <a-input v-model:value="newPolicy.threshold" type="number"></a-input>
         </div>
       </div>
-      <div :span="24" class="action-button">
-        <a-button :loading="loading" @click="closeModal">{{ $t('label.cancel') }}</a-button>
-        <a-button :loading="loading" ref="submit" type="primary" @click="addNewScalePolicyToGroup">{{ $t('label.ok') }}</a-button>
+
+      <template #footer>
+        <div :span="24" class="action-button">
+        <a-button :disabled="saving" @click="!saving && closeModal()">{{ $t('label.cancel') }}</a-button>
+        <a-button :loading="saving" ref="submit" type="primary" @click="addNewScalePolicyToGroup">{{ $t('label.ok') }}</a-button>
       </div>
+      </template>
     </a-modal>
 
   </div>
 </template>
 
 <script>
+import '@/style/components/view/autoscale.less'
+import { autoScaleResourceScope } from '@/utils/autoScaleUi'
+import { autoScaleOperators, validAutoScalePolicyTiming, autoScaleCounterLabel } from '@/utils/autoScalePolicyEvaluation'
 import { listRefreshMixin } from '@/utils/listRefreshMixin'
+import { autoScaleInteger } from '@/utils/autoscaleValidation'
+import { runAutoScaleMutation, autoScaleOwnerParams, autoScaleAffectedGroups, autoScaleMutationDescription, createAndAttachAutoScale } from '@/utils/autoScaleEditing'
 
 import { getAPI, postAPI } from '@/api'
 import Status from '@/components/widgets/Status'
-import TooltipButton from '@/components/widgets/TooltipButton'
 import TooltipLabel from '@/components/widgets/TooltipLabel'
 
 export default {
@@ -336,7 +361,6 @@ export default {
   name: 'conditionsTab',
   components: {
     Status,
-    TooltipButton,
     TooltipLabel
   },
   props: {
@@ -347,10 +371,24 @@ export default {
   },
   data () {
     return {
+      operators: autoScaleOperators,
       filterColumns: ['Actions'],
       loading: true,
+      policiesRefreshing: false,
+      policiesReadScope: null,
+      policiesReadRevision: 0,
+      saving: false,
+      affectedGroups: [],
+      affectedConditionGroups: [],
+      mutationError: '',
+      retainedResources: '',
       policies: [],
       isEditable: false,
+      policyDraft: {},
+      editPolicyModalVisible: false,
+      addConditionModalVisible: false,
+      pendingPolicyRemoval: null,
+      pendingConditionRemoval: null,
       policy: {
         duration: null,
         quiettime: null,
@@ -392,22 +430,29 @@ export default {
           title: this.$t('label.threshold'),
           dataIndex: 'threshold'
         },
-        {
-          title: this.$t('label.actions'),
-          key: 'actions'
-        }
+        { key: 'actions', title: this.$t('label.actions'), fixed: 'right', width: 90 }
+      ]
+    }
+  },
+  computed: {
+    policyColumns () {
+      return [
+        { key: 'name', title: this.$t('label.name') },
+        { key: 'duration', dataIndex: 'duration', title: this.$t('label.duration') },
+        { key: 'quiettime', dataIndex: 'quiettime', title: this.$t('label.autoscale.cooldown.seconds') },
+        { key: 'actions', title: this.$t('label.actions'), fixed: 'right', width: 90 }
       ]
     }
   },
   beforeCreate () {
     this.createConditionApi = this.$store.getters.apis.createCondition || {}
     this.createConditionApiParams = {}
-    this.createConditionApi.params.forEach(param => {
+    ;(this.createConditionApi.params || []).forEach(param => {
       this.createConditionApiParams[param.name] = param
     })
     this.createAutoScalePolicyApi = this.$store.getters.apis.createAutoScalePolicy || {}
     this.createAutoScalePolicyApiParams = {}
-    this.createAutoScalePolicyApi.params.forEach(param => {
+    ;(this.createAutoScalePolicyApi.params || []).forEach(param => {
       this.createAutoScalePolicyApiParams[param.name] = param
     })
   },
@@ -427,55 +472,66 @@ export default {
   },
   inject: ['parentFetchData'],
   methods: {
-    fetchInitData () {
-      this.loading = true
-      getAPI('listAutoScaleVmGroups', {
-        listAll: true,
-        id: this.resource.id
-      }).then(response => {
-        const lbruleid = response.listautoscalevmgroupsresponse?.autoscalevmgroup?.[0]?.lbruleid
-        this.policies = response.listautoscalevmgroupsresponse?.autoscalevmgroup?.[0]?.scaleuppolicies
-        if (this.selectedPolicyId) {
-          this.switchPolicy()
-        } else {
-          this.policy = this.policies?.[0]
-          this.selectedPolicyId = this.policy.id
+    selectPolicy (record) { this.selectedPolicyId = record.id; this.switchPolicy() },
+    openPolicyModal () {
+      this.policyDraft = { name: this.policy.name, duration: this.policy.duration, quiettime: this.policy.quiettime }
+      this.isEditable = true
+      this.editPolicyModalVisible = true
+      this.mutationError = ''
+    },
+    openAddConditionModal () {
+      this.newCondition = { counterid: null, relationaloperator: 'GT', threshold: null }
+      this.addConditionModalVisible = true
+      this.mutationError = ''
+    },
+    counterLabel (name) { return autoScaleCounterLabel(name, this.$t) },
+    async fetchInitData () {
+      const scope = autoScaleResourceScope(this)
+      const same = this.policiesReadScope === scope
+      const revision = ++this.policiesReadRevision
+      const current = () => revision === this.policiesReadRevision && scope === autoScaleResourceScope(this)
+      if (!same) { this.policies = []; this.policy = { conditions: [] }; this.selectedPolicyId = null }
+      this.loading = !same
+      this.policiesRefreshing = true
+      try {
+        const response = await getAPI('listAutoScaleVmGroups', { ...autoScaleOwnerParams(this.resource), listall: true, id: this.resource.id })
+        if (!current()) return
+        const group = response.listautoscalevmgroupsresponse?.autoscalevmgroup?.[0]
+        this.policies = group?.scaleuppolicies || []
+        if (!this.policies.some(policy => policy.id === this.selectedPolicyId)) this.selectedPolicyId = this.policies[0]?.id
+        this.policiesReadScope = scope
+        this.switchPolicy()
+        let provider = this.resource.lbprovider
+        if (!provider) {
+          const lb = await getAPI('listLoadBalancerRules', { ...autoScaleOwnerParams(this.resource), listall: true, id: group?.lbruleid })
+          const networkId = lb.listloadbalancerrulesresponse?.loadbalancerrule?.[0]?.networkid
+          const network = await getAPI('listNetworks', { ...autoScaleOwnerParams(this.resource), listall: true, id: networkId })
+          provider = network.listnetworksresponse?.network?.[0]?.service?.find(service => service.name === 'Lb')?.provider?.[0]?.name
         }
-        getAPI('listLoadBalancerRules', {
-          listAll: true,
-          id: lbruleid
-        }).then(response => {
-          const networkid = response.listloadbalancerrulesresponse?.loadbalancerrule?.[0]?.networkid
-          getAPI('listNetworks', {
-            listAll: true,
-            projectid: this.resource.projectid,
-            id: networkid
-          }).then(response => {
-            const services = response.listnetworksresponse?.network?.[0]?.service
-            const index = services.map(svc => { return svc.name }).indexOf('Lb')
-            const provider = services[index].provider[0].name
-            getAPI('listCounters', {
-              listAll: true,
-              provider: provider
-            }).then(response => {
-              this.countersList = response.counterresponse?.counter || []
-            })
-          })
-        })
-      }).finally(() => {
-        this.loading = false
-      })
+        const counters = await getAPI('listCounters', { listall: true, provider })
+        if (!current()) return
+        this.countersList = counters.counterresponse?.counter || []
+      } catch (error) {
+        if (current()) this.$notifyError(error)
+      } finally {
+        if (current()) { this.loading = false; this.policiesRefreshing = false }
+      }
     },
     fetchData () {
+      const scope = autoScaleResourceScope(this)
+      if (this.policiesReadScope !== scope) return this.fetchInitData()
       const listRequest = this.listRequestToken('fetchData')
-      this.loading = !listRequest.loaded
+      this.loading = false
+      if (!this.selectedPolicyId) return this.fetchInitData()
       return getAPI('listAutoScalePolicies', {
+        ...autoScaleOwnerParams(this.resource),
         listAll: true,
         id: this.selectedPolicyId
       }).then(response => {
         if (!this.isListRequestCurrent('fetchData', listRequest)) return
 
-        this.policy = response.listautoscalepoliciesresponse?.autoscalepolicy[0]
+        this.policy = response.listautoscalepoliciesresponse?.autoscalepolicy?.[0] || { conditions: [] }
+        this.policies = this.policies.map(policy => policy.id === this.policy.id ? this.policy : policy)
       }).finally(() => {
         if (!this.isListRequestCurrent('fetchData', listRequest)) return
 
@@ -491,8 +547,12 @@ export default {
       })
     },
     switchPolicy () {
-      this.policy = this.policies.filter(policy => policy.id === this.selectedPolicyId)[0]
+      this.policy = this.policies.find(policy => policy.id === this.selectedPolicyId) || { conditions: [] }
       this.isEditable = false
+      if (this.selectedPolicyId) {
+        autoScaleAffectedGroups(getAPI, this.resource, { policyId: this.selectedPolicyId })
+          .then(groups => { this.affectedGroups = groups }).catch(error => this.$notifyError(error))
+      }
     },
     isEditOrApply () {
       if (this.isEditable) return this.$t('label.apply')
@@ -521,314 +581,156 @@ export default {
       if (val === 'EQ' || val === 'eq') return this.$t('label.operator.equal')
       return val
     },
-    async pollJob (jobId) {
-      return new Promise(resolve => {
-        const asyncJobInterval = setInterval(() => {
-          getAPI('queryAsyncJobResult', { jobId }).then(async json => {
-            const result = json.queryasyncjobresultresponse
-            if (result.jobstatus === 0) {
-              return
-            }
-
-            clearInterval(asyncJobInterval)
-            resolve(result)
-          })
-        }, 1000)
-      })
+    mutate (command, params) { return runAutoScaleMutation(postAPI, getAPI, command, params) },
+    recordRetained (resources) { this.retainedResources = Object.entries(resources).filter(([, id]) => id).map(([type, id]) => `${type}: ${id}`).join(', ') },
+    async saveEdit (action) {
+      if (this.saving) return
+      this.saving = true
+      this.mutationError = ''
+      try {
+        await action()
+        await this.fetchInitData()
+        this.closeModal()
+        this.$message.success(this.$t('message.autoscale.edit.saved'))
+      } catch (error) {
+        this.mutationError = autoScaleMutationDescription(error, this.$t)
+        this.$notification.error({ message: this.$t('label.error'), description: this.mutationError })
+      } finally {
+        this.saving = false
+        this.updateConditionModalLoading = false
+      }
     },
-    addCondition (params) {
-      this.loading = true
-      return new Promise((resolve, reject) => {
-        postAPI('createCondition', params).then(async json => {
-          this.$pollJob({
-            jobId: json.conditionresponse.jobid,
-            successMethod: (result) => {
-              resolve(result.jobresult.condition)
-            },
-            errorMethod: (result) => {
-              reject(result.jobresult.errortext)
-            },
-            catchMessage: this.$t('error.fetching.async.job.result')
-          })
-        }).catch(error => {
-          reject(error)
-        }).finally(
-          this.loading = false
-        )
-      })
-    },
-    deleteCondition (conditionId) {
-      this.loading = true
-      return new Promise((resolve, reject) => {
-        postAPI('deleteCondition', { id: conditionId }).then(response => {
-          const jobId = response.deleteconditionresponse.jobid
-          this.$pollJob({
-            title: this.$t('label.delete.condition'),
-            description: conditionId,
-            jobId: jobId,
-            successMethod: () => {
-              return resolve()
-            },
-            errorMessage: this.$t('message.delete.condition.failed'),
-            errorMethod: (result) => {
-              reject(result.jobresult.errortext)
-            },
-            loadingMessage: this.$t('message.delete.condition.processing'),
-            catchMessage: this.$t('error.fetching.async.job.result'),
-            catchMethod: () => this.fetchData()
-          })
-        }).catch(error => {
-          reject(error)
-        }).finally(() => {
-          this.fetchData()
-          this.loading = false
-        })
-      })
-    },
+    addCondition (params) { return this.mutate('createCondition', params).then(result => result.condition) },
+    deleteCondition (id) { return this.mutate('deleteCondition', { id }) },
     openUpdateConditionModal (condition) {
       this.selectedCondition = condition
       this.updateConditionModalVisible = true
-      this.updateConditionDetails.countername = this.selectedCondition.countername
-      this.updateConditionDetails.relationaloperator = this.selectedCondition.relationaloperator
-      this.updateConditionDetails.threshold = this.selectedCondition.threshold
+      this.updateConditionDetails = { countername: condition.countername, relationaloperator: condition.relationaloperator, threshold: condition.threshold }
+      this.affectedConditionGroups = []
+      autoScaleAffectedGroups(getAPI, this.resource, { conditionId: condition.id })
+        .then(groups => { this.affectedConditionGroups = groups }).catch(error => this.$notifyError(error))
     },
     handleSubmitUpdateConditionForm () {
-      if (this.updateConditionModalLoading) return
-
-      if (!this.isNumber(this.updateConditionDetails.threshold)) {
-        this.$notification.error({
-          message: this.$t('label.threshold'),
-          description: this.$t('message.validate.number')
-        })
+      const threshold = autoScaleInteger(this.updateConditionDetails.threshold, 0)
+      if (threshold === null) {
+        this.$message.error(this.$t('message.validate.number'))
         return
       }
-
-      this.updateConditionModalLoading = true
-      postAPI('updateCondition', {
+      return this.saveEdit(() => this.mutate('updateCondition', {
         id: this.selectedCondition.id,
         relationaloperator: this.updateConditionDetails.relationaloperator,
-        threshold: this.updateConditionDetails.threshold
-      }).then(response => {
-        this.$pollJob({
-          title: this.$t('label.update.condition'),
-          description: this.selectedCondition.id,
-          jobId: response.updateconditionresponse.jobid,
-          successMessage: this.$t('message.success.update.condition'),
-          successMethod: () => {
-            this.fetchData()
-            this.closeModal()
-          },
-          errorMessage: this.$t('message.update.condition.failed'),
-          errorMethod: () => {
-            this.fetchData()
-            this.closeModal()
-          },
-          loadingMessage: this.$t('message.update.condition.processing')
-        })
-      }).catch(error => {
-        this.$notifyError(error)
-        this.updateConditionModalLoading = false
-      })
+        threshold
+      }))
     },
-    async deleteConditionFromAutoScalePolicy (conditionId) {
-      await this.updateAutoScalePolicy(null, conditionId)
+    preparePolicyRemoval () {
+      this.pendingPolicyRemoval = { resourceId: this.resource.id, policyId: this.policy.id, name: this.policy.name }
     },
-    async addConditionToPolicy () {
-      if (this.loading) return
-
-      if (!this.newCondition.counterid) {
-        this.$refs.newConditionCounterId.classList.add('error')
-      } else {
-        this.$refs.newConditionCounterId.classList.remove('error')
-      }
-
-      if (!this.newCondition.relationaloperator) {
-        this.$refs.newConditionRelationalOperator.classList.add('error')
-      } else {
-        this.$refs.newConditionRelationalOperator.classList.remove('error')
-      }
-
-      if (!this.newCondition.threshold) {
-        this.$refs.newConditionThreshold.classList.add('error')
-      } else {
-        this.$refs.newConditionThreshold.classList.remove('error')
-      }
-
-      if (!this.newCondition.counterid || !this.newCondition.relationaloperator || !this.newCondition.threshold) {
+    confirmPolicyRemoval (record) {
+      const target = this.pendingPolicyRemoval
+      this.pendingPolicyRemoval = null
+      if (record && record.id !== target?.policyId) {
+        this.$message.warning(this.$t('message.autoscale.selection.stale'))
         return
       }
-
-      if (!this.isNumber(this.newCondition.threshold)) {
-        this.$notification.error({
-          message: this.$t('label.threshold'),
-          description: this.$t('message.validate.number')
-        })
+      if (this.loading || this.saving || target?.resourceId !== this.resource.id || target?.policyId !== this.policy.id || !this.policies.some(item => item.id === target?.policyId)) {
+        this.$message.warning(this.$t('message.autoscale.selection.stale'))
         return
       }
-
-      const params = { ...this.newCondition }
-      params.domainid = this.resource.domainid
-      params.account = this.resource.account
-      const newCondition = await this.addCondition(params)
-
-      await this.updateAutoScalePolicy(newCondition.id, null)
+      return this.removeScalePolicyFromGroup()
     },
-    async addNewScalePolicyToGroup () {
-      if (this.loading) return
-
-      if (!this.newPolicy.duration || !this.newPolicy.counterid || !this.newPolicy.relationaloperator || !this.newPolicy.threshold) {
-        this.$notification.error({
-          message: this.$t('message.request.failed'),
-          description: this.$t('message.please.enter.valid.value')
-        })
+    prepareConditionRemoval (record) {
+      this.pendingConditionRemoval = { resourceId: this.resource.id, policyId: this.policy.id, id: record?.id, name: record?.countername }
+    },
+    confirmConditionRemoval (record) {
+      const target = this.pendingConditionRemoval
+      this.pendingConditionRemoval = null
+      if (record && record.id !== target?.id) {
+        this.$message.warning(this.$t('message.autoscale.selection.stale'))
         return
       }
-
-      if (!this.isPositiveNumber(this.newPolicy.duration)) {
-        this.$notification.error({
-          message: this.$t('label.duration'),
-          description: this.$t('message.validate.positive.number')
-        })
+      if (this.loading || this.saving || target?.resourceId !== this.resource.id || target?.policyId !== this.policy.id || !(this.policy.conditions || []).some(item => item.id === target?.id)) {
+        this.$message.warning(this.$t('message.autoscale.selection.stale'))
         return
       }
-
-      if (!this.isNumber(this.newPolicy.threshold)) {
-        this.$notification.error({
-          message: this.$t('label.threshold'),
-          description: this.$t('message.validate.number')
-        })
+      return this.deleteConditionFromAutoScalePolicy(target.id)
+    },
+    deleteConditionFromAutoScalePolicy (conditionId) {
+      if ((this.policy.conditions || []).length < 2) {
+        this.$message.error(this.$t('message.autoscale.policy.last.condition'))
         return
       }
-
-      this.loading = true
-
-      const newCondition = await this.addCondition({
-        domainid: this.resource.domainid,
-        account: this.resource.account,
-        counterid: this.newPolicy.counterid,
-        relationaloperator: this.newPolicy.relationaloperator,
-        threshold: this.newPolicy.threshold
-      })
-
-      const newPolicy = await this.createAutoScalePolicy({
-        domainid: this.resource.domainid,
-        account: this.resource.account,
-        name: this.newPolicy.name,
-        conditionids: newCondition.id,
-        duration: this.newPolicy.duration,
-        quiettime: this.newPolicy.quiettime,
-        action: 'ScaleUp'
-      })
-
-      this.policies.push(newPolicy)
-      this.policy = newPolicy
-      this.selectedPolicyId = newPolicy.id
-
-      await this.updateAutoScaleVmGroup({
+      return this.updateAutoScalePolicy(null, conditionId)
+    },
+    addConditionToPolicy () {
+      if (!this.newCondition.counterid || autoScaleInteger(this.newCondition.threshold, 0) === null) {
+        this.$message.error(this.$t('message.please.enter.valid.value'))
+        return
+      }
+      return this.saveEdit(() => createAndAttachAutoScale({
+        createCondition: () => this.addCondition({ ...autoScaleOwnerParams(this.resource), ...this.newCondition }),
+        attach: condition => this.mutate('updateAutoScalePolicy', { id: this.policy.id, conditionids: [...this.policy.conditions.map(item => item.id), condition.id].join(',') }),
+        removeCondition: this.deleteCondition,
+        retained: this.recordRetained
+      }))
+    },
+    addNewScalePolicyToGroup () {
+      if (!this.newPolicy.counterid || autoScaleInteger(this.newPolicy.threshold, 0) === null ||
+          !validAutoScalePolicyTiming(this.newPolicy, this.resource.interval)) {
+        this.$message.error(this.$t('message.autoscale.policy.time.invalid', { interval: this.resource.interval || 1 }))
+        return
+      }
+      return this.saveEdit(() => createAndAttachAutoScale({
+        createCondition: () => this.addCondition({
+          ...autoScaleOwnerParams(this.resource),
+          counterid: this.newPolicy.counterid,
+          relationaloperator: this.newPolicy.relationaloperator,
+          threshold: this.newPolicy.threshold
+        }),
+        createPolicy: condition => this.mutate('createAutoScalePolicy', {
+          ...autoScaleOwnerParams(this.resource),
+          name: this.newPolicy.name,
+          conditionids: condition.id,
+          duration: this.newPolicy.duration,
+          quiettime: this.newPolicy.quiettime,
+          action: 'ScaleUp'
+        }).then(result => result.autoscalepolicy),
+        attach: policy => this.mutate('updateAutoScaleVmGroup', { id: this.resource.id, scaleuppolicyids: [...this.policies.map(item => item.id), policy.id].join(',') }),
+        removePolicy: id => this.mutate('deleteAutoScalePolicy', { id }),
+        removeCondition: this.deleteCondition,
+        retained: this.recordRetained
+      }))
+    },
+    removeScalePolicyFromGroup () {
+      if (this.policies.length < 2) {
+        this.$message.error(this.$t('message.autoscale.policy.last.policy'))
+        return
+      }
+      return this.saveEdit(() => this.mutate('updateAutoScaleVmGroup', {
         id: this.resource.id,
-        scaleuppolicyids: this.policies.map(policy => { return policy.id }).join(',')
-      })
-
-      this.addPolicyModalVisible = false
-    },
-    async removeScalePolicyFromGroup () {
-      this.policies = this.policies.filter(policy => policy.id !== this.selectedPolicyId)
-
-      await this.updateAutoScaleVmGroup({
-        id: this.resource.id,
-        scaleuppolicyids: this.policies.map(policy => { return policy.id }).join(',')
-      })
-
-      this.selectedPolicyId = this.policies[this.policies.length - 1].id
-      this.isEditable = false
-    },
-    createAutoScalePolicy (params) {
-      this.loading = true
-      return new Promise((resolve, reject) => {
-        postAPI('createAutoScalePolicy', params).then(async json => {
-          this.$pollJob({
-            jobId: json.autoscalepolicyresponse.jobid,
-            successMethod: (result) => {
-              resolve(result.jobresult.autoscalepolicy)
-            },
-            errorMethod: (result) => {
-              reject(result.jobresult.errortext)
-            },
-            catchMessage: this.$t('error.fetching.async.job.result')
-          })
-        }).catch(error => {
-          reject(error)
-        }).finally(
-          this.loading = false
-        )
-      })
+        scaleuppolicyids: this.policies.filter(policy => policy.id !== this.selectedPolicyId).map(policy => policy.id).join(',')
+      }))
     },
     updateAutoScalePolicy (conditionIdToAdd, conditionIdToRemove) {
-      if (conditionIdToAdd === null && conditionIdToRemove === null && !this.isEditable) {
-        this.isEditable = true
+      if (!conditionIdToAdd && !conditionIdToRemove && !this.isEditable) { this.openPolicyModal(); return }
+      const settings = this.editPolicyModalVisible ? this.policyDraft : this.policy
+      if (!validAutoScalePolicyTiming(settings, this.resource.interval)) {
+        this.$message.error(this.$t('message.autoscale.policy.time.invalid', { interval: this.resource.interval || 1 }))
         return
       }
-      if (this.loading) return
-      this.loading = true
-
-      let newConditionIds
-      if (conditionIdToAdd) {
-        newConditionIds = this.policy.conditions.map(condition => { return condition.id }).join(',') + ',' + conditionIdToAdd
-      } else if (conditionIdToRemove) {
-        newConditionIds = this.policy.conditions.filter(condition => condition.id !== conditionIdToRemove).map(condition => { return condition.id }).join(',')
-      }
-
-      return new Promise((resolve, reject) => {
-        postAPI('updateAutoScalePolicy', {
-          id: this.policy.id,
-          name: this.policy.name,
-          duration: this.policy.duration,
-          quiettime: this.policy.quiettime,
-          conditionids: newConditionIds
-        }).then(response => {
-          this.$pollJob({
-            jobId: response.updateautoscalepolicyresponse.jobid,
-            successMethod: (result) => {
-              resolve(result.jobresult.autoscalepolicy)
-            },
-            errorMessage: this.$t('message.update.autoscale.policy.failed'),
-            errorMethod: (result) => {
-              reject(result.jobresult.errortext)
-            },
-            catchMessage: this.$t('error.fetching.async.job.result')
-          })
-        }).catch(error => {
-          reject(error)
-        }).finally(
-          this.loading = false
-        )
-      })
-    },
-    updateAutoScaleVmGroup (params) {
-      if (this.loading) return
-      this.loading = true
-
-      return new Promise((resolve, reject) => {
-        postAPI('updateAutoScaleVmGroup', params).then(response => {
-          this.$pollJob({
-            jobId: response.updateautoscalevmgroupresponse.jobid,
-            successMethod: (result) => {
-              resolve(result.jobresult.autoscalevmgroup)
-            },
-            errorMessage: this.$t('message.update.autoscale.vmgroup.failed'),
-            errorMethod: (result) => {
-              reject(result.jobresult.errortext)
-            },
-            catchMessage: this.$t('error.fetching.async.job.result')
-          })
-        }).catch(error => {
-          reject(error)
-        }).finally(
-          this.loading = false
-        )
-      })
+      const ids = this.policy.conditions.filter(condition => condition.id !== conditionIdToRemove).map(condition => condition.id)
+      if (conditionIdToAdd) ids.push(conditionIdToAdd)
+      if (!ids.length) { this.$message.error(this.$t('message.autoscale.policy.last.condition')); return }
+      return this.saveEdit(() => this.mutate('updateAutoScalePolicy', {
+        id: this.policy.id,
+        name: settings.name,
+        duration: settings.duration,
+        quiettime: settings.quiettime,
+        conditionids: ids.join(',')
+      }))
     },
     closeModal () {
+      this.addConditionModalVisible = false
+      this.editPolicyModalVisible = false
       this.updateConditionModalVisible = false
       this.updateConditionModalLoading = false
       this.addPolicyModalVisible = false
@@ -948,19 +850,19 @@ export default {
 
   &__required {
     margin-right: 5px;
-    color: red;
+    color: var(--ui-error-text);
   }
 
   .error-text {
     display: none;
-    color: red;
+    color: var(--ui-error-text);
     font-size: 0.8rem;
   }
 
   .error {
 
     input {
-      border-color: red;
+      border-color: var(--ui-error-text);
     }
 
     .error-text {

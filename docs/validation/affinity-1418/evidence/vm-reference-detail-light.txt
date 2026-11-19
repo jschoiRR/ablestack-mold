@@ -1,0 +1,269 @@
+Browser tab: 6, Title: "가상머신 - ABLESTACK-Mold", URL: "http://10.10.31.10:8080/client/#/vm/579b1439-136d-4280-b2bb-b10613496d20".
+1 AXWebArea 가상머신 - ABLESTACK-Mold, URL: 10.10.31.10:8080/client/#/vm/579b1439-136d-4280-b2bb-b10613496d20
+	2 container
+		749 container
+			750 image
+			751 menu
+				752 dashboard 대시보드
+					753 link Description: dashboard 대시보드, Value: 10.10.31.10:8080/client/#/dashboard
+				754 container
+					755 image cloud
+					756 text 컴퓨트
+				757 content list sub_menu_37_$$_/compute-popup
+					758 cloud-server 가상머신
+						759 link Description: cloud-server 가상머신, Value: 10.10.31.10:8080/client/#/vm
+					760 camera VM 스냅샷
+						761 link Description: camera VM 스냅샷, Value: 10.10.31.10:8080/client/#/vmsnapshot
+					762 쿠버네티스
+						763 link Description: 쿠버네티스, Value: 10.10.31.10:8080/client/#/kubernetes
+					764 fullscreen 오토스케일 VM 그룹
+						765 link Description: fullscreen 오토스케일 VM 그룹, Value: 10.10.31.10:8080/client/#/autoscalevmgroup
+					766 gold 가상머신 그룹
+						767 link Description: gold 가상머신 그룹, Value: 10.10.31.10:8080/client/#/vmgroup
+					768 key SSH 키 쌍
+						769 link Description: key SSH 키 쌍, Value: 10.10.31.10:8080/client/#/ssh
+					770 solution 사용자 데이터 라이브러리
+						771 link Description: solution 사용자 데이터 라이브러리, Value: 10.10.31.10:8080/client/#/userdata
+					772 solution CNI 구성
+						773 link Description: solution CNI 구성, Value: 10.10.31.10:8080/client/#/cniconfiguration
+					774 swap Affinity 그룹
+						775 link Description: swap Affinity 그룹, Value: 10.10.31.10:8080/client/#/affinitygroup
+				776 container
+					777 image hdd
+					778 text 스토리지
+				779 container
+					780 image wifi
+					781 text 네트워크
+				782 container
+					783 image picture
+					784 text 이미지
+				785 container
+					786 image lock
+					787 text 키 관리
+				788 schedule 이벤트
+					789 link Description: schedule 이벤트, Value: 10.10.31.10:8080/client/#/event
+				790 project 프로젝트
+					791 link Description: project 프로젝트, Value: 10.10.31.10:8080/client/#/project
+				792 idcard 역할
+					793 link Description: idcard 역할, Value: 10.10.31.10:8080/client/#/role
+				794 team 계정
+					795 link Description: team 계정, Value: 10.10.31.10:8080/client/#/account
+				796 block 도메인
+					797 link Description: block 도메인, Value: 10.10.31.10:8080/client/#/domain
+				798 container
+					799 image bank
+					800 text 인프라스트럭쳐
+				801 container
+					802 image shopping
+					803 text 서비스 오퍼링
+				804 container
+					805 image setting
+					806 text 구성
+				807 appstore-add 확장
+					808 link Description: appstore-add 확장, Value: 10.10.31.10:8080/client/#/extension
+				809 container
+					810 image tool
+					811 text 도구
+				812 read API 문서
+					813 link Description: read API 문서, Value: 10.10.31.10:8080/client/#/apidocs/
+		868 container
+			869 text 페이지 스타일 설정
+			870 button 닫기
+				871 image close
+			872 heading 페이지 스타일 설정, Value: 3
+				873 text 페이지 스타일 설정
+			874 container
+				875 container
+					876 image
+					877 container
+						878 radio button (settable, integer) Description:  , Value: 1
+					879 image check
+				880 container
+					881 image
+					882 container
+						883 radio button (settable, integer) Description:  , Value: 0
+			884 heading 테마 색상, Value: 3
+				885 text 테마 색상
+			886 container
+				887 container
+					888 radio button (settable, integer) Description:  , Value: 0
+					889 image check
+				890 container
+					891 radio button (settable, integer) Description:  , Value: 0
+				892 container
+					893 radio button (settable, integer) Description:  , Value: 0
+				894 container
+					895 radio button (settable, integer) Description:  , Value: 0
+				896 container
+					897 radio button (settable, integer) Description:  , Value: 0
+				898 container
+					899 radio button (settable, integer) Description:  , Value: 0
+				900 container
+					901 radio button (settable, integer) Description:  , Value: 0
+				902 container
+					903 radio button (settable, integer) Description:  , Value: 0
+			904 heading 네비게이션 설정, Value: 3
+				905 text 네비게이션 설정
+			906 container
+				907 container
+					908 text 배경색
+					909 color well (settable) #ffffff
+				910 container
+					911 text 텍스트 색상
+					912 color well (settable) #000000
+			913 container
+				914 image exclamation-circle
+				915 text 설정은 현재 브라우저에서만 볼 수 있습니다. 설정을 적용하려면 JSON 파일을 다운로드하고 경로 `/public/config.json` 아래의 `config.json` 파일의 `theme` 섹션에서 해당 콘텐츠를 교체하세요.
+			916 button download 세팅값 다운로드(json)
+				917 image download
+				918 text 세팅값 다운로드(json)
+			919 button undo 기본값으로 재설정
+				920 image undo
+				921 text 기본값으로 재설정
+		122 container
+			864 image menu-fold
+			124 container
+				125 combo box (settable) rc_select_0
+				126 image project
+				127 text 기본 보기
+			865 button 생성 down
+				866 text 생성
+				867 image down
+			131 image translation
+			132 image bell
+			133 container
+				134 text AC admin cloud
+		135 container
+			533 container
+				534 link Description: home, Value: 10.10.31.10:8080/client/#/
+				535 text /
+				536 link Description: 가상머신, Value: 10.10.31.10:8080/client/#/vm
+				537 text / qa-ag05-vm-01
+				538 link Description: question-circle, Value: docs.ablecloud.io/latest/adminguide/virtual_machines.html
+				539 button reload 업데이트
+					922 image reload
+					541 text 업데이트
+			542 button down 작업
+				543 image down
+				544 text 작업
+			923 container
+				924 image edit
+				925 heading qa-ag05-vm-01, Value: 4
+					926 text qa-ag05-vm-01
+				927 text i-2-664-VM x86_64 KVM 동적으로 확장 가능
+				928 link code
+					929 button (disabled) code
+						930 image code
+				931 text 상태 정지된 상태 아이디
+				932 button barcode
+					933 image barcode
+				934 link Description: 579b1439-136d-4280-b2bb-b10613496d20 , Value: javascript:;
+				935 text CPU 2 CPU x 2.00 GHz
+				936 image question-circle
+				937 text x86_64 메모리 2048 MB 메모리 네트워크
+				938 image wifi
+				939 text 1 NIC(s)
+				940 text eth0
+				941 link Description:  , Value: javascript:;
+				942 text 기본
+				943 image apartment
+				944 link Description: E1335-VM-Origin-L2, Value: 10.10.31.10:8080/client/#/guestnetwork/ae274fff-3d8e-4285-ac73-26a767c1fea7
+				945 text Affinity 그룹
+				946 image swap
+				947 link Description: qa-ag05-target, Value: 10.10.31.10:8080/client/#/affinitygroup/b2425532-f2bb-4511-86f5-917f6a4f1869
+				948 text ,
+				949 link Description: qa-ag05-other, Value: 10.10.31.10:8080/client/#/affinitygroup/92d3963c-f878-48a5-a830-cbfd902acaf2
+				950 text 템플릿
+				951 image save
+				952 link Description: rocky-9-4-minimal.qcow22, Value: 10.10.31.10:8080/client/#/template/e3d8677e-70f0-44bd-917e-6068636b97a8
+				953 text 컴퓨트 오퍼링
+				954 image cloud
+				955 link Description: AS-PROD-31-AS01-2C2G-Sparse, Value: 10.10.31.10:8080/client/#/computeoffering/39c3aa33-5632-4dea-bd84-ba794d292c87
+				956 text Zone
+				957 image global
+				958 link Description: Zone, Value: 10.10.31.10:8080/client/#/zone/7013f5a1-de59-4cea-a596-f4f58815f31c
+				959 text 계정
+				960 image user
+				961 link Description: admin, Value: 10.10.31.10:8080/client/#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f
+				962 text 도메인
+				963 image block
+				964 link Description: ROOT, Value: 10.10.31.10:8080/client/#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details
+				965 text 생성일
+				966 image calendar
+				967 text 2026. 10. 19. 오후 1:23:45
+				968 container
+					969 text 태그
+					970 container
+						971 image plus
+						972 text  새 태그
+			973 container
+				974 tab group
+					975 container
+						976 tab (selected, settable, boolean) 상세, Value: 1, ID: rc-tabs-4-tab-details
+						977 tab (selectable, settable, boolean) IP 구성, Value: 0, ID: rc-tabs-4-tab-guestnetwork
+						978 tab (selectable, settable, boolean) 메트릭, Value: 0, ID: rc-tabs-4-tab-stats
+						979 tab (selectable, settable, boolean) 프로세스, Value: 0, ID: rc-tabs-4-tab-processes
+						980 tab (selectable, settable, boolean) 스케줄, Value: 0, ID: rc-tabs-4-tab-schedules
+						981 tab (selectable, settable, boolean) ISO, Value: 0, ID: rc-tabs-4-tab-cdrom
+						982 tab (selectable, settable, boolean) 볼륨, Value: 0, ID: rc-tabs-4-tab-volumes
+						983 tab (selectable, settable, boolean) NIC, Value: 0, ID: rc-tabs-4-tab-nics
+						984 tab (selectable, settable, boolean) 설정, Value: 0, ID: rc-tabs-4-tab-settings
+						985 tab (selectable, settable, boolean) 호스트 장치, Value: 0, ID: rc-tabs-4-tab-hostdevices
+						986 tab (selectable, settable, boolean) VM 스냅샷, Value: 0, ID: rc-tabs-4-tab-vmsnapshots
+						987 tab (selectable, settable, boolean) 이벤트, Value: 0, ID: rc-tabs-4-tab-events
+						988 tab (selectable, settable, boolean) 코멘트, Value: 0, ID: rc-tabs-4-tab-comments
+				989 container Description: 상세, ID: rc-tabs-4-panel-details
+					990 content list
+						991 container
+							992 text VM 호스트 명
+							993 text qa-ag05-vm-01
+						994 container
+							995 text VM 표시 명
+							996 text qa-ag05-vm-01
+						997 container
+							998 text 아이디
+							999 text 579b1439-136d-4280-b2bb-b10613496d20
+						1000 container
+							1001 text 상태
+							1002 text Stopped
+						1003 container
+							1004 text 템플릿
+							1005 text rocky-9-4-minimal.qcow22
+						1006 container
+							1007 text 템플릿 형식
+							1008 text USER
+						1009 container
+							1010 text 컴퓨트 오퍼링
+							1011 text AS-PROD-31-AS01-2C2G-Sparse
+						1012 container
+							1013 text 동적으로 확장 가능
+							1014 text true
+						1015 container
+							1016 text HA 활성화
+							1017 text false
+						1018 container
+							1019 text 하이퍼바이저
+							1020 text KVM
+						1021 container
+							1022 text CPU 아키텍처
+							1023 text x86_64
+						1024 container
+							1025 text 계정
+							1026 text admin
+						1027 container
+							1028 text 도메인
+							1029 text ROOT
+						1030 container
+							1031 text Zone
+							1032 text Zone
+						1033 container
+							1034 text VBMC 포트
+							1035 text 미할당
+						1036 container
+							1037 text 삭제 보호
+							1038 text false
+	530 container
+		531 image info-circle
+		532 text Wall 모니터링을 사용할 수 없습니다. 기존 알림은 최신 정보가 아닐 수 있으며 Mold는 계속 사용할 수 있습니다. 비활성
+
+The focused UI element is 870 button 닫기

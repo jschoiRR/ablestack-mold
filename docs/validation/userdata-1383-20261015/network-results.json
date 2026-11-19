@@ -1,0 +1,327 @@
+[
+  {
+    "case": "required-fields",
+    "requests": [],
+    "truncated": false
+  },
+  {
+    "case": "invalid-base64",
+    "requests": [],
+    "truncated": false
+  },
+  {
+    "case": "oversize",
+    "requests": [],
+    "truncated": false
+  },
+  {
+    "case": "textarea-and-tag-enter-do-not-submit",
+    "requests": [],
+    "truncated": false
+  },
+  {
+    "case": "textarea-and-tag-enter-preserve-control-semantics",
+    "requests": [],
+    "truncated": false
+  },
+  {
+    "case": "admin-name-enter-register",
+    "requests": [
+      {
+        "command": "registerUserData",
+        "name": "UD1383-31-20261015-admin",
+        "params": "VAR1",
+        "projectid": null,
+        "domainid": null,
+        "account": null,
+        "status": 200
+      }
+    ],
+    "truncated": false
+  },
+  {
+    "case": "duplicate-server-431",
+    "requests": [
+      {
+        "command": "registerUserData",
+        "name": "UD1383-31-20261015-admin",
+        "params": "VAR2",
+        "projectid": null,
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "status": 431
+      }
+    ],
+    "truncated": false
+  },
+  {
+    "case": "required-light",
+    "requests": [],
+    "truncated": false
+  },
+  {
+    "case": "invalid-base64-light",
+    "requests": [],
+    "truncated": false
+  },
+  {
+    "case": "oversize-light",
+    "requests": [],
+    "truncated": false
+  },
+  {
+    "case": "duplicate-431-light",
+    "requests": [
+      {
+        "command": "registerUserData",
+        "name": "UD1383-31-20261015-admin",
+        "params": "VAR2",
+        "projectid": null,
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "status": 431
+      }
+    ],
+    "truncated": false
+  },
+  {
+    "case": "duplicate-native-key-light",
+    "requests": [
+      {
+        "command": "registerUserData",
+        "name": "UD1383-31-20261015-admin",
+        "params": "VAR2",
+        "projectid": null,
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "status": 431
+      }
+    ],
+    "truncated": false
+  },
+  {
+    "case": "duplicate-first-error-native-light",
+    "requests": [
+      {
+        "command": "registerUserData",
+        "name": "UD1383-31-20261015-admin",
+        "params": "VAR2",
+        "projectid": null,
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "status": 431
+      }
+    ],
+    "truncated": false
+  },
+  {
+    "case": "duplicate-stable-first-error-light",
+    "requests": [
+      {
+        "command": "registerUserData",
+        "name": "UD1383-31-20261015-admin",
+        "params": "VAR2",
+        "projectid": null,
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "status": 431
+      }
+    ],
+    "truncated": false
+  },
+  {
+    "case": "controlled-503-light",
+    "requests": [
+      {
+        "command": "registerUserData",
+        "name": "UD1383-31-20261015-admin",
+        "params": "VAR2",
+        "projectid": null,
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "status": 503
+      }
+    ],
+    "truncated": false
+  },
+  {
+    "case": "controlled-network-light",
+    "requests": [
+      {
+        "command": "registerUserData",
+        "name": "UD1383-31-20261015-admin",
+        "params": "VAR2",
+        "projectid": null,
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "failed": "net::ERR_CONNECTION_RESET"
+      }
+    ],
+    "truncated": false
+  },
+  {
+    "case": "deleted-owner-light",
+    "requests": [
+      {
+        "command": "registerUserData",
+        "name": "UD1383-31-20261015-admin",
+        "params": "VAR2",
+        "projectid": null,
+        "domainid": "91612e4a-83c9-4dd2-8ec9-a4a247f01486",
+        "account": "ud1383-31-20261015-deleted",
+        "status": 431
+      }
+    ],
+    "truncated": false
+  },
+  {
+    "case": "textarea-tags-enter-final-light",
+    "requests": [],
+    "truncated": false
+  },
+  {
+    "case": "delayed-recovery-success-light",
+    "requests": [
+      {
+        "command": "registerUserData",
+        "name": "UD1383-31-20261015-recovery",
+        "params": "VAR2,VAR3",
+        "projectid": null,
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "status": 200
+      }
+    ],
+    "truncated": false
+  },
+  {
+    "case": "invalid-base64-final-dark",
+    "requests": [],
+    "truncated": false
+  },
+  {
+    "case": "oversize-final-dark",
+    "requests": [],
+    "truncated": false
+  },
+  {
+    "case": "duplicate-stable-first-error-dark",
+    "requests": [
+      {
+        "command": "registerUserData",
+        "name": "UD1383-31-20261015-admin",
+        "params": "VAR2",
+        "projectid": null,
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "status": 431
+      }
+    ],
+    "truncated": false
+  },
+  {
+    "case": "controlled-503-final-dark",
+    "requests": [
+      {
+        "command": "registerUserData",
+        "name": "UD1383-31-20261015-admin",
+        "params": "VAR2",
+        "projectid": null,
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "status": 503
+      }
+    ],
+    "truncated": false
+  },
+  {
+    "case": "controlled-network-final-dark",
+    "requests": [
+      {
+        "command": "registerUserData",
+        "name": "UD1383-31-20261015-admin",
+        "params": "VAR2",
+        "projectid": null,
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "failed": "net::ERR_CONNECTION_RESET"
+      }
+    ],
+    "truncated": false
+  },
+  {
+    "case": "dark-recovery-success",
+    "requests": [
+      {
+        "command": "registerUserData",
+        "name": "UD1383-31-20261015-dark-recovery",
+        "params": "VAR2",
+        "projectid": null,
+        "domainid": "7ef6b29a-b253-11f1-a895-0024814c313f",
+        "account": "admin",
+        "status": 200
+      }
+    ],
+    "truncated": false
+  },
+  {
+    "case": "ordinary-user-success",
+    "requests": [
+      {
+        "command": "registerUserData",
+        "name": "UD1383-31-20261015-user",
+        "params": null,
+        "projectid": null,
+        "domainid": null,
+        "account": null,
+        "status": 200
+      }
+    ],
+    "truncated": false
+  },
+  {
+    "case": "domainadmin-success",
+    "requests": [
+      {
+        "command": "registerUserData",
+        "name": "UD1383-31-20261015-domainadmin",
+        "params": null,
+        "projectid": null,
+        "domainid": null,
+        "account": null,
+        "status": 200
+      }
+    ],
+    "truncated": false
+  },
+  {
+    "case": "project-success",
+    "requests": [
+      {
+        "command": "registerUserData",
+        "name": "UD1383-31-20261015-project",
+        "params": null,
+        "projectid": "7539b359-78db-40f0-a1a9-57b34570ec44",
+        "domainid": null,
+        "account": null,
+        "status": 200
+      }
+    ],
+    "truncated": false
+  },
+  {
+    "case": "cni-success",
+    "requests": [
+      {
+        "command": "registerCniConfiguration",
+        "name": "UD1383-31-20261015-cni",
+        "params": null,
+        "projectid": null,
+        "domainid": null,
+        "account": null,
+        "status": 200
+      }
+    ],
+    "truncated": false
+  }
+]

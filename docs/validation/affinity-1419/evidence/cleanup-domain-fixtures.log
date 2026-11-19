@@ -1,0 +1,13 @@
+deleteGroup qa-ag06-user-target
+deleteGroup qa-ag06-domain-shared
+deleteGroup qa-ag06-restricted-target
+deleteNetwork 2e92a24c-87ae-489f-87d4-d17c7ba5ad49
+deleteNetwork b035e24d-bee9-48b4-8e86-f915251fe52e
+deleteNetwork 7ca6ddea-5966-41a1-b939-e93d03bbdd7c
+deleteProject 5a4cdab0-8eb7-43d8-b6b8-39b34780ca14
+deleteAccount a70108ca-08b3-430e-8500-08dbeb9d28f7
+deleteAccount 7236be00-dfae-4d33-ad42-6243729cd083
+deleteAccount b18a6a99-9bb6-44d2-a8c4-81416b43bcac
+deleteRole a7dd5692-41b1-4aa7-8fb7-12426d9d7582
+deleteDomain 681fd899-ca4d-4bc6-87f1-8cbd2254e962
+Dedicated role/project/domain fixtures cleaned; root groups and cold-placement VMs retained

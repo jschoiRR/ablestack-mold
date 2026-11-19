@@ -1,0 +1,157 @@
+Browser tab: 6, Title: "Affinity 그룹 - ABLESTACK-Mold", URL: "http://10.10.31.10:8080/client/#/affinitygroup/555b7bb4-24d6-45f5-9480-72c2fd813bf6?tab=details".
+1 AXWebArea Affinity 그룹 - ABLESTACK-Mold, URL: 10.10.31.10:8080/client/#/affinitygroup/555b7bb4-24d6-45f5-9480-72c2fd813bf6?tab=details
+	2 container
+		3 container
+			4 text 페이지 스타일 설정
+			5 button 닫기
+				6 image close
+			3149 heading 페이지 스타일 설정, Value: 3
+				3150 text 페이지 스타일 설정
+			3151 container
+				3152 container
+					3153 image
+					3154 container
+						3155 radio button (settable, integer) Description:  , Value: 0
+				3156 container
+					3157 image
+					3158 container
+						3159 radio button (settable, integer) Description:  , Value: 1
+					3160 image check
+			3161 heading 테마 색상, Value: 3
+				3162 text 테마 색상
+			3163 container
+				3164 container
+					3165 radio button (settable, integer) Description:  , Value: 0
+					3166 image check
+				3167 container
+					3168 radio button (settable, integer) Description:  , Value: 0
+				3169 container
+					3170 radio button (settable, integer) Description:  , Value: 0
+				3171 container
+					3172 radio button (settable, integer) Description:  , Value: 0
+				3173 container
+					3174 radio button (settable, integer) Description:  , Value: 0
+				3175 container
+					3176 radio button (settable, integer) Description:  , Value: 0
+				3177 container
+					3178 radio button (settable, integer) Description:  , Value: 0
+				3179 container
+					3180 radio button (settable, integer) Description:  , Value: 0
+			3181 heading 네비게이션 설정, Value: 3
+				3182 text 네비게이션 설정
+			3183 container
+				3184 container
+					3185 text 배경색
+					3186 color well (disabled, settable) #ffffff
+				3187 container
+					3188 text 텍스트 색상
+					3189 color well (disabled, settable) #000000
+			3190 container
+				3191 image exclamation-circle
+				3192 text 설정은 현재 브라우저에서만 볼 수 있습니다. 설정을 적용하려면 JSON 파일을 다운로드하고 경로 `/public/config.json` 아래의 `config.json` 파일의 `theme` 섹션에서 해당 콘텐츠를 교체하세요.
+			3193 button download 세팅값 다운로드(json)
+				3194 image download
+				3195 text 세팅값 다운로드(json)
+			3196 button undo 기본값으로 재설정
+				3197 image undo
+				3198 text 기본값으로 재설정
+		55 container
+			3283 image menu-unfold
+			57 container
+				58 combo box (settable) rc_select_0
+				59 image project
+				60 text 기본 보기
+			61 image translation
+			62 image bell
+			63 container
+				64 text AC admin cloud
+		65 container
+			1786 container
+				1787 link Description: home, Value: 10.10.31.10:8080/client/#/
+				1788 text /
+				1789 link Description: Affinity 그룹, Value: 10.10.31.10:8080/client/#/affinitygroup
+				3203 text / qa-ag05-ui-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+				3204 link Description: question-circle, Value: docs.ablecloud.io/latest/adminguide/virtual_machines.html#affinity-groups
+				3205 button reload 업데이트
+					3206 image reload
+					3207 text 업데이트
+			3208 button down 작업
+				3209 image down
+				3210 text 작업
+			3211 container
+				3212 image swap
+				3213 heading Value: 4, qa-ag05-ui-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+					3214 text qa-ag05-ui-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+				3215 text 같은 호스트 배치 · 엄격
+				3216 text 아이디
+				3217 button barcode
+					3218 image barcode
+				3219 link Description: 555b7bb4-24d6-45f5-9480-72c2fd813bf6 , Value: javascript:;
+				3220 text 같은 그룹의 VM을 같은 호스트에 배치합니다. 조건을 만족하지 못하면 배치가 실패합니다. 연결 VM 수 0 계정
+				3221 image user
+				3222 link Description: admin, Value: 10.10.31.10:8080/client/#/account?name=admin&domainid=7ef6b29a-b253-11f1-a895-0024814c313f
+				3223 text 도메인
+				3224 image block
+				3225 link Description: ROOT, Value: 10.10.31.10:8080/client/#/domain/7ef6b29a-b253-11f1-a895-0024814c313f?tab=details
+				3226 link Description: cloud-server 가상머신 보기, Value: 10.10.31.10:8080/client/#/vm?affinitygroupid=555b7bb4-24d6-45f5-9480-72c2fd813bf6
+			3227 container
+				3228 tab group
+					3229 container
+						3230 tab (selected, settable, boolean) 상세, Value: 1, ID: rc-tabs-7-tab-details
+						3231 tab (selectable, settable, boolean) 가상머신, Value: 0, ID: rc-tabs-7-tab-instances
+						3232 tab (selectable, settable, boolean) 이벤트, Value: 0, ID: rc-tabs-7-tab-events
+				3233 container Description: 상세, ID: rc-tabs-7-panel-details
+					3234 content list
+						3235 container
+							3236 text 이름
+							3237 text qa-ag05-ui-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+						3238 container
+							3239 text 아이디
+							3240 text 555b7bb4-24d6-45f5-9480-72c2fd813bf6
+						3241 container
+							3242 text 설명
+							3243 text DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
+						3244 container
+							3245 text 유형
+							3246 text 같은 호스트 배치 · 엄격
+							3247 text 같은 그룹의 VM을 같은 호스트에 배치합니다. 조건을 만족하지 못하면 배치가 실패합니다.
+						3248 container
+							3249 text 연결 VM 수
+							3250 text 0
+						3251 container
+							3252 text 계정
+							3253 text admin
+						3254 container
+							3255 text 도메인
+							3256 text ROOT
+	212 container
+		213 image info-circle
+		214 text Wall 모니터링을 사용할 수 없습니다. 기존 알림은 최신 정보가 아닐 수 있으며 Mold는 계속 사용할 수 있습니다. 비활성
+	3257 container
+		3258 container Affinity 그룹 삭제
+			3259 container
+				3260 button Close
+					3261 image close
+				3262 text Affinity 그룹 삭제
+				3263 text 1 / 1
+				3264 table
+					3265 row
+						3266 cell
+							3267 text 이름
+						3268 cell
+							3269 text qa-ag05-ui-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+					3270 row
+						3271 cell
+							3272 text VM 소유 범위
+						3273 cell
+							3274 text admin / ROOT
+					3275 row
+						3276 cell
+							3277 text 연결 VM 수
+						3278 cell
+							3279 text 0
+				3280 text 이 Affinity 그룹을 삭제하면 해당 그룹의 모든 VM 연결이 해제됩니다. VM 자체와 다른 그룹 연결은 보존됩니다.
+				3281 button 취소
+				3282 button Affinity 그룹 삭제
+
+The focused UI element is 3284 container

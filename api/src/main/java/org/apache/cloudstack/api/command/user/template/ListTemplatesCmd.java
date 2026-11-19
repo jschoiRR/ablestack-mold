@@ -31,6 +31,7 @@ import org.apache.cloudstack.api.command.user.UserCmd;
 import org.apache.cloudstack.api.response.ExtensionResponse;
 import org.apache.cloudstack.api.response.GuestOSCategoryResponse;
 import org.apache.cloudstack.api.response.ListResponse;
+import org.apache.cloudstack.api.response.UserDataResponse;
 import org.apache.cloudstack.api.response.TemplateResponse;
 import org.apache.cloudstack.api.response.ZoneResponse;
 import org.apache.cloudstack.context.CallContext;
@@ -133,6 +134,14 @@ public class ListTemplatesCmd extends BaseListTaggedResourcesCmd implements User
 
     @Parameter(name = ApiConstants.IS_READY, type = CommandType.BOOLEAN, description = "list templates that are ready to be deployed", since = "4.21.0")
     private Boolean ready;
+
+    @Parameter(name = ApiConstants.USER_DATA_ID, type = CommandType.UUID, entityType = UserDataResponse.class,
+            description = "List resources associated with this user data library UUID", since = "4.23.0")
+    private Long userDataId;
+
+    public Long getUserDataId() {
+        return userDataId;
+    }
 
     /////////////////////////////////////////////////////
     /////////////////// Accessors ///////////////////////

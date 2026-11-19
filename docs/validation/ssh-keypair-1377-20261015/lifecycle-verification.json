@@ -1,0 +1,52 @@
+{
+  "passed": 7,
+  "total": 7,
+  "tests": [
+    {
+      "label": "final-root_a-association",
+      "passed": true,
+      "ids": [
+        "7ea443a5-01c5-46e9-a3bb-83ca1f52058d",
+        "982d89aa-6fc3-4ad7-832b-75894ae2c9d9"
+      ]
+    },
+    {
+      "label": "final-root_b-association",
+      "passed": true,
+      "ids": [
+        "982d89aa-6fc3-4ad7-832b-75894ae2c9d9",
+        "d93a9ed4-59fe-4839-945b-18545520257e"
+      ]
+    },
+    {
+      "label": "final-replacement-association",
+      "passed": true,
+      "ids": []
+    },
+    {
+      "label": "old-uuid-absent-new-same-name-preserved",
+      "passed": true,
+      "old": "7471de0f-aa08-4538-b88a-1f9cb3368d70",
+      "new": "678b26ed-6c96-48ed-87d4-656b1df76034"
+    },
+    {
+      "label": "temporary-raw-displayname-restored",
+      "passed": true,
+      "id": "7ea443a5-01c5-46e9-a3bb-83ca1f52058d"
+    },
+    {
+      "label": "db-multiple-key-association-restored",
+      "passed": true,
+      "vm": "982d89aa-6fc3-4ad7-832b-75894ae2c9d9",
+      "details": {
+        "SSH.KeyPairNames": "ssh1377-20261015-same,ssh1377-20261015-second",
+        "SSH.PublicKey": "5edf0858fb3e11565a1808c459565b2bf250c33cb1db59209619d6ba278346e4"
+      }
+    },
+    {
+      "label": "all-existing-vm-ssh-metadata-preserved",
+      "passed": true,
+      "rows": 350
+    }
+  ]
+}
