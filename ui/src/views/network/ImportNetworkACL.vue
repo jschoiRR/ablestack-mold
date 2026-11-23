@@ -16,366 +16,267 @@
 // under the License.
 
 <template>
-  <div v-ctrl-enter="handleSubmit">
-    <a-spin :spinning="loading">
-      <a-form
-        :ref="formRef"
-        :model="form"
-        :rules="rules"
-        layout="vertical"
-        @finish="handleSubmit">
-
-        <div class="info-section" style="margin-bottom: 24px; padding: 16px; background: var(--ui-bg-elevated); color: var(--ui-text-primary); border-radius: 4px;">
-          <a-descriptions :column="1" size="small">
-            <a-descriptions-item :label="$t('label.acl.id')">
-              <span style="font-family: monospace;">{{ resource.id }}</span>
-            </a-descriptions-item>
-            <a-descriptions-item :label="$t('label.add.acl.name')">
-              <strong>{{ resource.name }}</strong>
-            </a-descriptions-item>
-          </a-descriptions>
+  <MoldDialog
+    size="md"
+    focus-guard
+    :title="$t('label.acl.import')"
+    :closable="!loading"
+    :keyboard="!loading"
+    @cancel="closeAction">
+    <dl class="acl-import-context">
+      <dt>{{ $t('label.add.acl.name') }}</dt><dd>{{ resource.name }}</dd>
+      <dt>{{ $t('label.acl.id') }}</dt><dd>{{ resource.id }}</dd>
+    </dl>
+    <a-form layout="vertical" @finish="handleSubmit" v-ctrl-enter="handleSubmit">
+      <a-form-item>
+        <template #label><tooltip-label :title="$t('label.rules.file')" :tooltip="$t('label.rules.file.to.import')" /></template>
+        <a-upload-dragger
+          accept=".csv,text/csv"
+          :multiple="false"
+          :disabled="locked || !canWrite()"
+          :file-list="fileList"
+          :before-upload="beforeUpload"
+          @remove="handleRemove">
+          <p class="ant-upload-drag-icon"><cloud-upload-outlined /></p>
+          <p class="ant-upload-text">{{ $t('label.rules.file.import.description') }}</p>
+        </a-upload-dragger>
+      </a-form-item>
+      <a-alert
+        v-if="report"
+        class="csv-report"
+        show-icon
+        :type="reportType"
+        :message="$t(reportMessage, report)"
+        :description="report.saved && !report.applied ? $t('message.acl.csv.apply.failed') : undefined" />
+      <a-form-item v-if="csvData.length" :label="$t('label.csv.preview')">
+        <div class="csv-preview">
+          <a-table
+            :columns="columns"
+            :data-source="csvData"
+            :row-key="record => record.line"
+            :pagination="{ pageSize: 5 }"
+            :scroll="{ x: 1040 }"
+            size="small">
+            <template #bodyCell="{ column, record }">
+              <template v-if="column.key === 'validation'">
+                <span>{{ rowMessage(record) }}</span>
+                <a-button
+                  v-if="rowMessage(record)"
+                  size="small"
+                  type="link"
+                  :disabled="locked"
+                  :aria-label="$t('label.acl.csv.edit.line', { line: record.line })"
+                  @click="editor = { ...record }">
+                  {{ $t('label.edit') }}
+                </a-button>
+              </template>
+            </template>
+          </a-table>
         </div>
-
-        <a-form-item name="file" ref="file">
-          <template #label>
-            <tooltip-label :title="$t('label.rules.file')" :tooltip="$t('label.rules.file.to.import')"/>
-          </template>
-          <a-upload-dragger
-            :multiple=false
-            :fileList="fileList"
-            @remove="handleRemove"
-            :beforeUpload="beforeUpload"
-            @change="handleChange"
-            v-model:value="form.file">
-            <p class="ant-upload-drag-icon">
-              <cloud-upload-outlined />
-            </p>
-            <p class="ant-upload-text" v-if="fileList.length === 0">
-              {{ $t('label.rules.file.import.description') }}
-            </p>
-          </a-upload-dragger>
+      </a-form-item>
+      <section v-if="editor" class="csv-editor" aria-labelledby="acl-csv-edit-title">
+        <h3 id="acl-csv-edit-title">{{ $t('label.acl.csv.edit.line', { line: editor.line }) }}</h3>
+        <a-form-item v-for="(label, field) in fields" :key="field" :label="$t(label)">
+          <a-textarea
+            v-if="field === 'reason'"
+            v-model:value="editor[field]"
+            :aria-label="$t(label)"
+            :disabled="locked"
+            :auto-size="{ minRows: 2 }" />
+          <a-input v-else v-model:value="editor[field]" :aria-label="$t(label)" :disabled="locked" />
         </a-form-item>
-
-        <a-form-item v-if="csvData.length > 0" :label="$t('label.csv.preview')">
-          <div class="csv-preview">
-            <a-table
-                :columns="columns"
-                :dataSource="csvData"
-                :pagination="{ pageSize: 5 }"
-                :scroll="{ x: true }"
-                size="small">
-
-                <template #action="{ record }">
-                  <a-tag :color="record.action && record.action.toLowerCase() === 'allow' ? 'green' : 'red'">
-                    {{ record.action ? record.action.toUpperCase() : 'N/A' }}
-                  </a-tag>
-                </template>
-
-                <template #traffictype="{ record }">
-                  <a-tag :color="record.traffictype && record.traffictype.toLowerCase() === 'ingress' ? 'blue' : 'orange'">
-                    {{ record.traffictype ? record.traffictype.toUpperCase() : 'N/A' }}
-                  </a-tag>
-                </template>
-
-            </a-table>
-          </div>
-        </a-form-item>
-
-        <span>{{ $t('message.network.acl.import.note') }}</span><br/>
-
-        <div :span="24" class="action-button">
-          <a-button class="button-cancel" @click="closeAction">{{ $t('label.cancel') }}</a-button>
-          <a-button
-            class="button-submit"
-            ref="submit"
-            type="primary"
-            :loading="loading"
-            :disabled="csvData.length === 0"
-            @click="handleSubmit">{{ $t('label.import') }}</a-button>
-        </div>
-
-      </a-form>
-    </a-spin>
-  </div>
+        <a-space>
+          <a-button @click="editor = null">{{ $t('label.cancel') }}</a-button>
+          <a-button type="primary" :disabled="locked" @click="saveEdit">{{ $t('label.apply') }}</a-button>
+        </a-space>
+      </section>
+      <p>{{ $t('message.acl.csv.fields') }}</p>
+    </a-form>
+    <a-alert v-if="error" show-icon type="error" :message="$t(error.message, error)" :description="error.detail" />
+    <template #footer>
+      <a-button :disabled="loading" @click="closeAction">{{ $t('label.close') }}</a-button>
+      <a-button v-if="blocked" type="primary" @click="$emit('refresh-access')">{{ $t('label.refresh') }}</a-button>
+      <a-button
+        v-else-if="pending || csvData.length || !report"
+        type="primary"
+        :loading="loading || reading"
+        :disabled="!canWrite() || uncertain || !!editor || (!pending && !validRows.length)"
+        @click="handleSubmit">
+        {{ $t(pending ? 'label.vmvolume.check' : report ? 'label.acl.csv.retry.failed' : 'label.import') }}
+      </a-button>
+    </template>
+  </MoldDialog>
 </template>
 
 <script>
-import { ref, reactive, toRaw } from 'vue'
-import { postAPI } from '@/api'
+import { getAPI, postAPI } from '@/api'
+import MoldDialog from '@/components/view/MoldDialog'
 import TooltipLabel from '@/components/widgets/TooltipLabel'
+import { networkError } from '@/utils/networkLifecycle'
+import { aclCommands, aclDenied, runAclWrite } from '@/utils/vpcAclAccess'
+import { aclCsvError, aclCsvFields, aclCsvRule, aclImportReport, parseAclCsv } from '@/utils/aclCsv'
 
 export default {
   name: 'ImportNetworkACL',
-  components: {
-    TooltipLabel
-  },
+  components: { MoldDialog, TooltipLabel },
   props: {
-    resource: {
-      type: Object,
-      required: true
-    }
+    resource: { type: Object, required: true },
+    projectArgs: { type: Object, required: true },
+    canWrite: { type: Function, required: true }
   },
-  data () {
-    return {
-      loading: false,
-      fileList: [],
-      csvData: '',
-      csvFileType: ['.csv', 'text/csv', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'application/vnd.ms-excel'],
-      columns: [
-        {
-          title: this.$t('label.protocol'),
-          dataIndex: 'protocol',
-          key: 'protocol',
-          width: 100
-        },
-        {
-          title: this.$t('label.action'),
-          dataIndex: 'action',
-          key: 'action',
-          width: 100,
-          slots: { customRender: 'action' }
-        },
-        {
-          title: this.$t('label.cidr'),
-          dataIndex: 'cidrlist',
-          width: 150,
-          ellipsis: true
-        },
-        {
-          title: this.$t('label.startport'),
-          dataIndex: 'startport',
-          width: 100
-        },
-        {
-          title: this.$t('label.endport'),
-          dataIndex: 'endport',
-          width: 100
-        },
-        {
-          title: this.$t('label.traffictype'),
-          dataIndex: 'traffictype',
-          key: 'traffictype',
-          width: 120,
-          slots: { customRender: 'traffictype' }
-        },
-        {
-          title: this.$t('label.number'),
-          dataIndex: 'number',
-          width: 80
-        },
-        {
-          title: this.$t('label.reason'),
-          dataIndex: 'reason',
-          ellipsis: true
-        }
+  emits: ['imported', 'close-action', 'refresh-access'],
+  data: () => ({
+    loading: false,
+    reading: false,
+    disposed: false,
+    fileSequence: 0,
+    fileList: [],
+    csvData: [],
+    blocked: false,
+    uncertain: false,
+    pending: null,
+    batch: [],
+    error: null,
+    report: null,
+    savedRules: false,
+    editor: null,
+    fields: aclCsvFields
+  }),
+  computed: {
+    locked () {
+      return this.loading || this.blocked || this.uncertain || !!this.pending
+    },
+    validRows () {
+      return this.csvData.filter(row => !aclCsvError(row))
+    },
+    columns () {
+      return [
+        { title: this.$t('label.acl.csv.line'), dataIndex: 'line', width: 64 },
+        { title: this.$t('label.acl.csv.validation'), key: 'validation', width: 230 },
+        ...['protocol', 'action', 'cidrlist', 'traffictype', 'number', 'reason'].map(field => ({
+          title: this.$t(aclCsvFields[field]), dataIndex: field, width: field === 'cidrlist' || field === 'reason' ? 185 : 100
+        }))
       ]
+    },
+    reportMessage () {
+      if (!this.report.saved) return 'message.acl.csv.none'
+      return this.report.failed ? 'message.acl.csv.partial' : 'message.acl.csv.success'
+    },
+    reportType () {
+      if (!this.report.saved) return 'error'
+      return this.report.failed || !this.report.applied ? 'warning' : 'success'
     }
   },
-  beforeCreate () {
-    this.apiParams = this.$getApiParams('importNetworkACL')
-  },
-  created () {
-    this.initForm()
-  },
+  beforeUnmount () { this.disposed = true },
   methods: {
-    initForm () {
-      this.formRef = ref()
-      this.form = reactive({})
-      this.rules = reactive({
-        file: [
-          { required: true, message: this.$t('message.error.required.input') },
-          {
-            validator: this.checkCsvRulesFile,
-            message: this.$t('label.error.rules.file.import')
-          }
-        ]
-      })
+    current () { return !this.disposed && this.canWrite() },
+    rowMessage (row) {
+      const error = aclCsvError(row)
+      return error ? this.$t(error) : row.serverError || ''
+    },
+    saveEdit () {
+      if (!this.current() || this.locked || !this.editor) return
+      const { line } = this.editor
+      const replacement = { ...aclCsvRule(this.editor), line }
+      this.csvData = this.csvData.map(row => row.line === line ? replacement : row)
+      this.editor = null
     },
     beforeUpload (file) {
-      if (!this.csvFileType.includes(file.type)) {
-        return false
-      }
+      this.readFile(file)
+      return false
+    },
+    async readFile (file) {
+      if (!this.current() || this.locked) return
+      const sequence = ++this.fileSequence
       this.fileList = [file]
-      this.form.file = file
-      return false // Stop from uploading automatically
-    },
-    handleSubmit (e) {
-      e.preventDefault()
-      if (this.loading) return
-      this.formRef.value.validate().then(() => {
-        const values = toRaw(this.form)
-        const params = {}
-        for (const key in values) {
-          const input = values[key]
-          if (input === undefined) {
-            continue
-          }
-          if (key === 'file') {
-            continue
-          }
-          params[key] = input
+      this.csvData = []
+      this.error = null
+      this.report = null
+      this.editor = null
+      this.reading = true
+      try {
+        if (!/\.csv$/i.test(file.name)) throw new Error('Invalid ACL CSV file')
+        const text = await file.text()
+        if (this.current() && sequence === this.fileSequence) this.csvData = parseAclCsv(text)
+      } catch (error) {
+        if (this.current() && sequence === this.fileSequence) {
+          this.error = { message: error.line ? 'message.acl.csv.file.line' : 'label.error.rules.file.import', line: error.line }
         }
-
-        if (this.csvData.length === 0) {
-          this.$message.error(this.$t('message.csv.no.data'))
-          return
-        }
-        this.importNetworkACL()
-      }).catch(error => {
-        this.formRef.value.scrollToField(error.errorFields[0].name)
-      })
-    },
-    handleRemove (file) {
-      const index = this.fileList.indexOf(file)
-      const newFileList = this.fileList.slice()
-      newFileList.splice(index, 1)
-      this.fileList = newFileList
-      this.form.file = undefined
-    },
-    handleChange (info) {
-      if (info.file.status === 'error') {
-        this.$notification.error({
-          message: this.$t('label.error.file.upload'),
-          description: this.$t('label.error.file.upload')
-        })
+      } finally {
+        if (this.current() && sequence === this.fileSequence) this.reading = false
       }
     },
-    async checkCsvRulesFile (rule, value) {
-      if (!value || value === '') {
-        return Promise.resolve()
-      } else {
-        if (!this.csvFileType.includes(value.type)) {
-          return Promise.reject(rule.message)
-        }
-
-        try {
-          const validFile = await this.readCsvFile(value)
-          if (!validFile) {
-            return Promise.reject(rule.message)
-          } else {
-            return Promise.resolve()
-          }
-        } catch (reason) {
-          return Promise.reject(rule.message)
-        }
-      }
-    },
-    readCsvFile (file) {
-      return new Promise((resolve, reject) => {
-        if (window.FileReader) {
-          const reader = new FileReader()
-          reader.onload = (event) => {
-            const text = event.target.result
-            const lines = text.split('\n').filter(line => line.trim() !== '')
-            if (lines.length < 2) {
-              this.$message.error(this.$t('message.csv.empty'))
-              resolve(false)
-            }
-            const headers = this.parseCSVLine(lines[0])
-            const requiredHeaders = ['protocol', 'cidrlist', 'traffictype']
-            const missingHeaders = requiredHeaders.filter(h => !headers.includes(h.toLowerCase()))
-            if (missingHeaders.length > 0) {
-              this.$message.error(this.$t('message.csv.missing.headers') + ': ' + missingHeaders.join(', '))
-              resolve(false)
-            }
-            // Parse data rows
-            const data = []
-            for (let i = 1; i < lines.length; i++) {
-              const values = this.parseCSVLine(lines[i])
-              if (values.length === headers.length) {
-                const row = {}
-                headers.forEach((header, index) => {
-                  const value = values[index].trim()
-                  if (value !== '' && value !== 'null') {
-                    row[header.toLowerCase()] = value
-                  }
-                })
-                data.push(row)
-              }
-            }
-
-            this.csvData = data
-            resolve(true)
-          }
-
-          reader.onerror = (event) => {
-            if (event.target.error.name === 'NotReadableError') {
-              reject(event.target.error)
-            }
-          }
-
-          reader.readAsText(file)
-        } else {
-          reject(this.$t('label.error.file.read'))
-        }
-      })
-    },
-    parseCSVLine (line) {
-      const result = []
-      let current = ''
-      let inQuotes = false
-
-      for (let i = 0; i < line.length; i++) {
-        const char = line[i]
-        if (char === '"') {
-          inQuotes = !inQuotes
-        } else if (char === ',' && !inQuotes) {
-          result.push(current)
-          current = ''
-        } else {
-          current += char
-        }
-      }
-      result.push(current)
-
-      return result.map(v => v.trim())
+    handleRemove () {
+      if (!this.current() || this.locked) return false
+      this.fileSequence++
+      this.reading = false
+      this.fileList = []
+      this.csvData = []
+      this.error = null
+      this.report = null
+      this.editor = null
+      return true
     },
     closeAction () {
-      this.$emit('close-action')
+      if (!this.loading) this.$emit(this.savedRules || this.pending || this.uncertain ? 'imported' : 'close-action')
     },
-    importNetworkACL () {
-      this.loading = true
-      const params = {
-        aclid: this.resource.id
+    async handleSubmit () {
+      if (!this.current() || this.loading || this.reading || this.blocked || this.uncertain || this.editor ||
+          (!this.pending && !this.validRows.length)) return
+      if (!this.pending) this.batch = this.validRows
+      const params = { ...this.projectArgs, aclid: this.resource.id, reportdetails: true }
+      for (const row of this.batch) {
+        for (const [name, value] of Object.entries(aclCsvRule(row))) params['rules[' + row.line + '].' + name] = value
       }
-      this.csvData.forEach(function (values, index) {
-        for (const key in values) {
-          params['rules[' + index + '].' + key] = values[key]
-        }
-      })
-      postAPI('importNetworkACL', params).then(response => {
-        this.$pollJob({
-          jobId: response.importnetworkaclresponse.jobid,
-          title: this.$t('message.success.add.network.acl'),
-          successMethod: () => {
-            this.loading = false
-          },
-          errorMessage: this.$t('message.add.network.acl.failed'),
-          errorMethod: () => {
-            this.loading = false
-          },
-          loadingMessage: this.$t('message.add.network.acl.processing'),
-          catchMessage: this.$t('error.fetching.async.job.result'),
-          catchMethod: () => {
-            this.loading = false
-          }
+      this.loading = true
+      this.error = null
+      try {
+        let result
+        const ok = await runAclWrite({
+          get: getAPI,
+          post: postAPI,
+          command: aclCommands.import,
+          params,
+          pending: this.pending,
+          current: this.current,
+          accepted: jobId => { this.pending = jobId },
+          completed: jobResult => { result = aclImportReport(jobResult, this.batch) }
         })
-      }).catch(error => {
-        this.$notifyError(error)
-      }).finally(() => {
-        this.loading = false
-      })
+        if (ok && this.current()) {
+          this.savedRules ||= result.successcount > 0
+          this.csvData = this.csvData
+            .filter(row => aclCsvError(row) || Object.hasOwn(result.failedrows, row.line))
+            .map(row => ({ ...row, serverError: result.failedrows[row.line] }))
+          this.report = { saved: result.successcount, failed: this.csvData.length, applied: result.applied }
+          this.batch = []
+        }
+      } catch (error) {
+        if (!this.current()) return
+        this.blocked = aclDenied(error)
+        const failure = networkError(error)
+        this.uncertain = !this.blocked && !this.pending && !(failure.definitive && error.response?.status === 431)
+        this.error = {
+          message: this.blocked ? 'message.acl.access.changed'
+            : this.pending ? 'message.acl.job.pending'
+              : this.uncertain ? 'message.acl.csv.uncertain' : 'message.acl.import.failed',
+          detail: failure.text
+        }
+      } finally {
+        if (!this.disposed) this.loading = false
+      }
     }
   }
 }
 </script>
 
-<style scoped lang="less">
-  .csv-preview {
-  max-height: 400px;
-  overflow: auto;
-  border: 1px solid var(--ui-border);
-  border-radius: 4px;
-  padding: 10px;
+<style scoped>
+.acl-import-context {
+  display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 4px 16px;
+  padding: 12px; border: 1px solid var(--ui-border); border-radius: 8px;
+  background: var(--ui-bg-elevated); color: var(--ui-text-primary);
 }
+.acl-import-context dd { margin: 0; overflow-wrap: anywhere; font-weight: 600; }
+.csv-preview { max-width: 100%; overflow: auto; border: 1px solid var(--ui-border); border-radius: 4px; }
+.csv-report, .csv-editor { margin-bottom: 16px; }
+.csv-editor { padding: 12px; border: 1px solid var(--ui-border); border-radius: 8px; }
 </style>

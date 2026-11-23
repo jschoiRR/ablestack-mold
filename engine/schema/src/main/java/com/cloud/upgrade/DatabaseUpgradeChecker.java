@@ -572,6 +572,13 @@ public class DatabaseUpgradeChecker implements SystemIntegrityChecker {
                 runEuropaPhase(conn, EuropaSchemaUpgrade.S8, () -> EuropaSystemVmSchemaUpgrade.migrate(conn));
                 runEuropaPhase(conn, EuropaSchemaUpgrade.S9, () -> EuropaDrRecoverySchemaUpgrade.migrate(conn));
                 runEuropaPhase(conn, "europa-4.23-s10-vbmc-v1", () -> com.cloud.upgrade.dao.EuropaVbmcSchemaUpgrade.migrate(conn));
+                runEuropaPhase(conn, com.cloud.upgrade.dao.EuropaSharedFSCreationUpgrade.KEY, () -> com.cloud.upgrade.dao.EuropaSharedFSCreationUpgrade.migrate(conn));
+                runEuropaPhase(conn, com.cloud.upgrade.dao.EuropaStorageConfigurationUpgrade.KEY, () -> com.cloud.upgrade.dao.EuropaStorageConfigurationUpgrade.migrate(conn));
+                upgradeSharedFSRegistrySchemas(conn);
+                runEuropaPhase(conn, com.cloud.upgrade.dao.EuropaSmbServiceNamesUpgrade.KEY, () -> com.cloud.upgrade.dao.EuropaSmbServiceNamesUpgrade.migrate(conn));
+                runEuropaPhase(conn, com.cloud.upgrade.dao.EuropaStorageConfigArtifactUpgrade.KEY, () -> com.cloud.upgrade.dao.EuropaStorageConfigArtifactUpgrade.migrate(conn));
+                runEuropaPhase(conn, com.cloud.upgrade.dao.EuropaSharedFSDeletionUpgrade.KEY, () -> com.cloud.upgrade.dao.EuropaSharedFSDeletionUpgrade.migrate(conn));
+                runEuropaPhase(conn, com.cloud.upgrade.dao.EuropaSharedFSComputeUpgrade.KEY, () -> com.cloud.upgrade.dao.EuropaSharedFSComputeUpgrade.migrate(conn));
                 runEuropaPhase(conn, EuropaSchemaUpgrade.S11, () -> com.cloud.upgrade.dao.EuropaVmProcessConfigUpgrade.migrate(conn));
                 runEuropaPhase(conn, "europa-4.23-s12-process-profile-v1", () -> com.cloud.upgrade.dao.EuropaVmProcessProfileUpgrade.migrate(conn));
                 // Existing 4.23 installations have already completed S4 and the legacy authentication hooks.
@@ -587,11 +594,16 @@ public class DatabaseUpgradeChecker implements SystemIntegrityChecker {
                 runEuropaPhase(conn, EuropaBackupConfigUpgrade.PHASE, () -> EuropaBackupConfigUpgrade.migrate(conn));
                 runEuropaPhase(conn, EuropaBackupConfigUpgrade.FOLLOW_UP_PHASE, () -> EuropaBackupConfigUpgrade.migrate(conn));
                 runEuropaPhase(conn, EuropaBackupConfigUpgrade.VEEAM_VOLUME_PHASE, () -> EuropaBackupConfigUpgrade.migrate(conn));
+                runEuropaPhase(conn, EuropaBackupConfigUpgrade.RETIRED_SETTINGS_PHASE,
+                        () -> EuropaBackupConfigUpgrade.migrateRetiredSettings(conn));
                 runEuropaPhase(conn, "europa-4.23-vm-clone-batch-v1", () -> com.cloud.upgrade.dao.EuropaVmCloneBatchUpgrade.migrate(conn));
                 runEuropaPhase(conn, "europa-4.23-autoscale-creation-v1", () -> com.cloud.upgrade.dao.EuropaAutoScaleCreationUpgrade.migrate(conn));
                 runEuropaPhase(conn, "europa-4.23-autoscale-operation-v1", () -> com.cloud.upgrade.dao.EuropaAutoScaleOperationUpgrade.migrate(conn));
                 runEuropaPhase(conn, "europa-4.23-autoscale-evaluation-v1", () -> com.cloud.upgrade.dao.EuropaAutoScaleEvaluationUpgrade.migrate(conn));
                 runEuropaPhase(conn, "europa-4.23-autoscale-evaluation-precision-v2", () -> com.cloud.upgrade.dao.EuropaAutoScaleEvaluationUpgrade.migratePrecision(conn));
+                // A separate checkpoint also repairs databases whose old upgrade/S6 markers are already Complete.
+                runEuropaPhase(conn, com.cloud.upgrade.dao.SharedNetworkSubnetSchemaUpgrade.PHASE,
+                        () -> com.cloud.upgrade.dao.SharedNetworkSubnetSchemaUpgrade.migrate(conn));
                 // Completed phase markers do not guarantee views match the running binary.
                 try {
                     EuropaVolumeViewReconciler.reconcile(conn);
@@ -610,6 +622,11 @@ public class DatabaseUpgradeChecker implements SystemIntegrityChecker {
             }
             lock.releaseRef();
         }
+    }
+
+    /** These additions must also run after S4 and the legacy hooks were completed. */
+    protected void upgradeSharedFSRegistrySchemas(Connection conn) throws SQLException {
+        com.cloud.upgrade.dao.EuropaSharedFSRegistryUpgrade.migrate(conn);
     }
 
     protected void runEuropaPhase(Connection conn, String name, Runnable migration) throws SQLException {

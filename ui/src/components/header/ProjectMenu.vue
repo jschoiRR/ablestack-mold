@@ -17,12 +17,16 @@
 
 <template>
   <span class="header-notice-opener">
+    <label v-if="!isDisabled" :for="projectSelectorId" class="project-accessible-label">{{ $t('label.project') }}</label>
     <infinite-scroll-select
       v-if="!isDisabled"
       v-model:value="selectedProjectId"
       :disabled="loading"
       :aria-busy="loading"
+      :id="projectSelectorId"
       class="project-select"
+      :dropdownMatchSelectWidth="false"
+      :dropdownStyle="{ width: 'min(420px, calc(100vw - 24px))' }"
       api="listProjects"
       :apiParams="projectsApiParams"
       resourceType="project"
@@ -37,7 +41,9 @@
 import InfiniteScrollSelect from '@/components/widgets/InfiniteScrollSelect'
 import eventBus from '@/config/eventBus'
 import { sourceToken } from '@/utils/request'
+import { vpnUserRoute } from '@/utils/vpnUserSearch'
 
+let projectMenuSequence = 0
 export default {
   name: 'ProjectMenu',
   components: {
@@ -45,6 +51,7 @@ export default {
   },
   data () {
     return {
+      projectSelectorId: 'project-selector-' + (++projectMenuSequence),
       selectedProjectId: null,
       loading: false,
       timestamp: new Date().getTime()
@@ -89,21 +96,41 @@ export default {
     async changeProject (project) {
       if (this.loading || !project) return
       const previous = this.$store.getters.project || this.defaultOption
+      const previousApis = this.$store.getters.apis
+      const token = this.$store.getters.token
       const target = project.id && project.id !== '0' ? project : {}
+      let scopeApplied = false
       this.loading = true
+      eventBus.emit('project-switch-start')
       try {
         // Finish capability lookup before AutogenView's route guard cancels
         // outstanding reads. Keep project selection, API metadata and routing
         // in one awaited sequence instead of an unhandled fire-and-forget job.
         await this.$store.dispatch('ProjectView', target.id)
         await this.$store.dispatch('SetProject', target)
+        scopeApplied = true
         await this.$store.dispatch('ToggleTheme', target.id ? 'dark' : 'light')
-        if (this.$route.name !== 'dashboard') await this.$router.push({ name: 'dashboard' })
+        if (vpnUserRoute(this.$route) && this.$store.getters.apis.listVpnUsers) {
+          await this.$store.dispatch('SetListAllProjects', false)
+          await this.$router.push({ path: '/vpnuser', query: { projectid: target.id || '0', page: '1', pagesize: this.$route.query.pagesize } })
+        } else if (this.$route.name !== 'dashboard') {
+          await this.$router.push({ name: 'dashboard' })
+        }
         this.$message.success(`${this.$t('message.switch.to')} "${project.displaytext || project.name}"`)
       } catch (error) {
-        this.selectedProjectId = previous.id || this.defaultOption.id
+        // Lookup/storage failures keep the previous scope. A later navigation
+        // failure must not display the old project with the new permissions.
+        if (!scopeApplied && this.$store.getters.token === token && this.$store.getters.apis !== previousApis) {
+          this.$store.commit('SET_APIS', previousApis)
+          await this.$store.dispatch('GenerateRoutes', { apis: previousApis })
+        }
+        const active = this.$store.getters.project || previous
+        this.selectedProjectId = active.id || this.defaultOption.id
         if (!sourceToken.isCancel(error)) this.$notifyError(error)
-      } finally { this.loading = false }
+      } finally {
+        this.loading = false
+        eventBus.emit('project-switch-end')
+      }
     }
   }
 }
@@ -130,4 +157,8 @@ export default {
   right: 1px;
   margin-top: -5px;
 }
+</style>
+
+<style scoped>
+.project-accessible-label { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
 </style>

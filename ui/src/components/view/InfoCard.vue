@@ -18,6 +18,7 @@
   <a-spin :spinning="loading">
     <a-card
       class="spin-content"
+      :class="{ 'template-info-card': $route.meta.name === 'template' || kmsDetailRoute($route), 'kms-info-card': kmsDetailRoute($route), 'event-info-card': $route.meta.name === 'event' }"
       :bordered="bordered"
       :title="title"
       @contextmenu="handleContextMenu">
@@ -42,7 +43,7 @@
                       <file-text-outlined style="font-size: 36px;" />
                     </span>
                     <span v-else>
-                      <os-logo v-if="resource.ostypeid || resource.ostypename || ['guestoscategory'].includes($route.path.split('/')[1])" :osId="resource.ostypeid" :osName="resource.ostypename || resource.osdisplayname || resource.name" size="3x" />
+                      <os-logo v-if="resource.ostypeid || resource.ostypename || resource.osdisplayname || ['guestoscategory'].includes($route.path.split('/')[1])" :osId="resource.ostypeid" :osName="executionOsName || resource.name" size="3x" />
                       <render-icon v-else-if="typeof $route.meta.icon ==='string'" style="font-size: 36px" :icon="$route.meta.icon" />
                       <font-awesome-icon
                         v-else-if="$route.meta.icon && Array.isArray($route.meta.icon)"
@@ -65,6 +66,12 @@
               </div>
               <slot name="actions">
                 <div class="tags">
+                  <template v-if="$route.meta.name === 'acllist' && resource.id">
+                    <AclScopeValue :resource="resource" />
+                    <a-tag v-if="aclDisplaySupported($store.getters) && typeof resource.fordisplay === 'boolean'">
+                      {{ $t(aclDisplayLabel(resource.fordisplay)) }}
+                    </a-tag>
+                  </template>
                   <a-tag v-if="resource.instancename">
                     {{ resource.instancename }}
                   </a-tag>
@@ -74,10 +81,15 @@
                   <AffinityGroupPolicy v-if="resource.type && $route.meta.name === 'affinitygroup'" :type="resource.type" compact />
                   <a-tag v-else-if="resource.type">
                     <span v-if="['USER.LOGIN', 'USER.LOGOUT', 'ROUTER.HEALTH.CHECKS', 'FIREWALL.CLOSE', 'ALERT.SERVICE.DOMAINROUTER'].includes(resource.type)">{{ $t(resource.type.toLowerCase()) }}</span>
+                    <span v-else-if="$route.meta.name === 'guestnetwork'">{{ $t(networkTypeLabel(resource.type)) }}</span>
                     <span v-else>
                       {{ resource.type }}
                     </span>
                   </a-tag>
+                  <template v-if="$route.meta.name === 'role' && resource.id">
+                    <a-tag>{{ $t(resource.isdefault ? 'label.default' : 'label.role.kind.custom') }}</a-tag>
+                    <a-tag>{{ $t(resource.ispublic ? 'label.public' : 'label.role.visibility.private') }}</a-tag>
+                  </template>
                   <a-tag v-if="resource.issourcenat">
                     {{ $t('label.issourcenat') }}
                   </a-tag>
@@ -100,7 +112,7 @@
                     {{ resource.scope }}
                   </a-tag>
                   <a-tag v-if="resource.version">
-                    {{ resource.version }}
+                    {{ $route.meta.name === 'kmskey' ? $t('label.kms.current.version', { version: resource.version }) : resource.version }}
                   </a-tag>
                   <a-tag v-if="resource.internetprotocol && ['IPv6', 'DualStack'].includes(resource.internetprotocol)">
                     {{ resource.internetprotocol ? $t('label.ip.v4.v6') : resource.internetprotocol }}
@@ -125,11 +137,20 @@
 
             <a-divider/>
 
-            <div class="resource-detail-item" v-if="(resource.state || resource.status) && !['zone', 'keypair'].includes($route.meta.name)">
-          <div class="resource-detail-item__label">{{ $t('label.status') }}</div>
+            <div v-if="kmsDetailRoute($route) && typeof resource.enabled === 'boolean'" class="resource-detail-item">
+              <div class="resource-detail-item__label">{{ $t('label.status') }}</div>
+              <div class="resource-detail-item__details">
+                <status :text="String(resource.enabled)" :display-label="$t(resource.enabled ? 'label.enabled' : 'label.disabled')" display-text />
+              </div>
+            </div>
+            <div class="resource-detail-item" v-else-if="(resource.state || resource.status || (['template', 'iso', 'publicip', 'kubernetesiso'].includes($route.meta.name) && resource.id)) && !['zone', 'keypair', 'vpnuser'].includes($route.meta.name)">
+          <div class="resource-detail-item__label">{{ $t($route.meta.name === 'kubernetesiso' ? 'label.kubernetes.iso.version.state' : 'label.status') }}</div>
           <div class="resource-detail-item__details">
+            <kubernetes-iso-status v-if="$route.meta.name === 'kubernetesiso'" :resource="resource" mode="version" />
+            <public-ip-status v-else-if="$route.meta.name === 'publicip'" :value="resource.state" />
+            <template-availability v-else-if="['template', 'iso'].includes($route.meta.name)" :kind="$route.meta.name" :record="resource" :observation="$route.meta.name === 'template' ? templateObservation : null" inspectable @show-zones="$emit('show-template-zones')" />
             <backup-progress
-              v-if="$route.meta.name === 'backup'"
+              v-else-if="$route.meta.name === 'backup'"
               :record="resource"
               :statusText="resource.status"
               @capabilities-change="resource.capabilities !== $event && $emit('backup-controls-change', { capabilities: $event })"
@@ -143,6 +164,8 @@
                 </div>
               </template>
             </status>
+            <status v-else-if="$route.meta.name === 's2svpnconn'" class="status" :text="resource.state || ''" :display-label="$t(vpnConnectionState(resource))" display-text />
+            <status v-else-if="['role', 'account'].includes($route.meta.name)" class="status" :text="resource.state" :display-label="$t('label.' + resource.state)" display-text />
             <status v-else class="status" :text="resource.state || resource.status" displayText/>
           </div>
         </div>
@@ -168,7 +191,7 @@
             <div class="resource-detail-item" v-if="resource.apikeyaccess && $route.meta.name === 'accountuser'">
               <div class="resource-detail-item__label">{{ $t('label.apikeyaccess') }}</div>
               <div class="resource-detail-item__details">
-                <status class="status" :text="resource.apikeyaccess" displayText/>
+                <status class="status" :text="resource.apikeyaccess" :display-label="$route.meta.name === 'account' ? $t(resource.apikeyaccess === 'INHERIT' ? 'label.account.apikey.inherit' : 'label.' + resource.apikeyaccess.toLowerCase()) : ''" displayText/>
               </div>
             </div>
         <div class="resource-detail-item" v-if="resource.allocationstate">
@@ -180,7 +203,8 @@
         <div class="resource-detail-item" v-if="resource.resourcestate">
           <div class="resource-detail-item__label">{{ $t('label.resourcestate') }}</div>
           <div class="resource-detail-item__details">
-            <status class="status" :text="resource.resourcestate" displayText/>
+            <a-tag v-if="$route.meta.name === 'host'" :color="hostStatusColor(resource.resourcestate)">{{ $t(hostStatusLabel(resource.resourcestate)) }}</a-tag>
+            <status v-else class="status" :text="resource.resourcestate" displayText/>
           </div>
         </div>
         <div class="resource-detail-item" v-if="$route.meta.name === 'buckets'">
@@ -201,23 +225,23 @@
               :format="(percent, successPercent) => parseFloat(percent).toFixed(2) + '% 사용됨'" />
           </div>
         </div>
-        <div class="resource-detail-item" v-if="['cluster', 'zone'].includes($route.meta.name) && resource.resourcedetails">
+        <div class="resource-detail-item" v-if="($route.meta.name === 'zone' && resource.id) || ($route.meta.name === 'cluster' && resource.resourcedetails)">
           <div class="resource-detail-item__label">{{ $t('label.haenable') }}</div>
           <div class="resource-detail-item__details">
-            <status class="status" :text="resource.resourcedetails.resourceHAEnabled === 'true' ? 'enabled' : 'disabled'" displayText/>
+            <status class="status" :text="zoneFeatureState(resource.resourcedetails?.resourceHAEnabled ?? false)" :display-label="$t(zoneFeatureLabel(resource.resourcedetails?.resourceHAEnabled ?? false))" display-text />
           </div>
         </div>
         <div class="resource-detail-item" v-if="$route.meta.name === 'host' && resource.outofbandmanagement">
           <div class="resource-detail-item__label">{{ $t('label.powerstate') }}</div>
           <div class="resource-detail-item__details">
-            <status class="status" :text="resource.outofbandmanagement?.powerstate" displayText/>
+            <a-tag :color="hostStatusColor(resource.outofbandmanagement.powerstate)">{{ $t(hostStatusLabel(resource.outofbandmanagement.powerstate)) }}</a-tag>
           </div>
         </div>
         <div class="resource-detail-item" v-if="$route.meta.name === 'host' && resource.hostha">
           <div class="resource-detail-item__label">{{ $t('label.haenable') }}</div>
           <div class="resource-detail-item__details">
-            <status class="status" :text="resource.hostha.haenable ? 'enabled' : 'disabled'" displayText/>
-            <a-tag style="margin-left: 5px; margin-bottom: 5px;">{{ resource.hostha.hastate }}</a-tag>
+            <a-tag :color="hostStatusColor(resource.hostha.haenable)">{{ $t(hostStatusLabel(resource.hostha.haenable)) }}</a-tag>
+            <a-tag :color="hostStatusColor(resource.hostha.hastate)">{{ $t(hostStatusLabel(resource.hostha.hastate)) }}</a-tag>
           </div>
         </div>
         <div class="resource-detail-item" v-if="('success' in resource) && $route.meta.name === 'webhookdeliveries'">
@@ -238,7 +262,10 @@
             <status class="status" :text="resource.mirroringagentstatus" displayText/>
           </div>
         </div>
-        <div class="resource-detail-item" v-if="resource.id">
+        <div class="resource-detail-item" v-if="$route.meta.name === 'template' && templateRuntimeToolVisible">
+          <router-link to="/runtimebundle">{{ $t('label.runtime.catalog') }}</router-link>
+        </div>
+        <div class="resource-detail-item" v-if="resource.id && $route.meta.name !== 'vpnuser'">
           <div class="resource-detail-item__label">{{ $t('label.id') }}</div>
           <div class="resource-detail-item__details">
             <tooltip-button
@@ -288,14 +315,14 @@
                 </div>
               </div>
             </div>
-        <div class="resource-detail-item" v-if="executionOsName && resource.ostypeid">
+        <div class="resource-detail-item" v-if="(executionOsName && resource.ostypeid) || (['vm', 'vnfapp'].includes($route.meta.name) && resource.id)">
           <div class="resource-detail-item__label">{{ $t('label.ostypename') }}</div>
           <div class="resource-detail-item__details">
             <span v-if="resource.icon && resource.icon.base64image || images.template || images.iso">
               <resource-icon :image="getImage(images.template || images.iso)" size="1x" style="margin-right: 5px"/>
             </span>
-            <os-logo v-else :osId="resource.ostypeid" :osName="executionOsName" size="lg" style="margin-left: -1px" />
-            <span style="margin-left: 8px">{{ executionOsName }}</span>
+            <os-logo v-else-if="executionOsName && resource.ostypeid" :osId="resource.ostypeid" :osName="executionOsName" size="lg" style="margin-left: -1px" />
+            <span style="margin-left: 8px">{{ executionOsName || $t('label.unknown') }}</span>
           </div>
         </div>
         <div class="resource-detail-item" v-if="resource.ipaddress">
@@ -349,7 +376,7 @@
               </a-tooltip>
             </span>
             <span v-else-if="$route.meta.name === 'kubernetes'">{{ resource.cpunumber }}</span>
-            <span v-else>{{ resource.cputotal }}</span>
+            <span v-else>{{ $route.meta.name === 'zone' ? zoneMetricText(resource.cputotal) || $t('label.unknown') : resource.cputotal }}</span>
             <a-tag v-if="resource.arch" style="margin-left: 10px">
               {{ resource.arch }}
             </a-tag>
@@ -361,7 +388,7 @@
                 {{ new Date(resource.statslastsampled).toLocaleTimeString() }}
               </a-tag>
             </a-tooltip>
-            <span v-if="resource.cpuused">
+            <span v-if="$route.meta.name === 'zone' ? zoneMetricText(resource.cpuused) : resource.cpuused">
               <a-progress
                 v-if="resource.cpuused"
                 class="progress-bar"
@@ -371,7 +398,7 @@
                 :format="(percent, successPercent) => parseFloat(percent).toFixed(2) + '% ' + $t('label.used')"
               />
             </span>
-            <span v-if="resource.cpuallocated">
+            <span v-if="$route.meta.name === 'zone' ? zoneMetricText(resource.cpuallocated) : resource.cpuallocated">
               <a-progress
                 class="progress-bar"
                 size="small"
@@ -451,11 +478,11 @@
 
             <div style="display: flex; flex-direction: column; width: 100%;">
               <div>
-                <bulb-outlined />{{ resource.memorytotal + ' ' + $t('label.memory') }}
+                <bulb-outlined />{{ ($route.meta.name === 'zone' ? zoneMetricText(resource.memorytotal) || $t('label.unknown') : resource.memorytotal) + ' ' + $t('label.memory') }}
               </div>
               <div>
                 <span
-                  v-if="resource.memoryused">
+                  v-if="$route.meta.name === 'zone' ? zoneMetricText(resource.memoryused) : resource.memoryused">
                   <a-progress
                     class="progress-bar"
                     size="small"
@@ -464,7 +491,7 @@
                     :format="(percent, successPercent) => parseFloat(percent).toFixed(2) + '% ' + $t('label.used')" />
                 </span>
                 <span
-                  v-if="resource.memoryallocated">
+                  v-if="$route.meta.name === 'zone' ? zoneMetricText(resource.memoryallocated) : resource.memoryallocated">
                   <a-progress
                     class="progress-bar"
                     size="small"
@@ -496,7 +523,11 @@
                 </span>
               </div>
             </div>
-            <div class="resource-detail-item" v-if="resource.gputotal">
+            <div v-if="$route.meta.name === 'zone' && zoneMetricText(resource.gputotal) && Number(resource.gputotal) === 0" class="resource-detail-item">
+              <div class="resource-detail-item__label">{{ $t('label.gpu') }}</div>
+              <div>{{ $t('label.zone.capacity.unsupported') }}</div>
+            </div>
+            <div class="resource-detail-item" v-else-if="resource.gputotal">
               <div class="resource-detail-item__label">{{ $t('label.gpu') }}</div>
               <div class="resource-detail-item__details">
                 <font-awesome-icon
@@ -506,7 +537,7 @@
                 {{ resource.gputotal + ' ' + $t('label.gpu') }}
               </div>
               <div>
-                <span v-if="resource.gpuused">
+                <span v-if="$route.meta.name === 'zone' ? zoneMetricText(resource.gpuused) : resource.gpuused">
                   <a-progress
                     class="progress-bar"
                     size="small"
@@ -517,7 +548,9 @@
                 </span>
               </div>
             </div>
-            <div class="resource-detail-item" v-if="resource.volumes || resource.sizegb">
+            <SharedFSCapacitySummary v-if="$route.meta.name === 'sharedfs'" :resource="resource" mode="info" />
+            <SharedFSBootRecoverySummary v-if="$route.meta.name === 'sharedfs'" :resource="resource" />
+            <div class="resource-detail-item" v-else-if="resource.volumes || resource.sizegb">
               <div class="resource-detail-item__label" v-if="$route.meta.name === 'backup'">{{ $t('label.size') }}</div>
               <div class="resource-detail-item__label" v-else>{{ $t('label.disksize') }}</div>
               <div class="resource-detail-item__details">
@@ -608,6 +641,7 @@
               <div class="resource-detail-item__label">{{ $t('label.network') }}</div>
               <div class="resource-detail-item__details resource-detail-item__details--start">
                 <wifi-outlined />
+                <loading-outlined v-if="vmNetworkAccessStatus === 'loading'" class="vm-network-access-loading" :aria-label="$t('label.loading')" />
                 <div>
                   <div v-if="'networkkbsread' in resource && 'networkkbswrite' in resource">
                     <a-tag><ArrowDownOutlined />RX {{ toSize(resource.networkkbsread) }}</a-tag>
@@ -630,11 +664,15 @@
                     <span v-if="!isStatic && eth.networkname && eth.networkid">
                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                       <apartment-outlined/>
-                      <router-link :to="{ path: '/guestnetwork/' + eth.networkid      }">
+                      <router-link v-if="!vmNetworkAccessManaged || vmNetworks[eth.networkid]" :to="{ path: '/guestnetwork/' + eth.networkid }">
                         {{ eth.networkname }}
                       </router-link>
+                      <span v-else>{{ eth.networkname }}</span>
                     </span>
                   </div>
+                  <a-alert v-if="vmNetworkAccessFailed" class="vm-network-access-error" type="warning" show-icon :message="$t('message.vm.network.lookup.failed')" role="status">
+                    <template #description><a-button size="small" @click="fetchVmNetworkAccess()">{{ $t('label.retry') }}</a-button></template>
+                  </a-alert>
                 </div>
               </div>
             </div>
@@ -665,7 +703,7 @@
                 <span>{{ resource.loadbalancer.name }} ( {{ resource.loadbalancer.publicip }}:{{ resource.loadbalancer.publicport }})</span>
               </div>
             </div>
-            <div class="resource-detail-item" v-if="resource.projectid || resource.projectname">
+            <div class="resource-detail-item" v-if="$route.meta.name !== 'vpnuser' && (resource.projectid || resource.projectname)">
               <div class="resource-detail-item__label">{{ $t('label.project') }}</div>
               <div class="resource-detail-item__details">
                 <span v-if="images.project">
@@ -716,12 +754,15 @@
                 <resource-label :resourceType="resource.resourcetype" :resourceId="resource.resourceid" :resourceName="resource.resourcename" />
               </div>
             </div>
-            <div class="resource-detail-item" v-if="resource.virtualmachineid && $route.meta.name !== 'snapshot'">
+            <div class="resource-detail-item" v-if="(resource.virtualmachineid || $route.meta.name === 'publicip') && $route.meta.name !== 'snapshot'">
               <div class="resource-detail-item__label">{{ $t('label.vmname') }}</div>
               <div class="resource-detail-item__details">
-                <desktop-outlined />
-                <router-link v-if="volumeVmPath(resource, $router)" :to="{ path: volumeVmPath(resource, $router) }">{{ resource.vmname || resource.vm || resource.virtualmachinename || resource.virtualmachineid }} </router-link>
-                <span v-else>{{ resource.vmname || resource.virtualmachinename || resource.virtualmachineid }}</span>
+                <network-ip-vm-link v-if="$route.meta.name === 'publicip'" :record="resource" />
+                <template v-else>
+                  <desktop-outlined />
+                  <router-link v-if="volumeVmPath(resource, $router)" :to="{ path: volumeVmPath(resource, $router) }">{{ resource.vmname || resource.vm || resource.virtualmachinename || resource.virtualmachineid }} </router-link>
+                  <span v-else>{{ resource.vmname || resource.virtualmachinename || resource.virtualmachineid }}</span>
+                </template>
                 <status class="status status--end" :text="resource.vmstate" v-if="resource.vmstate"/>
               </div>
             </div>
@@ -733,7 +774,13 @@
                 <span v-else>{{ resource.volumename || resource.volume || resource.volumeid }}</span>
               </div>
             </div>
-            <div class="resource-detail-item" v-if="resource.associatednetworkid">
+            <template v-if="$route.meta.name === 'publicip'">
+              <div v-for="field in ['networkid', 'associatednetworkname', 'vpcname', 'fordisplay']" :key="field" class="resource-detail-item">
+                <div class="resource-detail-item__label">{{ $t(publicIpFieldLabel(field)) }}</div>
+                <div class="resource-detail-item__details"><PublicIpDetailValue :resource="resource" :field="field" compact /></div>
+              </div>
+            </template>
+            <div class="resource-detail-item" v-if="$route.meta.name !== 'publicip' && resource.associatednetworkid">
               <div class="resource-detail-item__label">{{ $t('label.associatednetwork') }}</div>
               <div class="resource-detail-item__details">
                 <wifi-outlined />
@@ -763,7 +810,7 @@
                 <copy-label v-else :label="resource.publicip" />
               </div>
             </div>
-            <div class="resource-detail-item" v-if="resource.vpcid">
+            <div class="resource-detail-item" v-if="!['publicip', 'acllist'].includes($route.meta.name) && resource.vpcid">
               <div class="resource-detail-item__label">{{ $t('label.vpcname') }}</div>
               <div class="resource-detail-item__details">
                 <span v-if="images.vpc">
@@ -813,7 +860,7 @@
                 <span v-else>{{ template.name || template.id }}</span>
               </div>
             </div>
-            <div class="resource-detail-item" v-if="attachedIsoRows.length">
+            <div class="resource-detail-item" v-if="attachedIsoRows.length && $route.meta.name !== 'kubernetesiso'">
               <div class="resource-detail-item__label">{{ $t('label.isoname') }}</div>
               <div class="resource-detail-item__details" v-for="iso in attachedIsoRows" :key="iso.id">
                 <router-link v-if="'listIsos' in $store.getters.apis" :to="{ path: '/iso/' + iso.id }">{{ iso.displaytext || iso.name || iso.id }}</router-link>
@@ -940,14 +987,14 @@
                 <span v-else>{{ resource.podname || resource.pod || resource.podid }}</span>
               </div>
             </div>
-            <div class="resource-detail-item" v-if="resource.zoneid && !['template', 'iso', 'snapshot'].includes($route.path.split('/')[1])">
+            <div class="resource-detail-item" v-if="resource.zoneid && !['template', 'iso', 'snapshot', 'kubernetesiso'].includes($route.path.split('/')[1])">
               <div class="resource-detail-item__label">{{ $t('label.zone') }}</div>
               <div class="resource-detail-item__details">
                 <span v-if="images.zone">
                   <resource-icon :image="images.zone" size="1x" style="margin-right: 5px"/>
                 </span>
                 <global-outlined v-else />
-                <router-link v-if="!isStatic && $router.resolve('/zone/' + resource.zoneid).matched[0].redirect !== '/exception/404'" :to="{ path: '/zone/' + resource.zoneid }">{{ resource.zone || resource.zonename || resource.zoneid }}</router-link>
+                <router-link v-if="!isStatic && $router.resolve('/zone/' + resource.zoneid).matched[0].redirect !== '/exception/404'" :to="$route.meta.name === 'physicalnetwork' ? physicalNetworkZoneLocation($route, resource.zoneid) : { path: '/zone/' + resource.zoneid }">{{ resource.zone || resource.zonename || resource.zoneid }}</router-link>
                 <router-link v-else-if="$router.resolve('/zones/' + resource.zoneid).matched[0].redirect !== '/exception/404'" :to="{ path: '/zones/' + resource.zoneid }">{{ resource.zone || resource.zonename || resource.zoneid }}</router-link>
                 <span v-else>{{ resource.zone || resource.zonename || resource.zoneid }}</span>
               </div>
@@ -983,7 +1030,7 @@
                 </template>
               </div>
             </div>
-            <div class="resource-detail-item" v-if="resource.account && !resource.account.startsWith('PrjAcct-')">
+            <div class="resource-detail-item" v-if="$route.meta.name !== 'vpnuser' && resource.account && !resource.account.startsWith('PrjAcct-')">
               <div class="resource-detail-item__label">{{ $t('label.account') }}</div>
               <div class="resource-detail-item__details">
                 <span v-if="images.account">
@@ -1010,7 +1057,7 @@
                 <span v-else>{{ resource.rolename || resource.role || resource.roleid }}</span>
               </div>
             </div>
-            <div class="resource-detail-item" v-if="resource.domainid">
+            <div class="resource-detail-item" v-if="$route.meta.name !== 'vpnuser' && resource.domainid">
               <div class="resource-detail-item__label">{{ $t('label.domain') }}</div>
               <div class="resource-detail-item__details">
                 <resource-icon v-if="images.domain" :image="images.domain" size="1x" style="margin-right: 5px"/>
@@ -1067,6 +1114,10 @@
                 <span v-else>{{ resource.managementserver || resource.managementserverid }}</span>
               </div>
             </div>
+            <div class="resource-detail-item" v-if="$route.meta?.name === 'event' && resource.username">
+              <div class="resource-detail-item__label">{{ $t('label.username') }}</div>
+              <div class="resource-detail-item__details"><user-outlined />{{ resource.username }}</div>
+            </div>
             <div class="resource-detail-item" v-if="resource.created && !['template', 'iso'].includes($route.path.split('/')[1])">
               <div class="resource-detail-item__label">{{ $t('label.created') }}</div>
               <div class="resource-detail-item__details">
@@ -1101,7 +1152,7 @@
               {{ resource.leaseexpiryaction }}
             </div>
           </div>
-          <div class="account-center-tags" v-if="$route.meta.related">
+          <div class="account-center-tags" :class="{ 'account-related-actions': $route.meta.name === 'account' }" v-if="$route.meta.related">
             <a-divider/>
             <div v-for="item in $route.meta.related" :key="item.path">
               <router-link
@@ -1120,6 +1171,17 @@
               :resource="resource"
               :osCategoryId="osCategoryId" />
           </div>
+
+          <template v-if="$route.meta?.name === 'domain' && resource.path">
+            <div class="resource-detail-item">
+              <strong>{{ $t('label.path') }}</strong>
+              <div class="domain-card-path">{{ resource.path }}</div>
+            </div>
+            <div v-if="resource.parentdomainid" class="resource-detail-item">
+              <strong>{{ $t('label.parentdomainname') }}</strong>
+              <div>{{ resource.parentdomainname || resource.parentdomainid }}</div>
+            </div>
+          </template>
 
           <resource-tags
             v-if="!isStatic && resourceType && tagsSupportingResourceTypes.includes(resourceType) && 'listTags' in $store.getters.apis"
@@ -1143,7 +1205,25 @@
 </template>
 
 <script>
+import { hostStatusColor, hostStatusLabel } from '@/utils/hostPresentation'
+import { physicalNetworkZoneLocation, zoneFeatureLabel, zoneFeatureState, zoneMetricText } from '@/utils/zone'
+import AclScopeValue from '@/components/view/AclScopeValue'
+import { aclDisplayLabel, aclDisplaySupported } from '@/utils/vpcAclAccess'
+import { eventDisplayTitle, eventTimelineQuery, isEventDetailRoute } from '@/utils/eventTimeline'
+import { kmsRelations, kmsRelatedFilter } from '@/utils/kmsRelated'
+import { kmsDetailRoute } from '@/utils/kmsNavigation'
+import { isStorageServiceTemplate, canReadTemplateRuntimeCatalog } from '@/utils/templateDetails'
+import { networkTypeLabel } from '@/utils/networkLifecycle'
+import { vmNetworkAccessMixin } from '@/utils/vmNetworkAccess'
+import { offeringNetworkQuery } from '@/utils/guestNetworkSearch'
+import SharedFSCapacitySummary from '@/views/storage/SharedFSCapacitySummary.vue'
+import SharedFSBootRecoverySummary from '@/views/storage/SharedFSBootRecoverySummary.vue'
+
 import { volumeVmPath } from '@/utils/storageUi'
+import PublicIpDetailValue from '@/components/widgets/PublicIpDetailValue'
+import { publicIpFieldLabel } from '@/utils/publicIpDetails'
+import NetworkIpVmLink from '@/components/widgets/NetworkIpVmLink'
+import PublicIpStatus from '@/components/widgets/PublicIpStatus'
 import { policyVolumePath } from '@/utils/snapshotPolicyDetail'
 import { creationVmOsName } from '@/utils/creationVmPresentation'
 import BucketUsageStatus from '@/components/view/BucketUsageStatus'
@@ -1157,6 +1237,8 @@ import { validateLinksAsync } from '@/utils/links'
 import Console from '@/components/widgets/Console'
 import OsLogo from '@/components/widgets/OsLogo'
 import Status from '@/components/widgets/Status'
+import TemplateAvailability from '@/components/widgets/TemplateAvailability'
+import KubernetesIsoStatus from '@/components/widgets/KubernetesIsoStatus'
 import BackupProgress from '@/components/view/BackupProgress'
 import CloneFlattenControl from '@/components/widgets/CloneFlattenControl'
 import { getFastClonePhaseLabel, getFastClonePhaseDescription, isFastCloneFlattenStatusVisible } from '@/utils/fastClone'
@@ -1171,9 +1253,23 @@ import { FileTextOutlined } from '@ant-design/icons-vue'
 import ActionButton from '@/components/view/ActionButton'
 import ResourceContextMenu from '@/components/view/ResourceContextMenu'
 
+import { gatewayName } from '@/utils/s2sGateway'
+import { vpnConnectionState } from '@/utils/s2sConnection'
+import { vpnConnectionName, vpnConnectionRoute } from '@/utils/s2sGatewaySearch'
+import { vmDisplayName, isVmIdentityRoute } from '@/utils/vmIdentity'
+
 export default {
   name: 'InfoCard',
+  mixins: [vmNetworkAccessMixin()],
   components: {
+    AclScopeValue,
+    PublicIpDetailValue,
+    TemplateAvailability,
+    KubernetesIsoStatus,
+    NetworkIpVmLink,
+    PublicIpStatus,
+    SharedFSCapacitySummary,
+    SharedFSBootRecoverySummary,
     BucketUsageStatus,
     AffinityGroupPolicy,
     Console,
@@ -1193,6 +1289,7 @@ export default {
     ResourceTags
   },
   props: {
+    templateObservation: { type: Object, default: null },
     resource: {
       type: Object,
       required: true
@@ -1270,7 +1367,7 @@ export default {
         this.newResource = newData
         this.showKeys = false
         this.setData()
-        this.validLinks = await validateLinksAsync(this.$router, this.isStatic, this.resource)
+        this.validLinks = this.$route.meta?.name === 'kubernetesiso' ? {} : await validateLinksAsync(this.$router, this.isStatic, this.resource, api => !!this.$store.getters.apis?.[api])
 
         if (this.$route.meta.name === 'accountuser' && 'apikey' in this.resource) {
           this.getUserKeys()
@@ -1288,6 +1385,7 @@ export default {
   },
   beforeUnmount () { this.iconActive = false },
   computed: {
+    templateRuntimeToolVisible () { return canReadTemplateRuntimeCatalog(this.$store.getters) && !isStorageServiceTemplate(this.resource) },
     executionOsName () { return creationVmOsName(this.resource, this.$t) },
     kubernetesNodeTemplates () {
       if (this.$route.meta.name !== 'kubernetes') return []
@@ -1303,9 +1401,15 @@ export default {
       return ['UserVm', 'Template', 'ISO', 'Volume', 'RbdImages', 'Snapshot', 'Backup', 'Network',
         'LoadBalancer', 'PortForwardingRule', 'FirewallRule', 'SecurityGroup', 'SecurityGroupRule',
         'PublicIpAddress', 'Project', 'Account', 'Vpc', 'NetworkACL', 'StaticRoute', 'VMSnapshot',
-        'RemoteAccessVpn', 'User', 'SnapshotPolicy', 'VpcOffering', 'Domain']
+        'RemoteAccessVpn', 'User', 'SnapshotPolicy', 'VpcOffering']
     },
     name () {
+      if (isEventDetailRoute(this.$route)) return eventDisplayTitle(this.resource, this.$t, date => this.$toLocaleDate(date))
+      if (vpnConnectionRoute(this.$route)) return vpnConnectionName(this.resource)
+      if (this.$route.meta?.name === 'ipv4subnets' && this.resource.subnet) return this.resource.subnet
+      if (this.$route.meta?.name === 'guestvlans' && this.resource.vlan) return this.$t('label.vlan') + ' ' + this.resource.vlan
+      if (this.$route.meta?.name === 's2svpn') return gatewayName(this.resource)
+      if (isVmIdentityRoute(this.$route)) return vmDisplayName(this.resource)
       return this.resource.displayname || this.resource.name || this.resource.displaytext || this.resource.username ||
         this.resource.ipaddress || this.resource.virtualmachinename || this.resource.osname || this.resource.osdisplayname || this.resource.templatetype || this.resource.rbdimagesname
     },
@@ -1385,6 +1489,21 @@ export default {
     }
   },
   methods: {
+    physicalNetworkZoneLocation,
+    zoneFeatureState,
+    hostStatusColor,
+    hostStatusLabel,
+    zoneFeatureLabel,
+    zoneMetricText,
+    aclDisplayLabel,
+    aclDisplaySupported,
+    vpnConnectionState,
+    kmsDetailRoute,
+    publicIpFieldLabel,
+    getImage (image) {
+      return image || this.resource?.icon?.base64image || this.resource?.resourceIcon?.base64image || null
+    },
+    networkTypeLabel,
     policyVolumePath,
     volumeVmPath,
     sshKeyPairNameLink,
@@ -1482,14 +1601,10 @@ export default {
       if (this.resource.zoneid) {
         this.fetchResourceIcon(this.resource.zoneid, 'zone')
       }
-      if (this.resource.domainid) {
-        this.fetchResourceIcon(this.resource.domainid, 'domain')
-      }
-      if (this.resource.account) {
-        this.fetchAccount()
-      }
-      if (this.resource.projectid) {
-        this.fetchResourceIcon(this.resource.projectid, 'project')
+      if (this.$route.meta.name !== 'vpnuser') {
+        if (this.resource.domainid) this.fetchResourceIcon(this.resource.domainid, 'domain')
+        if (this.resource.account) this.fetchAccount()
+        if (this.resource.projectid) this.fetchResourceIcon(this.resource.projectid, 'project')
       }
       if (this.resource.vpcid) {
         this.fetchResourceIcon(this.resource.vpcid, 'vpc')
@@ -1589,6 +1704,12 @@ export default {
       return ['Admin'].includes(this.$store.getters.userInfo.roletype)
     },
     getRouterQuery (item) {
+      const kind = this.$route.meta?.name
+      if (kind === 'event' && item.name === 'event' && item.param === 'startid') {
+        return eventTimelineQuery(this.resource, this.$route.query.projectid || this.$store.getters.project?.id)
+      }
+      if (kmsRelations[kind]?.filter === item.param) return kmsRelatedFilter(kind, this.resource, this.$store.getters)
+      if (item.param === 'networkofferingid' && item.name === 'guestnetwork') return offeringNetworkQuery(this.resource, this.$route, this.$store.getters)
       const query = {}
       if (item.value) {
         query[item.param] = this.resource[item.value]
@@ -1638,6 +1759,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.kms-info-card .name { overflow-wrap: anywhere; }
+.kms-info-card .resource-detail-item__details a { color: var(--ui-link); }
+.template-info-card .card-content { min-width: 0; }
+.template-info-card .resource-details__name > div:last-child { min-width: 0; }
+.template-info-card .resource-detail-item__details { min-width: 0; max-width: 100%; overflow-wrap: anywhere; }
+.template-info-card .resource-detail-item__details a { white-space: normal; overflow-wrap: anywhere; }
+.vm-network-access-error {
+  margin-top: 8px;
+  overflow-wrap: anywhere;
+}
 :deep(.ant-card-body) {
   padding: 0;
 }
@@ -1692,6 +1823,14 @@ export default {
   }
 }
 
+.account-center-tags.account-related-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  .ant-divider { margin: 8px 0; }
+  a { display: inline-flex; margin: 0; }
+  .ant-btn { margin-right: 0 !important; }
+}
 .user-keys {
   word-wrap: break-word;
 }
@@ -1795,3 +1934,9 @@ export default {
 </style>
 
 <style scoped src="@/style/components/view/resource-detail-fields.css"></style>
+
+<style scoped>
+.domain-card-path { overflow-wrap: anywhere; }
+
+.event-info-card .name { overflow-wrap: anywhere; }
+</style>

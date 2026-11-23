@@ -276,6 +276,9 @@
     <bean id="networkHelper"
         class="com.cloud.network.router.NetworkHelperImpl" />
 
+    <bean id="routerPublicMacManager"
+        class="com.cloud.network.router.RouterPublicMacManager" />
+
     <bean id="vpcNetworkHelper"
         class="com.cloud.network.router.VpcNetworkHelperImpl" />
 
@@ -393,6 +396,9 @@
     <bean id="backupDeletionService" class="org.apache.cloudstack.backup.BackupDeletionServiceImpl" />
     <bean id="thirdPartyBackupVolumeService" class="org.apache.cloudstack.backup.ThirdPartyBackupVolumeServiceImpl" />
     <bean id="netBackupRestoreCoordinator" class="org.apache.cloudstack.backup.NetBackupRestoreCoordinator" />
+    <bean id="netBackupHostConfigurationService" class="org.apache.cloudstack.backup.NetBackupHostConfigurationServiceImpl" />
+    <bean id="netBackupScheduleModeGuard" class="org.apache.cloudstack.backup.NetBackupScheduleModeGuard" />
+  <bean id="netBackupHookTimeoutService" class="org.apache.cloudstack.backup.NetBackupHookTimeoutService" />
 
     <bean id="backupRepositoryService" class="org.apache.cloudstack.backup.BackupRepositoryServiceImpl" />
 
@@ -437,6 +443,9 @@
 
     <bean id="BGPServiceImpl" class="com.cloud.bgp.BGPServiceImpl" />
 
+    <bean id="sharedFSCapacityService" class="org.apache.cloudstack.storage.sharedfs.SharedFSCapacityService" />
+
+    <bean id="sharedFSComputeCoordinator" class="org.apache.cloudstack.storage.sharedfs.SharedFSComputeCoordinator" />
     <bean id="sharedFSServiceImpl" class="org.apache.cloudstack.storage.sharedfs.SharedFSServiceImpl">
         <property name="sharedFSProviders" value="#{sharedFSProvidersRegistry.registered}" />
     </bean>
@@ -454,6 +463,7 @@
 
     <bean id="storageServiceGuestCommandDispatcher" class="org.apache.cloudstack.storage.dataservice.StorageServiceGuestCommandDispatcherImpl" />
     <bean id="storageServiceRuntimeHostDispatcher" class="org.apache.cloudstack.storage.dataservice.StorageServiceRuntimeHostDispatcherImpl" />
+    <bean id="storageServiceRuntimeCatalogManager" class="org.apache.cloudstack.storage.dataservice.StorageServiceRuntimeCatalogManagerImpl" />
     <bean id="storageServiceRuntimeUpgradeManager" class="org.apache.cloudstack.storage.dataservice.StorageServiceRuntimeUpgradeManagerImpl" />
     <bean id="storageServiceManagerImpl" class="org.apache.cloudstack.storage.dataservice.StorageServiceManagerImpl" />
     <bean id="internalBackupServiceImpl" class="org.apache.cloudstack.backup.InternalBackupServiceImpl" >

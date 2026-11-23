@@ -67,6 +67,7 @@ import io.opentelemetry.instrumentation.annotations.WithSpan;
 import com.cloud.cluster.ManagementServerHostVO;
 import com.cloud.cluster.dao.ManagementServerHostDao;
 import com.cloud.utils.Ternary;
+import com.cloud.projects.Project;
 import com.cloud.user.Account;
 import com.cloud.user.AccountManager;
 import com.cloud.user.AccountManagerImpl;
@@ -998,7 +999,9 @@ public class ApiServer extends ManagerBase implements HttpRequestHandler, ApiSer
             return;
         }
         auditTrailSb.append(" " + HttpServletResponse.SC_OK + " ");
-        if (command.equals("createSSHKeyPair") || command.equalsIgnoreCase("getBucketCredentials") || command.equalsIgnoreCase("rotateBucketCredentials") || java.util.Set.of("getbucketobjectmetadata", "checkobjectstoragepool", "getbucketdeletionimpact", "listbucketobjectversions", "managebucketobjectversion", "purgebucket", "getbucketpurgestatus").contains(command.toLowerCase(java.util.Locale.ROOT))) {
+        // VNF detail maps may contain credentials in both JSON and XML responses.
+        boolean vnfDetails = result.contains("\"vnfdetails\"") || result.contains("<vnfdetails");
+        if (vnfDetails || command.equals("createSSHKeyPair") || command.equalsIgnoreCase("getBucketCredentials") || command.equalsIgnoreCase("rotateBucketCredentials") || java.util.Set.of("getbucketobjectmetadata", "checkobjectstoragepool", "getbucketdeletionimpact", "listbucketobjectversions", "managebucketobjectversion", "purgebucket", "getbucketpurgestatus").contains(command.toLowerCase(java.util.Locale.ROOT))) {
             auditTrailSb.append("This result was not logged because it contains sensitive data.");
         } else {
             auditTrailSb.append(result);
@@ -1165,10 +1168,6 @@ public class ApiServer extends ManagerBase implements HttpRequestHandler, ApiSer
                 return false;
             }
 
-            if (!commandAvailable(remoteAddress, commandName, user, null)) {
-                return false;
-            }
-
             if (keyPair.getRemoved() != null) {
                 logger.info(String.format("Invalid request, as used API keypair [%s] has been removed.", keyPair.getUuid()));
                 return false;
@@ -1198,7 +1197,17 @@ public class ApiServer extends ManagerBase implements HttpRequestHandler, ApiSer
                 logger.info("User signature [{}] is not equaled to computed signature [{}].", signature, computedSignature);
                 return false;
             }
+            // The servlet resolves the requested project before signature verification,
+            // while the caller is still the system user. Evaluate both account/project
+            // and key permissions only after authenticating the actual signing user.
+            final Project project = CallContext.current().getProject();
             CallContext.register(user, account);
+            CallContext.current().setProject(project);
+            CallContext.current().setApiName(commandName);
+
+            if (!commandAvailable(remoteAddress, commandName, user, null)) {
+                return false;
+            }
 
             List<ApiKeyPairPermission> keyPairPermissions = keyPairManager.findAllPermissionsByKeyPairId(keyPair.getId(), account.getRoleId());
             if (commandAvailable(remoteAddress, commandName, user, keyPair, keyPairPermissions.toArray(new ApiKeyPairPermission[0]))) {

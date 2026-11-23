@@ -98,6 +98,28 @@ test('tab toolbar actions retain their original trigger instead of the global me
   expect(context.actionTrigger).toBe(trigger)
 })
 
+test('a closed VPC context menu returns focus to the selected row checkbox', async () => {
+  const root = document.createElement('div')
+  root.innerHTML = '<div class="ant-table-row-selected"><input type="checkbox" /></div>'
+  document.body.append(root)
+  const removedMenuItem = document.createElement('button')
+  const context = { ...view(), isVpcUi: true, $route: { path: '/vpc' }, actionOriginPath: '/vpc', actionTrigger: removedMenuItem, $refs: {}, $el: root }
+  AutogenView.methods.closeAction.call(context)
+  await Promise.resolve()
+  expect(document.activeElement).toBe(root.querySelector('input'))
+})
+
+test('a VPC context-menu focus return cannot cross a project change', async () => {
+  const trigger = document.createElement('button')
+  document.body.append(trigger)
+  let scope = 'old'
+  const context = { ...view(), isVpcUi: true, $route: { path: '/vpc' }, actionOriginPath: '/vpc', actionTrigger: trigger, listScope: () => scope }
+  AutogenView.methods.closeAction.call(context)
+  scope = 'new'
+  await Promise.resolve()
+  expect(document.activeElement).toBe(document.body)
+})
+
 test('a snapshot form closes before route reuse changes its resource context', () => {
   const order = []
   const context = { ...view(), showAction: true, $refs: {}, $route: { fullPath: '/snapshot/old' }, closeAction: () => order.push('close') }
@@ -110,6 +132,20 @@ test('leaving a snapshot screen unmounts its pending form before navigation', ()
   const context = { ...view(), showAction: true, $refs: {}, $route: { fullPath: '/snapshot/old' }, closeAction: () => order.push('close'), resetSelection: jest.fn(), clearAutoRefresh: jest.fn(), listRequestVersion: 0 }
   AutogenView.beforeRouteLeave.call(context, { path: '/volume/other' }, { name: 'snapshot' }, () => order.push('next'))
   expect(order).toEqual(['close', 'next'])
+})
+
+test('a guest network action closes before its target or project changes', () => {
+  const from = { path: '/guestnetwork/old', meta: { name: 'guestnetwork' }, query: { projectid: 'p1' } }
+  const context = { ...view(), showAction: true, $refs: {}, $route: from, closeAction: jest.fn() }
+  const next = jest.fn()
+
+  AutogenView.beforeRouteUpdate.call(context, { ...from, query: { projectid: 'p1', tab: 'details' } }, from, next)
+  expect(context.closeAction).not.toHaveBeenCalled()
+  AutogenView.beforeRouteUpdate.call(context, { ...from, path: '/guestnetwork/new' }, from, next)
+  expect(context.closeAction).toHaveBeenCalledTimes(1)
+  AutogenView.beforeRouteUpdate.call(context, { ...from, query: { projectid: 'p2' } }, from, next)
+  expect(context.closeAction).toHaveBeenCalledTimes(2)
+  expect(next).toHaveBeenCalledTimes(3)
 })
 
 test('a self-managed blocking action retains its confirmation when navigation is denied', () => {

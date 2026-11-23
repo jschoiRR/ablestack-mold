@@ -16,16 +16,27 @@
 // under the License.
 
 <template>
-  <resource-layout :wide="wideLayout" :class="{ 'autoscale-resource': $route.meta?.name === 'autoscalevmgroup', 'affinity-resource': $route.meta?.name === 'affinitygroup' }">
+  <resource-layout :wide="wideLayout" :class="{ 'event-resource': isEventDetailRoute($route), 'dns-zone-resource': $route.meta?.name === 'dnszone', 'kms-resource': kmsDetailRoute($route), 's2s-gateway-resource': $route.meta?.name === 's2svpn', 'autoscale-resource': $route.meta?.name === 'autoscalevmgroup', 'affinity-resource': $route.meta?.name === 'affinitygroup', 'kubernetes-iso-resource': $route.meta?.name === 'kubernetesiso', 'template-resource': ['template', 'iso', 'kubernetesiso'].includes($route.meta?.name), 'acl-resource': $route.meta?.name === 'acllist', 'project-resource': isProjectDetailRoute($route) }">
     <template #left>
       <slot name="info-card">
         <info-card
           :resource="resource"
-          :loading="loading"
+          :template-observation="templateZoneObservation"
+          @show-template-zones="onTabChange('zones')"
+          :loading="loading && !(quietRefresh && resource.id && resource.id === $route.params?.id)"
           :actions="actions"
           @backup-controls-change="$emit('backup-controls-change', $event)"
           @exec-action="$emit('exec-action', $event)">
-          <template #details><auto-scale-info-summary v-if="$route.meta?.name === 'autoscalevmgroup'" :resource="resource" /><AffinityGroupSummary v-if="$route.meta?.name === 'affinitygroup'" :resource="resource" /><StorageSnapshotSummary v-if="$route.meta?.name === 'snapshot'" :resource="resource" /></template>
+          <template #details>
+            <div v-if="$route.meta?.name === 'vpncustomergateway' && resource.gateway" class="gateway-summary-peer">
+              <strong>{{ $t('label.vpn.customer.gateway.peer') }}</strong>
+              <div>{{ resource.gateway }}</div>
+            </div>
+            <div v-if="$route.meta?.name === 'guestvlans' && resource.physicalnetworkname" class="gateway-summary-peer">
+              <strong>{{ $t('label.physical.network') }}</strong>
+              <div>{{ resource.physicalnetworkname }}</div>
+            </div>
+            <KubernetesIsoSummary v-if="$route.meta?.name === 'kubernetesiso' && resource.id" ref="kubernetesIsoSummary" :resource="resource" :loading="loading && !(quietRefresh && resource.id && resource.id === $route.params?.id)" @observed="acceptKubernetesIsoObservation" @show-zones="onTabChange('zones')" /><auto-scale-info-summary v-if="$route.meta?.name === 'autoscalevmgroup'" :resource="resource" /><AffinityGroupSummary v-if="$route.meta?.name === 'affinitygroup'" :resource="resource" /><StorageSnapshotSummary v-if="$route.meta?.name === 'snapshot'" :resource="resource" /><GuestNetworkDescription v-if="$route.meta?.name === 'guestnetwork'" :value="resource.displaytext" summary /></template>
         </info-card>
       </slot>
     </template>
@@ -35,24 +46,37 @@
         :loading="loading && !resource.id"
         :bordered="true"
         style="width:100%">
-        <keep-alive v-if="tabs.length === 1 && $route.meta?.name !== 'snapshotpolicy'">
+        <a-alert
+          v-if="conditionalTabNotice"
+          class="guest-feature-notice"
+          type="info"
+          show-icon
+          closable
+          :message="$t('message.guest.feature.' + conditionalTabNotice)"
+          @close="conditionalTabNotice = ''" />
+        <keep-alive v-if="tabs.length === 1 && !isNetworkTabs && !['snapshotpolicy', 's2svpn'].includes($route.meta?.name)">
           <component
             :is="tabs[0].component"
             :key="tabs[0].name"
             :resource="resource"
             :loading="loading"
             :tab="tabs[0].name"
-            @refresh="['buckets', 'objectstore'].includes($route.meta.name) && $emit('refresh')"
+            v-bind="$route.meta?.name === 'kubernetesiso' && ['details','zones'].includes(tabs[0].name) ? { observation: kubernetesIsoObservation } : {}"
+            @show-zones="$route.meta?.name === 'kubernetesiso' && onTabChange('zones')"
+            @refresh-availability="refreshKubernetesIsoAvailability"
+            @refresh="(['buckets', 'objectstore'].includes($route.meta.name) || ($route.meta.name === 'template' && ['vnf.settings','settings'].includes(tabs[0].name))) && $emit('refresh')"
+            v-on="$route.meta?.name === 'template' && tabs[0].name === 'zones' ? { 'availability-observed': acceptTemplateObservation, 'operation-retained': value => $emit('template-operation-retained',value), 'refresh-parent': () => $emit('refresh') } : $route.meta?.name === 'iso' && tabs[0].name === 'zones' ? { 'operation-retained': value => $emit('iso-operation-retained',value), 'refresh-parent': () => $emit('refresh') } : {}"
             @wide-layout-change="onWideLayoutChange" />
         </keep-alive>
         <a-tabs
           v-else
+          :class="{'s2s-gateway-tabs': $route.meta?.name === 's2svpn', 'template-main-tabs':['template','iso','kubernetesiso'].includes($route.meta?.name), 'project-tabs': isProjectDetailRoute($route), 'cluster-tabs': $route.meta?.name === 'cluster'}"
           :style="{ width: '100%', marginTop: resourceTabPosition === 'top' ? '-12px' : '0' }"
           :tabPosition="resourceTabPosition"
           :animated="false"
           :activeKey="activeTab"
           @change="onTabChange" >
-          <template v-for="tab in tabs" :key="tab.name">
+          <template v-for="tab in renderedTabs" :key="tab.name">
             <a-tab-pane
               :key="tab.name"
               :tab="$t('label.' + tabName(tab))"
@@ -60,14 +84,18 @@
               <keep-alive>
                 <component
                   :is="tab.component"
-                  :key="tab.name"
+                  :key="tabInstanceKey(tab)"
                   :resource="resource"
                   :resourceType="tab.resourceType"
-                  :loading="loading"
-                  :tab="activeTab"
+                  :loading="loading && !(quietRefresh && tab.name === 'details' && resource.id && resource.id === $route.params?.id)"
+                  :tab="$route.meta?.name === 's2svpnconn' ? tab.name : activeTab"
+                  v-bind="$route.meta?.name === 'kubernetesiso' && ['details','zones'].includes(tab.name) ? { observation: kubernetesIsoObservation } : {}"
+                  @show-zones="$route.meta?.name === 'kubernetesiso' && onTabChange('zones')"
+                  @refresh-availability="refreshKubernetesIsoAvailability"
                   @change-resource="$emit('change-resource', $event)"
-                  @refresh="['buckets', 'objectstore'].includes($route.meta.name) && $emit('refresh')"
-                  @wide-layout-change="onWideLayoutChange" />
+                  @refresh="(['buckets', 'objectstore'].includes($route.meta.name) || (['account', 'domain'].includes($route.meta.name) && tab.name === 'limits.configure') || ($route.meta.name === 'template' && ['vnf.settings','settings'].includes(tab.name))) && $emit('refresh')"
+                  v-on="$route.meta?.name === 'template' && tab.name === 'zones' ? { 'availability-observed': acceptTemplateObservation, 'operation-retained': value => $emit('template-operation-retained',value), 'refresh-parent': () => $emit('refresh') } : $route.meta?.name === 'iso' && tab.name === 'zones' ? { 'operation-retained': value => $emit('iso-operation-retained',value), 'refresh-parent': () => $emit('refresh') } : {}"
+            @wide-layout-change="onWideLayoutChange" />
               </keep-alive>
             </a-tab-pane>
           </template>
@@ -78,28 +106,46 @@
 </template>
 
 <script>
+import '@/style/components/view/template-tabs.less'
+import { isProjectDetailRoute, projectRouteHistory } from '@/utils/projectSearch'
+import { isAccountDetailRoute, accountRouteHistory } from '@/utils/accountSearch'
+import { isRoleDetailRoute, roleRouteHistory } from '@/utils/roleSearch'
+import { gatewayContext } from '@/utils/s2sGateway'
+import { networkTabRoute, uniqueTabs, selectedNetworkTab } from '@/utils/networkTabs'
+import { conditionalGuestTab, guestFeatureStatus } from '@/utils/conditionalGuestNetwork'
 import DetailsTab from '@/components/view/DetailsTab'
 import InfoCard from '@/components/view/InfoCard'
+import KubernetesIsoSummary from '@/components/view/KubernetesIsoSummary'
+import { kubernetesIsoDetailContext } from '@/utils/kubernetesIsoDetails'
 import AutoScaleInfoSummary from '@/views/compute/AutoScaleInfoSummary'
 import AffinityGroupSummary from '@/views/compute/AffinityGroupSummary'
 import StorageSnapshotSummary from '@/views/storage/StorageSnapshotSummary'
+import GuestNetworkDescription from '@/components/view/GuestNetworkDescription'
 import ResourceLayout from '@/layouts/ResourceLayout'
 import { getAPI } from '@/api'
+import { kmsDetailRoute, kmsRouteHistory } from '@/utils/kmsNavigation'
+import { eventRouteHistory, isEventDetailRoute } from '@/utils/eventTimeline'
+import { templateObservationContext } from '@/utils/templateAvailability'
 import { mixinDevice } from '@/utils/mixin.js'
 
 export default {
   name: 'ResourceView',
   components: {
     InfoCard,
+    KubernetesIsoSummary,
     AutoScaleInfoSummary,
     AffinityGroupSummary,
     StorageSnapshotSummary,
+    GuestNetworkDescription,
     ResourceLayout
   },
   mixins: [mixinDevice],
   props: {
+    quietRefresh: { type: Boolean, default: false },
     readyForActions: { type: Boolean, default: true },
     readPending: { type: Boolean, default: false },
+    readFailed: { type: Boolean, default: false },
+    managedNetworkContext: { type: Boolean, default: false },
     resource: {
       type: Object,
       required: true
@@ -128,22 +174,65 @@ export default {
       default: ''
     }
   },
-  provide () { return { resourceActionReady: () => this.readyForActions, resourceReadPending: () => this.readPending || this.loading } },
+  provide () { return { resourceActionReady: () => this.readyForActions, resourceReadPending: () => this.readPending || this.loading, resourceReadFailed: () => this.readFailed, resourceActiveTab: () => this.activeTab } },
   data () {
     return {
       activeTab: '',
+      templateZoneObservation: null,
+      conditionalTabNotice: '',
       networkService: null,
       projectAccount: null,
+      kubernetesIsoObservation: null,
       wideLayout: false
     }
   },
+  computed: {
+    kubernetesIsoContext () { return this.$route.meta?.name === 'kubernetesiso' ? kubernetesIsoDetailContext(this.$route, this.resource, this.$store.getters, this.$store.state?.user?.token) : '' },
+    templateTabsReady () { return this.$route.meta?.name === 'template' && !!this.resource.id && (!this.$route.params?.id || this.$route.params.id === this.resource.id) },
+    templateTabScope () { return this.$route.meta?.name === 'template' ? JSON.stringify([this.templateContext, this.resource.templatetype, Object.keys(this.$store.getters.apis || {}).sort()]) : '' },
+    templateContext () { return templateObservationContext(this.$route, this.resource, this.$store.getters, this.$store.state?.user?.token) },
+    isNetworkTabs () { return networkTabRoute(this.$route) },
+    networkTabsReady () { return !!this.resource.id && (!this.$route.params?.id || this.$route.params.id === this.resource.id) && !this.loading && (this.managedNetworkContext || !this.resource.associatednetworkid || this.networkService !== null) },
+    s2sTabScope () { return this.$route.meta?.name === 's2svpn' ? gatewayContext(this) : '' },
+    dnsZoneTabScope () {
+      if (this.$route.meta?.name !== 'dnszone') return ''
+      const user = this.$store.getters.userInfo || {}
+      const apis = this.$store.getters.apis || {}
+      return JSON.stringify([this.resource.id, user.id, user.roleid, this.$store.getters.project?.id, !!apis.listDnsRecords, !!apis.createDnsRecord, !!apis.deleteDnsRecord])
+    },
+    guestVlanTabScope () {
+      const { id, allocationstate } = this.resource
+      return this.$route.meta?.name === 'guestvlans' && id && String(id) === String(this.$route.params?.id) && allocationstate
+        ? id + ':' + allocationstate
+        : ''
+    },
+    renderedTabs () {
+      if (this.dnsZoneTabScope || this.$route.meta?.name === 's2svpn') return this.tabs.filter(tab => this.showTab(tab))
+      if (!this.isNetworkTabs) return this.tabs
+      return this.networkTabsReady ? uniqueTabs(this.tabs).filter(tab => this.showTab(tab)) : []
+    },
+    networkTabScope () {
+      if (!this.isNetworkTabs) return ''
+      const user = this.$store.getters.userInfo || {}
+      return JSON.stringify([this.resource.id, user.id, user.roleid, user.roletype, this.$store.getters.project?.id, Object.keys(this.$store.getters.apis || {}).sort()])
+    }
+  },
   watch: {
+    kubernetesIsoContext: { flush: 'sync', handler () { this.kubernetesIsoObservation = null } },
+    templateTabScope () { if (this.templateTabsReady) this.setActiveTab() },
+    templateContext () { this.templateZoneObservation = null },
+    s2sTabScope: { flush: 'sync', handler () { if (this.$route.meta?.name === 's2svpn') this.setActiveTab() } },
+    dnsZoneTabScope () { this.setActiveTab() },
+    guestVlanTabScope (scope) { if (scope) this.setActiveTab() },
+    renderedTabs () { if (this.isNetworkTabs || this.$route.meta?.name === 's2svpn') this.setActiveTab() },
+    networkTabScope () { if (this.isNetworkTabs) this.setActiveTab() },
     resource: {
       deep: true,
       handler (newItem, oldItem) {
-        if (newItem.id === oldItem.id) return
+        if (newItem.id === oldItem.id && newItem.associatednetworkid === oldItem.associatednetworkid) return
 
         this.wideLayout = false
+        this.conditionalTabNotice = ''
         this.fetchData()
       }
     },
@@ -165,23 +254,69 @@ export default {
     window.removeEventListener('popstate', this.setActiveTab)
   },
   methods: {
+    isProjectDetailRoute,
+    kmsDetailRoute,
+    isEventDetailRoute,
+    refreshKubernetesIsoAvailability () { return this.$refs.kubernetesIsoSummary?.refresh() },
+    acceptKubernetesIsoObservation (value) {
+      if (this.$route.meta?.name === 'kubernetesiso' && value?.versionid === this.resource.id && value?.isoid === this.resource.isoid && value.context === this.kubernetesIsoContext) this.kubernetesIsoObservation = value
+    },
+    acceptTemplateObservation (observation) {
+      if (this.$route.meta?.name === 'template' && observation?.context === this.templateContext && observation.templateid === this.resource.id) this.templateZoneObservation = observation
+    },
     fetchData () {
-      if (this.resource.associatednetworkid) {
-        getAPI('listNetworks', { id: this.resource.associatednetworkid, listall: true }).then(response => {
+      const resourceId = this.resource.id
+      const networkId = this.resource.associatednetworkid
+      this.networkService = null
+      if (networkId && !this.managedNetworkContext) {
+        getAPI('listNetworks', { id: networkId, listall: true }).then(response => {
+          if (this.resource.id !== resourceId || this.resource.associatednetworkid !== networkId) return
           if (response && response.listnetworksresponse && response.listnetworksresponse.network) {
             this.networkService = response.listnetworksresponse.network[0]
           } else {
             this.networkService = {}
           }
+        }).catch(error => {
+          if (this.resource.id !== resourceId || this.resource.associatednetworkid !== networkId) return
+          this.networkService = {}
+          this.$notifyError(error)
         })
       }
     },
+    tabInstanceKey (tab) { if (this.dnsZoneTabScope) return this.dnsZoneTabScope + ':' + tab.name; if (this.$route.meta?.name === 's2svpn') return this.s2sTabScope + ':' + tab.name; if (this.$route.meta?.name === 'kubernetesiso') return this.kubernetesIsoContext + ':' + tab.name; return this.isNetworkTabs ? this.networkTabScope + ':' + tab.name : tab.name },
     onTabChange (key) {
+      this.conditionalTabNotice = ''
       this.activeTab = key
       this.wideLayout = false
       const query = Object.assign({}, this.$route.query)
       query.tab = key
-      if (['ssh', 'userdata', 'cniconfiguration', 'affinitygroup', 'volume', 'computeoffering', 'diskoffering'].includes(this.$route.meta?.name)) {
+      const historyState = this.$router?.options?.history?.state
+      if (isAccountDetailRoute(this.$route)) {
+        this.$router.replace({ path: this.$route.path, query, state: accountRouteHistory(this.$route, historyState, this.$store.getters, this.$store.state?.user?.token) })
+        this.$emit('onTabChange', key)
+        return
+      }
+      if (isRoleDetailRoute(this.$route)) {
+        this.$router.replace({ path: this.$route.path, query, state: roleRouteHistory(this.$route, historyState, this.$store.getters, this.$store.state?.user?.token) })
+        this.$emit('onTabChange', key)
+        return
+      }
+      if (isProjectDetailRoute(this.$route)) {
+        this.$router.replace({ path: this.$route.path, query, state: projectRouteHistory(this.$route, historyState, this.$store.getters, this.$store.state?.user?.token) })
+        this.$emit('onTabChange', key)
+        return
+      }
+      if (isEventDetailRoute(this.$route)) {
+        this.$router.replace({ path: this.$route.path, query, state: eventRouteHistory(this.$route, historyState, this.$store.getters, this.$store.state?.user?.token) })
+        this.$emit('onTabChange', key)
+        return
+      }
+      if (kmsDetailRoute(this.$route) || (this.$route.meta?.name === 'volume' && historyState?.kmsRelatedReturn)) {
+        this.$router.push({ path: this.$route.path, query, state: kmsRouteHistory(historyState) })
+        this.$emit('onTabChange', key)
+        return
+      }
+      if (networkTabRoute(this.$route) || ['zone', 'physicalnetwork', 'kubernetesiso', 'template', 'iso', 'ssh', 'userdata', 'cniconfiguration', 'affinitygroup', 'volume', 'computeoffering', 'diskoffering', 'vpcoffering', 'privategw', 's2svpn', 's2svpnconn', 'vpncustomergateway', 'guestvlans', 'dnszone'].includes(this.$route.meta?.name)) {
         this.$router.push({ path: this.$route.path, query })
         this.$emit('onTabChange', key)
         return
@@ -202,12 +337,18 @@ export default {
       this.wideLayout = !!enabled
     },
     tabName (tab) {
+      if (typeof tab.label === 'function') return tab.label(this.resource)
       if (typeof tab.name === 'function') {
         return tab.name(this.resource)
       }
       return tab.name
     },
     showTab (tab) {
+      if (tab.permission?.some(api => !this.$store.getters.apis?.[api])) return false
+      if (networkTabRoute(this.$route)) {
+        if (tab.show && !tab.show(this.resource, this.$route, this.$store.getters.userInfo)) return false
+        return !tab.networkServiceFilter || !!(this.networkService?.service && tab.networkServiceFilter(this.networkService.service))
+      }
       if (this.networkService && this.networkService.service && tab.networkServiceFilter) {
         return tab.networkServiceFilter(this.networkService.service)
       } else if ('show' in tab) {
@@ -218,16 +359,25 @@ export default {
     },
     setActiveTab () {
       const requestedTab = this.$route.query.tab || this.historyTab
-      const available = ['ssh', 'userdata', 'cniconfiguration', 'affinitygroup', 'volume', 'computeoffering', 'diskoffering'].includes(this.$route.meta?.name) ? this.tabs.filter(tab => this.showTab(tab)) : this.tabs
-      const selected = available.find(tab => tab.name === requestedTab) || available[0]
+      const network = networkTabRoute(this.$route)
+      const available = network ? uniqueTabs(this.tabs).filter(tab => !this.networkTabsReady || this.showTab(tab)) : kmsDetailRoute(this.$route) || ['kubernetesiso', 'template', 'ssh', 'userdata', 'cniconfiguration', 'affinitygroup', 'volume', 'computeoffering', 'diskoffering', 'vpcoffering', 'privategw', 's2svpn', 's2svpnconn', 'vpncustomergateway', 'guestvlans', 'dnszone'].includes(this.$route.meta?.name) ? this.tabs.filter(tab => this.showTab(tab)) : this.tabs
+      const selected = network ? selectedNetworkTab(available, requestedTab) : available.find(tab => tab.name === requestedTab) || available[0]
       this.activeTab = selected ? selected.name : ''
       // Invalid library deep links use the visible fallback tab in the URL too.
       // A departing KeepAlive view can observe the destination route before its
       // own tabs are replaced. Only the destination's tab configuration may
       // canonicalize its URL.
       const routeTabs = this.$route.meta?.tabs
-      const ownsRouteTabs = !routeTabs || (routeTabs.length === this.tabs.length && routeTabs.every((tab, index) => tab.name === this.tabs[index].name))
-      if (ownsRouteTabs && ['userdata', 'cniconfiguration', 'volume', 'computeoffering', 'diskoffering'].includes(this.$route.meta?.name) && this.$route.query.tab && selected && requestedTab !== selected.name) {
+      const ownsRouteTabs = (this.$route.meta?.name === 'publicip' || !routeTabs) || (routeTabs.length === this.tabs.length && routeTabs.every((tab, index) => tab.name === this.tabs[index].name))
+      if (ownsRouteTabs && ((network && this.networkTabsReady) || this.templateTabsReady || this.guestVlanTabScope || this.dnsZoneTabScope || kmsDetailRoute(this.$route) || ['kubernetesiso', 'userdata', 'cniconfiguration', 'volume', 'computeoffering', 'diskoffering', 'vpcoffering', 'privategw', 's2svpn', 's2svpnconn', 'vpncustomergateway'].includes(this.$route.meta?.name)) && this.$route.query.tab && selected && requestedTab !== selected.name) {
+        if (this.$route.meta?.name === 'guestnetwork' && conditionalGuestTab(requestedTab)) {
+          this.conditionalTabNotice = guestFeatureStatus(requestedTab, this.resource, this.$store.getters)
+        } else if (this.$route.meta?.name === 'guestnetwork' && this.resource.type === 'L2' &&
+          ['egress.rules', 'public.ip.addresses', 'ip.addresses', 'virtual.routers', 'guest.ip.range'].includes(requestedTab)) {
+          this.conditionalTabNotice = 'unsupported'
+        } else if (this.$route.meta?.name === 'publicip' && ['firewall', 'portforwarding', 'loadbalancing', 'vpn'].includes(requestedTab)) {
+          this.conditionalTabNotice = 'unsupported'
+        }
         this.$router.replace({ path: this.$route.path, query: { ...this.$route.query, tab: selected.name } })
       }
     }
@@ -236,6 +386,21 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.cluster-tabs :deep(.ant-tabs-content-holder),
+.cluster-tabs :deep(.ant-tabs-tabpane) { min-width: 0; }
+.template-resource :deep(.resource-content-card .ant-tabs-content-holder),
+.dns-zone-resource :deep(.resource-content-card .ant-tabs-content-holder),
+.event-resource :deep(.resource-content-card .ant-tabs-content-holder) { min-width: 0; }
+.dns-zone-resource :deep(.resource-content-card .ant-tabs-tabpane),
+.template-resource :deep(.resource-content-card .ant-tabs-tabpane) { min-width: 0; }
+/* Match the notice-line spacing and rail minimum of VM InstanceTab. */
+.s2s-gateway-resource :deep(.s2s-gateway-tabs) { margin-top: 22px !important; }
+.s2s-gateway-resource :deep(.s2s-gateway-tabs.ant-tabs-left > .ant-tabs-nav) { min-width: 100px; }
+.gateway-summary-peer { margin-top: 12px; overflow-wrap: anywhere; }
+.guest-feature-notice {
+  margin-bottom: 16px;
+}
+
 .resource-content-card {
   background: var(--ui-bg-surface);
 }
@@ -244,5 +409,43 @@ export default {
 :deep(.resource-content-card .ant-spin-nested-loading),
 :deep(.resource-content-card .ant-spin-container) {
   background: var(--ui-bg-surface);
+}
+</style>
+
+<style scoped>
+.kms-resource :deep(.resource-content-card),
+.kms-resource :deep(.ant-tabs),
+.kms-resource :deep(.ant-tabs-content-holder),
+.kms-resource :deep(.ant-tabs-tabpane) { min-width: 0; max-width: 100%; }
+.kms-resource :deep(.ant-list-item) { overflow-wrap: anywhere; }
+</style>
+
+<style scoped>
+.project-resource :deep(.resource-content-card),
+.project-resource :deep(.ant-tabs-content-holder),
+.project-resource :deep(.ant-tabs-tabpane),
+.project-resource :deep(.resource-details__name > :last-child) { min-width: 0; }
+.project-resource :deep(.resource-details__name .name),
+.project-resource :deep(.resource-detail-item__details),
+.project-resource :deep(.project-tab-table .ant-table-cell) { overflow-wrap: anywhere; }
+.project-resource :deep(.project-tab-toolbar) {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+.project-resource :deep(.project-tab-toolbar .ant-input-search) {
+  width: 280px;
+  max-width: 100%;
+  margin-inline-start: auto;
+}
+.project-resource :deep(.project-tab-notice) { margin-bottom: 12px; }
+.project-resource :deep(.project-tabs.ant-tabs-left > .ant-tabs-content-holder > .ant-tabs-content > .ant-tabs-tabpane) {
+  padding-inline-start: 16px;
+}
+@media (max-width: 768px) {
+  .project-resource :deep(.resource-content-card > .ant-card-body) { padding: 16px; }
+  .project-resource :deep(.project-tab-toolbar .ant-input-search) { width: 100%; margin-inline-start: 0; }
 }
 </style>

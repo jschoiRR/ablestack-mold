@@ -21,7 +21,6 @@ import java.util.List;
 import javax.inject.Inject;
 
 import org.apache.cloudstack.acl.ControlledEntity;
-import org.apache.cloudstack.acl.ProjectRole;
 import org.apache.cloudstack.acl.ProjectRolePermission;
 import org.apache.cloudstack.acl.ProjectRoleService;
 import org.apache.cloudstack.acl.RolePermissionEntity;
@@ -184,6 +183,11 @@ public class DomainChecker extends AdapterBase implements SecurityChecker {
             Account owner = _accountDao.findById(template.getAccountId());
             // validate that the template is usable by the account
             if (!template.isPublicTemplate()) {
+                // Launch permission grants use of a private image, not modification.
+                if (accessType == AccessType.OperateEntry && !_accountService.isRootAdmin(caller.getId()) && owner.getId() != caller.getId()
+                        && (owner.getType() != Account.Type.PROJECT || !_projectMgr.canAccessProjectAccount(caller, owner.getId()))) {
+                    throw new PermissionDeniedException("Only the owner, Root Admin, or an authorized project member can modify this template");
+                }
                 if (_accountService.isRootAdmin(caller.getId()) || (owner.getId() == caller.getId())) {
                     return true;
                 }
@@ -195,6 +199,12 @@ public class DomainChecker extends AdapterBase implements SecurityChecker {
                 // since the current account is not the owner of the template, check the launch permissions table to see if the
                 // account can launch a VM from this template
                 LaunchPermissionVO permission = _launchPermissionDao.findByTemplateAndAccount(template.getId(), caller.getId());
+                if (permission == null && (accessType == null || accessType == AccessType.UseEntry || accessType == AccessType.ListEntry)) {
+                    Project selectedProject = CallContext.current().getProject();
+                    if (selectedProject != null && _projectMgr.canAccessProjectAccount(caller, selectedProject.getProjectAccountId())) {
+                        permission = _launchPermissionDao.findByTemplateAndAccount(template.getId(), selectedProject.getProjectAccountId());
+                    }
+                }
                 if (permission == null) {
                     throw new PermissionDeniedException(String.format("Account %s does not have permission to launch instances from template %s", caller, template));
                 }
@@ -309,16 +319,11 @@ public class DomainChecker extends AdapterBase implements SecurityChecker {
     }
 
     private boolean isPermitted(Project project, ProjectAccount projectUser, String apiCommandName) {
-        ProjectRole projectRole = null;
-        if(projectUser.getProjectRoleId() != null) {
-            projectRole = projectRoleService.findProjectRole(projectUser.getProjectRoleId(), project.getId());
-        }
-
-        if (projectRole == null) {
+        if (projectUser.getProjectRoleId() == null) {
             return true;
         }
 
-        for (ProjectRolePermission permission : projectRoleService.findAllProjectRolePermissions(project.getId(), projectRole.getId())) {
+        for (ProjectRolePermission permission : projectRoleService.findCurrentUserProjectRolePermissions(project.getId())) {
             if (permission.getRule().matches(apiCommandName)) {
                 if (RolePermissionEntity.Permission.ALLOW.equals(permission.getPermission())) {
                     return true;

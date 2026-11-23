@@ -631,7 +631,7 @@
                                             :zoneId="zoneId"
                                             :disabled="template.userdatapolicy === 'DENYOVERRIDE'"
                                             :preFillContent="dataPreFill"
-                                            @select-user-data-item="updateUserData"
+                                            @select-user-data-item="selectVnfUserData"
                                             @ready="userDataSelectionReady = $event"
                                           />
                                           <div v-if="userDataParams.length > 0">
@@ -808,7 +808,7 @@
             <div class="card-footer" v-if="isMobile()">
               <deploy-buttons
                 :loading="loading.deploy"
-                :disabled="userDataSelectionBlocked"
+                :disabled="vnfDeploymentBlocked"
                 :deployButtonText="$t('label.launch.vnf.appliance')"
                 :deployButtonMenuOptions="deployMenuOptions"
                 @handle-cancel="() => $router.back()"
@@ -824,7 +824,7 @@
             <template #footer-content>
               <deploy-buttons
                 :loading="loading.deploy"
-                :disabled="userDataSelectionBlocked"
+                :disabled="vnfDeploymentBlocked"
                 :deployButtonText="$t('label.launch.vnf.appliance')"
                 :deployButtonMenuOptions="deployMenuOptions"
                 @handle-cancel="() => $router.back()"
@@ -839,7 +839,7 @@
 </template>
 
 <script>
-import { ref, reactive, toRaw, nextTick } from 'vue'
+import { ref, reactive, toRaw, nextTick, h } from 'vue'
 import { affinitySelectionIds, affinitySelectionGroups, fetchAffinityGroupOptions } from '@/utils/affinityGroupSelection'
 import { getAPI, postAPI } from '@/api'
 import _ from 'lodash'
@@ -864,11 +864,14 @@ import NetworkSelection from '@views/compute/wizard/NetworkSelection'
 import NetworkConfiguration from '@views/compute/wizard/NetworkConfiguration'
 import SshKeyPairSelection from '@views/compute/wizard/SshKeyPairSelection'
 import UserDataSelection from '@views/compute/wizard/UserDataSelection'
-import { applyUserDataSelection, userDataSelectionConsumer } from '@/utils/userDataSelection'
+import { applyUserDataSelection, NO_USER_DATA, userDataSelectionConsumer } from '@/utils/userDataSelection'
 import SecurityGroupSelection from '@views/compute/wizard/SecurityGroupSelection'
 import VnfNicsSelection from '@views/compute/wizard/VnfNicsSelection.vue'
 import TooltipLabel from '@/components/widgets/TooltipLabel'
 import InstanceNicsNetworkSelectListView from '@/components/view/InstanceNicsNetworkSelectListView.vue'
+import VnfCredentials from '@/components/compute/VnfCredentials'
+import { vnfDeploymentNotice, vnfNoticeScope } from '@/utils/vnfAccess'
+import { vmDisplayName } from '@/utils/vmIdentity'
 
 export default {
   name: 'Wizard',
@@ -917,6 +920,7 @@ export default {
       imageSearchFilters: null,
       templateKey: 0,
       showRegisteredUserdata: true,
+      deploymentOwnerScope: null,
       doUserdataOverride: false,
       doUserdataAppend: false,
       userdataDefaultOverridePolicy: 'ALLOWOVERRIDE',
@@ -1194,6 +1198,13 @@ export default {
         }
       }
     },
+    vnfDeploymentBlocked () {
+      // None needs no library lookup. A requested UUID still uses the shared
+      // fail-closed guard, including prefill before the advanced picker mounts.
+      const id = this.form.userdataid || this.dataPreFill.userdataid
+      return JSON.stringify(this.userDataOwner) !== this.deploymentOwnerScope ||
+        Boolean(id && id !== NO_USER_DATA && this.userDataSelectionBlocked)
+    },
     networkOfferingIds () {
       return _.map(this.networks, 'id')
     },
@@ -1361,6 +1372,16 @@ export default {
     }
   },
   watch: {
+    userDataScopeKey (current, previous) {
+      const [owner, zone] = JSON.parse(current)
+      const [oldOwner, oldZone] = JSON.parse(previous)
+      if (JSON.stringify(owner) !== JSON.stringify(oldOwner) || (oldZone && zone !== oldZone)) {
+        this.resetVnfUserData()
+      }
+    },
+    'form.templateid' (id, previous) {
+      if (previous && id !== previous) this.resetVnfUserData()
+    },
     '$route' (to, from) {
       if (to.name === 'deployVnfAppliance') {
         this.resetData()
@@ -1540,6 +1561,7 @@ export default {
   },
   created () {
     this.initForm()
+    this.deploymentOwnerScope = JSON.stringify(this.userDataOwner)
     this.dataPreFill = this.preFillContent && Object.keys(this.preFillContent).length > 0 ? this.preFillContent : {}
     this.fetchData()
   },
@@ -1550,6 +1572,46 @@ export default {
     }
   },
   methods: {
+    pollVnfDeployment (jobId, title, description, notice, key) {
+      let shown = false
+      let closed = false
+      let timer
+      const finishClose = () => {
+        if (closed) return
+        closed = true
+        clearTimeout(timer)
+        this.$notification.defaultConfig.onClose()
+        notice.release()
+      }
+      const close = () => { if (shown && !closed) { this.$notification.close(key); finishClose() } }
+      notice.close = close
+      return Promise.resolve(this.$pollJob({
+        jobId,
+        title,
+        description,
+        successMethod: result => {
+          const rows = notice.credentials(result, this.$route, this.form.templateid)
+          if (rows.length) {
+            const vm = result.jobresult.virtualmachine
+            this.$notification.success({
+              key,
+              placement: 'bottomLeft',
+              duration: 10,
+              onClose: finishClose,
+              message: `${this.$t('message.vnf.credentials.default')} ${vmDisplayName(vm)} (${vm.id})`,
+              description: h(VnfCredentials, { rows, translate: key => this.$t(key), onClose: close })
+            })
+            shown = true
+            // Notification hover pauses its own timer. Credentials have a hard lifetime.
+            timer = setTimeout(close, 10000)
+          }
+          if (notice.current()) eventBus.emit('vm-refresh-data')
+        },
+        loadingMessage: `${title} ${this.$t('label.in.progress')}`,
+        catchMessage: this.$t('error.fetching.async.job.result'),
+        action: { isFetchData: false }
+      })).finally(() => { if (!shown) notice.release() })
+    },
     updateTemplateKey () {
       this.templateKey += 1
     },
@@ -1836,6 +1898,8 @@ export default {
       this.fetchOptions(param, 'networks')
     },
     resetData () {
+      this.deploymentOwnerScope = JSON.stringify(this.userDataOwner)
+      this.resetVnfUserData()
       this.vm = {
         name: null,
         zoneid: null,
@@ -1947,6 +2011,15 @@ export default {
     updateUserData (id, item) {
       applyUserDataSelection(this, id, item)
     },
+    selectVnfUserData (id, item) {
+      this.dataPreFill = { ...this.dataPreFill, userdataid: undefined }
+      this.updateUserData(id, item)
+    },
+    resetVnfUserData () {
+      this.userDataSelectionReady = false
+      this.selectVnfUserData(NO_USER_DATA)
+      this.form.userdata = undefined
+    },
     updateTemplateLinkedUserData (id) {
       if (!id || id === '0') {
         return
@@ -2043,9 +2116,13 @@ export default {
     handleSubmit (e) {
       console.log('wizard submit')
       e.preventDefault()
-      if (this.loading.deploy || this.userDataSelectionBlocked) return
+      if (this.loading.deploy || this.vnfDeploymentBlocked) return
+      const submissionScope = JSON.stringify([this.userDataOwner, this.zoneId, this.form.templateid])
+      const submissionSecurity = vnfNoticeScope(this.$store)
+      const submittedForm = this.form
       this.formRef.value.validate().then(async () => {
-        const values = toRaw(this.form)
+        if (this.vnfDeploymentBlocked || submissionSecurity !== vnfNoticeScope(this.$store) || submissionScope !== JSON.stringify([this.userDataOwner, this.zoneId, this.form.templateid])) return
+        const values = { ...toRaw(this.form) }
 
         if (!values.templateid && !values.isoid) {
           this.$notification.error({
@@ -2342,74 +2419,29 @@ export default {
         }
         idx = this.addVnfDetailsToDeployParams(createVnfAppData, idx, userdataDetailNames)
 
+        const notice = vnfDeploymentNotice(this.$store, this.template, createVnfAppData, () => notice.close?.())
         postAPI('deployVnfAppliance', createVnfAppData).then(response => {
+          if (!notice.current()) { notice.release(); return }
           const jobId = response.deployvirtualmachineresponse.jobid
           if (jobId) {
-            this.$pollJob({
-              jobId,
-              title,
-              description,
-              successMethod: result => {
-                const vm = result.jobresult.virtualmachine
-                const name = vm.displayname || vm.name || vm.id
-                const passwordEnabled = this.template?.passwordenabled === true
-                const username = vm.vnfdetails?.username || null
-                const password = passwordEnabled ? vm.vnfdetails?.password || null : null
-                const effectivePassword = passwordEnabled ? (vm.password || password) : null
-                const sshUsername = vm.vnfdetails?.ssh_user || null
-                const sshPassword = passwordEnabled ? vm.vnfdetails?.ssh_password || null : null
-                const webUsername = vm.vnfdetails?.web_user || null
-                const webPassword = passwordEnabled ? vm.vnfdetails?.web_password || null : null
-                const credentials = []
-                if (username) {
-                  credentials.push(this.$t('label.username') + ' : ' + username)
-                }
-                if (effectivePassword) {
-                  credentials.push(this.$t('label.password.default') + ' : ' + effectivePassword)
-                }
-                if (webUsername) {
-                  credentials.push('Web ' + this.$t('label.username') + ' : ' + webUsername)
-                }
-                if (webPassword) {
-                  credentials.push('Web ' + this.$t('label.password.default') + ' : ' + webPassword)
-                }
-                if (sshUsername) {
-                  credentials.push('SSH ' + this.$t('label.username') + ' : ' + sshUsername)
-                }
-                if (sshPassword) {
-                  credentials.push('SSH ' + this.$t('label.password.default') + ' : ' + sshPassword)
-                }
-                if (credentials.length > 0) {
-                  credentials.push(this.$t('message.vnf.credentials.change'))
-                }
-                const credentialsDesc = credentials.join('<br>')
-                this.$notification.success({
-                  message: `${this.$t('message.vnf.credentials.default')} ` + name,
-                  description: (<span v-html={credentialsDesc}></span>),
-                  duration: 0
-                })
-                eventBus.emit('vm-refresh-data')
-              },
-              loadingMessage: `${title} ${this.$t('label.in.progress')}`,
-              catchMessage: this.$t('error.fetching.async.job.result'),
-              action: {
-                isFetchData: false
-              }
-            })
-          }
+            const credentialKey = `vnf-credentials-${jobId}`
+            this.pollVnfDeployment(jobId, title, description, notice, credentialKey)
+          } else notice.release()
           // Sending a refresh in case it hasn't picked up the new VM
           new Promise(resolve => setTimeout(resolve, 3000)).then(() => {
-            eventBus.emit('vm-refresh-data')
+            if (submissionSecurity === vnfNoticeScope(this.$store)) eventBus.emit('vm-refresh-data')
           })
           if (!values.stayonpage) {
             this.$router.back()
           }
         }).catch(error => {
-          this.$notifyError(error)
-          this.loading.deploy = false
+          if (notice.current()) this.$notifyError(error)
+          notice.release()
         }).finally(() => {
-          this.form.stayonpage = false
-          this.loading.deploy = false
+          if (submissionSecurity === vnfNoticeScope(this.$store) && this.form === submittedForm) {
+            this.form.stayonpage = false
+            this.loading.deploy = false
+          }
         })
       }).catch(err => {
         this.formRef.value.scrollToField(err.errorFields[0].name)

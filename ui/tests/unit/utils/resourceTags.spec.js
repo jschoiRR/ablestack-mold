@@ -8,7 +8,7 @@
 // distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
 // WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 // License for the specific language governing permissions and limitations.
-import { clearResourceTagOperations, getResourceTagOperation, readResourceTags, tagAccessError, tagContext, tagIdentity, tagOperationBlocked, tagTargetParams } from '@/utils/resourceTags'
+import { clearResourceTagOperations, getResourceTagOperation, readResourceTags, tagAccessError, tagContext, tagIdentity, tagOperationBlocked, tagTargetParams, tagReadParams } from '@/utils/resourceTags'
 
 const flush = async () => { for (let i = 0; i < 20; i++) await Promise.resolve() }
 const deferred = () => { let finish; const promise = new Promise(resolve => { finish = resolve }); return { promise, resolve: finish } }
@@ -169,4 +169,100 @@ test('late read and an access error cannot be mistaken for an empty list', async
   await expect(p).rejects.toThrow('message.tags.scope.changed')
   expect(tagAccessError({ response: { status: 403 } })).toBe(true)
   expect(tagAccessError({ response: { data: { errorresponse: { errorcode: 531, errortext: 'Caller does not have permission' } } } })).toBe(true)
+})
+
+const finishReview = (op, extra = {}) => {
+  const state = op.snapshot()
+  return op.finishReview({ sequence: state.sequence, ...state.review, confirmed: true, ...extra })
+}
+
+test.each(['createTags', 'deleteTags'])('unknown %s is reviewed read-only and acknowledged without deciding server success', async command => {
+  const f = setup(); f.post.mockRejectedValueOnce({ response: { status: 503 } })
+  await f.op.run(command, params)
+  expect(finishReview(f.op)).toBe(false)
+  const read = jest.fn().mockResolvedValue([{ ...row(), key: 'Key', value: 'value' }])
+  expect(await f.op.review(read, f.op.snapshot().sequence)).toBe(true)
+  expect(f.op.snapshot().review).toMatchObject({ status: 'ready', desiredObserved: command === 'createTags' })
+  expect(finishReview(f.op, { confirmed: false })).toBe(false)
+  expect(finishReview(f.op)).toBe(true)
+  expect(f.op.snapshot()).toMatchObject({ status: 'acknowledged', jobId: '', resolution: { desiredObserved: command === 'createTags' } })
+  expect(tagOperationBlocked(f.op.snapshot())).toBe(false)
+  expect(f.post).toHaveBeenCalledTimes(1); expect(f.get).not.toHaveBeenCalled()
+  expect(finishReview(f.op)).toBe(false)
+  f.post.mockResolvedValueOnce({ [command.toLowerCase() + 'response']: { success: true } })
+  await f.op.run(command, params)
+  expect(f.post).toHaveBeenCalledTimes(2)
+})
+
+test('failed/foreign/incomplete review cannot unlock an unknown request; re-read resets its proof', async () => {
+  const f = setup(); f.post.mockRejectedValueOnce(new Error('timeout')); await f.op.run('createTags', params)
+  expect(await f.op.review(async () => { throw new Error('read failed') }, 1)).toBe(false)
+  expect(finishReview(f.op)).toBe(false)
+  expect(await f.op.review(async () => [row(0, 'foreign')].map(x => ({ ...x, resourceid: 'foreign' })), 1)).toBe(false)
+  expect(finishReview(f.op)).toBe(false)
+  await f.op.review(async () => [], 1)
+  const old = f.op.snapshot().review
+  const gate = deferred(); const reading = f.op.review(() => gate.promise, 1)
+  expect(finishReview(f.op, old)).toBe(false)
+  gate.resolve([]); await reading
+  expect(finishReview(f.op, old)).toBe(false)
+  expect(finishReview(f.op)).toBe(true)
+  expect(f.post).toHaveBeenCalledTimes(1)
+})
+
+test('scope pause, cancel and restored receipt invalidate review proofs without resubmission', async () => {
+  const f = setup(); f.post.mockRejectedValueOnce(new Error('timeout')); await f.op.run('createTags', params)
+  const gate = deferred(); const reviewing = f.op.review(() => gate.promise, 1)
+  f.release(); gate.resolve([]); expect(await reviewing).toBe(false)
+  f.op.bind(() => true)
+  expect(finishReview(f.op)).toBe(false)
+  await f.op.review(async () => [], 1); f.op.cancelReview()
+  expect(finishReview(f.op)).toBe(false)
+  await f.op.review(async () => [], 1)
+  const saved = Object.keys(sessionStorage).map(k => [k, sessionStorage.getItem(k)])
+  clearResourceTagOperations(); sessionStorage.clear(); for (const [key, value] of saved) sessionStorage.setItem(key, value)
+  const restored = setup()
+  expect(restored.op.snapshot().status).toBe('unknown'); expect(restored.op.snapshot().review).toBeNull()
+  expect(finishReview(restored.op)).toBe(false); expect(restored.post).not.toHaveBeenCalled()
+})
+
+test('job-bearing requests and still-unsettled submissions cannot be manually acknowledged', async () => {
+  const f = setup(); const late = deferred(); f.post.mockReturnValueOnce(late.promise)
+  const request = f.op.run('createTags', params); await flush(); f.release(); f.op.bind(() => true)
+  expect(f.op.snapshot()).toMatchObject({ status: 'unknown', requestPending: true })
+  expect(await f.op.review(async () => [], 1)).toBe(false); expect(finishReview(f.op)).toBe(false)
+  late.resolve({ createtagsresponse: { jobid: 'real-job' } }); await request
+  expect(f.op.snapshot().status).toBe('succeeded'); expect(f.post).toHaveBeenCalledTimes(1)
+  clearResourceTagOperations(sessionStorage); sessionStorage.clear()
+  const g = setup(); g.get.mockRejectedValue({ response: { status: 503 } }); await g.op.run('createTags', params)
+  expect(g.op.snapshot()).toMatchObject({ status: 'unknown', jobId: 'job' })
+  expect(await g.op.review(async () => [], 1)).toBe(false); expect(finishReview(g.op)).toBe(false)
+})
+
+test('failure to persist acknowledgement keeps the unknown lock and original request', async () => {
+  let unavailable = false; const values = new Map()
+  const storage = { getItem: key => values.get(key), setItem: (key, value) => { if (unavailable) throw new Error('quota'); values.set(key, value) } }
+  const f = setup({ storage }); f.post.mockRejectedValueOnce(new Error('timeout')); await f.op.run('createTags', params)
+  await f.op.review(async () => [], 1); unavailable = true
+  expect(finishReview(f.op)).toBe(false)
+  expect(f.op.snapshot()).toMatchObject({ status: 'unknown', review: { error: 'message.tags.review.storage.failed' } })
+  expect(tagOperationBlocked(f.op.snapshot())).toBe(true); expect(f.post).toHaveBeenCalledTimes(1)
+})
+
+test.each(['ISO', 'Template'])('%s tag reads preserve actor scope and retain the owner project only for mutations', async type => {
+  const resource = { id: 'shared-image', projectid: 'owner-project' }
+  const get = jest.fn().mockResolvedValue({ listtagsresponse: {} })
+  await readResourceTags(get, resource, type)
+  expect(get.mock.calls[0][1]).toEqual(expect.objectContaining({ resourcetype: type, resourceid: 'shared-image', ignoreproject: true }))
+  expect(get.mock.calls[0][1]).not.toHaveProperty('projectid')
+  await readResourceTags(get, resource, type, () => true, { project: { id: 'active-project' } })
+  expect(get.mock.calls[1][1]).toEqual(expect.objectContaining({ projectid: 'active-project' }))
+  expect(tagTargetParams(resource, type)).toEqual({ resourcetype: type, projectid: 'owner-project' })
+})
+test('image tag scope uses the selected project, independently of inventory and list filters', () => {
+  const resource = { id: 'resource', projectid: 'owner-project' }
+  expect(tagReadParams(resource, 'ISO', { project: { id: '0' } })).toEqual({ resourcetype: 'ISO', ignoreproject: true })
+  expect(tagReadParams(resource, 'ISO', { project: { id: 'p' }, listAllProjects: true, allProjects: [{ id: 'owner-project' }] })).toEqual({ resourcetype: 'ISO', projectid: 'p' })
+  expect(tagReadParams(resource, 'ISO', { project: { id: '-1' }, allProjects: [] })).toEqual({ resourcetype: 'ISO', projectid: '-1' })
+  for (const type of ['Snapshot', 'UserVm', 'Volume', 'VMSnapshot', 'Backup', 'Project']) expect(tagReadParams(resource, type, { project: { id: 'active' } })).toEqual(tagTargetParams(resource, type))
 })

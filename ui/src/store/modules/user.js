@@ -16,6 +16,7 @@
 // under the License.
 
 import { discoverOptional } from '@/utils/optionalDiscovery'
+import { toApiMetadata, toCachedApiMetadata } from '@/utils/apiMetadata'
 import { resetWallBannerDismissal } from '@/utils/wallAvailability'
 import Cookies from 'js-cookie'
 import message from 'ant-design-vue/es/message'
@@ -90,6 +91,9 @@ const user = {
   },
 
   mutations: {
+    ADVANCE_DISCOVERY: (state) => {
+      state.discoveryGeneration += 1
+    },
     RESET_DISCOVERY: (state) => {
       state.discoveryGeneration += 1
       state.apis = {}
@@ -128,8 +132,14 @@ const user = {
       state.info = info
     },
     SET_APIS: (state, apis) => {
+      try {
+        vueProps.$localStorage.set(APIS, toCachedApiMetadata(apis))
+      } catch (error) {
+        // A failed cache write must not restore permissions from the old scope
+        // on reload. Keep the freshly discovered permissions in memory only.
+        vueProps.$localStorage.remove(APIS)
+      }
       state.apis = apis
-      vueProps.$localStorage.set(APIS, apis)
     },
     SET_FEATURES: (state, features) => {
       state.features = features
@@ -363,7 +373,6 @@ const user = {
       commit = (...args) => { if (current()) originalCommit(...args) }
       return new Promise((resolve, reject) => {
         const cachedApis = switchDomain ? {} : vueProps.$localStorage.get(APIS, {})
-        const cachedZones = vueProps.$localStorage.get(ZONES, [])
         const cachedTimezoneOffset = vueProps.$localStorage.get(TIMEZONE_OFFSET, 0.0)
         const cachedUseBrowserTimezone = vueProps.$localStorage.get(USE_BROWSER_TIMEZONE, true)
         const cachedCustomColumns = vueProps.$localStorage.get(CUSTOM_COLUMNS, {})
@@ -413,6 +422,25 @@ const user = {
         }
 
         // This block is to enforce password change for first time login after admin resets password
+        const loadOptionalContext = apis => {
+          if (!current()) return
+          // A catalog-only role need not read infrastructure or networks to log in.
+          // Clear old owner data before optionally discovering the current grants.
+          commit('SET_ZONES', [])
+          discoverOptional(apis, 'listZones').then(json => {
+            if (current() && json) commit('SET_ZONES', json.listzonesresponse?.zone || [])
+          })
+          for (const [api, params, responseKey, key, title, path] of [
+            ['listNetworks', { restartrequired: true, forvpc: false }, 'listnetworksresponse', 'NETWORK_RESTART_REQUIRED', 'label.network.restart.required', '/guestnetwork/'],
+            ['listVPCs', { restartrequired: true }, 'listvpcsresponse', 'VPC_RESTART_REQUIRED', 'label.vpc.restart.required', '/vpc/']
+          ]) {
+            discoverOptional(apis, api, params).then(json => {
+              if (!current() || !(json?.[responseKey]?.count > 0)) return
+              store.dispatch('AddHeaderNotice', { key, title: i18n.global.t(title), path, query: { restartrequired: true }, status: 'done', timestamp: new Date() })
+            })
+          }
+        }
+
         const isPwdChangeRequired = vueProps.$localStorage.get(PASSWORD_CHANGE_REQUIRED)
         commit('SET_PASSWORD_CHANGE_REQUIRED', isPwdChangeRequired)
         if (isPwdChangeRequired) {
@@ -421,22 +449,30 @@ const user = {
         }
 
         if (hasAuth) {
-          console.log('Login detected, using cached APIs')
-          commit('SET_ZONES', cachedZones)
+          console.log('Login detected, revalidating API permissions')
+          commit('SET_ZONES', [])
           commit('SET_SHOW_SECURITY_GROUPS', cachedShowSecurityGroups)
-          commit('SET_APIS', cachedApis)
           commit('SET_TIMEZONE_OFFSET', cachedTimezoneOffset)
           commit('SET_USE_BROWSER_TIMEZONE', cachedUseBrowserTimezone)
           commit('SET_CUSTOM_COLUMNS', cachedCustomColumns)
           commit('SET_MS_ID', msId)
 
           // Ensuring we get the user info so that store.getters.user is never empty when the page is freshly loaded
-          getAPI('listUsers', { id: Cookies.get('userid'), listall: true }).then(response => {
+          // Cached metadata omits response schemas. Revalidate the current
+          // scope on reload instead of treating an old cache as authorization.
+          themePermissions = getAPI('listApis').then(response => {
+            if (!current()) return {}
+            const apis = toApiMetadata(response.listapisresponse.api)
+            commit('SET_APIS', apis)
+            loadOptionalContext(apis)
+            return apis
+          })
+          Promise.all([themePermissions, getAPI('listUsers', { id: Cookies.get('userid'), listall: true })]).then(([apis, response]) => {
             const result = response.listusersresponse.user[0]
             commit('SET_INFO', result)
             commit('SET_NAME', result.firstname + ' ' + result.lastname)
-            loadFeatures(cachedApis).then(() => {
-              resolve(current() ? cachedApis : {})
+            loadFeatures(apis).then(() => {
+              resolve(current() ? apis : {})
             })
           }).catch(error => {
             reject(error)
@@ -446,28 +482,11 @@ const user = {
           // in-memory login flag. Discover through the authenticated API so the
           // promise always resolves or rejects; never leave the router pending.
           const hide = message.loading(i18n.global.t('message.discovering.feature'), 0)
-          getAPI('listZones').then(json => {
-            const zones = json.listzonesresponse.zone || []
-            commit('SET_ZONES', zones)
-          }).catch(error => {
-            reject(error)
-          })
           themePermissions = getAPI('listApis').then(response => {
             if (!current()) { hide(); resolve({}); return }
-            const apis = {}
-            const apiList = response.listapisresponse.api
-            for (var idx = 0; idx < apiList.length; idx++) {
-              const api = apiList[idx]
-              const apiName = api.name
-              apis[apiName] = {
-                params: api.params,
-                // response: api.response,
-                isasync: api.isasync,
-                since: api.since,
-                description: api.description
-              }
-            }
+            const apis = toApiMetadata(response.listapisresponse.api)
             commit('SET_APIS', apis)
+            loadOptionalContext(apis)
             loadFeatures(apis).then(() => {
               resolve(current() ? apis : {})
               if (!current()) { hide(); return }
@@ -485,36 +504,6 @@ const user = {
             reject(error)
             return {}
           })
-
-          getAPI('listNetworks', { restartrequired: true, forvpc: false }).then(response => {
-            if (!current()) return
-            if (response.listnetworksresponse.count > 0) {
-              store.dispatch('AddHeaderNotice', {
-                key: 'NETWORK_RESTART_REQUIRED',
-                title: i18n.global.t('label.network.restart.required'),
-                description: i18n.global.t('message.network.restart.required'),
-                path: '/guestnetwork/',
-                query: { restartrequired: true, forvpc: false },
-                status: 'done',
-                timestamp: new Date()
-              })
-            }
-          }).catch(ignored => {})
-
-          getAPI('listVPCs', { restartrequired: true }).then(response => {
-            if (!current()) return
-            if (response.listvpcsresponse.count > 0) {
-              store.dispatch('AddHeaderNotice', {
-                key: 'VPC_RESTART_REQUIRED',
-                title: i18n.global.t('label.vpc.restart.required'),
-                description: i18n.global.t('message.vpc.restart.required'),
-                path: '/vpc/',
-                query: { restartrequired: true },
-                status: 'done',
-                timestamp: new Date()
-              })
-            }
-          }).catch(ignored => {})
         }
 
         getAPI('listUsers', { id: Cookies.get('userid'), showicon: true }).then(response => {
@@ -612,30 +601,19 @@ const user = {
       })
       commit('SET_HEADER_NOTICES', noticeArray)
     },
-    ProjectView ({ commit }, projectid) {
-      return new Promise((resolve, reject) => {
-        getAPI('listApis', { projectid: projectid }).then(response => {
-          const apis = {}
-          const apiList = response.listapisresponse.api
-          for (var idx = 0; idx < apiList.length; idx++) {
-            const api = apiList[idx]
-            const apiName = api.name
-            apis[apiName] = {
-              params: api.params,
-              response: api.response
-            }
-          }
-          commit('SET_APIS', apis)
-          resolve(apis)
-          store.dispatch('GenerateRoutes', { apis }).then(() => {
-            store.getters.addRouters.map(route => {
-              router.addRoute(route)
-            })
-          })
-        }).catch(error => {
-          reject(error)
-        })
+    async ProjectView ({ commit, state }, projectid) {
+      commit('ADVANCE_DISCOVERY')
+      const generation = state.discoveryGeneration
+      const response = await getAPI('listApis', { projectid: projectid, ignoreproject: true })
+      if (state.discoveryGeneration !== generation) throw new Error('Project discovery scope changed')
+      const apis = toApiMetadata(response.listapisresponse.api)
+      commit('SET_APIS', apis)
+      await store.dispatch('GenerateRoutes', { apis })
+      if (state.discoveryGeneration !== generation) throw new Error('Project discovery scope changed')
+      store.getters.addRouters.forEach(route => {
+        router.addRoute(route)
       })
+      return apis
     },
     async RefreshFeatures ({ commit, state }) {
       const generation = state.discoveryGeneration

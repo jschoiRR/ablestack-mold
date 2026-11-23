@@ -1,13 +1,20 @@
-<!-- Licensed to the Apache Software Foundation (ASF) under one or more
-contributor license agreements. See the NOTICE file distributed with this
-work for additional information regarding copyright ownership. The ASF
-licenses this file to you under the Apache License, Version 2.0 (the
-"License"); you may not use this file except in compliance with the License.
-You may obtain a copy at http://www.apache.org/licenses/LICENSE-2.0 .
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
-WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
-License for the specific language governing permissions and limitations. -->
+// Licensed to the Apache Software Foundation (ASF) under one
+// or more contributor license agreements.  See the NOTICE file
+// distributed with this work for additional information
+// regarding copyright ownership.  The ASF licenses this file
+// to you under the Apache License, Version 2.0 (the
+// "License"); you may not use this file except in compliance
+// with the License.  You may obtain a copy of the License at
+//
+//   http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing,
+// software distributed under the License is distributed on an
+// "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+// KIND, either express or implied.  See the License for the
+// specific language governing permissions and limitations
+// under the License.
+
 <template>
   <section v-if="available && active" class="resource-tags" data-testid="resource-tags">
     <a-divider />
@@ -25,8 +32,13 @@ License for the specific language governing permissions and limitations. -->
         <div v-if="operationState.error">{{ translateError(operationState.error) }}</div>
         <div v-if="operationState.status === 'unknown'">{{ $t(operationState.jobId ? 'message.tags.unknown.job' : 'message.tags.unknown.submission') }}</div>
         <div v-if="operationState.jobId">{{ $t('label.job.id') }}: {{ operationState.jobId }}</div>
-        <a-button v-if="operationState.status === 'unknown' && operationState.jobId" size="small" @click="resumeJob">{{ $t('label.tags.retry.status') }}</a-button>
-        <a-button v-if="operationState.status === 'failed'" size="small" :disabled="!canChange" @click="retryMutation">{{ $t('label.tags.retry.operation') }}</a-button>
+        <div v-if="operationState.status === 'acknowledged'">{{ $t('message.tags.acknowledged') }}</div>
+        <div v-if="operationState.status === 'unknown' && !operationState.jobId && operationState.requestPending">{{ $t('message.tags.review.wait') }}</div>
+        <div class="resource-tag-notice-actions">
+          <a-button v-if="operationState.status === 'unknown' && operationState.jobId" size="small" @click="resumeJob"><reload-outlined /> {{ $t('label.tags.retry.status') }}</a-button>
+          <a-button v-if="operationState.status === 'unknown' && !operationState.jobId" size="small" :disabled="!canReview || loadingTags" @click="openRecovery"><search-outlined /> {{ $t('label.tags.review.open') }}</a-button>
+          <a-button v-if="operationState.status === 'failed'" size="small" :disabled="!canChange" @click="retryMutation"><reload-outlined /> {{ $t('label.tags.retry.operation') }}</a-button>
+        </div>
       </template>
     </a-alert>
     <a-spin :spinning="loadingTags">
@@ -50,20 +62,51 @@ License for the specific language governing permissions and limitations. -->
       <plus-outlined /> {{ $t('label.new.tag') }}
     </a-button>
     <div v-if="fieldError" role="alert" class="resource-tag-field-error">{{ $t(fieldError) }}</div>
+    <mold-dialog v-if="recoveryVisible" :title="$t('label.tags.review.title')" size="md" focus-guard @cancel="closeRecovery">
+      <div class="tag-recovery">
+        <a-alert type="warning" show-icon :message="$t('message.tags.review.limit')" />
+        <dl class="tag-recovery-target">
+          <dt>{{ $t('label.tags.review.target') }}</dt><dd>{{ resource.name || resource.displayname || resource.displaytext || resource.id }}<div class="tag-recovery-id">{{ resourceType }} · {{ resource.id }}</div></dd>
+          <dt>{{ $t('label.project') }}</dt><dd>{{ resource.project || resource.projectid || $t('label.default.view') }}</dd>
+          <dt>{{ $t('label.tags.review.request') }}</dt><dd>{{ $t(operationState.command === 'deleteTags' ? 'label.delete' : 'label.add') }}: {{ operationState.params['tags[0].key'] }} = {{ operationState.params['tags[0].value'] }}</dd>
+          <dt>{{ $t('label.job.id') }}</dt><dd>{{ $t('label.tags.review.no.job') }}</dd>
+        </dl>
+        <div class="tag-recovery-heading">
+          <strong>{{ $t('label.tags.review.current') }}</strong>
+          <a-button :loading="loadingTags" :disabled="loadingTags || !canReview" @click="reviewOperation"><reload-outlined /> {{ $t('label.refresh') }}</a-button>
+        </div>
+        <div>{{ $t('label.tags.review.checked') }}: {{ checkedAtLabel }}</div>
+        <a-alert v-if="operationState.review?.error" type="error" show-icon :message="translateError(operationState.review.error)" />
+        <template v-if="operationState.review?.status === 'ready'">
+          <a-alert type="info" show-icon :message="$t(operationState.review.desiredObserved ? 'message.tags.review.observed' : 'message.tags.review.not.observed')" />
+          <ul v-if="operationState.review.matching.length" class="tag-recovery-values">
+            <li v-for="tag in operationState.review.matching" :key="JSON.stringify([tag.key, tag.value])">{{ tag.key }} = {{ tag.value }}</li>
+          </ul>
+          <div v-else>{{ $t('message.tags.review.key.absent') }}</div>
+        </template>
+        <a-checkbox v-model:checked="recoveryConfirmed" :disabled="!reviewReady">{{ $t('message.tags.review.confirm') }}</a-checkbox>
+      </div>
+      <template #footer>
+        <a-button @click="closeRecovery">{{ $t('label.cancel') }}</a-button>
+        <a-button type="primary" :disabled="!reviewReady || !recoveryConfirmed" @click="finishRecovery">{{ $t('label.tags.review.finish') }}</a-button>
+      </template>
+    </mold-dialog>
   </section>
 </template>
 
 <script>
-import { CheckOutlined, CloseOutlined, PlusOutlined, ReloadOutlined } from '@ant-design/icons-vue'
+import { CheckOutlined, CloseOutlined, PlusOutlined, ReloadOutlined, SearchOutlined } from '@ant-design/icons-vue'
 import { getAPI, postAPI } from '@/api'
+import MoldDialog from '@/components/view/MoldDialog.vue'
 import { getResourceTagOperation, readResourceTags, tagAccessError, tagApiError, tagContext, tagIdentity, tagOperationBlocked, tagTargetParams } from '@/utils/resourceTags'
 
 export default {
   name: 'ResourceTags',
-  components: { CheckOutlined, CloseOutlined, PlusOutlined, ReloadOutlined },
+  components: { CheckOutlined, CloseOutlined, PlusOutlined, ReloadOutlined, SearchOutlined, MoldDialog },
   props: {
     resource: { type: Object, required: true },
     resourceType: { type: String, required: true },
+    parentIpId: { type: String, default: '' },
     canEdit: { type: Boolean, default: false }
   },
   data () {
@@ -77,6 +120,8 @@ export default {
       inputVisible: false,
       inputKey: '',
       inputValue: '',
+      recoveryVisible: false,
+      recoveryConfirmed: false,
       active: true,
       disposed: false,
       operation: null,
@@ -89,13 +134,18 @@ export default {
     identity () { return tagIdentity(this.$store) },
     context () { return tagContext(this.$store, this.resource, this.resourceType) },
     viewScope () {
-      return JSON.stringify([this.context, this.$route.fullPath, this.$route.meta.resourceType,
+      return JSON.stringify([this.context, this.$route.fullPath, this.$route.meta.resourceType, this.parentIpId,
         ...['listTags', 'createTags', 'deleteTags'].map(api => api in this.$store.getters.apis), this.canEdit])
     },
     bindingKey () { return JSON.stringify([this.viewScope, this.available]) },
     available () {
-      if (!this.resource?.id || this.resourceType !== this.$route.meta.resourceType || !('listTags' in this.$store.getters.apis)) return false
+      if (!this.resource?.id || !('listTags' in this.$store.getters.apis)) return false
       const routeId = this.$route.params?.id
+      if (this.parentIpId) {
+        return ['FirewallRule', 'PortForwardingRule', 'LoadBalancer'].includes(this.resourceType) &&
+          (this.$route.meta.name !== 'publicip' || routeId === this.parentIpId)
+      }
+      if (this.resourceType !== this.$route.meta.resourceType) return false
       if (/^[0-9a-f-]{36}$/i.test(routeId || '') && routeId !== this.resource.id) return false
       const selected = this.$store.getters.project?.id
       const project = ['0', '-1'].includes(String(selected)) ? '' : selected
@@ -104,6 +154,13 @@ export default {
     visibleTags () { return this.boundScope === this.viewScope && this.available && this.active ? this.tags : [] },
     blocked () { return tagOperationBlocked(this.operationState) },
     canChange () { return this.available && this.active && this.canEdit && this.boundScope === this.viewScope && !this.blocked && !this.loadingTags && !this.readError },
+    canReview () {
+      return this.current(this.viewScope) && this.operationState.status === 'unknown' && !this.operationState.jobId &&
+      !this.operationState.requestPending && ['createTags', 'deleteTags'].includes(this.operationState.command) &&
+      this.operationState.params.resourceids === this.resource.id && this.operationState.params.resourcetype === this.resourceType
+    },
+    reviewReady () { return this.canReview && !this.loadingTags && !this.readError && this.operationState.review?.status === 'ready' && !this.operationState.review.error },
+    checkedAtLabel () { return this.operationState.review?.checkedAt ? new Date(this.operationState.review.checkedAt).toLocaleString() : '—' },
     noticeType () { return this.operationState.status === 'failed' ? 'error' : this.operationState.status === 'unknown' ? 'warning' : this.operationState.status === 'succeeded' ? 'success' : 'info' }
   },
   watch: {
@@ -116,6 +173,7 @@ export default {
   methods: {
     translateError (error) { return error?.startsWith('message.') ? this.$t(error) : error },
     stopBinding () {
+      this.closeRecovery()
       this.readVersion++
       if (this.unsubscribe) this.unsubscribe()
       this.unsubscribe = null
@@ -155,12 +213,13 @@ export default {
     },
     current (scope) { return !this.disposed && this.active && this.available && scope === this.viewScope && this.boundScope === scope },
     async refreshTags () {
+      if (this.recoveryVisible) return this.reviewOperation()
       const scope = this.viewScope; const version = ++this.readVersion
       if (!this.current(scope)) return false
       const current = () => this.current(scope) && this.readVersion === version
       this.loadingTags = true
       try {
-        const rows = await readResourceTags(getAPI, { ...this.resource }, this.resourceType, current)
+        const rows = await readResourceTags(getAPI, { ...this.resource }, this.resourceType, current, this.$store.getters)
         if (!current()) return false
         this.tags = rows; this.readError = ''
         return true
@@ -171,6 +230,51 @@ export default {
         }
         return false
       } finally { if (current()) this.loadingTags = false }
+    },
+    openRecovery () {
+      if (!this.canReview || this.loadingTags) return
+      this.recoveryVisible = true
+      this.recoveryConfirmed = false
+      return this.reviewOperation()
+    },
+    closeRecovery () {
+      if (this.operation) this.operation.cancelReview()
+      this.recoveryVisible = false
+      this.recoveryConfirmed = false
+    },
+    async reviewOperation () {
+      if (!this.canReview) return false
+      const scope = this.viewScope; const version = ++this.readVersion; const operation = this.operation
+      const sequence = this.operationState.sequence
+      const current = () => this.current(scope) && version === this.readVersion && operation === this.operation
+      this.recoveryConfirmed = false
+      this.loadingTags = true
+      try {
+        return await operation.review(async () => {
+          try {
+            const rows = await readResourceTags(getAPI, { ...this.resource }, this.resourceType, current, this.$store.getters)
+            if (!current()) throw new Error('message.tags.scope.changed')
+            this.tags = rows; this.readError = ''
+            return rows
+          } catch (error) {
+            if (current()) {
+              if (tagAccessError(error)) this.tags = []
+              this.readError = tagApiError(error) || 'message.tags.read.failed'
+            }
+            throw error
+          }
+        }, sequence)
+      } finally { if (current()) this.loadingTags = false }
+    },
+    finishRecovery () {
+      if (!this.recoveryVisible || !this.reviewReady || !this.recoveryConfirmed) return
+      const state = this.operationState
+      if (!this.operation.finishReview({ sequence: state.sequence, reviewId: state.review.reviewId, checkedAt: state.review.checkedAt, confirmed: true })) return
+      if (state.command === 'createTags' && this.canEdit && 'createTags' in this.$store.getters.apis) {
+        this.inputVisible = true
+        this.inputKey = state.params['tags[0].key']; this.inputValue = state.params['tags[0].value']
+      }
+      this.closeRecovery()
     },
     showInput () {
       if (!this.canChange) return
@@ -218,5 +322,18 @@ export default {
 .resource-tag-editor { display: grid; grid-template-columns: minmax(0, 1fr); gap: 6px; }
 .resource-tag-editor > span { display: none; }
 .resource-tag-editor-actions { display: flex; justify-content: flex-end; gap: 6px; }
+.resource-tag-notice-actions { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.resource-tag-notice-actions :deep(.ant-btn) { max-width: 100%; height: auto; white-space: normal; }
+.tag-recovery { display: grid; gap: 16px; min-width: 0; }
+.tag-recovery-target { display: grid; grid-template-columns: 110px minmax(0, 1fr); gap: 10px 16px; margin: 0; }
+.tag-recovery-target dt { font-weight: 600; }
+.tag-recovery-target dd { margin: 0; overflow-wrap: anywhere; }
+.tag-recovery-id { opacity: 0.7; margin-top: 4px; }
+.tag-recovery-heading { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; }
+.tag-recovery-values { margin: 0; padding-left: 20px; overflow-wrap: anywhere; }
+@media (max-width: 575px) {
+  .tag-recovery-target { grid-template-columns: minmax(0, 1fr); gap: 6px; }
+  .tag-recovery-target dd { margin-bottom: 8px; }
+}
 .resource-tag-field-error { color: var(--ant-error-color, #ff4d4f); margin-top: 6px; }
 </style>

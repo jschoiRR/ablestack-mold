@@ -21,14 +21,9 @@ import javax.inject.Inject;
 import org.apache.cloudstack.acl.RoleType;
 import org.apache.cloudstack.api.APICommand;
 import org.apache.cloudstack.api.ApiConstants;
-import org.apache.cloudstack.api.ApiErrorCode;
-import org.apache.cloudstack.api.BaseAsyncCmd;
 import org.apache.cloudstack.api.Parameter;
 import org.apache.cloudstack.api.ResponseObject;
-import org.apache.cloudstack.api.ServerApiException;
-import org.apache.cloudstack.api.command.user.UserCmd;
 import org.apache.cloudstack.api.response.SharedFSResponse;
-import org.apache.cloudstack.api.response.SuccessResponse;
 import org.apache.cloudstack.context.CallContext;
 import org.apache.cloudstack.storage.sharedfs.SharedFS;
 import org.apache.cloudstack.storage.sharedfs.SharedFSService;
@@ -36,14 +31,14 @@ import org.apache.cloudstack.storage.sharedfs.SharedFSService;
 import com.cloud.event.EventTypes;
 
 @APICommand(name = "expungeSharedFileSystem",
-        responseObject= SuccessResponse.class,
+        responseObject= org.apache.cloudstack.api.response.SharedFSDeletionResponse.class,
         description = "Expunge a Shared FileSystem by id",
         responseView = ResponseObject.ResponseView.Restricted,
         entityType = SharedFS.class,
         requestHasSensitiveInfo = false,
         since = "4.20.0",
         authorized = {RoleType.Admin, RoleType.ResourceAdmin, RoleType.DomainAdmin, RoleType.User})
-public class ExpungeSharedFSCmd extends BaseAsyncCmd implements UserCmd {
+public class ExpungeSharedFSCmd extends BaseSharedFSDeletionCmd {
 
     @Inject
     SharedFSService sharedFSService;
@@ -84,13 +79,7 @@ public class ExpungeSharedFSCmd extends BaseAsyncCmd implements UserCmd {
 
     @Override
     public void execute() {
-        try {
-            sharedFSService.deleteSharedFS(id);
-        } catch (Exception ex) {
-            throw new ServerApiException(ApiErrorCode.INTERNAL_ERROR, "Failed to expunge Shared FileSystem");
-        } finally {
-            SuccessResponse response = new SuccessResponse(getCommandName());
-            setResponseObject(response);
-        }
+        org.apache.cloudstack.api.response.SharedFSDeletionResponse response=new org.apache.cloudstack.api.response.SharedFSDeletionResponse(sharedFSService.deleteSharedFS(this,true));
+        response.setResponseName(getCommandName());setResponseObject(response);
     }
 }

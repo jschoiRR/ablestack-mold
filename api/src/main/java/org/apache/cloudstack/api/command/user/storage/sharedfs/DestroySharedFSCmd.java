@@ -19,14 +19,9 @@ package org.apache.cloudstack.api.command.user.storage.sharedfs;
 import org.apache.cloudstack.acl.RoleType;
 import org.apache.cloudstack.api.APICommand;
 import org.apache.cloudstack.api.ApiConstants;
-import org.apache.cloudstack.api.ApiErrorCode;
-import org.apache.cloudstack.api.BaseAsyncCmd;
 import org.apache.cloudstack.api.Parameter;
 import org.apache.cloudstack.api.ResponseObject;
-import org.apache.cloudstack.api.ServerApiException;
-import org.apache.cloudstack.api.command.user.UserCmd;
 import org.apache.cloudstack.api.response.SharedFSResponse;
-import org.apache.cloudstack.api.response.SuccessResponse;
 import org.apache.cloudstack.context.CallContext;
 import org.apache.cloudstack.storage.sharedfs.SharedFS;
 import org.apache.cloudstack.storage.sharedfs.SharedFSService;
@@ -36,14 +31,14 @@ import javax.inject.Inject;
 import com.cloud.event.EventTypes;
 
 @APICommand(name = "destroySharedFileSystem",
-        responseObject= SuccessResponse.class,
+        responseObject= org.apache.cloudstack.api.response.SharedFSDeletionResponse.class,
         description = "Destroy a Shared FileSystem by id",
         responseView = ResponseObject.ResponseView.Restricted,
         entityType = SharedFS.class,
         requestHasSensitiveInfo = false,
         since = "4.20.0",
         authorized = {RoleType.Admin, RoleType.ResourceAdmin, RoleType.DomainAdmin, RoleType.User})
-public class DestroySharedFSCmd extends BaseAsyncCmd implements UserCmd {
+public class DestroySharedFSCmd extends BaseSharedFSDeletionCmd {
 
     @Inject
     SharedFSService sharedFSService;
@@ -105,12 +100,7 @@ public class DestroySharedFSCmd extends BaseAsyncCmd implements UserCmd {
 
     @Override
     public void execute() {
-        Boolean result = sharedFSService.destroySharedFS(this);
-        if (result) {
-            SuccessResponse response = new SuccessResponse(getCommandName());
-            setResponseObject(response);
-        } else {
-            throw new ServerApiException(ApiErrorCode.INTERNAL_ERROR, "Failed to destroy Shared FileSystem");
-        }
+        org.apache.cloudstack.api.response.SharedFSDeletionResponse response=new org.apache.cloudstack.api.response.SharedFSDeletionResponse(sharedFSService.deleteSharedFS(this,isExpunge()));
+        response.setResponseName(getCommandName());setResponseObject(response);
     }
 }

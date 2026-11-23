@@ -40,17 +40,114 @@
       <p v-html="ip6routes" />
     </template>
   </a-alert>
-  <a-alert v-if="vnfAccessMethods" type="info" :showIcon="true" :message="$t('label.vnf.appliance.access.methods')">
-    <template #description>
-      <p v-html="vnfAccessMethods" />
-    </template>
-  </a-alert>
+  <a-alert
+    v-if="$route.meta.name === 'role' && dataResource.id && (dataResource.isdefault || dataResource.inuse === true)"
+    show-icon
+    type="info"
+    :message="$t(dataResource.isdefault ? 'message.role.details.default' : 'message.role.details.linked')" />
+  <VnfAccessNotice v-if="['vm', 'vnfapp'].includes($route.meta.name)" :resource="resource" />
+  <PvlanSupportNotice v-if="guestPvlan" :zone-id="dataResource.zoneid" :physical-network-id="dataResource.physicalnetworkid || ''" />
+  <a-alert
+    v-if="l2Network"
+    type="info"
+    show-icon
+    class="l2-details-notice"
+    :message="$t(l2Network.configDrive ? 'message.l2.network.configdrive' : 'message.l2.network.basic')" />
   <a-list
     class="resource-details-list"
+    :class="{ 'template-details-list': ['template', 'iso'].includes($route.meta.name), 's2s-gateway-details': $route.meta.name === 's2svpn', 'vm-details-list': kmsRoute($route) || ['vm', 'vnfapp', 'publicip', 's2svpn', 'acllist', 'event', 'vpnuser', 'project', 'guestvlans', 'ipv4subnets', 'dnszone', 'dnsserver', 'zone', 'physicalnetwork', 'host', 'cluster'].includes($route.meta.name) }"
     size="small"
     :dataSource="(fetchDetails() || []).concat(Object.keys(allocationDetails))">
     <template #renderItem="{item}">
-      <a-list-item v-if="allocationDetails[item] || (item in dataResource && !customDisplayItems.includes(item)) || ($route.meta.name === 'computeoffering' && item === 'diskofferingcomputeonly' && dataResource.diskofferingid) || (offeringDetails.includes(item) && dataResource.serviceofferingdetails)|| ($route.path.includes('/alertRules') && ['summary', 'description'].includes(item))">
+      <a-list-item v-if="kmsRoute($route) && ['algorithm', 'keybits', 'vendorname', 'protocol', 'enabled', 'hsmzonescope', 'hsmownerscope', 'state'].includes(item)">
+        <div class="kms-metadata">
+          <strong>{{ $t(item === 'state' ? 'label.hsm.connection.state' : 'label.' + item) }}</strong>
+          <template v-if="item === 'enabled'">
+            <status v-if="typeof dataResource.enabled === 'boolean'" :text="String(dataResource.enabled)" :display-label="$t(dataResource.enabled ? 'label.enabled' : 'label.disabled')" display-text />
+            <div v-else>{{ $t('label.unknown') }}</div>
+          </template>
+          <div v-else-if="item === 'hsmzonescope'">{{ $t(dataResource.zoneid ? 'label.hsm.create.zone.specific' : 'label.hsm.create.zone.global') }}</div>
+          <div v-else-if="item === 'hsmownerscope'">{{ hsmOwnerScope(dataResource) ? $t('label.hsm.create.scope.' + hsmOwnerScope(dataResource)) : $t('label.unknown') }}</div>
+          <div v-else-if="item === 'protocol'">{{ kmsProtocolOptions($store.getters.features, dataResource.protocol).find(provider => provider.id === dataResource.protocol)?.name || $t('label.unknown') }}</div>
+          <div v-else-if="item === 'vendorname'">{{ dataResource.vendor || dataResource.vendorname || $t('label.unknown') }}</div>
+          <div v-else>{{ dataResource[item] ?? $t(item === 'state' ? 'label.hsm.connection.unavailable' : 'label.unknown') }}</div>
+        </div>
+      </a-list-item>
+      <a-list-item v-else-if="$route.meta.name === 'host' && ['state', 'resourcestate'].includes(item)">
+        <div>
+          <strong>{{ $t('label.' + item) }}</strong>
+          <div><a-tag :color="hostStatusColor(dataResource[item])">{{ $t(hostStatusLabel(dataResource[item])) }}</a-tag></div>
+        </div>
+      </a-list-item>
+      <a-list-item v-else-if="$route.meta.name === 'cluster' && ['allocationstate', 'managedstate', 'clustertype', 'haenable'].includes(item)">
+        <div>
+          <strong>{{ $t('label.' + item) }}</strong>
+          <div>
+            <status v-if="item === 'allocationstate'" :text="dataResource.allocationstate || ''" :display-label="$t(clusterStateLabel(item, dataResource[item]))" display-text />
+            <status v-else-if="item === 'haenable'" :text="zoneFeatureState(dataResource.resourcedetails?.resourceHAEnabled ?? false)" :display-label="$t(zoneFeatureLabel(dataResource.resourcedetails?.resourceHAEnabled ?? false))" display-text />
+            <span v-else>{{ $t(clusterStateLabel(item, dataResource[item])) }}</span>
+          </div>
+        </div>
+      </a-list-item>
+      <a-list-item v-else-if="$route.meta.name === 'zone' && ['allocationstate', 'haenable', 'localstorageenabled', 'securitygroupsenabled'].includes(item)">
+        <div>
+          <strong>{{ $t('label.' + item) }}</strong>
+          <div>
+            <status v-if="item === 'allocationstate'" :text="dataResource.allocationstate || ''" :display-label="dataResource.allocationstate ? '' : $t('label.unknown')" display-text />
+            <status v-else-if="item === 'haenable'" :text="zoneFeatureState(dataResource.resourcedetails?.resourceHAEnabled ?? false)" :display-label="$t(zoneFeatureLabel(dataResource.resourcedetails?.resourceHAEnabled ?? false))" display-text />
+            <status v-else :text="zoneFeatureState(dataResource[item])" :display-label="$t(zoneFeatureLabel(dataResource[item]))" display-text />
+          </div>
+        </div>
+      </a-list-item>
+      <a-list-item v-else-if="$route.meta.name === 'zone' && ['networkdomain', 'dnssearchorder'].includes(item)">
+        <div>
+          <strong>{{ $t('label.zone.' + item) }}</strong>
+          <div>{{ (item === 'networkdomain' ? dataResource.domain : zoneDnsSearchOrder(dataResource).join(', ')) || '—' }}</div>
+        </div>
+      </a-list-item>
+      <a-list-item v-else-if="$route.meta.name === 'dnszone' && item === 'dnsservername'">
+        <div>
+          <strong>{{ $t('label.dns.server') }}</strong>
+          <div>
+            <router-link v-if="dataResource.dnsserverid && $store.getters.apis?.listDnsServers" :to="{ path: '/dnsserver/' + dataResource.dnsserverid }">{{ dataResource.dnsservername }}</router-link>
+            <span v-else>{{ dataResource.dnsservername }}</span>
+          </div>
+        </div>
+      </a-list-item>
+      <a-list-item v-else-if="$route.meta.name === 'dnszone' && item === 'associatednetworks' && (dataResource.associatednetworks?.length || dataResource.networkname)">
+        <div>
+          <strong>{{ $t('label.dns.zone.associated.networks') }}</strong>
+          <div v-for="network in dataResource.associatednetworks || [dataResource]" :key="network.networkid">
+            {{ network.networkname }}<span v-if="network.subdomain"> ({{ network.subdomain }})</span>
+          </div>
+        </div>
+      </a-list-item>
+      <a-list-item v-else-if="$route.meta.name === 'guestvlans' && ['allocationstate', 'taken', 'isdedicated'].includes(item)">
+        <div>
+          <strong>{{ $t(item === 'taken' ? 'label.guest.vlan.taken' : 'label.' + item) }}</strong>
+          <div v-if="item === 'allocationstate'"><status :text="dataResource.allocationstate || ''" display-text /></div>
+          <div v-else-if="item === 'taken'">{{ dataResource.taken ? $toLocaleDate(dataResource.taken) : '—' }}</div>
+          <div v-else>{{ typeof dataResource.isdedicated === 'boolean' ? $t(dataResource.isdedicated ? 'label.yes' : 'label.no') : '—' }}</div>
+        </div>
+      </a-list-item>
+      <a-list-item v-else-if="$route.meta.name === 'role' && ['isdefault', 'ispublic', 'state'].includes(item)">
+        <div>
+          <strong>{{ $t(item === 'isdefault' ? 'label.role.kind' : 'label.' + item) }}</strong><br />
+          <status v-if="item === 'state'" :text="dataResource.state" :display-label="$t('label.' + dataResource.state)" display-text />
+          <a-tag v-else-if="item === 'isdefault'">{{ $t(dataResource.isdefault ? 'label.default' : 'label.role.kind.custom') }}</a-tag>
+          <a-tag v-else>{{ $t(dataResource.ispublic ? 'label.public' : 'label.role.visibility.private') }}</a-tag>
+        </div>
+      </a-list-item>
+      <a-list-item v-else-if="$route.meta.name === 'vpnuser' && dataResource.id">
+        <div>
+          <strong>{{ $t(item === 'id' ? 'label.vpn.user.uuid' : getDetailTitle(item)) }}</strong><br />
+          <VpnUserValue :resource="dataResource" :field="item" />
+        </div>
+      </a-list-item>
+      <a-list-item v-else-if="$route.meta.name === 'acllist' && item === 'scope' && dataResource.id">
+        <div><strong>{{ $t('label.scope') }}</strong><br/><AclScopeValue :resource="dataResource" /></div>
+      </a-list-item>
+      <a-list-item v-else-if="($route.meta.name !== 's2svpn' || item !== 'fordisplay' || $store.getters.userInfo?.roletype === 'Admin') && (($route.meta.name === 's2svpn' && (item !== 'fordisplay' || $store.getters.userInfo?.roletype === 'Admin')) || ($route.meta.name === 'publicip' && (item === 'virtualmachinename' || publicIpDetailFields.includes(item))) || (['vm', 'vnfapp'].includes($route.meta.name) && (['deleteprotection', 'ostypename', 'osdisplayname', 'state'].includes(item) || vmBooleanFields.has(item))) || allocationDetails[item] || ($route.meta.name === 'ipv4subnets' && ((item === 'networkname' && dataResource.networkid) || (item === 'vpcname' && dataResource.vpcid))) || (item in dataResource && !customDisplayItems.includes(item) && !($route.meta.name === 'dnszone' && item === 'associatednetworks')) || ($route.meta.name === 'ilb' && item === 'loadbalancerrule') || ($route.meta.name === 'guestnetwork' && (item === 'displaytext' || item === 'sharedscope' || (item === 'hideipaddressusage' && dataResource.type === 'Shared'))) || ($route.meta.name === 'computeoffering' && item === 'diskofferingcomputeonly' && dataResource.diskofferingid) || (offeringDetails.includes(item) && dataResource.serviceofferingdetails)|| ($route.path.includes('/alertRules') && ['summary', 'description'].includes(item)))">
         <div style="width: 100%">
           <strong>{{ allocationDetails[item] ? $t(allocationDetails[item].label) : item === 'service' ? $t('label.supportedservices') :
            $route.meta.name === 'cniconfiguration' && item === 'userdata' ? $t('label.' + String($route.meta.name).toLowerCase()) :
@@ -60,7 +157,55 @@
           <a-tooltip v-if="['volume', 'snapshot', 'template', 'iso'].includes($route.meta.name) && item === 'savingrate'"><template #title>{{ $t('message.savingrate') }}</template><QuestionCircleOutlined style="margin-left: 8px;"/></a-tooltip>
           <a-tooltip v-if="$route.meta.name === 'storagepool' && item === 'disksizeallocated'" :title="$t('message.storage.allocated.meaning')"><info-circle-outlined style="margin-left: 8px" /></a-tooltip>
           <br/>
-          <div v-if="allocationDetails[item]">{{ allocationDetails[item].value }}</div>
+          <S2sGatewayValue v-if="$route.meta.name === 's2svpn'" :resource="dataResource" :field="item" />
+          <public-ip-detail-value v-else-if="$route.meta.name === 'publicip' && publicIpDetailFields.includes(item)" :resource="dataResource" :field="item" />
+          <iso-detail-value v-else-if="$route.meta.name === 'iso' && presentedIsoValue(item)" :field="item" :value="dataResource[item]" :label="$t(getDetailTitle(item))" />
+          <template-detail-value
+            v-else-if="$route.meta.name === 'template' && presentedTemplateValue(item)"
+            :field="item"
+            :value="dataResource[item]"
+            :label="$t(getDetailTitle(item))" />
+          <status v-else-if="['ipv4subnets', 'dnsserver', 'physicalnetwork'].includes($route.meta.name) && item === 'state'" :text="dataResource.state" display-text />
+          <span v-else-if="$route.meta.name === 'ipv4subnets' && item === 'allocated'">{{ $toLocaleDate(dataResource.allocated) }}</span>
+          <status v-else-if="$route.meta.name === 'event' && item === 'state'" :text="dataResource.state" display-text />
+          <div v-else-if="$route.meta.name === 'event' && item === 'type'">{{ eventTypeLabel(dataResource.type, $t) }}</div>
+          <status v-else-if="['vm', 'vnfapp'].includes($route.meta.name) && ['state', 'hostcontrolstate'].includes(item)" :text="String(dataResource[item] || '')" :display-label="dataResource[item] ? '' : $t('label.unknown')" display-text />
+          <div v-else-if="['vm', 'vnfapp'].includes($route.meta.name) && ['ostypename', 'osdisplayname'].includes(item)">{{ creationVmOsName(dataResource, $t) || $t('label.unknown') }}</div>
+          <div v-else-if="['vm', 'vnfapp'].includes($route.meta.name) && item !== 'deleteprotection' && (vmBooleanFields.has(item) || typeof dataResource[item] === 'boolean')">{{ $t(vmBooleanLabel(dataResource[item])) }}</div>
+          <div v-else-if="['vm', 'vnfapp'].includes($route.meta.name) && item === 'deleteprotection'">
+            <a-tag :color="dataResource.deleteprotection === true ? 'warning' : dataResource.deleteprotection === false ? 'success' : 'default'">{{ $t('label.vm.protection.' + (resourceReadFailed() ? 'failed' : dataResource.deleteprotection === true ? 'protected' : dataResource.deleteprotection === false ? 'unprotected' : 'unknown')) }}</a-tag>
+            <div>{{ $t('message.vm.delete.edit') }}</div>
+          </div>
+          <a-tag v-else-if="$route.meta.name === 'acllist' && item === 'fordisplay'">{{ $t(aclDisplayLabel(dataResource.fordisplay)) }}</a-tag>
+          <div v-else-if="$route.meta.name === 'acllist' && item === 'id'" class="acl-details-id">
+            <span>{{ dataResource.id }}</span>
+            <tooltip-button
+              :tooltip="$t('label.copyid')"
+              icon="copy-outlined"
+              size="small"
+              :copyResource="dataResource.id"
+              @copy-success="$message.success($t('label.copied.clipboard'))" />
+          </div>
+          <Ipv4SubnetResourceLink v-else-if="$route.meta?.name === 'ipv4subnets' && ['networkname', 'vpcname'].includes(item)" :record="dataResource" :field="item" />
+          <network-ip-vm-link v-else-if="$route.meta.name === 'publicip' && item === 'virtualmachinename'" :record="dataResource" />
+          <InternalLbRules v-else-if="$route.meta.name === 'ilb' && item === 'loadbalancerrule'" :record="dataResource" :loading="loading" />
+          <div v-else-if="allocationDetails[item]">{{ allocationDetails[item].value }}</div>
+          <div v-else-if="item === 'vlan' && guestPvlan">
+            {{ guestPvlan.primary }}
+            <div>{{ $t('label.isolatedpvlantype') }} · {{ $t('label.l2.pvlan.' + guestPvlan.type) }}</div>
+            <div>{{ $t('label.isolatedpvlanid') }} · {{ guestPvlan.secondary }}</div>
+          </div>
+          <template v-else-if="item === 'sharedscope' && sharedScope">
+            {{ $t(sharedScope) }}
+            <div v-if="sharedScope === 'label.domain' && dataResource.subdomainaccess != null">
+              {{ $t('label.subdomainaccess') }} · {{ $t(dataResource.subdomainaccess ? 'label.yes' : 'label.no') }}
+            </div>
+          </template>
+          <GuestNetworkDescription v-else-if="$route.meta.name === 'guestnetwork' && item === 'displaytext'" :value="dataResource.displaytext" />
+          <div v-else-if="$route.meta.name === 'guestnetwork' && item === 'hideipaddressusage'" class="network-ip-usage-detail">
+            <span>{{ $t(networkIpUsageLabel(dataResource)) }}</span>
+            <p>{{ $t('message.network.ip.usage.help') }}</p>
+          </div>
           <status
             v-else-if="$route.meta.name === 'buckets' && item === 'credentialstate'"
             :text="dataResource[item] === 'Verified' ? 'ready' : 'error'"
@@ -179,6 +324,7 @@ display-text />
               {{ $bytesToHumanReadableSize(dataResource[item]) }}
             </div>
           </div>
+          <div v-else-if="$route.meta.name === 'guestnetwork' && item === 'type'">{{ $t(networkTypeLabel(dataResource[item])) }}</div>
           <div v-else-if="['name', 'type'].includes(item)">
             <span v-if="!($route.meta.name === 'ssh' && item === 'name') && ['USER.LOGIN', 'USER.LOGOUT', 'ROUTER.HEALTH.CHECKS', 'FIREWALL.CLOSE', 'ALERT.SERVICE.DOMAINROUTER'].includes(dataResource[item])">{{ $t(dataResource[item].toLowerCase()) }}</span>
             <span v-else>{{ dataResource[item] }}</span>
@@ -224,6 +370,12 @@ display-text />
               </div>
             </div>
           </div>
+          <div v-else-if="$route.meta.name === 'account' && item === 'apikeyaccess' && dataResource[item]">
+            <a-tag>{{ $t(dataResource[item] === 'INHERIT' ? 'label.account.apikey.inherit' : 'label.' + dataResource[item].toLowerCase()) }}</a-tag>
+          </div>
+          <div v-else-if="$route.meta.name === 'account' && item === 'roletype' && dataResource[item]">
+            {{ $t('label.account.role.' + dataResource[item].toLowerCase()) }}
+          </div>
           <div v-else-if="item === 'usersource'">
             {{ $t(getUserSourceLabel(dataResource[item])) }}
           </div>
@@ -249,11 +401,10 @@ display-text />
           <div v-else>{{ dataResource[item] }}</div>
         </div>
       </a-list-item>
-      <a-list-item v-else-if="['cluster', 'zone'].includes($route.meta.name) && item === 'haenable'">
-        <div>
-          <strong>{{ $t('label.ha.enable') }}</strong>
-          <br/>
-          <div>{{ dataResource.resourcedetails?.resourceHAEnabled }}</div>
+      <a-list-item v-else-if="item === 'ipsecpsk'">
+        <div style="width: 100%">
+          <strong>{{ $t('label.ipsecpsk') }}</strong><br/>
+          <VpnPsk :value="dataResource[item]" :resource="resource" :permission="$route.meta.name === 'vpncustomergateway' ? 'listVpnCustomerGateways' : 'listVpnConnections'" />
         </div>
       </a-list-item>
       <a-list-item v-else-if="item === 'secretkey' && dataResource[item]">
@@ -369,10 +520,32 @@ display-text />
 </template>
 
 <script>
+import { hostStatusColor, hostStatusLabel } from '@/utils/hostPresentation'
+import { clusterStateLabel } from '@/utils/clusterSearch'
+import { zoneDnsSearchOrder, zoneFeatureLabel, zoneFeatureState } from '@/utils/zone'
+import Ipv4SubnetResourceLink from '@/components/widgets/Ipv4SubnetResourceLink'
+import AclScopeValue from '@/components/view/AclScopeValue'
+import { aclDisplayLabel } from '@/utils/vpcAclAccess'
+import { eventTypeLabel } from '@/utils/eventTimeline'
+import S2sGatewayValue from '@/components/view/S2sGatewayValue'
+import { kmsRoute, hsmOwnerScope, kmsProtocolOptions } from '@/utils/kmsSearch'
+import { networkTypeLabel } from '@/utils/networkLifecycle'
+import { l2ConfigDrive, l2PvlanDetails } from '@/utils/l2Network'
+import { sharedScopeLabel } from '@/utils/sharedNetwork'
 import Status from '@/components/widgets/Status'
-import { creationVmDetails } from '@/utils/creationVmPresentation'
+import PublicIpDetailValue from '@/components/widgets/PublicIpDetailValue'
+import VpnUserValue from '@/components/widgets/VpnUserValue'
+import { publicIpDetailFields, publicIpFieldLabel } from '@/utils/publicIpDetails'
+import TemplateDetailValue from '@/components/widgets/TemplateDetailValue'
+import IsoDetailValue from '@/components/widgets/IsoDetailValue'
+import { presentedIsoValue } from '@/utils/isoZoneOperations'
+import { presentedTemplateValue } from '@/utils/templateDetails'
+import NetworkIpVmLink from '@/components/widgets/NetworkIpVmLink'
+import { creationVmDetails, creationVmOsName, vmBooleanLabel, vmBooleanFields } from '@/utils/creationVmPresentation'
 import { getAblestackBackupOfferingVisibleDetails } from '@/utils/ablestackBackupPolicy'
 import AffinityGroupPolicy from '@/views/compute/AffinityGroupPolicy'
+import GuestNetworkDescription from '@/components/view/GuestNetworkDescription'
+import { networkIpUsageLabel } from '@/utils/networkIpUsage'
 import LinkedDiskOffering from '@/components/offering/LinkedDiskOffering'
 import DedicateData from './DedicateData'
 import HostInfo from '@/views/infra/HostInfo'
@@ -386,13 +559,30 @@ import CodeHighlight from 'vue-code-highlight/src/CodeHighlight.vue'
 import 'vue-code-highlight/themes/prism-okaidia.css'
 
 import { allocationDetailFields } from '@/utils/volumeAllocation'
+import PvlanSupportNotice from '@/components/network/PvlanSupportNotice'
+import VpnPsk from '@/components/network/VpnPsk'
+import InternalLbRules from '@/components/network/InternalLbRules'
+import VnfAccessNotice from '@/components/compute/VnfAccessNotice'
 
 export default {
   name: 'DetailsTab',
   components: {
+    Ipv4SubnetResourceLink,
+    VpnUserValue,
+    AclScopeValue,
+    S2sGatewayValue,
+    PublicIpDetailValue,
+    VnfAccessNotice,
+    InternalLbRules,
+    TemplateDetailValue,
+    IsoDetailValue,
+    VpnPsk,
+    PvlanSupportNotice,
+    NetworkIpVmLink,
     Status,
     LinkedDiskOffering,
     AffinityGroupPolicy,
+    GuestNetworkDescription,
     DedicateData,
     HostInfo,
     VmwareData,
@@ -401,6 +591,7 @@ export default {
     TooltipButton,
     CodeHighlight
   },
+  inject: { resourceReadFailed: { default: () => () => false } },
   props: {
     resource: {
       type: Object,
@@ -430,6 +621,8 @@ export default {
       projectname: '',
       dataResource: {},
       detailsTitles: [],
+      vmBooleanFields,
+      publicIpDetailFields,
       licenseInfo: {
         expired: false,
         expiryDate: ''
@@ -441,6 +634,17 @@ export default {
     this.dedicatedSectionActive = this.dedicatedRoutes.includes(this.$route.meta.name)
   },
   computed: {
+    guestPvlan () {
+      if (this.$route.meta.name !== 'guestnetwork' || !['L2', 'Shared'].includes(this.dataResource.type)) return null
+      return l2PvlanDetails(this.dataResource.broadcasturi)
+    },
+    sharedScope () {
+      return this.$route.meta.name === 'guestnetwork' && this.dataResource.type === 'Shared' && sharedScopeLabel(this.dataResource)
+    },
+    l2Network () {
+      if (this.$route.meta.name !== 'guestnetwork' || this.dataResource.type !== 'L2') return null
+      return { configDrive: l2ConfigDrive(this.dataResource) }
+    },
     visibleBackupOfferingDetails () {
       return getAblestackBackupOfferingVisibleDetails(this.dataResource)
     },
@@ -453,7 +657,7 @@ export default {
       })
     },
     customDisplayItems () {
-      var items = ['ip4routes', 'ip6routes', 'privatemtu', 'publicmtu', 'provider', 'migrationip', 'details', 'parameters', 'secretkey', 'backupofferingdetails']
+      var items = ['ip4routes', 'ip6routes', 'privatemtu', 'publicmtu', 'provider', 'migrationip', 'details', 'parameters', 'secretkey', 'ipsecpsk', 'backupofferingdetails']
       if (this.$route.meta.name === 'webhookdeliveries' || this.$route.meta.name === 'quotasummary') {
         items.push('startdate')
         items.push('enddate')
@@ -463,97 +667,6 @@ export default {
         items.push('externaldetails')
       }
       return items
-    },
-    vnfAccessMethods () {
-      if (this.resource.templatetype === 'VNF' && ['vm', 'vnfapp'].includes(this.$route.meta.name)) {
-        const accessMethodsDescription = []
-        const accessMethods = this.resource.vnfdetails?.access_methods || null
-        const username = this.resource.vnfdetails?.username || null
-        const password = this.resource.vnfdetails?.password || null
-        const sshPort = this.resource.vnfdetails?.ssh_port || 22
-        const sshUsername = this.resource.vnfdetails?.ssh_user || null
-        const sshPassword = this.resource.vnfdetails?.ssh_password || null
-        let httpPath = this.resource.vnfdetails?.http_path || ''
-        if (!httpPath.startsWith('/')) {
-          httpPath = '/' + httpPath
-        }
-        const httpPort = this.resource.vnfdetails?.http_port || null
-        let httpsPath = this.resource.vnfdetails?.https_path || ''
-        if (!httpsPath.startsWith('/')) {
-          httpsPath = '/' + httpsPath
-        }
-        const httpsPort = this.resource.vnfdetails?.https_port || null
-        const webUsername = this.resource.vnfdetails?.web_user || null
-        const webPassword = this.resource.vnfdetails?.web_password || null
-
-        const credentials = []
-        if (username) {
-          credentials.push(this.$t('label.username') + ' : ' + username)
-        }
-        if (password) {
-          credentials.push(this.$t('label.password.default') + ' : ' + password)
-        }
-        if (webUsername) {
-          credentials.push('Web ' + this.$t('label.username') + ' : ' + webUsername)
-        }
-        if (webPassword) {
-          credentials.push('Web ' + this.$t('label.password.default') + ' : ' + webPassword)
-        }
-        if (sshUsername) {
-          credentials.push('SSH ' + this.$t('label.username') + ' : ' + sshUsername)
-        }
-        if (sshPassword) {
-          credentials.push('SSH ' + this.$t('label.password.default') + ' : ' + sshPassword)
-        }
-
-        const managementDeviceIds = []
-        if (this.resource.vnfnics) {
-          for (const vnfnic of this.resource.vnfnics) {
-            if (vnfnic.management) {
-              managementDeviceIds.push(vnfnic.deviceid)
-            }
-          }
-        }
-        const managementIps = []
-        for (const nic of this.resource.nic) {
-          if (managementDeviceIds.includes(parseInt(nic.deviceid)) && nic.enabled !== false && nic.ipaddress) {
-            managementIps.push(nic.ipaddress)
-            if (nic.publicip) {
-              managementIps.push(nic.publicip)
-            }
-          }
-        }
-
-        if (accessMethods) {
-          const accessMethodsArray = accessMethods.split(',')
-          for (const accessMethod of accessMethodsArray) {
-            if (accessMethod === 'console') {
-              accessMethodsDescription.push('- VM Console.')
-            } else if (accessMethod === 'ssh-password') {
-              accessMethodsDescription.push('- SSH with password' + (sshPort ? ' (SSH port is ' + sshPort + ').' : '.'))
-            } else if (accessMethod === 'ssh-key') {
-              accessMethodsDescription.push('- SSH with key' + (sshPort ? ' (SSH port is ' + sshPort + ').' : '.'))
-            } else if (accessMethod === 'http') {
-              for (const managementIp of managementIps) {
-                const url = 'http://' + managementIp + (httpPort ? ':' + httpPort : '') + httpPath
-                accessMethodsDescription.push('- Webpage: <a href="' + url + '" target="_blank>">' + url + '</a>')
-              }
-            } else if (accessMethod === 'https') {
-              for (const managementIp of managementIps) {
-                const url = 'https://' + managementIp + (httpsPort ? ':' + httpsPort : '') + httpsPath
-                accessMethodsDescription.push('- Webpage: <a href="' + url + '" target="_blank">' + url + '</a>')
-              }
-            }
-          }
-        } else {
-          accessMethodsDescription.push('- VM Console.')
-        }
-        if (credentials) {
-          accessMethodsDescription.push('<br>' + this.$t('message.vnf.credentials.in.template.vnf.details'))
-        }
-        return accessMethodsDescription.join('<br>')
-      }
-      return null
     },
     offeringDetails () {
       return ['maxcpunumber', 'mincpunumber', 'minmemory', 'maxmemory']
@@ -599,6 +712,7 @@ export default {
     resource: {
       deep: true,
       handler (newVal) {
+        this.projectname = ''
         this.dataResource = creationVmDetails(newVal, this.$t)
         if ('account' in this.dataResource && this.dataResource.account.startsWith('PrjAcct-')) {
           this.projectname = this.dataResource.account.substring(this.dataResource.account.indexOf('-') + 1, this.dataResource.account.lastIndexOf('-'))
@@ -614,6 +728,20 @@ export default {
     }
   },
   methods: {
+    zoneDnsSearchOrder,
+    clusterStateLabel,
+    zoneFeatureState,
+    hostStatusColor,
+    hostStatusLabel,
+    zoneFeatureLabel,
+    eventTypeLabel,
+    kmsRoute,
+    hsmOwnerScope,
+    kmsProtocolOptions,
+    creationVmOsName,
+    vmBooleanLabel,
+    networkTypeLabel,
+    networkIpUsageLabel,
     decodeUserData (userdata) {
       const decodedData = Buffer.from(userdata, 'base64')
       return decodedData.toString('utf-8')
@@ -629,6 +757,9 @@ export default {
       }
       this.dataResource.account = projectAdmins.join()
     },
+    aclDisplayLabel,
+    presentedTemplateValue,
+    presentedIsoValue,
     fetchDetails () {
       let details = this.$route.meta.details
 
@@ -652,10 +783,26 @@ export default {
         }
       }
 
-      detailsKeys = this.projectname ? [...detailsKeys.filter(x => x !== 'account'), 'projectname'] : detailsKeys
+      detailsKeys = this.projectname && this.$route.meta.name !== 's2svpn' ? [...detailsKeys.filter(x => x !== 'account'), 'projectname'] : detailsKeys
+      if (this.l2Network) {
+        const l3Fields = ['vpcid', 'cidr', 'ip6cidr', 'netmask', 'gateway', 'asnumber', 'aclname', 'restartrequired',
+          'reservediprange', 'redundantrouter', 'networkdomain', 'egressdefaultpolicy', 'ip4routing', 'ip6firewall',
+          'ip6routing', 'ip6routes', 'dns1', 'dns2', 'ip6dns1', 'ip6dns2', 'publicmtu', 'dnszone', 'dnssubdomain',
+          'keepmacaddressonpublicnic']
+        detailsKeys = detailsKeys.filter(key => !l3Fields.includes(key))
+      }
+      if (this.sharedScope && !detailsKeys.includes('sharedscope')) detailsKeys.splice(Math.max(0, detailsKeys.indexOf('type') + 1), 0, 'sharedscope')
       return detailsKeys
     },
     getDetailTitle (detail) {
+      if (this.$route.meta.name === 's2svpn' && detail === 'fordisplay') return 'label.public.ip.display'
+      if (this.$route.meta.name === 'publicip' && publicIpDetailFields.includes(detail)) return publicIpFieldLabel(detail)
+      if (['vm', 'vnfapp'].includes(this.$route.meta.name) && ['osdisplayname', 'ostypename'].includes(detail)) return 'label.ostypename'
+      if (['vm', 'vnfapp'].includes(this.$route.meta.name) && detail === 'name') return 'label.vm.name'
+      if (['vm', 'vnfapp'].includes(this.$route.meta.name) && detail === 'displayname') return 'label.vm.displayname'
+      if (this.$route.meta.name === 'template' && detail === 'format') return 'label.template.image.format'
+      if (this.$route.meta.name === 'template' && detail === 'templatetype') return 'label.template.type'
+      if (detail === 'sharedscope') return this.$t('label.shared.scope')
       return `label.${String(this.detailsTitles[detail]).toLowerCase()}`
     },
     getResourceLink (type, id) {
@@ -881,12 +1028,10 @@ export default {
 }
 </script>
 
-<style scoped>
-.resource-details-list {
-  color: var(--ui-text-secondary);
-  background: var(--ui-bg-surface);
-}
+<style scoped src="@/style/components/view/resource-details-list.css" />
 
+<style scoped>
+.network-ip-usage-detail p { color: var(--ui-text-secondary); margin: 4px 0 0; overflow-wrap: anywhere; }
 :deep(.resource-details-list .ant-list-item) {
   padding: 12px 8px;
   color: var(--ui-text-secondary);
@@ -898,8 +1043,18 @@ export default {
   color: var(--ui-text-primary);
 }
 
+/* Same row rhythm as the VM InstanceTab details. */
+.s2s-gateway-details :deep(.ant-list-item) { padding-top: 12px; padding-bottom: 12px; }
 .preline {
   white-space: pre-line;
   word-break: break-word;
 }
+.l2-details-notice {
+  margin-bottom: 16px;
+  overflow-wrap: anywhere;
+}
+</style>
+
+<style scoped>
+.kms-metadata { min-width: 0; overflow-wrap: anywhere; }
 </style>

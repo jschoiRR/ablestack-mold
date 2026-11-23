@@ -22,7 +22,7 @@
     <br/>
     <a-alert v-if="protectionLookupFailed" type="warning" show-icon class="protection-tab-notice">
       <template #message>{{ $t('message.vm.protection.lookup.failed') }}</template>
-      <template #action>
+      <template #description>
         <a-button size="small" :loading="protectionLookupPending" @click="refreshProtectionTabs"><template #icon><reload-outlined /></template>{{ $t('label.refresh') }}</a-button>
       </template>
     </a-alert>
@@ -46,7 +46,7 @@
         v-if="resource.hypervisor === 'KVM' && 'getVirtualMachineGuestNetworkState' in $store.getters.apis">
         <GuestNetworkTab :resource="vm"/>
       </a-tab-pane>
-      <a-tab-pane :tab="$t('label.metrics')" key="stats">
+      <a-tab-pane v-if="'listVirtualMachinesUsageHistory' in $store.getters.apis" :tab="$t('label.metrics')" key="stats">
         <StatsTab :resource="resource"/>
       </a-tab-pane>
       <a-tab-pane :tab="$t('label.vmprocess.tab')" key="processes" v-if="resource.hypervisor === 'KVM' && 'getVirtualMachineProcessCapabilities' in $store.getters.apis && 'listVirtualMachineProcesses' in $store.getters.apis">
@@ -376,6 +376,7 @@ export default {
       if (tab === 'disasterrecoverycluster') {
         return 'drplans'
       }
+      if (tab === 'stats' && !('listVirtualMachinesUsageHistory' in this.$store.getters.apis)) return 'details'
       return tab || 'details'
     },
     async fetchData () {
@@ -383,29 +384,37 @@ export default {
         return
       }
       const annotationEntityId = this.dataResource.id
-      getAPI('listAnnotations', { entityid: annotationEntityId, entitytype: 'VM', annotationfilter: 'all' }).then(json => {
-        if (this.listRefreshDisposed || annotationEntityId !== this.dataResource.id) return
-        this.annotations = json.listannotationsresponse?.annotation || []
-      })
-      getAPI('listNetworks', { supportedservices: 'SecurityGroup' }).then(json => {
-        if (json.listnetworksresponse && json.listnetworksresponse.network) {
-          for (const net of json.listnetworksresponse.network) {
-            if (this.securityGroupNetworkProviderUseThisVM) {
-              break
-            }
-            const listVmParams = {
-              id: this.resource.id,
-              networkid: net.id,
-              listall: true
-            }
-            getAPI('listVirtualMachines', listVmParams).then(json => {
-              if (json.listvirtualmachinesresponse && json.listvirtualmachinesresponse?.virtualmachine?.length > 0) {
-                this.securityGroupNetworkProviderUseThisVM = true
+      if (this.$store.getters.apis?.listAnnotations) {
+        getAPI('listAnnotations', { entityid: annotationEntityId, entitytype: 'VM', annotationfilter: 'all' }).then(json => {
+          if (this.listRefreshDisposed || annotationEntityId !== this.dataResource.id || !this.$store.getters.apis?.listAnnotations) return
+          this.annotations = json.listannotationsresponse?.annotation || []
+        })
+      }
+      const canReadProvider = () => !this.listRefreshDisposed && annotationEntityId === this.dataResource.id &&
+        this.$store.getters.apis?.listNetworks && this.$store.getters.apis?.listVirtualMachines
+      if (canReadProvider()) {
+        getAPI('listNetworks', { supportedservices: 'SecurityGroup' }).then(json => {
+          if (!canReadProvider()) return
+          if (json.listnetworksresponse && json.listnetworksresponse.network) {
+            for (const net of json.listnetworksresponse.network) {
+              if (this.securityGroupNetworkProviderUseThisVM) {
+                break
               }
-            })
+              const listVmParams = {
+                id: annotationEntityId,
+                networkid: net.id,
+                listall: true
+              }
+              getAPI('listVirtualMachines', listVmParams).then(json => {
+                if (!canReadProvider()) return
+                if (json.listvirtualmachinesresponse && json.listvirtualmachinesresponse?.virtualmachine?.length > 0) {
+                  this.securityGroupNetworkProviderUseThisVM = true
+                }
+              })
+            }
           }
-        }
-      })
+        })
+      }
     },
     listDiskOfferings () {
       getAPI('listDiskOfferings', {

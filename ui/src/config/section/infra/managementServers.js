@@ -35,13 +35,14 @@ export default {
   },
   details: ['ipaddress', 'collectiontime', 'usageislocal', 'dbislocal', 'lastserverstart', 'lastserverstop', 'lastboottime', 'version', 'loginfo', 'systemtotalcpucycles', 'systemloadaverages', 'systemcycleusage', 'systemmemorytotal', 'systemmemoryfree', 'systemmemoryvirtualsize', 'availableprocessors', 'javadistribution', 'javaversion', 'osdistribution', 'kernelversion', 'pendingjobscount', 'agentscount', 'sessions', 'heapmemoryused', 'heapmemorytotal', 'threadsblockedcount', 'threadsdeamoncount', 'threadsnewcount', 'threadsrunnablecount', 'threadsterminatedcount', 'threadstotalcount', 'threadswaitingcount'],
   tabs: [
+    { name: 'runtime.catalog', component: shallowRef(defineAsyncComponent(() => import('@/views/tools/RuntimeBundleCatalogSummary.vue'))), show: () => store.getters.userInfo.roletype === 'Admin' },
     {
       name: 'details',
       component: shallowRef(defineAsyncComponent(() => import('@/components/view/DetailsTab.vue')))
     },
     {
       name: 'settings',
-      component: shallowRef(defineAsyncComponent(() => import('@/components/view/SettingsTab.vue')))
+      component: shallowRef(defineAsyncComponent(() => import('@/views/setting/InfrastructureSettingsTab.vue')))
     },
     {
       name: 'management.server.peers',

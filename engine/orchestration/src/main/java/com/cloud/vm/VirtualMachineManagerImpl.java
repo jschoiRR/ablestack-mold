@@ -306,6 +306,7 @@ import com.cloud.vm.VirtualMachine.Event;
 import com.cloud.vm.VirtualMachine.PowerState;
 import com.cloud.vm.VirtualMachine.State;
 import com.cloud.vm.dao.NicDao;
+import com.cloud.vm.dao.NicDetailsDao;
 import com.cloud.vm.dao.UserVmDao;
 import com.cloud.vm.dao.VMInstanceDao;
 import com.cloud.vm.dao.VMInstanceDetailsDao;
@@ -355,6 +356,8 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
     private CapacityManager _capacityMgr;
     @Inject
     private NicDao _nicsDao;
+    @Inject
+    private NicDetailsDao _nicDetailsDao;
     @Inject
     private HostDao _hostDao;
     @Inject
@@ -1369,6 +1372,14 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
 
     @Override
     public void orchestrateStart(final String vmUuid, final Map<VirtualMachineProfile.Param, Object> params, final DeploymentPlan planToDeploy, final DeploymentPlanner planner)
+            throws InsufficientCapacityException, ConcurrentOperationException, ResourceUnavailableException {
+        try (org.apache.cloudstack.storage.sharedfs.SharedFSDeletionPowerGuard guard =
+                org.apache.cloudstack.storage.sharedfs.SharedFSDeletionPowerGuard.enter(vmUuid)) {
+            orchestrateStartWithoutSharedFSDeletionGuard(vmUuid, params, planToDeploy, planner);
+        }
+    }
+
+    public void orchestrateStartWithoutSharedFSDeletionGuard(final String vmUuid, final Map<VirtualMachineProfile.Param, Object> params, final DeploymentPlan planToDeploy, final DeploymentPlanner planner)
             throws InsufficientCapacityException, ConcurrentOperationException, ResourceUnavailableException {
         VMInstanceVO vm = _vmDao.findByUuid(vmUuid);
         try (var sourceLease = thirdPartyBackupVolumeService.guardVmStart(vm.getId())) {
@@ -2867,6 +2878,13 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
     }
 
     private void orchestrateStorageMigration(final String vmUuid, final Map<Long, Long> volumeToPool) {
+        try (org.apache.cloudstack.storage.sharedfs.SharedFSDeletionPowerGuard guard =
+                org.apache.cloudstack.storage.sharedfs.SharedFSDeletionPowerGuard.enter(vmUuid)) {
+            orchestrateStorageMigrationWithoutSharedFSDeletionGuard(vmUuid, volumeToPool);
+        }
+    }
+
+    private void orchestrateStorageMigrationWithoutSharedFSDeletionGuard(final String vmUuid, final Map<Long, Long> volumeToPool) {
         final VMInstanceVO vm = _vmDao.findByUuid(vmUuid);
 
         Map<Volume, StoragePool> volumeToPoolMap = prepareVmStorageMigration(vm, volumeToPool);
@@ -3153,6 +3171,13 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
     }
 
     private void orchestrateMigrate(final String vmUuid, final long srcHostId, final DeployDestination dest) throws ResourceUnavailableException, ConcurrentOperationException {
+        try (org.apache.cloudstack.storage.sharedfs.SharedFSDeletionPowerGuard guard =
+                org.apache.cloudstack.storage.sharedfs.SharedFSDeletionPowerGuard.enter(vmUuid)) {
+            orchestrateMigrateWithoutSharedFSDeletionGuard(vmUuid, srcHostId, dest);
+        }
+    }
+
+    private void orchestrateMigrateWithoutSharedFSDeletionGuard(final String vmUuid, final long srcHostId, final DeployDestination dest) throws ResourceUnavailableException, ConcurrentOperationException {
         final VMInstanceVO vm = _vmDao.findByUuid(vmUuid);
         if (vm == null) {
             logger.debug("Unable to find the Instance {}", vmUuid);
@@ -3755,6 +3780,14 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
 
     private void orchestrateMigrateWithStorage(final String vmUuid, final long srcHostId, final long destHostId, final Map<Long, Long> volumeToPool) throws ResourceUnavailableException,
     ConcurrentOperationException {
+        try (org.apache.cloudstack.storage.sharedfs.SharedFSDeletionPowerGuard guard =
+                org.apache.cloudstack.storage.sharedfs.SharedFSDeletionPowerGuard.enter(vmUuid)) {
+            orchestrateMigrateWithStorageWithoutSharedFSDeletionGuard(vmUuid, srcHostId, destHostId, volumeToPool);
+        }
+    }
+
+    private void orchestrateMigrateWithStorageWithoutSharedFSDeletionGuard(final String vmUuid, final long srcHostId, final long destHostId, final Map<Long, Long> volumeToPool) throws ResourceUnavailableException,
+    ConcurrentOperationException {
 
         final VMInstanceVO vm = _vmDao.findByUuid(vmUuid);
 
@@ -4030,6 +4063,13 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
     }
 
     private void orchestrateMigrateAway(final String vmUuid, final long srcHostId, final DeploymentPlanner planner) throws InsufficientServerCapacityException {
+        try (org.apache.cloudstack.storage.sharedfs.SharedFSDeletionPowerGuard guard =
+                org.apache.cloudstack.storage.sharedfs.SharedFSDeletionPowerGuard.enter(vmUuid)) {
+            orchestrateMigrateAwayWithoutSharedFSDeletionGuard(vmUuid, srcHostId, planner);
+        }
+    }
+
+    private void orchestrateMigrateAwayWithoutSharedFSDeletionGuard(final String vmUuid, final long srcHostId, final DeploymentPlanner planner) throws InsufficientServerCapacityException {
         final VMInstanceVO vm = _vmDao.findByUuid(vmUuid);
         if (vm == null) {
             String message = String.format("Unable to find VM with uuid [%s].", vmUuid);
@@ -4197,6 +4237,14 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
     }
 
     private void orchestrateReboot(final String vmUuid, final Map<VirtualMachineProfile.Param, Object> params) throws InsufficientCapacityException, ConcurrentOperationException,
+    ResourceUnavailableException {
+        try (org.apache.cloudstack.storage.sharedfs.SharedFSDeletionPowerGuard guard =
+                org.apache.cloudstack.storage.sharedfs.SharedFSDeletionPowerGuard.enter(vmUuid)) {
+            orchestrateRebootWithoutSharedFSDeletionGuard(vmUuid, params);
+        }
+    }
+
+    private void orchestrateRebootWithoutSharedFSDeletionGuard(final String vmUuid, final Map<VirtualMachineProfile.Param, Object> params) throws InsufficientCapacityException, ConcurrentOperationException,
     ResourceUnavailableException {
         final VMInstanceVO vm = _vmDao.findByUuid(vmUuid);
         checkFastCloneSourcePowerOperation(vm);
@@ -4748,20 +4796,26 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
         if (vm.getState() == State.Running) {
             final NicProfile nic = _networkMgr.createNicForVm(network, requested, context, vmProfile, true);
 
-            final HypervisorGuru hvGuru = _hvGuruMgr.getGuru(vmProfile.getVirtualMachine().getHypervisorType());
-            final VirtualMachineTO vmTO = hvGuru.implement(vmProfile);
-
-            final NicTO nicTO = toNicTO(nic, vmProfile.getVirtualMachine().getHypervisorType());
-
             //4) plug the nic to the vm
             logger.debug("Plugging NIC for Instance {} in Network {}", vm, network);
 
             boolean result = false;
+            boolean outcomeUnknown = false;
             Exception plugFailure = null;
             try {
+                final HypervisorGuru hvGuru = _hvGuruMgr.getGuru(vmProfile.getVirtualMachine().getHypervisorType());
+                final VirtualMachineTO vmTO = hvGuru.implement(vmProfile);
+                final NicTO nicTO = toNicTO(nic, vmProfile.getVirtualMachine().getHypervisorType());
                 result = plugNic(network, nicTO, vmTO, context, dest);
                 if (result) {
-                    _userVmMgr.setupVmForPvlan(true, vm.getHostId(), nic);
+                    if (nic.getBroadCastUri() != null && "pvlan".equalsIgnoreCase(nic.getBroadCastUri().getScheme())
+                            && !_userVmMgr.setupVmForPvlan(true, vm.getHostId(), nic)) {
+                        if (!unplugNic(network, nicTO, vmTO, context, dest)) {
+                            throw new NicHotplugOutcomeUnknownException("PVLAN policy failed and NIC rollback requires operator recovery", host.getId());
+                        }
+                        result = false;
+                        throw new ResourceUnavailableException("PVLAN policy setup failed; NIC attachment was rolled back", Host.class, host.getId());
+                    }
                     logger.debug("Nic is plugged successfully for vm {} in network {}. VM is a part of network now.", vm, network);
                     final long isDefault = nic.isDefaultNic() ? 1 : 0;
 
@@ -4774,10 +4828,19 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
                     throw new ResourceUnavailableException("NIC hotplug was rejected by the host", Host.class, host.getId());
                 }
             } catch (Exception error) {
+                outcomeUnknown = error instanceof NicHotplugOutcomeUnknownException;
+                if (outcomeUnknown) {
+                    try {
+                        _nicDetailsDao.addDetail(nic.getId(), "hotplug.outcome", "Unknown", false);
+                    } catch (RuntimeException markerFailure) {
+                        error.addSuppressed(markerFailure);
+                        logger.warn("Unable to record NIC hotplug recovery state; reservation is preserved", markerFailure);
+                    }
+                }
                 plugFailure = error;
                 throw error;
             } finally {
-                if (!result) {
+                if (!result && !outcomeUnknown) {
                     logger.debug("Removing NIC {} from Instance {} as NIC plug failed on the backend.", nic, vmProfile.getVirtualMachine());
                     try {
                         _networkMgr.removeNic(vmProfile, _nicsDao.findById(nic.getId()));
@@ -5054,6 +5117,14 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
 
     private void orchestrateMigrateForScale(final String vmUuid, final long srcHostId, final DeployDestination dest, final Long oldSvcOfferingId)
             throws ResourceUnavailableException, ConcurrentOperationException {
+        try (org.apache.cloudstack.storage.sharedfs.SharedFSDeletionPowerGuard guard =
+                org.apache.cloudstack.storage.sharedfs.SharedFSDeletionPowerGuard.enter(vmUuid)) {
+            orchestrateMigrateForScaleWithoutSharedFSDeletionGuard(vmUuid, srcHostId, dest, oldSvcOfferingId);
+        }
+    }
+
+    private void orchestrateMigrateForScaleWithoutSharedFSDeletionGuard(final String vmUuid, final long srcHostId, final DeployDestination dest, final Long oldSvcOfferingId)
+            throws ResourceUnavailableException, ConcurrentOperationException {
 
         VMInstanceVO vm = _vmDao.findByUuid(vmUuid);
         logger.info("Migrating {} to {}", vm, dest);
@@ -5272,16 +5343,19 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
                 final PlugNicCommand plugNicCmd = new PlugNicCommand(nic, vm.getName(), vm.getType(), vm.getDetails());
                 final Commands cmds = new Commands(Command.OnError.Stop);
                 cmds.addCommand("plugnic", plugNicCmd);
-                _agentMgr.send(dest.getHost().getId(), cmds);
-                final PlugNicAnswer plugNicAnswer = cmds.getAnswer(PlugNicAnswer.class);
-                if (plugNicAnswer == null || !plugNicAnswer.getResult()) {
-                    String reason = plugNicAnswer == null ? "No response from the host NIC hotplug command"
-                            : StringUtils.defaultIfBlank(plugNicAnswer.getDetails(), "The host rejected the NIC hotplug command");
+                final Answer[] answers = _agentMgr.send(dest.getHost().getId(), cmds);
+                final PlugNicAnswer plugNicAnswer = answers != null && answers.length > 0 && answers[0] instanceof PlugNicAnswer
+                        ? (PlugNicAnswer) answers[0] : null;
+                if (plugNicAnswer == null) {
+                    throw new NicHotplugOutcomeUnknownException("Host NIC hotplug outcome is unknown; keep the NIC reservation and reconcile the host before retrying", dest.getHost().getId());
+                }
+                if (!plugNicAnswer.getResult()) {
+                    String reason = StringUtils.defaultIfBlank(plugNicAnswer.getDetails(), "The host rejected the NIC hotplug command");
                     throw new ResourceUnavailableException("Unable to add NIC to VM " + vm.getName() + ": " + reason,
                             Host.class, dest.getHost().getId());
                 }
-            } catch (final OperationTimedoutException e) {
-                throw new AgentUnavailableException("Unable to plug nic for router " + vm.getName() + " in network " + network, dest.getHost().getId(), e);
+            } catch (final OperationTimedoutException | AgentUnavailableException e) {
+                throw new NicHotplugOutcomeUnknownException("Host NIC hotplug outcome is unknown; keep the NIC reservation and reconcile the host before retrying: " + e.getMessage(), dest.getHost().getId());
             }
         } else {
             String message = String.format("Unable to apply PlugNic, VM [%s] is not in the right state (\"Running\"). VM state [%s].", router.toString(), router.getState());
@@ -5292,6 +5366,14 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
         }
 
         return result;
+    }
+
+    protected static class NicHotplugOutcomeUnknownException extends ResourceUnavailableException {
+        private static final long serialVersionUID = 1L;
+
+        NicHotplugOutcomeUnknownException(String message, long hostId) {
+            super(message, Host.class, hostId);
+        }
     }
 
     public boolean unplugNic(final Network network, final NicTO nic, final VirtualMachineTO vm, final ReservationContext context, final DeployDestination dest) throws ConcurrentOperationException,

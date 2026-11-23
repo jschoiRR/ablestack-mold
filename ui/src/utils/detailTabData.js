@@ -7,9 +7,14 @@ import { detailTabRouteKey } from './listRefreshMixin'
 export function detailTabContext (vm, commands = []) {
   const getters = vm.$store?.getters || {}
   return JSON.stringify([detailTabRouteKey(vm.$route), vm.resource?.id,
-    vm.resourceType || vm.$route?.meta?.resourceType, getters.project?.id,
+    vm.resourceType || vm.$route?.meta?.resourceType, getters.project?.id, vm.resource?.projectid, getters.userInfo?.domainid,
     getters.userInfo?.id, getters.userInfo?.roleid, getters.userInfo?.roletype,
     vm.$store?.state?.user?.token, commands.map(command => command in (getters.apis || {}))])
+}
+
+export function detailTabProject (vm) {
+  if (!['guestnetwork', 'publicip'].includes(vm.$route?.meta?.name)) return {}
+  return vm.resource?.projectid ? { projectid: vm.resource.projectid } : { ignoreproject: true }
 }
 
 export function detailTabDenied (error) {
@@ -22,7 +27,7 @@ export function detailTabError (error) {
 }
 
 // Reject malformed or mixed-resource pages instead of rendering a false empty result.
-export function readDetailTabPage (json, response, key, { page, pageSize, resourceId, entityType }) {
+export function readDetailTabPage (json, response, key, { page, pageSize, resourceId, entityType, matchResource = true }) {
   const fail = () => { throw new Error('message.detail.tab.incomplete') }
   const data = json?.[response]
   if (!data || (data[key] !== undefined && !Array.isArray(data[key]))) fail()
@@ -31,8 +36,8 @@ export function readDetailTabPage (json, response, key, { page, pageSize, resour
   const ids = new Set()
   for (const row of rows) {
     if (typeof row.id !== 'string' || !row.id || ids.has(row.id) ||
-      (row.resourceid && row.resourceid !== resourceId) ||
-      (row.entityid && row.entityid !== resourceId) ||
+      (matchResource && row.resourceid && row.resourceid !== resourceId) ||
+      (matchResource && row.entityid && row.entityid !== resourceId) ||
       (entityType && row.entitytype && row.entitytype !== entityType)) fail()
     ids.add(row.id)
   }

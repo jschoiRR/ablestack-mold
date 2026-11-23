@@ -18,23 +18,24 @@
 <template>
   <a-row
     style="overflow: auto"
-    :wrap="false"
+    :class="{ 'kms-filter-chips': kms }"
+    :wrap="kms"
   >
     <template
       v-for="filter in this.searchFilters"
       :key="filter.key + filter.value"
     >
-      <a-col v-if="!['page', 'pagesize', 'q', 'keyword', 'tags', 'projectid', 'sortkey', 'sortorder'].includes(filter.key)">
+      <a-col v-if="(kms && filter.key === 'projectid') || !['page', 'pagesize', 'q', 'keyword', 'tags', 'projectid', 'sortkey', 'sortorder'].includes(filter.key)">
         <a-tag
           v-if="!filter.isTag"
           closable
           @close="() => $emit('removeFilter', filter)"
         >
           <a-tooltip
-            :title="retrieveFieldLabel(filter.key) + ': ' + filter.value + (['affinitygroupid', 'volumeid'].includes(filter.key) && filter.rawValue !== filter.value ? ' (' + filter.rawValue + ')' : '')"
+            :title="retrieveFieldLabel(filter.key) + ': ' + publicIpFilterValue(filter) + (['affinitygroupid', 'volumeid', 'networkofferingid', 'physicalnetworkid'].includes(filter.key) && filter.rawValue !== filter.value ? ' (' + filter.rawValue + ')' : '')"
             placement="bottom"
           >
-            {{ retrieveFieldLabel(filter.key) }} : {{ getTrimmedText(filter.value, 20) }}
+            {{ retrieveFieldLabel(filter.key) }} : {{ getTrimmedText(publicIpFilterValue(filter), 20) }}
           </a-tooltip>
         </a-tag>
         <a-tag
@@ -57,8 +58,12 @@
 <script>
 
 import { getAPI } from '@/api'
+import { kmsApis, kmsBooleans, kmsProtocolOptions } from '@/utils/kmsSearch'
+import { publicIpState } from '@/utils/publicIpPresentation'
+import { publicIpPickerConfig } from '@/utils/publicIpSearch'
 import { affinityPolicy } from '@/utils/affinityGroupPresentation'
 import { snapshotSearchLabel, snapshotSearchValue, snapshotPickerScope } from '@/utils/storageSnapshotSearch'
+import { networkPickerApi, networkPickerParams } from '@/utils/guestNetworkSearch'
 
 export default {
   name: 'SearchFilter',
@@ -186,7 +191,8 @@ export default {
     }
   },
   computed: {
-    lookupScope () { return JSON.stringify([this.$store?.getters?.userInfo?.id, this.$store?.state?.user?.token, this.$store?.getters?.project?.id, this.$route.query?.projectid, this.$route.path, this.apiName]) }
+    kms () { return kmsApis.includes(this.apiName) },
+    lookupScope () { return JSON.stringify([this.$store?.getters?.userInfo?.id, this.$store?.getters?.userInfo?.roletype, this.$store?.getters?.userInfo?.roleid, Object.keys(this.$store?.getters?.apis || {}).sort(), this.$store?.state?.user?.token, this.$store?.getters?.project?.id, this.$route.query?.projectid, this.$route.path, this.apiName]) }
   },
   beforeUnmount () { this.filterVersion++ },
   watch: {
@@ -194,10 +200,33 @@ export default {
     lookupScope () { this.resolveFilters(this.filters) }
   },
   methods: {
+    publicIpFilterValue (filter) {
+      if (this.apiName !== 'listPublicIpAddresses') return filter.value
+      const value = filter.rawValue ?? filter.value
+      if (filter.key === 'state') return this.$t(publicIpState(value).key)
+      if (['true', 'false', 'all'].includes(String(value))) return this.$t(String(value) === 'all' ? 'label.all' : String(value) === 'true' ? 'label.yes' : 'label.no')
+      return filter.value
+    },
     async resolveFilters (filters) {
       const version = ++this.filterVersion
       const scope = this.lookupScope
       const cloned = filters.map(filter => ({ ...filter, rawValue: filter.value }))
+      if (this.kms) {
+        this.searchFilters = cloned.map(filter => {
+          if (kmsBooleans.includes(filter.key)) return { ...filter, value: this.$t(filter.rawValue === 'true' ? 'label.yes' : 'label.no') }
+          if (filter.key === 'protocol') {
+            return { ...filter, value: kmsProtocolOptions(this.$store.getters.features, filter.value).find(p => p.id === filter.value)?.name || filter.value }
+          }
+          return filter
+        })
+        return
+      }
+      // Keep the submitted UUID instead of looking up names in an unrelated owner.
+      if (this.apiName === 'listPublicIpAddresses') {
+        this.searchFilters = cloned.filter(f => f.key !== 'filter').map(f => ({ ...f, value: f.key === 'state' ? this.$t(publicIpState(f.value).key) : ['true', 'false', 'all'].includes(String(f.value)) ? this.$t(String(f.value) === 'all' ? 'label.all' : String(f.value) === 'true' ? 'label.yes' : 'label.no') : f.value }))
+        return
+      }
+      if (this.apiName === 'listVnfAppliances') { this.searchFilters = cloned.map(f => f.key === 'state' ? { ...f, value: this.$t('state.' + String(f.value).toLowerCase()) } : f); return }
       this.searchFilters = cloned.map(filter => ({ ...filter }))
       const resolved = await Promise.all(cloned.map(async filter => {
         if (filter.key === 'tags') return { ...filter, isTag: true }
@@ -215,6 +244,18 @@ export default {
       return (text.length <= length) ? text : (text.substring(0, length - 3) + '...')
     },
     retrieveFieldLabel (fieldName) {
+      if (this.apiName === 'listBackups' && fieldName === 'virtualmachineid') return this.$t('label.virtualmachinename')
+      if (this.apiName === 'listVpnUsers' && fieldName === 'username') return this.$t('label.vpn.user.search.exact')
+      if (this.apiName === 'listVpnUsers' && fieldName === 'domainid') return this.$t('label.domain')
+      if (this.kms && fieldName === 'projectid') return this.$t('label.project')
+      if (this.apiName === 'listPublicIpAddresses') return this.$t(publicIpPickerConfig(fieldName)?.label || (fieldName === 'fordisplay' ? 'label.public.ip.display' : 'label.' + fieldName))
+      if (this.apiName === 'listVnfAppliances' && fieldName === 'name') return this.$t('label.vm.name')
+      if (this.apiName === 'listIsos' && fieldName === 'isofilter') return this.$t('label.filterby')
+      if (['listTemplates', 'listIsos'].includes(this.apiName) && fieldName === 'name') return this.$t('label.template.name.exact')
+      if (fieldName === 'forvpc') return this.$t('label.network.search.forvpc')
+      if (fieldName === 'networkofferingid') return this.$t('label.network.offering')
+      if (this.apiName === 'listGuestVlans' && fieldName === 'vnet') return this.$t('label.guest.vlan.search.exact')
+      if (fieldName === 'physicalnetworkid') return this.$t('label.physical.network')
       if (this.apiName === 'listSnapshotPolicies' && fieldName === 'fordisplay') return this.$t('label.snapshot.policy.scheduling')
       if (this.apiName === 'listSnapshots') return this.$t(snapshotSearchLabel(fieldName))
       if (fieldName === 'affinitygroupid') return this.$t('label.affinitygroup')
@@ -237,6 +278,11 @@ export default {
       return this.$t('label.' + fieldName)
     },
     async getSearchFilters (key, value) {
+      if (this.apiName === 'listNetworkACLLists' && this.$route.meta?.name === 'acllist' && key === 'vpcid' &&
+          'listVPCs' in this.$store.getters.apis) {
+        const result = await getAPI('listVPCs', { id: value, listall: true, page: 1, pagesize: 1 }, { preserveOnFailure: true, timeout: 15000 })
+        return result.listvpcsresponse?.vpc?.find(row => row.id === value)?.name || value
+      }
       const val = this.getStaticFieldValue(key, value)
       if (val !== '') {
         return val
@@ -245,11 +291,17 @@ export default {
       }
     },
     getStaticFieldValue (key, value) {
+      if (this.apiName === 'listBackupSchedule' && key === 'quiescevm') return this.$t(String(value) === 'true' ? 'label.yes' : 'label.no')
+      if (this.apiName === 'listBackupSchedule' && key === 'intervaltype' && ['HOURLY', 'DAILY', 'WEEKLY', 'MONTHLY'].includes(String(value).toUpperCase())) return this.$t('label.' + String(value).toLowerCase())
+      if (this.apiName === 'listIsos' && ['bootable', 'isready', 'ispublic'].includes(key)) return this.$t(String(value) === 'true' ? 'label.yes' : 'label.no')
+      if (this.apiName === 'listIsos' && key === 'isofilter') return this.$t(this.$route?.meta?.filterLabels?.[value] || ('label.' + value))
+      if (this.apiName === 'listNetworks' && key === 'forvpc') return this.$t(String(value) === 'true' ? 'label.yes' : 'label.no')
       if (this.apiName === 'listSnapshotPolicies' && key === 'fordisplay') return this.$t(value === 'true' ? 'label.snapshot.policy.schedule.enabled' : 'label.snapshot.policy.schedule.paused')
       if (this.apiName === 'listSnapshots') {
         const label = snapshotSearchValue(key, value)
         if (label) return this.$t(label)
       }
+      if (this.apiName === 'listTemplates' && ['isready', 'forcks'].includes(key)) return this.$t(String(value) === 'true' ? 'label.yes' : 'label.no')
       let formattedValue = ''
       if (key.includes('type')) {
         if (this.$route.path === '/guestnetwork' || this.$route.path.includes('/guestnetwork/')) {
@@ -296,6 +348,22 @@ export default {
     },
     async getDynamicFieldValue (key, value) {
       let formattedValue = ''
+      if (['listBackups', 'listBackupSchedule'].includes(this.apiName) && key === 'virtualmachineid') {
+        if (!this.$store.getters.apis?.listVirtualMachines || !this.$isValidUuid(value)) return value
+        const query = this.$route.query || {}
+        const params = { id: value, listall: true }
+        for (const field of ['projectid', 'zoneid', 'domainid', 'account']) {
+          if (query[field]) params[field] = query[field]
+        }
+        const response = await getAPI('listVirtualMachines', params, { preserveOnFailure: true })
+        return response?.listvirtualmachinesresponse?.virtualmachine?.find(vm => vm.id === value)?.name || value
+      }
+      if ((this.apiName === 'listNetworks' && ['networkofferingid', 'physicalnetworkid'].includes(key)) || (this.apiName === 'listGuestVlans' && key === 'physicalnetworkid')) {
+        const { api, field } = networkPickerApi(key)
+        if (!this.$store.state?.user?.token || !this.$store.getters.apis?.[api]) return value
+        const json = await getAPI(api, { ...networkPickerParams(key, this.$route.query), id: value, page: 1, pagesize: 20 }, { preserveOnFailure: true, timeout: 20000 })
+        return json?.[api.toLowerCase() + 'response']?.[field]?.find(r => r.id === value)?.name || value
+      }
 
       if (this.apiName === 'listSnapshots' && key === 'account') return value
       if (['listSnapshots', 'listSnapshotPolicies'].includes(this.apiName) && key === 'volumeid') {
@@ -579,3 +647,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.kms-filter-chips { row-gap: 4px; }
+.kms-filter-chips :deep(.ant-tag) { max-width: 100%; color: var(--ui-text-primary); background: var(--ui-bg-elevated); border-color: var(--ui-border); }
+.kms-filter-chips :deep(.ant-tag-close-icon) { color: var(--ui-text-secondary); }
+</style>

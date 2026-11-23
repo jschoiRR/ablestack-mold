@@ -477,15 +477,14 @@ public class LibvirtComputingResource extends ServerResourceBase implements Serv
     private String vmActivityCheckPathClvm;
     private String nasBackupPath;
     private String ableNasBackupPath;
-    private String ableCvtBackupPath;
-    private String ableNetBackupPath;
-    private String ableVeeamPath;
+    private String thirdPartyVolumeBackupPath;
     private String imageServerPath;
     private boolean imageServerTlsEnabled = false;
     private String imageServerListenAddress;
     private String securityGroupPath;
     private String ovsPvlanDhcpHostPath;
     private String ovsPvlanVmPath;
+    private String guardedPvlanPath;
     private String routerProxyPath;
     private String ovsTunnelPath;
 
@@ -527,6 +526,7 @@ public class LibvirtComputingResource extends ServerResourceBase implements Serv
     private KVMStoragePoolManager storagePoolManager;
 
     private VifDriver defaultVifDriver;
+    private final List<VifDriver> additionalVifDrivers = new ArrayList<>();
     private VifDriver tungstenVifDriver;
     private Map<TrafficType, VifDriver> trafficTypeVifDriverMap;
 
@@ -838,10 +838,15 @@ public class LibvirtComputingResource extends ServerResourceBase implements Serv
             guestCpuArch = cpuArchOverride;
         }
         try {
-            hypervisorPath = getHypervisorPath(LibvirtConnection.getConnection());
+            final Connect connection = LibvirtConnection.getConnection();
+            hypervisorPath = getHypervisorPath(connection);
+            // A detached worker has not run the Agent's normal host discovery.
+            // Load real versions before applying incremental-backup capability checks.
+            hypervisorLibvirtVersion = connection.getLibVirVersion();
+            hypervisorQemuVersion = connection.getVersion();
         } catch (LibvirtException e) {
             final ConfigurationException configurationException =
-                    new ConfigurationException("Unable to resolve the KVM emulator for detached backup job");
+                    new ConfigurationException("Unable to resolve the KVM emulator or hypervisor versions for detached backup job");
             configurationException.initCause(e);
             throw configurationException;
         }
@@ -859,17 +864,12 @@ public class LibvirtComputingResource extends ServerResourceBase implements Serv
         if (ableNasBackupPath == null) {
             throw new ConfigurationException("Unable to find ablestack_nasbackup.sh");
         }
-        ableCvtBackupPath = Script.findScript(kvmScriptsDir, "ablestack_cvtbackup.sh");
-        if (ableCvtBackupPath == null) {
-            throw new ConfigurationException("Unable to find ablestack_cvtbackup.sh");
+        thirdPartyVolumeBackupPath = Script.findScript(kvmScriptsDir, "thirdparty_volume_backup.py");
+        if (thirdPartyVolumeBackupPath == null) {
+            throw new ConfigurationException("Unable to find thirdparty_volume_backup.py");
         }
-        ableNetBackupPath = Script.findScript(kvmScriptsDir, "ablestack_netbackup.sh");
-        if (ableNetBackupPath == null) {
-            throw new ConfigurationException("Unable to find ablestack_netbackup.sh");
-        }
-        ableVeeamPath = Script.findScript(kvmScriptsDir, "ablestack_veeam.sh");
-        if (ableVeeamPath == null) {
-            throw new ConfigurationException("Unable to find ablestack_veeam.sh");
+        if (Script.findScript(kvmScriptsDir, "thirdparty_backup_cleanup.sh") == null) {
+            throw new ConfigurationException("Unable to find thirdparty_backup_cleanup.sh");
         }
     }
 
@@ -1113,16 +1113,8 @@ public class LibvirtComputingResource extends ServerResourceBase implements Serv
         return ableNasBackupPath;
     }
 
-    public String getAbleCvtBackupPath() {
-        return ableCvtBackupPath;
-    }
-
-    public String getAbleNetBackupPath() {
-        return ableNetBackupPath;
-    }
-
-    public String getAbleVeeamPath() {
-        return ableVeeamPath;
+    public String getThirdPartyVolumeBackupPath() {
+        return thirdPartyVolumeBackupPath;
     }
 
     public String getImageServerPath() {
@@ -1143,6 +1135,30 @@ public class LibvirtComputingResource extends ServerResourceBase implements Serv
 
     public String getOvsPvlanVmPath() {
         return ovsPvlanVmPath;
+    }
+
+    public String executeGuardedPvlan(String action, String bridge, String primary, String secondary, String role, String mac) {
+        if (guardedPvlanPath == null) {
+            return "Guarded PVLAN policy script is unavailable";
+        }
+        final Script script = new Script(guardedPvlanPath, timeout, LOGGER);
+        script.add(action);
+        script.add("-b", bridge);
+        if (primary != null) { script.add("-p", primary); }
+        if (secondary != null) { script.add("-s", secondary); }
+        if (role != null) { script.add("-t", role); }
+        if (mac != null) { script.add("-m", mac); }
+        return script.execute();
+    }
+
+    protected String getGuardedPvlanBridges() {
+        if (guardedPvlanPath == null || getAllVifDrivers().stream().noneMatch(driver -> driver instanceof OvsVifDriver)) {
+            return "";
+        }
+        final Script script = new Script(guardedPvlanPath, timeout, LOGGER);
+        script.add("status");
+        final OutputInterpreter.OneLineParser parser = new OutputInterpreter.OneLineParser();
+        return script.execute(parser) == null && parser.getLine() != null ? parser.getLine() : "";
     }
 
     public String getDirectDownloadTemporaryDownloadPath() {
@@ -1554,6 +1570,7 @@ public class LibvirtComputingResource extends ServerResourceBase implements Serv
         }
 
         ovsPvlanVmPath = Script.findScript(networkScriptsDir, "ovs-pvlan-kvm-vm.sh");
+        guardedPvlanPath = Script.findScript(networkScriptsDir, "ovs-pvlan-kvm-policy.py");
         if (ovsPvlanVmPath == null) {
             throw new ConfigurationException("Unable to find the ovs-pvlan-kvm-vm.sh");
         }
@@ -2289,6 +2306,7 @@ public class LibvirtComputingResource extends ServerResourceBase implements Serv
         final String LIBVIRT_VIF_DRIVER = "libvirt.vif.driver";
 
         trafficTypeVifDriverMap = new HashMap<TrafficType, VifDriver>();
+        additionalVifDrivers.clear();
 
         // Load the default vif driver
         String defaultVifDriverName = AgentPropertiesFileHandler.getPropertyValue(AgentProperties.LIBVIRT_VIF_DRIVER);
@@ -2303,6 +2321,16 @@ public class LibvirtComputingResource extends ServerResourceBase implements Serv
         }
         defaultVifDriver = getVifDriverClass(defaultVifDriverName, params);
         tungstenVifDriver = getVifDriverClass(DEFAULT_TUNGSTEN_VIF_DRIVER_CLASS_NAME, params);
+
+        // Opt-in drivers for explicitly labelled physical networks. This does
+        // not change the default or any existing per-traffic-type driver.
+        final Object extraDrivers = params.containsKey(LIBVIRT_VIF_DRIVER + ".extra") ? params.get(LIBVIRT_VIF_DRIVER + ".extra")
+                : AgentPropertiesFileHandler.getPropertyValue(new AgentProperties.Property<>(LIBVIRT_VIF_DRIVER + ".extra", ""));
+        if (extraDrivers != null && StringUtils.isNotBlank(extraDrivers.toString())) {
+            for (String driverName : extraDrivers.toString().split(",")) {
+                additionalVifDrivers.add(getVifDriverClass(driverName.trim(), params));
+            }
+        }
 
         // Load any per-traffic-type vif drivers
         for (final Map.Entry<String, Object> entry : params.entrySet()) {
@@ -2376,6 +2404,7 @@ public class LibvirtComputingResource extends ServerResourceBase implements Serv
         final Set<VifDriver> vifDrivers = new HashSet<VifDriver>();
 
         vifDrivers.add(defaultVifDriver);
+        vifDrivers.addAll(additionalVifDrivers);
         if (isTungstenEnabled) {
             vifDrivers.add(tungstenVifDriver);
         }
@@ -3126,6 +3155,15 @@ public class LibvirtComputingResource extends ServerResourceBase implements Serv
 
     private String getBroadcastUriFromBridge(final String brName) {
         final String pif = matchPifFileInDirectory(brName);
+        if (!brName.startsWith("brvx") && pif.matches("[a-zA-Z0-9_.:-]{1,15}")) {
+            // Device names (including compact names) do not encode their VLAN reliably.
+            // Read the kernel VLAN metadata instead of guessing from digit groups in a NIC name.
+            String vlanId = Script.runSimpleBashScript("awk '/VID:/ {for(i=1;i<=NF;i++) if($i==\"VID:\") print $(i+1)}' /proc/net/vlan/" + pif);
+            if (vlanId != null && vlanId.trim().matches("[0-9]{1,4}")) {
+                return BroadcastDomainType.Vlan.toUri(vlanId.trim()).toString();
+            }
+            return "";
+        }
         final Pattern pattern = Pattern.compile("(\\D+)(\\d+)(\\D*)(\\d*)(\\D*)(\\d*)");
         final Matcher matcher = pattern.matcher(pif);
         LOGGER.debug("getting broadcast uri for pif " + pif + " and bridge " + brName);
@@ -4875,17 +4913,10 @@ public class LibvirtComputingResource extends ServerResourceBase implements Serv
             LOGGER.error("LibvirtVMDef object get devices with null result");
             throw new InternalErrorException("LibvirtVMDef object get devices with null result");
         }
-        final InterfaceDef interfaceDef = getVifDriver(nic.getType(), nic.getName()).plug(nic, vm.getPlatformEmulator(), nicAdapter, extraConfig);
+        final VifDriver selectedVifDriver = getVifDriver(nic.getType(), nic.getName());
+        final InterfaceDef interfaceDef = selectedVifDriver.plug(nic, vm.getPlatformEmulator(), nicAdapter, extraConfig);
 
-        String defaultVifDriver = AgentPropertiesFileHandler.getPropertyValue(AgentProperties.LIBVIRT_VIF_DRIVER);
-        final String bridgeType = AgentPropertiesFileHandler.getPropertyValue(AgentProperties.NETWORK_BRIDGE_TYPE);
-        boolean enableOVSDriver = false;
-
-        if (defaultVifDriver != null && defaultVifDriver.equals(DEFAULT_OVS_VIF_DRIVER_CLASS_NAME) && bridgeType != null && "openvswitch".equals(bridgeType)) {
-            enableOVSDriver = true;
-        }
-
-        if (!nic.isSecurityGroupEnabled() && !enableOVSDriver && nic.getNwfilter()) {
+        if (!nic.isSecurityGroupEnabled() && !(selectedVifDriver instanceof OvsVifDriver) && nic.getNwfilter()) {
             interfaceDef.setFilterrefFilterTag();
         }
         if (vmSpec.getDetails() != null) {
@@ -5238,6 +5269,9 @@ public class LibvirtComputingResource extends ServerResourceBase implements Serv
         fillNetworkInformation(cmd);
         privateIp = cmd.getPrivateIpAddress();
         cmd.getHostDetails().putAll(getVersionStrings());
+        cmd.getHostDetails().put("pvlan.guard.version", "1");
+        cmd.getHostDetails().put("pvlan.default.bridge", getGuestBridgeName());
+        cmd.getHostDetails().put("pvlan.supported.bridges", getGuardedPvlanBridges());
         cmd.getHostDetails().put(KeyStoreUtils.SECURED, String.valueOf(isHostSecured()).toLowerCase());
         cmd.setPool(pool);
         cmd.setCluster(clusterId);
@@ -7298,7 +7332,7 @@ public class LibvirtComputingResource extends ServerResourceBase implements Serv
 
     public String getVlanIdFromBridgeName(String brName) {
         if (StringUtils.isNotBlank(brName)) {
-            String[] s = brName.split("-");
+            String[] s = brName.split("-(?=[^-]+$)");
             if (s.length > 1) {
                 return s[1];
             }

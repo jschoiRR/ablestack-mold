@@ -29,6 +29,9 @@ import com.cloud.utils.db.GenericDao;
 import com.cloud.utils.fsm.StateDao;
 
 public interface VolumeDao extends GenericDao<VolumeVO, Long>, StateDao<Volume.State, Volume.Event, Volume> {
+    /** Current membership candidates, including managed hidden DATA; caller must enforce service ownership. */
+    List<VolumeVO> listCurrentDataByVmIds(java.util.Collection<Long> vmIds);
+
 
     List<VolumeVO> findDetachedByAccount(long accountId);
 
@@ -188,6 +191,8 @@ public interface VolumeDao extends GenericDao<VolumeVO, Long>, StateDao<Volume.S
     int getVolumeCountByOfferingId(long diskOfferingId);
 
     boolean existsWithKmsKey(long kmsKeyId);
+
+    long countWithKmsKey(long kmsKeyId);
 
     /**
      *  Retrieves volume by its externalId

@@ -460,6 +460,7 @@ import com.cloud.vm.VMInstanceVO;
 import com.cloud.vm.VirtualMachine;
 import com.cloud.vm.VirtualMachine.Type;
 import com.cloud.vm.dao.NicExtraDhcpOptionDao;
+import com.cloud.vm.dao.NicDetailsDao;
 import com.cloud.vm.dao.NicSecondaryIpVO;
 import com.cloud.vm.snapshot.VMSnapshot;
 import com.cloud.vm.snapshot.VMSnapshotVO;
@@ -468,6 +469,7 @@ import com.cloud.vm.snapshot.dao.VMSnapshotDao;
 import sun.security.x509.X509CertImpl;
 
 public class ApiResponseHelper implements ResponseGenerator, ResourceIdSupport {
+
 
     protected Logger logger = LogManager.getLogger(ApiResponseHelper.class);
     private static final DecimalFormat s_percentFormat = new DecimalFormat("##.##");
@@ -500,6 +502,8 @@ public class ApiResponseHelper implements ResponseGenerator, ResourceIdSupport {
     private ResourceTagDao _resourceTagDao;
     @Inject
     private NicExtraDhcpOptionDao _nicExtraDhcpOptionDao;
+    @Inject
+    private NicDetailsDao _nicDetailsDao;
     @Inject
     private IPAddressDao userIpAddressDao;
     @Inject
@@ -1299,7 +1303,8 @@ public class ApiResponseHelper implements ResponseGenerator, ResourceIdSupport {
 
     private void showVmInfoForSharedNetworks(boolean forVirtualNetworks, IpAddress ipAddr, IPAddressResponse ipResponse) {
         if (!forVirtualNetworks) {
-            NicVO nic = ApiDBUtils.findByIp4AddressAndNetworkId(ipAddr.getAddress().toString(), ipAddr.getNetworkId());
+            // Router IP reservations also have placeholder NICs without an instance. Only a bound NIC is a VM target.
+            NicVO nic = ApiDBUtils.findNonPlaceHolderByIp4AddressAndNetworkId(ipAddr.getAddress().toString(), ipAddr.getNetworkId());
 
             if (nic == null) {  // find in nic_secondary_ips, user vm only
                 NicSecondaryIpVO secondaryIp =
@@ -1309,6 +1314,7 @@ public class ApiResponseHelper implements ResponseGenerator, ResourceIdSupport {
                     if (vm != null) {
                         ipResponse.setVirtualMachineId(vm.getUuid());
                         ipResponse.setVirtualMachineName(vm.getHostName());
+                        ipResponse.setVirtualMachineType(vm.getType().toString());
                         if (vm.getDisplayName() != null) {
                             ipResponse.setVirtualMachineDisplayName(vm.getDisplayName());
                         } else {
@@ -1321,6 +1327,7 @@ public class ApiResponseHelper implements ResponseGenerator, ResourceIdSupport {
                 if (vm != null) {
                     ipResponse.setVirtualMachineId(vm.getUuid());
                     ipResponse.setVirtualMachineName(vm.getHostName());
+                    ipResponse.setVirtualMachineType(vm.getType().toString());
                     if (vm.getDisplayName() != null) {
                         ipResponse.setVirtualMachineDisplayName(vm.getDisplayName());
                     } else {
@@ -1356,7 +1363,7 @@ public class ApiResponseHelper implements ResponseGenerator, ResourceIdSupport {
         lbResponse.setPublicPort(Integer.toString(loadBalancer.getSourcePortStart()));
         lbResponse.setPrivatePort(Integer.toString(loadBalancer.getDefaultPortStart()));
         lbResponse.setAlgorithm(loadBalancer.getAlgorithm());
-        lbResponse.setLbProtocol(loadBalancer.getLbProtocol());
+        lbResponse.setLbProtocol(StringUtils.defaultIfBlank(StringUtils.lowerCase(StringUtils.trim(loadBalancer.getLbProtocol())), NetUtils.TCP_PROTO));
         FirewallRuleDetailVO backendSslDetail = firewallRuleDetailsDao.findDetail(loadBalancer.getId(), ApiConstants.BACKEND_SSL);
         lbResponse.setBackendSsl(backendSslDetail != null && Boolean.parseBoolean(backendSslDetail.getValue()));
         lbResponse.setForDisplay(loadBalancer.isDisplay());
@@ -3369,11 +3376,9 @@ public class ApiResponseHelper implements ResponseGenerator, ResourceIdSupport {
         }
         response.setServices(services);
 
-        Provider serviceProvider = networkModel.resolveProvider(result.getProviderName());
-        if (serviceProvider != null) {
-            boolean canEnableIndividualServices = ApiDBUtils.canElementEnableIndividualServices(serviceProvider);
-            response.setCanEnableIndividualServices(canEnableIndividualServices);
-        }
+        final var element = networkModel.getElementImplementingProvider(result.getProviderName());
+        response.setSupported(element != null);
+        response.setCanEnableIndividualServices(element != null && element.canEnableIndividualServices());
 
         response.setObjectName("networkserviceprovider");
         return response;
@@ -4855,6 +4860,11 @@ public class ApiResponseHelper implements ResponseGenerator, ResourceIdSupport {
     @Override
     public NicResponse createNicResponse(Nic result) {
         NicResponse response = new NicResponse();
+        response.setState(result.getState() == null ? null : result.getState().name());
+        com.cloud.vm.NicDetailVO hotplugOutcome = _nicDetailsDao.findDetail(result.getId(), "hotplug.outcome");
+        if (hotplugOutcome != null && "Unknown".equals(hotplugOutcome.getValue())) {
+            response.setAttachmentState("Unknown");
+        }
         NetworkVO network = _entityMgr.findById(NetworkVO.class, result.getNetworkId());
         VMInstanceVO vm = _entityMgr.findById(VMInstanceVO.class, result.getInstanceId());
         List<NicExtraDhcpOptionVO> nicExtraDhcpOptionVOs = _nicExtraDhcpOptionDao.listByNicId(result.getId());
@@ -5145,6 +5155,7 @@ public class ApiResponseHelper implements ResponseGenerator, ResourceIdSupport {
         response.setName(networkACL.getName());
         response.setDescription(networkACL.getDescription());
         response.setForDisplay(networkACL.isDisplay());
+        response.setDefault(NetworkACL.isDefault(networkACL.getId()));
         Vpc vpc = ApiDBUtils.findVpcById(networkACL.getVpcId());
         if (vpc != null) {
             response.setVpcId(vpc.getUuid());
@@ -5726,36 +5737,45 @@ public class ApiResponseHelper implements ResponseGenerator, ResourceIdSupport {
         response.setId(asn.getUuid());
         if (asn.getAccountId() != null) {
             Account account = ApiDBUtils.findAccountById(asn.getAccountId());
-            response.setAccountId(account.getUuid());
-            response.setAccountName(account.getAccountName());
+            if (account != null) {
+                response.setAccountId(account.getUuid());
+                response.setAccountName(account.getAccountName());
+            }
         }
         if (asn.getDomainId() != null) {
             DomainVO domain = ApiDBUtils.findDomainById(asn.getDomainId());
-            response.setDomainId(domain.getUuid());
-            response.setDomainName(domain.getName());
+            if (domain != null) {
+                response.setDomainId(domain.getUuid());
+                response.setDomainName(domain.getName());
+            }
         }
         DataCenterVO zone = ApiDBUtils.findZoneById(asn.getDataCenterId());
-        response.setZoneId(zone.getUuid());
-        response.setZoneName(zone.getName());
+        if (zone != null) {
+            response.setZoneId(zone.getUuid());
+            response.setZoneName(zone.getName());
+        }
         response.setAsNumber(asn.getAsNumber());
         ASNumberRangeVO range = asNumberRangeDao.findById(asn.getAsNumberRangeId());
         if (Objects.nonNull(range)) {
             response.setAsNumberRangeId(range.getUuid());
             String rangeText = String.format("%s-%s", range.getStartASNumber(), range.getEndASNumber());
             response.setAsNumberRange(rangeText);
-        } else {
-            logger.info("Range is null for AS number: "+ asn.getAsNumber());
+
         }
         response.setAllocated(asn.getAllocatedTime());
         response.setAllocationState(asn.isAllocated() ? "Allocated" : "Free");
         if (asn.getVpcId() != null) {
             VpcVO vpc = ApiDBUtils.findVpcById(asn.getVpcId());
-            response.setVpcId(vpc.getUuid());
-            response.setVpcName(vpc.getName());
+            if (vpc != null) {
+                response.setVpcId(vpc.getUuid());
+                response.setVpcName(vpc.getName());
+            }
         } else if (asn.getNetworkId() != null) {
             NetworkVO network = ApiDBUtils.findNetworkById(asn.getNetworkId());
-            response.setAssociatedNetworkId(network.getUuid());
-            response.setAssociatedNetworkName(network.getName());
+            if (network != null) {
+                response.setAssociatedNetworkId(network.getUuid());
+                response.setAssociatedNetworkName(network.getName());
+            }
         }
         response.setCreated(asn.getCreated());
         response.setObjectName("asnumber");
@@ -5788,7 +5808,9 @@ public class ApiResponseHelper implements ResponseGenerator, ResourceIdSupport {
     @Override
     public SharedFSResponse createSharedFSResponse(ResponseView view, SharedFS sharedFS) {
         SharedFSJoinVO sharedFSView = ApiDBUtils.newSharedFSView(sharedFS);
-        return ApiDBUtils.newSharedFSResponse(view, sharedFSView);
+        SharedFSResponse response = ApiDBUtils.newSharedFSResponse(view, sharedFSView);
+        response.setCreation(sharedFS);
+        return response;
     }
 protected Map<String, ResourceIcon> getResourceIconsUsingOsCategory(List<TemplateResponse> responses) {
         Set<Long> guestOsCategoryIds = responses.stream().map(TemplateResponse::getOsTypeCategoryId).collect(Collectors.toSet());

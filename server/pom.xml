@@ -29,6 +29,12 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>2.2.224</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>com.mysql</groupId>
             <artifactId>mysql-connector-j</artifactId>
         </dependency>
@@ -288,6 +294,8 @@
                                       tofile="${project.build.outputDirectory}/storage-runtime/bootstrap/ablestack-storage-runtime-updater" />
                                 <copy file="${project.basedir}/../systemvm/debian/usr/local/lib/ablestack-storage/runtime_updater.py"
                                       tofile="${project.build.outputDirectory}/storage-runtime/bootstrap/runtime_updater.py" />
+                                <copy file="${project.basedir}/../systemvm/debian/usr/local/lib/ablestack-storage/runtime-baseline-profile.json"
+                                      tofile="${project.build.outputDirectory}/storage-runtime/bootstrap/runtime-baseline-profile.json" />
                                 <copy todir="${project.build.outputDirectory}/storage-runtime/trusted-keys">
                                     <fileset dir="${project.basedir}/../systemvm/debian/etc/ablestack-storage/runtime-trusted-keys">
                                         <include name="*.pem" />

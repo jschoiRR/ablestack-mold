@@ -673,7 +673,7 @@ export default {
       columns: ['name', 'status', 'compressionstatus', 'validationstatus', 'size', 'virtualsize', 'virtualmachinename', 'backupofferingname', 'intervaltype', 'type', 'created', 'account', 'domain', 'zone'],
       details: ['name', 'description', 'virtualmachinename', 'id', 'intervaltype', 'type', 'externalid', 'size', 'virtualsize', 'volumes', 'backupofferingname', 'backupjobdetails', 'restorejobid', 'restorejobstate', 'restorejobdetails', 'restorejoblogpath', 'zone', 'account', 'domain', 'created'],
       searchFilters: () => {
-        var filters = ['name', 'zoneid', 'domainid', 'account', 'backupofferingname', 'status']
+        var filters = ['name', 'virtualmachineid', 'zoneid', 'domainid', 'account', 'backupofferingname', 'status']
         return filters
       },
       tabs: [
@@ -751,6 +751,15 @@ export default {
               value: (record) => { return record.id }
             }
           }
+        },
+        {
+          api: 'getBackupImageInfo',
+          icon: 'info-circle-outlined',
+          label: 'label.backup.image.information',
+          dataView: true,
+          popup: true,
+          show: record => isAdmin() && String(record.provider || '').toLowerCase() === 'ablestack-netbackup' && isVolumeBackup(record),
+          component: shallowRef(defineAsyncComponent(() => import('@/views/storage/BackupImageInfo.vue')))
         },
         {
           api: 'getBackupStagingInfo',
@@ -842,10 +851,10 @@ export default {
       resourceType: 'backupSchedule',
       params: { listall: true },
       columns: () => {
-        var fields = ['intervaltype', 'maxbackups', 'schedule', 'timezone', 'virtualmachinename']
+        var fields = ['intervaltype', 'maxbackups', 'schedule', 'timezone', 'virtualmachinename', 'quiescevm']
         return fields
       },
-      searchFilters: ['virtualmachineid'],
+      searchFilters: ['virtualmachineid', 'intervaltype', 'quiescevm'],
       actions: [
         {
           api: 'createBackupSchedule',
@@ -988,7 +997,7 @@ export default {
       permission: ['listSharedFileSystems'],
       resourceType: 'SharedFS',
       columns: () => {
-        const fields = ['name', 'state', 'sizegb']
+        const fields = ['name', 'state', 'capacity']
         const metricsFields = ['diskkbsread', 'diskkbswrite', 'utilization', 'physicalsize']
 
         if (store.getters.metrics) {
@@ -1007,7 +1016,8 @@ export default {
 
         return fields
       },
-      details: ['id', 'name', 'description', 'state', 'filesystem', 'diskofferingdisplaytext', 'ipaddress', 'sizegb', 'provider', 'protocol', 'provisioningtype', 'utilization', 'diskkbsread', 'diskkbswrite', 'diskioread', 'diskiowrite', 'account', 'domain', 'created'],
+      optionalColumns: ['sizegb', 'bootrecovery'],
+      details: ['id', 'name', 'description', 'state', 'filesystem', 'diskofferingdisplaytext', 'ipaddress', 'provider', 'protocol', 'provisioningtype', 'utilization', 'diskkbsread', 'diskkbswrite', 'diskioread', 'diskiowrite', 'account', 'domain', 'created'],
       tabs: [{
         component: shallowRef(defineAsyncComponent(() => import('@/views/storage/SharedFSTab.vue')))
       }],
@@ -1018,6 +1028,7 @@ export default {
       actions: [
         {
           api: 'createSharedFileSystem',
+          fixedFormFooter: true,
           icon: 'plus-outlined',
           docHelp: 'adminguide/storage.html#creating-a-new-file-share',
           label: 'label.create.sharedfs',
@@ -1026,7 +1037,34 @@ export default {
           component: shallowRef(defineAsyncComponent(() => import('@/views/storage/CreateSharedFS.vue')))
         },
         {
+          api: 'getSharedFileSystemPreparation',
+          icon: 'clock-circle-outlined',
+          label: 'label.sharedfs.preparation.status',
+          dataView: true,
+          popup: true,
+          selfManagedDialog: true,
+          component: shallowRef(defineAsyncComponent(() => import('@/views/storage/SharedFSPreparationStatus.vue'))),
+          show: record => !!record.creationrequestid && !!record.preparation
+        },
+        {
+          api: 'resumeSharedFileSystemCreation',
+          icon: 'close-circle-outlined',
+          label: 'label.sharedfs.initial.cancel',
+          message: 'message.sharedfs.initial.corrupt',
+          dataView: true,
+          popup: true,
+          args: [],
+          mapping: {
+            id: { value: record => record.id },
+            requestid: { value: record => record.creationrequestid },
+            action: { value: () => 'CANCEL_PREPARATION' }
+          },
+          show: record => record.creationstage === 'CORRUPT' && !!record.creationrequestid &&
+            !record.virtualmachineid && ['Allocated', 'Error'].includes(record.state)
+        },
+        {
           api: 'updateSharedFileSystem',
+          standardDialogSize: 'sm',
           icon: 'edit-outlined',
           docHelp: 'adminguide/storage.html#lifecycle-operations',
           label: 'label.update.sharedfs',
@@ -1071,16 +1109,18 @@ export default {
           show: (record) => { return ['Stopped', 'Ready', 'Detached'].includes(record.state) }
         },
         {
-          api: 'getStorageServiceRuntimeUpgradeCapabilities',
-          icon: 'cloud-upload-outlined',
-          label: 'label.storage.service.runtime.upgrade',
+          api: 'getSharedFileSystemComputeStatus',
+          icon: 'arrows-alt-outlined',
+          label: 'label.sharedfs.compute.online',
           dataView: true,
           popup: true,
-          component: shallowRef(defineAsyncComponent(() => import('@/views/storage/StorageServiceRuntimeUpgrade.vue'))),
-          show: (record) => { return ['Ready', 'Stopped'].includes(record.state) }
+          standardDialogSize: 'lg',
+          component: shallowRef(defineAsyncComponent(() => import('@/views/storage/SharedFSCompute.vue'))),
+          show: (record) => record.state === 'Ready' && 'changeSharedFileSystemServiceOffering' in store.getters.apis
         },
         {
           api: 'changeSharedFileSystemServiceOffering',
+          standardDialogSize: 'md',
           icon: 'arrows-alt-outlined',
           docHelp: 'adminguide/storage.html#lifecycle-operations',
           label: 'label.change.service.offering',
@@ -1097,9 +1137,11 @@ export default {
           message: 'message.action.destroy.sharedfs',
           dataView: true,
           popup: true,
+          standardDialogSize: 'xl',
+          component: shallowRef(defineAsyncComponent(() => import('@/views/storage/SharedFSDeletion.vue'))),
           groupAction: true,
           groupMap: (selection, values) => { return selection.map(x => { return { id: x, expunge: values.expunge, forced: values.forced } }) },
-          args: ['expunge', 'forced'],
+          args: [],
           show: (record) => { return !['Destroyed', 'Expunging', 'Error'].includes(record.state) }
         },
         {
@@ -1119,7 +1161,20 @@ export default {
           message: 'message.action.expunge.sharedfs',
           dataView: true,
           popup: true,
+          standardDialogSize: 'xl',
+          component: shallowRef(defineAsyncComponent(() => import('@/views/storage/SharedFSDeletion.vue'))),
           show: (record) => { return ['Destroyed', 'Expunging', 'Error'].includes(record.state) }
+        },
+        {
+          api: 'listSharedFileSystemDeletionOperations',
+          listView: true,
+          icon: 'clock-circle-outlined',
+          toolbarLabel: 'label.sharedfs.delete.history',
+          label: 'label.sharedfs.delete.history',
+          dataView: false,
+          popup: true,
+          standardDialogSize: 'xl',
+          component: shallowRef(defineAsyncComponent(() => import('@/views/storage/SharedFSDeletionHistory.vue')))
         }
       ]
     }
