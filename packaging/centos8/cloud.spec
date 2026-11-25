@@ -244,9 +244,12 @@ mkdir -p ${RPM_BUILD_ROOT}%{_datadir}/%{name}-common/lib
 mkdir -p ${RPM_BUILD_ROOT}/usr/bin
 cp -r scripts/* ${RPM_BUILD_ROOT}%{_datadir}/%{name}-common/scripts
 # Bundle the current source SQL for the runtime schema replay utility.
-mkdir -p ${RPM_BUILD_ROOT}%{_datadir}/%{name}-common/scripts/util/schema-repair/sql
-cp engine/schema/src/main/resources/META-INF/db/schema-*.sql ${RPM_BUILD_ROOT}%{_datadir}/%{name}-common/scripts/util/schema-repair/sql/
-cp -r engine/schema/src/main/resources/META-INF/db/procedures ${RPM_BUILD_ROOT}%{_datadir}/%{name}-common/scripts/util/schema-repair/sql/
+schema_repair_dir="${RPM_BUILD_ROOT}%{_datadir}/%{name}-common/scripts/util/schema-repair"
+mkdir -p "$schema_repair_dir/sql"
+cp engine/schema/src/main/resources/META-INF/db/schema-*.sql "$schema_repair_dir/sql/"
+cp -r engine/schema/src/main/resources/META-INF/db/procedures "$schema_repair_dir/sql/"
+# Fail the build if the packaged tool cannot read the bundled SQL.
+bash "$schema_repair_dir/mold-schema-repair.sh" --list --sql-dir "$schema_repair_dir/sql" || exit 1
 install -D systemvm/dist/* ${RPM_BUILD_ROOT}%{_datadir}/%{name}-common/vms/
 install python/lib/cloud_utils.py ${RPM_BUILD_ROOT}%{_datadir}/%{name}-common/python-site/cloud_utils.py
 cp -r python/lib/cloudutils ${RPM_BUILD_ROOT}%{_datadir}/%{name}-common/python-site/

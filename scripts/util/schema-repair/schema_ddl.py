@@ -46,6 +46,7 @@ def index_spec(definition):
 
 DDL_PROCS={
  'IDEMPOTENT_ADD_COLUMN','IDEMPOTENT_CHANGE_COLUMN','IDEMPOTENT_MODIFY_COLUMN_CHAR_SET',
+ 'ADD_RUNTIME_CATALOG_COLUMN',
  'IDEMPOTENT_ADD_KEY','IDEMPOTENT_ADD_UNIQUE_KEY','IDEMPOTENT_ADD_UNIQUE_INDEX',
  'IDEMPOTENT_DROP_COLUMN','IDEMPOTENT_DROP_INDEX','IDEMPOTENT_DROP_UNIQUE_KEY',
  'IDEMPOTENT_ADD_FOREIGN_KEY','IDEMPOTENT_DROP_FOREIGN_KEY',
@@ -164,7 +165,7 @@ class Schema:
 
     def procedure(self,data):
         schema,name,a=data;t=self.resolve(table_name(a[0],schema)) if a else None
-        if name=='IDEMPOTENT_ADD_COLUMN':
+        if name in ('IDEMPOTENT_ADD_COLUMN', 'ADD_RUNTIME_CATALOG_COLUMN'):
             col,definition=a[1:];columns=self.columns(t)
             if col.lower() in columns:return False
             alias=self.column_aliases.get((t,col))
