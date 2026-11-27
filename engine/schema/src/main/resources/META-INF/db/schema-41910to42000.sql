@@ -46,6 +46,8 @@ CALL `cloud`.`IDEMPOTENT_ADD_COLUMN`('cloud.resource_reservation', 'resource_id'
 CALL `cloud`.`IDEMPOTENT_ADD_COLUMN`('cloud.resource_reservation', 'mgmt_server_id', 'bigint unsigned NULL COMMENT "management server id" ');
 CALL `cloud`.`IDEMPOTENT_ADD_COLUMN`('cloud.resource_reservation', 'created', 'datetime DEFAULT NULL COMMENT "date when the reservation was created" ');
 
+-- @repair-target cloud.resource_reservation 8f092558765443ae62bcf1be17573c30823960f439a094937fed75c246f733db
+-- @repair-probe SELECT EXISTS (SELECT 1 FROM cloud.resource_reservation WHERE created IS NULL)
 UPDATE `cloud`.`resource_reservation` SET `created` = now() WHERE created IS NULL;
 
 

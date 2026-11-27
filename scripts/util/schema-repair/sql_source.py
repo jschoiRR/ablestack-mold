@@ -9,7 +9,7 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations.
 """Read SQL and mysql DELIMITER directives; never embed a schema snapshot."""
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 import hashlib
 from pathlib import Path
 import re
@@ -30,6 +30,7 @@ class Statement:
     line: int
     sql: str
     context: str = ''
+    repair: dict = field(default_factory=dict)
 
     @property
     def digest(self):
@@ -44,6 +45,7 @@ class Statement:
 def parse(text, filename='<sql>'):
     if text.startswith('\ufeff'):text=text[1:]
     result=[];buf=[];quote=None;delimiter=';';line=1;start=1;i=0;line_start=True
+    repair = {}
     while i<len(text):
         c=text[i]
         if quote:
@@ -60,10 +62,17 @@ def parse(text, filename='<sql>'):
             match=re.match(r'[ \t]*DELIMITER[ \t]+(\S+)[ \t]*(?:\r?\n|$)',text[i:],re.I)
             if match:
                 if ''.join(buf).strip():raise SourceError(f'{filename}:{line}: DELIMITER inside an unfinished statement')
+                if repair:raise SourceError(f'{filename}:{line}: repair annotation must precede a statement')
                 delimiter=match[1];line+=match[0].count('\n');i+=len(match[0]);continue
         if text.startswith('--',i) and (i+2==len(text) or text[i+2].isspace() or text[i+2] in '-;') or c=='#':
             end=text.find('\n',i)
-            if end<0:i=len(text);break
+            if end<0:end=len(text)
+            comment = text[i:end]
+            if line_start and comment.startswith('-- @repair-'):
+                directive = re.fullmatch(r'-- @repair-(target|probe|apply|review)\s+(\S.*)', comment.rstrip())
+                if not directive or delimiter != ';' or ''.join(buf).strip():
+                    raise SourceError(f'{filename}:{line}: invalid repair annotation')
+                repair.setdefault(directive[1], []).append(directive[2])
             buf.append(' ');i=end;continue
         if text.startswith('/*',i):
             end=text.find('*/',i+2)
@@ -72,7 +81,11 @@ def parse(text, filename='<sql>'):
             line+=text[i:end+2].count('\n');buf.append(' ');i=end+2;continue
         if text.startswith(delimiter,i):
             sql=''.join(buf).strip()
-            if sql:result.append(Statement(filename,start,sql))
+            if sql:
+                result.append(Statement(filename, start, sql, repair=repair))
+                repair = {}
+            elif repair:
+                raise SourceError(f'{filename}:{line}: repair annotation must precede a statement')
             buf=[];i+=len(delimiter);line_start=False;continue
         if c in "'\"`":quote=c
         if not ''.join(buf).strip() and not c.isspace():start=line
@@ -83,6 +96,7 @@ def parse(text, filename='<sql>'):
     if quote:raise SourceError(f'{filename}:{line}: unterminated quoted value')
     if ''.join(buf).strip():raise SourceError(f'{filename}:{start}: missing final DELIMITER')
     if delimiter!=';':raise SourceError(f'{filename}:{line}: DELIMITER was not reset')
+    if repair:raise SourceError(f'{filename}:{line}: repair annotation must precede a statement')
     return result
 
 

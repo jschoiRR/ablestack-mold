@@ -15,9 +15,118 @@
 -- specific language governing permissions and limitations
 -- under the License.
 
---;
 -- Schema upgrade from 4.20.4.0 to 4.21.0.0
---;
+
+-- Check for ambiguous legacy/current objects before changing the schema.
+DROP PROCEDURE IF EXISTS `cloud`.`SCHEMA_42100_REQUIRE`;
+DELIMITER $$
+CREATE PROCEDURE `cloud`.`SCHEMA_42100_REQUIRE`(IN valid BOOLEAN, IN problem VARCHAR(128))
+BEGIN
+    IF NOT COALESCE(valid, FALSE) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = problem;
+    END IF;
+END$$
+
+DROP PROCEDURE IF EXISTS `cloud`.`SCHEMA_42100_REQUIRE_FK`$$
+CREATE PROCEDURE `cloud`.`SCHEMA_42100_REQUIRE_FK`(
+    IN target_table VARCHAR(64), IN fk_name VARCHAR(64),
+    IN target_column VARCHAR(64), IN parent_table VARCHAR(64))
+BEGIN
+    DECLARE matching BOOLEAN;
+    DECLARE problem VARCHAR(128);
+    SELECT COUNT(*) = 1 AND SUM(k.COLUMN_NAME = target_column
+        AND k.REFERENCED_TABLE_SCHEMA = 'cloud' AND k.REFERENCED_TABLE_NAME = parent_table
+        AND k.REFERENCED_COLUMN_NAME = 'id' AND r.DELETE_RULE = 'CASCADE' AND r.UPDATE_RULE IN ('RESTRICT', 'NO ACTION')) = 1
+    INTO matching
+    FROM information_schema.KEY_COLUMN_USAGE k JOIN information_schema.REFERENTIAL_CONSTRAINTS r
+      ON k.CONSTRAINT_SCHEMA = r.CONSTRAINT_SCHEMA AND k.TABLE_NAME = r.TABLE_NAME AND k.CONSTRAINT_NAME = r.CONSTRAINT_NAME
+    WHERE k.TABLE_SCHEMA = 'cloud' AND k.TABLE_NAME = target_table AND k.CONSTRAINT_NAME = fk_name;
+    IF NOT COALESCE(matching, FALSE) THEN
+        SET problem = CONCAT('Unexpected foreign key definition: ', fk_name);
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = problem;
+    END IF;
+END$$
+DELIMITER ;
+
+SET @schema_42100_vm_table_ok = (SELECT COUNT(*) = 1 AND SUM(TABLE_TYPE = 'BASE TABLE') = 1
+    FROM information_schema.TABLES WHERE TABLE_SCHEMA = 'cloud' AND TABLE_NAME IN ('user_vm_details', 'vm_instance_details'));
+CALL `cloud`.`SCHEMA_42100_REQUIRE`(@schema_42100_vm_table_ok,
+    'Expected exactly one of user_vm_details and vm_instance_details to exist as a base table');
+
+SET @schema_42100_object_size_ok = (SELECT COUNT(*) = 1 FROM information_schema.COLUMNS
+    WHERE TABLE_SCHEMA = 'cloud' AND TABLE_NAME = 'object_store' AND COLUMN_NAME IN ('used_bytes', 'used_size'));
+CALL `cloud`.`SCHEMA_42100_REQUIRE`(@schema_42100_object_size_ok,
+    'Expected exactly one of object_store.used_bytes and object_store.used_size');
+
+-- The normal Java upgrade also checks scope. Handle it here for databases whose version already skips that step.
+SET @schema_42100_scope_type = (SELECT DATA_TYPE FROM information_schema.COLUMNS
+    WHERE TABLE_SCHEMA = 'cloud' AND TABLE_NAME = 'configuration' AND COLUMN_NAME = 'scope');
+SET @schema_42100_staged_scope_type = (SELECT DATA_TYPE FROM information_schema.COLUMNS
+    WHERE TABLE_SCHEMA = 'cloud' AND TABLE_NAME = 'configuration' AND COLUMN_NAME = 'new_scope');
+CALL `cloud`.`SCHEMA_42100_REQUIRE`(
+    (@schema_42100_scope_type = 'varchar' AND (@schema_42100_staged_scope_type IS NULL OR @schema_42100_staged_scope_type = 'bigint'))
+    OR (@schema_42100_scope_type IS NULL AND @schema_42100_staged_scope_type = 'bigint')
+    OR (@schema_42100_scope_type = 'bigint' AND @schema_42100_staged_scope_type IS NULL),
+    'Unexpected cloud.configuration.scope / new_scope state');
+
+-- Bit values correspond to ConfigKey.Scope. Preserve values already stored as decimal strings.
+SET @schema_42100_scope_bitmask = 'CASE
+    WHEN scope IS NULL OR TRIM(scope) = '''' THEN 0
+    WHEN TRIM(scope) = ''Global'' THEN 1
+    WHEN TRIM(scope) = ''Zone'' THEN 2
+    WHEN TRIM(scope) = ''Cluster'' THEN 4
+    WHEN TRIM(scope) = ''StoragePool'' THEN 8
+    WHEN TRIM(scope) = ''ManagementServer'' THEN 16
+    WHEN TRIM(scope) = ''ImageStore'' THEN 32
+    WHEN TRIM(scope) = ''Domain'' THEN 64
+    WHEN TRIM(scope) = ''Account'' THEN 128
+    WHEN TRIM(scope) REGEXP ''^[0-9]{1,10}$'' THEN
+        CASE WHEN CAST(TRIM(scope) AS UNSIGNED) <= 255 THEN CAST(TRIM(scope) AS UNSIGNED) END
+    END';
+SET @sql := CASE
+    WHEN @schema_42100_scope_type = 'varchar' THEN CONCAT('SELECT NOT EXISTS (SELECT 1 FROM cloud.configuration WHERE (',
+        @schema_42100_scope_bitmask, ') IS NULL) INTO @schema_42100_scope_valid')
+    WHEN @schema_42100_scope_type IS NULL THEN 'SELECT NOT EXISTS (SELECT 1 FROM cloud.configuration WHERE new_scope IS NULL OR new_scope NOT BETWEEN 0 AND 255) INTO @schema_42100_scope_valid'
+    ELSE 'SELECT NOT EXISTS (SELECT 1 FROM cloud.configuration WHERE scope IS NULL OR scope NOT BETWEEN 0 AND 255) INTO @schema_42100_scope_valid'
+END;
+PREPARE s FROM @sql;
+EXECUTE s;
+DEALLOCATE PREPARE s;
+CALL `cloud`.`SCHEMA_42100_REQUIRE`(@schema_42100_scope_valid,
+    'Unrecognized or incomplete cloud.configuration.scope values');
+
+SET @sql := IF(@schema_42100_scope_type = 'varchar' AND @schema_42100_staged_scope_type IS NULL,
+    'ALTER TABLE cloud.configuration ADD COLUMN new_scope BIGINT NULL', 'SELECT 1');
+PREPARE s FROM @sql;
+EXECUTE s;
+DEALLOCATE PREPARE s;
+
+SET @sql := IF(@schema_42100_scope_type = 'varchar',
+    CONCAT('UPDATE cloud.configuration SET new_scope = ', @schema_42100_scope_bitmask,
+        ' WHERE NOT (new_scope <=> (', @schema_42100_scope_bitmask, '))'), 'SELECT 1');
+PREPARE s FROM @sql;
+EXECUTE s;
+DEALLOCATE PREPARE s;
+
+-- Keep the source column until the drop and replacement can commit together.
+SET @schema_42100_scope_definition = 'BIGINT NOT NULL DEFAULT 0 COMMENT ''Bitmask for scope(s) of this parameter''';
+SET @sql := CASE
+    WHEN @schema_42100_scope_type = 'varchar' THEN CONCAT('ALTER TABLE cloud.configuration DROP COLUMN scope, CHANGE COLUMN new_scope scope ', @schema_42100_scope_definition)
+    WHEN @schema_42100_scope_type IS NULL THEN CONCAT('ALTER TABLE cloud.configuration CHANGE COLUMN new_scope scope ', @schema_42100_scope_definition)
+    WHEN EXISTS (SELECT 1 FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = 'cloud' AND TABLE_NAME = 'configuration'
+        AND COLUMN_NAME = 'scope' AND (IS_NULLABLE <> 'NO' OR NOT (COLUMN_DEFAULT <=> '0')))
+        THEN CONCAT('ALTER TABLE cloud.configuration MODIFY COLUMN scope ', @schema_42100_scope_definition)
+    ELSE 'SELECT 1'
+END;
+PREPARE s FROM @sql;
+EXECUTE s;
+DEALLOCATE PREPARE s;
+
+-- Re-apply the VPC default on the legacy schema without resetting later operator changes.
+UPDATE `cloud`.`network_offerings` SET conserve_mode = 1
+WHERE name = 'DefaultIsolatedNetworkOfferingForVpcNetworks' AND NOT (conserve_mode <=> 1)
+  AND EXISTS (SELECT 1 FROM information_schema.TABLES
+      WHERE TABLE_SCHEMA = 'cloud' AND TABLE_NAME = 'user_vm_details');
 
 -- Re-apply schema change that may be missing from earlier 4.21 installations.
 CALL `cloud`.`IDEMPOTENT_ADD_COLUMN`('cloud.op_ha_work', 'reason', 'varchar(32) DEFAULT NULL COMMENT "Reason for the HA work"');
@@ -27,7 +136,10 @@ CALL `cloud`.`IDEMPOTENT_ADD_COLUMN`('cloud.backups', 'backup_schedule_id', 'BIG
 CALL `cloud`.`IDEMPOTENT_ADD_COLUMN`('cloud.backup_schedule', 'quiescevm', 'tinyint(1) default NULL COMMENT "Quiesce VM before taking backup"');
 
 -- Update default value for the config 'vm.network.nic.max.secondary.ipaddresses' (and value to default value if value is null)
-UPDATE `cloud`.`configuration` SET default_value = '10' WHERE name = 'vm.network.nic.max.secondary.ipaddresses';
+UPDATE `cloud`.`configuration` SET default_value = '10'
+WHERE name = 'vm.network.nic.max.secondary.ipaddresses' AND (default_value IS NULL OR default_value = '256');
+-- @repair-target cloud.configuration 21008e38f8b5b6538fbd26bea6076c02d8f55ba0914cf8c4b39b965925b15dcb
+-- @repair-probe SELECT EXISTS (SELECT 1 FROM cloud.configuration WHERE name='vm.network.nic.max.secondary.ipaddresses' AND value IS NULL)
 UPDATE `cloud`.`configuration` SET value = '10' WHERE name = 'vm.network.nic.max.secondary.ipaddresses' AND value IS NULL;
 
 -- Add console_endpoint_creator_address column to cloud.console_session table
@@ -45,9 +157,9 @@ WHERE rp.rule = 'quotaStatement'
 
 CALL `cloud`.`IDEMPOTENT_ADD_COLUMN`('cloud.host', 'last_mgmt_server_id', 'bigint unsigned DEFAULT NULL COMMENT "last management server this host is connected to" AFTER `mgmt_server_id`');
 
------------------------------------------------------------
+-- ---------------------------------------------------------
 -- CKS Enhancements:
------------------------------------------------------------
+-- ---------------------------------------------------------
 -- Add for_cks column to the vm_template table
 CALL `cloud`.`IDEMPOTENT_ADD_COLUMN`('cloud.vm_template','for_cks', 'int(1) unsigned DEFAULT "0" COMMENT "if true, the template can be used for CKS cluster deployment"');
 
@@ -73,14 +185,28 @@ CALL `cloud`.`IDEMPOTENT_ADD_FOREIGN_KEY`('cloud.kubernetes_cluster','fk_cluster
 CALL `cloud`.`IDEMPOTENT_ADD_FOREIGN_KEY`('cloud.kubernetes_cluster','fk_cluster__worker_node_template_id','(`worker_node_template_id`)','`vm_template`(`id`)');
 CALL `cloud`.`IDEMPOTENT_ADD_FOREIGN_KEY`('cloud.kubernetes_cluster','fk_cluster__etcd_node_template_id','(`etcd_node_template_id`)','`vm_template`(`id`)');
 
+CALL `cloud`.`SCHEMA_42100_REQUIRE_FK`('kubernetes_cluster', 'fk_cluster__control_node_service_offering_id', 'control_node_service_offering_id', 'service_offering');
+CALL `cloud`.`SCHEMA_42100_REQUIRE_FK`('kubernetes_cluster', 'fk_cluster__worker_node_service_offering_id', 'worker_node_service_offering_id', 'service_offering');
+CALL `cloud`.`SCHEMA_42100_REQUIRE_FK`('kubernetes_cluster', 'fk_cluster__etcd_node_service_offering_id', 'etcd_node_service_offering_id', 'service_offering');
+CALL `cloud`.`SCHEMA_42100_REQUIRE_FK`('kubernetes_cluster', 'fk_cluster__control_node_template_id', 'control_node_template_id', 'vm_template');
+CALL `cloud`.`SCHEMA_42100_REQUIRE_FK`('kubernetes_cluster', 'fk_cluster__worker_node_template_id', 'worker_node_template_id', 'vm_template');
+CALL `cloud`.`SCHEMA_42100_REQUIRE_FK`('kubernetes_cluster', 'fk_cluster__etcd_node_template_id', 'etcd_node_template_id', 'vm_template');
+
+UPDATE cloud.kubernetes_cluster_vm_map nodes
+JOIN cloud.kubernetes_cluster cluster ON nodes.cluster_id = cluster.id
+JOIN cloud.kubernetes_supported_version versions ON cluster.kubernetes_version_id = versions.id
+SET nodes.kubernetes_node_version = versions.semantic_version
+WHERE cluster.removed IS NULL AND (nodes.kubernetes_node_version IS NULL OR nodes.kubernetes_node_version = '')
+  AND versions.semantic_version IS NOT NULL;
+
 -- Add for_cks column to the user_data table to represent CNI Configuration stored as userdata
 CALL `cloud`.`IDEMPOTENT_ADD_COLUMN`('cloud.user_data','for_cks', 'int(1) unsigned DEFAULT "0" COMMENT "if true, the user data represent CNI configuration meant for CKS use only"');
 
 -- Add use VR IP as resolver option on VPC
 CALL `cloud`.`IDEMPOTENT_ADD_COLUMN`('cloud.vpc','use_router_ip_resolver', 'tinyint(1) DEFAULT 0 COMMENT "use router ip as resolver instead of dns options"');
------------------------------------------------------------
+-- ---------------------------------------------------------
 -- END - CKS Enhancements
------------------------------------------------------------
+-- ---------------------------------------------------------
 
 -- Add table for reconcile commands
 CREATE TABLE IF NOT EXISTS `cloud`.`reconcile_commands` (
@@ -105,7 +231,7 @@ CREATE TABLE IF NOT EXISTS `cloud`.`reconcile_commands` (
     CONSTRAINT `fk_reconcile_command__host_id` FOREIGN KEY (`host_id`) REFERENCES `host`(`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---- KVM Incremental Snapshots
+-- KVM Incremental Snapshots
 
 CALL `cloud`.`IDEMPOTENT_ADD_COLUMN`('cloud.snapshot_store_ref', 'kvm_checkpoint_path', 'varchar(255)');
 CALL `cloud`.`IDEMPOTENT_ADD_COLUMN`('cloud.snapshot_store_ref', 'end_of_chain', 'int(1) unsigned');
@@ -126,6 +252,25 @@ CALL `cloud`.`IDEMPOTENT_ADD_COLUMN`('cloud.host_pod_ref', 'storage_access_group
 CALL `cloud`.`IDEMPOTENT_ADD_COLUMN`('cloud.data_center', 'storage_access_groups', 'varchar(255) DEFAULT NULL COMMENT "storage access groups for the hosts in the zone"');
 
 -- Add featured, sort_key, created, removed columns for guest_os_category
+-- Reclassify the legacy catalog once. Keep catalog choices on databases with the new columns.
+CREATE TABLE IF NOT EXISTS `cloud`.`ablestack_schema_migration` (
+    `name` VARCHAR(191) NOT NULL PRIMARY KEY,
+    `state` VARCHAR(16) NOT NULL,
+    `updated` DATETIME NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+SET @schema_42100_legacy_catalog = NOT EXISTS (
+    SELECT 1 FROM cloud.ablestack_schema_migration
+    WHERE name = 'schema-4.21.0.0-guest-os-catalog-v1' AND state = 'Complete'
+) AND (
+    NOT EXISTS (SELECT 1 FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = 'cloud'
+        AND TABLE_NAME = 'guest_os_category' AND COLUMN_NAME = 'featured')
+    OR EXISTS (SELECT 1 FROM cloud.ablestack_schema_migration
+        WHERE name = 'schema-4.21.0.0-guest-os-catalog-v1' AND state = 'Pending')
+);
+INSERT IGNORE INTO cloud.ablestack_schema_migration (name, state, updated)
+SELECT 'schema-4.21.0.0-guest-os-catalog-v1', 'Pending', NOW() WHERE @schema_42100_legacy_catalog;
+
 CALL `cloud`.`IDEMPOTENT_ADD_COLUMN`('cloud.guest_os_category', 'featured', 'tinyint(1) NOT NULL DEFAULT 0 COMMENT "whether the category is featured or not" AFTER `uuid`');
 CALL `cloud`.`IDEMPOTENT_ADD_COLUMN`('cloud.guest_os_category', 'sort_key', 'int NOT NULL DEFAULT 0 COMMENT "sort key used for customising sort method" AFTER `featured`');
 CALL `cloud`.`IDEMPOTENT_ADD_COLUMN`('cloud.guest_os_category', 'created', 'datetime COMMENT "date on which the category was created" AFTER `sort_key`');
@@ -137,7 +282,7 @@ DROP PROCEDURE IF EXISTS `cloud`.`INSERT_CATEGORY_IF_NOT_EXIST`;
 DELIMITER $$
 CREATE PROCEDURE `cloud`.`INSERT_CATEGORY_IF_NOT_EXIST`(IN os_name VARCHAR(255))
 BEGIN
-    IF NOT EXISTS ((SELECT 1 FROM `cloud`.`guest_os_category` WHERE name = os_name))
+    IF @schema_42100_legacy_catalog AND NOT EXISTS (SELECT 1 FROM `cloud`.`guest_os_category` WHERE name = os_name)
     THEN
         INSERT INTO `cloud`.`guest_os_category` (name, uuid)
             VALUES (os_name, UUID())
@@ -153,8 +298,11 @@ CALL `cloud`.`INSERT_CATEGORY_IF_NOT_EXIST`('AlmaLinux');
 DROP PROCEDURE IF EXISTS `cloud`.`UPDATE_CATEGORY_FOR_GUEST_OSES`;
 DELIMITER $$
 CREATE PROCEDURE `cloud`.`UPDATE_CATEGORY_FOR_GUEST_OSES`(IN category_name VARCHAR(255), IN os_name VARCHAR(255))
-BEGIN
+catalog_update: BEGIN
     DECLARE category_id BIGINT
+;   IF NOT @schema_42100_legacy_catalog THEN
+        LEAVE catalog_update
+;   END IF
 ;   SELECT `id` INTO category_id
     FROM `cloud`.`guest_os_category`
     WHERE `name` = category_name
@@ -165,6 +313,7 @@ BEGIN
 ;   UPDATE `cloud`.`guest_os`
     SET `category_id` = category_id
     WHERE `display_name` LIKE CONCAT('%', os_name, '%')
+      AND NOT (guest_os.category_id <=> category_id)
 ; END$$
 DELIMITER ;
 CALL `cloud`.`UPDATE_CATEGORY_FOR_GUEST_OSES`('Rocky Linux', 'Rocky Linux');
@@ -175,9 +324,11 @@ CALL `cloud`.`UPDATE_CATEGORY_FOR_GUEST_OSES`('Fedora', 'Fedora');
 DROP PROCEDURE IF EXISTS `cloud`.`UPDATE_NEW_AND_DELETE_OLD_CATEGORY_FOR_GUEST_OS`;
 DELIMITER $$
 CREATE PROCEDURE `cloud`.`UPDATE_NEW_AND_DELETE_OLD_CATEGORY_FOR_GUEST_OS`(IN to_category_name VARCHAR(255), IN from_category_name VARCHAR(255))
-BEGIN
-    DECLARE done INT DEFAULT 0
-;   DECLARE to_category_id BIGINT
+catalog_retire: BEGIN
+    DECLARE to_category_id BIGINT
+;   IF NOT @schema_42100_legacy_catalog THEN
+        LEAVE catalog_retire
+;   END IF
 ;   SELECT id INTO to_category_id
     FROM `cloud`.`guest_os_category`
     WHERE `name` = to_category_name
@@ -187,8 +338,8 @@ BEGIN
 ;   END IF
 ;   UPDATE `cloud`.`guest_os`
     SET `category_id` = to_category_id
-    WHERE `category_id` = (SELECT `id` FROM `cloud`.`guest_os_category` WHERE `name` = from_category_name)
-;   UPDATE `cloud`.`guest_os_category` SET `removed`=now() WHERE `name` = from_category_name
+    WHERE `category_id` IN (SELECT `id` FROM `cloud`.`guest_os_category` WHERE `name` = from_category_name)
+;   UPDATE `cloud`.`guest_os_category` SET `removed`=now() WHERE `name` = from_category_name AND removed IS NULL
 ; END$$
 DELIMITER ;
 CALL `cloud`.`UPDATE_NEW_AND_DELETE_OLD_CATEGORY_FOR_GUEST_OS`('Other', 'Novel');
@@ -197,7 +348,7 @@ CALL `cloud`.`UPDATE_NEW_AND_DELETE_OLD_CATEGORY_FOR_GUEST_OS`('Other', 'Unix');
 CALL `cloud`.`UPDATE_NEW_AND_DELETE_OLD_CATEGORY_FOR_GUEST_OS`('Other', 'Mac');
 
 -- Update featured for existing guest OS categories
-UPDATE `cloud`.`guest_os_category` SET featured = 1;
+UPDATE `cloud`.`guest_os_category` SET featured = 1 WHERE @schema_42100_legacy_catalog AND featured <> 1;
 
 -- Update sort order for all guest OS categories
 UPDATE `cloud`.`guest_os_category`
@@ -214,7 +365,10 @@ SET `sort_key` = CASE
     WHEN `name` = 'Windows' THEN 10
     WHEN `name` = 'Other' THEN 11
     ELSE `sort_key`
-END;
+END WHERE @schema_42100_legacy_catalog;
+
+UPDATE cloud.ablestack_schema_migration SET state = 'Complete', updated = NOW()
+WHERE name = 'schema-4.21.0.0-guest-os-catalog-v1' AND state = 'Pending' AND @schema_42100_legacy_catalog;
 -- End: Changes for Guest OS category cleanup
 
 -- Update description for configuration: host.capacityType.to.order.clusters
@@ -306,8 +460,8 @@ CREATE TABLE IF NOT EXISTS `cloud`.`gpu_device` (
 CALL `cloud`.`IDEMPOTENT_ADD_COLUMN`('cloud.service_offering', 'vgpu_profile_id', 'bigint unsigned DEFAULT NULL COMMENT "vgpu profile ID"');
 CALL `cloud`.`IDEMPOTENT_ADD_COLUMN`('cloud.service_offering', 'gpu_count', 'int unsigned DEFAULT NULL COMMENT "number of GPUs"');
 CALL `cloud`.`IDEMPOTENT_ADD_COLUMN`('cloud.service_offering', 'gpu_display', 'boolean DEFAULT false COMMENT "enable GPU display"');
-CALL `cloud`.`IDEMPOTENT_DROP_FOREIGN_KEY`('cloud.service_offering','fk_service_offering__vgpu_profile_id');
 CALL `cloud`.`IDEMPOTENT_ADD_FOREIGN_KEY`('cloud.service_offering', 'fk_service_offering__vgpu_profile_id', '(vgpu_profile_id)', '`vgpu_profile`(`id`)');
+CALL `cloud`.`SCHEMA_42100_REQUIRE_FK`('service_offering', 'fk_service_offering__vgpu_profile_id', 'vgpu_profile_id', 'vgpu_profile');
 
 -- Netris Plugin
 CREATE TABLE IF NOT EXISTS `cloud`.`netris_providers` (
@@ -329,12 +483,42 @@ CREATE TABLE IF NOT EXISTS `cloud`.`netris_providers` (
                                             INDEX `i_netris_providers__zone_id`(`zone_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Drop the Tungsten and NSX columns from the network offerings (replaced by checking the provider on the ntwk_offering_service_map table)
-CALL `cloud`.`IDEMPOTENT_DROP_COLUMN`('cloud.network_offerings', 'for_tungsten');
-CALL `cloud`.`IDEMPOTENT_DROP_COLUMN`('cloud.network_offerings', 'for_nsx');
+-- The new provider mappings do not use these flags. Drop only unused legacy columns; retain nonzero values for review.
+SET @sql := IF(EXISTS (SELECT 1 FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = 'cloud'
+    AND TABLE_NAME = 'network_offerings' AND COLUMN_NAME = 'for_tungsten'),
+    'SELECT NOT EXISTS (SELECT 1 FROM cloud.network_offerings WHERE for_tungsten <> 0) INTO @schema_42100_drop_flag',
+    'SELECT 0 INTO @schema_42100_drop_flag');
+PREPARE s FROM @sql;
+EXECUTE s;
+DEALLOCATE PREPARE s;
+SET @sql := IF(@schema_42100_drop_flag, 'ALTER TABLE cloud.network_offerings DROP COLUMN for_tungsten', 'SELECT 1');
+PREPARE s FROM @sql;
+EXECUTE s;
+DEALLOCATE PREPARE s;
 
--- Drop the Tungsten and NSX columns from the VPC offerings (replaced by checking the provider on the vpc_offering_service_map table)
-CALL `cloud`.`IDEMPOTENT_DROP_COLUMN`('cloud.vpc_offerings', 'for_nsx');
+SET @sql := IF(EXISTS (SELECT 1 FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = 'cloud'
+    AND TABLE_NAME = 'network_offerings' AND COLUMN_NAME = 'for_nsx'),
+    'SELECT NOT EXISTS (SELECT 1 FROM cloud.network_offerings WHERE for_nsx <> 0) INTO @schema_42100_drop_flag',
+    'SELECT 0 INTO @schema_42100_drop_flag');
+PREPARE s FROM @sql;
+EXECUTE s;
+DEALLOCATE PREPARE s;
+SET @sql := IF(@schema_42100_drop_flag, 'ALTER TABLE cloud.network_offerings DROP COLUMN for_nsx', 'SELECT 1');
+PREPARE s FROM @sql;
+EXECUTE s;
+DEALLOCATE PREPARE s;
+
+SET @sql := IF(EXISTS (SELECT 1 FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = 'cloud'
+    AND TABLE_NAME = 'vpc_offerings' AND COLUMN_NAME = 'for_nsx'),
+    'SELECT NOT EXISTS (SELECT 1 FROM cloud.vpc_offerings WHERE for_nsx <> 0) INTO @schema_42100_drop_flag',
+    'SELECT 0 INTO @schema_42100_drop_flag');
+PREPARE s FROM @sql;
+EXECUTE s;
+DEALLOCATE PREPARE s;
+SET @sql := IF(@schema_42100_drop_flag, 'ALTER TABLE cloud.vpc_offerings DROP COLUMN for_nsx', 'SELECT 1');
+PREPARE s FROM @sql;
+EXECUTE s;
+DEALLOCATE PREPARE s;
 
 -- Add next_hop to the static_routes table
 CALL `cloud`.`IDEMPOTENT_ADD_COLUMN`('cloud.static_routes', 'next_hop', 'varchar(50) COMMENT "next hop of the static route" AFTER `vpc_gateway_id`');
@@ -343,8 +527,12 @@ CALL `cloud`.`IDEMPOTENT_ADD_COLUMN`('cloud.static_routes', 'next_hop', 'varchar
 CALL `cloud`.`IDEMPOTENT_ADD_COLUMN`('cloud.user_ip_address', 'for_router', 'tinyint(1) DEFAULT 0 COMMENT "True if the ip address is used by Domain Router to expose services"');
 
 -- Add Netris Autoscaling rules
-INSERT IGNORE INTO `cloud`.`counter` (uuid, provider, source, name, value, created) VALUES (UUID(), 'Netris', 'cpu', 'VM CPU - average percentage', 'vm.cpu.average.percentage', NOW());
-INSERT IGNORE INTO `cloud`.`counter` (uuid, provider, source, name, value, created) VALUES (UUID(), 'Netris', 'memory', 'VM Memory - average percentage', 'vm.memory.average.percentage', NOW());
+INSERT INTO `cloud`.`counter` (uuid, provider, source, name, value, created)
+SELECT UUID(), 'Netris', 'cpu', 'VM CPU - average percentage', 'vm.cpu.average.percentage', NOW() FROM DUAL
+WHERE NOT EXISTS (SELECT 1 FROM cloud.counter WHERE provider = 'Netris' AND source = 'cpu' AND value = 'vm.cpu.average.percentage');
+INSERT INTO `cloud`.`counter` (uuid, provider, source, name, value, created)
+SELECT UUID(), 'Netris', 'memory', 'VM Memory - average percentage', 'vm.memory.average.percentage', NOW() FROM DUAL
+WHERE NOT EXISTS (SELECT 1 FROM cloud.counter WHERE provider = 'Netris' AND source = 'memory' AND value = 'vm.memory.average.percentage');
 
 -- Rename user_vm_details to vm_instance_details
 SET @sql := (SELECT IF(COUNT(*)>0,'RENAME TABLE `cloud`.`user_vm_details` TO `cloud`.`vm_instance_details`','SELECT 1') FROM information_schema.TABLES WHERE TABLE_SCHEMA='cloud' AND TABLE_NAME='user_vm_details');
@@ -352,20 +540,32 @@ PREPARE s FROM @sql;
 EXECUTE s;
 DEALLOCATE PREPARE s;
 
+-- Verify the replacement before dropping the legacy constraint. The ADD helper accepts duplicate names.
+CALL `cloud`.`IDEMPOTENT_ADD_FOREIGN_KEY`('cloud.vm_instance_details', 'fk_vm_instance_details__vm_id', '(vm_id)', '`vm_instance`(`id`)');
+CALL `cloud`.`SCHEMA_42100_REQUIRE_FK`('vm_instance_details', 'fk_vm_instance_details__vm_id', 'vm_id', 'vm_instance');
+
 SET @sql := (SELECT IF(COUNT(*)>0,'ALTER TABLE `cloud`.`vm_instance_details` DROP FOREIGN KEY `fk_user_vm_details__vm_id`','SELECT 1') FROM information_schema.TABLE_CONSTRAINTS WHERE CONSTRAINT_SCHEMA='cloud' AND TABLE_NAME='vm_instance_details' AND CONSTRAINT_NAME='fk_user_vm_details__vm_id' AND CONSTRAINT_TYPE='FOREIGN KEY');
 PREPARE s FROM @sql;
 EXECUTE s;
 DEALLOCATE PREPARE s;
-CALL `cloud`.`IDEMPOTENT_ADD_FOREIGN_KEY`('cloud.vm_instance_details', 'fk_vm_instance_details__vm_id', '(vm_id)', '`vm_instance`(`id`)');
-
-CALL `cloud`.`IDEMPOTENT_ADD_COLUMN`('cloud.backup_schedule', 'uuid', 'VARCHAR(40) NOT NULL');
+CALL `cloud`.`IDEMPOTENT_ADD_COLUMN`('cloud.backup_schedule', 'uuid', 'VARCHAR(40) NULL');
+-- @repair-target cloud.backup_schedule a0cb6eddd817a5a8eeacb0aa692418e584cb1aa599b5b47383cdfaf67acc9981
+-- @repair-probe SELECT EXISTS (SELECT 1 FROM cloud.backup_schedule WHERE uuid IS NULL OR uuid = '')
 UPDATE `cloud`.`backup_schedule` SET uuid = UUID() WHERE uuid IS NULL OR uuid = '';
+SET @sql := IF(EXISTS (SELECT 1 FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = 'cloud'
+    AND TABLE_NAME = 'backup_schedule' AND COLUMN_NAME = 'uuid' AND COLUMN_TYPE = 'varchar(40)' AND IS_NULLABLE = 'YES'),
+    'ALTER TABLE cloud.backup_schedule MODIFY COLUMN uuid VARCHAR(40) NOT NULL', 'SELECT 1');
+PREPARE s FROM @sql;
+EXECUTE s;
+DEALLOCATE PREPARE s;
 
 -- Extension framework
 UPDATE `cloud`.`configuration`
 SET value = IF(value IS NULL OR value = '', 'External', CONCAT(value, ',External'))
 WHERE name = 'hypervisor.list'
-  AND (value IS NULL OR FIND_IN_SET('External', value) = 0);
+  AND (value IS NULL OR FIND_IN_SET('External', value) = 0)
+  AND NOT EXISTS (SELECT 1 FROM information_schema.TABLES
+      WHERE TABLE_SCHEMA = 'cloud' AND TABLE_NAME = 'extension');
 
 CREATE TABLE IF NOT EXISTS `cloud`.`extension` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
@@ -590,17 +790,49 @@ CALL `cloud`.`INSERT_EXTENSION_CUSTOM_ACTION_DETAILS_IF_NOT_EXISTS`('HyperV', 'S
 CALL `cloud`.`INSERT_EXTENSION_CUSTOM_ACTION_DETAILS_IF_NOT_EXISTS`('HyperV', 'Resume', '[]');
 
 
-CALL `cloud`.`IDEMPOTENT_CHANGE_COLUMN`('cloud.networks','cidr','cidr','VARCHAR(255) DEFAULT NULL COMMENT ''CloudStack managed vms get IP address from cidr.In general this cidr also serves as the network CIDR. But in case IP reservation feature is being used by a Guest network, networkcidr is the Effective network CIDR for that network''');
-CALL `cloud`.`IDEMPOTENT_CHANGE_COLUMN`('cloud.networks','gateway','gateway','VARCHAR(255) DEFAULT NULL COMMENT ''gateway(s) for this network configuration''');
-CALL `cloud`.`IDEMPOTENT_CHANGE_COLUMN`('cloud.networks','ip6_cidr','ip6_cidr','VARCHAR(1024) DEFAULT NULL COMMENT ''IPv6 cidr(s) for this network''');
-CALL `cloud`.`IDEMPOTENT_CHANGE_COLUMN`('cloud.networks','ip6_gateway','ip6_gateway','VARCHAR(1024) DEFAULT NULL COMMENT ''IPv6 gateway(s) for this network''');
+-- Widen legacy VARCHAR columns without shrinking values from later versions.
+SET @sql := IF(EXISTS (SELECT 1 FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = 'cloud'
+    AND TABLE_NAME = 'networks' AND COLUMN_NAME = 'cidr' AND DATA_TYPE = 'varchar' AND CHARACTER_MAXIMUM_LENGTH < 255),
+    'ALTER TABLE cloud.networks MODIFY COLUMN cidr VARCHAR(255) DEFAULT NULL COMMENT ''CloudStack managed vms get IP address from cidr.In general this cidr also serves as the network CIDR. But in case IP reservation feature is being used by a Guest network, networkcidr is the Effective network CIDR for that network''', 'SELECT 1');
+PREPARE s FROM @sql;
+EXECUTE s;
+DEALLOCATE PREPARE s;
 
--- Add columns name, description and backup_interval_type to backup table
+SET @sql := IF(EXISTS (SELECT 1 FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = 'cloud'
+    AND TABLE_NAME = 'networks' AND COLUMN_NAME = 'gateway' AND DATA_TYPE = 'varchar' AND CHARACTER_MAXIMUM_LENGTH < 255),
+    'ALTER TABLE cloud.networks MODIFY COLUMN gateway VARCHAR(255) DEFAULT NULL COMMENT ''gateway(s) for this network configuration''', 'SELECT 1');
+PREPARE s FROM @sql;
+EXECUTE s;
+DEALLOCATE PREPARE s;
+
+SET @sql := IF(EXISTS (SELECT 1 FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = 'cloud'
+    AND TABLE_NAME = 'networks' AND COLUMN_NAME = 'ip6_cidr' AND DATA_TYPE = 'varchar' AND CHARACTER_MAXIMUM_LENGTH < 1024),
+    'ALTER TABLE cloud.networks MODIFY COLUMN ip6_cidr VARCHAR(1024) DEFAULT NULL COMMENT ''IPv6 cidr(s) for this network''', 'SELECT 1');
+PREPARE s FROM @sql;
+EXECUTE s;
+DEALLOCATE PREPARE s;
+
+SET @sql := IF(EXISTS (SELECT 1 FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = 'cloud'
+    AND TABLE_NAME = 'networks' AND COLUMN_NAME = 'ip6_gateway' AND DATA_TYPE = 'varchar' AND CHARACTER_MAXIMUM_LENGTH < 1024),
+    'ALTER TABLE cloud.networks MODIFY COLUMN ip6_gateway VARCHAR(1024) DEFAULT NULL COMMENT ''IPv6 gateway(s) for this network''', 'SELECT 1');
+PREPARE s FROM @sql;
+EXECUTE s;
+DEALLOCATE PREPARE s;
+
+-- Add backup name and description. backup_interval_type was retired in 4.22.1.0.
 CALL `cloud`.`IDEMPOTENT_ADD_COLUMN`('cloud.backups', 'name', 'VARCHAR(255) NULL COMMENT "name of the backup"');
-UPDATE `cloud`.`backups` backup INNER JOIN `cloud`.`vm_instance` vm ON backup.vm_id = vm.id SET backup.name = vm.name WHERE backup.name IS NULL OR backup.name = '';
-CALL `cloud`.`IDEMPOTENT_CHANGE_COLUMN`('cloud.backups','name','name','VARCHAR(255) NOT NULL');
+-- @repair-target cloud.backups 82b4f56893fb5d852c866d88e953d2a064878bbafa6967b722de261ec70bf1c7
+-- @repair-probe SELECT EXISTS (SELECT 1 FROM cloud.backups b JOIN cloud.vm_instance v ON b.vm_id=v.id WHERE (b.name IS NULL OR b.name='') AND v.name IS NOT NULL AND v.name<>'')
+UPDATE `cloud`.`backups` backup INNER JOIN `cloud`.`vm_instance` vm ON backup.vm_id = vm.id
+SET backup.name = vm.name
+WHERE (backup.name IS NULL OR backup.name = '') AND vm.name IS NOT NULL AND vm.name <> '';
+SET @sql := IF(EXISTS (SELECT 1 FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = 'cloud'
+    AND TABLE_NAME = 'backups' AND COLUMN_NAME = 'name' AND COLUMN_TYPE = 'varchar(255)' AND IS_NULLABLE = 'YES'),
+    'ALTER TABLE cloud.backups MODIFY COLUMN name VARCHAR(255) NOT NULL', 'SELECT 1');
+PREPARE s FROM @sql;
+EXECUTE s;
+DEALLOCATE PREPARE s;
 CALL `cloud`.`IDEMPOTENT_ADD_COLUMN`('cloud.backups', 'description', 'VARCHAR(1024) COMMENT "description for the backup"');
-CALL `cloud`.`IDEMPOTENT_ADD_COLUMN`('cloud.backups', 'backup_interval_type', 'int(5) COMMENT "type of backup, e.g. manual, recurring - hourly, daily, weekly or monthly"');
 
 -- Create backup details table
 CREATE TABLE IF NOT EXISTS `cloud`.`backup_details` (
@@ -613,7 +845,7 @@ CREATE TABLE IF NOT EXISTS `cloud`.`backup_details` (
   CONSTRAINT `fk_backup_details__backup_id` FOREIGN KEY `fk_backup_details__backup_id`(`backup_id`) REFERENCES `backups`(`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Add diskOfferingId, deviceId, minIops and maxIops to backed_volumes in backups table
+-- Initialize missing backup volume metadata. Existing snapshots keep their recorded inventory.
 UPDATE `cloud`.`backups` b
 INNER JOIN `cloud`.`vm_instance` vm ON b.vm_id = vm.id
 SET b.backed_volumes = (
@@ -638,9 +870,9 @@ SET b.backed_volumes = (
     LEFT JOIN `cloud`.`disk_offering` doff ON v.disk_offering_id = doff.id
     WHERE v.instance_id = vm.id
 )
-WHERE b.backed_volumes IS NULL OR b.backed_volumes = '' OR b.backed_volumes NOT LIKE '%"diskOfferingId"%';
+WHERE b.backed_volumes IS NULL OR b.backed_volumes = '';
 
--- Add diskOfferingId, deviceId, minIops and maxIops to backup_volumes in vm_instance table
+-- Initialize missing VM backup volume metadata.
 UPDATE `cloud`.`vm_instance` vm
 SET vm.backup_volumes = (
     SELECT COALESCE(
@@ -665,12 +897,91 @@ SET vm.backup_volumes = (
     WHERE v.instance_id = vm.id
 )
 WHERE vm.backup_offering_id IS NOT NULL
-AND (vm.backup_volumes IS NULL OR vm.backup_volumes = '' OR vm.backup_volumes NOT LIKE '%"diskOfferingId"%');
+AND (vm.backup_volumes IS NULL OR vm.backup_volumes = '');
+
+-- Fill missing attributes only where the saved volume still exists on the same VM.
+DROP PROCEDURE IF EXISTS `cloud`.`SCHEMA_42100_FILL_BACKUP_VOLUME_DETAILS`;
+DELIMITER $$
+CREATE PROCEDURE `cloud`.`SCHEMA_42100_FILL_BACKUP_VOLUME_DETAILS`()
+BEGIN
+    DECLARE finished BOOLEAN DEFAULT FALSE;
+    DECLARE is_backup BOOLEAN;
+    DECLARE record_id, owner_vm_id BIGINT UNSIGNED;
+    DECLARE payload LONGTEXT;
+    DECLARE entry_index INT;
+    DECLARE entry_path VARCHAR(32);
+    DECLARE saved_uuid, offering_uuid VARCHAR(255);
+    DECLARE device_id_value, min_iops_value, max_iops_value BIGINT;
+    DECLARE changed BOOLEAN;
+    DECLARE inventories CURSOR FOR
+        SELECT id, vm_id, backed_volumes, TRUE FROM cloud.backups WHERE JSON_VALID(backed_volumes)
+        UNION ALL
+        SELECT id, id, backup_volumes, FALSE FROM cloud.vm_instance
+        WHERE backup_offering_id IS NOT NULL AND JSON_VALID(backup_volumes);
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET finished = TRUE;
+
+    OPEN inventories;
+    inventory_loop: LOOP
+        FETCH inventories INTO record_id, owner_vm_id, payload, is_backup;
+        IF finished THEN LEAVE inventory_loop; END IF;
+        IF JSON_TYPE(payload) <> 'ARRAY' THEN ITERATE inventory_loop; END IF;
+
+        SET changed = FALSE;
+        SET entry_index = 0;
+        WHILE entry_index < JSON_LENGTH(payload) DO
+            SET entry_path = CONCAT('$[', entry_index, ']');
+            SET saved_uuid = JSON_UNQUOTE(JSON_EXTRACT(payload, CONCAT(entry_path, '.uuid')));
+            IF saved_uuid IS NOT NULL AND NOT JSON_CONTAINS_PATH(payload, 'all',
+                CONCAT(entry_path, '.deviceId'), CONCAT(entry_path, '.diskOfferingId'),
+                CONCAT(entry_path, '.minIops'), CONCAT(entry_path, '.maxIops')) THEN
+                SELECT MAX(v.device_id), MAX(d.uuid), MAX(v.min_iops), MAX(v.max_iops)
+                INTO device_id_value, offering_uuid, min_iops_value, max_iops_value
+                FROM cloud.volumes v LEFT JOIN cloud.disk_offering d ON v.disk_offering_id = d.id
+                WHERE v.instance_id = owner_vm_id AND v.uuid = saved_uuid;
+
+                IF device_id_value IS NOT NULL OR offering_uuid IS NOT NULL OR min_iops_value IS NOT NULL OR max_iops_value IS NOT NULL THEN
+                    SET payload = JSON_INSERT(payload,
+                        CONCAT(entry_path, '.deviceId'), device_id_value,
+                        CONCAT(entry_path, '.diskOfferingId'), offering_uuid,
+                        CONCAT(entry_path, '.minIops'), min_iops_value,
+                        CONCAT(entry_path, '.maxIops'), max_iops_value);
+                    SET changed = TRUE;
+                END IF;
+            END IF;
+            SET entry_index = entry_index + 1;
+        END WHILE;
+
+        IF changed AND OCTET_LENGTH(payload) <= 65535 THEN
+            IF is_backup THEN
+                UPDATE cloud.backups SET backed_volumes = payload WHERE id = record_id;
+            ELSE
+                UPDATE cloud.vm_instance SET backup_volumes = payload WHERE id = record_id;
+            END IF;
+        END IF;
+    END LOOP;
+    CLOSE inventories;
+END$$
+DELIMITER ;
+CALL `cloud`.`SCHEMA_42100_FILL_BACKUP_VOLUME_DETAILS`();
+DROP PROCEDURE `cloud`.`SCHEMA_42100_FILL_BACKUP_VOLUME_DETAILS`;
 
 -- Add column allocated_size to object_store table. Rename column 'used_bytes' to 'used_size'
 CALL `cloud`.`IDEMPOTENT_ADD_COLUMN`('cloud.object_store', 'allocated_size', 'bigint unsigned COMMENT "allocated size in bytes"');
-CALL `cloud`.`IDEMPOTENT_CHANGE_COLUMN`('cloud.object_store','used_bytes','used_size','BIGINT UNSIGNED COMMENT ''used size in bytes''');
-CALL `cloud`.`IDEMPOTENT_CHANGE_COLUMN`('cloud.object_store','total_size','total_size','BIGINT UNSIGNED COMMENT ''total size in bytes''');
+SET @sql := IF(EXISTS (SELECT 1 FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = 'cloud'
+    AND TABLE_NAME = 'object_store' AND COLUMN_NAME = 'used_bytes'),
+    'ALTER TABLE cloud.object_store RENAME COLUMN used_bytes TO used_size', 'SELECT 1');
+PREPARE s FROM @sql;
+EXECUTE s;
+DEALLOCATE PREPARE s;
+
+-- The source size column has varied over time. Widen older integer types only.
+SET @sql := IF(EXISTS (SELECT 1 FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = 'cloud'
+    AND TABLE_NAME = 'object_store' AND COLUMN_NAME = 'total_size'
+    AND DATA_TYPE IN ('tinyint', 'smallint', 'mediumint', 'int')),
+    'ALTER TABLE cloud.object_store MODIFY COLUMN total_size BIGINT UNSIGNED COMMENT ''total size in bytes''', 'SELECT 1');
+PREPARE s FROM @sql;
+EXECUTE s;
+DEALLOCATE PREPARE s;
 
 UPDATE `cloud`.`object_store`
 JOIN (
@@ -679,16 +990,23 @@ JOIN (
     WHERE removed IS NULL
     GROUP BY object_store_id
 ) buckets_quota_sum_view ON `object_store`.id = buckets_quota_sum_view.object_store_id
-SET `object_store`.allocated_size = buckets_quota_sum_view.total_quota;
+SET `object_store`.allocated_size = buckets_quota_sum_view.total_quota
+WHERE `object_store`.allocated_size IS NULL;
 
-CALL `cloud`.`IDEMPOTENT_ADD_COLUMN`('cloud.console_session', 'domain_id', 'bigint(20) unsigned NOT NULL');
+CALL `cloud`.`IDEMPOTENT_ADD_COLUMN`('cloud.console_session', 'domain_id', 'BIGINT UNSIGNED NULL');
 
-UPDATE `cloud`.`console_session` `cs`
-SET `cs`.`domain_id` = (
-    SELECT `acc`.`domain_id`
-    FROM `cloud`.`account` `acc`
-    WHERE `acc`.`id` = `cs`.`account_id`
-);
+UPDATE `cloud`.`console_session` cs
+JOIN `cloud`.`account` acc ON acc.id = cs.account_id
+SET cs.domain_id = acc.domain_id
+WHERE (cs.domain_id IS NULL OR cs.domain_id = 0) AND acc.domain_id IS NOT NULL;
 
--- Re-apply VPC: update default network offering for vpc tier to conserve_mode=1 (#8309)
-UPDATE `cloud`.`network_offerings` SET conserve_mode = 1 WHERE name = 'DefaultIsolatedNetworkOfferingForVpcNetworks';
+SET @sql := IF(EXISTS (SELECT 1 FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = 'cloud'
+    AND TABLE_NAME = 'console_session' AND COLUMN_NAME = 'domain_id'
+    AND REPLACE(COLUMN_TYPE, '(20)', '') = 'bigint unsigned' AND IS_NULLABLE = 'YES'),
+    'ALTER TABLE cloud.console_session MODIFY COLUMN domain_id BIGINT UNSIGNED NOT NULL', 'SELECT 1');
+PREPARE s FROM @sql;
+EXECUTE s;
+DEALLOCATE PREPARE s;
+
+DROP PROCEDURE `cloud`.`SCHEMA_42100_REQUIRE_FK`;
+DROP PROCEDURE `cloud`.`SCHEMA_42100_REQUIRE`;

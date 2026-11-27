@@ -166,4 +166,24 @@ CALL `cloud`.`IDEMPOTENT_ADD_UNIQUE_KEY`('cloud.counter', 'uc_counter__provider_
 -- Change scope for configuration - 'use.https.to.upload from' from StoragePool to Zone
 UPDATE `cloud`.`configuration` SET `scope` = 2 WHERE `name` = 'use.https.to.upload';
 -- Delete the configuration for 'use.https.to.upload' from StoragePool
+-- @repair-target cloud.storage_pool_details 6bfe49f8f2fba3c35a207d17d9ba6dbd824dd9246a7d4eddfbc81a7393035c2e
+-- @repair-probe SELECT EXISTS (SELECT 1 FROM cloud.storage_pool_details legacy
+-- @repair-probe JOIN cloud.storage_pool pool ON pool.id = legacy.pool_id
+-- @repair-probe JOIN cloud.configuration config ON config.name = legacy.name AND CAST(config.scope AS CHAR) = '2'
+-- @repair-probe WHERE legacy.name = 'use.https.to.upload' AND pool.data_center_id IS NOT NULL
+-- @repair-probe AND NOT EXISTS (SELECT 1 FROM cloud.data_center_details zone
+-- @repair-probe     WHERE zone.dc_id=pool.data_center_id AND zone.name=legacy.name AND BINARY zone.value <> BINARY legacy.value)
+-- @repair-probe AND (EXISTS (SELECT 1 FROM cloud.data_center_details zone
+-- @repair-probe     WHERE zone.dc_id=pool.data_center_id AND zone.name=legacy.name AND BINARY zone.value = BINARY legacy.value)
+-- @repair-probe     OR BINARY legacy.value = BINARY COALESCE(config.value,config.default_value)))
+-- @repair-apply DELETE legacy FROM cloud.storage_pool_details legacy
+-- @repair-apply JOIN cloud.storage_pool pool ON pool.id = legacy.pool_id
+-- @repair-apply JOIN cloud.configuration config ON config.name = legacy.name AND CAST(config.scope AS CHAR) = '2'
+-- @repair-apply WHERE legacy.name = 'use.https.to.upload' AND pool.data_center_id IS NOT NULL
+-- @repair-apply AND NOT EXISTS (SELECT 1 FROM cloud.data_center_details zone
+-- @repair-apply     WHERE zone.dc_id=pool.data_center_id AND zone.name=legacy.name AND BINARY zone.value <> BINARY legacy.value)
+-- @repair-apply AND (EXISTS (SELECT 1 FROM cloud.data_center_details zone
+-- @repair-apply     WHERE zone.dc_id=pool.data_center_id AND zone.name=legacy.name AND BINARY zone.value = BINARY legacy.value)
+-- @repair-apply     OR BINARY legacy.value = BINARY COALESCE(config.value,config.default_value))
+-- @repair-review SELECT EXISTS (SELECT 1 FROM cloud.storage_pool_details WHERE name = 'use.https.to.upload')
 DELETE FROM `cloud`.`storage_pool_details` WHERE `name` = 'use.https.to.upload';

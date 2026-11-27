@@ -23,13 +23,16 @@ def insert_parts(sql):
     remainder=hit[4]
     if re.search(r'\bON\s+DUPLICATE\s+KEY\s+UPDATE\b',remainder,re.I):raise GuardError('ON DUPLICATE KEY UPDATE requires an explicit reviewed guard')
     if re.match(r'VALUES\b',remainder,re.I):
-        tuples=split_items(re.sub(r'^VALUES\s*','',remainder,flags=re.I));selects=[]
+        tuples=split_items(re.sub(r'^VALUES\s*','',remainder,flags=re.I));selects=[];rows=[]
         for tup in tuples:
             if not tup.startswith('(') or not tup.endswith(')'):raise GuardError('Unsupported VALUES tuple')
             values=split_items(tup[1:-1])
             if len(values)!=len(columns):raise GuardError('INSERT column / value count mismatch')
+            rows.append(values)
             selects.append('SELECT '+','.join(v+' AS '+qi(c) for c,v in zip(columns,values)))
-        projection=' UNION ALL '.join(selects);expressions=values
+        projection=' UNION ALL '.join(selects)
+        # Inspect every tuple when rejecting generated keys (not only the last row).
+        expressions=[' '.join(values) for values in zip(*rows)]
     else:
         distinct,expressions,suffix=select_parts(remainder)
         if len(expressions)!=len(columns):raise GuardError('INSERT SELECT requires an explicit matching projection')
@@ -41,7 +44,7 @@ def insert_parts(sql):
 
 
 def guarded_insert(sql,schema,policies):
-    ignore,target,columns,expressions,projection=insert_parts(sql)
+    _,target,columns,expressions,projection=insert_parts(sql)
     target=schema.resolve(target);by_name={c.lower():v for c,v in zip(columns,expressions)}
     declared=policies.get(target)
     if declared:
@@ -60,4 +63,7 @@ def guarded_insert(sql,schema,policies):
     partition=','.join('src.'+qi(c) for c in key)
     ranked='SELECT src.*,ROW_NUMBER() OVER (PARTITION BY '+partition+' ORDER BY '+partition+') AS __mold_replay_rank FROM ('+projection+') src'
     match=' AND '.join('existing.'+qi(c)+' <=> candidate.'+qi(c) for c in key)
-    return 'INSERT '+('IGNORE ' if ignore else '')+'INTO '+qt(target)+' ('+','.join(qi(c) for c in columns)+') SELECT '+','.join('candidate.'+qi(c) for c in columns)+' FROM ('+ranked+') candidate WHERE candidate.__mold_replay_rank=1 AND NOT EXISTS (SELECT 1 FROM '+qt(target)+' existing WHERE '+match+')'
+    candidates = 'SELECT '+','.join('candidate.'+qi(c) for c in columns)+' FROM ('+ranked+') candidate WHERE candidate.__mold_replay_rank=1 AND NOT EXISTS (SELECT 1 FROM '+qt(target)+' existing WHERE '+match+')'
+    # A conflicting unique key must fail rather than report a missing row as repaired.
+    write = 'INSERT INTO '+qt(target)+' ('+','.join(qi(c) for c in columns)+') '+candidates
+    return target, 'SELECT EXISTS (SELECT 1 FROM ('+candidates+') repair_candidates)', write

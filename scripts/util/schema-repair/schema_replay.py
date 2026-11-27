@@ -8,7 +8,7 @@
 # distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations.
-"""Replay current version-ordered SQL, with an atomic per-statement DML journal."""
+"""Inspect the installed migration SQL and apply verifiable repairs."""
 import argparse
 import collections
 import datetime
@@ -22,14 +22,16 @@ import shutil
 import sys
 import tempfile
 
-from mysql_client import Mysql,SqlError,qi,qt,lit,quoted,services_stopped,backup
-from schema_ddl import Schema,GuardError,DDL_PROCS,table_name
-from schema_insert import guarded_insert,insert_parts
-from sql_source import SourceError,Statement,parse,discover,call,canonical
+from mysql_client import Mysql, SqlError, qi, qt, services_stopped, backup
+from schema_ddl import Schema, GuardError, DDL_PROCS, table_name, index_spec
+from schema_insert import guarded_insert
+from sql_source import SourceError, parse, discover, call, canonical, split_items
 
-JOURNAL='cloud.mold_schema_replay_statement'
-INFLIGHT='cloud.mold_schema_replay_ddl_attempt'
 HERE=Path(__file__).resolve().parent
+VM_RENAME_ASSIGNMENT = canonical(
+    "SET @sql := (SELECT IF(COUNT(*)>0,'RENAME TABLE `cloud`.`user_vm_details` TO `cloud`.`vm_instance_details`',"
+    "'SELECT 1') FROM information_schema.TABLES WHERE TABLE_SCHEMA='cloud' AND TABLE_NAME='user_vm_details')"
+)
 
 
 def sql_directory(explicit):
@@ -71,20 +73,8 @@ def validate_data_helper(name,body):
         raise SourceError('Data helper contains DDL, transaction control or an indirect call: '+name)
 
 
-def guarded_helper(name,body):
-    """Keep the current helper body, strengthening known seed identity predicates."""
-    if name.endswith('.IDEMPOTENT_UPDATE_API_PERMISSION'):
-        body=re.sub(r'SELECT\s+MAX\((`?rp`?\.`?sort_order`?)\)\s+INTO',r'SELECT COALESCE(MAX(\1),0) INTO',body,flags=re.I)
-    if name.endswith('.ADD_GUEST_OS_AND_HYPERVISOR_MAPPING'):
-        # Category cleanup in a later version must not produce a second OS row
-        # when an older file is replayed; mapping display strings are not identities.
-        body=re.sub(r'category_id\s*=\s*guest_os_category_id\s+AND\s+','',body,flags=re.I)
-        body=re.sub(r'\s+AND\s+hypervisor\.guest_os_name\s*=\s*guest_os_hypervisor_guest_os_name','',body,flags=re.I)
-    return body
-
-
 def read_sources(directory,minimum):
-    files=discover(directory,minimum);sources={};all_statements=[];helpers={};definitions={};bodies={};variables={};prepared={};temps={}
+    files=discover(directory,minimum);sources={};all_statements=[];helpers={};definitions={};bodies={};variables={};prepared={};temps={};assignments={}
     procdir=directory/'procedures'
     if procdir.is_dir():
         for p in sorted(procdir.glob('*.sql')):
@@ -94,6 +84,8 @@ def read_sources(directory,minimum):
         text=p.read_bytes().decode('utf-8');sources[p.name]=text
         for s in parse(text,p.name):
             kind=raw_kind(s.sql);context=[]
+            if s.repair:
+                s.repair = repair_rule(s, kind)
             if kind=='ROUTINE' and re.match(r'CREATE',s.sql,re.I):
                 definitions[proc_name(s.sql)]=s.digest;bodies[proc_name(s.sql)]=s.sql
             if kind=='SESSION':
@@ -101,18 +93,19 @@ def read_sources(directory,minimum):
                     h=re.match(r'SET\s+(@\w+)\s*(?::=|=)',s.sql,re.I)
                     if not h:raise SourceError('Unsupported session assignment: '+s.sql[:100])
                     dependencies=sorted({variables[v.lower()] for v in re.findall(r'@\w+',s.sql[h.end():]) if v.lower() in variables})
+                    assignments[h[1].lower()]=s.sql
                     variables[h[1].lower()]=hashlib.sha256((s.digest+'|'+','.join(dependencies)).encode()).hexdigest() if dependencies else s.digest
                 elif re.match(r'PREPARE',s.sql,re.I):
                     h=re.fullmatch(r'PREPARE\s+(\w+)\s+FROM\s+(@\w+)',s.sql,re.I)
                     if not h:raise SourceError('PREPARE requires a session variable')
-                    prepared[h[1].lower()]=(h[2],variables.get(h[2].lower(),''))
+                    prepared[h[1].lower()]=(h[2].lower(),variables.get(h[2].lower(),''))
                 elif not re.match(r'(?:DEALLOCATE PREPARE|USE|SELECT 1)\b',s.sql,re.I):raise SourceError('Only local @variable assignments are supported; no global/session overrides')
                 if re.match(r'USE\b',s.sql,re.I) and not re.fullmatch(r'USE\s+`?cloud`?',s.sql,re.I):raise SourceError('Default schema must stay cloud; qualify cloud_usage table names explicitly')
             if kind=='EXECUTE':
                 h=re.fullmatch(r'EXECUTE\s+(\w+)',s.sql,re.I)
                 if not h or h[1].lower() not in prepared:raise SourceError('EXECUTE has no corresponding PREPARE')
                 variable,fingerprint=prepared[h[1].lower()];context.append('prepared:'+variable+':'+fingerprint)
-                s.prepared_variable=variable
+                s.prepared_assignment=assignments.get(variable,'')
             data=call(s.sql)
             if data and kind=='CALL':
                 key=data[0]+'.'+data[1]
@@ -150,192 +143,293 @@ def rewrite_tables(sql,schema):
     return ''.join(parts)
 
 
-class RoutineDefiners:
-    """Preserve application ownership when an administrator executes migration SQL."""
-    def __init__(self,db,override=None):
-        self.db=db;self.actor=db.scalar('SELECT CURRENT_USER()');self.override=override;self.resolved={}
-        self.existing={r['ROUTINE_SCHEMA']+'.'+r['ROUTINE_NAME'].upper():r['DEFINER'] for r in db.objects(
-            'information_schema.ROUTINES',['ROUTINE_SCHEMA','ROUTINE_NAME','DEFINER'],
-            "ROUTINE_SCHEMA IN ('cloud','cloud_usage') AND ROUTINE_TYPE='PROCEDURE'")}
-        grants=' '.join(db.query('SHOW GRANTS')).upper()
-        self.can_set_other=bool(re.search(r'\bSET_USER_ID\b|\bSUPER\b|ALL PRIVILEGES ON \*\.\*',grants))
+def repair_rule(statement, kind):
+    location = f'{statement.file}:{statement.line}'
+    directives = statement.repair
+    targets = directives.get('target', [])
+    target = re.fullmatch(r'(\S+)\s+([a-f0-9]{64})', targets[0]) if len(targets) == 1 else None
+    if not target or kind not in ('UPDATE', 'DELETE') or 'probe' not in directives:
+        raise SourceError(f'{location}: repair requires a target, source digest and probe for an UPDATE or DELETE')
+    table = table_name(target[1])
+    rule = {'table': table, 'apply': statement.sql}
+    for key in ('probe', 'review'):
+        if key in directives:
+            sql = parse('\n'.join(directives[key]) + ';', location)
+            if len(sql) != 1 or not re.match(r'^SELECT\s+EXISTS\s*\(', sql[0].sql, re.I):
+                raise SourceError(f'{location}: repair {key} must be a single SELECT EXISTS query')
+            rule[key] = sql[0].sql
+    if 'apply' in directives:
+        sql = parse('\n'.join(directives['apply']) + ';', location)
+        if len(sql) != 1 or raw_kind(sql[0].sql) != kind:
+            raise SourceError(f'{location}: repair apply statement must match the original SQL type')
+        rule['apply'] = sql[0].sql
+    elif kind == 'DELETE':
+        raise SourceError(f'{location}: a DELETE requires an explicit guarded repair apply statement')
+    # A source edit must not silently inherit an approval for the previous SQL.
+    return rule if target[2] == statement.digest else {}
+
+
+class Repair:
+    """Plan from actual metadata/rows. Delay backup and mutation until a verified repair."""
+
+    def __init__(self, args, work, db, statements, policies):
+        self.args = args
+        self.work = work
+        self.db = db
+        self.statements = statements
+        self.schema = Schema(db, statements)
+        self.policies = policies
+        self.count = collections.Counter()
+        self.backed_up = False
+        self.removed_columns = set()
+        self.removed_tables = set()
+        self.removed_indexes = set()
+        self.log = (work / 'actions.jsonl').open('w', encoding='utf-8')
+        self.executed = (work / 'executed.sql').open('w', encoding='utf-8')
+        for statement in statements:
+            data = call(statement.sql)
+            if data and data[1] == 'IDEMPOTENT_DROP_COLUMN':
+                self.removed_columns.add((table_name(data[2][0], data[0]), data[2][1].lower()))
+            if data and data[1] in ('IDEMPOTENT_DROP_INDEX', 'IDEMPOTENT_DROP_UNIQUE_KEY'):
+                schema, name, args = data
+                table, index = args[::-1] if name == 'IDEMPOTENT_DROP_INDEX' else args
+                self.removed_indexes.add((table_name(table, schema), index.lower()))
+            drop_column = re.fullmatch(r'ALTER TABLE\s+(\S+)\s+DROP COLUMN\s+`?(\w+)`?', statement.sql, re.I)
+            if not drop_column and statement.kind == 'EXECUTE':
+                drop_column = re.search(r"['\"]ALTER TABLE\s+([^\s'\"]+)\s+DROP COLUMN\s+`?(\w+)`?['\"]",
+                                        statement.prepared_assignment, re.I)
+            if drop_column:
+                self.removed_columns.add((table_name(drop_column[1]), drop_column[2].lower()))
+            drop_table = re.fullmatch(r'DROP TABLE(?: IF EXISTS)?\s+(\S+)', statement.sql, re.I)
+            if drop_table:
+                self.removed_tables.add(table_name(drop_table[1]))
+            drop_index = re.fullmatch(r'ALTER TABLE\s+(\S+)\s+DROP (?:INDEX|KEY)\s+`?(\w+)`?', statement.sql, re.I)
+            if drop_index:
+                self.removed_indexes.add((table_name(drop_index[1]), drop_index[2].lower()))
+
+    def event(self, status, statement, detail=''):
+        self.count[status] += 1
+        self.log.write(json.dumps(dict(status=status, file=statement.file, line=statement.line,
+            kind=statement.kind, statement_id=statement.identity, detail=detail), ensure_ascii=False) + '\n')
+        self.log.flush()
+        if status in ('MISSING', 'FAILED'):
+            print(f'[{status}] {statement.file}:{statement.line} {detail}', flush=True)
+
+    def before_write(self):
+        if self.backed_up:
+            return
+        services_stopped()
+        backup(self.args, self.work)
+        self.backed_up = True
+
+    def apply(self, statement, sql, data_change=False, verify=None):
+        if not self.args.apply:
+            self.event('MISSING', statement, ' '.join(statement.sql.split())[:140])
+            return
+        self.before_write()
+        self.executed.write(f'-- {statement.file}:{statement.line}\n{sql};\n')
+        self.executed.flush()
+        if data_change:
+            self.db.query('START TRANSACTION')
         try:
-            rows=db.objects('mysql.global_grants',['USER','HOST'],"PRIV='SYSTEM_USER'")
-            self.system_accounts={r['USER']+'@'+r['HOST'] for r in rows}
-        except SqlError:
-            # A normal app user can safely retain its own owner. Do not infer the
-            # privilege category of a different user without administrative metadata.
-            self.system_accounts=None
-        self.actor_safe=('SYSTEM_USER' not in grants and db.scalar('SELECT CURRENT_ROLE()')=='NONE') if self.system_accounts is None else self.actor not in self.system_accounts
-        self.defaults={}
-        for schema in ('cloud','cloud_usage'):
-            candidates={owner for key,owner in self.existing.items() if key.startswith(schema+'.') and self.safe(owner)}
-            self.defaults[schema]=override or (next(iter(candidates)) if len(candidates)==1 else self.actor if self.actor_safe else None)
-
-    def safe(self,owner):
-        return owner not in self.system_accounts if self.system_accounts is not None else owner==self.actor and self.actor_safe
-
-    def owner(self,name):
-        if name in self.resolved:return self.resolved[name]
-        previous=self.existing.get(name)
-        if previous and not self.safe(previous) and not self.override:
-            raise GuardError('Protected or unverifiable routine DEFINER '+previous+' on '+name+'; restore the application owner before replay or specify --routine-definer explicitly')
-        owner=previous if previous and self.safe(previous) else self.defaults.get(name.split('.')[0])
-        if not owner or '@' not in owner:raise GuardError('Cannot infer application routine owner for '+name+'; use --routine-definer user@host')
-        if not self.safe(owner):raise GuardError('Routine owner must be a verified non-SYSTEM_USER application account: '+owner)
-        if owner!=self.actor:
-            if not self.can_set_other:raise GuardError('Current DB account cannot preserve DEFINER '+owner+'; use a DB administrator')
-            user,host=owner.rsplit('@',1)
-            if self.db.scalar('SELECT EXISTS(SELECT 1 FROM mysql.user WHERE User='+lit(user)+' AND Host='+lit(host)+')')!='1':raise GuardError('Routine owner account does not exist: '+owner)
-        self.resolved[name]=owner;return owner
-
-    def create(self,name,body):
-        user,host=self.owner(name).rsplit('@',1)
-        sql,count=re.subn(r'^CREATE\s+PROCEDURE\b','CREATE DEFINER='+quoted(user)+'@'+quoted(host)+' PROCEDURE',body,count=1,flags=re.I)
-        if count!=1:raise GuardError('Unsupported procedure CREATE header: '+name)
-        return sql
-
-
-class Replay:
-    def __init__(self,args,work,db,statements,helpers,policies):
-        self.a=args;self.work=work;self.db=db;self.statements=statements;self.helpers=helpers;self.policies=policies
-        self.schema=Schema(db,statements);self.count=collections.Counter();self.loaded=set();self.temporary=set();self.run_seen=set()
-        self.definers=None
-        self.log=open(work/'actions.jsonl','w',encoding='utf-8');self.sql_log=open(work/'executed.sql','w',encoding='utf-8')
-        self.done=set(db.query('SELECT statement_id FROM '+JOURNAL)) if self.schema.exists(JOURNAL) else set()
-        self.pending=[s for s in statements if self.persistent(s) and s.identity not in self.done]
-
-    def persistent(self,s):return s.kind not in ('SESSION','ROUTINE','TEMP') and not s.temporary_insert
-
-    def event(self,status,s,detail=''):
-        self.count[status]+=1
-        self.log.write(json.dumps(dict(status=status,file=s.file,line=s.line,kind=s.kind,statement_id=s.identity,sql_sha256=s.digest,detail=detail),ensure_ascii=False)+'\n');self.log.flush()
-        if status in ('FAILED','PENDING'):print('['+status+'] '+s.file+':'+str(s.line)+' '+s.kind+' '+detail,flush=True)
-
-    def mark(self,s,status):
-        self.db.query('INSERT INTO '+JOURNAL+' (statement_id,source_file,source_line,statement_sha256,statement_kind,result,sql_text) VALUES ('+','.join([lit(s.identity),lit(s.file),str(s.line),lit(s.digest),lit(s.kind),lit(status),lit(s.sql)])+')')
-
-    def create_journal(self):
-        self.db.query('CREATE TABLE IF NOT EXISTS '+JOURNAL+''' (
-          statement_id CHAR(64) CHARACTER SET ascii COLLATE ascii_bin NOT NULL PRIMARY KEY,
-          source_file VARCHAR(255) NOT NULL,source_line INT NOT NULL,statement_sha256 CHAR(64) NOT NULL,
-          statement_kind VARCHAR(24) NOT NULL,result VARCHAR(32) NOT NULL,sql_text MEDIUMTEXT NOT NULL,
-          applied_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6)
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4''')
-        self.db.query('CREATE TABLE IF NOT EXISTS '+INFLIGHT+''' (
-          statement_id CHAR(64) CHARACTER SET ascii COLLATE ascii_bin NOT NULL PRIMARY KEY,
-          source_file VARCHAR(255) NOT NULL,source_line INT NOT NULL,sql_text MEDIUMTEXT NOT NULL,
-          started_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6)
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4''')
-
-    def ensure_helper(self,name):
-        if name in self.loaded:return
-        if name not in self.helpers:raise GuardError('No helper definition available: '+name)
-        body=self.helpers[name]
-        validate_data_helper(name,body)
-        self.db.query('DROP PROCEDURE IF EXISTS '+qt(name))
-        self.db.query(self.definers.create(name,guarded_helper(name,body)));self.loaded.add(name)
-
-    def data_statement(self,s,sql):
-        data=call(sql)
-        if data:
-            name=data[0]+'.'+data[1]
-            if name not in self.loaded:self.ensure_helper(name)
-        self.db.query('START TRANSACTION')
-        try:
-            if data and data[1]=='IDEMPOTENT_UPDATE_API_PERMISSION' and self.db.scalar('SELECT EXISTS(SELECT 1 FROM cloud.roles WHERE name='+lit(data[2][0])+' AND is_default=1)')!='1':pass
-            elif re.match(r'INSERT\b',sql,re.I):
-                rewritten=guarded_insert(sql,self.schema,self.policies)
-                self.db.query(rewritten,allow_duplicate=bool(re.match(r'INSERT\s+IGNORE\b',sql,re.I)))
-            else:self.db.query(sql)
-            self.mark(s,'APPLIED');self.db.query('COMMIT')
+            self.db.query(sql)
+            if verify and self.db.scalar(verify) == '1':
+                raise RuntimeError('Rows still match the repair condition after execution')
+            if data_change:
+                self.db.query('COMMIT')
         except BaseException:
-            # Connection loss closes/rolls back an uncommitted InnoDB transaction.
-            if self.db.p.poll() is None:
-                try:self.db.query('ROLLBACK')
-                except Exception:pass
+            if data_change and self.db.p.poll() is None:
+                try:
+                    self.db.query('ROLLBACK')
+                except Exception:
+                    pass
             raise
+        self.event('APPLIED', statement)
+
+    def rename(self, old, new):
+        has_old = self.schema.exists(old)
+        has_new = self.schema.exists(new)
+        if has_old and has_new:
+            raise GuardError(f'Both {old} and {new} exist')
+        if not has_old:
+            if not has_new:
+                raise GuardError(f'Neither {old} nor {new} exists')
+            return None
+        return f'RENAME TABLE {qt(old)} TO {qt(new)}'
+
+    def add_column(self, table, column, definition):
+        table = self.schema.resolve(table)
+        columns = self.schema.columns(table)
+        if column.lower() in columns:
+            return None
+        if (table, column.lower()) in self.removed_columns:
+            raise GuardError(f'{table}.{column} is also dropped by a migration')
+        new_column = self.schema.column_aliases.get((table, column))
+        if new_column and new_column.lower() in columns:
+            return None
+        if not columns:
+            raise GuardError(f'Missing prerequisite table {table}')
+        if len(split_items(definition)) != 1:
+            raise GuardError('Multiple ALTER clauses need a reviewed repair')
+        tokens = canonical(definition).upper().split('\x1f')
+        not_null = any(tokens[i:i + 2] == ['NOT', 'NULL'] for i in range(len(tokens) - 1))
+        if not_null and 'DEFAULT' not in tokens and self.db.scalar(f'SELECT EXISTS (SELECT 1 FROM {qt(table)})') == '1':
+            raise GuardError(f'{table}.{column} needs a reviewed backfill before adding NOT NULL')
+        return f'ALTER TABLE {qt(table)} ADD COLUMN {qi(column)} {definition}'
+
+    def add_index(self, table, name, definition):
+        table = self.schema.resolve(table)
+        if not self.schema.exists(table):
+            raise GuardError(f'Missing prerequisite table {table}')
+        actual = self.schema.indexes(table).get(name)
+        if actual:
+            if self.schema.actual_index(actual) != index_spec(definition):
+                raise GuardError(f'Existing index {table}.{name} has different columns or uniqueness')
+            return None
+        if (table, name.lower()) in self.removed_indexes:
+            raise GuardError(f'{table}.{name} is also dropped by a migration')
+        return f'ALTER TABLE {qt(table)} ADD {definition}'
+
+    def add_foreign_key(self, table, name, columns, reference):
+        table = self.schema.resolve(table)
+        parent = table_name(reference.split('(', 1)[0], table.split('.')[0])
+        if not self.schema.exists(table) or not self.schema.exists(parent):
+            raise GuardError(f'Missing prerequisite for foreign key {table}.{name}')
+        definition = f'CONSTRAINT {qi(name)} FOREIGN KEY {columns} REFERENCES {reference} ON DELETE CASCADE'
+        # Ask the existing FK guard to compare the full constraint, without replacing it.
+        return self.schema.plan_fk_addition(table, name, definition)
+
+    def additive_ddl(self, sql):
+        data = call(sql)
+        if data:
+            schema, name, args = data
+            if name in ('IDEMPOTENT_ADD_COLUMN', 'ADD_RUNTIME_CATALOG_COLUMN'):
+                return self.add_column(table_name(args[0], schema), args[1], args[2])
+            if name == 'IDEMPOTENT_ADD_KEY':
+                return self.add_index(table_name(args[1], schema), args[0], f'KEY {qi(args[0])} {args[2]}')
+            if name in ('IDEMPOTENT_ADD_UNIQUE_KEY', 'IDEMPOTENT_ADD_UNIQUE_INDEX'):
+                return self.add_index(table_name(args[0], schema), args[1], f'UNIQUE KEY {qi(args[1])} {args[2]}')
+            if name == 'IDEMPOTENT_ADD_FOREIGN_KEY':
+                return self.add_foreign_key(table_name(args[0], schema), *args[1:])
+            raise GuardError(f'{name} needs a reviewed repair')
+
+        create = re.match(r'CREATE TABLE(?: IF NOT EXISTS)?\s+([^\s(]+)\s*\(', sql, re.I)
+        if create:
+            table = table_name(create[1])
+            if table in self.removed_tables:
+                raise GuardError(f'{table} is also dropped by a migration')
+            if self.schema.exists(self.schema.resolve(table)):
+                return None
+            if 'SELECT' in canonical(sql).upper().split('\x1f'):
+                raise GuardError('CREATE TABLE with a data query needs a reviewed repair')
+            engine = re.search(r'\bENGINE\s*=\s*(\w+)', sql, re.I)
+            if engine and engine[1].lower() != 'innodb':
+                raise GuardError('New tables must use InnoDB')
+            return sql
+
+        rename = re.fullmatch(r'RENAME TABLE\s+(\S+)\s+TO\s+(\S+)', sql, re.I)
+        if rename:
+            return self.rename(table_name(rename[1]), table_name(rename[2]))
+
+        alter = re.fullmatch(r'ALTER TABLE\s+(\S+)\s+(ADD\s+.+)', sql, re.I | re.S)
+        if alter and len(split_items(alter[2])) == 1:
+            table = table_name(alter[1])
+            index = re.fullmatch(r'ADD\s+((?:UNIQUE\s+)?(?:INDEX|KEY)\s+`?(\w+)`?\s*\(.*\))', alter[2], re.I | re.S)
+            if index:
+                return self.add_index(table, index[2], index[1])
+            col = re.fullmatch(r'ADD\s+(?:COLUMN\s+)?`?(\w+)`?\s+(.+)', alter[2], re.I | re.S)
+            if col and col[1].upper() not in ('INDEX', 'KEY', 'CONSTRAINT', 'UNIQUE', 'PRIMARY', 'FOREIGN', 'CHECK', 'PARTITION'):
+                return self.add_column(table, col[1], col[2])
+        raise GuardError('Destructive, replacement, or unsupported DDL needs a reviewed repair')
+
+    def prepared_ddl(self, statement):
+        # This historical statement is a metadata test around a single table rename.
+        source = statement.prepared_assignment
+        if statement.file == 'schema-42040to42100.sql' and VM_RENAME_ASSIGNMENT == canonical(source):
+            return self.rename('cloud.user_vm_details', 'cloud.vm_instance_details')
+        raise GuardError('Dynamic SQL needs a reviewed repair')
+
+    def inspect(self, statement):
+        if statement.kind in ('DDL', 'EXECUTE'):
+            sql = self.prepared_ddl(statement) if statement.kind == 'EXECUTE' else self.additive_ddl(statement.sql)
+            if sql:
+                self.apply(statement, sql)
+            else:
+                self.event('ALREADY_PRESENT', statement)
+            return
+
+        if statement.kind == 'INSERT' and not statement.temporary_insert:
+            sql = rewrite_tables(statement.sql, self.schema)
+            tokens = canonical(sql).upper().split('\x1f')
+            if '@' in tokens:
+                raise GuardError('INSERT depends on a session value')
+            target, probe, write = guarded_insert(sql, self.schema, self.policies)
+        else:
+            rule = statement.repair
+            if not rule:
+                raise GuardError('No verified missing-data condition for this historical operation')
+            target, probe, write = rule['table'], rule['probe'], rule['apply']
+        if not self.has_candidates(probe):
+            if statement.kind == 'DELETE' and rule.get('review') and self.has_candidates(rule['review']):
+                raise GuardError('Rows remain whose replacement value could not be verified')
+            self.event('ALREADY_PRESENT', statement)
+            return
+        self.require_transactional_target(target)
+        self.apply(statement, write, data_change=True, verify=probe)
+        if self.args.apply and statement.kind == 'DELETE' and rule.get('review') and self.has_candidates(rule['review']):
+            self.event('REVIEW_REQUIRED', statement, 'Remaining rows do not have a verified replacement value')
+
+    def has_candidates(self, probe):
+        try:
+            result = self.db.scalar(probe)
+        except SqlError as exc:
+            if re.match(r'^(1054|1146):', str(exc)):
+                raise GuardError('Data repair prerequisite missing: ' + str(exc)) from exc
+            raise
+        if result not in ('0', '1'):
+            raise GuardError('Probe did not return a boolean result')
+        return result == '1'
+
+    def require_transactional_target(self, table):
+        # Triggers may write to other tables, so ensure both schemas can roll back.
+        count = self.db.scalar("SELECT COUNT(*) FROM information_schema.TABLES "
+            "WHERE TABLE_SCHEMA IN ('cloud','cloud_usage') AND TABLE_TYPE='BASE TABLE' AND ENGINE <> 'InnoDB'")
+        if count != '0':
+            raise GuardError(f'Data repairs require all cloud and cloud_usage tables to use InnoDB ({table})')
 
     def execute(self):
-        if not self.a.apply:
+        if not self.args.apply:
             self.db.query('SET SESSION TRANSACTION READ ONLY')
-            for s in self.statements:
-                if not self.persistent(s):continue
-                if s.identity in self.done or s.identity in self.run_seen:self.event('SKIPPED_HISTORY',s)
-                else:self.event('PENDING',s,' '.join(s.sql.split())[:140]);self.run_seen.add(s.identity)
-            return
-        if not self.pending:
-            for s in self.statements:
-                if self.persistent(s):self.event('SKIPPED_HISTORY',s)
-            return
-        nontransactional=self.db.query("SELECT CONCAT(TABLE_SCHEMA,'.',TABLE_NAME,':',ENGINE) FROM information_schema.TABLES WHERE TABLE_SCHEMA IN ('cloud','cloud_usage') AND TABLE_TYPE='BASE TABLE' AND ENGINE <> 'InnoDB'")
-        if nontransactional:raise GuardError('DML journaling requires InnoDB; found '+', '.join(nontransactional))
-        self.definers=RoutineDefiners(self.db,self.a.routine_definer)
-        for s in self.statements:
-            if s.kind=='ROUTINE' and re.match('CREATE',s.sql,re.I):self.definers.owner(proc_name(s.sql))
-            if s.kind=='CALL' and s.identity not in self.done:
-                data=call(s.sql);self.definers.owner(data[0]+'.'+data[1])
-        backup(self.a,self.work);self.create_journal()
-        previous=None
-        for s in self.statements:
-            if s.file!=previous:print('\nReading '+s.file,flush=True);previous=s.file
-            if self.persistent(s) and (s.identity in self.done or s.identity in self.run_seen):self.event('SKIPPED_HISTORY',s);continue
+        for statement in self.statements:
+            if statement.kind in ('SESSION', 'ROUTINE', 'TEMP') or statement.temporary_insert:
+                continue
             try:
-                sql=rewrite_tables(s.sql,self.schema) if s.kind in ('INSERT','UPDATE','DELETE') else s.sql
-                if s.kind=='ROUTINE':
-                    name=proc_name(sql)
-                    self.db.query(self.definers.create(name,guarded_helper(name,sql)) if re.match('CREATE',sql,re.I) else sql)
-                    if re.match('CREATE',sql,re.I):self.loaded.add(name)
-                    else:self.loaded.discard(name)
-                    self.event('SESSION',s);continue
-                if s.kind=='SESSION':
-                    if re.match(r'PREPARE|DEALLOCATE',sql,re.I):pass # EXECUTE is guarded using the variable's actual SQL.
-                    else:self.db.query(sql)
-                    self.event('SESSION',s);continue
-                if s.kind=='TEMP':
-                    self.db.query(sql);self.event('SESSION',s);continue
-                if s.temporary_insert:
-                    self.db.query(sql);self.event('SESSION',s);continue
-                effective=sql
-                if s.kind=='EXECUTE':
-                    effective=self.db.scalar('SELECT '+s.prepared_variable)
-                    if not effective:raise GuardError('Prepared SQL variable is empty')
-                effective_kind=raw_kind(effective)
-                self.sql_log.write('-- '+s.file+':'+str(s.line)+' '+s.identity+'\n'+effective.rstrip(';')+';\n\n');self.sql_log.flush()
-                if effective_kind=='DDL' or effective_kind=='SESSION' and re.fullmatch(r'SELECT\s+1',effective,re.I):
-                    self.db.query('INSERT INTO '+INFLIGHT+' (statement_id,source_file,source_line,sql_text) VALUES ('+','.join([lit(s.identity),lit(s.file),str(s.line),lit(effective)])+') ON DUPLICATE KEY UPDATE sql_text=VALUES(sql_text)')
-                    changed=self.schema.execute(effective)
-                    self.db.query('START TRANSACTION')
-                    try:
-                        self.mark(s,'APPLIED' if changed else 'ALREADY_PRESENT')
-                        self.db.query('DELETE FROM '+INFLIGHT+' WHERE statement_id='+lit(s.identity));self.db.query('COMMIT')
-                    except BaseException:
-                        self.db.query('ROLLBACK');raise
-                    self.event('APPLIED' if changed else 'ALREADY_PRESENT',s)
-                elif effective_kind in ('INSERT','UPDATE','DELETE','CALL'):
-                    self.data_statement(s,effective);self.event('APPLIED',s)
-                else:raise GuardError('Unsupported prepared statement type: '+effective_kind)
-                self.done.add(s.identity);self.run_seen.add(s.identity)
-            except BaseException as exc:
-                self.event('FAILED',s,str(exc));raise
+                self.inspect(statement)
+            except (GuardError, SourceError) as exc:
+                self.event('REVIEW_REQUIRED', statement, str(exc))
+            except Exception as exc:
+                self.event('FAILED', statement, str(exc))
+                raise
+        if self.count['REVIEW_REQUIRED']:
+            print(f"{self.count['REVIEW_REQUIRED']} statement(s) need review. See actions.jsonl.", flush=True)
 
-    def finish(self,error=None):
-        summary=dict(mode='APPLY' if self.a.apply else 'PLAN',sql_directory=str(self.a.sql_dir),
-            counts=dict(self.count),error=error,mysql_version=self.db.version,
-            backup=str(self.work/'backup.sql.gz') if (self.work/'backup.sql.gz').exists() else None,
-            journal=JOURNAL,routine_definers=self.definers.resolved if self.definers else {},finished_at=datetime.datetime.now().astimezone().isoformat())
-        (self.work/'summary.json').write_text(json.dumps(summary,ensure_ascii=False,indent=2)+'\n')
-        self.log.close();self.sql_log.close()
-        print('\nResults:',self.work,'\nCounts:',dict(self.count),flush=True)
-        return 1 if error else 2 if self.count['PENDING'] else 0
+    def finish(self, error=None):
+        summary = dict(mode='APPLY' if self.args.apply else 'PLAN', sql_directory=str(self.args.sql_dir),
+            counts=dict(self.count), error=error, mysql_version=self.db.version,
+            backup=str(self.work / 'backup.sql.gz') if self.backed_up else None,
+            finished_at=datetime.datetime.now().astimezone().isoformat())
+        (self.work / 'summary.json').write_text(json.dumps(summary, ensure_ascii=False, indent=2) + '\n')
+        self.log.close()
+        self.executed.close()
+        print('\nResults:', self.work, '\nCounts:', dict(self.count), flush=True)
+        return 1 if error else 2 if self.count['MISSING'] else 0
 
 
 def main():
-    parser=argparse.ArgumentParser(prog='mold-schema-repair.sh',description='Read current SQL files in version/file order; journal UPDATE/DELETE/INSERT atomically; default is read-only plan.')
+    parser=argparse.ArgumentParser(prog='mold-schema-repair.sh',description='Inspect current migration SQL and apply verified missing changes. Default: read-only plan.')
     mode=parser.add_mutually_exclusive_group();mode.add_argument('--apply',action='store_true');mode.add_argument('--plan',action='store_true');mode.add_argument('--list',action='store_true')
     parser.add_argument('--sql-dir',type=Path);parser.add_argument('--minimum-version',type=int,default=41810)
     parser.add_argument('--insert-keys',type=Path,default=HERE/'insert-keys.json')
-    parser.add_argument('--routine-definer',help='Application MySQL user@host for new/protected routine ownership; existing normal owners are preserved')
     parser.add_argument('--defaults-extra-file',dest='config',type=Path)
     parser.add_argument('--host',default='localhost');parser.add_argument('--port',type=int,default=3306);parser.add_argument('--user',default='root');parser.add_argument('--socket')
     parser.add_argument('--mysql',default='mysql');parser.add_argument('--mysqldump',default='mysqldump');parser.add_argument('--timeout',type=int,default=600)
@@ -347,7 +441,6 @@ def main():
         print('Files:',len(sources),'Statements:',len(statements));return 0
     if not shutil.which(args.mysql):raise RuntimeError('mysql CLI not found')
     policies=json.loads(args.insert_keys.read_text(encoding='utf-8'))
-    if args.apply:services_stopped()
     if args.work_dir:
         work=args.work_dir.expanduser().absolute();work.mkdir(mode=0o700,parents=True,exist_ok=False)
     else:work=Path(tempfile.mkdtemp(prefix='mold-schema-replay-'+datetime.datetime.now().strftime('%Y%m%d-%H%M%S')+'-',dir='/root' if os.geteuid()==0 and Path('/root').is_dir() else os.getcwd()))
@@ -369,9 +462,10 @@ def main():
             db=Mysql(args,work)
             if db.scalar("SELECT GET_LOCK('mold_schema_replay_v1',0)")!='1':raise RuntimeError('Another replay is running')
             if db.scalar("SELECT GET_LOCK('mold_missing_schema_repair_v1',0)")!='1':raise RuntimeError('The older schema repair tool is running')
+            if args.apply and db.scalar("SELECT GET_LOCK('DatabaseUpgrade',0)") != '1':
+                raise RuntimeError('A Mold database upgrade is running')
             if db.scalar("SELECT EXISTS(SELECT 1 FROM information_schema.SCHEMATA WHERE SCHEMA_NAME='cloud_usage')")!='1':raise RuntimeError('Existing cloud and cloud_usage databases are required')
-            replay=Replay(args,work,db,statements,helpers,policies)
-            if not replay.done:print('FIRST RUN: original UPDATE and DELETE statements will be applied. Existing migration history cannot be inferred automatically.',flush=True)
+            replay=Repair(args,work,db,statements,policies)
             try:replay.execute()
             except BaseException as exc:
                 replay.finish(str(exc));raise

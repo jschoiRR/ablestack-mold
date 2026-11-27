@@ -33,6 +33,8 @@ import com.cloud.utils.db.TransactionLegacy;
 import com.cloud.utils.exception.CloudRuntimeException;
 
 public class Upgrade42040to42100 extends DbUpgradeAbstractImpl implements DbUpgrade, DbUpgradeSystemVmTemplate {
+    static final String SCHEMA_FILE = "schema-42040to42100.sql";
+
     private SystemVmTemplateRegistration systemVmTemplateRegistration;
 
     @Override
@@ -52,7 +54,7 @@ public class Upgrade42040to42100 extends DbUpgradeAbstractImpl implements DbUpgr
 
     @Override
     public InputStream[] getPrepareScripts() {
-        final String scriptFile = "META-INF/db/schema-42040to42100.sql";
+        final String scriptFile = "META-INF/db/" + SCHEMA_FILE;
         final InputStream script = Thread.currentThread().getContextClassLoader().getResourceAsStream(scriptFile);
         if (script == null) {
             throw new CloudRuntimeException("Unable to find " + scriptFile);
@@ -164,7 +166,8 @@ public class Upgrade42040to42100 extends DbUpgradeAbstractImpl implements DbUpgr
     }
 
     private void updateKubernetesNodeVersion(Connection conn, List<Long> kubernetesClusterVmIds, Long cksClusterId, String cksVersion) {
-        String updateKubernetesNodeVersion = "UPDATE `cloud`.`kubernetes_cluster_vm_map` set kubernetes_node_version = ? WHERE id = ?;";
+        String updateKubernetesNodeVersion = "UPDATE `cloud`.`kubernetes_cluster_vm_map` SET kubernetes_node_version = ? " +
+                "WHERE id = ? AND (kubernetes_node_version IS NULL OR kubernetes_node_version = '');";
         for (Long nodeVmId : kubernetesClusterVmIds) {
             try {
                 PreparedStatement pstmt = conn.prepareStatement(updateKubernetesNodeVersion);

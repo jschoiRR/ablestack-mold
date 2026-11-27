@@ -16,8 +16,10 @@
 // under the License.
 package com.cloud.upgrade.dao;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -27,12 +29,16 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.codec.digest.DigestUtils;
+
 import com.cloud.utils.db.ScriptRunner;
 import com.cloud.utils.exception.CloudRuntimeException;
 
 /** Explicit migrations for Europa installations already reporting the upstream version. */
 public final class EuropaSchemaUpgrade {
     public static final String LEGACY_HOOKS = "europa-4.23-legacy-hooks";
+    private static final String DIPLO_SCHEMA_REPLAY = "diplo-42100";
+    private static final String LEGACY_DIPLO_SCHEMA_REPLAY = "europa-4.23-diplo-schema-replay-v1";
     public static final String S4 = "europa-4.23-s4-v1";
     public static final String S5A = "europa-4.23-s5a-v1";
     public static final String S5B = "europa-4.23-s5b-v1";
@@ -55,11 +61,15 @@ public final class EuropaSchemaUpgrade {
     }
 
     public static boolean hasState(Connection conn, String name, String state) throws SQLException {
+        return state.equals(getState(conn, name));
+    }
+
+    private static String getState(Connection conn, String name) throws SQLException {
         try (PreparedStatement statement = conn.prepareStatement(
                 "SELECT state FROM cloud.ablestack_schema_migration WHERE name = ?")) {
             statement.setString(1, name);
             try (ResultSet result = statement.executeQuery()) {
-                return result.next() && state.equals(result.getString(1));
+                return result.next() ? result.getString(1) : null;
             }
         }
     }
@@ -88,18 +98,55 @@ public final class EuropaSchemaUpgrade {
     }
 
     public static void migrate(Connection conn) {
-        final String path = "META-INF/db/schema-europa-4.23-s4.sql";
-        try (InputStream input = EuropaSchemaUpgrade.class.getClassLoader().getResourceAsStream(path)) {
-            if (input == null) {
-                throw new CloudRuntimeException("Missing Europa migration: " + path);
-            }
-            new ScriptRunner(conn, false, true).runScript(new InputStreamReader(input, StandardCharsets.UTF_8));
+        try {
+            runMigrationScript(conn, "schema-europa-4.23-s4.sql");
             EuropaSecuritySchemaUpgrade.migrate(conn);
             new Upgrade42030to42040().performDataMigration(conn);
             ensureVolumeUsageIndex(conn);
         } catch (Exception e) {
             throw new CloudRuntimeException("Unable to apply Europa S4 schema migration", e);
         }
+    }
+
+    public static String loadDiploSchemaScript() {
+        try (InputStream script = openMigration(Upgrade42040to42100.SCHEMA_FILE)) {
+            return new String(script.readAllBytes(), StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            throw new CloudRuntimeException("Unable to read Diplo schema migration", e);
+        }
+    }
+
+    public static String diploSchemaPhase(Connection conn, String script) throws SQLException {
+        String digest = DigestUtils.sha256Hex(script);
+        String legacyName = LEGACY_DIPLO_SCHEMA_REPLAY + "-" + digest;
+        String legacyState = getState(conn, legacyName);
+        if ("Complete".equals(legacyState) || "Pending".equals(legacyState)) {
+            return legacyName;
+        }
+        return DIPLO_SCHEMA_REPLAY + "-" + digest.substring(0, 16);
+    }
+
+    public static void migrateDiploSchema(Connection conn, String script) {
+        try {
+            new ScriptRunner(conn, false, true).runScript(new StringReader(script));
+        } catch (IOException | SQLException e) {
+            throw new CloudRuntimeException("Unable to apply Diplo schema migration: " + e.getMessage(), e);
+        }
+    }
+
+    private static void runMigrationScript(Connection conn, String fileName) throws IOException, SQLException {
+        try (InputStream input = openMigration(fileName)) {
+            new ScriptRunner(conn, false, true).runScript(new InputStreamReader(input, StandardCharsets.UTF_8));
+        }
+    }
+
+    private static InputStream openMigration(String fileName) throws IOException {
+        String path = "META-INF/db/" + fileName;
+        InputStream input = EuropaSchemaUpgrade.class.getClassLoader().getResourceAsStream(path);
+        if (input == null) {
+            throw new IOException("Missing Europa migration: " + path);
+        }
+        return input;
     }
 
     static void ensureVolumeUsageIndex(Connection conn) throws SQLException {

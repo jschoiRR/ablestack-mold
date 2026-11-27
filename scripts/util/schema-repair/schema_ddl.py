@@ -27,14 +27,6 @@ def table_name(value,default='cloud'):
     return '.'.join(parts)
 
 
-def type_signature(definition):
-    hit=re.match(r'(\w+(?:\([^)]*\))?)(\s+unsigned)?',definition,re.I)
-    if not hit:raise GuardError('Unrecognized column type: '+definition)
-    value=re.sub(r'\bbool(?:ean)?\b','tinyint',hit[0].lower())
-    value=re.sub(r'\binteger\b','int',value)
-    return re.sub(r'\b(tinyint|smallint|mediumint|int|bigint)\(\d+\)',r'\1',value)
-
-
 def index_spec(definition):
     parts=split_items(definition[definition.index('(')+1:definition.rindex(')')]);columns=[]
     for part in parts:
@@ -54,29 +46,18 @@ DDL_PROCS={
 
 
 class Schema:
-    def __init__(self,db,statements):
-        self.db=db;self.aliases={};self.column_aliases={};self.final_indexes={};self.final_fks={};self.final_column_types={};column_definitions=[]
+    def __init__(self, db, statements):
+        self.db = db
+        self.aliases = {}
+        self.column_aliases = {}
         for statement in statements:
-            sql=statement.sql
-            for old,new in re.findall(r'RENAME TABLE\s+([^\s]+)\s+TO\s+([^\s\'\"]+)',sql,re.I):
-                self.aliases[table_name(old)]=table_name(new)
-            data=call(sql)
-            direct=re.fullmatch(r'ALTER TABLE\s+([^\s]+)\s+MODIFY\s+(?:COLUMN\s+)?`?(\w+)`?\s+(.*)',sql,re.I|re.S)
-            if direct:column_definitions.append((table_name(direct[1]),direct[2],direct[3]))
-            if not data:continue
-            schema,name,args=data
-            if name=='IDEMPOTENT_CHANGE_COLUMN' and args[1]!=args[2]:self.column_aliases[(table_name(args[0],schema),args[1])]=args[2]
-            if name=='IDEMPOTENT_CHANGE_COLUMN':column_definitions.append((table_name(args[0],schema),args[2],args[3]))
-            if name=='IDEMPOTENT_MODIFY_COLUMN_CHAR_SET':column_definitions.append((table_name(args[0],schema),args[1],args[2]))
-            if name=='IDEMPOTENT_ADD_KEY':
-                key,t,cols=args;self.final_indexes[(table_name(t,schema),key)]='KEY '+qi(key)+' '+cols
-            if name in ('IDEMPOTENT_ADD_UNIQUE_KEY','IDEMPOTENT_ADD_UNIQUE_INDEX'):
-                t,key,cols=args;self.final_indexes[(table_name(t,schema),key)]='UNIQUE KEY '+qi(key)+' '+cols
-            if name=='IDEMPOTENT_ADD_FOREIGN_KEY':
-                t,key,cols,ref=args;self.final_fks[(table_name(t,schema),key)]='CONSTRAINT '+qi(key)+' FOREIGN KEY '+cols+' REFERENCES '+ref+' ON DELETE CASCADE'
-        for t,col,definition in column_definitions:
-            col=self.column_aliases.get((t,col),col);t=self.aliases.get(t,t)
-            self.final_column_types[(t,col.lower())]=type_signature(definition)
+            for old, new in re.findall(r'RENAME TABLE\s+([^\s]+)\s+TO\s+([^\s\'\"]+)', statement.sql, re.I):
+                self.aliases[table_name(old)] = table_name(new)
+            data = call(statement.sql)
+            if data and data[1] == 'IDEMPOTENT_CHANGE_COLUMN':
+                table, old, new, _ = data[2]
+                if old != new:
+                    self.column_aliases[(table_name(table, data[0]), old)] = new
 
     def exists(self,t):
         schema,name=t.split('.')
@@ -107,14 +88,7 @@ class Schema:
     def actual_index(rows):
         return (not bool(rows[0]['NON_UNIQUE']),[(r['COLUMN_NAME'].lower(),r['SUB_PART'],r['COLLATION']) for r in rows])
 
-    def add_index(self,t,name,definition):
-        current=self.indexes(t).get(name);wanted=index_spec(definition)
-        if current and self.actual_index(current)==wanted:return False
-        # A single ALTER retains the old index if the replacement cannot be created.
-        prefix=('DROP PRIMARY KEY' if name=='PRIMARY' else 'DROP INDEX '+qi(name))+', ' if current else ''
-        self.db.query('ALTER TABLE '+qt(t)+' '+prefix+'ADD '+definition);return True
-
-    def add_fk(self,t,name,definition):
+    def plan_fk_addition(self,t,name,definition):
         hit=re.search(r'FOREIGN KEY(?:\s+`\w+`)?\s*\(([^)]+)\)\s+REFERENCES\s+([^\s(]+)\s*\(([^)]+)\)',definition,re.I)
         if not hit:raise GuardError('Unsupported FK definition: '+definition)
         cols=[x.strip().strip('`').lower() for x in hit[1].split(',')]
@@ -128,116 +102,6 @@ class Schema:
             return ([r['column'].lower() for r in rows],rows[0]['ref_schema']+'.'+rows[0]['ref_table'],[r['ref_column'].lower() for r in rows],norm(rows[0]['delete']),norm(rows[0]['update']))
         stage='mold_replay_fk_'+hashlib.sha256((t+name+definition).encode()).hexdigest()[:24]
         current=self.fk(t,name);staged=self.fk(t,stage)
-        if staged and spec(staged)!=wanted:raise GuardError('Staging FK name has different definition: '+stage)
-        if current and spec(current)==wanted:
-            if staged:self.db.query('ALTER TABLE '+qt(t)+' DROP FOREIGN KEY '+qi(stage));return True
-            return False
-        if current:
-            if not staged:
-                replacement=re.sub(r'^CONSTRAINT\s+`?\w+`?', 'CONSTRAINT '+qi(stage),definition,flags=re.I)
-                self.db.query('ALTER TABLE '+qt(t)+' ADD '+replacement)
-            self.db.query('ALTER TABLE '+qt(t)+' DROP FOREIGN KEY '+qi(name))
-            staged=True
-        self.db.query('ALTER TABLE '+qt(t)+' ADD '+definition)
-        if staged:self.db.query('ALTER TABLE '+qt(t)+' DROP FOREIGN KEY '+qi(stage))
-        return True
-
-    def change_column(self,t,old,new,definition):
-        columns=self.columns(t)
-        if old.lower() not in columns:
-            if new.lower() in columns:return self.change_column(t,new,new,definition)
-            raise GuardError('Both source and destination column are missing: '+t+'.'+old+' -> '+new)
-        if old!=new and new.lower() in columns:raise GuardError('Both old/new columns exist: '+t+'.'+old)
-        actual=columns[old.lower()];wanted=type_signature(definition);present=type_signature(actual['COLUMN_TYPE'])
-        target_charset=re.search(r'CHARACTER SET\s+(\w+)',definition,re.I)
-        same_charset=not target_charset or actual['CHARACTER_SET_NAME']==target_charset[1]
-        # Do not undo a later width increase while replaying an older file.
-        old_width=re.fullmatch(r'(varchar|char)\((\d+)\)',present)
-        new_width=re.fullmatch(r'(varchar|char)\((\d+)\)',wanted)
-        final_type=self.final_column_types.get((t,new.lower()),wanted)
-        final_width=re.fullmatch(r'(varchar|char)\((\d+)\)',final_type)
-        already_later=old_width and new_width and final_width and old_width[1]==new_width[1]==final_width[1] and wanted!=final_type and int(old_width[2])>=int(final_width[2])
-        if old==new and (wanted==present or already_later) and same_charset:return False
-        definition=re.sub(r'\s+(?:AFTER\s+`?\w+`?|FIRST)\s*$','',definition,flags=re.I)
-        if old==new:self.db.query('ALTER TABLE '+qt(t)+' MODIFY COLUMN '+qi(old)+' '+definition)
-        else:self.db.query('ALTER TABLE '+qt(t)+' CHANGE COLUMN '+qi(old)+' '+qi(new)+' '+definition)
-        return True
-
-    def procedure(self,data):
-        schema,name,a=data;t=self.resolve(table_name(a[0],schema)) if a else None
-        if name in ('IDEMPOTENT_ADD_COLUMN', 'ADD_RUNTIME_CATALOG_COLUMN'):
-            col,definition=a[1:];columns=self.columns(t)
-            if col.lower() in columns:return False
-            alias=self.column_aliases.get((t,col))
-            if alias and alias.lower() in columns:return False
-            definition=re.sub(r'\s+(?:AFTER\s+`?\w+`?|FIRST)\s*$','',definition,flags=re.I)
-            self.db.query('ALTER TABLE '+qt(t)+' ADD COLUMN '+qi(col)+' '+definition);return True
-        if name=='IDEMPOTENT_DROP_COLUMN':
-            if a[1].lower() not in self.columns(t):return False
-            self.db.query('ALTER TABLE '+qt(t)+' DROP COLUMN '+qi(a[1]));return True
-        if name=='IDEMPOTENT_CHANGE_COLUMN':return self.change_column(t,*a[1:])
-        if name=='IDEMPOTENT_MODIFY_COLUMN_CHAR_SET':return self.change_column(t,a[1],a[1],a[2]+' CHARACTER SET utf8mb4 '+a[3])
-        if name=='IDEMPOTENT_ADD_KEY':
-            key,raw,cols=a;t=self.resolve(table_name(raw,schema));return self.add_index(t,key,'KEY '+qi(key)+' '+cols)
-        if name in ('IDEMPOTENT_ADD_UNIQUE_KEY','IDEMPOTENT_ADD_UNIQUE_INDEX'):
-            return self.add_index(t,a[1],'UNIQUE KEY '+qi(a[1])+' '+a[2])
-        if name in ('IDEMPOTENT_DROP_INDEX','IDEMPOTENT_DROP_UNIQUE_KEY'):
-            if name=='IDEMPOTENT_DROP_INDEX':key,raw=a;t=self.resolve(table_name(raw,schema))
-            else:key=a[1]
-            if key not in self.indexes(t):return False
-            future=self.final_indexes.get((t,key))
-            # If a newer DB already has the final replacement, retain it. Otherwise
-            # honor the original DROP position; an intervening DML/ADD COLUMN may
-            # be a prerequisite for the subsequent ADD INDEX.
-            if future and self.actual_index(self.indexes(t)[key])==index_spec(future):return False
-            self.db.query('ALTER TABLE '+qt(t)+' DROP INDEX '+qi(key));return True
-        if name=='IDEMPOTENT_ADD_FOREIGN_KEY':
-            return self.add_fk(t,a[1],'CONSTRAINT '+qi(a[1])+' FOREIGN KEY '+a[2]+' REFERENCES '+a[3]+' ON DELETE CASCADE')
-        if name=='IDEMPOTENT_DROP_FOREIGN_KEY':
-            if not self.fk(t,a[1]):return False
-            self.db.query('ALTER TABLE '+qt(t)+' DROP FOREIGN KEY '+qi(a[1]));return True
-        raise GuardError('Unknown DDL helper: '+name)
-
-    def execute(self,sql):
-        data=call(sql)
-        if data and data[1] in DDL_PROCS:return self.procedure(data)
-        hit=re.match(r'CREATE TABLE(?: IF NOT EXISTS)?\s+([^\s(]+)',sql,re.I)
-        if hit:
-            if self.exists(table_name(hit[1])):return False
-            engine=re.search(r'\bENGINE\s*=\s*(\w+)',sql,re.I)
-            storage=engine[1] if engine else self.db.scalar('SELECT @@default_storage_engine')
-            if str(storage).lower()!='innodb':raise GuardError('New persistent tables must use InnoDB for atomic DML journaling')
-            self.db.query(sql);return True
-        hit=re.fullmatch(r'DROP TABLE(?: IF EXISTS)?\s+([^\s]+)',sql,re.I)
-        if hit:
-            if not self.exists(table_name(hit[1])):return False
-            self.db.query(sql);return True
-        hit=re.fullmatch(r'RENAME TABLE\s+([^\s]+)\s+TO\s+([^\s]+)',sql,re.I)
-        if hit:
-            old,new=table_name(hit[1]),table_name(hit[2])
-            if not self.exists(old) and self.exists(new):return False
-            if self.exists(old) and self.exists(new):raise GuardError('Both old/new tables exist: '+old+' / '+new)
-            self.db.query(sql);return True
-        hit=re.fullmatch(r'ALTER TABLE\s+([^\s]+)\s+(.*)',sql,re.I|re.S)
-        if hit:
-            t=self.resolve(table_name(hit[1]));action=hit[2]
-            if m:=re.fullmatch(r'ADD\s+(?:COLUMN\s+)?`?(\w+)`?\s+(.*)',action,re.I|re.S):
-                if m[1].upper() not in ('INDEX','KEY','CONSTRAINT','UNIQUE','PRIMARY'):
-                    return self.procedure((t.split('.')[0],'IDEMPOTENT_ADD_COLUMN',[t,m[1],m[2]]))
-            if m:=re.match(r'ADD\s+((?:UNIQUE\s+)?(?:INDEX|KEY)\s+`?(\w+)`?\s*\(.*)',action,re.I|re.S):return self.add_index(t,m[2],m[1])
-            if m:=re.match(r'ADD\s+(CONSTRAINT\s+`?(\w+)`?\s+FOREIGN KEY.*)',action,re.I|re.S):return self.add_fk(t,m[2],m[1])
-            if m:=re.fullmatch(r'DROP\s+(?:FOREIGN KEY|CONSTRAINT)\s+`?(\w+)`?',action,re.I):
-                return self.procedure(('cloud','IDEMPOTENT_DROP_FOREIGN_KEY',[t,m[1]]))
-            if m:=re.fullmatch(r'DROP INDEX\s+`?(\w+)`?',action,re.I):return self.procedure(('cloud','IDEMPOTENT_DROP_INDEX',[m[1],t]))
-            if m:=re.fullmatch(r'DROP\s+(?:COLUMN\s+)?`?(\w+)`?',action,re.I):return self.procedure(('cloud','IDEMPOTENT_DROP_COLUMN',[t,m[1]]))
-            if m:=re.fullmatch(r'MODIFY\s+(?:COLUMN\s+)?`?(\w+)`?\s+(.*)',action,re.I|re.S):return self.change_column(t,m[1],m[1],m[2])
-            if m:=re.fullmatch(r'CHANGE\s+(?:COLUMN\s+)?`?(\w+)`?\s+`?(\w+)`?\s+(.*)',action,re.I|re.S):return self.change_column(t,*m.groups())
-            if m:=re.fullmatch(r'CONVERT TO CHARACTER SET\s+(\w+)',action,re.I):
-                s,n=t.split('.');collation=self.db.scalar('SELECT TABLE_COLLATION FROM information_schema.TABLES WHERE TABLE_SCHEMA='+lit(s)+' AND TABLE_NAME='+lit(n))
-                if str(collation).startswith(m[1]+'_') and all(not c['CHARACTER_SET_NAME'] or c['CHARACTER_SET_NAME']==m[1] for c in self.columns(t).values()):return False
-                self.db.query('ALTER TABLE '+qt(t)+' '+action);return True
-            if t=='cloud.console_session' and re.match(r'DROP\s+`acquired`,\s*ADD\s+`acquired`',action,re.I):
-                if self.columns(t).get('acquired',{}).get('COLUMN_TYPE')=='datetime':return False
-                self.db.query(sql);return True
-        if re.fullmatch(r'SELECT\s+1',sql,re.I):return False
-        raise GuardError('Unsupported DDL; no statement executed: '+sql[:150])
+        if staged or (current and spec(current) != wanted):
+            raise GuardError('Foreign key needs a reviewed replacement: '+t+'.'+name)
+        return None if current else 'ALTER TABLE '+qt(t)+' ADD '+definition

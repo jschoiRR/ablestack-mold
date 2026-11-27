@@ -531,6 +531,11 @@ public class DatabaseUpgradeChecker implements SystemIntegrityChecker {
 
             try (Connection conn = TransactionLegacy.getStandaloneConnection()) {
                 EuropaSchemaUpgrade.initialize(conn);
+                if (dbVersion.compareTo(CloudStackVersion.parse("4.21.0.0")) >= 0) {
+                    String script = EuropaSchemaUpgrade.loadDiploSchemaScript();
+                    runEuropaPhase(conn, EuropaSchemaUpgrade.diploSchemaPhase(conn, script),
+                            () -> EuropaSchemaUpgrade.migrateDiploSchema(conn, script));
+                }
                 if (dbVersion.compareTo(currentVersion) < 0) {
                     EuropaSchemaUpgrade.begin(conn, EuropaSchemaUpgrade.LEGACY_HOOKS);
                     for (String release : new String[]{"Bronto", "Cerato", "Diplo", "Europa"}) {

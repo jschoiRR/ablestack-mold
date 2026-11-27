@@ -17,64 +17,41 @@ specific language governing permissions and limitations
 under the License.
 -->
 
-# MOLD SQL 재실행 도구
+# MOLD 스키마 리페어
 
-실행 시점의 SQL을 파일 버전 순서·문장 순서로 처리하고, 완료 이력으로 중복 적용을 막습니다.
-패키지 빌드 시 원본 SQL과 `procedures/`를 도구의 `sql/` 폴더에 포함합니다.
-새 SQL을 배포하면 쉘을 다시 생성하지 않고 읽을 수 있습니다.
-
-필요 환경: Bash, Python 3.8 이상, MySQL 8.0, `mysql`·`mysqldump`, InnoDB 테이블.
-
-## 1. 대상과 실행 계획 확인
+`--apply`는 기존 버전 기록 대신 실제 테이블, 컬럼, 인덱스와 데이터를 확인합니다.
+확인된 누락만 보완하고, 적용할 항목이 없으면 DB를 변경하지 않습니다.
 
 ```bash
-# SQL 파일 목록·순서 확인 (DB 접속 없음)
-bash /usr/share/cloudstack-common/scripts/util/schema-repair/mold-schema-repair.sh --list
-
-# 미처리 문장 확인 (DB 변경 없음)
-bash /usr/share/cloudstack-common/scripts/util/schema-repair/mold-schema-repair.sh --plan
+cd /usr/share/cloudstack-common/scripts/util/schema-repair
+./mold-schema-repair.sh --list   # DB 접속 없이 SQL 읽기 검사
+./mold-schema-repair.sh --plan   # DB 변경 없이 누락과 검토 항목 확인
 ```
 
-MySQL root 비밀번호는 실행 중 입력합니다.
-`PENDING`은 완료 이력이 없다는 뜻이며, DB에 반드시 누락됐다는 뜻은 아닙니다.
+| 결과 | 의미 |
+|---|---|
+| `ALREADY_PRESENT` | 보완 대상이 이미 있거나 변경할 행이 없음 |
+| `MISSING` | 실제로 적용할 항목이 확인됨 |
+| `REVIEW_REQUIRED` | 조건이나 대상의 상태를 확인해야 함. 자동으로 반영하지 않음 |
 
-## 2. 서비스 정지
-
-모든 관리 노드에서 해당 MOLD·Usage 서비스를 정지합니다.
+실제 보완은 관리 노드 전체에서 Mold·Usage를 정지한 뒤 한 CCVM에서 진행합니다.
+변경이 필요한 경우에만 `cloud`, `cloud_usage`를 백업한 뒤 적용합니다.
 
 ```bash
 systemctl stop mold mold-usage
+./mold-schema-repair.sh --apply
+# 정상 완료와 검토 항목을 확인한 뒤 시작
+systemctl start mold mold-usage
 ```
 
-서비스명이 `cloudstack-management`·`cloudstack-usage`인 환경은 해당 이름을 사용합니다.
+- INSERT는 업무 키로 누락 행만 추가합니다. 기존 값은 덮어쓰지 않습니다.
+- UPDATE·DELETE는 원본 SQL에 붙은 `@repair-` 주석의 조건을 확인해 대상 행만 변경합니다. 원본 구문이 바뀌면 조건을 검토할 때까지 적용을 보류합니다.
+- 프로시저 재생성, 테이블·컬럼 삭제, 정의가 다른 인덱스 교체, 검증되지 않은 동적 SQL은 검토 대상으로 남깁니다.
+- 결과와 백업은 `/root/mold-schema-replay-*`의 `summary.json`, `actions.jsonl`, `backup.sql.gz`에서 확인합니다.
+- 기본 대상은 시작 버전 `41810` 이상인 `schema-숫자to숫자.sql`입니다. Java 마이그레이션은 Mold 시작 시 실행됩니다.
 
-## 3. 적용
+Mold 기동 시 DB 버전이 4.21.0.0 이상이면 원본 `schema-42040to42100.sql`을 실행해 누락된 변경과 설정 범위 변환을 보완합니다.
+같은 내용이 완료된 상태면 건너뛰며, 실행이 중단되었거나 SQL 파일이 바뀌면 다음 기동에서 다시 실행합니다.
 
-CCVM 한 곳에서 실행합니다. 미처리 작업이 있으면 `cloud`·`cloud_usage` 전체 백업 후 반영합니다.
-
-```bash
-bash /usr/share/cloudstack-common/scripts/util/schema-repair/mold-schema-repair.sh --apply
-```
-
-결과는 root 실행 기준 `/root/mold-schema-replay-*`에 저장합니다.
-`summary.json`·`actions.jsonl`에서 오류를 확인하고, 확인을 마친 뒤 정지했던 서비스를 시작합니다.
-
-```bash
-systemctl start mold
-systemctl start mold-usage
-```
-
-백업 파일은 같은 폴더의 `backup.sql.gz`입니다. 재시작 후 UI/API 정상 동작을 확인합니다.
-
-## 처리 기준
-
-- INSERT는 업무 키로 중복을 확인합니다. 키는 `insert-keys.json`에서 관리합니다.
-- 프로시저는 기존 애플리케이션 계정의 소유자를 유지합니다. 새 소유자를 판단할 수 없으면 `--routine-definer user@host`로 명시합니다.
-- **원본 UPDATE·DELETE·DROP은 실제 변경·삭제를 수행합니다.** 최초 실행에서는 과거 적용 여부를 확정할 수 없습니다.
-- 완료된 내용은 건너뛰고 새로운 SQL 내용을 처리합니다. 이전 작업의 효과를 자동으로 되돌리지는 않습니다.
-- 실패하면 중단합니다. DML은 이력과 함께 롤백하지만, 자동 커밋된 DDL은 남으므로 원인 확인 후 재실행합니다.
-- 미지원 구문이나 중복을 판별할 수 없는 INSERT는 오류로 중단합니다.
-- 기본 대상은 시작 버전 `41810` 이상인 `schema-숫자to숫자.sql`입니다. cleanup·Java·뷰 후처리는 별도입니다.
-
-다른 원본 폴더는 `--sql-dir 경로`로 지정합니다. 수동 배포 시 SQL을 포함한 도구 폴더 전체를 복사합니다.
-종료 코드: `0` 완료, `2` 조회 모드에서 미처리 문장 있음, `1` 오류. 추가 옵션은 `--help`로 확인합니다.
+Bash, Python 3.8 이상, MySQL 8.0, `mysql`·`mysqldump`가 필요합니다.
+`--plan`은 누락을 발견하면 코드 2, 오류는 코드 1을 반환합니다. 검토 항목은 실행 결과에서 확인합니다.
